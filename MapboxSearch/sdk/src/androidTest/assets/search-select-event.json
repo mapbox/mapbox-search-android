@@ -1,0 +1,40 @@
+{
+  "created": "2020-05-16T23:06:35+0300",
+  "event": "search.select",
+  "lat": 53.911334999999994,
+  "limit": 10,
+  "lng": 27.55140833333333,
+  "proximity": [
+    27.55140833333333,
+    53.911334999999994
+  ],
+  "queryString": "Minsk",
+  "resultId": "region.16795317862473520",
+  "resultIndex": 3,
+  "resultPlaceName": "Minsk",
+  "sessionIdentifier": "2068adda-16c0-4dfe-a5a1-4a08aee8a600",
+  "userAgent": "search-sdk-android-internal",
+  "bbox": [
+    27.55140833333333,
+    53.911334999999994,
+    27.55140833333333,
+    53.911334999999994
+  ],
+  "autocomplete": true,
+  "cached": false,
+  "routing": false,
+  "country": [
+    "by"
+  ],
+  "orientation": "portrait",
+  "fuzzyMatch": false,
+  "endpoint": "mapbox.com",
+  "language": [
+    "by"
+  ],
+  "keyboardLocale": "by",
+  "mapZoom": 11.0,
+  "mapCenterLat": 10.1,
+  "mapCenterLng": 11.1234567,
+  "schema": "test-schema-1.0"
+}

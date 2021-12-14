@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/mapbox_search_sdk_ic_error"
+        app:tint="?attr/mapboxSearchSdkErrorIconColor"
+        />
+
+    <TextView
+        android:id="@+id/error_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_dimen_3x"
+        android:text="@string/mapbox_search_sdk_no_internet_connection_title"
+        android:textAppearance="@style/MapboxSearchSdk.Text.BoldHeader.Big"
+        />
+
+    <TextView
+        android:id="@+id/error_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mapbox_search_sdk_no_internet_connection_subtitle"
+        android:textAppearance="@style/MapboxSearchSdk.Text.Secondary"
+        />
+
+    <Button
+        android:id="@+id/retry_button"
+        style="@style/MapboxSearchSdk.Button.Primary.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_dimen_8x"
+        android:text="@string/mapbox_search_sdk_no_internet_connection_retry_button"
+        />
+
+</merge>

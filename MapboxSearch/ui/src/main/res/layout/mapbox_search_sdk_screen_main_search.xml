@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@drawable/mapbox_search_sdk_search_view_background"
+    tools:parentTag="com.mapbox.search.ui.view.main.MainScreenView"
+    >
+
+    <View
+        android:id="@+id/tongue_view"
+        android:layout_width="@dimen/mapbox_search_sdk_search_view_tongue_width"
+        android:layout_height="@dimen/mapbox_search_sdk_search_view_tongue_height"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_search_view_tongue_margin_top"
+        android:background="@drawable/mapbox_search_sdk_tongue_view_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.mapbox.search.ui.view.search.SearchInputView
+        android:id="@+id/search_input_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_search_input_view_layout_margin_top"
+        android:layout_marginEnd="@dimen/mapbox_search_sdk_primary_layout_offset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tongue_view"
+        />
+
+    <com.mapbox.search.ui.view.category.HotCategoriesView
+        android:id="@+id/hot_categories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:focusable="false"
+        app:categoryItemIconWidth="@dimen/mapbox_search_sdk_search_view_hot_category_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_input_edit_text"
+        />
+
+    <com.mapbox.search.ui.view.tabviewcontainer.TabViewContainer
+        android:id="@+id/search_tab_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hot_categories"
+        app:layout_constraintVertical_bias="0.0"
+        />
+
+    <com.mapbox.search.ui.view.SearchResultsView
+        android:id="@+id/search_results_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:paddingBottom="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_input_edit_text"
+        app:layout_constraintVertical_bias="0.0"
+        />
+
+    <com.mapbox.search.ui.utils.MapboxFadeView
+        android:id="@+id/search_results_top_fade"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:visibility="gone"
+        app:fadeColor="?attr/mapboxSearchSdkBackgroundColor"
+        app:layout_constraintEnd_toEndOf="@+id/search_results_view"
+        app:layout_constraintStart_toStartOf="@+id/search_results_view"
+        app:layout_constraintTop_toTopOf="@+id/search_results_view"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/search_results_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="search_results_view, search_results_top_fade"
+        />
+
+</merge>

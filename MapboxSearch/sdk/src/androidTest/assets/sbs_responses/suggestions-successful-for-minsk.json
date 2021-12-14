@@ -1,0 +1,191 @@
+{
+  "suggestions":[
+    {
+      "feature_name":"Minsk",
+      "matching_name":"Minsk",
+      "description":"Belarus",
+      "result_type": [
+        "region"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"test-id"
+        },
+        "multi_retrievable":false
+      },
+      "distance": 5000000,
+      "eta": 10.5,
+      "maki":"marker",
+      "internal_id":"Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
+      "external_ids":{
+        "carmen":"place.9038333669154200",
+        "federated":"carmen.place.9038333669154200"
+      },
+      "context":[
+        {
+          "layer":"country.13685961050877970",
+          "name":"Belarus"
+        }
+      ]
+    },
+    {
+      "feature_name":"Minsk",
+      "matching_name":"Minsk",
+      "description":"Minsk Region, Belarus",
+      "result_type": [
+        "place",
+        "region"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "allowed_methods":[
+          "GET"
+        ],
+        "path":"ApZhXACk9ENf2gxGXpgkwskoYL2HVuWx7JjeYZSNav0LnhKjiQIsmo1bD_ajfkMKQpkaEYl7Fj2fdfdqWVAwggC5eQTWoK6Aex5tQ0PHJHXFqxunBrunFACie4QyxD9Tw-Odfh4FR3QnEZojkg8o6EvWEwJ6q_Rsb-ZCvxDkAwkDdBIMlrUXytbr8wxoANBLvjxUTKDTtN5Jc1kLhFarShwRIbe5r5PjohLJ85isu4GDya0ZEpYsLHn6yD1cBTgUE7KSAyRba6uS6dgmls6sF90U7N-K-bgdjoiMIWlsdmDw2nxEgE6azixonts7tCEHA3n7-I0dtCsbusHWjk232xetX5O5GHMTfrQiRng5Ft29st5vLZvJ4gAp49dIFSnx6LPSTSZiEbfIcR4vqGcTMIR5FBC3E2I6hYckWVxLxc_xW5YzI2NAX_NZOO7Cg_bAs_JAFjjb7t9hUfl7GqTfwXlf7DN8ZKQEzjxZbXDre_AqDyyakQ6w_ooFQkQX--hOqJq_c-veNNBaBIS2-uCVlMcDy6lp8Mk5V8tzjz1YaT-h-8qPk479XA==",
+        "query":{
+
+        }
+      },
+      "distance": 6000000,
+      "eta": 12.0,
+      "maki":"marker",
+      "internal_id":"Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RcwxDsIwDAVQjoI89wSM7CxcAKWJ1VqkNrKdoUIchpsSMFW9vf-__D7EPSFLY9cVTnDGmrQZDKA4kXCPLsR2P16DAxQyV8rem65HTRm30ddinqVgtFVyquRriJGmeRSdRUokqRRFsx03bsuI-t-n5ffn9QE=",
+      "external_ids":{
+        "carmen":"place.11543680732831130",
+        "federated":"carmen.place.11543680732831130"
+      },
+      "context":[
+        {
+          "layer":"region.14146701401889110",
+          "name":"Minsk Region"
+        },
+        {
+          "layer":"country.13685961050877970",
+          "name":"Belarus"
+        }
+      ]
+    },
+    {
+      "feature_name":"Mia's Minks",
+      "matching_name":"Mia's Minks",
+      "description":"Mia's Minks, 3249 Stevens Creek Blvd Ste 205, San Jose, California 95117, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "allowed_methods":[
+          "GET",
+          "POST"
+        ],
+        "path":"-lRnHBDE9FsdIiFnQVAHwpZOWq62thoIDA3p-A8ITj7Q0iOgobcjNrv2fGWzKCblbek09St4h2CUDbnq3eO2Y0QYD9uVrEPjRGeKU_EObgTB3zo7aaz1qn1OXgaTXVxfov4i8fDlzR21Sk2z-tNbaRWsV1jeGk0nawuGyL0c1_4ftPAJSNzOu6-JftLUcGJPn7Y4hEhYaKg0kZjF3zqoJaiHwt8-hAgikLGT4XwY6IktTNO9wrKFXgE6U8jjDjAWxlXYO5HMIjGOD3HNiZ64ZClKjcnXKrX97M_tiOwekAwAfV8pwpIyLAZ_hNoPhbej7DfC5KSJT9WKthng2gwFaA-O4YvD3oJiNQY-yGpRWyImqwXL1U7Efxw8q-CQr10N4T2U4A3swXPdJQEvDcbtw9VzzS1lnSqasoiF0PF4fOJoUFeaxg2yswWiTQbSVeP094uU-6sKgNkQBg0kBHi7bx0IGyDUE4W9reD5qsLuZXjRaU7bjxWMP68JOklYZoiPuGvmwezQ75K7NHUaQPkLxDLesWLqi9rThY391CU0NklEqpCZr8iceMPqjhmzcOf6UTStsPPTRYfsjDXW6y5Df5GYXMDg6HIbfaaD3WvJNhzgqJVHqSvwolyNg8dEAyYiQogmdKYbtldY_hBhWIaGze1dkIikw1Scv06iaoN-vLCPwwS5pH0EOwmFgOlPnxlWT06a4TX1tt03wf77IJnBpkXuBijWrvNnvT_SjxeqTM-VKx9uMeW8TyhecXjh6JTFKw==",
+        "query":{
+
+        }
+      },
+      "distance": 7000000,
+      "eta": 13.0,
+      "maki":"marker",
+      "category":[
+        "salon",
+        "services",
+        "cosmetics shop",
+        "shopping"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.ATUAyv8tAAAAAAAAAHNhZmVncmFwaC5zZzoyYTYzOTcxMTM4OWI0ZDcxODA1ZTY4NDVjMjk5NTI5NA==",
+      "external_ids":{
+        "poi":"eMOCM3UBVg8uHqZ3mhvp",
+        "safegraph":"sg:2a639711389b4d71805e6845c2995294",
+        "federated":"poi.eMOCM3UBVg8uHqZ3mhvp"
+      },
+      "context":[
+        {
+          "layer":"address",
+          "name":"3249 Stevens Creek Blvd Ste 205"
+        },
+        {
+          "layer":"street",
+          "name":"stevens creek blvd"
+        },
+        {
+          "layer":"postcode",
+          "name":"95117"
+        },
+        {
+          "layer":"neighborhood",
+          "name":"Valley Fair"
+        },
+        {
+          "layer":"place",
+          "name":"San Jose"
+        },
+        {
+          "layer":"region",
+          "name":"California"
+        },
+        {
+          "layer":"country",
+          "name":"United States of America"
+        }
+      ]
+    },
+    {
+      "feature_name":"Cafe",
+      "matching_name":"Cafe",
+      "description":"Category",
+      "result_type":[
+        "category"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"GpThHBDE9AO9Vf5iHO5K9h1qhzgej14gZ9AZ3MR1PFnBwkCfk8Z5jngBO2NzfK_QEH0QeVU5BtU1-2Y6GRt353GP3XR5p9IcODFWV2wA6F2aWFGn-hOCit7uVeKuDPNVNnJhyER1GLDtBeylJ8svbT4S_bc6Xo89HBeb29EdAXnvXU_a0y1XO8KgvGvAiY7fT7PB2BrfPqbZBo5vZAy_jR8KhJ5reYDDci_p9hl9vvbyQZERRf8JBkZEBouPXY777z8Fc2jlZPXHnzb0RGHu0lZFnA6puaEmZUBHXQQgvQ43_5O9XPUZEn_paHkT80-mRbGsLnx16u7wY4BhNzJReFFXNcMyoW10Gvk4MkUs1tcFnu8OiLaPoqEy7b0buWO3ocr-lNy8oqCU-KyyLWNnalhs5Mjv4Z_t9F-6zAF4ATWm-2SO-1wTJiPgcI4XvL8S8UpINRzhMTUGfkOZK5vqEasQOKQi9ThIyXaTaG6h61ySXt7jOY2qoYqswL6kkJ4kn9XSojRkkNCKpXMWx7t8DiHXxXEFyJt5LY4YnAHEXX_EPSgR5rHp_lebyd5UdBT8FmKSOefYNaj8jiadePVSBbHdiC4gEs0zqNNPxykHLK7aphGqowmlL23KK8IC64qAgx4aXwZlyeEhFFjGt0WyLO7bTSo-hxsKIvCA"
+        },
+        "multi_retrievable":false
+      },
+      "maki":"restaurant",
+      "category":[
+        "Cafe"
+      ],
+      "internal_id":"42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
+      "external_ids":{
+        "federated":"category.cafe"
+      }
+    },
+    {
+      "feature_name":"Flower Shop",
+      "matching_name":"Flower Shop",
+      "description":"Category",
+      "result_type":[
+        "category"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"GpQXHBC09HCmqE1UXzKG_WsvfKRApIKIKgPXziVbwDWHYly6Md2uexJXGr5skWQQYb3oSj2RCqR5uWCUdGst4YbD9R_dY_qOGQlX6I5lg0WDCYsc6FzxUFIbahYOVXgHxXkFmMBS7W_atJvXfoK_rGcfEilsp0qWMcX67UQhowWSM6WvdMYQJHz1fnXcnmCuE9BA1SjP7c59TJ_uLOK2QDGHaGEywFPCP38yktJDAlnT_siXNPsPzubUbvGIgTmYR9vIpCVUtiX4D4qwkQn2cCjylrBrue6fvgi2I3UruXpJd9HNsmQrJrnUUH3xecHBpBfHIuHxXpUKpvq5eJftz0rmQRe8vquo1stkEiPTjaW_GEhKahnmV4OTu9pmrUe6rhhkLAc61E54khcXJUE9vyPdegN34IsJhL6WhTYzs_QoJhbAsgZCTpDZ2LUAq9e0zc8F6CCHViMXSXKqUGgM5Fth54BXrIRRCbNqlJsyj5IJaSQoul98O4qwzBEShqsK6TNIXMoYB57RGdidfOhTnmvZkEDdWQ4zGD45fJY_VvCwomZdqiz171y3476DAZVM97ofJ0P4V2tF2MieG9KF91rt3rKw_7-gpkfyjInjSe8z7XKszI2XrHINYgI23EypJbjUGJenVyyjM6bKNFB6gBipRGx_6lCZ46BpaNm0ZSzZLA=="
+        },
+        "multi_retrievable":false
+      },
+      "maki":"marker",
+      "category":[
+        "Flower Shop"
+      ],
+      "internal_id":"42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2eAgLSc_KLM4hIA",
+      "external_ids":{
+        "federated":"category.florist"
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"12:9476295bf0515457bd2a576af2b1d06d3bf42a57",
+  "response_uuid":"bf62f6f4-92db-11eb-a8b3-0242ac130003"
+}

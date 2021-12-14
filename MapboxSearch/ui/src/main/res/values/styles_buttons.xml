@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="mapbox_search_sdk_button_corner_padding">14dp</dimen>
+    <dimen name="mapbox_search_sdk_button_corner_radius">5dp</dimen>
+    <dimen name="mapbox_search_sdk_button_height_small">26dp</dimen>
+    <dimen name="mapbox_search_sdk_button_height_normal">50dp</dimen>
+
+    <style name="MapboxSearchSdk.Button.Base" parent="@style/MapboxSearchSdk.Text.RobotoBold">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:stateListAnimator" tools:targetApi="lollipop">@null</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Button.Primary.Base" parent="@style/MapboxSearchSdk.Button.Base">
+        <item name="android:textColor">?attr/mapboxSearchSdkOnPrimaryAccentColor</item>
+        <item name="drawableTintCompat">?attr/mapboxSearchSdkOnPrimaryAccentColor</item>
+        <item name="android:background">@drawable/mapbox_search_sdk_primary_button_background</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Button.Primary.Small" parent="@style/MapboxSearchSdk.Button.Primary.Base">
+        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_tiny</item>
+        <item name="android:minHeight">@dimen/mapbox_search_sdk_button_height_small</item>
+        <item name="android:paddingLeft">@dimen/mapbox_search_sdk_button_corner_padding</item>
+        <item name="android:paddingRight">@dimen/mapbox_search_sdk_button_corner_padding</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Button.Primary.Normal" parent="@style/MapboxSearchSdk.Button.Primary.Base">
+        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_small</item>
+        <item name="android:minHeight">@dimen/mapbox_search_sdk_button_height_normal</item>
+        <item name="android:paddingLeft">@dimen/mapbox_search_sdk_button_corner_padding</item>
+        <item name="android:paddingRight">@dimen/mapbox_search_sdk_button_corner_padding</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Button.Secondary.Base" parent="@style/MapboxSearchSdk.Button.Base">
+        <item name="android:textColor">?attr/mapboxSearchSdkPrimaryAccentColor</item>
+        <item name="drawableTintCompat">?attr/mapboxSearchSdkPrimaryAccentColor</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Button.Secondary.Normal" parent="@style/MapboxSearchSdk.Button.Secondary.Base">
+        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_small</item>
+        <item name="android:minHeight">@dimen/mapbox_search_sdk_button_height_normal</item>
+        <item name="android:paddingLeft">@dimen/mapbox_search_sdk_button_corner_padding</item>
+        <item name="android:paddingRight">@dimen/mapbox_search_sdk_button_corner_padding</item>
+    </style>
+
+</resources>

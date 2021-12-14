@@ -1,0 +1,109 @@
+<resources>
+    <string name="mapbox_search_sdk_distance_meters">%1$s m</string>
+    <string name="mapbox_search_sdk_distance_km">%1$s km</string>
+    <string name="mapbox_search_sdk_distance_miles">%1$s mi</string>
+    <string name="mapbox_search_sdk_distance_feet">%1$s ft</string>
+
+    <string name="mapbox_search_sdk_search_input_view_hint_text">Where to?</string>
+    <string name="mapbox_search_sdk_search_result_view_no_results">No suggestions found</string>
+    <string name="mapbox_search_sdk_search_result_view_empty_recent_searches">Recent searches</string>
+    <string name="mapbox_search_sdk_search_result_view_recent_searches_title">Recent searches</string>
+    <string name="mapbox_search_sdk_search_result_missing_feedback">Missing result?</string>
+
+    <string name="mapbox_search_sdk_search_tab_view_container_category_page">Categories</string>
+    <string name="mapbox_search_sdk_search_tab_view_container_favorite_page">Favorites</string>
+
+    <string name="mapbox_search_sdk_category_name_restaurants">Restaurants</string>
+    <string name="mapbox_search_sdk_category_name_bars">Bars</string>
+    <string name="mapbox_search_sdk_category_name_coffee_shop_cafe">Cafe</string>
+    <string name="mapbox_search_sdk_category_name_hotel">Hotel</string>
+    <string name="mapbox_search_sdk_category_name_gas_station">Gas</string>
+    <string name="mapbox_search_sdk_category_name_ev_charging_station">Charging Station</string>
+    <string name="mapbox_search_sdk_category_name_parking">Parking</string>
+    <string name="mapbox_search_sdk_category_name_bus_station">Bus station</string>
+    <string name="mapbox_search_sdk_category_name_train_station">Train station</string>
+    <string name="mapbox_search_sdk_category_name_shopping_malls">Shopping malls</string>
+    <string name="mapbox_search_sdk_category_name_supermarket_grocery">Supermarket/Grocery</string>
+    <string name="mapbox_search_sdk_category_name_clothing_shoes">Clothing/shoes</string>
+    <string name="mapbox_search_sdk_category_name_pharmacy">Pharmacy</string>
+    <string name="mapbox_search_sdk_category_name_museums">Museums</string>
+    <string name="mapbox_search_sdk_category_name_parks">Parks</string>
+    <string name="mapbox_search_sdk_category_name_movie_theaters">Movie Theaters</string>
+    <string name="mapbox_search_sdk_category_name_gym_fitness">Gym</string>
+    <string name="mapbox_search_sdk_category_name_night_clubs">Night clubs</string>
+    <string name="mapbox_search_sdk_category_name_auto_repair_mechanic">Auto repair/mechanic</string>
+    <string name="mapbox_search_sdk_category_name_atm">ATM</string>
+    <string name="mapbox_search_sdk_category_name_hospital">Hospital</string>
+    <string name="mapbox_search_sdk_category_name_emergency_room">ER</string>
+
+    <string name="mapbox_search_sdk_search_feedback_screen_title">Send feedback</string>
+    <string name="mapbox_search_sdk_search_feedback_comment_title">Comments</string>
+    <string name="mapbox_search_sdk_search_feedback_hint">Enter description here</string>
+    <string name="mapbox_search_sdk_search_feedback_submit">Submit</string>
+
+    <string name="mapbox_search_sdk_feedback_card_reason_incorrect_name">Incorrect name</string>
+    <string name="mapbox_search_sdk_feedback_card_reason_incorrect_address">Incorrect address</string>
+    <string name="mapbox_search_sdk_feedback_card_reason_incorrect_location">Incorrect location</string>
+    <string name="mapbox_search_sdk_feedback_card_reason_other">Other</string>
+
+    <!--Favorite actions strings-->
+    <string name="mapbox_search_sdk_favorite_tap_to_add">Tap to add</string>
+
+    <string name="mapbox_search_sdk_favorite_action_rename">Rename</string>
+    <string name="mapbox_search_sdk_favorite_action_edit_location">Edit location</string>
+    <string name="mapbox_search_sdk_favorite_action_delete">Delete</string>
+    <string name="mapbox_search_sdk_favorite_action_remove_location">Remove location</string>
+
+    <string name="mapbox_search_sdk_favorite_template_home_name">Home</string>
+    <string name="mapbox_search_sdk_favorite_template_work_name">Work</string>
+
+    <string name="mapbox_search_sdk_favorite_screen_rename_title">Rename favorite</string>
+    <string name="mapbox_search_sdk_favorite_screen_rename_name_title">Name</string>
+    <string name="mapbox_search_sdk_favorite_screen_rename_address_title">Address</string>
+    <string name="mapbox_search_sdk_favorite_screen_add_title">Add to favorites</string>
+
+    <string name="mapbox_search_sdk_favorite_action_add">Add to favorites</string>
+
+    <string name="mapbox_search_sdk_favorite_loading_error">Unable to load favorites</string>
+    <string name="mapbox_search_sdk_favorite_update_error">Unable to update favorite</string>
+    <string name="mapbox_search_sdk_favorite_delete_error">Unable to delete favorite</string>
+
+    <!-- Network request error strings -->
+    <string name="mapbox_search_sdk_no_internet_connection_title">No internet connection</string>
+    <string name="mapbox_search_sdk_no_internet_connection_subtitle">You’re offline. Try to reconnect.</string>
+    <string name="mapbox_search_sdk_server_error_title">Server error</string>
+    <string name="mapbox_search_sdk_server_error_subtitle">Something went wrong.</string>
+    <string name="mapbox_search_sdk_unknown_error_title">Error</string>
+    <string name="mapbox_search_sdk_unknown_error_subtitle">Something went wrong.</string>
+    <string name="mapbox_search_sdk_no_internet_connection_retry_button">Tap to retry</string>
+
+    <!-- Placeholders to be used as a search result subtitle when the result has no address -->
+    <string name="mapbox_search_sdk_search_result_type_address">Address</string>
+    <string name="mapbox_search_sdk_search_result_type_poi">POI</string>
+    <string name="mapbox_search_sdk_search_result_type_country">Country</string>
+    <string name="mapbox_search_sdk_search_result_type_region">Region</string>
+    <string name="mapbox_search_sdk_search_result_type_place">Place</string>
+    <string name="mapbox_search_sdk_search_result_type_district">District</string>
+    <string name="mapbox_search_sdk_search_result_type_locality">Locality</string>
+    <string name="mapbox_search_sdk_search_result_type_neighborhood">Neighborhood</string>
+    <string name="mapbox_search_sdk_search_result_type_history">History</string>
+    <string name="mapbox_search_sdk_search_result_type_favorite">Favorite</string>
+    <string name="mapbox_search_sdk_search_result_type_street">Street</string>
+    <string name="mapbox_search_sdk_search_result_type_postcode">Postcode</string>
+
+    <string name="mapbox_search_sdk_address_search_hint_add_favorite">Search to add favorite</string>
+    <string name="mapbox_search_sdk_address_search_hint_edit_favorite">Search for new address</string>
+
+    <string name="mapbox_search_sdk_place_card_navigate">Navigate</string>
+    <string name="mapbox_search_sdk_place_card_share">Share</string>
+    <string name="mapbox_search_sdk_place_card_add_to_favorites">Add to favorites</string>
+    <string name="mapbox_search_sdk_place_card_added_to_favorites">Added to favorites</string>
+    <string name="mapbox_search_sdk_place_card_send_feedback">Report an issue</string>
+
+    <string name="mapbox_search_sdk_categories_card_loading">Loading results…</string>
+    <plurals name="mapbox_search_sdk_categories_card_number_of_search_results">
+        <item quantity="one">%d item found</item>
+        <item quantity="other">%d items found</item>
+    </plurals>
+    <string name="mapbox_search_sdk_categories_card_no_results">No categories found</string>
+</resources>

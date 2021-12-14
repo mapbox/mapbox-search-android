@@ -1,0 +1,26 @@
+configurations {
+    metalava
+}
+
+dependencies {
+    // Metalava isn't released yet. Check in its jar and explicitly track its transitive deps.
+    metalava files('../metalava/metalava.jar')
+
+    def studio_version = '27.2.0-alpha11'
+    def kotlin_version = "1.4.30"
+
+    metalava "com.android.tools.external.org-jetbrains:uast:$studio_version"
+    metalava "com.android.tools.external.com-intellij:kotlin-compiler:$studio_version"
+    metalava "com.android.tools.external.com-intellij:intellij-core:$studio_version"
+    metalava "com.android.tools.lint:lint-api:$studio_version"
+    metalava "com.android.tools.lint:lint-checks:$studio_version"
+    metalava "com.android.tools.lint:lint-gradle:$studio_version"
+    metalava "com.android.tools.lint:lint:$studio_version"
+    metalava "com.android.tools:common:$studio_version"
+    metalava "com.android.tools:sdk-common:$studio_version"
+    metalava "com.android.tools:sdklib:$studio_version"
+    metalava "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    metalava "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    metalava "org.ow2.asm:asm:8.0"
+    metalava "org.ow2.asm:asm-tree:8.0"
+}

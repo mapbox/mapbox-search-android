@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_place_card"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/mapbox_search_sdk_search_view_margin_horizontal"
+    android:layout_marginTop="@dimen/mapbox_search_sdk_search_view_margin_top"
+    android:layout_marginEnd="@dimen/mapbox_search_sdk_search_view_margin_horizontal"
+    android:background="@drawable/mapbox_search_sdk_search_view_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingBottom="@dimen/mapbox_search_sdk_dimen_8x"
+    >
+
+    <TextView
+        android:id="@+id/search_result_name"
+        style="@style/MapboxSearchSdk.Text.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_dimen_6x"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/card_close_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem"
+        />
+
+    <ImageView
+        android:id="@+id/card_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/mapbox_search_sdk_button_extra_tap_area_edge_offset"
+        android:padding="@dimen/mapbox_search_sdk_extra_touch_area"
+        android:src="@drawable/mapbox_search_sdk_close_drawable"
+        app:layout_constraintBottom_toBottomOf="@+id/search_result_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_result_name"
+        app:tint="?attr/mapboxSearchSdkPrimaryAccentColor"
+        />
+
+    <TextView
+        android:id="@+id/search_result_category"
+        style="@style/MapboxSearchSdk.Text.BoldHeader.Big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_name"
+        tools:text="@tools:sample/lorem"
+        />
+
+    <TextView
+        android:id="@+id/search_result_address"
+        style="@style/MapboxSearchSdk.Text.Address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:layout_marginEnd="@dimen/mapbox_search_sdk_dimen_2x"
+        android:ellipsize="end"
+        android:maxLines="3"
+        app:layout_constraintEnd_toStartOf="@+id/search_result_distance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_category"
+        tools:text="@tools:sample/lorem/random"
+        />
+
+    <TextView
+        android:id="@+id/search_result_distance"
+        style="@style/MapboxSearchSdk.Text.Distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/mapbox_search_sdk_primary_layout_offset"
+        app:layout_constraintBottom_toBottomOf="@+id/search_result_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_result_address"
+        tools:text="123 km"
+        />
+
+    <com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
+        android:id="@+id/search_result_button_navigate"
+        style="@style/MapboxSearchSdk.Button.Primary.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_dimen_5x"
+        android:drawablePadding="@dimen/mapbox_search_sdk_dimen_1x"
+        android:gravity="center"
+        android:text="@string/mapbox_search_sdk_place_card_navigate"
+        app:iconSrc="@drawable/mapbox_search_sdk_ic_navigate_to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_address"
+        />
+
+    <View
+        android:id="@+id/secondary_buttons_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/mapbox_search_sdk_dimen_5x"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/search_result_button_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_button_navigate"
+        />
+
+    <com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
+        android:id="@+id/search_result_button_share"
+        style="@style/MapboxSearchSdk.Button.Secondary.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:drawablePadding="@dimen/mapbox_search_sdk_dimen_1x"
+        android:gravity="center"
+        android:text="@string/mapbox_search_sdk_place_card_share"
+        app:iconSrc="@drawable/mapbox_search_sdk_ic_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondary_buttons_barrier"
+        />
+
+    <View
+        android:id="@+id/share_button_divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/mapbox_search_sdk_divider_height"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:background="@drawable/mapbox_search_sdk_list_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_button_share"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/share_button_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="search_result_button_share,share_button_divider"
+        />
+
+    <com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
+        android:id="@+id/search_result_button_favorite"
+        style="@style/MapboxSearchSdk.Button.Secondary.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:drawablePadding="@dimen/mapbox_search_sdk_dimen_1x"
+        android:gravity="center"
+        android:text="@string/mapbox_search_sdk_place_card_add_to_favorites"
+        app:iconSrc="@drawable/mapbox_search_sdk_ic_add_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/share_button_divider"
+        />
+
+    <View
+        android:id="@+id/favorite_button_divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/mapbox_search_sdk_divider_height"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:background="@drawable/mapbox_search_sdk_list_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_button_favorite"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/favorite_button_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="search_result_button_favorite,favorite_button_divider"
+        />
+
+    <com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
+        android:id="@+id/search_result_button_feedback"
+        style="@style/MapboxSearchSdk.Button.Secondary.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:drawablePadding="@dimen/mapbox_search_sdk_dimen_1x"
+        android:gravity="center"
+        android:text="@string/mapbox_search_sdk_place_card_send_feedback"
+        app:iconSrc="@drawable/mapbox_search_sdk_ic_feedback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favorite_button_divider"
+        />
+
+    <View
+        android:id="@+id/feedback_button_divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/mapbox_search_sdk_divider_height"
+        android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+        android:background="@drawable/mapbox_search_sdk_list_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_result_button_feedback"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/feedback_button_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="search_result_button_feedback,feedback_button_divider"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

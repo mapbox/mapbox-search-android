@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/submit_missing_result_feedback"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+    android:layout_marginTop="@dimen/mapbox_search_sdk_primary_layout_offset"
+    android:gravity="center_horizontal"
+    android:maxLines="1"
+    android:text="@string/mapbox_search_sdk_search_result_missing_feedback"
+    android:textAppearance="@style/MapboxSearchSdk.Text.CategoryHeader"
+    />

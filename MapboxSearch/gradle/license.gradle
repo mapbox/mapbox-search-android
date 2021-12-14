@@ -1,0 +1,11 @@
+apply plugin: 'com.jaredsburrows.license'
+
+licenseReport {
+  generateCsvReport = true
+  generateHtmlReport = true
+  generateJsonReport = true
+
+  copyCsvReportToAssets = false
+  copyHtmlReportToAssets = false
+  copyJsonReportToAssets = false
+}

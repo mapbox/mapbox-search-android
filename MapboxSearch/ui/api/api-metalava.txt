@@ -1,0 +1,501 @@
+// Signature format: 3.0
+package com.mapbox.search.ui.utils {
+
+  public final class ThemePatcherKt {
+  }
+
+}
+
+package com.mapbox.search.ui.utils.extenstion {
+
+  public final class AsyncOperationTaskKt {
+  }
+
+  public final class BottomSheetBehaviorKt {
+  }
+
+  public final class ContextKt {
+  }
+
+  public final class DrawableKt {
+  }
+
+  public final class EditTextKt {
+  }
+
+  public final class LocaleKt {
+  }
+
+  public final class PointKt {
+  }
+
+  public final class RouterKt {
+  }
+
+  public final class RouterTransactionKt {
+  }
+
+  public final class TextViewKt {
+  }
+
+  public final class ViewKt {
+  }
+
+}
+
+package com.mapbox.search.ui.view {
+
+  @kotlinx.parcelize.Parcelize public final class CommonSearchViewConfiguration implements android.os.Parcelable {
+    ctor public CommonSearchViewConfiguration(com.mapbox.search.ui.view.DistanceUnitType distanceUnitType = DistanceUnitType.getFromLocale(Locale.getDefault()));
+    method public com.mapbox.search.ui.view.DistanceUnitType getDistanceUnitType();
+    property public final com.mapbox.search.ui.view.DistanceUnitType distanceUnitType;
+  }
+
+  public enum DistanceUnitType {
+    enum_constant public static final com.mapbox.search.ui.view.DistanceUnitType IMPERIAL;
+    enum_constant public static final com.mapbox.search.ui.view.DistanceUnitType METRIC;
+  }
+
+  public final class SearchBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
+    ctor public SearchBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
+    ctor public SearchBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null);
+    ctor public SearchBottomSheetView(android.content.Context outerContext);
+    method public void addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void addOnCategoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnCategoryClickListener listener);
+    method public void addOnFavoriteClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFavoriteClickListener listener);
+    method public void addOnFeedbackClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackClickListener listener);
+    method public void addOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackSubmitClickListener listener);
+    method public void addOnHistoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnHistoryClickListener listener);
+    method public void addOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener listener);
+    method public void expand();
+    method public androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<?> getBehavior();
+    method public com.mapbox.search.ui.view.SearchMode getSearchMode();
+    method public com.mapbox.search.SearchOptions getSearchOptions();
+    method @com.mapbox.search.ui.view.SearchBottomSheetView.BottomSheetState public int getState();
+    method public boolean handleOnBackPressed();
+    method public void hide();
+    method public void initializeSearch(android.os.Bundle? savedInstanceState, com.mapbox.search.ui.view.SearchBottomSheetView.Configuration configuration);
+    method public boolean isHidden();
+    method public boolean isHideableByDrag();
+    method public void open();
+    method public void removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void removeOnCategoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnCategoryClickListener listener);
+    method public void removeOnFavoriteClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFavoriteClickListener listener);
+    method public void removeOnFeedbackClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackClickListener listener);
+    method public void removeOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackSubmitClickListener listener);
+    method public void removeOnHistoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnHistoryClickListener listener);
+    method public void removeOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener listener);
+    method public void restorePreviousNonHiddenState();
+    method public void setHideableByDrag(boolean value);
+    method public void setSearchMode(com.mapbox.search.ui.view.SearchMode value);
+    method public void setSearchOptions(com.mapbox.search.SearchOptions value);
+    property public final boolean isHideableByDrag;
+    property public final com.mapbox.search.ui.view.SearchMode searchMode;
+    property public final com.mapbox.search.SearchOptions searchOptions;
+    property @com.mapbox.search.ui.view.SearchBottomSheetView.BottomSheetState public final int state;
+    field public static final int COLLAPSED = 2; // 0x2
+    field public static final int DRAGGING = 4; // 0x4
+    field public static final int EXPANDED = 3; // 0x3
+    field public static final int HIDDEN = 1; // 0x1
+    field public static final int SETTLING = 5; // 0x5
+  }
+
+  @IntDef({com.mapbox.search.ui.view.SearchBottomSheetView.HIDDEN, com.mapbox.search.ui.view.SearchBottomSheetView.COLLAPSED, com.mapbox.search.ui.view.SearchBottomSheetView.EXPANDED, com.mapbox.search.ui.view.SearchBottomSheetView.DRAGGING, com.mapbox.search.ui.view.SearchBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchBottomSheetView.BottomSheetState {
+  }
+
+  public enum SearchBottomSheetView.CollapsedStateAnchor {
+    enum_constant public static final com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor HOT_CATEGORIES;
+    enum_constant public static final com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor SEARCH_BAR;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchBottomSheetView.Configuration implements android.os.Parcelable {
+    ctor public SearchBottomSheetView.Configuration(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor collapsedStateAnchor = DEFAULT_ANCHOR, java.util.List<com.mapbox.search.ui.view.category.Category> hotCategories = DEFAULT_HOT_CATEGORIES, java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> favoriteTemplates = DEFAULT_FAVORITE_TEMPLATES, com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration = CommonSearchViewConfiguration());
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor getCollapsedStateAnchor();
+    method public com.mapbox.search.ui.view.CommonSearchViewConfiguration getCommonSearchViewConfiguration();
+    method public java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> getFavoriteTemplates();
+    method public java.util.List<com.mapbox.search.ui.view.category.Category> getHotCategories();
+    property public final com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor collapsedStateAnchor;
+    property public final com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration;
+    property public final java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> favoriteTemplates;
+    property public final java.util.List<com.mapbox.search.ui.view.category.Category> hotCategories;
+  }
+
+  public static final class SearchBottomSheetView.Configuration.Builder {
+    ctor public SearchBottomSheetView.Configuration.Builder();
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.Configuration build();
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.Configuration.Builder commonSearchViewConfiguration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration);
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.Configuration.Builder favoriteTemplates(java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> favoriteTemplates);
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor getCollapsedStateAnchor();
+    method public com.mapbox.search.ui.view.CommonSearchViewConfiguration getCommonSearchViewConfiguration();
+    method public java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> getFavoriteTemplates();
+    method public java.util.List<com.mapbox.search.ui.view.category.Category> getHotCategories();
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.Configuration.Builder hotCategories(java.util.List<com.mapbox.search.ui.view.category.Category> hotCategories);
+    method public com.mapbox.search.ui.view.SearchBottomSheetView.Configuration.Builder setCollapsedStateAnchor(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor collapsedStateAnchor);
+    property public final com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor collapsedStateAnchor;
+    property public final com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration;
+    property public final java.util.List<com.mapbox.search.ui.view.favorite.FavoriteTemplate> favoriteTemplates;
+    property public final java.util.List<com.mapbox.search.ui.view.category.Category> hotCategories;
+  }
+
+  public static fun interface SearchBottomSheetView.OnBottomSheetStateChangedListener {
+    method public void onStateChanged(@com.mapbox.search.ui.view.SearchBottomSheetView.BottomSheetState int newState, boolean fromUser);
+  }
+
+  public static fun interface SearchBottomSheetView.OnCategoryClickListener {
+    method public void onCategoryClick(com.mapbox.search.ui.view.category.Category category);
+  }
+
+  public static fun interface SearchBottomSheetView.OnFavoriteClickListener {
+    method public void onFavoriteClick(com.mapbox.search.record.FavoriteRecord favorite);
+  }
+
+  public static fun interface SearchBottomSheetView.OnFeedbackClickListener {
+    method public boolean onMissingResultClick(com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public static fun interface SearchBottomSheetView.OnFeedbackSubmitClickListener {
+    method public boolean onSendMissingResultFeedback(String text, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public static fun interface SearchBottomSheetView.OnHistoryClickListener {
+    method public void onHistoryClick(com.mapbox.search.record.HistoryRecord history);
+  }
+
+  public static fun interface SearchBottomSheetView.OnSearchResultClickListener {
+    method public void onSearchResultClick(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public enum SearchMode {
+    enum_constant public static final com.mapbox.search.ui.view.SearchMode AUTO;
+    enum_constant public static final com.mapbox.search.ui.view.SearchMode OFFLINE;
+    enum_constant public static final com.mapbox.search.ui.view.SearchMode ONLINE;
+  }
+
+  public final class SearchResultsView extends androidx.recyclerview.widget.RecyclerView {
+    ctor public SearchResultsView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchResultsView(android.content.Context outerContext, android.util.AttributeSet? attrs = null);
+    ctor public SearchResultsView(android.content.Context outerContext);
+    method public void addOnSuggestionClickListener(com.mapbox.search.ui.view.SearchResultsView.OnSuggestionClickListener listener);
+    method public void addSearchListener(com.mapbox.search.ui.view.SearchResultsView.SearchListener listener);
+    method public com.mapbox.search.SearchOptions getDefaultSearchOptions();
+    method public com.mapbox.search.ui.view.SearchMode getSearchMode();
+    method public void initialize(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration);
+    method public void removeOnSuggestionClickListener(com.mapbox.search.ui.view.SearchResultsView.OnSuggestionClickListener listener);
+    method public void removeSearchListener(com.mapbox.search.ui.view.SearchResultsView.SearchListener listener);
+    method @UiThread public void search(String query, com.mapbox.search.SearchOptions options = defaultSearchOptions);
+    method @UiThread public void search(String query);
+    method public void setDefaultSearchOptions(com.mapbox.search.SearchOptions p);
+    method public void setSearchMode(com.mapbox.search.ui.view.SearchMode value);
+    property public final com.mapbox.search.SearchOptions defaultSearchOptions;
+    property public final com.mapbox.search.ui.view.SearchMode searchMode;
+  }
+
+  public static fun interface SearchResultsView.OnSuggestionClickListener {
+    method public boolean onSuggestionClick(com.mapbox.search.result.SearchSuggestion searchSuggestion);
+  }
+
+  public static interface SearchResultsView.SearchListener {
+    method public void onFeedbackClicked(com.mapbox.search.ResponseInfo responseInfo);
+    method public void onHistoryItemClicked(com.mapbox.search.record.HistoryRecord historyRecord);
+    method public void onPopulateQueryClicked(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public final class SearchResultsViewKt {
+  }
+
+  public class SearchSdkFrameLayout extends android.widget.FrameLayout {
+    ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
+    ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null);
+    ctor public SearchSdkFrameLayout(android.content.Context context);
+    method public final int getMaxWidth();
+    method public final void setMaxWidth(int value);
+    property public final int maxWidth;
+  }
+
+}
+
+package com.mapbox.search.ui.view.category {
+
+  @kotlinx.parcelize.Parcelize public final class Category implements android.os.Parcelable {
+    ctor public Category(String geocodingCanonicalName, String sbsCanonicalName, com.mapbox.search.ui.view.category.Category.Presentation presentation);
+    method public static com.mapbox.search.ui.view.category.Category? findByCanonicalName(String name);
+    method public String getGeocodingCanonicalName();
+    method public com.mapbox.search.ui.view.category.Category.Presentation getPresentation();
+    method public String getSbsCanonicalName();
+    property public final String geocodingCanonicalName;
+    property public final com.mapbox.search.ui.view.category.Category.Presentation presentation;
+    property public final String sbsCanonicalName;
+    field public static final com.mapbox.search.ui.view.category.Category ATM;
+    field public static final com.mapbox.search.ui.view.category.Category AUTO_REPAIR_MECHANIC;
+    field public static final com.mapbox.search.ui.view.category.Category BARS;
+    field public static final com.mapbox.search.ui.view.category.Category BUS_STATION;
+    field public static final com.mapbox.search.ui.view.category.Category CLOTHING_STORE;
+    field public static final com.mapbox.search.ui.view.category.Category COFFEE_SHOP_CAFE;
+    field public static final com.mapbox.search.ui.view.category.Category EMERGENCY_ROOM;
+    field public static final com.mapbox.search.ui.view.category.Category EV_CHARGING_STATION;
+    field public static final com.mapbox.search.ui.view.category.Category GAS_STATION;
+    field public static final com.mapbox.search.ui.view.category.Category GYM_FITNESS;
+    field public static final com.mapbox.search.ui.view.category.Category HOSPITAL;
+    field public static final com.mapbox.search.ui.view.category.Category HOTEL;
+    field public static final com.mapbox.search.ui.view.category.Category MOVIE_THEATERS;
+    field public static final com.mapbox.search.ui.view.category.Category MUSEUMS;
+    field public static final com.mapbox.search.ui.view.category.Category NIGHT_CLUBS;
+    field public static final com.mapbox.search.ui.view.category.Category PARKING;
+    field public static final com.mapbox.search.ui.view.category.Category PARKS;
+    field public static final com.mapbox.search.ui.view.category.Category PHARMACY;
+    field public static final com.mapbox.search.ui.view.category.Category RAILWAY_STATION;
+    field public static final com.mapbox.search.ui.view.category.Category RESTAURANTS;
+    field public static final com.mapbox.search.ui.view.category.Category SHOPPING_MALLS;
+    field public static final com.mapbox.search.ui.view.category.Category SUPERMARKET_GROCERY;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class Category.Presentation implements android.os.Parcelable {
+    ctor public Category.Presentation(@StringRes int displayName, @DrawableRes int icon);
+    method public int getDisplayName();
+    method public int getIcon();
+    property public final int displayName;
+    property public final int icon;
+  }
+
+  public final class SearchCategoriesBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
+    ctor public SearchCategoriesBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
+    ctor public SearchCategoriesBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchCategoriesBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null);
+    ctor public SearchCategoriesBottomSheetView(android.content.Context outerContext);
+    method public void addCategoryLoadingStateListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.CategoryLoadingStateListener listener);
+    method public void addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void addOnCloseClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnCloseClickListener listener);
+    method public void addOnSearchResultClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnSearchResultClickListener listener);
+    method public void cancelCategoryLoading();
+    method public androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<?> getBehavior();
+    method @com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.BottomSheetState public int getState();
+    method public boolean handleOnBackPressed();
+    method public void hide();
+    method public void initialize(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration);
+    method public boolean isHidden();
+    method public void open(com.mapbox.search.ui.view.category.Category category, com.mapbox.search.CategorySearchOptions searchOptions = com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.searchOptions);
+    method public void open(com.mapbox.search.ui.view.category.Category category);
+    method public void removeCategoryLoadingStateListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.CategoryLoadingStateListener listener);
+    method public void removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void removeOnCloseClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnCloseClickListener listener);
+    method public void removeOnSearchResultClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnSearchResultClickListener listener);
+    method public void restorePreviousNonHiddenState(com.mapbox.search.ui.view.category.Category category, com.mapbox.search.CategorySearchOptions searchOptions = com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.searchOptions);
+    method public void restorePreviousNonHiddenState(com.mapbox.search.ui.view.category.Category category);
+    property @com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.BottomSheetState public final int state;
+    field public static final int COLLAPSED = 2; // 0x2
+    field public static final int DRAGGING = 4; // 0x4
+    field public static final int EXPANDED = 3; // 0x3
+    field public static final int HIDDEN = 1; // 0x1
+    field public static final int SETTLING = 5; // 0x5
+  }
+
+  @IntDef({com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.HIDDEN, com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.COLLAPSED, com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.EXPANDED, com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.DRAGGING, com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchCategoriesBottomSheetView.BottomSheetState {
+  }
+
+  public static interface SearchCategoriesBottomSheetView.CategoryLoadingStateListener {
+    method public void onCategoryResultsLoaded(com.mapbox.search.ui.view.category.Category category, java.util.List<? extends com.mapbox.search.result.SearchResult> searchResults);
+    method public void onLoadingError(com.mapbox.search.ui.view.category.Category category);
+    method public void onLoadingStart(com.mapbox.search.ui.view.category.Category category);
+  }
+
+  public static fun interface SearchCategoriesBottomSheetView.OnBottomSheetStateChangedListener {
+    method public void onStateChanged(@com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.BottomSheetState int newState, boolean fromUser);
+  }
+
+  public static fun interface SearchCategoriesBottomSheetView.OnCloseClickListener {
+    method public void onCloseClick();
+  }
+
+  public static fun interface SearchCategoriesBottomSheetView.OnSearchResultClickListener {
+    method public void onSearchResultClick(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+}
+
+package com.mapbox.search.ui.view.favorite {
+
+  @kotlinx.parcelize.Parcelize public final class FavoriteTemplate implements android.os.Parcelable {
+    ctor public FavoriteTemplate(String id, @StringRes int nameId, @DrawableRes int resourceId);
+    method public String getId();
+    method public int getNameId();
+    method public int getResourceId();
+    property public final String id;
+    property public final int nameId;
+    property public final int resourceId;
+    field public static final String HOME_DEFAULT_TEMPLATE_ID = "HOME_DEFAULT_TEMPLATE_ID";
+    field public static final String WORK_DEFAULT_TEMPLATE_ID = "WORK_DEFAULT_TEMPLATE_ID";
+  }
+
+}
+
+package com.mapbox.search.ui.view.feedback {
+
+  public abstract class IncorrectSearchPlaceFeedback implements android.os.Parcelable {
+    ctor public IncorrectSearchPlaceFeedback();
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class IncorrectSearchPlaceFeedback.FavoriteFeedback extends com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback {
+    ctor public IncorrectSearchPlaceFeedback.FavoriteFeedback(com.mapbox.search.record.FavoriteRecord favoriteRecord);
+    method public com.mapbox.search.record.FavoriteRecord getFavoriteRecord();
+    property public final com.mapbox.search.record.FavoriteRecord favoriteRecord;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class IncorrectSearchPlaceFeedback.HistoryFeedback extends com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback {
+    ctor public IncorrectSearchPlaceFeedback.HistoryFeedback(com.mapbox.search.record.HistoryRecord historyRecord);
+    method public com.mapbox.search.record.HistoryRecord getHistoryRecord();
+    property public final com.mapbox.search.record.HistoryRecord historyRecord;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class IncorrectSearchPlaceFeedback.SearchResultFeedback extends com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback {
+    ctor public IncorrectSearchPlaceFeedback.SearchResultFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+    method public com.mapbox.search.ResponseInfo getResponseInfo();
+    method public com.mapbox.search.result.SearchResult getSearchResult();
+    property public final com.mapbox.search.ResponseInfo responseInfo;
+    property public final com.mapbox.search.result.SearchResult searchResult;
+  }
+
+  public final class SearchFeedbackBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
+    ctor public SearchFeedbackBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
+    ctor public SearchFeedbackBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchFeedbackBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null);
+    ctor public SearchFeedbackBottomSheetView(android.content.Context outerContext);
+    method public void addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void addOnCloseClickListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnCloseClickListener listener);
+    method public void addOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnFeedbackSubmitClickListener listener);
+    method public androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<?> getBehavior();
+    method public boolean handleOnBackPressed();
+    method public void hide();
+    method public void initialize(android.os.Bundle? savedInstanceState);
+    method public boolean isHidden();
+    method public void open(com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback feedback);
+    method public void removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void removeOnCloseClickListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnCloseClickListener listener);
+    method public void removeOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OnFeedbackSubmitClickListener listener);
+    field public static final int DRAGGING = 3; // 0x3
+    field public static final int HIDDEN = 1; // 0x1
+    field public static final int OPEN = 2; // 0x2
+    field public static final int SETTLING = 4; // 0x4
+  }
+
+  @IntDef({com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.HIDDEN, com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.OPEN, com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.DRAGGING, com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchFeedbackBottomSheetView.BottomSheetState {
+  }
+
+  public static fun interface SearchFeedbackBottomSheetView.OnBottomSheetStateChangedListener {
+    method public void onStateChanged(@com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView.BottomSheetState int newState, boolean fromUser);
+  }
+
+  public static fun interface SearchFeedbackBottomSheetView.OnCloseClickListener {
+    method public void onCloseClick();
+  }
+
+  public static fun interface SearchFeedbackBottomSheetView.OnFeedbackSubmitClickListener {
+    method public boolean onSendIncorrectResultFeedback(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String text, com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback feedback);
+  }
+
+}
+
+package com.mapbox.search.ui.view.place {
+
+  @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
+    ctor public SearchPlace(String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback? feedback);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, com.mapbox.geojson.Point coordinate, Double? distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate, Double? distanceMeters = searchResult.distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate);
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public String? getDescriptionText();
+    method public Double? getDistanceMeters();
+    method public com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback? getFeedback();
+    method public String? getMakiIcon();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
+    method public String getName();
+    method public com.mapbox.search.record.IndexableRecord? getRecord();
+    method public java.util.List<com.mapbox.search.result.SearchResultType> getResultTypes();
+    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    property public final com.mapbox.search.result.SearchAddress? address;
+    property public final java.util.List<java.lang.String>? categories;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final String? descriptionText;
+    property public final Double? distanceMeters;
+    property public final com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback? feedback;
+    property public final String? makiIcon;
+    property public final com.mapbox.search.SearchResultMetadata? metadata;
+    property public final String name;
+    property public final com.mapbox.search.record.IndexableRecord? record;
+    property public final java.util.List<com.mapbox.search.result.SearchResultType> resultTypes;
+    property public final java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+  }
+
+  public final class SearchPlaceBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
+    ctor public SearchPlaceBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
+    ctor public SearchPlaceBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public SearchPlaceBottomSheetView(android.content.Context outerContext, android.util.AttributeSet? attrs = null);
+    ctor public SearchPlaceBottomSheetView(android.content.Context outerContext);
+    method public void addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void addOnCloseClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnCloseClickListener listener);
+    method public void addOnFeedbackClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnFeedbackClickListener listener);
+    method public void addOnNavigateClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnNavigateClickListener listener);
+    method public void addOnSearchPlaceAddedToFavoritesListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnSearchPlaceAddedToFavoritesListener listener);
+    method public void addOnShareClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnShareClickListener listener);
+    method public androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<?> getBehavior();
+    method @com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.BottomSheetState public int getState();
+    method public void hide();
+    method public void initialize(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration);
+    method public boolean isFavoriteButtonVisible();
+    method public boolean isHidden();
+    method public boolean isNavigateButtonVisible();
+    method public boolean isShareButtonVisible();
+    method public void open(com.mapbox.search.ui.view.place.SearchPlace searchPlace);
+    method public void removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnBottomSheetStateChangedListener listener);
+    method public void removeOnCloseClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnCloseClickListener listener);
+    method public void removeOnFeedbackClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnFeedbackClickListener listener);
+    method public void removeOnNavigateClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnNavigateClickListener listener);
+    method public void removeOnSearchPlaceAddedToFavoritesListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnSearchPlaceAddedToFavoritesListener listener);
+    method public void removeOnShareClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnShareClickListener listener);
+    method public void setFavoriteButtonVisible(boolean value);
+    method public void setNavigateButtonVisible(boolean value);
+    method public void setShareButtonVisible(boolean value);
+    method public boolean updateDistance(double distanceMeters);
+    property public final boolean isFavoriteButtonVisible;
+    property public final boolean isNavigateButtonVisible;
+    property public final boolean isShareButtonVisible;
+    property @com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.BottomSheetState public final int state;
+    field public static final int DRAGGING = 3; // 0x3
+    field public static final int HIDDEN = 1; // 0x1
+    field public static final int OPEN = 2; // 0x2
+    field public static final int SETTLING = 4; // 0x4
+  }
+
+  @IntDef({com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.HIDDEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OPEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.DRAGGING, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchPlaceBottomSheetView.BottomSheetState {
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnBottomSheetStateChangedListener {
+    method public void onStateChanged(@com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.BottomSheetState int newState, boolean fromUser);
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnCloseClickListener {
+    method public void onCloseClick();
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnFeedbackClickListener {
+    method public void onFeedbackClick(com.mapbox.search.ui.view.place.SearchPlace searchPlace, com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback feedback);
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnNavigateClickListener {
+    method public void onNavigateClick(com.mapbox.search.ui.view.place.SearchPlace searchPlace);
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnSearchPlaceAddedToFavoritesListener {
+    method public void onSearchPlaceAddedToFavorites(com.mapbox.search.ui.view.place.SearchPlace searchPlace, com.mapbox.search.record.FavoriteRecord favorite);
+  }
+
+  public static fun interface SearchPlaceBottomSheetView.OnShareClickListener {
+    method public void onShareClick(com.mapbox.search.ui.view.place.SearchPlace searchPlace);
+  }
+
+}
+

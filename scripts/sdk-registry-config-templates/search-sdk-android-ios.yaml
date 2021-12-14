@@ -1,0 +1,14 @@
+api-downloads: v2
+
+android:
+  group: search
+
+packages:
+  android:
+    - mapbox-search-android
+  ios:
+    - MapboxSearch
+    - MapboxSearchUI
+
+bundles:
+  android: mapbox-search-android-all

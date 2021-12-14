@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="@dimen/mapbox_search_sdk_list_item_icon_horizontal_margin"
+    android:gravity="start|center_vertical"
+    android:maxLines="1"
+    android:minHeight="@dimen/mapbox_search_sdk_list_item_height_simple_item"
+    android:paddingStart="@dimen/mapbox_search_sdk_list_item_start_padding_with_start_icon_margin"
+    android:paddingEnd="@dimen/mapbox_search_sdk_primary_layout_offset"
+    android:textAlignment="viewStart"
+    android:textAppearance="@style/MapboxSearchSdk.Text.Primary"
+    tools:drawableStart="@drawable/mapbox_search_sdk_ic_category_park"
+    tools:text="Parks"
+    />

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription,UseCompoundDrawables"
+    tools:parentTag="com.mapbox.search.ui.view.category.HotCategoryView"
+    >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/mapbox_search_sdk_search_view_hot_category_size"
+        android:layout_height="@dimen/mapbox_search_sdk_search_view_hot_category_size"
+        android:background="@drawable/mapbox_search_sdk_hot_category_item_background"
+        android:scaleType="center"
+        tools:src="@drawable/mapbox_search_sdk_ic_category_bar"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textAppearance="@style/MapboxSearchSdk.Text.Primary"
+        tools:text="Cafe"
+        />
+</merge>

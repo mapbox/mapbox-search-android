@@ -1,0 +1,78 @@
+import groovy.xml.MarkupBuilder
+
+/**
+ * Task for generating "public.xml" file. This file is used for declaration of library resources,
+ * which can be accessed by external consumers. All other resources will be mark internal implicitly and
+ * user couldn't easily access them.
+ * More information: https://developer.android.com/studio/projects/android-library#PrivateResources.
+ *
+ * Please note: if you want to process only part of specified resource file, you should place
+ * <eat-comment/> tag right before declarations with internal resources. This way only resources before
+ * <eat-comment/> tag will be added to "public.xml".
+ */
+tasks.register('generatePublicXml') {
+    doFirst {
+        def resDir = project.projectDir.absolutePath + "/src/main/res"
+
+        def publicResourceSourceTree = fileTree(
+                dir: resDir,
+                includes: ['**/values/attrs.xml',
+                           '**/values/themes.xml']
+        ).sort()
+
+        def targetPublicXmlPath = resDir + "/values/public.xml"
+        if (project.hasProperty('destination')) {
+            targetPublicXmlPath = destination
+        }
+
+        def verbose = project.hasProperty('verbose')
+
+        // Traverse resources and generate public.xml
+        new File(targetPublicXmlPath).withWriter { writer ->
+            def indent = "    "
+            def targetXml = new MarkupBuilder(new IndentPrinter(writer, indent, true, true))
+            def xmlBuilder = targetXml.getMkp()
+
+            xmlBuilder.xmlDeclaration('version': '1.0', 'encoding': 'utf-8')
+            xmlBuilder.comment("This file is generated.")
+            xmlBuilder.yield "\n"
+            targetXml.resources {
+                publicResourceSourceTree.eachWithIndex { resourceFile, index ->
+                    xmlBuilder.yield "\n$indent"
+                    xmlBuilder.comment(resourceFile.name)
+                    if (resourceFile.getParentFile().getName() == "values") {
+                        def resourceXmlRootNode = new XmlParser().parse(resourceFile)
+                        traverseResourceNode(targetXml, xmlBuilder, resourceXmlRootNode, verbose)
+                    } else {
+                        if (verbose) {
+                            println(resourceType + " " + xmlNode.@name)
+                        }
+                        "public"("name": resourceFile.getName().tokenize('.')[0], "type": resourceType)
+                    }
+                }
+            }
+            xmlBuilder.yield "\n"
+        }
+    }
+}
+
+private def traverseResourceNode(context, xmlBuilder, Node resourceXmlNode, verbose) {
+    context.with {
+        resourceXmlNode.children().any { xmlNode ->
+            def resourceType = xmlNode.name()
+            if (resourceType == "eat-comment") {
+                return true
+            } else if (resourceType == "declare-styleable") {
+                traverseResourceNode(context, xmlBuilder, xmlNode, verbose)
+                xmlBuilder.yield "\n"
+                return false
+            } else {
+                if (verbose) {
+                    println(resourceType + " " + xmlNode.@name)
+                }
+                "public"("name": xmlNode.@name, "type": resourceType)
+                return false
+            }
+        }
+    }
+}

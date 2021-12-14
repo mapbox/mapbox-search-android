@@ -1,0 +1,9 @@
+*.iml
+.gradle
+local.properties
+.idea
+/build
+.externalNativeBuild
+app/src/main/res/values/developer-config.xml
+src/main/assets/sdk_versions/com.mapbox.search
+LICENSE_THIRDPARTY_SDK.md-validate

@@ -1,0 +1,63 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.mapbox.sdkRegistry'
+
+project.archivesBaseName = project.property('mapboxArtifactName')
+project.version = project.property('versionName')
+group = project.property('mapboxArtifactGroup')
+version = project.property('versionName')
+
+afterEvaluate {
+    publishing {
+        publications {
+            MapboxAndroidSDKPublication(MavenPublication) {
+                from components.release
+
+                groupId project.property('mapboxArtifactGroup')
+                artifactId project.property('mapboxArtifactName')
+                version project.property('versionName')
+
+                artifact(androidJavadocsJar)
+
+                pom.withXml {
+                    final mainNode = asNode()
+                    mainNode.appendNode('name', project.property('mapboxArtifactTitle'))
+                    mainNode.appendNode('description', project.property('mapboxArtifactDescription'))
+                    mainNode.appendNode('url', project.property('mapboxArtifactUrl'))
+
+                    final licenseNode = mainNode.appendNode('licenses').appendNode('license')
+                    licenseNode.appendNode('name', project.property('mapboxLicenseName'))
+                    licenseNode.appendNode('url', project.property('mapboxLicenseUrl'))
+                    licenseNode.appendNode('distribution', "repo")
+
+                    final developerNode = mainNode.appendNode('developers').appendNode('developer')
+                    developerNode.appendNode('id', project.property('mapboxArtifactDeveloperId'))
+                    developerNode.appendNode('name', project.property('mapboxArtifactDeveloperName'))
+
+                    final scmNode = mainNode.appendNode("scm")
+                    scmNode.appendNode("connection", project.property('mapboxArtifactScmUrl'))
+                    scmNode.appendNode("developerConnection", project.property('mapboxArtifactScmUrl'))
+                    scmNode.appendNode("url", project.property('mapboxArtifactUrl'))
+                }
+            }
+        }
+    }
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: dokkaHtml) {
+    archiveClassifier.set('javadoc')
+    from dokkaHtml.outputDirectory
+}
+
+def sdkNameMap = [:]
+sdkNameMap["sdk"] = "search-sdk"
+sdkNameMap["ui"] = "search-ui-sdk"
+sdkNameMap["sdk-common"] = "search-sdk-common"
+
+registry {
+    sdkName = sdkNameMap[project.name]
+    production = true
+    snapshot = versionName.endsWith("-SNAPSHOT")
+    override = snapshot ? true : false
+    dryRun = project.properties['sdkRegistryDryRun'] ?: false
+    publications = ["MapboxAndroidSDKPublication"]
+}

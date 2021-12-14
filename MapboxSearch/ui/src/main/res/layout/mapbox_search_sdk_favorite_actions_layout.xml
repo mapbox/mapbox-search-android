@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/favorite_actions_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/mapbox_search_sdk_dimen_3x"
+    >
+
+    <TextView
+        android:id="@+id/favorite_rename_layout_action"
+        style="@style/MapboxSearchSdk.BottomSheet.MenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mapbox_search_sdk_favorite_action_rename"
+        app:drawableStartCompat="@drawable/mapbox_search_sdk_ic_edit"
+        />
+
+    <TextView
+        android:id="@+id/favorite_edit_location_action"
+        style="@style/MapboxSearchSdk.BottomSheet.MenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mapbox_search_sdk_favorite_action_edit_location"
+        app:drawableStartCompat="@drawable/mapbox_search_sdk_ic_edit_location"
+        />
+
+    <TextView
+        android:id="@+id/favorite_delete_action"
+        style="@style/MapboxSearchSdk.BottomSheet.MenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mapbox_search_sdk_favorite_action_delete"
+        app:drawableStartCompat="@drawable/mapbox_search_sdk_ic_delete"
+        />
+</LinearLayout>

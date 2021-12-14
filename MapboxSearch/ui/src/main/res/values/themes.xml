@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MapboxSearchSdk.Theme.Auto" parent="MapboxSearchSdk.Theme.Light"/>
+
+    <style name="MapboxSearchSdk.Theme.Light" parent="">
+        <item name="mapboxSearchSdkPrimaryTextColor">#343434</item>
+        <item name="mapboxSearchSdkPrimaryTextInactiveColor">#BCBCBF</item>
+        <item name="mapboxSearchSdkPrimaryAccentColor">#007AFF</item>
+        <item name="mapboxSearchSdkPrimaryAccentLightColor">#5592FF</item>
+        <item name="mapboxSearchSdkOnPrimaryAccentColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkDistanceColor">#9FB3C6</item>
+        <item name="mapboxSearchSdkIconTintColor">#343434</item>
+        <item name="mapboxSearchSdkBackgroundColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkBackgroundSecondaryColor">#F0F0F1</item>
+        <item name="mapboxSearchSdkTongueColor">#DADADB</item>
+        <item name="mapboxSearchSdkPopulateArrowColor">#B2D7FF</item>
+        <!--
+            Special case for light theme: light theme uses transparent fill color, but dark theme
+            looks better with solid "primaryTextInactiveColor" color.
+        -->
+        <item name="mapboxSearchSdkInputViewClearIconColor">#1F000000</item>
+        <item name="mapboxSearchSdkProgressColor">#007AFF</item>
+        <item name="mapboxSearchSdkErrorIconColor">#E5E5E5</item>
+
+        <item name="mapboxSearchSdkPopupDialogThemeOverlay">@style/MapboxSearchSdk.ThemeOverlay.Light</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Theme.Dark" parent="">
+        <item name="mapboxSearchSdkPrimaryTextColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkPrimaryTextInactiveColor">#898A8D</item>
+        <item name="mapboxSearchSdkPrimaryAccentColor">#0A84FF</item>
+        <item name="mapboxSearchSdkPrimaryAccentLightColor">#5592FF</item>
+        <item name="mapboxSearchSdkOnPrimaryAccentColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkDistanceColor">#9FB3C6</item>
+        <item name="mapboxSearchSdkIconTintColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkBackgroundColor">#454545</item>
+        <item name="mapboxSearchSdkBackgroundSecondaryColor">#545454</item>
+        <item name="mapboxSearchSdkTongueColor">#343332</item>
+        <item name="mapboxSearchSdkPopulateArrowColor">#656565</item>
+        <!--
+            Special case for light theme: light theme uses transparent fill color, but dark theme
+            looks better with solid "primaryTextInactiveColor" color.
+        -->
+        <item name="mapboxSearchSdkInputViewClearIconColor">#898A8D</item>
+        <item name="mapboxSearchSdkProgressColor">#0A84FF</item>
+        <item name="mapboxSearchSdkErrorIconColor">#E5E5E5</item>
+
+        <item name="mapboxSearchSdkPopupDialogThemeOverlay">@style/MapboxSearchSdk.ThemeOverlay.Dark</item>
+    </style>
+
+    <style name="MapboxSearchSdk.ThemeOverlay.Light" parent="">
+        <item name="mapboxSearchSdkPrimaryTextColor">#333333</item>
+        <item name="mapboxSearchSdkIconTintColor">#666666</item>
+        <item name="mapboxSearchSdkBackgroundColor">#FFFFFF</item>
+    </style>
+
+    <style name="MapboxSearchSdk.ThemeOverlay.Dark" parent="">
+        <item name="mapboxSearchSdkPrimaryTextColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkIconTintColor">#FFFFFF</item>
+        <item name="mapboxSearchSdkBackgroundColor">#252525</item>
+    </style>
+
+    <!-- Internal themes -->
+    <eat-comment/>
+
+    <style name="MapboxSearchSdk.Internal.Theme.CursorTinting" parent="">
+        <item name="colorAccent">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
+        <item name="colorControlNormal">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
+        <item name="colorPrimary">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
+    </style>
+
+    <style name="MapboxSearchSdk.Internal.Theme.BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:colorBackground">?attr/mapboxSearchSdkBackgroundColor</item>
+    </style>
+
+</resources>

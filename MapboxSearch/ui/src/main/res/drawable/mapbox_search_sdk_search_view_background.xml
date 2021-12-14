@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="?attr/mapboxSearchSdkBackgroundColor" />
+    <corners
+        android:topLeftRadius="@dimen/mapbox_search_sdk_search_view_background_radius"
+        android:topRightRadius="@dimen/mapbox_search_sdk_search_view_background_radius" />
+</shape>

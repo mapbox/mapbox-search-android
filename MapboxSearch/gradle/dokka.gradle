@@ -1,0 +1,34 @@
+apply plugin: 'org.jetbrains.dokka'
+
+tasks.named("dokkaHtml") {
+    outputDirectory.set(file("$buildDir/dokka"))
+
+    dokkaSourceSets {
+        configureEach {
+
+            // Use to include or exclude non public members
+            includeNonPublic.set(false)
+
+            // Do not output deprecated members. Applies globally, can be overridden by packageOptions
+            skipDeprecated.set(false)
+
+            // Do not create index pages for empty packages
+            skipEmptyPackages.set(true)
+
+            // Disable linking to online kotlin-stdlib documentation
+            noStdlibLink.set(false)
+
+            // Disable linking to online JDK documentation
+            noJdkLink.set(false)
+
+            // Disable linking to online Android documentation
+            noAndroidSdkLink.set(false)
+
+            // Emit warnings about not documented members. Applies globally, also can be overridden by packageOptions
+            reportUndocumented.set(true)
+
+            // Forces Dokka to fail on warnings (e.g. when some class/method wasn't documented)
+            failOnWarning.set(true)
+        }
+    }
+}

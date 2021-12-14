@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?attr/mapboxSearchSdkTongueColor" />
+    <corners android:radius="@dimen/mapbox_search_sdk_search_view_tongue_corner_radius" />
+</shape>

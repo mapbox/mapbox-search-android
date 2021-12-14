@@ -1,0 +1,357 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.1
+
+
+#------------------------------
+#---------- COMMANDS ----------
+#------------------------------
+commands:
+  write-workspace:
+    steps:
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - ./
+
+  read-workspace:
+    steps:
+      - attach_workspace:
+          at: ~/code
+
+  restore-gradle-cache:
+    steps:
+      - run:
+          name: Generate cache key
+          command: cd MapboxSearch && ./../scripts/checksum.sh /tmp/checksum.txt
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "/tmp/checksum.txt" }}
+            # In case if cache for the version specified above is not present
+            - deps-
+      - run:
+          name: Download Dependencies
+          command: cd MapboxSearch && ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: deps-{{ checksum "/tmp/checksum.txt" }}
+
+  login-google-cloud-platform:
+    steps:
+      - run:
+          name: Log in to Google Cloud Platform
+          shell: /bin/bash -euo pipefail
+          command: |
+            echo "${GCLOUD_SERVICE_ACCOUNT_JSON}" > secret.json
+            gcloud auth activate-service-account --key-file secret.json --project mapbox-search-android
+            rm secret.json
+
+  set-up-aws-for-android:
+    steps:
+      - run:
+          name: Set up AWS access for Android environment
+          command: |
+            curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci
+            chmod 755 ./mbx-ci
+            ./mbx-ci aws setup
+
+  verify-codebase:
+    steps:
+      - run:
+          name: Verify codebase
+          command: |
+            cd MapboxSearch
+            ./gradlew :sdk:lint
+            ./gradlew :ui:lint
+            ./gradlew :sdk-common:lint
+            ./gradlew :sample:lint
+            ./gradlew :sdk:ktlint
+            ./gradlew :ui:ktlint
+            ./gradlew :sdk-common:ktlint
+            ./gradlew :sample:ktlint
+            ./gradlew detektAll
+
+  check-license:
+    steps:
+      - run:
+          name: Check license
+          command: python scripts/license-validate.py
+
+  check-public-api:
+    steps:
+      - run:
+          name: Check public API
+          command: cd MapboxSearch && bash ../scripts/public-api.sh --check
+
+  check-public-documentation:
+    steps:
+      - run:
+          name: Check public documentation
+          command: cd MapboxSearch && bash ../scripts/validate-kdocs.sh
+
+  clean-build:
+    steps:
+      - run:
+          name: Clean build
+          command: cd MapboxSearch && ./gradlew clean
+
+  assemble-sample-debug:
+    steps:
+      - run:
+          name: Assemble sample (debug)
+          no_output_timeout: 30m
+          command: |
+            cd MapboxSearch
+            ./gradlew :sample:assembleDebug -Pcoverage
+            ./gradlew :sample:assembleDebugAndroidTest -Pcoverage
+
+  assemble-sample-release:
+    steps:
+      - run:
+          name: Assemble sample (release)
+          no_output_timeout: 30m
+          command: |
+            cd MapboxSearch
+            ./gradlew :sample:assembleRelease
+
+  codebase-unit-tests:
+    steps:
+      - run:
+          name: Codebase unit tests
+          command: |
+            cd MapboxSearch
+            ./gradlew :sdk:testDebugUnitTest -Pcoverage
+            ./gradlew :ui:testDebugUnitTest -Pcoverage
+            ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
+
+  store-results:
+    parameters:
+      module_target:
+        description: module target
+        type: string
+    steps:
+      - store_test_results:
+          path: MapboxSearch/<< parameters.module_target >>/build/test-results
+
+  run-firebase-sample-robo:
+    steps:
+      - run:
+          name: Run robo tests on Firebase
+          no_output_timeout: 10m
+          command: |
+            gcloud firebase test android run \
+            	--type robo --app MapboxSearch/sample/build/outputs/apk/release/sample-release.apk \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 120s \
+            	--project mapbox-search-android
+
+  run-firebase-sample-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for sample app on Firebase
+          no_output_timeout: 10m
+          command: |
+            gcloud firebase test android run \
+            	--type instrumentation --app MapboxSearch/sample/build/outputs/apk/debug/sample-debug.apk --test MapboxSearch/sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 600s \
+            	--project mapbox-search-android
+
+  run-firebase-sdk-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for SDK module on Firebase
+          no_output_timeout: 10m
+          command: |
+            cd MapboxSearch
+            ./gradlew :sdk:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test sdk/build/outputs/apk/androidTest/debug/mapbox-search-android-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 300s \
+            	--project mapbox-search-android
+
+#-------------------------------
+#---------- EXECUTORS ----------
+#-------------------------------
+executors:
+  ndk-r21e-executor:
+    docker:
+      - image: mbgl/android-ndk-r21e:86bcba4d3f
+    working_directory: ~/code
+    environment:
+      MBX_CI_DOMAIN: o619qyc20d.execute-api.us-east-1.amazonaws.com
+
+
+#--------------------------
+#---------- JOBS ----------
+#--------------------------
+jobs:
+  prepare-and-assemble:
+    executor: ndk-r21e-executor
+    steps:
+      - checkout
+      - set-up-aws-for-android
+      - restore-gradle-cache
+      - clean-build
+      - assemble-sample-debug
+      - assemble-sample-release
+      - write-workspace
+
+  static-analysis:
+    executor: ndk-r21e-executor
+    steps:
+      - read-workspace
+      - check-license
+      - verify-codebase
+      - check-public-api
+      - check-public-documentation
+
+  pitest-validate:
+    executor: ndk-r21e-executor
+    steps:
+      - read-workspace
+      - run:
+          name: Validate pitest set up
+          command: cd MapboxSearch && bash ../scripts/quick_pitest_check.sh
+
+  unit-tests:
+    executor: ndk-r21e-executor
+    steps:
+      - read-workspace
+      - codebase-unit-tests
+      - store-results:
+          module_target: "sdk"
+      - store-results:
+          module_target: "ui"
+      - run:
+          name: Calculate coverage
+          command: cd MapboxSearch && ./gradlew :sdk:testDebugUnitTestCoverage
+      - run:
+          name: Post code coverage reports to Codecov.io
+          command: bash ./scripts/codecov.sh ./MapboxSearch/sdk/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
+      - write-workspace
+
+  instrumentation-tests:
+    executor: ndk-r21e-executor
+    steps:
+      - checkout
+      - set-up-aws-for-android
+      - restore-gradle-cache
+      - login-google-cloud-platform
+      - clean-build
+      - assemble-sample-debug
+      - run-firebase-sdk-instrumentation
+
+  ui-robo-tests:
+    executor: ndk-r21e-executor
+    steps:
+      - read-workspace
+      - login-google-cloud-platform
+      - run-firebase-sample-robo
+
+  ui-instrumentation-tests:
+    executor: ndk-r21e-executor
+    steps:
+      - read-workspace
+      - login-google-cloud-platform
+      - run-firebase-sample-instrumentation
+
+  publish-snapshots:
+    executor: ndk-r21e-executor
+    steps:
+      - checkout
+      - set-up-aws-for-android
+      - restore-gradle-cache
+      - run:
+          name: Publish snapshots
+          command: bash ./scripts/ci-publish-snapshots.sh
+
+  publish-release:
+    executor: ndk-r21e-executor
+    steps:
+      - checkout
+      - set-up-aws-for-android
+      - restore-gradle-cache
+      - run:
+          name: Publish release
+          command: bash ./scripts/ci-publish-release.sh
+      - run:
+          name: Create PR in the SDK registry repository
+          command: bash ./scripts/ci-create-registry-pr.sh
+      - run:
+          name: Publish API reference
+          command: bash ./scripts/ci-publish-api-reference.sh
+
+
+#-------------------------------
+#---------- WORKFLOWS ----------
+#-------------------------------
+workflows:
+  version: 2
+  release-workflow:
+    jobs:
+      - publish-snapshots:
+          filters:
+            branches:
+              only:
+                - develop
+      - publish-release:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+  nightly-build:
+    jobs:
+      - prepare-and-assemble
+      - instrumentation-tests
+      - static-analysis:
+          requires:
+            - prepare-and-assemble
+      - unit-tests:
+          requires:
+            - prepare-and-assemble
+      - ui-robo-tests:
+          requires:
+            - prepare-and-assemble
+      - ui-instrumentation-tests:
+          requires:
+            - prepare-and-assemble
+      - pitest-validate:
+          requires:
+            - unit-tests
+    triggers:
+       - schedule:
+           cron: "0 0 * * *"
+           filters:
+             branches:
+               only:
+                 - develop
+                 - main
+
+  default:
+    jobs:
+      - prepare-and-assemble
+      - instrumentation-tests
+      - static-analysis:
+          requires:
+            - prepare-and-assemble
+      - unit-tests:
+          requires:
+            - prepare-and-assemble
+      - ui-robo-tests:
+          requires:
+            - prepare-and-assemble
+      - ui-instrumentation-tests:
+          requires:
+            - prepare-and-assemble
+      - pitest-validate:
+          requires:
+            - unit-tests

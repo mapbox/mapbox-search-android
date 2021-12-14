@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/feedback_card_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/mapbox_search_sdk_search_view_margin_horizontal"
+    android:layout_marginTop="@dimen/mapbox_search_sdk_search_view_margin_top"
+    android:layout_marginEnd="@dimen/mapbox_search_sdk_search_view_margin_horizontal"
+    android:background="@drawable/mapbox_search_sdk_search_view_background"
+    android:theme="@style/MapboxSearchSdk.Internal.Theme.CursorTinting"
+    >
+
+    <FrameLayout
+        android:id="@+id/feedback_screen_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</FrameLayout>

@@ -1,0 +1,560 @@
+package com.mapbox.search
+
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
+import com.mapbox.geojson.Point
+import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.tests.BuildConfig
+import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.tests_support.BlockingEngineReadyCallback
+import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
+import com.mapbox.search.tests_support.BlockingSearchCallback
+import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
+import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
+import com.mapbox.search.tests_support.TestSearchSuggestion
+import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.createTestSuggestion
+import com.mapbox.search.tests_support.equalsTo
+import com.mapbox.search.tests_support.getAllTileRegionsBlocking
+import com.mapbox.search.tests_support.loadTileRegionBlocking
+import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.getAllBlocking
+import com.mapbox.search.tests_support.removeTileRegionBlocking
+import com.mapbox.search.tests_support.searchBlocking
+import com.mapbox.search.utils.TimeProvider
+import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Test
+import java.lang.IllegalArgumentException
+import java.util.concurrent.Executor
+
+@Suppress("LargeClass")
+internal class OfflineSearchEngineIntegrationTest : BaseTest() {
+
+    private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
+
+    private val testTimeProvider = TimeProvider { CURRENT_TIME_MILLIS }
+    private lateinit var searchEngine: OfflineSearchEngine
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+
+        MapboxSearchSdk.initializeInternal(
+            application = targetApplication,
+            accessToken = BuildConfig.MAPBOX_API_TOKEN,
+            locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION),
+            offlineSearchSettings = OfflineSearchSettings(tileStore = tileStore),
+            timeProvider = testTimeProvider,
+            allowReinitialization = true,
+        )
+
+        searchEngine = MapboxSearchSdk.getOfflineSearchEngine()
+
+        waitUntilEngineReady()
+    }
+
+    private fun waitUntilEngineReady() {
+        val engineReadyCallback = BlockingEngineReadyCallback()
+        searchEngine.addEngineReadyCallback(engineReadyCallback)
+        engineReadyCallback.getResultBlocking()
+    }
+
+    @After
+    override fun tearDown() {
+        clearOfflineData()
+    }
+
+    private fun loadOfflineData() {
+        val listener = BlockingOnIndexChangeListener(1)
+        searchEngine.addOnIndexChangeListener(listener)
+
+        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+
+        val dcLoadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(descriptors)
+            .geometry(MAPBOX_DC_LOCATION)
+            .acceptExpired(true)
+            .build()
+
+        val loadTilesResult = tileStore.loadTileRegionBlocking(TEST_GROUP_ID, dcLoadOptions)
+        assertTrue(loadTilesResult.isValue)
+
+        val tileRegion = requireNotNull(loadTilesResult.value)
+        assertEquals(TEST_GROUP_ID, tileRegion.id)
+        assertTrue(tileRegion.completedResourceCount > 0)
+        assertEquals(tileRegion.requiredResourceCount, tileRegion.completedResourceCount)
+
+        val events = listener.getResultsBlocking()
+        events.forEach {
+            val result = (it as? BlockingOnIndexChangeListener.OnIndexChangeResult.Result)
+            assertNotNull(result)
+            assertTrue(
+                "Event type should be ADD, but was ${result!!.event.type}",
+                result.event.type == OfflineIndexChangeEvent.EventType.ADD
+            )
+        }
+
+        searchEngine.removeOnIndexChangeListener(listener)
+    }
+
+    private fun clearOfflineData() {
+        val regions = tileStore.getAllTileRegionsBlocking().value
+        if (regions == null || regions.isEmpty()) {
+            return
+        }
+
+        val listener = BlockingOnIndexChangeListener(regions.size)
+        searchEngine.addOnIndexChangeListener(listener)
+
+        regions.forEach {
+            tileStore.removeTileRegionBlocking(it.id)
+        }
+
+        val events = listener.getResultsBlocking()
+        events.forEach {
+            val result = (it as? BlockingOnIndexChangeListener.OnIndexChangeResult.Result)
+            assertNotNull(result)
+            assertTrue(
+                "Event type should be REMOVE, but was ${result!!.event.type}",
+                result.event.type == OfflineIndexChangeEvent.EventType.REMOVE
+            )
+        }
+
+        searchEngine.removeOnIndexChangeListener(listener)
+    }
+
+    @Test
+    fun testSearchRequestWithoutAddedRegions() {
+        val result = searchEngine.searchBlocking("123")
+        assertTrue(result is BlockingSearchSelectionCallback.SearchEngineResult.Error)
+    }
+
+    @Test
+    fun testReverseGeocodingWithoutAddedRegions() {
+        val callback = BlockingSearchCallback()
+        searchEngine.reverseGeocoding(
+            OfflineReverseGeoOptions(center = MAPBOX_DC_LOCATION),
+            callback
+        )
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
+    }
+
+    @Test
+    fun testDataLoading() {
+        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+
+        val dcLoadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(descriptors)
+            .geometry(MAPBOX_DC_LOCATION)
+            .acceptExpired(true)
+            .build()
+
+        val loadTilesResult = tileStore.loadTileRegionBlocking(TEST_GROUP_ID, dcLoadOptions)
+        assertTrue(loadTilesResult.isValue)
+
+        val tileRegion = requireNotNull(loadTilesResult.value)
+        assertEquals(TEST_GROUP_ID, tileRegion.id)
+        assertTrue(tileRegion.completedResourceCount > 0)
+        assertEquals(tileRegion.requiredResourceCount, tileRegion.completedResourceCount)
+
+        val allTileRegionsResult = tileStore.getAllTileRegionsBlocking()
+        assertTrue(allTileRegionsResult.isValue)
+
+        val allTileRegions = requireNotNull(allTileRegionsResult.value)
+        assertEquals(1, allTileRegions.size)
+        assertEquals(TEST_GROUP_ID, allTileRegions.first().id)
+    }
+
+    @Test
+    fun testDataRemoval() {
+        loadOfflineData()
+
+        val listener = BlockingOnIndexChangeListener(1)
+        searchEngine.addOnIndexChangeListener(listener)
+
+        var allTileRegionsResult = tileStore.getAllTileRegionsBlocking()
+        assertTrue(allTileRegionsResult.isValue)
+
+        val removeResult = tileStore.removeTileRegionBlocking(TEST_GROUP_ID)
+        assertTrue(removeResult.isValue)
+
+        allTileRegionsResult = tileStore.getAllTileRegionsBlocking()
+        assertTrue(allTileRegionsResult.isValue)
+
+        val allTileRegions = requireNotNull(allTileRegionsResult.value)
+        assertEquals(0, allTileRegions.size)
+
+        val events = listener.getResultsBlocking()
+        events.forEach {
+            val result = (it as? BlockingOnIndexChangeListener.OnIndexChangeResult.Result)
+            assertNotNull(result)
+            assertTrue(
+                "Event type should be REMOVE, but was ${result!!.event.type}",
+                result.event.type == OfflineIndexChangeEvent.EventType.REMOVE
+            )
+        }
+
+        searchEngine.removeOnIndexChangeListener(listener)
+
+        val searchResult = searchEngine.searchBlocking(
+            "2011 15th Street Northwest, Washington, District of Columbia",
+            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
+        )
+
+        assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Error)
+        val error = searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Error
+        assertTrue(error.e.message?.contains("message: Offline regions not added") == true)
+    }
+
+    @Test
+    fun testSuccessfulSearchEmptyResponse() {
+        loadOfflineData()
+
+        val searchResult = searchEngine.searchBlocking(
+            "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
+            OfflineSearchOptions(),
+        )
+
+        assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Suggestions)
+
+        val suggestions = (searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
+        assertEquals(0, suggestions.size)
+    }
+
+    @Test
+    fun testSuccessfulSearch() {
+        loadOfflineData()
+
+        val historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider.clearBlocking(callbacksExecutor)
+
+        val callback = BlockingSearchSelectionCallback()
+
+        searchEngine.search(
+            "2011 15th Street Northwest, Washington, District of Columbia",
+            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
+            callback
+        )
+
+        val suggestions =
+            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
+        assertEquals(9, suggestions.size)
+
+        callback.reset()
+
+        searchEngine.select(suggestions.first(), callback)
+
+        val result = (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Result).result
+        val originalSearchResult = (result as CoreResponseProvider).originalSearchResult
+        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
+        assertEquals(expectedSearchResult, originalSearchResult)
+
+        val historyRecords = historyDataProvider.getAllBlocking(callbacksExecutor)
+
+        assertEquals(
+            "Selected offline search result added to search history",
+            1,
+            historyRecords.size
+        )
+
+        val expectedHistoryRecord = HistoryRecord(
+            id = expectedSearchResult.id,
+            name = expectedSearchResult.names.first(),
+            descriptionText = expectedSearchResult.descriptionAddress,
+            address = expectedSearchResult.addresses?.first(),
+            routablePoints = expectedSearchResult.routablePoints,
+            categories = expectedSearchResult.categories ?: emptyList(),
+            makiIcon = expectedSearchResult.icon,
+            coordinate = expectedSearchResult.center,
+            type = expectedSearchResult.types.first().tryMapToSearchResultType()!!,
+            metadata = expectedSearchResult.metadata,
+            timestamp = testTimeProvider.currentTimeMillis(),
+        )
+
+        assertEquals(expectedHistoryRecord, historyRecords.first())
+    }
+
+    @Test
+    fun testSelectionForNonOfflineSuggestion() {
+        loadOfflineData()
+
+        val callback = BlockingSearchSelectionCallback()
+
+        searchEngine.search(
+            "15th Street Northwest, Washington, DC",
+            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
+            callback
+        )
+
+        val suggestions =
+            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
+        assertTrue(suggestions.isNotEmpty())
+
+        callback.reset()
+
+        searchEngine.select(
+            suggestion = createTestSuggestion(isFromOffline = false),
+            callback = callback
+        )
+
+        assertTrue(callback.getResultBlocking() is BlockingSearchSelectionCallback.SearchEngineResult.Error)
+    }
+
+    @Test
+    fun testSelectionForUnsupportedSuggestion() {
+        loadOfflineData()
+
+        val callback = BlockingSearchSelectionCallback()
+
+        searchEngine.search(
+            "15th Street Northwest, Washington, DC",
+            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
+            callback
+        )
+
+        val suggestions =
+            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
+        assertTrue(suggestions.isNotEmpty())
+
+        callback.reset()
+
+        searchEngine.select(
+            suggestion = TestSearchSuggestion(),
+            callback = callback
+        )
+
+        val result = callback.getResultBlocking()
+        assertTrue(result is BlockingSearchSelectionCallback.SearchEngineResult.Error)
+
+        result as BlockingSearchSelectionCallback.SearchEngineResult.Error
+        assertTrue(result.e.equalsTo(IllegalArgumentException("SearchSuggestion must provide original response")))
+    }
+
+    @Test
+    fun testForwardGeocodingShortQuery() {
+        loadOfflineData()
+
+        val searchResult = searchEngine.searchBlocking("1")
+        val suggestions = (searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
+        assertEquals(10, suggestions.size)
+    }
+
+    @Test
+    fun testSuccessfulReverseGeocoding() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.reverseGeocoding(
+            OfflineReverseGeoOptions(center = TEST_SEARCH_RESULT_MAPBOX.center!!),
+            callback
+        )
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertEquals(1, results.size)
+
+        val originalSearchResult = (results.first() as CoreResponseProvider).originalSearchResult
+        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
+        assertEquals(expectedSearchResult, originalSearchResult)
+    }
+
+    @Test
+    fun testSuccessfulReverseGeocodingEmptyResponse() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.reverseGeocoding(
+            OfflineReverseGeoOptions(center = Point.fromLngLat(2.2943982184367453, 48.85829192244227)),
+            callback
+        )
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertEquals(0, results.size)
+    }
+
+    @Test
+    fun testSuccessfulAddressesSearch() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = TEST_SEARCH_RESULT_MAPBOX.addresses?.first()?.street!!,
+            proximity = TEST_SEARCH_RESULT_MAPBOX.center!!,
+            radiusMeters = 100.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isNotEmpty())
+
+        val originalSearchResult = (results.first() as CoreResponseProvider).originalSearchResult
+        val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id, distanceMeters = null)
+        assertEquals(expectedResult, (results.first() as CoreResponseProvider).originalSearchResult)
+    }
+
+    @Test
+    fun testAddressSearchOutsideAddedOfflineRegion() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
+            proximity = Point.fromLngLat(2.294464, 48.858353),
+            radiusMeters = 1000.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isEmpty())
+    }
+
+    @Test
+    fun testAddressSearchWithUnknownStreet() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = "Rue de Marseille, Paris, France",
+            proximity = TEST_SEARCH_RESULT_MAPBOX.center!!,
+            radiusMeters = 1000.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isEmpty())
+    }
+
+    @Test
+    fun testAddressSearchWithProximityOutsideOfAddedRegion() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = TEST_SEARCH_RESULT_MAPBOX.addresses?.first()?.street!!,
+            proximity = Point.fromLngLat(2.294464, 48.858353),
+            radiusMeters = 1000.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isEmpty())
+    }
+
+    @Test
+    fun testAddressesSearchNegativeRadius() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = TEST_SEARCH_RESULT_MAPBOX.addresses?.first()?.street!!,
+            proximity = TEST_SEARCH_RESULT_MAPBOX.center!!,
+            radiusMeters = -100.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
+
+        val exception = (callback.getResultBlocking() as SearchEngineResult.Error).e
+        assertEquals("Negative radius", exception.message)
+    }
+
+    @Test
+    fun testAddressesSearchZeroRadius() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = TEST_SEARCH_RESULT_MAPBOX.addresses?.first()?.street!!,
+            proximity = TEST_SEARCH_RESULT_MAPBOX.center!!,
+            radiusMeters = 0.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isNotEmpty())
+    }
+
+    @Test
+    fun testAddressesInvalidProximity() {
+        loadOfflineData()
+
+        val callback = BlockingSearchCallback()
+
+        searchEngine.searchAddressesNearby(
+            street = TEST_SEARCH_RESULT_MAPBOX.addresses?.first()?.street!!,
+            proximity = Point.fromLngLat(300.0, 300.0),
+            radiusMeters = 1000.0,
+            callback
+        )
+
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+
+        // Probably we should get error here (related to an issue in search-sdk/#578)
+        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+        assertTrue(results.isEmpty())
+    }
+
+    companion object {
+
+        private val tileStore: TileStore = TileStore.create()
+
+        private const val TEST_GROUP_ID = "usa-dc"
+        private val MAPBOX_DC_LOCATION: Point = Point.fromLngLat(-77.03399849939174, 38.89992081005698)
+
+        private const val CURRENT_TIME_MILLIS = 123L
+
+        private val TEST_SEARCH_RESULT_MAPBOX = createTestOriginalSearchResult(
+            id = "<will be dynamically changed>",
+            types = listOf(OriginalResultType.ADDRESS),
+            names = listOf("2011 15th Street Northwest"),
+            languages = listOf("def"),
+            addresses = listOf(
+                SearchAddress(
+                    houseNumber = "2011",
+                    street = "15th Street Northwest",
+                    place = "Washington",
+                    region = "District of Columbia",
+                )
+            ),
+            descriptionAddress = "2011 15th Street Northwest, Washington, District of Columbia",
+            distanceMeters = 0.0,
+            center = Point.fromLngLat(-77.03401323039313, 38.91793457393481),
+            serverIndex = null,
+        )
+
+        @BeforeClass
+        @JvmStatic
+        fun cleanUpBeforeTests() {
+            tileStore.getAllTileRegionsBlocking().value!!.forEach {
+                tileStore.removeTileRegionBlocking(it.id)
+            }
+            Thread.sleep(1000)
+        }
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="main_screen_view" type="id" />
+    <item name="mapbox_sdk_button_text_view" type="id" />
+    <item name="search_tab_category_recycler" type="id" />
+    <item name="search_tab_favorites_recycler" type="id" />
+</resources>

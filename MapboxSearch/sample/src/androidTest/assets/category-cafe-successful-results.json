@@ -1,0 +1,740 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.08756436973518,
+                    37.42275394973225
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Googleplex - Big Table Cafe",
+                "matching_name": "Googleplex - Big Table Cafe",
+                "description": "1900 Charleston Rd, Mountain View, California 94043, United States of America",
+                "place_name": "Googleplex - Big Table Cafe, 1900 Charleston Rd, Mountain View, California 94043, United States of America",
+                "id": "6sxJhnkBuByQO0T6fgWd",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "1900 Charleston Rd"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "charleston rd"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe",
+                    "fast food"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.JcDBDYAgDAVQJzJS_0ca53CApqVXI4b9Pfiu5Zf3HO8zbfQVdjSFRmqFUbYsnSX7fiIcsJJghFSQwl2sycmjijvEo2xBsqpGQ_MP",
+                "external_ids": {
+                    "federated": "poi.75c8e1135414b59ccdf32fa136190d8eded1993538a10a153367e49df0690541",
+                    "mbx_poi": "75c8e1135414b59ccdf32fa136190d8eded1993538a10a153367e49df0690541",
+                    "foursquare": "4a78949df964a520f1e51fe3;4dc44a1f45dd264552532a82;5762cc42cd10d555699d848c"
+                },
+                "mapbox_id": "CkIKQDc1YzhlMTEzNTQxNGI1OWNjZGYzMmZhMTM2MTkwZDhlZGVkMTk5MzUzOGExMGExNTMzNjdlNDlkZjA2OTA1NDE=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.094249,
+                    37.419206
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Krispy Kreme Doughnuts",
+                "matching_name": "Krispy Kreme Doughnuts",
+                "description": "2146 Leghorn St, Mountain View, California 94043, United States of America",
+                "place_name": "Krispy Kreme Doughnuts, 2146 Leghorn St, Mountain View, California 94043, United States of America",
+                "id": "kuBVhnkBuByQO0T6SGji",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "2146 Leghorn St"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "leghorn st"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe",
+                    "breakfast restaurant",
+                    "restaurant",
+                    "donut shop"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8RUc8PUNJM0SzOTRFMjA8u0RAsjw1RjAA==",
+                "external_ids": {
+                    "foursquare": "4ae71ef4f964a5209fa821e3",
+                    "safegraph": "sg:111a80014b4a457e87cd2c72025bafca",
+                    "mbx_poi": "c170c06ae2d9b7b5879cf86f9ce9047c22c5d1daac92485143edfa60e4174567",
+                    "federated": "poi.c170c06ae2d9b7b5879cf86f9ce9047c22c5d1daac92485143edfa60e4174567"
+                },
+                "mapbox_id": "CkIKQGMxNzBjMDZhZTJkOWI3YjU4NzljZjg2ZjljZTkwNDdjMjJjNWQxZGFhYzkyNDg1MTQzZWRmYTYwZTQxNzQ1Njc=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.077594,
+                    37.415745
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Starbucks",
+                "matching_name": "Starbucks",
+                "description": "1380 Pear Ave, Mountain View, California 94043, United States of America",
+                "place_name": "Starbucks, 1380 Pear Ave, Mountain View, California 94043, United States of America",
+                "id": "-e5dhnkBuByQO0T62v7f",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "1380 Pear Ave"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "pear ave"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe",
+                    "bakery",
+                    "teahouse"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8REMwtDE4M0SzOTRFMjAwMjk0Qjg1RjAA==",
+                "external_ids": {
+                    "safegraph": "sg:3211c4cbf50d40449e4134e84bd01694",
+                    "federated": "poi.a1b3d2be5c1fd980eafeea5116ba70359f4bc73e216c7578efdc5eb7293e1588",
+                    "foursquare": "4aa68140f964a520024a20e3",
+                    "mbx_poi": "a1b3d2be5c1fd980eafeea5116ba70359f4bc73e216c7578efdc5eb7293e1588"
+                },
+                "mapbox_id": "CkIKQGExYjNkMmJlNWMxZmQ5ODBlYWZlZWE1MTE2YmE3MDM1OWY0YmM3M2UyMTZjNzU3OGVmZGM1ZWI3MjkzZTE1ODg=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.0715057906431,
+                    37.41816694736564
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Googleplex - Coffee Lab",
+                "matching_name": "Googleplex - Coffee Lab",
+                "description": "1345 Shorebird Way, Mountain View, California 94043, United States of America",
+                "place_name": "Googleplex - Coffee Lab, 1345 Shorebird Way, Mountain View, California 94043, United States of America",
+                "id": "FMJEhnkBuByQO0T6Gr3J",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "1345 Shorebird Way"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "shorebird way"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U2ODNAtji0QTS4tUA_OkZDOzpJS05NRUAA==",
+                "external_ids": {
+                    "federated": "poi.8f569e986c73915cac03ad4d33b868fb8aaeac8f9c6f5ba373970daff7e445a5",
+                    "mbx_poi": "8f569e986c73915cac03ad4d33b868fb8aaeac8f9c6f5ba373970daff7e445a5",
+                    "foursquare": "530f838a498e07bc66bdfcee"
+                },
+                "mapbox_id": "CkIKQDhmNTY5ZTk4NmM3MzkxNWNhYzAzYWQ0ZDMzYjg2OGZiOGFhZWFjOGY5YzZmNWJhMzczOTcwZGFmZjdlNDQ1YTU=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.096414,
+                    37.421869
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Starbucks",
+                "matching_name": "Starbucks",
+                "description": "2410 Charleston Rd, Mountain View, California 94043, United States of America",
+                "place_name": "Starbucks, 2410 Charleston Rd, Mountain View, California 94043, United States of America",
+                "id": "HpkshnkBuByQO0T6GqpG",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "2410 Charleston Rd"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "charleston rd"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe",
+                    "bakery",
+                    "teahouse"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8QU46TktKQ0SzOTRFMjA4O0VDMjg1RjAA==",
+                "external_ids": {
+                    "foursquare": "4ad3bcfbf964a5200fe620e3",
+                    "safegraph": "sg:9dd2434ea0944d59a30ccbfba6142c23",
+                    "federated": "poi.0ff27f7ba801e4416c5ef15df923efa8103b3c99fa40e9e48cc4958e3354dedc",
+                    "mbx_poi": "0ff27f7ba801e4416c5ef15df923efa8103b3c99fa40e9e48cc4958e3354dedc"
+                },
+                "mapbox_id": "CkIKQDBmZjI3ZjdiYTgwMWU0NDE2YzVlZjE1ZGY5MjNlZmE4MTAzYjNjOTlmYTQwZTllNDhjYzQ5NThlMzM1NGRlZGM=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.088148,
+                    37.432614
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Shoreline Lake American Bistro",
+                "matching_name": "Shoreline Lake American Bistro",
+                "description": "3160 N Shoreline Blvd, Palo Alto, California 94303, United States of America",
+                "place_name": "Shoreline Lake American Bistro, 3160 N Shoreline Blvd, Palo Alto, California 94303, United States of America",
+                "id": "IZcqhnkBuByQO0T6uUGA",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "3160 N Shoreline Blvd"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "n shoreline blvd"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94303"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Palo Alto"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "restaurant",
+                    "cafe",
+                    "breakfast restaurant",
+                    "american restaurant",
+                    "brunch restaurant"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8TkRBOjFOM0SzOTRFMjA8PEZEMjg1RjAA==",
+                "external_ids": {
+                    "mbx_poi": "3baf5418a430c94957f3f475afff546cd6f23aafa7279a8da4f82800fae44fad",
+                    "foursquare": "4aca42d3f964a5201ac120e3",
+                    "federated": "poi.3baf5418a430c94957f3f475afff546cd6f23aafa7279a8da4f82800fae44fad",
+                    "safegraph": "sg:16dd07837d2640ddae0f880b40631aa3"
+                },
+                "mapbox_id": "CkIKQDNiYWY1NDE4YTQzMGM5NDk1N2YzZjQ3NWFmZmY1NDZjZDZmMjNhYWZhNzI3OWE4ZGE0ZjgyODAwZmFlNDRmYWQ=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.077613,
+                    37.41446
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Cloud Bistro",
+                "matching_name": "Cloud Bistro",
+                "description": "1401 N Shoreline Blvd, Mountain View, California 94043, United States of America",
+                "place_name": "Cloud Bistro, 1401 N Shoreline Blvd, Mountain View, California 94043, United States of America",
+                "id": "WIsjhnkBuByQO0T68b_j",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "1401 N Shoreline Blvd"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "n shoreline blvd"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k1TTtJQUw5S0RHMzY8OUZBMDS0uDFBMLAA==",
+                "external_ids": {
+                    "federated": "poi.dd402b67b29df81c3e15f277be5d0e516af06f82467795efb87236c36cfb0b90",
+                    "mbx_poi": "dd402b67b29df81c3e15f277be5d0e516af06f82467795efb87236c36cfb0b90",
+                    "safegraph": "sg:bb37f3ef061b4d92989b1a4e1a271afc",
+                    "foursquare": "4e5fdd1dfa7631dc40990d48"
+                },
+                "mapbox_id": "CkIKQGRkNDAyYjY3YjI5ZGY4MWMzZTE1ZjI3N2JlNWQwZTUxNmFmMDZmODI0Njc3OTVlZmI4NzIzNmMzNmNmYjBiOTA=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.09810554941588,
+                    37.4145902911897
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Bajis Cafe",
+                "matching_name": "Bajis Cafe",
+                "description": "2423 Old Middlefield Way, Mountain View, California 94043, United States of America",
+                "place_name": "Bajis Cafe, 2423 Old Middlefield Way, Mountain View, California 94043, United States of America",
+                "id": "tehZhnkBuByQO0T66Ur5",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "2423 Old Middlefield Way"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "old middlefield way"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "restaurant",
+                    "food",
+                    "food and drink",
+                    "cafe",
+                    "diner"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k0TLxCRLI8s0SzOTRFMjA1NTYyMjg1RjAA==",
+                "external_ids": {
+                    "federated": "poi.1bb0673af7482210f95b67ef2d2c54227f31433efd72e98b343a6d284f713430",
+                    "mbx_poi": "1bb0673af7482210f95b67ef2d2c54227f31433efd72e98b343a6d284f713430",
+                    "foursquare": "4a9ab929f964a520553220e3"
+                },
+                "mapbox_id": "CkIKQDFiYjA2NzNhZjc0ODIyMTBmOTViNjdlZjJkMmM1NDIyN2YzMTQzM2VmZDcyZTk4YjM0M2E2ZDI4NGY3MTM0MzA=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.0813560487002,
+                    37.41920563198859
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "The Art of Tea",
+                "matching_name": "The Art of Tea",
+                "description": "Mountain View, California 94043, United States of America",
+                "place_name": "The Art of Tea, Mountain View, California 94043, United States of America",
+                "id": "IJ4uhnkBuByQO0T6xjtn",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "cafe",
+                    "food",
+                    "food and drink",
+                    "teahouse"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U0MzE0vTRNNUkyQDM4ukRKOUVEMjMwMTAA==",
+                "external_ids": {
+                    "foursquare": "516495a5e4b068ba2de12604",
+                    "mbx_poi": "95c042b2ee86479db96696caf482a44803a1f2b044d58e7d38541347fd34362b",
+                    "federated": "poi.95c042b2ee86479db96696caf482a44803a1f2b044d58e7d38541347fd34362b"
+                },
+                "mapbox_id": "CkIKQDk1YzA0MmIyZWU4NjQ3OWRiOTY2OTZjYWY0ODJhNDQ4MDNhMWYyYjA0NGQ1OGU3ZDM4NTQxMzQ3ZmQzNDM2MmI=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -122.09434,
+                    37.411476
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "Starbucks",
+                "matching_name": "Starbucks",
+                "description": "580 N Rengstorff Ave, Mountain View, California 94043, United States of America",
+                "place_name": "Starbucks, 580 N Rengstorff Ave, Mountain View, California 94043, United States of America",
+                "id": "hx55hnkBuByQO0T6wIzN",
+                "place_type": [
+                    "poi"
+                ],
+                "context": [
+                    {
+                        "layer": "address",
+                        "localized_layer": "address",
+                        "name": "580 N Rengstorff Ave"
+                    },
+                    {
+                        "layer": "street",
+                        "localized_layer": "street",
+                        "name": "n rengstorff ave"
+                    },
+                    {
+                        "layer": "postcode",
+                        "localized_layer": "postcode",
+                        "name": "94043"
+                    },
+                    {
+                        "layer": "neighborhood",
+                        "localized_layer": "neighborhood",
+                        "name": "Monta Loma"
+                    },
+                    {
+                        "layer": "place",
+                        "localized_layer": "place",
+                        "name": "Mountain View"
+                    },
+                    {
+                        "layer": "region",
+                        "localized_layer": "region",
+                        "name": "California"
+                    },
+                    {
+                        "layer": "country",
+                        "localized_layer": "country",
+                        "name": "United States of America"
+                    }
+                ],
+                "maki": "restaurant",
+                "poi_category": [
+                    "food",
+                    "food and drink",
+                    "coffee shop",
+                    "coffee",
+                    "cafe",
+                    "bakery",
+                    "teahouse"
+                ],
+                "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9E5MkI4tEM4s0SzOTRFMjA-MUY1PDtFRjAA==",
+                "external_ids": {
+                    "foursquare": "44b28a68f964a5203d351fe3",
+                    "mbx_poi": "e3966b4568a83b58d06a308a5a9bf2226ea5bc1936cb5ca29072e0921d0450e9",
+                    "safegraph": "sg:1b038a59a6b84a8db8492acb3e1be506",
+                    "federated": "poi.e3966b4568a83b58d06a308a5a9bf2226ea5bc1936cb5ca29072e0921d0450e9"
+                },
+                "mapbox_id": "CkIKQGUzOTY2YjQ1NjhhODNiNThkMDZhMzA4YTVhOWJmMjIyNmVhNWJjMTkzNmNiNWNhMjkwNzJlMDkyMWQwNDUwZTk=",
+                "metadata": {
+                    "primary_photo": [],
+                    "iso_3166_1": "US",
+                    "iso_3166_2": "US-CA"
+                }
+            }
+        }
+    ],
+    "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+    "version": "44:9d58434d7f88e4515b1edfbad545cc8c527e303f",
+    "response_uuid": "00000000-0000-0000-0000-000000000000"
+}

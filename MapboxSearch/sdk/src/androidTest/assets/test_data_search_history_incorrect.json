@@ -1,0 +1,24 @@
+{
+  "records": [
+    {
+      "id": "empty_correct_record_id",
+      "name": "Empty correct record",
+      "timestamp": 123,
+      "searchResultType": "POI"
+    },
+    {
+      "id": "record_with_incorrect_result_type",
+      "name": "Record with incorrect searchResultType",
+      "timestamp": 123,
+      "searchResultType": "UNKNOWN_TYPE"
+    },
+    {
+      "name": "Record without id",
+      "timestamp": 123,
+      "searchResultType": "POI"
+    },
+    {
+    }
+  ],
+  "version": 0
+}

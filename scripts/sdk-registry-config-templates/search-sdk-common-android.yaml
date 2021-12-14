@@ -1,0 +1,11 @@
+api-downloads: v2
+
+android:
+  group: search
+
+packages:
+  android:
+    - mapbox-search-android-common
+
+bundles:
+  android: mapbox-search-android-common-all

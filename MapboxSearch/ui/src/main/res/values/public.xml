@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- This file is generated. -->
+<resources>
+    <!-- attrs.xml -->
+    <public name='mapboxSearchSdkPrimaryTextColor' type='attr' />
+    <public name='mapboxSearchSdkPrimaryTextInactiveColor' type='attr' />
+    <public name='mapboxSearchSdkPrimaryAccentColor' type='attr' />
+    <public name='mapboxSearchSdkPrimaryAccentLightColor' type='attr' />
+    <public name='mapboxSearchSdkOnPrimaryAccentColor' type='attr' />
+    <public name='mapboxSearchSdkDistanceColor' type='attr' />
+    <public name='mapboxSearchSdkIconTintColor' type='attr' />
+    <public name='mapboxSearchSdkBackgroundColor' type='attr' />
+    <public name='mapboxSearchSdkBackgroundSecondaryColor' type='attr' />
+    <public name='mapboxSearchSdkTongueColor' type='attr' />
+    <public name='mapboxSearchSdkPopulateArrowColor' type='attr' />
+    <public name='mapboxSearchSdkInputViewClearIconColor' type='attr' />
+    <public name='mapboxSearchSdkProgressColor' type='attr' />
+    <public name='mapboxSearchSdkErrorIconColor' type='attr' />
+    <public name='mapboxSearchSdkPopupDialogThemeOverlay' type='attr' />
+
+    <public name='mapboxSearchSdkTheme' type='attr' />
+
+    <public name='maxWidth' type='attr' />
+
+    <!-- themes.xml -->
+    <public name='MapboxSearchSdk.Theme.Auto' type='style' />
+    <public name='MapboxSearchSdk.Theme.Light' type='style' />
+    <public name='MapboxSearchSdk.Theme.Dark' type='style' />
+    <public name='MapboxSearchSdk.ThemeOverlay.Light' type='style' />
+    <public name='MapboxSearchSdk.ThemeOverlay.Dark' type='style' />
+</resources>

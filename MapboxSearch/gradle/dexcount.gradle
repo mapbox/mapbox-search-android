@@ -1,0 +1,5 @@
+apply plugin: 'com.getkeepsafe.dexcount'
+
+dexcount {
+    format = "json"
+}

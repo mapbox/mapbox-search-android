@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MapboxSearchSdk.BottomSheet.MenuItem" parent="MapboxSearchSdk.Text.RobotoRegular">
+        <item name="android:textColor">?attr/mapboxSearchSdkPrimaryTextColor</item>
+        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_normal</item>
+        <item name="android:paddingTop">@dimen/mapbox_search_sdk_dimen_3x</item>
+        <item name="android:paddingBottom">@dimen/mapbox_search_sdk_dimen_3x</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:drawablePadding">@dimen/mapbox_search_sdk_dimen_8x</item>
+        <item name="drawableTint">?attr/mapboxSearchSdkIconTintColor</item>
+    </style>
+
+</resources>

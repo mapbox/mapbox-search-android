@@ -1,0 +1,1473 @@
+// Signature format: 3.0
+package com.mapbox.search {
+
+  public enum ApiType {
+    enum_constant public static final com.mapbox.search.ApiType GEOCODING;
+    enum_constant public static final com.mapbox.search.ApiType SBS;
+  }
+
+  public final class ApiTypeKt {
+  }
+
+  public interface AsyncOperationTask {
+    method public void cancel();
+    method public boolean isCancelled();
+    method public boolean isDone();
+    property public abstract boolean isCancelled;
+    property public abstract boolean isDone;
+  }
+
+  public final class AsyncOperationTaskKt {
+  }
+
+  public interface CategorySearchEngine {
+    method public com.mapbox.search.ApiType getApiType();
+    method public com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
+    property public abstract com.mapbox.search.ApiType apiType;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class CategorySearchOptions implements android.os.Parcelable {
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public com.mapbox.geojson.BoundingBox? getBoundingBox();
+    method public java.util.List<com.mapbox.search.Country>? getCountries();
+    method public Boolean? getFuzzyMatch();
+    method public boolean getIgnoreIndexableRecords();
+    method public Double? getIndexableRecordsDistanceThresholdMeters();
+    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public Integer? getLimit();
+    method public com.mapbox.search.SearchNavigationProfile? getNavigationProfile();
+    method public com.mapbox.geojson.Point? getOrigin();
+    method public com.mapbox.geojson.Point? getProximity();
+    method public Integer? getRequestDebounce();
+    method public com.mapbox.search.RouteOptions? getRouteOptions();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
+    method public com.mapbox.search.CategorySearchOptions.Builder toBuilder();
+    property public final com.mapbox.geojson.BoundingBox? boundingBox;
+    property public final java.util.List<com.mapbox.search.Country>? countries;
+    property public final Boolean? fuzzyMatch;
+    property public final boolean ignoreIndexableRecords;
+    property public final Double? indexableRecordsDistanceThresholdMeters;
+    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final Integer? limit;
+    property public final com.mapbox.search.SearchNavigationProfile? navigationProfile;
+    property public final com.mapbox.geojson.Point? origin;
+    property public final com.mapbox.geojson.Point? proximity;
+    property public final Integer? requestDebounce;
+    property public final com.mapbox.search.RouteOptions? routeOptions;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
+  }
+
+  public static final class CategorySearchOptions.Builder {
+    ctor public CategorySearchOptions.Builder();
+    method public com.mapbox.search.CategorySearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
+    method public com.mapbox.search.CategorySearchOptions build();
+    method public com.mapbox.search.CategorySearchOptions.Builder countries(com.mapbox.search.Country... countries);
+    method public com.mapbox.search.CategorySearchOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
+    method public com.mapbox.search.CategorySearchOptions.Builder fuzzyMatch(boolean fuzzyMatch);
+    method public com.mapbox.search.CategorySearchOptions.Builder ignoreIndexableRecords(boolean ignoreIndexableRecords);
+    method public com.mapbox.search.CategorySearchOptions.Builder indexableRecordsDistanceThresholdMeters(Double? threshold);
+    method public com.mapbox.search.CategorySearchOptions.Builder languages(com.mapbox.search.Language... languages);
+    method public com.mapbox.search.CategorySearchOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.CategorySearchOptions.Builder limit(int limit);
+    method public com.mapbox.search.CategorySearchOptions.Builder navigationProfile(com.mapbox.search.SearchNavigationProfile navigationProfile);
+    method public com.mapbox.search.CategorySearchOptions.Builder origin(com.mapbox.geojson.Point origin);
+    method public com.mapbox.search.CategorySearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
+    method public com.mapbox.search.CategorySearchOptions.Builder requestDebounce(int debounce);
+    method public com.mapbox.search.CategorySearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
+    method public com.mapbox.search.CategorySearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
+  }
+
+  public final class CategorySearchOptionsKt {
+  }
+
+  public interface CompletionCallback<T> {
+    method public void onComplete(T? result);
+    method public void onError(Exception e);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class Country implements android.os.Parcelable {
+    ctor public Country(String code);
+    method public String getCode();
+    property public final String code;
+    field public static final com.mapbox.search.Country AFGHANISTAN;
+    field public static final com.mapbox.search.Country ALAND_ISLANDS;
+    field public static final com.mapbox.search.Country ALBANIA;
+    field public static final com.mapbox.search.Country ALGERIA;
+    field public static final com.mapbox.search.Country AMERICAN_SAMOA;
+    field public static final com.mapbox.search.Country ANDORRA;
+    field public static final com.mapbox.search.Country ANGOLA;
+    field public static final com.mapbox.search.Country ANGUILLA;
+    field public static final com.mapbox.search.Country ANTARCTICA;
+    field public static final com.mapbox.search.Country ANTIGUA_AND_BARBUDA;
+    field public static final com.mapbox.search.Country ARGENTINA;
+    field public static final com.mapbox.search.Country ARMENIA;
+    field public static final com.mapbox.search.Country ARUBA;
+    field public static final com.mapbox.search.Country AUSTRALIA;
+    field public static final com.mapbox.search.Country AUSTRIA;
+    field public static final com.mapbox.search.Country AZERBAIJAN;
+    field public static final com.mapbox.search.Country BAHAMAS;
+    field public static final com.mapbox.search.Country BAHRAIN;
+    field public static final com.mapbox.search.Country BANGLADESH;
+    field public static final com.mapbox.search.Country BARBADOS;
+    field public static final com.mapbox.search.Country BELARUS;
+    field public static final com.mapbox.search.Country BELGIUM;
+    field public static final com.mapbox.search.Country BELIZE;
+    field public static final com.mapbox.search.Country BENIN;
+    field public static final com.mapbox.search.Country BERMUDA;
+    field public static final com.mapbox.search.Country BHUTAN;
+    field public static final com.mapbox.search.Country BOLIVIA;
+    field public static final com.mapbox.search.Country BOSNIA_AND_HERZEGOVINA;
+    field public static final com.mapbox.search.Country BOTSWANA;
+    field public static final com.mapbox.search.Country BOUVET_ISLAND;
+    field public static final com.mapbox.search.Country BRAZIL;
+    field public static final com.mapbox.search.Country BRITISH_INDIAN_OCEAN_TERRITORY;
+    field public static final com.mapbox.search.Country BRITISH_VIRGIN_ISLANDS;
+    field public static final com.mapbox.search.Country BRUNEI;
+    field public static final com.mapbox.search.Country BULGARIA;
+    field public static final com.mapbox.search.Country BURKINA_FASO;
+    field public static final com.mapbox.search.Country BURUNDI;
+    field public static final com.mapbox.search.Country CAMBODIA;
+    field public static final com.mapbox.search.Country CAMEROON;
+    field public static final com.mapbox.search.Country CANADA;
+    field public static final com.mapbox.search.Country CAPE_VERDE;
+    field public static final com.mapbox.search.Country CARIBBEAN_NETHERLANDS;
+    field public static final com.mapbox.search.Country CAYMAN_ISLANDS;
+    field public static final com.mapbox.search.Country CENTRAL_AFRICAN_REPUBLIC;
+    field public static final com.mapbox.search.Country CHAD;
+    field public static final com.mapbox.search.Country CHILE;
+    field public static final com.mapbox.search.Country CHINA;
+    field public static final com.mapbox.search.Country CHRISTMAS_ISLAND;
+    field public static final com.mapbox.search.Country COCOS_ISLANDS;
+    field public static final com.mapbox.search.Country COLOMBIA;
+    field public static final com.mapbox.search.Country COMOROS;
+    field public static final com.mapbox.search.Country CONGO_BRAZZAVILLE;
+    field public static final com.mapbox.search.Country CONGO_KINSHASA;
+    field public static final com.mapbox.search.Country COOK_ISLANDS;
+    field public static final com.mapbox.search.Country COSTA_RICA;
+    field public static final com.mapbox.search.Country COTE_DIVOIRE;
+    field public static final com.mapbox.search.Country CROATIA;
+    field public static final com.mapbox.search.Country CUBA;
+    field public static final com.mapbox.search.Country CURACAO;
+    field public static final com.mapbox.search.Country CYPRUS;
+    field public static final com.mapbox.search.Country CZECHIA;
+    field public static final com.mapbox.search.Country DENMARK;
+    field public static final com.mapbox.search.Country DJIBOUTI;
+    field public static final com.mapbox.search.Country DOMINICA;
+    field public static final com.mapbox.search.Country DOMINICAN_REPUBLIC;
+    field public static final com.mapbox.search.Country ECUADOR;
+    field public static final com.mapbox.search.Country EGYPT;
+    field public static final com.mapbox.search.Country EL_SALVADOR;
+    field public static final com.mapbox.search.Country EQUATORIAL_GUINEA;
+    field public static final com.mapbox.search.Country ERITREA;
+    field public static final com.mapbox.search.Country ESTONIA;
+    field public static final com.mapbox.search.Country ETHIOPIA;
+    field public static final com.mapbox.search.Country FALKLAND_ISLANDS_;
+    field public static final com.mapbox.search.Country FAROE_ISLANDS;
+    field public static final com.mapbox.search.Country FIJI;
+    field public static final com.mapbox.search.Country FINLAND;
+    field public static final com.mapbox.search.Country FRANCE;
+    field public static final com.mapbox.search.Country FRENCH_GUIANA;
+    field public static final com.mapbox.search.Country FRENCH_POLYNESIA;
+    field public static final com.mapbox.search.Country FRENCH_SOUTHERN_TERRITORIES;
+    field public static final com.mapbox.search.Country GABON;
+    field public static final com.mapbox.search.Country GAMBIA;
+    field public static final com.mapbox.search.Country GEORGIA;
+    field public static final com.mapbox.search.Country GERMANY;
+    field public static final com.mapbox.search.Country GHANA;
+    field public static final com.mapbox.search.Country GIBRALTAR;
+    field public static final com.mapbox.search.Country GREECE;
+    field public static final com.mapbox.search.Country GREENLAND;
+    field public static final com.mapbox.search.Country GRENADA;
+    field public static final com.mapbox.search.Country GUADELOUPE;
+    field public static final com.mapbox.search.Country GUAM;
+    field public static final com.mapbox.search.Country GUATEMALA;
+    field public static final com.mapbox.search.Country GUERNSEY;
+    field public static final com.mapbox.search.Country GUINEA;
+    field public static final com.mapbox.search.Country GUINEA_BISSAU;
+    field public static final com.mapbox.search.Country GUYANA;
+    field public static final com.mapbox.search.Country HAITI;
+    field public static final com.mapbox.search.Country HEARD_AND_MCDONALD_ISLANDS;
+    field public static final com.mapbox.search.Country HONDURAS;
+    field public static final com.mapbox.search.Country HONG_KONG;
+    field public static final com.mapbox.search.Country HUNGARY;
+    field public static final com.mapbox.search.Country ICELAND;
+    field public static final com.mapbox.search.Country INDIA;
+    field public static final com.mapbox.search.Country INDONESIA;
+    field public static final com.mapbox.search.Country IRAN;
+    field public static final com.mapbox.search.Country IRAQ;
+    field public static final com.mapbox.search.Country IRELAND;
+    field public static final com.mapbox.search.Country ISLE_OF_MAN;
+    field public static final com.mapbox.search.Country ISRAEL;
+    field public static final com.mapbox.search.Country ITALY;
+    field public static final com.mapbox.search.Country JAMAICA;
+    field public static final com.mapbox.search.Country JAPAN;
+    field public static final com.mapbox.search.Country JERSEY;
+    field public static final com.mapbox.search.Country JORDAN;
+    field public static final com.mapbox.search.Country KAZAKHSTAN;
+    field public static final com.mapbox.search.Country KENYA;
+    field public static final com.mapbox.search.Country KIRIBATI;
+    field public static final com.mapbox.search.Country KUWAIT;
+    field public static final com.mapbox.search.Country KYRGYZSTAN;
+    field public static final com.mapbox.search.Country LAOS;
+    field public static final com.mapbox.search.Country LATVIA;
+    field public static final com.mapbox.search.Country LEBANON;
+    field public static final com.mapbox.search.Country LESOTHO;
+    field public static final com.mapbox.search.Country LIBERIA;
+    field public static final com.mapbox.search.Country LIBYA;
+    field public static final com.mapbox.search.Country LIECHTENSTEIN;
+    field public static final com.mapbox.search.Country LITHUANIA;
+    field public static final com.mapbox.search.Country LUXEMBOURG;
+    field public static final com.mapbox.search.Country MACAU;
+    field public static final com.mapbox.search.Country MACEDONIA;
+    field public static final com.mapbox.search.Country MADAGASCAR;
+    field public static final com.mapbox.search.Country MALAWI;
+    field public static final com.mapbox.search.Country MALAYSIA;
+    field public static final com.mapbox.search.Country MALDIVES;
+    field public static final com.mapbox.search.Country MALI;
+    field public static final com.mapbox.search.Country MALTA;
+    field public static final com.mapbox.search.Country MARSHALL_ISLANDS;
+    field public static final com.mapbox.search.Country MARTINIQUE;
+    field public static final com.mapbox.search.Country MAURITANIA;
+    field public static final com.mapbox.search.Country MAURITIUS;
+    field public static final com.mapbox.search.Country MAYOTTE;
+    field public static final com.mapbox.search.Country MEXICO;
+    field public static final com.mapbox.search.Country MICRONESIA;
+    field public static final com.mapbox.search.Country MOLDOVA;
+    field public static final com.mapbox.search.Country MONACO;
+    field public static final com.mapbox.search.Country MONGOLIA;
+    field public static final com.mapbox.search.Country MONTENEGRO;
+    field public static final com.mapbox.search.Country MONTSERRAT;
+    field public static final com.mapbox.search.Country MOROCCO;
+    field public static final com.mapbox.search.Country MOZAMBIQUE;
+    field public static final com.mapbox.search.Country MYANMAR;
+    field public static final com.mapbox.search.Country NAMIBIA;
+    field public static final com.mapbox.search.Country NAURU;
+    field public static final com.mapbox.search.Country NEPAL;
+    field public static final com.mapbox.search.Country NETHERLANDS;
+    field public static final com.mapbox.search.Country NEW_CALEDONIA;
+    field public static final com.mapbox.search.Country NEW_ZEALAND;
+    field public static final com.mapbox.search.Country NICARAGUA;
+    field public static final com.mapbox.search.Country NIGER;
+    field public static final com.mapbox.search.Country NIGERIA;
+    field public static final com.mapbox.search.Country NIUE;
+    field public static final com.mapbox.search.Country NORFOLK_ISLAND;
+    field public static final com.mapbox.search.Country NORTHERN_MARIANA_ISLANDS;
+    field public static final com.mapbox.search.Country NORTH_KOREA;
+    field public static final com.mapbox.search.Country NORWAY;
+    field public static final com.mapbox.search.Country OMAN;
+    field public static final com.mapbox.search.Country PAKISTAN;
+    field public static final com.mapbox.search.Country PALAU;
+    field public static final com.mapbox.search.Country PALESTINE;
+    field public static final com.mapbox.search.Country PANAMA;
+    field public static final com.mapbox.search.Country PAPUA_NEW_GUINEA;
+    field public static final com.mapbox.search.Country PARAGUAY;
+    field public static final com.mapbox.search.Country PERU;
+    field public static final com.mapbox.search.Country PHILIPPINES;
+    field public static final com.mapbox.search.Country PITCAIRN_ISLANDS;
+    field public static final com.mapbox.search.Country POLAND;
+    field public static final com.mapbox.search.Country PORTUGAL;
+    field public static final com.mapbox.search.Country PUERTO_RICO;
+    field public static final com.mapbox.search.Country QATAR;
+    field public static final com.mapbox.search.Country REUNION;
+    field public static final com.mapbox.search.Country ROMANIA;
+    field public static final com.mapbox.search.Country RUSSIA;
+    field public static final com.mapbox.search.Country RWANDA;
+    field public static final com.mapbox.search.Country SAMOA;
+    field public static final com.mapbox.search.Country SAN_MARINO;
+    field public static final com.mapbox.search.Country SAO_TOME_AND_PRINCIPE;
+    field public static final com.mapbox.search.Country SAUDI_ARABIA;
+    field public static final com.mapbox.search.Country SENEGAL;
+    field public static final com.mapbox.search.Country SERBIA;
+    field public static final com.mapbox.search.Country SEYCHELLES;
+    field public static final com.mapbox.search.Country SIERRA_LEONE;
+    field public static final com.mapbox.search.Country SINGAPORE;
+    field public static final com.mapbox.search.Country SINT_MAARTEN;
+    field public static final com.mapbox.search.Country SLOVAKIA;
+    field public static final com.mapbox.search.Country SLOVENIA;
+    field public static final com.mapbox.search.Country SOLOMON_ISLANDS;
+    field public static final com.mapbox.search.Country SOMALIA;
+    field public static final com.mapbox.search.Country SOUTH_AFRICA;
+    field public static final com.mapbox.search.Country SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS;
+    field public static final com.mapbox.search.Country SOUTH_KOREA;
+    field public static final com.mapbox.search.Country SOUTH_SUDAN;
+    field public static final com.mapbox.search.Country SPAIN;
+    field public static final com.mapbox.search.Country SRI_LANKA;
+    field public static final com.mapbox.search.Country ST_BARTHELEMY;
+    field public static final com.mapbox.search.Country ST_HELENA;
+    field public static final com.mapbox.search.Country ST_KITTS_AND_NEVIS;
+    field public static final com.mapbox.search.Country ST_LUCIA;
+    field public static final com.mapbox.search.Country ST_MARTIN;
+    field public static final com.mapbox.search.Country ST_PIERRE_AND_MIQUELON;
+    field public static final com.mapbox.search.Country ST_VINCENT_AND_GRENADINES;
+    field public static final com.mapbox.search.Country SUDAN;
+    field public static final com.mapbox.search.Country SURINAME;
+    field public static final com.mapbox.search.Country SVALBARD_AND_JAN_MAYEN;
+    field public static final com.mapbox.search.Country SWAZILAND;
+    field public static final com.mapbox.search.Country SWEDEN;
+    field public static final com.mapbox.search.Country SWITZERLAND;
+    field public static final com.mapbox.search.Country SYRIA;
+    field public static final com.mapbox.search.Country TAIWAN;
+    field public static final com.mapbox.search.Country TAJIKISTAN;
+    field public static final com.mapbox.search.Country TANZANIA;
+    field public static final com.mapbox.search.Country THAILAND;
+    field public static final com.mapbox.search.Country TIMOR_LESTE;
+    field public static final com.mapbox.search.Country TOGO;
+    field public static final com.mapbox.search.Country TOKELAU;
+    field public static final com.mapbox.search.Country TONGA;
+    field public static final com.mapbox.search.Country TRINIDAD_AND_TOBAGO;
+    field public static final com.mapbox.search.Country TUNISIA;
+    field public static final com.mapbox.search.Country TURKEY;
+    field public static final com.mapbox.search.Country TURKMENISTAN;
+    field public static final com.mapbox.search.Country TURKS_AND_CAICOS_ISLANDS;
+    field public static final com.mapbox.search.Country TUVALU;
+    field public static final com.mapbox.search.Country UGANDA;
+    field public static final com.mapbox.search.Country UKRAINE;
+    field public static final com.mapbox.search.Country UNITED_ARAB_EMIRATES;
+    field public static final com.mapbox.search.Country UNITED_KINGDOM;
+    field public static final com.mapbox.search.Country UNITED_STATES;
+    field public static final com.mapbox.search.Country URUGUAY;
+    field public static final com.mapbox.search.Country US_OUTLYING_ISLANDS;
+    field public static final com.mapbox.search.Country US_VIRGIN_ISLANDS;
+    field public static final com.mapbox.search.Country UZBEKISTAN;
+    field public static final com.mapbox.search.Country VANUATU;
+    field public static final com.mapbox.search.Country VATICAN_CITY;
+    field public static final com.mapbox.search.Country VENEZUELA;
+    field public static final com.mapbox.search.Country VIETNAM;
+    field public static final com.mapbox.search.Country WALLIS_AND_FUTUNA;
+    field public static final com.mapbox.search.Country WESTERN_SAHARA;
+    field public static final com.mapbox.search.Country YEMEN;
+    field public static final com.mapbox.search.Country ZAMBIA;
+    field public static final com.mapbox.search.Country ZIMBABWE;
+  }
+
+  public interface DataProviderInitializationCallback {
+    method public void onError(com.mapbox.search.record.IndexableDataProvider<?> dataProvider, Exception e);
+    method public void onInitialized(com.mapbox.search.record.IndexableDataProvider<?> dataProvider);
+  }
+
+  public interface DistanceCalculator {
+    method public double distance(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
+    method public default static double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class EtaType implements android.os.Parcelable {
+    ctor public EtaType(String rawName);
+    method public String getRawName();
+    property public final String rawName;
+    field public static final com.mapbox.search.EtaType NAVIGATION;
+  }
+
+  public interface HighlightsCalculator {
+    method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> highlights(String name, String query);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
+    ctor public ImageInfo(String url, @Px int width, @Px int height);
+    method public int getHeight();
+    method public String getUrl();
+    method public int getWidth();
+    property public final int height;
+    property public final String url;
+    property public final int width;
+  }
+
+  public final class ImageInfoKt {
+  }
+
+  public interface IndexableDataProvidersRegistry {
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask register(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, int priority, java.util.concurrent.Executor executor, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask register(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, int priority, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregister(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregister(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
+  }
+
+  public static interface IndexableDataProvidersRegistry.Callback {
+    method public void onError(Exception e);
+    method public void onSuccess();
+  }
+
+  @kotlinx.parcelize.Parcelize public final class Language implements android.os.Parcelable {
+    ctor public Language(String code);
+    method public String getCode();
+    property public final String code;
+    field public static final com.mapbox.search.Language ALBANIAN;
+    field public static final com.mapbox.search.Language ARABIC;
+    field public static final com.mapbox.search.Language BOSNIAN;
+    field public static final com.mapbox.search.Language BULGARIAN;
+    field public static final com.mapbox.search.Language CATALAN;
+    field public static final com.mapbox.search.Language CHINESE;
+    field public static final com.mapbox.search.Language CHINESE_SIMPLIFIED;
+    field public static final com.mapbox.search.Language CHINESE_TRADITIONAL;
+    field public static final com.mapbox.search.Language CZECH;
+    field public static final com.mapbox.search.Language DANISH;
+    field public static final com.mapbox.search.Language DUTCH;
+    field public static final com.mapbox.search.Language ENGLISH;
+    field public static final com.mapbox.search.Language FINNISH;
+    field public static final com.mapbox.search.Language FRENCH;
+    field public static final com.mapbox.search.Language GEORGIAN;
+    field public static final com.mapbox.search.Language GERMAN;
+    field public static final com.mapbox.search.Language HEBREW;
+    field public static final com.mapbox.search.Language HUNGARIAN;
+    field public static final com.mapbox.search.Language ICELANDIC;
+    field public static final com.mapbox.search.Language INDONESIAN;
+    field public static final com.mapbox.search.Language ITALIAN;
+    field public static final com.mapbox.search.Language JAPANESE;
+    field public static final com.mapbox.search.Language KAZAKH;
+    field public static final com.mapbox.search.Language KOREAN;
+    field public static final com.mapbox.search.Language LATVIAN;
+    field public static final com.mapbox.search.Language MONGOLIAN;
+    field public static final com.mapbox.search.Language NORWEGIAN_BOKMAL;
+    field public static final com.mapbox.search.Language POLISH;
+    field public static final com.mapbox.search.Language PORTUGUESE;
+    field public static final com.mapbox.search.Language ROMANIAN;
+    field public static final com.mapbox.search.Language SERBIAN;
+    field public static final com.mapbox.search.Language SLOVAK;
+    field public static final com.mapbox.search.Language SLOVENIAN;
+    field public static final com.mapbox.search.Language SPANISH;
+    field public static final com.mapbox.search.Language SWEDISH;
+    field public static final com.mapbox.search.Language TAGALOG;
+    field public static final com.mapbox.search.Language THAI;
+    field public static final com.mapbox.search.Language TURKISH;
+  }
+
+  public final class MapboxSearchSdk {
+    method public static void addDataProviderInitializationCallback(com.mapbox.search.DataProviderInitializationCallback callback);
+    method public static com.mapbox.search.CategorySearchEngine getCategorySearchEngine();
+    method public static com.mapbox.search.OfflineSearchEngine getOfflineSearchEngine();
+    method public static com.mapbox.search.ReverseGeocodingSearchEngine getReverseGeocodingSearchEngine();
+    method public static com.mapbox.search.SearchEngine getSearchEngine();
+    method public static com.mapbox.search.ServiceProvider getServiceProvider();
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings(), com.mapbox.search.OfflineSearchSettings offlineSearchSettings = OfflineSearchSettings());
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings());
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application));
+    method public static void initialize(android.app.Application application, String accessToken);
+    method public static void removeDataProviderInitializationCallback(com.mapbox.search.DataProviderInitializationCallback callback);
+    method public static void setAccessToken(String accessToken);
+    field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
+    field public static final int LAYER_PRIORITY_FAVORITES = 101; // 0x65
+    field public static final int LAYER_PRIORITY_HISTORY = 100; // 0x64
+  }
+
+  public final class OfflineIndexChangeEvent {
+    ctor public OfflineIndexChangeEvent(com.mapbox.search.OfflineIndexChangeEvent.EventType type, String regionId, String dataset, String version);
+    method public String getDataset();
+    method public String getRegionId();
+    method public com.mapbox.search.OfflineIndexChangeEvent.EventType getType();
+    method public String getVersion();
+    property public final String dataset;
+    property public final String regionId;
+    property public final com.mapbox.search.OfflineIndexChangeEvent.EventType type;
+    property public final String version;
+  }
+
+  public enum OfflineIndexChangeEvent.EventType {
+    enum_constant public static final com.mapbox.search.OfflineIndexChangeEvent.EventType ADD;
+    enum_constant public static final com.mapbox.search.OfflineIndexChangeEvent.EventType REMOVE;
+    enum_constant public static final com.mapbox.search.OfflineIndexChangeEvent.EventType UPDATE;
+  }
+
+  public final class OfflineIndexChangeEventKt {
+  }
+
+  public final class OfflineIndexErrorEvent {
+    ctor public OfflineIndexErrorEvent(String regionId, String dataset, String version, String tile, String message);
+    method public String getDataset();
+    method public String getMessage();
+    method public String getRegionId();
+    method public String getTile();
+    method public String getVersion();
+    property public final String dataset;
+    property public final String message;
+    property public final String regionId;
+    property public final String tile;
+    property public final String version;
+  }
+
+  public final class OfflineIndexErrorEventKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineReverseGeoOptions implements android.os.Parcelable {
+    ctor public OfflineReverseGeoOptions(com.mapbox.geojson.Point center);
+    method public com.mapbox.geojson.Point getCenter();
+    property public final com.mapbox.geojson.Point center;
+  }
+
+  public final class OfflineReverseGeoOptionsKt {
+  }
+
+  public interface OfflineSearchEngine {
+    method public void addEngineReadyCallback(java.util.concurrent.Executor executor, com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
+    method public default void addEngineReadyCallback(com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
+    method public void addOnIndexChangeListener(java.util.concurrent.Executor executor, com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public default void addOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset, String version);
+    method public default com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset, String version);
+    method public default com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method public com.mapbox.common.TileStore getTileStore();
+    method public void removeEngineReadyCallback(com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
+    method public void removeOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
+    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
+    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
+    method public void selectTileset(String? dataset, String? version);
+    property public abstract com.mapbox.common.TileStore tileStore;
+  }
+
+  public static interface OfflineSearchEngine.EngineReadyCallback {
+    method public void onEngineReady();
+    method public void onError(Exception e);
+  }
+
+  public static interface OfflineSearchEngine.OnIndexChangeListener {
+    method public void onError(com.mapbox.search.OfflineIndexErrorEvent event);
+    method public void onIndexChange(com.mapbox.search.OfflineIndexChangeEvent event);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public Integer? getLimit();
+    method public com.mapbox.geojson.Point? getOrigin();
+    method public com.mapbox.geojson.Point? getProximity();
+    method public com.mapbox.search.OfflineSearchOptions.Builder toBuilder();
+    property public final Integer? limit;
+    property public final com.mapbox.geojson.Point? origin;
+    property public final com.mapbox.geojson.Point? proximity;
+  }
+
+  public static final class OfflineSearchOptions.Builder {
+    ctor public OfflineSearchOptions.Builder();
+    method public com.mapbox.search.OfflineSearchOptions build();
+    method public com.mapbox.search.OfflineSearchOptions.Builder limit(int limit);
+    method public com.mapbox.search.OfflineSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
+    method public com.mapbox.search.OfflineSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
+  }
+
+  public final class OfflineSearchOptionsKt {
+  }
+
+  public final class OfflineSearchSettings {
+    ctor public OfflineSearchSettings(com.mapbox.common.TileStore? tileStore = null, java.net.URI? tilesBaseUri = null);
+    method public com.mapbox.common.TileStore? getTileStore();
+    method public java.net.URI? getTilesBaseUri();
+    method public com.mapbox.search.OfflineSearchSettings.Builder toBuilder();
+    property public final com.mapbox.common.TileStore? tileStore;
+    property public final java.net.URI? tilesBaseUri;
+    field public static final String DEFAULT_DATASET = "test-dataset";
+    field public static final String DEFAULT_VERSION = "";
+  }
+
+  public static final class OfflineSearchSettings.Builder {
+    ctor public OfflineSearchSettings.Builder();
+    method public com.mapbox.search.OfflineSearchSettings build();
+    method public com.mapbox.search.OfflineSearchSettings.Builder tileStore(com.mapbox.common.TileStore? tileStore);
+    method public com.mapbox.search.OfflineSearchSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
+  }
+
+  public enum QueryType {
+    enum_constant public static final com.mapbox.search.QueryType ADDRESS;
+    enum_constant public static final com.mapbox.search.QueryType CATEGORY;
+    enum_constant public static final com.mapbox.search.QueryType COUNTRY;
+    enum_constant public static final com.mapbox.search.QueryType DISTRICT;
+    enum_constant public static final com.mapbox.search.QueryType LOCALITY;
+    enum_constant public static final com.mapbox.search.QueryType NEIGHBORHOOD;
+    enum_constant public static final com.mapbox.search.QueryType PLACE;
+    enum_constant public static final com.mapbox.search.QueryType POI;
+    enum_constant public static final com.mapbox.search.QueryType POSTCODE;
+    enum_constant public static final com.mapbox.search.QueryType REGION;
+    enum_constant public static final com.mapbox.search.QueryType STREET;
+  }
+
+  public final class QueryTypeKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class RequestOptions implements android.os.Parcelable {
+    method public com.mapbox.search.SearchOptions getOptions();
+    method public boolean getOriginRewritten();
+    method public boolean getProximityRewritten();
+    method public String getQuery();
+    property public final com.mapbox.search.SearchOptions options;
+    property public final boolean originRewritten;
+    property public final boolean proximityRewritten;
+    property public final String query;
+  }
+
+  public final class RequestOptionsKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class ResponseInfo implements android.os.Parcelable {
+    method public com.mapbox.search.RequestOptions getRequestOptions();
+    property public final com.mapbox.search.RequestOptions requestOptions;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class ReverseGeoOptions implements android.os.Parcelable {
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center);
+    method public com.mapbox.geojson.Point getCenter();
+    method public java.util.List<com.mapbox.search.Country>? getCountries();
+    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public Integer? getLimit();
+    method public com.mapbox.search.ReverseMode? getReverseMode();
+    method public java.util.List<com.mapbox.search.QueryType>? getTypes();
+    method public com.mapbox.search.ReverseGeoOptions.Builder toBuilder();
+    property public final com.mapbox.geojson.Point center;
+    property public final java.util.List<com.mapbox.search.Country>? countries;
+    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final Integer? limit;
+    property public final com.mapbox.search.ReverseMode? reverseMode;
+    property public final java.util.List<com.mapbox.search.QueryType>? types;
+  }
+
+  public static final class ReverseGeoOptions.Builder {
+    ctor public ReverseGeoOptions.Builder(com.mapbox.geojson.Point center);
+    method public com.mapbox.search.ReverseGeoOptions build();
+    method public com.mapbox.search.ReverseGeoOptions.Builder countries(com.mapbox.search.Country... countries);
+    method public com.mapbox.search.ReverseGeoOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
+    method public com.mapbox.search.ReverseGeoOptions.Builder languages(com.mapbox.search.Language... languages);
+    method public com.mapbox.search.ReverseGeoOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.ReverseGeoOptions.Builder limit(int limit);
+    method public com.mapbox.search.ReverseGeoOptions.Builder reverseMode(com.mapbox.search.ReverseMode reverseMode);
+    method public com.mapbox.search.ReverseGeoOptions.Builder types(com.mapbox.search.QueryType... types);
+    method public com.mapbox.search.ReverseGeoOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
+  }
+
+  public final class ReverseGeoOptionsKt {
+  }
+
+  public interface ReverseGeocodingSearchEngine {
+    method public com.mapbox.search.ApiType getApiType();
+    method public com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
+    property public abstract com.mapbox.search.ApiType apiType;
+  }
+
+  public enum ReverseMode {
+    enum_constant public static final com.mapbox.search.ReverseMode DISTANCE;
+    enum_constant public static final com.mapbox.search.ReverseMode SCORE;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class RouteOptions implements android.os.Parcelable {
+    ctor public RouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.RouteOptions.Deviation deviation);
+    method public com.mapbox.search.RouteOptions.Deviation getDeviation();
+    method public java.util.List<com.mapbox.geojson.Point> getRoute();
+    property public final com.mapbox.search.RouteOptions.Deviation deviation;
+    property public final java.util.List<com.mapbox.geojson.Point> route;
+  }
+
+  public abstract static class RouteOptions.Deviation implements android.os.Parcelable {
+    ctor public RouteOptions.Deviation();
+    method public abstract com.mapbox.search.RouteOptions.Deviation.SarType? getSarType();
+    property public abstract com.mapbox.search.RouteOptions.Deviation.SarType? sarType;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class RouteOptions.Deviation.SarType implements android.os.Parcelable {
+    ctor public RouteOptions.Deviation.SarType(String rawName);
+    method public String getRawName();
+    property public final String rawName;
+    field public static final com.mapbox.search.RouteOptions.Deviation.SarType ISOCHROME;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class RouteOptions.Deviation.Time extends com.mapbox.search.RouteOptions.Deviation {
+    ctor public RouteOptions.Deviation.Time(long value, java.util.concurrent.TimeUnit unit, com.mapbox.search.RouteOptions.Deviation.SarType? sarType = com.mapbox.search.RouteOptions.Deviation.SarType.ISOCHROME);
+    ctor public RouteOptions.Deviation.Time(long value, java.util.concurrent.TimeUnit unit);
+    method public com.mapbox.search.RouteOptions.Deviation.SarType? getSarType();
+    method public java.util.concurrent.TimeUnit getUnit();
+    method public long getValue();
+    property public com.mapbox.search.RouteOptions.Deviation.SarType? sarType;
+    property public final java.util.concurrent.TimeUnit unit;
+    property public final long value;
+  }
+
+  public interface SearchCallback {
+    method public void onError(Exception e);
+    method public void onResults(java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public interface SearchEngine {
+    method public com.mapbox.search.ApiType getApiType();
+    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
+    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
+    method public com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
+    method public com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public default com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    property public abstract com.mapbox.search.ApiType apiType;
+  }
+
+  public interface SearchMultipleSelectionCallback {
+    method public void onError(Exception e);
+    method public void onResult(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchNavigationOptions implements android.os.Parcelable {
+    ctor public SearchNavigationOptions(com.mapbox.search.SearchNavigationProfile navigationProfile, com.mapbox.search.EtaType? etaType = null);
+    ctor public SearchNavigationOptions(com.mapbox.search.SearchNavigationProfile navigationProfile);
+    method public com.mapbox.search.EtaType? getEtaType();
+    method public com.mapbox.search.SearchNavigationProfile getNavigationProfile();
+    property public final com.mapbox.search.EtaType? etaType;
+    property public final com.mapbox.search.SearchNavigationProfile navigationProfile;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchNavigationProfile implements android.os.Parcelable {
+    ctor public SearchNavigationProfile(String rawName);
+    method public String getRawName();
+    property public final String rawName;
+    field public static final com.mapbox.search.SearchNavigationProfile CYCLING;
+    field public static final com.mapbox.search.SearchNavigationProfile DRIVING;
+    field public static final com.mapbox.search.SearchNavigationProfile WALKING;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public com.mapbox.geojson.BoundingBox? getBoundingBox();
+    method public java.util.List<com.mapbox.search.Country>? getCountries();
+    method public Boolean? getFuzzyMatch();
+    method public boolean getIgnoreIndexableRecords();
+    method public Double? getIndexableRecordsDistanceThresholdMeters();
+    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public Integer? getLimit();
+    method public com.mapbox.search.SearchNavigationOptions? getNavigationOptions();
+    method public com.mapbox.geojson.Point? getOrigin();
+    method public com.mapbox.geojson.Point? getProximity();
+    method public Integer? getRequestDebounce();
+    method public com.mapbox.search.RouteOptions? getRouteOptions();
+    method public java.util.List<com.mapbox.search.QueryType>? getTypes();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
+    method public com.mapbox.search.SearchOptions.Builder toBuilder();
+    property public final com.mapbox.geojson.BoundingBox? boundingBox;
+    property public final java.util.List<com.mapbox.search.Country>? countries;
+    property public final Boolean? fuzzyMatch;
+    property public final boolean ignoreIndexableRecords;
+    property public final Double? indexableRecordsDistanceThresholdMeters;
+    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final Integer? limit;
+    property public final com.mapbox.search.SearchNavigationOptions? navigationOptions;
+    property public final com.mapbox.geojson.Point? origin;
+    property public final com.mapbox.geojson.Point? proximity;
+    property public final Integer? requestDebounce;
+    property public final com.mapbox.search.RouteOptions? routeOptions;
+    property public final java.util.List<com.mapbox.search.QueryType>? types;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
+  }
+
+  public static final class SearchOptions.Builder {
+    ctor public SearchOptions.Builder();
+    method public com.mapbox.search.SearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
+    method public com.mapbox.search.SearchOptions build();
+    method public com.mapbox.search.SearchOptions.Builder countries(com.mapbox.search.Country... countries);
+    method public com.mapbox.search.SearchOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
+    method public com.mapbox.search.SearchOptions.Builder fuzzyMatch(boolean fuzzyMatch);
+    method public com.mapbox.search.SearchOptions.Builder ignoreIndexableRecords(boolean ignoreIndexableRecords);
+    method public com.mapbox.search.SearchOptions.Builder indexableRecordsDistanceThresholdMeters(Double? threshold);
+    method public com.mapbox.search.SearchOptions.Builder languages(com.mapbox.search.Language... languages);
+    method public com.mapbox.search.SearchOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.SearchOptions.Builder limit(int limit);
+    method public com.mapbox.search.SearchOptions.Builder navigationOptions(com.mapbox.search.SearchNavigationOptions navigationOptions);
+    method public com.mapbox.search.SearchOptions.Builder origin(com.mapbox.geojson.Point origin);
+    method public com.mapbox.search.SearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
+    method public com.mapbox.search.SearchOptions.Builder requestDebounce(int debounce);
+    method public com.mapbox.search.SearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
+    method public com.mapbox.search.SearchOptions.Builder types(com.mapbox.search.QueryType... types);
+    method public com.mapbox.search.SearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
+    method public com.mapbox.search.SearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
+  }
+
+  public final class SearchOptionsKt {
+  }
+
+  public final class SearchRequestException extends java.lang.RuntimeException {
+    ctor public SearchRequestException(String message, int code, Exception? cause = null);
+    method public Exception? getCause();
+    method public int getCode();
+    method public boolean isClientError();
+    method public boolean isServerError();
+    property public Exception? cause;
+    property public final int code;
+    property public String message;
+  }
+
+  public interface SearchRequestTask {
+    method public void cancel();
+  }
+
+  public final class SearchRequestTaskKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {
+    method public Double? getAverageRating();
+    method public String? getCpsJson();
+    method public String? getDescription();
+    method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
+    method public com.mapbox.search.metadata.OpenHours? getOpenHours();
+    method public java.util.List<com.mapbox.search.ImageInfo>? getOtherPhotos();
+    method public com.mapbox.search.metadata.ParkingData? getParking();
+    method public String? getPhone();
+    method public java.util.List<com.mapbox.search.ImageInfo>? getPrimaryPhotos();
+    method public Integer? getReviewCount();
+    method public String? getWebsite();
+    property public final Double? averageRating;
+    property public final String? cpsJson;
+    property public final String? description;
+    property public final java.util.Map<java.lang.String,java.lang.String> extraData;
+    property public final com.mapbox.search.metadata.OpenHours? openHours;
+    property public final java.util.List<com.mapbox.search.ImageInfo>? otherPhotos;
+    property public final com.mapbox.search.metadata.ParkingData? parking;
+    property public final String? phone;
+    property public final java.util.List<com.mapbox.search.ImageInfo>? primaryPhotos;
+    property public final Integer? reviewCount;
+    property public final String? website;
+  }
+
+  public final class SearchSdkSettings {
+    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null, int maxHistoryRecordsAmount = 100);
+    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
+    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    method public String getGeocodingEndpointBaseUrl();
+    method public int getMaxHistoryRecordsAmount();
+    method public String? getSingleBoxSearchBaseUrl();
+    method public com.mapbox.search.SearchSdkSettings.Builder toBuilder();
+    property public final String geocodingEndpointBaseUrl;
+    property public final int maxHistoryRecordsAmount;
+    property public final String? singleBoxSearchBaseUrl;
+    field public static final int DEFAULT_MAX_HISTORY_RECORDS_AMOUNT = 100; // 0x64
+    field public static final int MAX_HISTORY_RECORDS_AMOUNT_HIGHER_BOUND = 100; // 0x64
+  }
+
+  public static final class SearchSdkSettings.Builder {
+    ctor public SearchSdkSettings.Builder();
+    method public com.mapbox.search.SearchSdkSettings build();
+    method public com.mapbox.search.SearchSdkSettings.Builder geocodingEndpointBaseUrl(String baseUrl);
+    method public com.mapbox.search.SearchSdkSettings.Builder maxHistoryRecordsAmount(int amount);
+    method public com.mapbox.search.SearchSdkSettings.Builder singleBoxSearchBaseUrl(String? baseUrl);
+  }
+
+  public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
+    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onResult(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  public interface SearchSuggestionsCallback {
+    method public void onError(Exception e);
+    method public void onSuggestions(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SelectOptions implements android.os.Parcelable {
+    ctor public SelectOptions(boolean addResultToHistory = true);
+    method public boolean getAddResultToHistory();
+    property public final boolean addResultToHistory;
+  }
+
+  public interface ServiceProvider {
+    method public com.mapbox.search.analytics.AnalyticsService analyticsService();
+    method public com.mapbox.search.DistanceCalculator distanceCalculator(double latitude);
+    method public com.mapbox.search.record.FavoritesDataProvider favoritesDataProvider();
+    method public com.mapbox.search.IndexableDataProvidersRegistry globalDataProvidersRegistry();
+    method public com.mapbox.search.HighlightsCalculator highlightsCalculator();
+    method public com.mapbox.search.record.HistoryDataProvider historyDataProvider();
+    method public com.mapbox.android.core.location.LocationEngine locationEngine();
+  }
+
+  public fun interface ViewportProvider {
+    method public com.mapbox.geojson.BoundingBox? getViewport();
+  }
+
+}
+
+package com.mapbox.search.analytics {
+
+  public interface AnalyticsService {
+    method public String createRawFeedbackEvent(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+    method public String createRawFeedbackEvent(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo);
+    method public void sendFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
+    method public void sendFeedback(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
+    method public void sendFeedback(com.mapbox.search.record.HistoryRecord historyRecord, com.mapbox.search.analytics.FeedbackEvent event);
+    method public void sendFeedback(com.mapbox.search.record.FavoriteRecord favoriteRecord, com.mapbox.search.analytics.FeedbackEvent event);
+    method public void sendMissingResultFeedback(com.mapbox.search.analytics.MissingResultFeedbackEvent event);
+    method public void sendRawFeedbackEvent(String rawFeedbackEvent, com.mapbox.search.analytics.FeedbackEvent event);
+  }
+
+  public final class FeedbackEvent {
+    ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null);
+    ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null, android.graphics.Bitmap? screenshot = null);
+    ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null);
+    ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason);
+    method public String getReason();
+    method public android.graphics.Bitmap? getScreenshot();
+    method public String? getSessionId();
+    method public String? getText();
+    property public final String reason;
+    property public final android.graphics.Bitmap? screenshot;
+    property public final String? sessionId;
+    property public final String? text;
+  }
+
+  @StringDef({com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_NAME, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_ADDRESS, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_LOCATION, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.OTHER}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface FeedbackEvent.FeedbackReason {
+    field public static final String INCORRECT_ADDRESS = "incorrect_address";
+    field public static final String INCORRECT_LOCATION = "incorrect_location";
+    field public static final String INCORRECT_NAME = "incorrect_name";
+    field public static final String OTHER = "other_result_issue";
+  }
+
+  public final class MissingResultFeedbackEvent {
+    ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null);
+    ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null);
+    ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null);
+    ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo);
+    method public com.mapbox.search.ResponseInfo getResponseInfo();
+    method public android.graphics.Bitmap? getScreenshot();
+    method public String? getSessionId();
+    method public String? getText();
+    property public final com.mapbox.search.ResponseInfo responseInfo;
+    property public final android.graphics.Bitmap? screenshot;
+    property public final String? sessionId;
+    property public final String? text;
+  }
+
+}
+
+package com.mapbox.search.core {
+
+  public final class CoreAliasesKt {
+  }
+
+}
+
+package com.mapbox.search.location {
+
+  public final class LocationUtilsKt {
+  }
+
+}
+
+package com.mapbox.search.metadata {
+
+  public abstract class OpenHours {
+    ctor public OpenHours();
+  }
+
+  public static final class OpenHours.AlwaysOpen extends com.mapbox.search.metadata.OpenHours {
+    field public static final com.mapbox.search.metadata.OpenHours.AlwaysOpen INSTANCE;
+  }
+
+  public static final class OpenHours.PermanentlyClosed extends com.mapbox.search.metadata.OpenHours {
+    field public static final com.mapbox.search.metadata.OpenHours.PermanentlyClosed INSTANCE;
+  }
+
+  public static final class OpenHours.Scheduled extends com.mapbox.search.metadata.OpenHours {
+    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.metadata.OpenPeriod> periods);
+    method public java.util.List<com.mapbox.search.metadata.OpenPeriod> getPeriods();
+    property public final java.util.List<com.mapbox.search.metadata.OpenPeriod> periods;
+  }
+
+  public static final class OpenHours.TemporaryClosed extends com.mapbox.search.metadata.OpenHours {
+    field public static final com.mapbox.search.metadata.OpenHours.TemporaryClosed INSTANCE;
+  }
+
+  public final class OpenHoursKt {
+  }
+
+  public final class OpenPeriod {
+    ctor public OpenPeriod(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
+    method public com.mapbox.search.metadata.WeekTimestamp component1();
+    method public com.mapbox.search.metadata.WeekTimestamp component2();
+    method public com.mapbox.search.metadata.OpenPeriod copy(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
+    method public com.mapbox.search.metadata.WeekTimestamp getClosed();
+    method public com.mapbox.search.metadata.WeekTimestamp getOpen();
+    property public final com.mapbox.search.metadata.WeekTimestamp closed;
+    property public final com.mapbox.search.metadata.WeekTimestamp open;
+  }
+
+  public final class OpenPeriodKt {
+  }
+
+  public final class ParkingData {
+    ctor public ParkingData(int totalCapacity, int reservedForDisabilities);
+    method public int getReservedForDisabilities();
+    method public int getTotalCapacity();
+    property public final int reservedForDisabilities;
+    property public final int totalCapacity;
+  }
+
+  public final class ParkingDataKt {
+  }
+
+  public enum WeekDay {
+    method public final int getIsoCode();
+    property public final int isoCode;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay FRIDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay MONDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay SATURDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay SUNDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay THURSDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay TUESDAY;
+    enum_constant public static final com.mapbox.search.metadata.WeekDay WEDNESDAY;
+  }
+
+  public final class WeekTimestamp {
+    ctor public WeekTimestamp(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
+    method public com.mapbox.search.metadata.WeekDay component1();
+    method public int component2();
+    method public int component3();
+    method public com.mapbox.search.metadata.WeekTimestamp copy(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
+    method public com.mapbox.search.metadata.WeekDay getDay();
+    method public int getHour();
+    method public int getMinute();
+    property public final com.mapbox.search.metadata.WeekDay day;
+    property public final int hour;
+    property public final int minute;
+  }
+
+}
+
+package com.mapbox.search.record {
+
+  @kotlinx.parcelize.Parcelize public final class FavoriteRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
+    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public String? getDescriptionText();
+    method public String getId();
+    method public java.util.List<java.lang.String> getIndexTokens();
+    method public String? getMakiIcon();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
+    method public String getName();
+    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public com.mapbox.search.result.SearchResultType getType();
+    property public com.mapbox.search.result.SearchAddress? address;
+    property public java.util.List<java.lang.String>? categories;
+    property public com.mapbox.geojson.Point coordinate;
+    property public String? descriptionText;
+    property public String id;
+    property public java.util.List<java.lang.String> indexTokens;
+    property public String? makiIcon;
+    property public com.mapbox.search.SearchResultMetadata? metadata;
+    property public String name;
+    property public java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public com.mapbox.search.result.SearchResultType type;
+  }
+
+  public interface FavoritesDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.FavoriteRecord> {
+    field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.favorite";
+  }
+
+  public interface HistoryDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.HistoryRecord> {
+    field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.history";
+  }
+
+  @kotlinx.parcelize.Parcelize public final class HistoryRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
+    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point? coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point? getCoordinate();
+    method public String? getDescriptionText();
+    method public String getId();
+    method public java.util.List<java.lang.String> getIndexTokens();
+    method public String? getMakiIcon();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
+    method public String getName();
+    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public long getTimestamp();
+    method public com.mapbox.search.result.SearchResultType getType();
+    property public com.mapbox.search.result.SearchAddress? address;
+    property public java.util.List<java.lang.String>? categories;
+    property public com.mapbox.geojson.Point? coordinate;
+    property public String? descriptionText;
+    property public String id;
+    property public java.util.List<java.lang.String> indexTokens;
+    property public String? makiIcon;
+    property public com.mapbox.search.SearchResultMetadata? metadata;
+    property public String name;
+    property public java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public final long timestamp;
+    property public com.mapbox.search.result.SearchResultType type;
+  }
+
+  public interface IndexableDataProvider<R extends com.mapbox.search.record.IndexableRecord> {
+    method public com.mapbox.search.AsyncOperationTask add(R record, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask add(R record, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.AsyncOperationTask addAll(java.util.List<? extends R> records, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask addAll(java.util.List<? extends R> records, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.AsyncOperationTask clear(java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask clear(com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.AsyncOperationTask contains(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.AsyncOperationTask contains(String id, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.AsyncOperationTask get(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<? super R> callback);
+    method public default com.mapbox.search.AsyncOperationTask get(String id, com.mapbox.search.CompletionCallback<? super R> callback);
+    method public com.mapbox.search.AsyncOperationTask getAll(java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
+    method public default com.mapbox.search.AsyncOperationTask getAll(com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
+    method public String getDataProviderName();
+    method public com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.AsyncOperationTask remove(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.AsyncOperationTask remove(String id, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.AsyncOperationTask update(R record, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask update(R record, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    property public abstract String dataProviderName;
+  }
+
+  public interface IndexableDataProviderEngineLayer {
+    method public void add(com.mapbox.search.record.IndexableRecord record);
+    method public void addAll(Iterable<? extends com.mapbox.search.record.IndexableRecord> records);
+    method public void clear();
+    method public void executeBatchUpdate(com.mapbox.search.record.IndexableDataProviderEngineLayer.BatchUpdateOperation batchUpdateOperation);
+    method public void remove(String id);
+    method public void removeAll(Iterable<java.lang.String> ids);
+    method public void update(com.mapbox.search.record.IndexableRecord record);
+  }
+
+  public static fun interface IndexableDataProviderEngineLayer.BatchUpdateOperation {
+    method public void execute(com.mapbox.search.record.IndexableDataProviderEngineLayer engineLayer);
+  }
+
+  public interface IndexableRecord extends android.os.Parcelable {
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point? getCoordinate();
+    method public String? getDescriptionText();
+    method public String getId();
+    method public java.util.List<java.lang.String> getIndexTokens();
+    method public String? getMakiIcon();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
+    method public String getName();
+    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public com.mapbox.search.result.SearchResultType getType();
+    property public abstract com.mapbox.search.result.SearchAddress? address;
+    property public abstract java.util.List<java.lang.String>? categories;
+    property public abstract com.mapbox.geojson.Point? coordinate;
+    property public abstract String? descriptionText;
+    property public abstract String id;
+    property public abstract java.util.List<java.lang.String> indexTokens;
+    property public abstract String? makiIcon;
+    property public abstract com.mapbox.search.SearchResultMetadata? metadata;
+    property public abstract String name;
+    property public abstract java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public abstract com.mapbox.search.result.SearchResultType type;
+  }
+
+  public final class IndexableRecordKt {
+  }
+
+  public interface LocalDataProvider<R extends com.mapbox.search.record.IndexableRecord> extends com.mapbox.search.record.IndexableDataProvider<R> {
+    method public void addOnDataChangedListener(java.util.concurrent.Executor executor, com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
+    method public default void addOnDataChangedListener(com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
+    method public void removeOnDataChangedListener(com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
+  }
+
+  public static interface LocalDataProvider.OnDataChangedListener<R extends com.mapbox.search.record.IndexableRecord> {
+    method public void onDataChanged(java.util.List<? extends R> newData);
+  }
+
+}
+
+package com.mapbox.search.result {
+
+  public interface IndexableRecordSearchResult extends com.mapbox.search.result.SearchResult {
+    method public com.mapbox.search.record.IndexableRecord getRecord();
+    property public abstract com.mapbox.search.record.IndexableRecord record;
+  }
+
+  public final class OriginalResultTypeKt {
+  }
+
+  public final class OriginalSearchResultKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
+    ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
+    method public String getName();
+    method public com.mapbox.geojson.Point getPoint();
+    property public final String name;
+    property public final com.mapbox.geojson.Point point;
+  }
+
+  public final class RoutablePointKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchAddress implements android.os.Parcelable {
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null, String? country = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null);
+    ctor public SearchAddress(String? houseNumber = null);
+    method public String? formattedAddress(com.mapbox.search.result.SearchAddress.FormatStyle style = FormatStyle.Medium);
+    method public String? formattedAddress();
+    method public String? getCountry();
+    method public String? getDistrict();
+    method public String? getHouseNumber();
+    method public String? getLocality();
+    method public String? getNeighborhood();
+    method public String? getPlace();
+    method public String? getPostcode();
+    method public String? getRegion();
+    method public String? getStreet();
+    method public com.mapbox.search.result.SearchAddress.Builder toBuilder();
+    property public final String? country;
+    property public final String? district;
+    property public final String? houseNumber;
+    property public final String? locality;
+    property public final String? neighborhood;
+    property public final String? place;
+    property public final String? postcode;
+    property public final String? region;
+    property public final String? street;
+    field public static final String SEPARATOR = ", ";
+  }
+
+  public static final class SearchAddress.Builder {
+    ctor public SearchAddress.Builder();
+    method public com.mapbox.search.result.SearchAddress build();
+    method public com.mapbox.search.result.SearchAddress.Builder country(String country);
+    method public com.mapbox.search.result.SearchAddress.Builder district(String district);
+    method public com.mapbox.search.result.SearchAddress.Builder houseNumber(String houseNumber);
+    method public com.mapbox.search.result.SearchAddress.Builder locality(String locality);
+    method public com.mapbox.search.result.SearchAddress.Builder neighborhood(String neighborhood);
+    method public com.mapbox.search.result.SearchAddress.Builder place(String place);
+    method public com.mapbox.search.result.SearchAddress.Builder postcode(String postcode);
+    method public com.mapbox.search.result.SearchAddress.Builder region(String region);
+    method public com.mapbox.search.result.SearchAddress.Builder street(String street);
+  }
+
+  public static final class SearchAddress.FormatComponent {
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent COUNTRY;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent DISTRICT;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent HOUSE_NUMBER;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent LOCALITY;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent NEIGHBORHOOD;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent PLACE;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent POSTCODE;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent REGION;
+    field public static final com.mapbox.search.result.SearchAddress.FormatComponent STREET;
+  }
+
+  public abstract static class SearchAddress.FormatStyle {
+    ctor public SearchAddress.FormatStyle();
+  }
+
+  public static final class SearchAddress.FormatStyle.Custom extends com.mapbox.search.result.SearchAddress.FormatStyle {
+    ctor public SearchAddress.FormatStyle.Custom(java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> components);
+    ctor public SearchAddress.FormatStyle.Custom(com.mapbox.search.result.SearchAddress.FormatComponent... components);
+    method public java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> getComponents();
+    property public final java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> components;
+  }
+
+  public static final class SearchAddress.FormatStyle.Full extends com.mapbox.search.result.SearchAddress.FormatStyle {
+    field public static final com.mapbox.search.result.SearchAddress.FormatStyle.Full INSTANCE;
+  }
+
+  public static final class SearchAddress.FormatStyle.Long extends com.mapbox.search.result.SearchAddress.FormatStyle {
+    field public static final com.mapbox.search.result.SearchAddress.FormatStyle.Long INSTANCE;
+  }
+
+  public static final class SearchAddress.FormatStyle.Medium extends com.mapbox.search.result.SearchAddress.FormatStyle {
+    field public static final com.mapbox.search.result.SearchAddress.FormatStyle.Medium INSTANCE;
+  }
+
+  public static final class SearchAddress.FormatStyle.Short extends com.mapbox.search.result.SearchAddress.FormatStyle {
+    field public static final com.mapbox.search.result.SearchAddress.FormatStyle.Short INSTANCE;
+  }
+
+  public final class SearchAddressKt {
+  }
+
+  public interface SearchResult extends android.os.Parcelable {
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String> getCategories();
+    method public com.mapbox.geojson.Point? getCoordinate();
+    method public String? getDescriptionText();
+    method public Double? getDistanceMeters();
+    method public Double? getEtaMinutes();
+    method public String getId();
+    method public String? getMakiIcon();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
+    method public String getName();
+    method public com.mapbox.search.RequestOptions getRequestOptions();
+    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
+    property public abstract com.mapbox.search.result.SearchAddress? address;
+    property public abstract java.util.List<java.lang.String> categories;
+    property public abstract com.mapbox.geojson.Point? coordinate;
+    property public abstract String? descriptionText;
+    property public abstract Double? distanceMeters;
+    property public abstract Double? etaMinutes;
+    property public abstract String id;
+    property public abstract String? makiIcon;
+    property public abstract com.mapbox.search.SearchResultMetadata? metadata;
+    property public abstract String name;
+    property public abstract com.mapbox.search.RequestOptions requestOptions;
+    property public abstract java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public abstract java.util.List<com.mapbox.search.result.SearchResultType> types;
+  }
+
+  public final class SearchResultSuggestActionKt {
+  }
+
+  public enum SearchResultType {
+    enum_constant public static final com.mapbox.search.result.SearchResultType ADDRESS;
+    enum_constant public static final com.mapbox.search.result.SearchResultType COUNTRY;
+    enum_constant public static final com.mapbox.search.result.SearchResultType DISTRICT;
+    enum_constant public static final com.mapbox.search.result.SearchResultType LOCALITY;
+    enum_constant public static final com.mapbox.search.result.SearchResultType NEIGHBORHOOD;
+    enum_constant public static final com.mapbox.search.result.SearchResultType PLACE;
+    enum_constant public static final com.mapbox.search.result.SearchResultType POI;
+    enum_constant public static final com.mapbox.search.result.SearchResultType POSTCODE;
+    enum_constant public static final com.mapbox.search.result.SearchResultType REGION;
+    enum_constant public static final com.mapbox.search.result.SearchResultType STREET;
+  }
+
+  public final class SearchResultTypeKt {
+  }
+
+  public interface SearchSuggestion extends android.os.Parcelable {
+    method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public String? getDescriptionText();
+    method public Double? getDistanceMeters();
+    method public Double? getEtaMinutes();
+    method public String getId();
+    method public String? getMakiIcon();
+    method public String getName();
+    method public com.mapbox.search.RequestOptions getRequestOptions();
+    method public com.mapbox.search.result.SearchSuggestionType getType();
+    method public boolean isBatchResolveSupported();
+    property public abstract com.mapbox.search.result.SearchAddress? address;
+    property public abstract String? descriptionText;
+    property public abstract Double? distanceMeters;
+    property public abstract Double? etaMinutes;
+    property public abstract String id;
+    property public abstract boolean isBatchResolveSupported;
+    property public abstract String? makiIcon;
+    property public abstract String name;
+    property public abstract com.mapbox.search.RequestOptions requestOptions;
+    property public abstract com.mapbox.search.result.SearchSuggestionType type;
+  }
+
+  public abstract class SearchSuggestionType implements android.os.Parcelable {
+    ctor public SearchSuggestionType();
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Category extends com.mapbox.search.result.SearchSuggestionType {
+    method public String getCanonicalName();
+    property public final String canonicalName;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.IndexableRecordItem extends com.mapbox.search.result.SearchSuggestionType {
+    method public String getDataProviderName();
+    method public com.mapbox.search.result.SearchResultType getType();
+    method public boolean isFavoriteRecord();
+    method public boolean isHistoryRecord();
+    property public final String dataProviderName;
+    property public final boolean isFavoriteRecord;
+    property public final boolean isHistoryRecord;
+    property public final com.mapbox.search.result.SearchResultType type;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Query extends com.mapbox.search.result.SearchSuggestionType {
+    field public static final com.mapbox.search.result.SearchSuggestionType.Query INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.SearchResultSuggestion extends com.mapbox.search.result.SearchSuggestionType {
+    method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
+    property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
+  }
+
+  public interface ServerSearchResult extends com.mapbox.search.result.SearchResult {
+    property public abstract com.mapbox.geojson.Point coordinate;
+  }
+
+}
+
+package com.mapbox.search.utils.bitmap {
+
+  public final class BitmapsKt {
+  }
+
+}
+
+package com.mapbox.search.utils.concurrent {
+
+  public interface MainThreadWorker {
+    method public void cancel(Runnable runnable);
+    method public java.util.concurrent.Executor getMainExecutor();
+    method public boolean isMainThread();
+    method public void post(Runnable runnable);
+    method public void postDelayed(long delay, java.util.concurrent.TimeUnit unit = java.util.concurrent.TimeUnit.MILLISECONDS, Runnable runnable);
+    property public abstract boolean isMainThread;
+    property public abstract java.util.concurrent.Executor mainExecutor;
+  }
+
+  public final class SearchSdkMainThreadWorker implements com.mapbox.search.utils.concurrent.MainThreadWorker {
+    method public void cancel(Runnable runnable);
+    method public com.mapbox.search.utils.concurrent.MainThreadWorker getDelegate();
+    method public java.util.concurrent.Executor getMainExecutor();
+    method public boolean isMainThread();
+    method public void post(Runnable runnable);
+    method public void postDelayed(long delay, java.util.concurrent.TimeUnit unit, Runnable runnable);
+    method public void resetDelegate();
+    method public void setDelegate(com.mapbox.search.utils.concurrent.MainThreadWorker p);
+    property public final com.mapbox.search.utils.concurrent.MainThreadWorker delegate;
+    property public boolean isMainThread;
+    property public java.util.concurrent.Executor mainExecutor;
+    field public static final com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker INSTANCE;
+  }
+
+}
+
+package com.mapbox.search.utils.extension {
+
+  public final class BoundingBoxKt {
+  }
+
+  public final class ContextKt {
+  }
+
+  public final class PackageInfoKt {
+  }
+
+}
+

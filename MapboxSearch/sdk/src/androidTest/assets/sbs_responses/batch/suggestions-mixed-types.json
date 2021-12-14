@@ -1,0 +1,227 @@
+{
+  "suggestions":[
+    {
+      "feature_name":"Starbucks",
+      "matching_name":"Starbucks",
+      "description":"Starbucks, 1380 Pear Ave, Mountain View, California 94043, United States of America",
+      "result_type":"poi",
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"8pLh_dix-JvzxZZewlgtRk59dQksY9zs6apdnohHzKbhACOJA7nNJ4Iewy9Nl9VX5zkWGxUB5WIMCbG8zYzfIXy4HpL7mXbmzADx9sKCYEXykPBwz1pStnEp6roTWS2E61dqPD5Zj0rGbCBWsIlyGNnsMfjV8xozAUlz288agxbgH0y6owQLzdnRObX5RGQk4dNZbzPoSF-TOWH-fNZEJhdPxxcRacaIeOSC4jpnkGR5iUpurkm_KttCPza-niDSDne64uTstVklNPWvbCvV5Hpia4ux8e9VHeW-o35J2qlh4gbgk1ghDxW1v5AD3brhvEcy9xzeEVb2MFtjXb3h-uR1EnT0Q6VyGd7-SOLCoDo72BgkhPwAG3ABCynZ8NlwGpjwu7l8vfUVaiEcOXyZ1_pf7_rekAxaNMMUWKRtgKW_p4cGlsOHa535RnEMdz95twGlZIWhDfNzMqT7Id5EAvwv67s5A7wZjc2kq4B5UCoEHdxAw1A8QrhMEbM8S8wJq-992TBaAZQMrH6EJUlf2HhQAbu51F-BHHL8XcZIxjOuJ1RBNCsSv9qgAFYi9HIsWvTEoZRxhy3-vZ3SiJl6TFixnqCuJEEWR00hafjvO4vUQ0BYeAZhiF8NKr0eXRju3S2ijmBxPh7uTuzKo8Sn6l1UzfBTEorh0hV8D0sfsHvfrX3DrVX-1CjyEUwrcgClSsO1_r6v3OKkHZS0VwAPQjZDNLvPAW_DwIxYQhI6mNyp7a1b2CTi6S7ml7PAbgnGeuC34j_pRNUvQv1YbrMMnRVMpsUM0LvVvn3_mmYvqZDn-pw-cRTlPHA-11WYRNB_qCd2HsAu-yJtLiK7O19L9oBOK4jY257WauILil7m0DnQlz0Eh516D_3gDhElwmEp4QSm7wzVN6aVp545EgNCJoBniYG6ZB92NA0oB5gDgraJOcvFCZoTZQJW4MiP7jm0TNiU6yHjFzD_1MY_QhgWuKwn3-magpzcwYk1BwH5B1DsyAIu_jUfUAmVm_7TPBLdqTjlr0o2Agg0tlTebQ5rO0AAjQ7e-2-pCiTqR_0hk3B1OwaJZp5InX2NzUSM-MMtZuDuAjXwCXQz0U4IwjkApmLWgLDi3graKz-o_-2Q_v97mFTQ2ISBZk8zmTy9GAFdQSBD4DBJyMZLJNlvnf__-YMN1PvgTemiLrW0Wu_CxbNrb3ynk1xk2bB3vubHEwCW6qmrjxTNncomLPcwbWI96TSAQWiOFw=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"restaurant",
+      "category":[
+        "food",
+        "food and drink",
+        "coffee shop",
+        "coffee",
+        "cafe",
+        "bakery",
+        "teahouse"
+      ],
+      "internal_id":"id_test_poi_1",
+      "external_ids":{
+        "safegraph":"sg:3211c4cbf50d40449e4134e84bd01694",
+        "federated":"poi.UWRcj3UBv6vUIXmeTAwk",
+        "foursquare":"4aa68140f964a520024a20e3",
+        "poi":"UWRcj3UBv6vUIXmeTAwk"
+      },
+      "context":[
+        {
+          "layer":"address",
+          "name":"1380 Pear Ave"
+        },
+        {
+          "layer":"street",
+          "name":"pear ave"
+        },
+        {
+          "layer":"postcode",
+          "name":"94043"
+        },
+        {
+          "layer":"place",
+          "name":"Mountain View"
+        },
+        {
+          "layer":"region",
+          "name":"California"
+        },
+        {
+          "layer":"country",
+          "name":"United States of America"
+        }
+      ]
+    },
+    {
+      "feature_name":"Starbucks",
+      "matching_name":"Starbucks",
+      "description":"Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+      "result_type":"poi",
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"8pLh_dix-JvzxZZewlgtRk59dQksY9zs6apdnohHzKbhACOJA7nNJ4Iewy9Nl9VX5zkWGxUB5WIMCbG8zYzfIXy4HpL7mXbmzADx9sKCYEXykPBwz1pStnEp6roTWS2E61dqPD5Zj0rGbCBWsIlyGNnsMfjV8xozAUlz288agxbgH0y6owQLzdnRObX5RGQk4dNZbzPoSF-TOWH-fNZEJhdPxxcRacaIeOSC4jpnkGR5iUpurkm_KttCPza-niDSDne64uTstVklNPWvbCvV5Hpia4ux8e9VHeW-o35J2qlh4gbgk1ghDxW1v5AD3brhvEcy9xzeEVb2MFtjXb3h-uR1EnT0Q6VyGd7-SOLCoDo72BgkhPwAG3ABCynZ8NlwGpjwu7l8vfUVaiEcOXyZ1_pf7_rekAxaNMMUWKRtgKW_p4cGlsOHa535RnEMdz95twGlZIWhDfNzMqT7Id5EAvwv67s5A7wZjc2kq4B5UCoEHdxAw1A8QrhMEbM8S8wJq-992TBaAZQMrH6EJUlf2HhQAbu51F-BHHL8XcZIxjOuJ1RBNCsSv9qgAFYi9HIsWvTEoZRxhy3-vZ3SiJl6TFixnqCuJEEWR00hafjvO4vUQ0BYeAZhiF8NKr0eXRju3S2ijmBxPh7uTuzKo8Sn6l1UzfBTEorh0hV8D0sfsHvfrX3DrVX-1CjyEUwrcgClSsO1_r6v3OKkHZS0VwAPQjZDNLvPAW_DwIxYQhI6mNyp7a1b2CTi6S7ml7PAbgnGeuC34j_pRNUvQv1YbrMMnRVMpsUM0LvVvn3_mmYvqZDn-pw-cRTlPHA-11WYRNB_qCd2HsAu-yJtLiK7O19L9oBOK4jY257WauILil7m0DnQlz0Eh516D_3gDhElwmEp4QSm7wzVN6aVp545EgNCJoBniYG6ZB92NA0oB5gDgraJOcvFCZoTZQJW4MiP7jm0TNiU6yHjFzD_1MY_QhgWuKwn3-magpzcwYk1BwH5B1DsyAIu_jUfUAmVm_7TPBLdqTjlr0o2Agg0tlTebQ5rO0AAjQ7e-2-pCiTqR_0hk3B1OwaJZp5InX2NzUSM-MMtZuDuAjXwCXQz0U4IwjkApmLWgLDi3graKz-o_-2Q_v97mFTQ2ISBZk8zmTy9GAFdQSBD4DBJyMZLJNlvnf__-YMN1PvgTemiLrW0Wu_CxbNrb3ynk1xk2bB3vubHEwCW6qmrjxTNncomLPcwbWI96TSAQWiOFw=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"cafe",
+      "category":[
+        "coffee shop",
+        "coffee",
+        "food and drink",
+        "cafe",
+        "food"
+      ],
+      "internal_id":"id_test_poi_2",
+      "external_ids":{
+        "poi":"83Fkj3UBv6vUIXmevaqB",
+        "federated":"poi.83Fkj3UBv6vUIXmevaqB",
+        "foursquare":"4740b317f964a520724c1fe3"
+      },
+      "context":[
+        {
+          "layer":"address",
+          "name":"750 Castro St"
+        },
+        {
+          "layer":"street",
+          "name":"castro st"
+        },
+        {
+          "layer":"postcode",
+          "name":"94041"
+        },
+        {
+          "layer":"neighborhood",
+          "name":"Old Mountain View"
+        },
+        {
+          "layer":"place",
+          "name":"Mountain View"
+        },
+        {
+          "layer":"region",
+          "name":"California"
+        },
+        {
+          "layer":"country",
+          "name":"United States of America"
+        }
+      ]
+    },
+    {
+      "feature_name":"Starbucks",
+      "matching_name":"Starbucks",
+      "description":"Starbucks, 580 N Rengstorff Ave, Mountain View, California 94043, United States of America",
+      "result_type":"poi",
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"8pLh_dix-JvzxZZewlgtRk59dQksY9zs6apdnohHzKbhACOJA7nNJ4Iewy9Nl9VX5zkWGxUB5WIMCbG8zYzfIXy4HpL7mXbmzADx9sKCYEXykPBwz1pStnEp6roTWS2E61dqPD5Zj0rGbCBWsIlyGNnsMfjV8xozAUlz288agxbgH0y6owQLzdnRObX5RGQk4dNZbzPoSF-TOWH-fNZEJhdPxxcRacaIeOSC4jpnkGR5iUpurkm_KttCPza-niDSDne64uTstVklNPWvbCvV5Hpia4ux8e9VHeW-o35J2qlh4gbgk1ghDxW1v5AD3brhvEcy9xzeEVb2MFtjXb3h-uR1EnT0Q6VyGd7-SOLCoDo72BgkhPwAG3ABCynZ8NlwGpjwu7l8vfUVaiEcOXyZ1_pf7_rekAxaNMMUWKRtgKW_p4cGlsOHa535RnEMdz95twGlZIWhDfNzMqT7Id5EAvwv67s5A7wZjc2kq4B5UCoEHdxAw1A8QrhMEbM8S8wJq-992TBaAZQMrH6EJUlf2HhQAbu51F-BHHL8XcZIxjOuJ1RBNCsSv9qgAFYi9HIsWvTEoZRxhy3-vZ3SiJl6TFixnqCuJEEWR00hafjvO4vUQ0BYeAZhiF8NKr0eXRju3S2ijmBxPh7uTuzKo8Sn6l1UzfBTEorh0hV8D0sfsHvfrX3DrVX-1CjyEUwrcgClSsO1_r6v3OKkHZS0VwAPQjZDNLvPAW_DwIxYQhI6mNyp7a1b2CTi6S7ml7PAbgnGeuC34j_pRNUvQv1YbrMMnRVMpsUM0LvVvn3_mmYvqZDn-pw-cRTlPHA-11WYRNB_qCd2HsAu-yJtLiK7O19L9oBOK4jY257WauILil7m0DnQlz0Eh516D_3gDhElwmEp4QSm7wzVN6aVp545EgNCJoBniYG6ZB92NA0oB5gDgraJOcvFCZoTZQJW4MiP7jm0TNiU6yHjFzD_1MY_QhgWuKwn3-magpzcwYk1BwH5B1DsyAIu_jUfUAmVm_7TPBLdqTjlr0o2Agg0tlTebQ5rO0AAjQ7e-2-pCiTqR_0hk3B1OwaJZp5InX2NzUSM-MMtZuDuAjXwCXQz0U4IwjkApmLWgLDi3graKz-o_-2Q_v97mFTQ2ISBZk8zmTy9GAFdQSBD4DBJyMZLJNlvnf__-YMN1PvgTemiLrW0Wu_CxbNrb3ynk1xk2bB3vubHEwCW6qmrjxTNncomLPcwbWI96TSAQWiOFw=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"restaurant",
+      "category":[
+        "food",
+        "food and drink",
+        "coffee shop",
+        "coffee",
+        "cafe",
+        "bakery",
+        "teahouse"
+      ],
+      "internal_id":"id_test_poi_3",
+      "external_ids":{
+        "foursquare":"44b28a68f964a5203d351fe3",
+        "safegraph":"sg:1b038a59a6b84a8db8492acb3e1be506",
+        "federated":"poi.kfgWj3UBv6vUIXme8hDG",
+        "poi":"kfgWj3UBv6vUIXme8hDG"
+      },
+      "context":[
+        {
+          "layer":"address",
+          "name":"580 N Rengstorff Ave"
+        },
+        {
+          "layer":"street",
+          "name":"n rengstorff ave"
+        },
+        {
+          "layer":"postcode",
+          "name":"94043"
+        },
+        {
+          "layer":"neighborhood",
+          "name":"Monta Loma"
+        },
+        {
+          "layer":"place",
+          "name":"Mountain View"
+        },
+        {
+          "layer":"region",
+          "name":"California"
+        },
+        {
+          "layer":"country",
+          "name":"United States of America"
+        }
+      ]
+    },
+    {
+      "feature_name":"Starbucks",
+      "matching_name":"Starbucks",
+      "description":"Manteca, California 95336, United States",
+      "result_type":"street",
+      "language":"en",
+      "action":{
+        "action":{
+          "endpoint":"retrieve",
+          "method":"POST",
+          "body":{
+            "id":"GpWX_R-w8KsCT6jbOTpDoD-W1SJXDzIBw5eWBvn-gQO12SG8NZExoU_nCHijFxTU9NvgbHeoLSLy2aOXV6iJpHvVW43kY8N26IqlxdlFbITTxq778TVgwbN7FS21TO91A4zuBnpVzQMh-_NBYWIS0xlkaI9bPL67732X-KWoAGO1h-7evV-WNEe-aa7S6qv0wdmq4fsj3soZoYR2ZUytgivz02V3e-l00wnxMvBIc_ows5V8U_S5CbfVTk74gf-CvxKTaOGiws16f8NgRQPtMvmfpxGN4FqyUBO1f8dSP17lbA0rJXL_8vQIFSjmGZZowb67rQl5rtrjPI5iJHugdvsppThX2vrkv8KxQ9m4oxYUjWcweMyV6TmGGLwLGeSO2zj_QZIPRVgAg3C4fNZOOn_UviJzegODh7WxBMJL4qfY7CByffYJSejeBLzSgkq1OChCqe_Tw8_IrzzmV4uszHsSx5ev1zoBmuHFwCIpdPvA9V62HiS4nT_Ni-uvbiOygsl0xmmrp8jiwxKowl9oa2c6iLfDOp3S8Kq23RfWhIqJ5dbfgnZMHQZs_VonwkMYOhpdX8PWv2M_WpAQvSY5q1Pc_uq5ZMCDR03-ivY_9x5quUuZVfN_Avt9CKcPeY_WgvOCr_IosrPuTY3gKNVhtQ8wQOZF8EjAxZKsCzVpT_pDB1OAgV7o1aXcApqwr1Sk5Dukz051Fp24NPznzT3aVHKUYxEfj2uB_LRPqBlw_xNHrQ-NsWewA1aj6YntIxYl6Wy96hg5Nv0cnNb3z56550UAnHHacCa6DvICZjvGygKuTRLBJ-MBAIb1Qrm3Ci45LqrlEktCeHd-IecyNcxSem8-zUXjCi21bzgLQxFihgwaYwnO0vuCa2N0W4jEb1mqdpA7hd296TAW2o_P4P1UIsXcys_4TE6gwvUn1AV0bwethuQhTtpboQHujM8sDAuh_55pWcePIa0jSUGR_v-wVpQlYBsfabDY6heuwmYW5KKnWHrCps8fwRa6brWYGsNq_rRuTvS8S26V-AMxBCF9iAazXh3hMl7KEtIieG1RwofsD6zy14_Ux4xjgoipgY3k1W7Qm-5IzxTWFuWU"
+          },
+          "multi_retrievable":false
+        }
+      },
+      "maki":"marker",
+      "internal_id":"id_test_street_1",
+      "external_ids":{
+        "carmen":"address.2899160420788650",
+        "federated":"carmen.address.2899160420788650"
+      },
+      "context":[
+        {
+          "layer":"postcode.14784117992752130",
+          "name":"95336"
+        },
+        {
+          "layer":"place.10345120986689240",
+          "name":"Manteca"
+        },
+        {
+          "layer":"region.9803118085738010",
+          "name":"California"
+        },
+        {
+          "layer":"country.19678805456372290",
+          "name":"United States"
+        }
+      ]
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"30:dff9c036cd6522c9e4cc1e8bf81fe0370c745631",
+  "response_uuid":"218561e5-1c36-4a23-9925-4bdc00cd57b4"
+}

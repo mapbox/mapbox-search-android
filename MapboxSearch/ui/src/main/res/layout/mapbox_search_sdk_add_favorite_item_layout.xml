@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_favorite"
+    style="@style/MapboxSearchSdk.Button.Secondary.Normal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="@dimen/mapbox_search_sdk_dimen_1x"
+    android:minHeight="@dimen/mapbox_search_sdk_list_item_height_add_favorite"
+    android:text="@string/mapbox_search_sdk_favorite_action_add"
+    app:iconSrc="@drawable/mapbox_search_sdk_ic_add_favorite"
+    />

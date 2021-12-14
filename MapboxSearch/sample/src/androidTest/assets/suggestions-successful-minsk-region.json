@@ -1,0 +1,478 @@
+{
+    "suggestions": [
+        {
+            "feature_name": "Minsk Region",
+            "matching_name": "Minsk Region",
+            "description": "Belarus",
+            "result_type": [
+                "region"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpVjHeCx9AP9rEvFFRIMEC2Fbju6QE4oVW1Uzla3x_TMtuLlZZkt__3XLMS46gfUYNv6AKm_krhz-kWSWYtg6gLZc2VGf5vv_LnTZZmyiGgSvpnkPVyyhfGBjyKHT7uVI-esjwmV7ivUPjS3L1ZYdPBX06LbbToAie0mj8YCylV_-IulaAg5Fzo_feDXDDISeFOgC5ztMfPCnF0pfp72ZGuIYXwdjdYCNOJtHGYL4qDTKX0kKyV2IcejA5pcpn_XrkP9AJg5Vt0HOmyd2zLHJuHgFB2ZhQWhZuKtLIL0qbpjv33O5b4AC66_zmDSzJQGrkgGIDqK2kbyY-SteDDk6hqq412fNbjRB249svBUCq3HxAm3wjcpTcb-Adj34Vw1yxmwdRhyFYFiXzw1OqMi0G5ihS9g6W3YC2byKjvjv-UMj2WSqVOq1fynmfENhWO7fl0snWNQzCJ2Kx-E5q92LZd6QVmYQboCLyUUfCBCbTM-GulV4nDjQsrVgnD53I-FYnnFACbrL9vbB0uCf-NO9YOGR2dN8Tb_vTTS3uM9vmcPAamLYGRLQ5_ag4w_pgWw51V1XDIy-wApssD6MwPb74i_mpouoKJBYUdiBfRz_OHma2eWVZ4jKfbZNOl2xSh7u2WxpL58zgJZ1ec2JyH8Gl1xNEPNRz1WIFyx_N-mz5Ioz56RA00sGjGYyhYpUFTMEbxaWpSPCvX1gKCLZcB_BUoB6uNb7UBx-dvgaMtwQGMdRFyhqiNTuUhqX0eiQV-Y9hcWzq-oRermxwIHo2aVVsDWunKeeOvrQC7Uk-fOM5jCOb_NQcty2ns0axbCQyD2_dk-cPPqcX-pixs8wqtHv0TKfsZA3UzBSOPowTIAMiNQwgXnNYgTUIfXagB_2tkm4yoDuXUkljHSmj00M9k-F56Bt3vYv5tz1gJPMyhIQNAGgU5axYv2nh8dnGnyTJIKjw9_1vnWbc9Ymj9z1Nsz5VmdldZRTjhdxBoGqhOvzPMBuAtbQxWRJTzLPqz7Ctt5-KuRHNmfw0iFFqPS-veYhxacvPlzLnlyW414TgZWbICl0UYduXLUl_J1g3C3j3gpiQP_Php79Prk3cTJtwx1nlV-iYyJdQd9sTVdfA-ew5PkYnYqyekTGUar1_y7EXntAHBek9KLTa2n_5iG37iNY-Mo_nVJksna9VkNtocBgFbLqCHs8Ddiv_v8MEXnGaHGKKnbpA0Tp4eYnXDvPaol2_b9jA=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9480000,
+            "maki": "marker",
+            "internal_id": "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RcwxDsIwDAVQjoI89wSM7CxcAKWx1VqkNrKdoULchMMSkUj15Pdt_e-pzxuyVgnb4QJXKsmqwwRGC6u06Mbiz_O9cwJkD-Mc7dL0KinTWNUjKw4Vzalw7F1CvKyz2qqKPUmIRu4HHlK3mWz8p-3f8_kB",
+            "external_ids": {
+                "federated": "carmen.region.14146701401889110",
+                "carmen": "region.14146701401889110"
+            },
+            "context": [
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Belarus"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "by"
+            }
+        },
+        {
+            "feature_name": "Patsy T. Mink Central Oahu Regional Park & Playground",
+            "matching_name": "Mink Central Oahu Regional Park & Playground",
+            "description": "94-801 Kamehameha Hwy, Waipahu, Hawaii 96797, United States of America",
+            "result_type": [
+                "poi"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "6pPjHd-x9HL2klnef7vCmNQFa5txVueYeOwtwZhL8GY0aG7sy4Bp8G21Us6xnCizNMNYzb97gAoGWQ52KZU6ksA6i7gDpnVHl7hRwmDFH7lMHC25xFQShnepChP7ZuRHTlF4uTEqdZ0aj7cNJ7q7qEK-vZ7BWpnt5WOK9A6umVRf-AmltCgxPeZ6ouX4CdQje0Kmk5v9MvK21tA3l6H6ROHOQTPJNT_tvrn2TiDhrUdz3FUOC5TOJ7XSwrulHwgm9IFafnOS6XKhpG9fhImh-WVgljSodxl4gtdaQI7Qh7DidHduY4KDJNw38pQOL437pLed9HL1uhj2E2SMzknWSAyCvbu6sI6gxNqEK5V959s-LDj96n79Mkl3B_vlfYe3TRX49AXVKgvKKqmcnKAntgSME4W4dAn4I4gMsZQhp0ENarYIYmnydBpl7PCrN4Fhn1yzqJTlDK-Az9AkVGzXxVGtcBhig-Rm7zCWGjqC1YkzRf25b9gD4FPLAhb788K9ncmYAzhkL2JlFdT2HCah8MOamooUsN1H5OCKk4ddOD1CpxfRZw2P3GD3Rp8PQ3UZ0lzXtPOhqKtlTr74Uwjoq4-LD7CT5Dlic8tKIYj_k7skqOeyxUBH_i9G3-bWhYMmgi2vfHseg9UVGfWdWXjmZo3XQ4lbSdxCm16NQPC8ZncGHYCawR6vTmDQyxUEk47rtz0AKI9BNfeJmYkvZsDqZhUQ4voGhApgPoq9xvg55gyL8ODf0UJgEhlhXrl65Ds3sD1zqFUDQnwUJwDAQOGh0OoqqOys4lhcwJhjc--EPYsFPkoeU-rCbfvMDN8ypidFt_SwycWnRVBDgkselPoZihgYaR_uY5qDhEFMeq14oV80yjteV-kIizDGmOJtVi_PravMdAZZh_bGavWd4bZAnSmmSqq-k39vDuTmUeAyABzXv6WRdHNLOlhdcveK-2HGZmZu8GbIrYuzxajvqE-0umMdajIfB-70Z1rMB2hkId5mgHPqLVlluoFQkXU7i-Fhm0U5hAkASkRzGG-SuFtVmVLwc8NbikW9pGiCL0FNKuEU33FvKGHRTZJuT8whHsPXgwyp4P385Tzj_VjOlcFh9_HxY9jaS80vXcsMHSzxsogd1Q9X5T80aopeB7vVdluR5swM3F_v3OyVw_ahJS8ZKTTli0Pnpf0nOq0Ad9319vQqVJrLpmn2E7a0qYfcLqn_NqfOV0z8hbSjXDBvi-8FLPA_lOT7L3tXZvB0gn0H3LbVhejdO7VKsAKPYiOxz3dx_2tPU_GcHKMoUntMoKwwqlpSKxJRSQlocy-IaZlkgiaPBM_f8UcJpbSIs4Yh-BXjAfoSNHI5M-iwhl94EnTcnb05daRjWQm70Sfzf_wWb4yAfSkdUlMxKKCCRZ7_-o4faRtwaOebkEBNro8wnFCR3UmF9FIm1Gqx2TYpHVGIkhkYzlpwn5X38Zy5Uj9s6-i0og=="
+                },
+                "multi_retrievable": true
+            },
+            "distance": 3880000,
+            "maki": "marker",
+            "category": [
+                "park",
+                "outdoors",
+                "playground"
+            ],
+            "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyQzI7PkRIM0SzOTRFMjA8MUE3OjxFRjAA==",
+            "external_ids": {
+                "mbx_poi": "cd72275b03b5b6a56aaba79d72b302330df8131a2f92c429047951be47a10c04",
+                "federated": "poi.cd72275b03b5b6a56aaba79d72b302330df8131a2f92c429047951be47a10c04",
+                "foursquare": "4b626ca0f964a5201d472ae3"
+            },
+            "mapbox_id": "CkIKQGNkNzIyNzViMDNiNWI2YTU2YWFiYTc5ZDcyYjMwMjMzMGRmODEzMWEyZjkyYzQyOTA0Nzk1MWJlNDdhMTBjMDQ=",
+            "context": [
+                {
+                    "layer": "address",
+                    "localized_layer": "address",
+                    "name": "94-801 Kamehameha Hwy"
+                },
+                {
+                    "layer": "street",
+                    "localized_layer": "street",
+                    "name": "kamehameha hwy"
+                },
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "96797"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Waipahu"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Hawaii"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "United States of America"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "US",
+                "iso_3166_2": "US-HI"
+            }
+        },
+        {
+            "feature_name": "Minsk",
+            "matching_name": "Minsk",
+            "description": "Minsk Region, Belarus",
+            "result_type": [
+                "place"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpJhHd-x9GI6BOZSXy5h9brYQZrx3NDcte7lsh_k3UvpylPQzJf0oGn17z2PasMJ349ai9TGNEjvPTJF74ZIEjTYU_Kl2KzgUt1wkiYtQoy1R7fkCVBS31OBj8ELhH5SIiHOrZ020g4wYw8KA2NAd60FgWci2WUBWVA9tXUFrZRGE02TDhDl0vBURJ0btuPARmoVRUHMNnU7YbUeAhP2Ubs-5G6Vr0QLansr0LIlA3Nmp2tkC4PfOXnv2mqma4-7cLpzcqhY2qzZdMzqFIH5WEPiJ1A-c9AxxBSquCh_YSSVv0AZt8kR35dtxSnrL_NztVmxZRpPWz1G0Zz3_kKKuTn-9xBhrFnz5Xp6KONUh7yXJ73OP4VjzX3v0I_l_YBZ6w33FATVNRf02BgJy6II7L8Jxg7S5Fl8nigKhRGPSlQERO0V0ZFQM0ztoUtvPCmMRnG0s7gATgwTKlOJVsJa2OpyYrgEEliHUrLUMniPmpNVkZnw2SiPLxhBxB4K3CUKzP_MXEDSo_IHiH63kUJZ8aNCdivGtJmQWAgZOY9xQq0iKcNpLfQBmR96b1IVPV6lPT2DFcrCRTWtirKxyS7_9fRp9QSVrOdanD9KpAS3tFiPHC-5fVrwA48sdLtKXtz1iA27LLXc4nIflq6x52nnBl1xLGPNBz2WINip5N-wzBa0zpihAzUUHTEYVlUnUDSMmQ8EN2yHCvH1vTZ1Aj9nZUpDRD515-LxhrgKaFw65n5wPqIN-dUof5vj-8u8op7YLCGcV0-qsV8yUurwM1ZE_HDU_EDIbe1gLQ4RJAOxlfcqIYW1LMzKD9MPMA4Ml36_dlplfDe-LDDQp1PNS0MuVJ8ou57lCep1E7FxpZwjcnjsXZUOUjpBWTK5uKDH591RwPzQrDyDVIUEjjkhL62Dr8pl_cB0PnhegAbv7y1BJXp4B8zEqiq9aso1M0uG3B4EDsQkYyy77Gk-gfZZT4E2LT_NHeu_LMQ-NalU9-d-J26RgYcE2ZrfaPUzNbG6M9sqv5lRN81glN9E5ZzQAxcCI4TLk_ux3_C0X4UpD-FdTrJsTADMUQA0l5KXAXSbi-3nKcqcPQ0CEJTgMSwGMKfk1Ze5t46A-I4CF_nee5t2cebWDPRpPgwCZkHA5Llbp5bs2xIWqMb0zXuJHTRhEXmt_7j6m-RQzrDa2VjDCJb_W-ua4WTL7_1qUdlpOBhHcqQCjphoVsYdVXzxxu6v7zUstZBx7p1VvVchnnYsNlPxkG35av4uV4oiaJQo9IhkXXfhNFzaUqxrpAc50YaaSnqBuOP2PtF-"
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9440000,
+            "maki": "marker",
+            "internal_id": "Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RcwxDsIwDAVQjoI89wSM7CxcAKWJ1VqkNrKdoUIchpsSMFW9vf-__D7EPSFLY9cVTnDGmrQZDKA4kXCPLsR2P16DAxQyV8rem65HTRm30ddinqVgtFVyquRriJGmeRSdRUokqRRFsx03bsuI-t-n5ffn9QE=",
+            "external_ids": {
+                "carmen": "place.11543680732831130",
+                "federated": "carmen.place.11543680732831130"
+            },
+            "context": [
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Minsk Region"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Belarus"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "by",
+                "iso_3166_2": "BY-MI"
+            }
+        },
+        {
+            "feature_name": "Minso",
+            "matching_name": "Minso",
+            "description": "Centre, Cameroon",
+            "result_type": [
+                "place"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpITHeex9HvIWRlQ6t5LENHVx9PD8-gZVWDIWgzkFd1Lh0Wlg0h7J-rPTWXnFWzteOsMmz0tZSLcVRxQ0qISqQcGAKfOcCV51WEd7eB-g5G5rKq3x0gR1lMjRiV2rMcj028KN0iTwx-sWq-ywWCcwTdqbBgnIMgSE6bSsHoy2mainSA2hp-NCMBh5ocrFyp-45DFVT7W_b3kA-O_U8MBpB6Y9Ab2g2idvVis0rMAVNFjWL3DTs2H0s68gRdS6mU-RnfcfNxEF6TLb65y_Kd4mJ2_WO7u0XI4oGadBSsgrSZxk9mUl9Gi8ZDkJdvXZO8pe_vGNiLaTcuwxrvK4RcPaPi_lPP4kGfDBsKvNDy6soPEA7lG1YnnpcvTT8LU5v3qqdu1IkUl6bUEfhbg5tBLZtYqI7zz2DmyeBkIxqGXE7cam1jm5Wz29JbRTabeADKl2vzSuhVh06Ht9KgeVv_UEMQKEOWrtsIJ0-wkkwWvVwnuqdwNBFOIKhahqE3WqXtbgD6wpuBocUyq1NkjBhdcxyBO2HrhyyGHPIeo7ChhI5ICL7Mt718uFol6JyZOnTUFuBZiTjgPFsgyQGWOooM8fybR9lPY_DLXkZM-H2r_trVVAztJNjyMsXYjN2DC-AOcVuGEvbUXx7LRArUxRXkalYONHYmsCeFV9NhBdOjV2Cua1aFX0zuV6rfTgopo3Mjmc_S8ivJ3hCxjwQx2Mn6zW6HM2_yZTeRa0p6QtayrgDSM3BbggF-VN4__MNurnpYL-9zCr8KYlzmWOJnZk2fB5DmzOD5tUm5Umbyt-sxxDHwzEkdld5z7JzG83ROgxU2FyI5o7-_C8X8ZjJ-Hxa-5fUisnqDqVMsim_2wcDz9GP8RRPkukLJPAzEddCEdAbaPLG8q9P2ltCYw-m29Va9_0ZG7Gb9TK_ModuQfQc7dwngST2EjNMEE5aLvFatPAuiIKmew39z8g34sWBhV4n9PfKuOx5wTnD-3Z1zASH6A_ooC_4E8IDkoYdo0l-g-0zpSpSe2rqvm8J-xkVQxH35myGxlhqxRWrbmk3CRlIHegDftGbllyl1MA0Oekn7aLZj6K1bMnj2DbutfJrod38MpQAVzdi7FZnVevAESbxF3WNJREgb2L2xAFR56wPvnUnGmvrPY--sk-_4OvfDezuQCpSMiYSvs5t-kiCJcNHJzfUiXLelHV124NVDNEGX_TPMN0u5U0mBZlvEm6JEmUWG8zFn3nRI1RuJsJt8P0FOP8Zqv_eT3cQ=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 13350000,
+            "maki": "marker",
+            "internal_id": "Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RY5BDsJACEU9C2tP4Na1ZzBTIC3JFAzQRWO8iYeVZkzK6r_3WfzvZdwb0DZN3-EG97aymylcwXmWCuW4Si5DEumCWa7o1RtyxYdo2MEWiUY82m7YuuQ-SFnmZTJfzGiYRuQcccJTt3Vi___XjCN9fg==",
+            "external_ids": {
+                "carmen": "place.19210903915624050",
+                "federated": "carmen.place.19210903915624050"
+            },
+            "context": [
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Centre"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Cameroon"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "cm",
+                "iso_3166_2": "CM-CE"
+            }
+        },
+        {
+            "feature_name": "Minse",
+            "matching_name": "Minse",
+            "description": "Centre, Cameroon",
+            "result_type": [
+                "place"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpIT_eCh8HtI1sqsrStfEdVhgAHMnF2FVjNj9qZ0QjQ2tWI2w4Dx8ENDSxKDOujObVWQyVxGErln-MceLKgimVnyaDmRi-X5BDW5BgtEbD3V3uGQCUH3BXWyZWm35g7Jiw3ieQdabQqtGmTl476ZZnfA-axlooDg0TJO5bcoLHpNtpT148xtOxF5BgliQHI81e_UAxiVO-eJSVBXRWNFAbDOsjRoEek4fJ9YqoqzhYqeVCwe2TJYVp27KLh5QHysn0CkOXZN3Z36af_6TiHGKlNTsJcUmPp8hNyf_mQeV6CsByTABRcQYUdz641NknsqfwZPDlu7DRwI4cmZV6D-Z-6Fkuxk5zjvU-phQn6XUYb8cTbKE-nGhbfJsHpyRKgR-BXi2DkdA3CGDBlaPmdKVrLBldELFhlImg6jpKUQN5OXCOKxQY3jvXzgXiursraYIMvQCk-FscL3v3Kq0gZ2hZFNWQKNmUxeNp1iBSkNJvXnkfc_vnlTHV5WBzAep7WKXMpWbPOUrt8v2ZRAMRezQHUQMpFYQBTGuQTWn0pa0gA2ZWljgVE-9Zl9OySllTJZBXJY2ftUohlv2vIbLQ9MpD8i9mjniCKmqIGPupq3lHYf6qsGfKgalFJIsW7YPDuIfpA3eDkewhaaVydQTowpsEOIoHcYpJ7qZHMHse7JH-E0O1q025fwRBQwuaziAfVn8_GAiS51ZqV3eFkboLiCJ3C5nfdNKOLYOnNQdXN2FMqFYdd2ACxZR8npNMBeFTwjXauIwGf6ngLqMYFwzaDRRY4YVi-zH-ykcU8EmMd1fb6NrRAvohVbkTy4whsWbnFFr6v-94CPnH1n98zLuYOaEPzSLUDTpLUZ2fE_PuYsHZp3XV1Amf7SHIHHaFc5Ztq3UmCAMqex9Xqjm9gZ0TU3GIZjmUs_6a8oQbOcQ_-xW8JifUtHb2O3v4lJnCwXr5Z7cmcWULdRLbOwlU9MRqA1494GlNPLLsruSRkK10BU8Caf0Il713B-7QBRK6K00zG5Fd9pxpbT2eoNPFUe57sRgOwOUjHsLxzEkRFx0zIeXvP13kEVoR7ucz5il9qG2bFl5ijwZFFsiWUJBS11E_SX-wVDM5ClNXzKycCPah6uBYDK5ujRwoi5PhOHIQFASLscmp_fNUb1iV73Xok5EktyVVmWYepvif0PR3jBvPfMxfcmTOE0KdYi623Ap_auXWHLZ2iyfA1A80yv44ZFRtPCnw=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 13330000,
+            "maki": "marker",
+            "internal_id": "Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RY5BDsJACEU9C2tP4Na1ZzBTIC3JFBqgi8Z4Ew8rzZjI6v_3WPzPZdwL0HZNP-AG97aymylcwXmWCsW4JBchiXTBLFZt6w254kM0TrtZJBrxsN2wdcljNGWZl8l8MaNBGpFzxL88dV8n9t9_zTjT-ws=",
+            "external_ids": {
+                "federated": "carmen.place.1275041541301410",
+                "carmen": "place.1275041541301410"
+            },
+            "context": [
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Centre"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Cameroon"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "cm",
+                "iso_3166_2": "CM-CE"
+            }
+        },
+        {
+            "feature_name": "Minská",
+            "matching_name": "Minská",
+            "description": "616 00 Brno, South Moravian, Czech Republic",
+            "result_type": [
+                "street"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpKTAeCx9DJPXzhSQVSD-rKeLrVmXNbyJlb0mI9mwd-T68TYoWupqdBnUNQbbwJKnpUSG10pNmBC8Y5C7Fg7MtPx6kGKKCz1s8jLTxTb50X56KZyH0qVTf2vdhQ_UiFpRQaNvxQrvmLX2QCicIbskVlcMGikciISETJaHnt2H_bBZpswT96xJqnFHSVu92SIwlsiIf-OsHmm-EtPe5js7l1cxdGoKLPnYSIDELD5JRanFwrPunQagukO0-B7jXuAIV2qPFbJp-cUtfeItEsEgjjx4bNTUW9sbbF1S83q-xD7N1bfyNM2TjXoZD6WXZxl6i8N5LtEHVd3ZPemfDTPKt2JEaV5cznox369fg4eTDE3Nsbrj0rrBgUarumDbH1dBrAV2lIhMWstB5spbxbHzDTltucYhH7qOiiexhUnIDIsUjvB3mzkeCTMwN4ltgylbb7AgC-A_-FXSWl3ZWSKed0D-q9XxsF0kt6i5wZQAVXpI9PzkenaHIz9yC1fbXf0v2q5QQUg7cPB3tGGNkrO2UknrSjKQI-TRuUTnz88dVXvk_80c8CRWtUA19Of3HTY1AeLx-kJ5h7FYVGqH70KDHaniGQkFSLoihd4xsPwtTJ4-TgswYI2U97dNCPXI-hgpkt_lDhcfPOfDTl_r7si2wece0vAmVoYSSIEQjT7vva4RZqlAc94eZmTaM9ADPQN--7oaOcNxPadwh0IARo2cIlEZuoAKMa6IA1RMq1omBcQ0H8GmbvksfTBsXjOBfPvbOJ-x3n_fgHQvh5kjzL_QG3tAUhGaDxBzhC_PIQqe58PDIbPhx7XStlUc4BOGJ9lzIDCt31U9HYITxIKDrI0oymbKt_m3TbLBu2kLyatD-8VFZxtkzwyQlH1ALuon2OCIfEUMZMv2iGH8tg7uIzycDij4rzs8Z0nuMP0Y5H3mkqVaKv0oQWLrqZrUnR7nr5zJWfo-G3LJH6uaRi1hH9zxieXHKXaKkrqcycsW4rT9uO23NL9-dHgrOZMV8QxPlRFq6f4tljM4tg4ANppgdwSGHGW-6OJSf1FmniLt31wHHX7bWPeobYb55NOZjjw9E4Lqh8cvhUw-fU1p9EeiWVDZWIE1IiPEr2sKme2AirEHl3dtaSzpe9rmKtwxlkOUAH4tvvKI1i5ZsJOVsRvVIkqt4cXcr-QIIQKKTrcWWbiXocMTUt9zGa7n9sVtjcTjeA5aZVEBlcmticUy_neDcmzSXsM7xLFsoLPM-KP2DbD4nSiJ3VmSXvRKqd_dfyaVkFpXX6UCStDwCovdstgeSRmMVFj7nFT6CcGiOAvOUtlxbihsyJxOfQyDIAHs8Hc"
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9560000,
+            "maki": "marker",
+            "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.LYwxDsIwDEU5SpWZoSwdGGHuAgdAaWI1FqldOQlSQRyGS3ABLoar1JP_e_r_u6v3Mo4LZVnM0Zyf4EJzgbkMEZ3ZG4ERmdRcueTQ9Cz2gZbUeExZ0GV1muZoHeh7EuI1csqO_Uq6Q9e0rbLIzkbMSy0Q4BgGlsDsK7HeC6SkoUdK999nYzcq0wCy1ey0jpr3Hw==",
+            "external_ids": {
+                "federated": "carmen.address.2538796283584540",
+                "carmen": "address.2538796283584540"
+            },
+            "context": [
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "616 00"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Brno"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "South Moravian"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Czech Republic"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "cz",
+                "iso_3166_2": "CZ-JM"
+            }
+        },
+        {
+            "feature_name": "Minská",
+            "matching_name": "Minská",
+            "description": "390 05 Tábor, South Bohemia, Czech Republic",
+            "result_type": [
+                "street"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "-pKXHSew8BPG6Nyuberb0AywydBjS4m-_52Jk0rVghlfvGy1Aj2s8Z2nrE0P09Ru3H9Ws0n7p6ZR_ruHPZg0p628gEdrOIa1h_tyrkvKSIzndoj8CA2GkkRgaVMVD8GmDSMuiyjTsxuF5Z7GlarGugqRhjQPkdQZR6PHgHBWMcwZnn5n6RkUbmOH_mexCCL7V4lehm8zdV_tZ8nWUPEafJES7eUMLBMrv3-kFVgJUtd7XqWAlk6GMGOgIcRRa-QgxjQw4Nzus6vgM-bvPvaIGmDfyPXswdKZhqGzDZIUYSphqlE1tYfEFvYDbtgAw9XLPYsxHx3PxyWdsbpnAQHN81ElHlF-FqF4QPOhu_EWNVWDsVJyq3YtEL7L7Kn__BHH2U8BJRVZbkWtH4tH9lpuoTxoBdBuzks0a8IDgqjyk8C4mmYVk2SxemIPH2btADFBdzAh0UeyLbgkQLefjPkzjjzl6ufL5bijvMJBDijaVY9EEHYxpXY00wagxn2Pqgt3sD3GmTKU9oBFL21hKdLEJxUJFKoQRL9RRtbrTBEQqW10kDs-XX-H6IUqP7H5x9I-gjKvZleXS1enievhnYzGb5xCPbZ1WF_AyIsnz-NABhCEExnPz-qJMxwuX4zA6ev4mMmRXNxUq7OZGXazWkByDP44FheYriEBcEg8F6fh18mUbtoNItmFPAnTDxjcJkrVLWxmoVgfZoxE8PJwugoBRRa0BEOBEHidjt83YQI1AUQH2mkUyQUQknqWXi914wlO0J1YXb4bhWpAt-J104XltWAT4W-AaJ4AieBBGJJzfFbL87sAFwY1k4vtt5ZWdnfHBFsIVZMsrBCAyZlu_VTTiqlvx3-2YzU-mDb04LIL8hYfRBwZohXrMKLL6pd6iAD83ttwNIFpY3a1mSHGUXg8CpXPmegIMgapsXVbjvEPUBgWWCCXA7fC12FW6iy5BfsW5jo2PYRYNkMUce4l8rWoO6DqvDu1FJL6xGLb5KeZw4DdO6ZXGviho8C_gUij_1Q75yvaXu7IX-GDVTbTPOB-0sP2mc612S1M3c2YxE1845Qh0jwablGlbcXOmYJ9Kjlt17Jjb3RvdEuW5mDJlONvYaFLKIOJ54tq0bWhwqTD5Ujcz3wUmngT_kM3Rr5LC6eNy-10pDdaUkWRxo_6nfviDEDlDsuNyHP0dtDk5B1529wc2xVfGcliQFNt0AgkY-knsYltXFy148WY4PIpeFHXDKa4M3b8HxwEdGcG7eEPRSg-1-6mhTJRu_5nFUxpiNOVDEOVzYxUkB-T6JPWo6lNFwMy4TAH6P4Y76H7LM7tmCAGsgTO_icHrvGz0c1Sl5ycTro0kJ_YK-TcUJauGta0EMw="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9470000,
+            "maki": "marker",
+            "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.LYw9DsIwDIU5SpWZoRJigBFmFmBHqWM1Fmlc5WcoiMP0FBygF6uj1JPf9_n5v6vzVcDZpzCps7p-EGxzxzF3jkDtVcCe2It5cE62ubDFgbQIQzEFgiRK0ug0oKzPZe44FMAxAZvCDqe2aY_CHIN2lKZa8Ui9lWPLbCrRxgSMUcKNfHwv88ZePg8dhq2mh_JU_VY=",
+            "external_ids": {
+                "carmen": "address.8504225921391428",
+                "federated": "carmen.address.8504225921391428"
+            },
+            "context": [
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "390 05"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Tábor"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "South Bohemia"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Czech Republic"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "cz",
+                "iso_3166_2": "CZ-JC"
+            }
+        },
+        {
+            "feature_name": "Minská",
+            "matching_name": "Minská",
+            "description": "322 00 Plzeň, Plzeň, Czech Republic",
+            "result_type": [
+                "street"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "ApLjHd-x9GINR8jYFnTD0eEb_bFvIl82cAy5go9A6e5J-j7iE90-dw_8rLqR3jh-pHHgQxXRX0E298Ru-AxQ4MSEgF3miWV3pRGXo9qEq94ZrKLmB9mjnidYlvnkOVgeNiJw4kc-pkt_WPX_o7LgP3Tbx7cZQ1IBBCttVro-nCoXeSMWuoenT7xoPA-KJ-Yr9STlozGV1yH7kl2_KxtIrzoGKqapHhsMR4oLKQ-kcxM6GxzVXNsc-AcnezUsRoTIY7mbWuUVE-CxzakIraYghvmLB2MJURZJ24g5OVorVaW4H6qYlgzRjm15W759cqb0sG4VwwovhEArdW-7zjK2EANVxQnimYf5xPKB3hR89MoPZ72liq541Nu4ryqP5TzosZqeoErYfZxPxFvxupMktCQ3xkVm3eM5aaOQKNNuGDCjHnDc99HEWWrh7Vablan6S01AhexdcAbt6Hy2ckNeFyXz8H6Cy4BmahSgczG5GJ2fWKSHUY1jjzRqlHPvzYrWdt0ko8zC1F2pq8nbZGeJPehtX0rh3aIoI9K0oZt2mxLl79J6ffS3ovr6SrWZQ7FehA3-BRB2Ve9MuVDiiQOMpCmh1qDsSdTif4s36IDrTnJOYv-pEj2seYk6d-XdcM1kpGe-6AjMy1PtVqOBR70I8c2mfYG_Yfv6knxThzy35QKOQfnwkatiIF7ZMJ_iz7a0PWLZepdlppAp8C2P2cIrJDKL5v3do9KfUly6gKLUDCa8GZdFwaSJKDgasZHai7zI95mUNfV_bPfwO8FGdQf1jiyi-s844L9nTW9WVbc1akCL2o1XtQmNi00Z8h21fn0TpmHEzmBXznZIfxgKDv2-uNfLulWhBEI4XQg-SuOcKL4ZT60Cs9GSo85WztobmlZoIibLyiR68BUscawiUdf9EJK7W1-G_DSCoT1SJJhPXQrly5KiW9-8hSnMe6dWc0CBJDwPrqy_zs_Udsykukf1lr61_vqee_AqfLDCMCUYEwsdNgGvozCW9XdsYxJhWrk0ULKNYXRRU--lWwnbqjfvvX7RQ47dG1EPJhhTHRCLiEElytWVebwAfmnpAvQ0lZpoAeWCa3u3LfjkVFqNC2b8Mb3Q-XaVzkbrE-pTGJ83VCdnUMWm1dMCtzMO3Sssqu4wacPRkNiwEyP1mE58zgf_7oDS6dBA_3i9T0cJ_VtZXqR57GHNX0AiQ_ZOp82qfYDRcTvhEpS-DZwxVic8SNIjvdHgfntP-XQWZRvJrh25hocbAskKKLWxbjis-pD6QvR-ZR6qTe3h5Uzyo4o8bZg4tX-XQrWXE2vemVYX-tgTIViSvw=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9380000,
+            "maki": "marker",
+            "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.Tcw9DsIwDAVgjlJlZqjKxsqMhLgASh2rsUjjKD9Di9i5BjfgDoh74Sod6u19T8-fXb2HAi4-x0kd1WlGsM0VQ-kdgdqriAOxl-biZvy9RAylHAmymKTgNOC2DpwysFns0HVN24o5Bu0oT3XikQbbc7TMpoo2JmJKEs7k0_37Xu3my9hjXGd6XJ6q5x8=",
+            "external_ids": {
+                "carmen": "address.140101546421850",
+                "federated": "carmen.address.140101546421850"
+            },
+            "context": [
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "322 00"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Plzeň"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Plzeň"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Czech Republic"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "cz",
+                "iso_3166_2": "CZ-PL"
+            }
+        },
+        {
+            "feature_name": "Minská",
+            "matching_name": "Minská",
+            "description": "071 01 Michalovce, Košice, Slovakia",
+            "result_type": [
+                "street"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "GpKTHe-x8HKmsEMKWvAXkBE3bnNpm4HK1cPPmhTUAD1ShUWlg8mNyw-MQt7FTyBPUoyRAAi6bMFWezVI0swpoGZxxqTEMm_6gOUmT6Inp6URjYTWPMgSCg2VkKHwlWASdqBrmUp4t3d_uORn7x7xwgi1fzsh-Pa7InDEfWb9yE_yvwzZHd_BBt12JMfEIOo-S96T-vHdNoiFLyrSYLOB5_4-4d77i-iWDUcw0ssEBByIUnOO-baPfDp_ZEOrXFqOqsSWVKPYtAOKTBGCniCf_P8gjaB1llJxbaCx68yJhI2FTZMtIAX63Rgj_iX8eMOlsSVsae5igFjpUz8Hh2i2BHuqmHd4FhBL-qCxeBDMlX2VQqJbAeEv0y6SmP9U87F9vrWDVZxCvz41Wr2uipwEaGV0c0NJBDNqqmk4sqXmT1Yr4a4B1beh3zWVLjpTfRvS4IzsUEYx86DGYLOf7Pm0DqyhW4OVHvRDnTELYQYBGPK20BmQaMDZGsbVJPDJbJGG11E17wZJURoDmCX7j7xanL4yO0hGAaggpdyhIowgRzW7wwYA2g1C5P1_gW__Yclfqsf9fuMELyToxNFJ_ESTZ98r9mQCTdhuvuND67upcHOmTdyTDQbYvsDYaWnewKtePMSWsrw5xsbZNXghVWypneZhtlAMqT2booQ2US0YgaIGHVySyT6luSAPj52s8yEYbcpo2bECZxWzEI7fMGQjkJNGYLNZL5fTC1IFge8lYXyx5sh4vZZGtjLQkLnfDkgPVkc28T3T3GbL6kzhAYfgV52coCxj7rIPTTsm6tRQXSqvQ8-ME_b4VfQkScgSaf3HNAU2X37lgaRhZjpJrZafCyBno_8bMFEA2B07uJpCKj0QSX-KM3iEaXjz9SETB7Fumt9LH8pXybq3lDJ0HOgjzuDCkc0ShXxCtEeHS_CIpb0RZsJnbpKsF487JsMl5t6mglTgRu5838XXw8jlc9KxnHdnv0lAtdIUpJ7bg8vG_ALNXS8havdA-TW6Z9oefBDAJewCDbUXWId7VAba-TKlmE2_xiUmUqkBzp40A5pTeOl5mKwjYtzk-eDyWZkde9veM16Eb8_mjEgRFvk--i7YIfasZUNBuHThYw_wft2OhOyjyR35w9I3v79Y64egBpk7_if9bLAOSNWPr9jXbANes8FCvpGGCqTS84NF5WkeiH-EYo7p59qc3BfmBZbXPd25o810WmsdqSvWW14Rluymn7bQbPb3nZqYf2DXFz-Ie4UA2zXeuxbaCGTR-dlnQWuN5qS7B_Mlp0E0dzqzz8KW9dCFrouFKJC8ehMQQLTPsFjcyKSxon1zeQ=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9800000,
+            "maki": "marker",
+            "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.LczBDYMwDAXQjlL53AOcKrFC1VMHqEwSEYsQIydUQlWHYYIOUXUvDME3P_3_v6dybzA8xSwzNPAI_MKeEC4griOOajf-L2SckqWUhUxW1G8MqNrAnYxH7e2RkVM2bDevrvW5qtUCGwyU51KLjjrfsnhmWwStFZfSPhVT_1sOe8ZpaJ0cNRy2Ufis",
+            "external_ids": {
+                "federated": "carmen.address.4867021213321122",
+                "carmen": "address.4867021213321122"
+            },
+            "context": [
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "071 01"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Michalovce"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Košice"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Slovakia"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "sk",
+                "iso_3166_2": "SK-KI"
+            }
+        },
+        {
+            "feature_name": "Minská",
+            "matching_name": "Minská",
+            "description": "040 18 Košice, Košice, Slovakia",
+            "result_type": [
+                "street"
+            ],
+            "language": "en",
+            "action": {
+                "endpoint": "retrieve",
+                "method": "POST",
+                "body": {
+                    "id": "ApLnHeex8GPNbygXbZ4DzNRq8t-iIqGwpwS94WTB1298mdVbnh3ff8_h3M0xmJNb25MfK4C4rWTx08MWxDBKDdP_usZpuT2yPtxpNWHu8w7TRNKmWtv9h2smfQgFeLCLxLdtjYbIvyLX-Y_EjCqmNBnRQlyqb1BtB-g2IAB6AgOlXxZ9ELui17VtlsZpR1dlqARcotzmt6lLJ7wd-sGJJH-vBepqbZGJsFA1XNUyR9by5564j3NLlymFKSqkNnnvRfuBeLkKPDzk56aIlPP1ZwS_CV1qcpVDdYg8dGXbRG_T90oTGD8hBv5ZEqHj50I0X9gJJprliROmT2S67izceHGmrCB4ZiGqRvajaKKlGlZlfrH5mXvR_Z2vas2LNvbI7-m5ZPmqrRRei3fBMj4Jh2lZWT341j7tnG6qoYgfd0wfxHbWhscrsdwbxUMsjce78PQ3qaMNr5KCxIpuj8pYjBZOV6gHhIWCtrynTMsMQB5wdiYleqYZ8tV-4be9fhXTkwDYZYiqDULg3lKx79Nk7HpNuXnY32pgnVZlJUst8L8gAtqE0rR3ZU48IHWDf6blONOkpRwH0w5zNiwPbpcXywZVa_0hgIHjU8X5InEl98qEr4cG2J4uUseCuEcBqLp9nuCW8pK8Gr6xFOYVDB9tGMfkN5dZKMaCCbo2dLR6feB1BhPktrZyIZFgcJ6zm1-JbB0YdSt01SxVehgYgvmOY--7mdOEe0h6Vuh53g2AN_cxoOfBxSdVRLGgzyKEqzYPd3ylwN63Ea_yqn_ucNyLNACUpI68TAOLO2kM0iXRqG2FP7ocRYDxBYmzMbPc2rsBd7sWfMzhpn6SHBIKCLI0MyibK8ugBLI4XQg6aoMsSHATCf0X06qVo84kzsMbmlZQLsA0XRgJR3Zn8WmjMyO5B7tFUQPPc8DUvlw4dYf1mkqVbqv0qpi03Q5inTIC5vSZWpTUw9-c4pFf8pViokTMR235HaXaIjK6IiUlkAz_oGl0ICtwK49ZjP6xFcMimkjVMVonmbsQCMrnylveG8mWBlLHGOdKIUni7ajkWtYoGaKMvKZeCkehgKPQiDayiLwQUfIOfxcTHDjkt16Dl-rWekthMXJtswh4K7kCXwf-t8Hp0UvxxZWhVm051vBdek3l8GmZJpeuEHrJYcKC-ugByj8jUceEHkmQopCYkh_QsvCrVXArQ9oJSSPYfgGn1sZ8olGkfiZZkz3JsZE_qKoVFrTDzoH5tNc3x3B3mdgrRELOVv8L7wLslxev6lQ7fxjrCrX0awMBJEVLBViPklqevEYM6oOYQkT7r2D1nA=="
+                },
+                "multi_retrievable": false
+            },
+            "distance": 9780000,
+            "maki": "marker",
+            "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.TcxBCsJADAVQjyJZu6jgQryCuPIAks4Mbeh0UjKpUMTDdO8txHuZMl00u__C_59duRc4HpPKBBe4R35iRwgHkNAQJ7Mr_2ZywchTViGnhpaGiKbb_8BZHfsFq1O1P57NIjuMpFPppEBNW7O0zL4Iei8hZws3Srn7zqs90tjXQdYa9ssovP8=",
+            "external_ids": {
+                "carmen": "address.6117749724283520",
+                "federated": "carmen.address.6117749724283520"
+            },
+            "context": [
+                {
+                    "layer": "postcode",
+                    "localized_layer": "postcode",
+                    "name": "040 18"
+                },
+                {
+                    "layer": "place",
+                    "localized_layer": "place",
+                    "name": "Košice"
+                },
+                {
+                    "layer": "region",
+                    "localized_layer": "region",
+                    "name": "Košice"
+                },
+                {
+                    "layer": "country",
+                    "localized_layer": "country",
+                    "name": "Slovakia"
+                }
+            ],
+            "metadata": {
+                "iso_3166_1": "sk",
+                "iso_3166_2": "SK-KI"
+            }
+        }
+    ],
+    "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+    "version": "46:1ed13a97242df2400c86d2f978f2683e8c81bf63",
+    "response_uuid": "a0d4a47c-70df-480b-a2f4-f91c6926fd3f"
+}

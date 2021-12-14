@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/open_simple_ui"
+        android:title="@string/action_open_simple_ui_example"
+        />
+
+    <item
+        android:id="@+id/open_custom_data_provider_kt_example"
+        android:title="@string/action_open_custom_data_provider_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_custom_data_provider_java_example"
+        android:title="@string/action_open_custom_data_provider_java_example"
+        />
+
+    <item
+        android:id="@+id/custom_theme_example"
+        android:title="@string/action_open_custom_theme_example"
+        />
+
+    <item
+        android:id="@+id/open_forward_geocoding_kt_example"
+        android:title="@string/action_open_forward_geocoding_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_forward_geocoding_java_example"
+        android:title="@string/action_open_forward_geocoding_java_example"
+        />
+
+    <item
+        android:id="@+id/open_forward_geocoding_batch_resolving_kt_example"
+        android:title="@string/action_open_forward_geocoding_batch_resolving_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_forward_geocoding_batch_resolving_java_example"
+        android:title="@string/action_open_forward_geocoding_batch_resolving_java_example"
+        />
+
+    <item
+        android:id="@+id/open_reverse_geocoding_kt_example"
+        android:title="@string/action_open_reverse_geocoding_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_reverse_geocoding_java_example"
+        android:title="@string/action_open_reverse_geocoding_java_example"
+        />
+
+    <item
+        android:id="@+id/open_category_search_kt_example"
+        android:title="@string/action_open_category_search_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_category_search_java_example"
+        android:title="@string/action_open_category_search_java_example"
+        />
+
+    <item
+        android:id="@+id/open_offline_search_java_example"
+        android:title="@string/action_open_offline_search_java_example"
+        />
+
+    <item
+        android:id="@+id/open_offline_search_kt_example"
+        android:title="@string/action_open_offline_search_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_offline_reverse_geocoding_java_example"
+        android:title="@string/action_open_offline_reverse_geocoding_java_example"
+        />
+
+    <item
+        android:id="@+id/open_offline_reverse_geocoding_kt_example"
+        android:title="@string/action_open_offline_reverse_geocoding_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_history_data_provider_java_example"
+        android:title="@string/action_open_history_data_provider_java_example"
+        />
+
+    <item
+        android:id="@+id/open_history_data_provider_kt_example"
+        android:title="@string/action_open_history_data_provider_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_favorites_data_provider_java_example"
+        android:title="@string/action_open_favorites_data_provider_java_example"
+        />
+
+    <item
+        android:id="@+id/open_favorites_data_provider_kt_example"
+        android:title="@string/action_open_favorites_data_provider_kt_example"
+        />
+
+    <item
+        android:id="@+id/open_maps_integration_example"
+        android:title="@string/action_open_maps_integration_example"
+        />
+</menu>

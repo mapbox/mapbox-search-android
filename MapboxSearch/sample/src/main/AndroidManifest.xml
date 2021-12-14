@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mapbox.search.sample"
+    >
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name=".SampleApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="${appName}"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:targetApi="m"
+        >
+
+        <activity
+            android:name="com.mapbox.search.sample.MainActivity"
+            android:windowSoftInputMode="adjustNothing"
+            >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SimpleUiSearchActivity" />
+
+        <activity
+            android:name=".CustomThemeActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />
+        <activity android:name=".api.CustomIndexableDataProviderJavaExample" />
+        <activity android:name=".api.ForwardGeocodingKotlinExampleActivity" />
+        <activity android:name=".api.ForwardGeocodingJavaExampleActivity" />
+        <activity android:name=".api.ForwardGeocodingBatchResolvingKotlinExampleActivity" />
+        <activity android:name=".api.ForwardGeocodingBatchResolvingJavaExampleActivity" />
+        <activity android:name=".api.ReverseGeocodingKotlinExampleActivity" />
+        <activity android:name=".api.ReverseGeocodingJavaExampleActivity" />
+        <activity android:name=".api.CategorySearchKotlinExampleActivity" />
+        <activity android:name=".api.CategorySearchJavaExampleActivity" />
+        <activity android:name=".api.OfflineSearchKotlinExampleActivity" />
+        <activity android:name=".api.OfflineSearchJavaExampleActivity" />
+        <activity android:name=".api.OfflineReverseGeocodingKotlinExampleActivity" />
+        <activity android:name=".api.OfflineReverseGeocodingJavaExampleActivity" />
+        <activity android:name=".api.HistoryDataProviderKotlinExample" />
+        <activity android:name=".api.HistoryDataProviderJavaExample" />
+        <activity android:name=".api.FavoritesDataProviderKotlinExample" />
+        <activity android:name=".api.FavoritesDataProviderJavaExample" />
+
+        <activity
+            android:name=".maps.MapsIntegrationExampleActivity"
+            android:windowSoftInputMode="adjustNothing"
+            />
+
+    </application>
+
+</manifest>

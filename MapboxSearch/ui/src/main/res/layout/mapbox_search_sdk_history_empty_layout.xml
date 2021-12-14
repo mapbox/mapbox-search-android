@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/history_not_items"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/mapbox_search_sdk_search_history_item_name_margin_top"
+    android:gravity="center_horizontal"
+    android:maxLines="1"
+    android:paddingHorizontal="@dimen/mapbox_search_sdk_primary_layout_offset"
+    android:text="@string/mapbox_search_sdk_search_result_view_empty_recent_searches"
+    android:textAppearance="@style/MapboxSearchSdk.Text.BoldHeader.Big"
+    />

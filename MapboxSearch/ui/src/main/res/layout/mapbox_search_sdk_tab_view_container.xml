@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:parentTag="com.mapbox.search.ui.view.tabviewcontainer.TabViewContainer"
+    >
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_view_tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/mapbox_search_sdk_search_tab_view_container_tab_height"
+        android:layout_gravity="center_horizontal"
+        app:tabBackground="@drawable/mapbox_search_sdk_tab_background"
+        app:tabGravity="center"
+        app:tabIndicator="@drawable/mapbox_search_sdk_tab_background_selected"
+        app:tabIndicatorColor="?attr/mapboxSearchSdkPrimaryAccentColor"
+        app:tabIndicatorHeight="@dimen/mapbox_search_sdk_search_tab_view_container_tab_height"
+        app:tabMinWidth="@dimen/mapbox_search_sdk_search_tab_view_container_tab_min_width"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="@dimen/mapbox_search_sdk_search_tab_view_container_tab_horizontal_padding"
+        app:tabPaddingStart="@dimen/mapbox_search_sdk_search_tab_view_container_tab_horizontal_padding"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="?attr/mapboxSearchSdkOnPrimaryAccentColor"
+        app:tabTextAppearance="@style/MapboxSearchSdk.Text.TabTitle"
+        app:tabTextColor="?attr/mapboxSearchSdkPrimaryTextInactiveColor"
+        />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/tab_view_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</merge>

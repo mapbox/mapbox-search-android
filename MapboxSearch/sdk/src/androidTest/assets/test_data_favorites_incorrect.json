@@ -1,0 +1,30 @@
+{
+  "records": [
+    {
+      "id": "empty_correct_record_id",
+      "name": "Empty correct record",
+      "coordinate": [
+        0.0,
+        0.1
+      ],
+      "searchResultType": "POI"
+    },
+    {
+      "id": "record_with_unknown_type",
+      "name": "Record with incorrect type",
+      "coordinate": [
+        0.0,
+        0.1
+      ],
+      "searchResultType": "UNKNOWN_TYPE"
+    },
+    {
+      "id": "record_without_coordinate",
+      "name": "Record without coordinate",
+      "searchResultType": "POI"
+    },
+    {
+    }
+  ],
+  "version": 0
+}

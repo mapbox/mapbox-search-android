@@ -1,0 +1,62 @@
+apply plugin: 'pl.droidsonroids.pitest'
+
+pitest {
+    targetClasses = ['com.mapbox.search.**']
+    targetTests = ['**Test**']
+    pitestVersion = pitest_version
+    avoidCallsTo = ['kotlin.jvm.internal']
+    testPlugin = "junit5"
+    threads = Runtime.getRuntime().availableProcessors()
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    jvmArgs = ['-Xmx1024m']
+    verbose = true
+    exportLineCoverage = true
+    mutators = ['DEFAULTS', 'CONSTRUCTOR_CALLS', 'EMPTY_RETURNS', 'FALSE_RETURNS', 'NULL_RETURNS', 'REMOVE_CONDITIONALS', 'REMOVE_INCREMENTS', 'EXPERIMENTAL_SWITCH']
+
+    excludedClasses = [
+
+            // Parcelable classes thar cause pitest fail...
+            'com.mapbox.search.result.OriginalSearchResult$Creator',
+            'com.mapbox.search.result.SearchAddress$Creator',
+            'com.mapbox.search.result.IndexableRecordSearchResultImpl$Creator',
+            'com.mapbox.search.result.SearchResultSuggestAction$Creator',
+            'com.mapbox.search.result.ServerSearchResultImpl$Creator',
+            'com.mapbox.search.result.SearchSuggestionType$SearchResultSuggestion$Creator',
+            'com.mapbox.search.result.SearchSuggestionType$Category$Creator',
+            'com.mapbox.search.result.SearchSuggestionType$IndexableRecordItem$Creator',
+            'com.mapbox.search.result.SearchSuggestionType$Query$Creator',
+            'com.mapbox.search.result.GeocodingCompatSearchSuggestion$Creator',
+            'com.mapbox.search.result.ServerSearchSuggestion$Creator',
+            'com.mapbox.search.result.IndexableRecordSearchSuggestion$Creator',
+            'com.mapbox.search.result.RoutablePoint$Creator',
+            'com.mapbox.search.result.SearchRequestContext$Creator',
+
+            'com.mapbox.search.record.HistoryRecord$Creator',
+            'com.mapbox.search.record.FavoriteRecord$Creator',
+
+            'com.mapbox.search.RequestOptions$Creator',
+            'com.mapbox.search.Language$Creator',
+            'com.mapbox.search.Country$Creator',
+            'com.mapbox.search.SearchNavigationProfile$Creator',
+            'com.mapbox.search.ReverseGeoOptions$Creator',
+            'com.mapbox.search.SearchOptions$Creator',
+            'com.mapbox.search.CategorySearchOptions$Creator',
+            'com.mapbox.search.SearchResultMetadata$Creator',
+            'com.mapbox.search.RouteOptions$Creator',
+            'com.mapbox.search.RouteOptions$Deviation$Time$Creator',
+            'com.mapbox.search.RouteOptions$Deviation$SarType$Creator',
+            'com.mapbox.search.ImageInfo$Creator',
+            'com.mapbox.search.ResponseInfo$Creator',
+            'com.mapbox.search.analytics.events.AppMetadata$Creator',
+            'com.mapbox.search.analytics.events.SearchResultEntry$Creator',
+            'com.mapbox.search.analytics.events.SearchResultsInfo$Creator',
+            'com.mapbox.search.EtaType$Creator',
+            'com.mapbox.search.SearchNavigationOptions$Creator',
+            'com.mapbox.search.OfflineSearchOptions$Creator',
+            'com.mapbox.search.OfflineReverseGeoOptions$Creator',
+            'com.mapbox.search.SelectOptions$Creator',
+    ]
+    // Use feature EXPORT for debug
+    // features = ["+EXPORT"]
+}

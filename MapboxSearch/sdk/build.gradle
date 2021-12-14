@@ -1,0 +1,151 @@
+import java.time.Duration
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'de.mannodermaus.android-junit5'
+    id 'com.mapbox.android.sdk.versions'
+}
+
+apply from: "../gradle/ktlint.gradle"
+apply from: "../gradle/versions.gradle"
+apply from: "../gradle/pitest.gradle"
+apply from: "../gradle/jacoco.gradle"
+apply from: "../gradle/dexcount.gradle"
+apply from: "../gradle/dokka.gradle"
+apply from: "../gradle/publish.gradle"
+apply from: "../gradle/license.gradle"
+apply from: "../gradle/track-public-apis.gradle"
+
+android {
+    buildToolsVersion build_tools_version
+    compileSdkVersion compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+
+        versionName project.property('versionName')
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled project.hasProperty('coverage')
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"
+        }
+        release {
+            debuggable false
+            jniDebuggable false
+            minifyEnabled false
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+        /**
+         * Migrate to Groovy syntax when the issue https://youtrack.jetbrains.com/issue/KT-37652 is resolved
+         *
+         *     kotlin {
+         *         explicitApi()
+         *     }
+         */
+        freeCompilerArgs += [
+                '-Xexplicit-api=strict',
+        ]
+    }
+
+    lintOptions {
+        disable 'ParcelCreator'
+        abortOnError true
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+        }
+    }
+
+    sourceSets {
+        String sharedTestDir = "src/sharedTest/java"
+        test {
+            java.srcDirs += sharedTestDir
+        }
+        androidTest {
+            java.srcDirs += sharedTestDir
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':sdk-common')
+    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation "androidx.annotation:annotation:$android_x_annotation_version"
+    implementation "androidx.collection:collection-ktx:$androidx_collection_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_interceptor_version"
+
+    api "com.mapbox.common:common:$common_sdk_version"
+    api "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
+    implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:$telemetry_version"
+
+    implementation "com.mapbox.base:annotations:$mapbox_base_version"
+
+    ktlint "com.pinterest:ktlint:$ktlint_version"
+
+    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
+    testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+    // The following libraries were added for preventing
+    // Pitest from crash due to missing libraries in passed
+    // classpath.
+    testImplementation "io.mockk:mockk-agent-common:$mockk_version"
+    testImplementation "io.mockk:mockk-agent-api:$mockk_version"
+    testImplementation "io.mockk:mockk-agent-jvm:$mockk_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+    testImplementation project(":common-tests")
+
+    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation "androidx.test:runner:$android_x_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$android_x_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation project(":common-tests")
+}
+
+task cleanNative(type: Delete) {
+    delete "${projectDir}/.cxx"
+}
+
+tasks.register('quickPitestDebugCheck') {
+    doLast {
+        tasks.pitestDebug.exec()
+    }
+    timeout = Duration.ofMillis(30_000)
+    dependsOn pitestMockableAndroidJar
+    dependsOn compileDebugUnitTestSources
+}
+
+clean.dependsOn cleanNative

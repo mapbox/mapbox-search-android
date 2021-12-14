@@ -1,0 +1,82 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    -1.533131,
+                    52.281483
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "feature_name": "62 Ranelagh Terrace",
+                "matching_name": "62 Ranelagh Terrace",
+                "description": "Royal Leamington Spa, Royal Leamington Spa, CV31 3BS, United Kingdom",
+                "place_name": "62 Ranelagh Terrace, Royal Leamington Spa, Royal Leamington Spa, CV31 3BS, United Kingdom",
+                "id": "address.6720736975655310",
+                "place_type": [
+                    "address"
+                ],
+                "context": [
+                    {
+                        "layer": "postcode.6729862716359000",
+                        "localized_layer": "postcode.6729862716359000",
+                        "name": "CV31 3BS"
+                    },
+                    {
+                        "layer": "locality.6749277918143330",
+                        "localized_layer": "locality.6749277918143330",
+                        "name": "Royal Leamington Spa"
+                    },
+                    {
+                        "layer": "place.9090331492878150",
+                        "localized_layer": "place.9090331492878150",
+                        "name": "Royal Leamington Spa"
+                    },
+                    {
+                        "layer": "district.10997294942520540",
+                        "localized_layer": "district.10997294942520540",
+                        "name": "Warwickshire"
+                    },
+                    {
+                        "layer": "region.13483278848453920",
+                        "localized_layer": "region.13483278848453920",
+                        "name": "England"
+                    },
+                    {
+                        "layer": "country.12405201072814600",
+                        "localized_layer": "country.12405201072814600",
+                        "name": "United Kingdom"
+                    }
+                ],
+                "language": "en",
+                "maki": "marker",
+                "internal_id": "Y2eAgMSUlKLU4mIA.Y2OAgOTEotzUPAA=.dY29CkIxDIV9lNLZRQUHR8VJJ39HiW3oDfYmklbkIr6xD2GKsxm_7-Scz-h3Lx_kwVUHv_BHporRbYhTlN6PvWIiYTNrThk4GopUqlKoBs-gTwq30pGimXuGgIZ3MkB2W4Teeqqw29-haSk1SGyJ1Wk2cbPl3miWAJnq8P-PkVJ3Fe1EoqWMQIyKpbQXYMyQOndA1bb-kxd-9FdUC8ynrQH6turfXw==",
+                "external_ids": {
+                    "carmen": "address.6720736975655310",
+                    "federated": "carmen.address.6720736975655310"
+                },
+                "accuracy": "point",
+                "address_number": "62",
+                "metadata": {
+                    "iso_3166_1": "gb",
+                    "iso_3166_2": "GB-ENG"
+                },
+                "routable_points": [
+                    {
+                        "name": "Address",
+                        "coordinates": [
+                            -1.533119,
+                            52.281471
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+    "version": "44:9d58434d7f88e4515b1edfbad545cc8c527e303f",
+    "response_uuid": "30e951b6-e7f4-437c-9b19-691bb7d43fc4"
+}

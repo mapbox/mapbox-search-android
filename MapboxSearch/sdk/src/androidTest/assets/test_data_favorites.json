@@ -1,0 +1,140 @@
+{
+  "records": [
+    {
+      "descriptionText": "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
+      "address": {
+        "country": "France",
+        "houseNumber": "5",
+        "locality": "7th arrondissement of Paris",
+        "neighborhood": "Gros-Caillou",
+        "place": "Paris",
+        "postcode": "75007",
+        "street": "avenue Anatole France"
+      },
+      "coordinate": [
+        2.295135021209717,
+        48.859291076660156
+      ],
+      "id": "poi.609885454495",
+      "name": "Eiffel Tower",
+      "categories": [
+        "monument",
+        "landmark",
+        "historic"
+      ],
+      "searchResultType": "POI"
+    },
+    {
+      "descriptionText": "Calle de Ruiz de Alarcón, 23, 28014 Madrid, Spain",
+      "address": {
+        "country": "Spain",
+        "locality": "Jerónimos",
+        "place": "Madrid",
+        "postcode": "28014",
+        "region": "Madrid",
+        "street": "C. de Ruiz de Alarcón, 23"
+      },
+      "coordinate": [
+        -3.6922054290771484,
+        40.41393280029297
+      ],
+      "id": "poi.979252559345",
+      "name": "Museo del Prado",
+      "categories": [
+        "monument",
+        "landmark",
+        "historic"
+      ],
+      "makiIcon": "museum",
+      "searchResultType": "ADDRESS",
+      "routablePoints": [
+        {
+          "point": [
+            -3.6925262879649585,
+            40.413767129064276
+          ],
+          "name": "Entrance"
+        }
+      ],
+      "metadata": {
+        "metadata": {
+          "testKey": "testValue"
+        },
+        "reviewCount": 3456,
+        "website": "https://www.museodelprado.es/en/visit-the-museum",
+        "averageRating": 9.7,
+        "phone": "+902 10 70 77",
+        "description": "Museo Del Prado",
+        "otherPhotos":[
+          {
+            "height":500,
+            "url":"https://museodelprado.es/pic2.jpg",
+            "width":500
+          },
+          {
+            "height":300,
+            "url":"https://museodelprado.es/pic3.jpg",
+            "width":700
+          }
+        ],
+        "primaryPhotos":[
+          {
+            "height":150,
+            "url":"https://museodelprado.es/pic1.jpg",
+            "width":700
+          }
+        ],
+        "openHours": {
+          "mode": "SCHEDULED",
+          "periods": [
+            {
+              "openWeekDay": "MONDAY",
+              "openHour": 9,
+              "openMinute": 30,
+              "closedWeekDay": "MONDAY",
+              "closedHour": 17,
+              "closedMinute": 0
+            }
+          ]
+        },
+        "parking": {
+          "totalCapacity": 4,
+          "reservedForDisabilities": 2
+        },
+        "cpsJson": "{\"raw\":{}}"
+      }
+    },
+    {
+      "descriptionText": "Kirsten Flagstads Plass 1, 0150 Oslo, Norway",
+      "address": {
+        "country": "Norway",
+        "place": "Oslo",
+        "postcode": "0150",
+        "street": "Kirsten Flagstads Plass 1"
+      },
+      "coordinate": [
+        10.752805709838867,
+        59.90727233886719
+      ],
+      "id": "poi.798864010802",
+      "name": "Oslo Opera House",
+      "categories": [
+        "theatre",
+        "theater",
+        "music",
+        "show venue",
+        "concert",
+        "concert hall"
+      ],
+      "makiIcon": "opera",
+      "searchResultType": "POI",
+      "metadata": {
+        "metadata": {
+        },
+        "otherPhotos":[
+        ]
+      }
+    }
+  ],
+  "version": 0
+}

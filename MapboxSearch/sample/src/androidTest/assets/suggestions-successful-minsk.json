@@ -1,0 +1,585 @@
+{
+  "suggestions": [
+    {
+      "feature_name": "All World Mission Minsteries",
+      "matching_name": "All World Mission Minsteries",
+      "description": "1045 Garden St, East Palo Alto, California 94303, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "CpPtGSew9CsuGXTEeZCikeUjSwT6xJPzNFK4MdDrdyLDt1VtzixPUaPR22kq8276Wl7FxSmF-MrGbqYAmSdKD0LFiGMRl7fkyjOUKVyw0hC4jZmJSyDqkxnj3guKaR6KOjU_uDNL6FMzHPPUaHM4GtKNIB0UDkT5-uEIKnR3BqhjMtvRQJGnhIto_mcGq339yJAOMh_pESJNxSWEMHe_64MFz6a54YVXGaaWUxRz1OwKg0le63aVzZjq7kHeCQFKrlMadfEsooPbY4DxfHCIu-C_P3VZEZAd545QQMS173f6QXq4IvGh_YHbkyDsl9wCV2bMTzK1e4uu-qhfWY_1id2PmBnlVGN_t0j7sT63KCYgekpxd0XZixRf7b6qu7aU_rq9S1B90dVPJxh2svjvQnq63erGZWUrdb7yiq1Qon4-F9Q1-8KwJGovqux1eJGA1x-CcKDy_UObU7Cwa9Idnw_YKP83MHXdGo6sv0WXi5MH9CgWOgRf5uA1zEB9zUTDbYGKaw6wkwvJwOQ86CJJohUUw7JWHbNcBmb41u-AEht8UDoJyBlH8eL00rfDmrzU2kA19_1EUREKtBs-M0iMRvyEKbeISixgITgCVrFBXfr9alUrDgwc_1mTrFXAifl-uE6V-4I8hzXuw0zKm7iAK0TUYRDNNaYO4O6IEwmzhahHlJAAgG7_9mCAlWSGg00k8jFrLWRTF7tGcjCZEaYmXdyL93DCChhxsUU_qqA_2g7se_r4JES5Z0KDhBMr-Psc4EnCzK65OibakgT_ezS4cqduvjEuxWn1T_zoxUJqBhnj30EGZjUh7v25EbAvSof5jikRMfvUO3j7DgCpNL6HfdU7Vxe-RVLr2UcjfEvTA8ByoOQLh5cX8Go9s9smNLMeXTkCBus0SNcgm7Bk_mNf3WlAVjvufLJWwIcsS1OYNbZ4KvMbrpKiOAgsH10jlO1kWaiy8upLArdLMF0jMQkVc-2xaPin7Anrd1AJSfjG9qyHruzCQT8dAGKrjAcvpl3if1_chGK2dvF4_TXrJbQagQaQiwkFL5aKEKoOI31urRMSSI_ShF0gg5ulo_7ErySTQvDbINlpQHWT6wIJejJ6gpREyr7sGtsybQaWkaZuRi7W-Jzj3iiv4N77su7UyvJes1MVAgEXKfXjMwRHpu9ykzSA-4HMxoHvjMhmXsua7xrz8TQS9bNhQ-RKDpLRGZ6GLNfIXqfnEBFy7_X5c3_B78hOMVq4DiURIAw3xSoZDAW-D6JipHM4ITxGsAJr7XUS5aJxFXZPmQYSk0JMDkTqgDd67ivtuvxLM1apqBhdG9KIuUL5twfSM3mYEJCDtF60Yus3jYmoWCxll9w6qJ_fvGhMOVV5U98cD1ZWAHkWorE4n8QcIcHWZvAYbTLcDY2L73zg8EdrpSKI_RzbRzkXlHx-lmU8m18ehzRgrkUm"
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-122.131708,37.467122",
+      "distance": 6600,
+      "maki": "marker",
+      "category": [
+        "place of worship"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.JcBBCsAgDATAfqglCRJof7Muqz2K_h88OPd1LDT1ifE_q38BS4E0DxWno5noJSvrqwxs",
+      "external_ids": {
+        "federated": "poi.32c8486d1279cce286c03db89ca75cd2a77d0141319e3c5888b9ecce77ea1a8f",
+        "mbx_poi": "32c8486d1279cce286c03db89ca75cd2a77d0141319e3c5888b9ecce77ea1a8f",
+        "safegraph": "sg:2a06eacc012e41c1af0ec146bcb9e62a"
+      },
+      "mapbox_id": "CkIKQDMyYzg0ODZkMTI3OWNjZTI4NmMwM2RiODljYTc1Y2QyYTc3ZDAxNDEzMTllM2M1ODg4YjllY2NlNzdlYTFhOGY=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "1045 Garden St"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "garden st"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "94303"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "East Palo Alto"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Mia Minks",
+      "matching_name": "Mia Minks",
+      "description": "3249 Stevens Creek Blvd suit 205, Santa Clara, California 95117, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "8pPjHd-x9DoOUTmsDXMKKQQ0J3352KS6MNF9T3C3W44T7EwbahTEghNBV9i4PQK_Ks1Se857YoWUr5f-3JR5YWAAAvMFkDozokWmcrWkXlQRelih9-xf1iGSj0HDZU2ShBrzUmoPO2oNQbrKFhcAu_IAgGeis_W_bYhkaJFnrIJGR6euC9v7SeKPfF_O_ydkx0tvHfb9f4nEkZAzzPif6D6txZM0Q69mxoerLRovXYDGZCiozT6l9NwXdsuETPigtYjXbN9z8bPASCnbJvYKLFqRWTQiAuZ4x63EMWBPmmU7f4pI1RfKTpYwhCxct6eM5stEVS9lvp2JXR6eAO92BwAIv65mmIOPFynM8QYLyl7uwZjFROeFJHGGkR8ldEgkksybodcgAcKTi4gcyAKe7gryxHuws6Na6j3vIQLyv_-jrqEwi42b97OTysDFFByU73sRv_zMRRAYKztJbgXAYg70DWXvGi_ojOvPH4DXjKb0SDMbN4wtShtEja0TmBjQx0bWAxjl09gPEnkQhT_AEiOdNf6EFy0gzeEJ7ZrFDkwvBQCyBFZiQmXZbVrgJSnChdPvUZGzqiO4yvE2qnJvEu0AO6GUe455Dmz4QT9rhLYPIdAuFwpUbt_LuHvgEMt_LKEQ9ujfN48t4ybaO8d0gFsBvFugBDDaxrpyJmXUWcpWXXjdfJPAliZv7lCOjkfq0uWHQ6HE0CdmUX93dIluzOwXCEs8-GDdcQXHARy_hcSlnXKxnofO8GtZ7HX4-3Hmn0fsrJn-Ru9Cbq_VlU0899MDH9WwuS59SddtyNswsEofSYUS8LcU-60vSX_lXn2rhiLq31kW4_T-KbypBCHFSvVz5Bw2o7rX_AMhnVksRqZyOxjHDNK_-wDCmy8RTEzI1Tz0q760np60I3zXCntB0phbMt--Bsi-4ksE2UMa1xvWpeIiY2KidEH4jUjGoCC2SnIt80S7M0uakVhMTrkrQU7uY7eqOel7AgMjfIvb1YepNAdBYaJtMGCfnYyjLEOzKr4Cs2RRmHMCE5neEfH4MJWyM9OyeDIa6gpF8Lm70vSU4LmOc3I77bHaGpJlbPazNA3ycXbb2lUa6L-izvUmXHpwYuYjGGLZWK-TEWlbRuwjwIIDs8PQzEkeL88kRvdZxxdGVSYlEMhGMXk1QeGV_ImKCvD8sKD8-rk3yI_irI76ngpl2m8t3K1MY8NQI4_HSH6T72s65PG61yv3GTIVbExukB0EKbjqjMbdmkY9ojPgm8CdiGIb9Y6kG0kkHiIB9xEB_25VsKdrZth5UDwIOdhuOjEBjZ-6oZ_HrQREDzdU5cNuz66mPErChG2JSYXNzhlHsHmvT5IoVfG4KxrwMcWtj0e3r9lTZIrywRqSAyxynWXhiLTbZYGfjP5102pMcAzPkthJZGRX0m7uLlnZm5MCPym1guLlvCGvG9X4lIb9NVqyzWpWaL4hLUqNesLuj44aSyILNpg4f_HN"
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-121.95415175203829,37.32376962095897",
+      "distance": 16000,
+      "maki": "marker",
+      "category": [
+        "barber",
+        "services",
+        "salon",
+        "cosmetics shop",
+        "shopping",
+        "spa"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9UwMTkzRjw8RUkyQDc6OUZEtz87SUVMNUAA==",
+      "external_ids": {
+        "federated": "poi.1f4d45c7ef165061f6c0222ee9ae9eb1d18ca5535b62c3923a4780488d90fdc8",
+        "foursquare": "5044f31ae4b072dc977fde1e",
+        "mbx_poi": "1f4d45c7ef165061f6c0222ee9ae9eb1d18ca5535b62c3923a4780488d90fdc8"
+      },
+      "mapbox_id": "CkIKQDFmNGQ0NWM3ZWYxNjUwNjFmNmMwMjIyZWU5YWU5ZWIxZDE4Y2E1NTM1YjYyYzM5MjNhNDc4MDQ4OGQ5MGZkYzg=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "3249 Stevens Creek Blvd suit 205"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "stevens creek blvd suit"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "95117"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "Santa Clara"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Mia's Minks",
+      "matching_name": "Mia's Minks",
+      "description": "3249 Stevens Creek Blvd Ste 205, Santa Clara, California 95117, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "8pPjHd-x9DpOQKrKbS9B2M8sV65dSXHQyXHdPTtE6JkwQcMabQJARBf1hp7PmficfFou5xuyCZ3UIfpc8h2IabPAlphjtknz-65FIoZiQA1cgN1J7IuhhdGtChP7cTnlmzbeuJ52pM3386anY9xv95SDbZDzxIGiGqVJwifU2bQH8g_aDLBGFdDzKI3RprNSTI4Sm56lw15JSDtFLKZYR9uEp48uP78VrI2KiXWzYBD3uWxDno6A0o-CUrcOBzhfCeX1Qb4zy4ecXgaixoeCEUxrzxQ9KGR6GZ-GYwpQr9Gk2XiVLOdY_P0XtTNChRGK90uxQhO61Ix3kMVWEZ850yuwK8z8E0On974fVsuZGsUWKJxX6RG4g1bgBwzN9JbjOA515e-wDx8GivJwaGvmM9HIsgAWQgJaRbeNEPq2GJ8lQrRtYuqGISIQK1mD12AS1A-4XafoTZPGbPJCTXliCSCYEVLLTi45Gj1yBHAbjAp9jqKmx-iIeKb1kmYJMacqhlOxAftYhvuzadfQh4fQcrw-z_x8HUP--GkaaikoIIUBodwYWx8CXb7eqwGQXi5i4gVIk5i1pEfiEJOriF69ACG2-bHKKkqWL2FWlS5TPopxo5pUCOgKIJTfVOf1aOKyPGGt3LTrvQNDEgkIyGp8IFyqHuK5WB0vGvkbUTqj57EZDF2MtJb2w5gq_nS24jtV9atu2fwea2IDLYQSX0RB-d6uLMlAkdA1J5CGWEdkv1YJ-njdhQ6qoP_dEXqxPk2vzXT9_2K6PJ5uMR9AD44ilbauNNjvAX_UK52WrNB5q7kD-rk57C3SnBjZTVzKYNjcs0TdBTnm2clwHBNYcU6HgtCalRGannlw48rbhmBMWqiOGlz6dFMzrdSnZaGL6QrrVfljvUe6FJNBsrWDNj66ajHOYHNWl9mDb9BqE5yHeJziXnFOjnO-2m8RkrsR5PECClouoYwAweJstr2HcLO6CCS7ccYbXR8iMwldSh5cjIfwCsL-8jZzj_HgRKt1NjqWWUyoht99mY-5lcxMkr9rkNCpNJve6LInIEu3fXkB6lEHF-3kTf2PELOoaBpBwSOjs8sHtSzsijcebY1IQMTXLOTVF73EqStNEcbUJBCmndyKKwyHphz_Dv0_Nyiq6bbATmf5M-p1ngLTmlgZrdjF-KC18R4Upxc2XL369dxcmLuwlQ5FCtm1o2A63QHTmZeznKL1f3fmIgqWHppz5J9WXbqVd8R4GL9KBO06s-JIdV-OIy5Bj7K4PNTjqZLgIuWlODekDxYL5hTynkZWGWPHUnx6uO8auf-687slFsbeJEqZ9IQ4y18-cakqyc0pqqFV-zIVhC8tZ_pGl4s4d7Ocf3TOwO8GZ4uiI7tgUgYBp5n0PiHmKkTFoS9JTgmydDEzb_MlBEfiKjSFm20KB8guP3l8Yf3fpuJ5KLnCA9nClO5iOIH5Nbr94Eff9W67QDd-gequhaFFr_mU"
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-121.954111,37.323856",
+      "distance": 16000,
+      "maki": "marker",
+      "category": [
+        "salon",
+        "services",
+        "cosmetics shop",
+        "shopping"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.ATUAyv8tAAAAAAAAAHNhZmVncmFwaC5zZzoyYTYzOTcxMTM4OWI0ZDcxODA1ZTY4NDVjMjk5NTI5NA==",
+      "external_ids": {
+        "mbx_poi": "4907cce7513340758c1d86832453e8c14f34a0e0428510ab631006df2cee4b02",
+        "safegraph": "sg:2a639711389b4d71805e6845c2995294",
+        "federated": "poi.4907cce7513340758c1d86832453e8c14f34a0e0428510ab631006df2cee4b02"
+      },
+      "mapbox_id": "CkIKQDQ5MDdjY2U3NTEzMzQwNzU4YzFkODY4MzI0NTNlOGMxNGYzNGEwZTA0Mjg1MTBhYjYzMTAwNmRmMmNlZTRiMDI=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "3249 Stevens Creek Blvd Ste 205"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "stevens creek blvd"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "95117"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "Santa Clara"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Dale H Minkin DDS Oral Care Associates",
+      "matching_name": "Dale H Minkin DDS Oral Care Associates",
+      "description": "39350 Civic Center Dr Ste 320, Fremont, California 94538, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "-pNhHd-x9HLKV8zmkcsRemAPgKem39AzXUSapa9ESf4ZSQmjcqxjkUn1w8eTvXw2bJgOzmElLZThSfYqkPgtqysiEbTqRCXkO2uaNUaRBRRcAOPcc0L1zjDig4KLaR4Rml91LHOveKwvKMABbdB_47D_Uf6_biWWbkD9GDZ1hbrN8LucKnM3lQG0IkyNOLAIV4Z_JZ4NWmsdnIDtjt94jvvCD24XhyJvHndYg0A8AeVafi-n_K11ZLPEwp36Yq9w1gNi6XjrCeZQEWbx3GaOy1uVXhVf9joTChapDvMM02nZqHgeFe7HJp6thBCMCz-7O2sclaBWiTWuOitPWc7zhdxvmB76JHs9j4iLrQvK084gciJkYrKilRKdpAaZB7ggMNorAScbeBws4XFIoA2Dq3fZUr5cR2VLfY4yB5S6uLZo8rvHhjfM1i2tsRgds6E1xMgA8_Iaz5gc7e23JZZEQwWaNOezMFUtoK5QARHHET4H_CCzA9MS6Pm1z0Cx3lopUf3X4jPPaauTKnf8jLER4KcdlejNtyGoUCiOLukSe5-6lqA1J9-UyZF-sNuVC_Q1KG5XcSCF4nhnDqOUOkoLSr9Wg5EQLIJrdhrn6_qaXjgmi_LMWCmZXChNJuXcetXk3seHPbqIpC23f9x-Y9aj60_3bFO4N2eBAw0y3Kl3SdKbdNLJcRIBZpSVRlpNRuEJDWf7FJBNlWIVyU717asc6Fi3px4xtnoxNbVXVsGKK5jEELXiXVEIhX4D9AoSjhq9pYQN15ax_nEyaFrjczM52_11HopCGD3WGzSMmmZN3TOEXo7MWZV1h8tf5_WunxB0w0w8vWQvIGyMMXzJZe7CQIXTVXVchlzLddhvCtMUPg6aEPtZQ6XyZ1LplExkNvESMxRyJYtuXRq8d0qHNI3dT_RC8P4y_-HhFovHKhztmz2-y30gZRfT8729HLYDy-B4wJAvSZi5FFaaYqCOXtXAYHupt5nYyOD35m9Wf_jvger0hfwr4hN66tLR9cQUI8Z5ez7eSAkVIJ7YNLqS9Cwe1AFeF1ov7aVVFj82C2Ta66qzvf4nusgt8vmzVDi6EKtcXQotMuYYXrHAy2zGksZEKl1GtBkHSCKaCK5TuaT2stbn4PjT203wYhNXGnoHtg5zwXhhXeSW9ySnp4FodYuIB5JxBXr8irIML1kfwCTm9mA_qxdmgtZgIEYJwS7XA7p75rssTTAr68qUDE0c_u-rTsgiPpeM4fn7FuWn9Rf7gJHCHOE_qQmzH_CtvbtQ9236FAuItd2uPd2YwQ28mTYL6bAzPJ6epBgbqvBq5EMUQCII72-NADTRO_e-h2Xa6cLKCUvScPgiA3NLye8CVtWXg2c2BE7o1Sm5RZsdRaX3IaRlnsxWaZM39q3G_yLKvW-s75esKtjQp8cJXiuJnyHLSFz9PxEAD3YyxMnGjA2aCU_ZoGHDvEPtewW7m1KYHVB23YwlSLXiYiUzbmJ8qtIkFV0eEyKEkNUrpdj8RUbDJw17ZpQ1YiRx4aWg1QvA_kSjqJD5mfVon4s="
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-121.975326,37.554455",
+      "distance": 18000,
+      "maki": "marker",
+      "category": [
+        "dentist",
+        "health services",
+        "services"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.Jcq5DYAwDABAJkJxHj8wBSPYwQ4lIvtLIHH1Hctvavh49L7WObaGCRKyq0CpzF3CUkciy3BmLnn_DklmwxOclCtEM-eQXrBRqR7SXg==",
+      "external_ids": {
+        "safegraph": "sg:5601068ea913488c9fb0c677b21d2832;sg:7928b6d1e7a841f5be8f9c365734ef95",
+        "mbx_poi": "0a9bc3c06c4a756adafc4cef6326af3dd1586478be1f623fdd0c73204d7048a2",
+        "federated": "poi.0a9bc3c06c4a756adafc4cef6326af3dd1586478be1f623fdd0c73204d7048a2"
+      },
+      "mapbox_id": "CkIKQDBhOWJjM2MwNmM0YTc1NmFkYWZjNGNlZjYzMjZhZjNkZDE1ODY0NzhiZTFmNjIzZmRkMGM3MzIwNGQ3MDQ4YTI=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "39350 Civic Center Dr Ste 320"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "civic center dr"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "94538"
+        },
+        {
+          "layer": "neighborhood",
+          "localized_layer": "neighborhood",
+          "name": "Downtown"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "Fremont"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Minikins Market",
+      "matching_name": "Minikins Market",
+      "description": "138 Railway Ave, Campbell, California 95008, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "ApNjHd-x9DsOWcE18CRVUp9F5rOvcyk4Fg0UeLUMujw3QG3gZZnN6hD9Bm2ynHCjswfxxlreewiE9CO2ghhQdyAvSB-8G83oZ3igPm3pyN02plpCw0gXCgEjq4dbYuwD1csayXhWfnkajnulBcwkn4KUCcpGxz-wXqq4B4DI4QBnroCqTAefWxu_g-AQfLwY6xWT9-qnYtt-h0jKqxgihqI44y0zd_G9y5qXOW4YLGR69uCJzHa9KpSw-j2F2F4JGd-fFwr8uwVIFNOgCYM4YfCnAgVfK_ikCY-KkwBV2pkF5TKmmlDCr8V1uVyeQmzyipeEu0U_bCf_mqUeMG9CF3wzWMEIZIWDd42S9DJp8hkBairhtBxvvkITIR3rqw07NT5LANGxEHqJ6qEabSwl22pKAZOn4HvZkeECRtE-ckyBKdgofeExnYtREOACFRIgvy1C0XQdsx7zLcIs1pouUQtJf1v9xNEDUTiroq3vQezU7nhtiGNUbpI6Go5XYDJxomkLkkQc0hA96EeMNt0ZXJ2KmL30AkOA1pTrrJ3tiHJgLNqOfT-yqKcLNesQhRwiJsZXGPeWutieq80sCnPisCW07yMw975Lzpaeql_CscgDBJMvIowMrN-IkEYgSC9c_GMfnUfSkK9WC3ybZTTiz25qp2c4DhsfWf_TAA9jyGgBjcs-4mfhRdhCOvC-70qjdy1UcehUvddKjMpOvPQCFS0hZQKKISH4LpmoT_4kI552A7WscQIJZJaV_JHRYKWtDx6V7VSq4Rab13Ybm9bLQvO9oa2f-mRDVz4M_2t_I5jmBraFVosP_degX7CXTsTOtFDj5B2leRly28HYID2DfeVPBFVc7NmU9p-CKZEyVn5iotdGmTsh2pFxbddE4HTvlSN7FXz_Yv5dbQzWaZNKR_g5dRZApF_zzAiQ1THOBpgmlX68IyB-SVq1hCeoJcQfgdjB0o9GpqJ9sAzzzOJOO9c9JZlTkLRJPtri6gR75gdOaVleBMHtYmoOVI4wIsmad5m-FqEVxVjgOFx8R057mlsGSQCN_mMbbgj5UfMW3Q7P5BKMQR5WGDowqXsFEp6JGROAYa1RDIaDuCeyzeAaHyIQ_z_jPXSYmWQrPUxyUtGt7g-XfrgpA_bGzl2upFS9Qrs80x2_KJw1sfvuk0wi7C2RynHn7yKTTm2jVZDv6U43kFneGhNchiw4Q_WjEZDs2CaMeYoAsHJfBXBO-agQ8m8Dydnw61pBc8gJzyeAPcLa_UA81vkjekX7GA3PtNiFkIwq2MRDkNSNdhH-DZFx-IJZIH4q2dOS75D3J6EBD3mxRvCWwN0jjhGhpwZdpowSTuTgwkGjTUEMo3yd2qSAVhLzGmC3_eFDY-UY9RdlgcPmjYX3Hup8kdaaaWp6LAs5DA_5nUIV58wEXK33Youo1kJGd2BZpHa9aTrVBmn9BeLctU5wAjz2_cQ="
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-121.942727,37.285178",
+      "distance": 20000,
+      "maki": "marker",
+      "category": [
+        "clothes store",
+        "shopping",
+        "clothing"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.ATUAyv8tAAAAAAAAAHNhZmVncmFwaC5zZzo5MDAxZDQ0YTkwMzI0MzhjODFkZDdlYjNlY2YyZGQ2Mw==",
+      "external_ids": {
+        "safegraph": "sg:9001d44a9032438c81dd7eb3ecf2dd63",
+        "mbx_poi": "af290e650ce55701b80e873c818fbd492f0eba652609ae284d317320b73aff61",
+        "federated": "poi.af290e650ce55701b80e873c818fbd492f0eba652609ae284d317320b73aff61"
+      },
+      "mapbox_id": "CkIKQGFmMjkwZTY1MGNlNTU3MDFiODBlODczYzgxOGZiZDQ5MmYwZWJhNjUyNjA5YWUyODRkMzE3MzIwYjczYWZmNjE=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "138 Railway Ave"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "railway ave"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "95008"
+        },
+        {
+          "layer": "neighborhood",
+          "localized_layer": "neighborhood",
+          "name": "Central Campbell"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "Campbell"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Minako Organic ish Japanese Cuisine",
+      "matching_name": "Minako Organic ish Japanese Cuisine",
+      "description": "360 Peninsula Ave, San Mateo, California 94401, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "-pPj-R-w9MoHmbBPVyQZczPRZ1azSmA3KiL4e7GWlx3hQnpNxsZRz4GAj9XED2H7WgqjWoiRnRvWPBAf3J2cAWL8DXJoYMTTmxjD9J3peof74HrD2sMMmQTjIwnqcX0C6N1sKK_CgeHEGD7gm_brDB9gNS7z8QxChtpDiiSGcaqZ2epvUDfw9C3AXl5HyVnO3LE7OoJCF86_pWd0uWhgxyP1daSrjyZnIoOUxk4ix0hb7XgTGxNBQo6ifVed-GVnOtF9kJ7s8_a75F9IeQCG4wMByFXvJ_CwZ0MNi7x0vpzoPu2BaLISf_GynsoKMRS0WrRsFXqGKd3EmsMIOpawsmkEQkpe0Lb6-7TMhxqorBQkfkYM5-5R865Fs9UT3R3bV1eaYFAk6bKgywvUtTy8MCKiRuyitAhiw96rdDZAQQeWzFQXwsm10NNroSLo6Rd9YBGzk2fj0zg4MS_uGPYCNQcIn7k1vZm2VjrqiArKalw5icVridZqoTOhi3g9TXmjjvLfkqEmqZ57vFFnC4AJUb49_pMKtOGig8zYCQ3JWx9NjcpDgyi8OLfn-7aZuzZRXf4E6lCYHCMtBcszAlMdRnHNPTIu7zTHZquGAn2vjHrPDHtRCiqHLPQddGtkaK_sTiGQ3zwE98I_5oxYsF0xcDrUaq38zV-swPIPyA_gIcBaRUF8kXOGRabMMa3ap7QWFH9l4Zal826CCQMSNjpqf0Fatksc9PPX-hR6Fr9g2c0684-kHpfoCt075mEdmDKT_uBzZw2pEALuMIEix-bNDr1iL_mGSehlTfmD4V9f7qVF8ow4Sv5dGJMu14ciwcatQO6bvNxfhC06DWZbKj__MYLyN1U-oPvV4s1lY91I4Y5ZhTqiR0bIow8qoTVivNWJ2aPAQIv6YBrmpI8JMxXtWJd0NBPjc0pR-hO0I5uN-oWzDjkUZv3eue_ktVafTTG0UKIjR1X9DrFPdTzIZDyNlQ5DsZ065UaJQlYtVd3XjC7yqJr9lqv6d854YEh96N5MRD8XtSq-mr-72ycCzJ7qEeCRL3zDg9QHPzoYrow1rPOWe4UdFwtk2BQpelweKIS92RHuQYtiJPLtCpqTLKTZX3FUomDul3W_9-AuTYEYkL26-BpQVat65cUtkCWOxdFIJ5--JFRfuiNq_-dlG-LAdWRT_QK2gJYEsjrnt3Ggs0maKRI-JMm_YavrHWiEEDTIS2l5VdR4hLGuYnd0RlANlKhNB-GKyWrUprqmr4sOnBIc_iuRMRt_XnlfLVd558zhNSbfQuVy5H7ptI2RJOD9tS-c2WADmX1NdhFshNEVV1NvNFkX72EwrBjlnYalGnLOMb18uGfJLKp4amABgbxigT0zFtFXiD_WCFsSl1SGjk1bBq8PdZraRJV0VDpmLbEU1MKfowe24RWb4_IzREqugyU6XHxWjJErax9gXDwfYIZQgPHZFAxcVnGDPVOK_RMtbYI5nLNZpg_-WE_8HiGVTZ6s"
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-122.337456,37.5782",
+      "distance": 28000,
+      "maki": "marker",
+      "category": [
+        "pharmacy",
+        "health services",
+        "services"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.JcBBCsAgDATAfqgFa3SJv1k00aPo_8GD8z7XpltfnOPbvYTIKsHFKiGEko3JvCGr4oce",
+      "external_ids": {
+        "safegraph": "sg:13ac41f4eca74a79aada5efd76997279",
+        "mbx_poi": "16c4852fc9068a3275a21b719f7976129ae72977fce791013767d8e2dd78cefa",
+        "federated": "poi.16c4852fc9068a3275a21b719f7976129ae72977fce791013767d8e2dd78cefa"
+      },
+      "mapbox_id": "CkIKQDE2YzQ4NTJmYzkwNjhhMzI3NWEyMWI3MTlmNzk3NjEyOWFlNzI5NzdmY2U3OTEwMTM3NjdkOGUyZGQ3OGNlZmE=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "360 Peninsula Ave"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "peninsula ave"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "94401"
+        },
+        {
+          "layer": "neighborhood",
+          "localized_layer": "neighborhood",
+          "name": "North Central"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "San Mateo"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Minsk",
+      "matching_name": "Minsk",
+      "description": "Belarus",
+      "result_type": [
+        "region",
+        "place"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "GpVj-R-w9BOPVLVFQVWBq1gVeJZq2T536svCjnrkSxST9QGXWQ3sZiln7n4rmU6Fw7BeQEDnMB0mH55M6ar2JwOAyt60PsvyR6q_tpq5mVRddStfOEq5zruLDxNPQbvNGQIYmfk_r3_u_aUsncB6ndqNI78MafdLJigM6tZtWNk89SzRTGH3JzuuuJJ15BiBrbT6tgtnh-cbnWnia8GGQ7OF76ZZ5o1HOfZEFHgifg1gJNVwkRINQe6WrTQEOjNVdXQBApb64EfHra8x0ZJS-2InI4tRYedYZ61iWxpDYju9R1fNVr80IWwsXgALKn6I8UemwcV1uicrh-26k291LDn4zFNJOhPDF0nK4d033iSzLwYMhU2q-Ti30sgADBYpupF6RT5YAPMs1JkCKPnNo-4L0QJImb4f8uYwKL2vzUqc9cEOe-bfG1QMI4WFRqP58bB_MkTaXowM5G-YLEkPo5lRwfftCGZWWaqhKF39emzgGo2Qt-qzpQHV3gN--jxqRhk_gTG8VZFYq3FVR8DuZKbIUSlKzQPVKnby7soll6AT3RqD9mQcAFqX92p2sbjtnwz1trlnlLO-yVesfGPJVuEgbWljGIqTR22lH_Qf62IbLUEv3S6SBsrR5HQgyOwuTB_wX8b0E6mPbZ0lsBfLSlIHgVdSHTSfWdTzW3W8CIrbPz06YYsPzyaJI1fpFXszxmYCnZIS4F876x8u7nCGe1Lw00c0hu_VXRg_UN_FBpKbLZPgJv9QVaT2FldePr508O-Fw03xsZEqJ699Nf6xZfwcSToMnKe2BVU23rHCrLKoaYRc_6LQg3oIqtYfM13kNa0lX0A3N4SJkXugONMqNm0VC5WOYcaj5JbvlTXWwB0cGeo8862mAsj_uh_SCzWt33r9imIm9hltPfsO-qgixuSefX0I-GuNm0-s3cjztMUFBUQlFbhCb_6tpvR9OtaCgfRQ5I-syPtGFJFfm2PD_DD5CDqHNpAGW6bgJC3WoF-G7Oedb3VCxHbEnTgacPoyRQSy3C326y6doGNEDXHdGAVHVZM_A1DgxZViPS76nzP2l2epb7mL-odssXUS7JvzFyqrPBk5HIjM86fCJhWB_nFfKHybMxbdUJ-HPlLg4YEPRP3G-v7WJByu-GX_tuwWO0waU-_2npCPER36BDxOJkQy-a1VgSbCh8SD34hOpXKHXPmxLaXBHXCIFwCiPZ-UmJ7s"
+        },
+        "multi_retrievable": false
+      },
+      "coordinates": "27.56184,53.90225",
+      "distance": 9450000,
+      "maki": "marker",
+      "internal_id": "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.TYzBDcJADASp5d5UwJM_NSDHthKLix3ZvkeEaIRqOXFIZH8zu9r3aeRZ0Jqm7-VSrlzBW5RzcZ7FtKubaDy6IIl0weyq01YB-dBuFolGPNpqCFVyH6Qs8zKZL2Y0DBA5R_zhrm2d2H97WL8_rw8=",
+      "external_ids": {
+        "federated": "carmen.place.9038333669154200",
+        "carmen": "place.9038333669154200"
+      },
+      "context": [
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "Belarus"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "by"
+      }
+    },
+    {
+      "feature_name": "Minsk",
+      "matching_name": "Minsk",
+      "description": "Minsk Region, Belarus",
+      "result_type": [
+        "place"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "GpVjHd-x9DNv99Z3wWURQWTMI1emkNSYuBamhc6r_vKoeO5pruxk8A0kes-x3HyWS1uQDGpHhXP8rL1r-als8d_9SsvkRo2CJrP9kITx4UC9F_Quz9iz9XWpyguJ2THwY1VSAxsHL12BRrSJEO09uvPAsh3UHcuuOUJUSDM2ycmQSB1KDIFGFdbCYIMZxr9TTI51aeequXyJ2Z8yyphzV67JzRNTH5AioQCvLRrreuFQnkENgI6A0oeCUreotgoBCeX1IQeH_pMcpx5VztgU1lahvsGB0ZZeZOMcZN7dyQwg8yalkIVmHE3PnBh1WNLUc6oPPJzL0ekB-qxeFvY8Il8GC6HHl4OshZQ1lIUo0YQDwp7-hyOxxEDgbJ8kSpcnZAxxpPRw8S8Br2okKV7ufsBAmYl4VYBz6OOylDm-Ty2qCFwFLtPb2kbIJdYHVCBSxf0Fn0PM9hY8vKcSmhn-qwj5kdIWVpWewGtfvJgmv8E7Lw7mGB-QBE2tKOVdH_U6pFTjlpogxsur-5-Nw1G1P3Fbs2dD0QuKQoV_G2NTI565vYKS289JirIKfrcTDzNwgZIG1iS3tfrHJtuBiUKqZEzR7zY4Mukabk2F2D0qwdyCZ3SsHCqXCLS87A9QWHdD64p4x17Bx1yTQFxq5rkQH8ZLb7DczQUGr3XTn3zh5FOyJXeNQQN7OsQNNJ84XK3QPp9Dhg6kcgvebq97PyMbGKityrDTWU0oX7Jd0rZkCoTTCX4QmuM5vI5EW0Lu7HjJTBRPxRXXc2K8vxJnzofkF2NE7j2kTXTw_L5FYW_cQjB2xzmwxXb7XaCvoLTtNrqRjNc_Q01S1p1c4-JqylLYQQkqWi-Gxn7AfxjqldzAMtlWrspbmZ8pCgbH4FvrFvp4rJ0Jd1kdeBp0PmHWzcnY-WJ2QEmgjCVJelpwnV7dHTjRa3nudVSrKZHF8ux9_RwCh9zJBaWmDeSVG9xjF0_O71cC2GQZXQ-3E9w_4pt64WR7OiTWwCPmlGj8_zSZZZCLEYsLe1e3SHjNyQo3UiaRqxlQVDxuFNQY9tbv18gqRjI22UgGuR4mBSmsvZzFYeRbBfq6EavbcOGnPVOdTgs7Ym9aiAytS_brgXTt9iCUu2x5MhQ2oJ-3PJ4lrn_QaKmkhub451FFvKyEGfs8tBboE1GMjWctzPtD1TJW2p2dnswki2oewq4v0SyjBWVfwOinrMxkDld3qffaufmekxKgT2zf2LXVBUOQNGTsMys7geJoARmcF3M="
+        },
+        "multi_retrievable": false
+      },
+      "coordinates": "27.234342,53.940465",
+      "distance": 9440000,
+      "maki": "marker",
+      "internal_id": "Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RcwxDsIwDAVQjoI89wSM7CxcAKWJ1VqkNrKdoUIchpsSMFW9vf-__D7EPSFLY9cVTnDGmrQZDKA4kXCPLsR2P16DAxQyV8rem65HTRm30ddinqVgtFVyquRriJGmeRSdRUokqRRFsx03bsuI-t-n5ffn9QE=",
+      "external_ids": {
+        "federated": "carmen.place.11543680732831130",
+        "carmen": "place.11543680732831130"
+      },
+      "context": [
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "Minsk Region"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "Belarus"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "by",
+        "iso_3166_2": "BY-MI"
+      }
+    },
+    {
+      "feature_name": "Minsk Region",
+      "matching_name": "Minsk Region",
+      "description": "Belarus",
+      "result_type": [
+        "region"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "GpXh_dix-APNdzYPRGjpUWcqsP8zoxtGT59ixlS2Hegtej6gscfN94X-wy9Nl1Uy4CVDvloB1OSU2GlVOghs9ivZI_IAhNX0tQ84kZaZ47gdZc_Epk2BpAnHDcOq5x7alioWrmhZ7062vpr5aOfra7_MxDcu5_EFL6NHgXD2sFptd6cfGtmn3Juo7qXc6mVx0ZwOep8luKNB_6Fn8PIgmiwu3XKqcN85m0INGunyEe3ms96dxyZlz83pfQBIX2AfY3gPoZN0-PH6t_YZlxDe-p8nI4uS175TUxiTafbyDnk4A2yOQxI7fFsce5P-9WDJOEcJDv16gSVTl5zbEPdVv0audfpnj4ZLENZFbBs182OQozDmAoqQbTKMnTXQnsvLHuJQkeGKPpiF8zOKh8SsfReyvPGtxiMnrdNyOKWsz0LoSaIGAxb8VDC2SY-XDQNsdSGYAbp7pQgZVkBfbFkLpZhJyfvuyWZW25KhHpkOuGIMZxnjtuqipQOVnaQTuZzOmB_C0V2d1ZBcaHFWhjBU8cPuzDJx_wgBmYmU0s9Df0PK_vdhYXkGM5Zazr7W23HBn1IYhMh1Ali-qumQ-b-6IKV_2-Nb0UWuH-FCDvcf4VRDZLErgC-XVvLRJMOwK-JsV586hkfcfzz35b8h4N_LsXQpyECifD_oAR0i9qUKWa2DfmNfufBG1mvFH7JAWvj-L-Grud_zJqOciK3XQCVPVmn3CknsHnCQBLjutqt3SuF1ejujZrSFEqhSBjEQCF9yVultHcY_7MrZfgx_dGjLwGVhdxPPyi6YOoptJ6jJvBYG6FWwpgMG6eodG6e5dhK-KesT-jSUjuyiLFlj0fMYK1dm6naaSyUkne_fIqACr1B4NYASkMQUJsnx087I2SEnIuRTIXhz2arEdUbTiTtPKksqnPVZiEJEhg8qGGAFSob7zMuUS0WJw5FEf3PcxLK-1G69T1kMHIXDSke0EFVJv9ytNR1h4a1I8ysEZrzPQEjJQzDnx5WzDfLSoZieI-BoFMxO4hT07Emg5ktS22nRrSebV7nMgzxjYpGx-Agy56FgiQmAcYaWxEgU8q_wnUBW9lHieB8UzehuHxrFZMt0fL3AyrT9p4nFZd0iKrAzs7gpq2VO_dj53hcpbylf1XXaQQ4zz5hElU5-OvVU4St-HY6L4W5bgesh-e_O3edO6tM9cCBBPt8d-Gp_2iMR25Bcq2utko572lqt"
+        },
+        "multi_retrievable": false
+      },
+      "coordinates": "27.75,53.66667",
+      "distance": 9480000,
+      "maki": "marker",
+      "internal_id": "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RcwxDsIwDAVQjoI89wSM7CxcAKWx1VqkNrKdoULchMMSkUj15Pdt_e-pzxuyVgnb4QJXKsmqwwRGC6u06Mbiz_O9cwJkD-Mc7dL0KinTWNUjKw4Vzalw7F1CvKyz2qqKPUmIRu4HHlK3mWz8p-3f8_kB",
+      "external_ids": {
+        "federated": "carmen.region.14146701401889110",
+        "carmen": "region.14146701401889110"
+      },
+      "context": [
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "Belarus"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "by"
+      }
+    },
+    {
+      "feature_name": "Mińsk County",
+      "matching_name": "Mińsk County",
+      "description": "Masovian Voivodeship, Poland",
+      "result_type": [
+        "district"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "GpVjHd-x9DNPAycSrfeX07O-KTf_mN0_CWGrhad8ZcOA3_UBjCk_05ez2LoZwqc7c1W8pciqB5rWVRZEnQp78WEa0tD9aZ83QPa3_hkhPf9F_HuSuh7RQDGSQxNJcbsq5BIWrmgJdM_Gvpp5ouhFZ-zwyyNWUqtC86xgXG56bOm62HYFuaHyIW_AIjEuMWgl1sAW6ds-fWqVX2E8tzhE9zXf-fCjKJonAV1ThUSftI40K41OFXK5TKQAMO3mRF5uW74i-bDqA_9QHeRx3c8eYvMbT5VZkpP_Z4IgxZuWe848JzwdT3AuA8DZ7ALvkuSHMIbNmcpr4gjDL45LGG-wwdburrIwQZtgaDOYFxs3ChO4izAnde-EngG1IcRKgmWz7Pjb15B1NvAc1ph2JDjNke4o4fKtxiMnbdNOEZnCAC7ER1fgggWSZQtfdJgAbCJRz5ATeXH9zK7hhgaTL1cPat5esdXeZMO_Ssr969XZ_LpsTLPDvydrMOeoXG_BNCk8WkiN97Yw5LMz9n6UHeQvZyQz8DCGwzOvE38eepNIs2xezktFYbkUupdazj6vAq2cpA5r1n4yroIo3F31w3AJVjZN9obo49vYAmY2Mt1obWpN4eB8G-2JMITxDMd0CKjzOohpUcLjCmd3e1eFfbopdH_MHO4IUl4VdfrygPhzsUb0xbAFCOA7udw3v0mqh6Avomk0PDljhSiPpw3QIO5_Omh_HLSADD35cbJLwyR1oUWN2V86CmnZQPFy8CuWBrE1E9e6NH9UN_p7LEjb1UzMQmltsatj7gdy3wZjfXu--hjEbmj9x8V5V4c0yWFjRvd_1HrKap61vlFJZK0LSSHUo2uUCU5QLFiybLlwmpTcQmuy06ewUgwBbRZnZdgAHESwl_0Aa4omTrpRo9cDgagyGIDUKreFQcrScyGTMM7aZIlIx5S855ccaMtpnqB7ETTjGh1URspbKTU3hPVC19csFo5pRSQ8tLzHNgwQt81RI041XF2CWXzbdYb6PVmMJiPnzbgUqdUlKqiWuzgK3y9F_Q95ceYzH2Fqx5KO7eo9ruZY0Uhx-V2EFXK8-3cxA1Lyv71Qvx8OMGlyMbGHJGpHfSTsFf8zZf9ZR1dCgLG47eBXUpJ9zui4iFF5S3aAHm3iKzHmoz-e0r_Md8Nzekl8U3BnaLmaN5_iW1sgWTYcIMSq0lnOMngfEgfvX951V5HmbDEtLSiuC2F73HvjKc_0Y5G_itdGaiCnFjdMNZeF_8de37UfMR6-0SuDZtSt0Exy7cS8MchGV6fU547vi29bP-5k"
+        },
+        "multi_retrievable": false
+      },
+      "coordinates": "21.56667,52.18333",
+      "distance": 9450000,
+      "maki": "marker",
+      "internal_id": "42CAgJTM4pKizOQSAA==.Y2OAgOTEotzUPAA=.RYw9DsIwDIU5SpWZE7AyIzGxIjexGovUruy0UoTYOBCX4F4kBAlPft_7ee363Z2XlbMWd3BnScDB7Z3iRMKVnMBkI-DhIrRJQIu0VD-QZSWfW4LeT7sNxzZSqrUk8Fh5e8Wyr6WuknhIlEtXjDTFUTSKhE4gBEWzv7jyOo-ovzzM353HBw==",
+      "external_ids": {
+        "federated": "carmen.district.11786668541221300",
+        "carmen": "district.11786668541221300"
+      },
+      "context": [
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "Masovian Voivodeship"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "Poland"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "pl",
+        "iso_3166_2": "PL-MZ"
+      }
+    }
+  ],
+  "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "44:9d58434d7f88e4515b1edfbad545cc8c527e303f",
+  "response_uuid": "cdb6ad7b-00d6-4db8-bb59-a8a7327d04e2"
+}

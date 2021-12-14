@@ -1,0 +1,382 @@
+{
+  "type":"FeatureCollection",
+  "features":[
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.08295,
+          37.38755
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+        "place_name":"Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+        "id":"6IXWdnYBo8NaDG6XivFv",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"750 Castro St, Mountain View, CA 94041-2015"
+          },
+          {
+            "layer":"street",
+            "name":"castro st"
+          },
+          {
+            "layer":"postcode",
+            "name":"94041"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Old Mountain View"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "restaurant",
+          "food",
+          "food and drink",
+          "coffee shop",
+          "coffee",
+          "cafe"
+        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9E3MTgyRjQ_M0SzOTRFMjA3Mjk2TDtFRjAA==",
+        "external_ids":{
+          "foursquare":"4740b317f964a520724c1fe3",
+          "tripadvisor":"4113702"
+        },
+        "routable_points":[
+          {
+            "name":"Address",
+            "coordinates":[
+              -122.08295,
+              37.38755
+            ]
+          }
+        ],
+        "metadata":{
+          "raw_plugshare":[
+            {
+              "id":616134,
+              "network_id":8,
+              "outlets":[
+                {
+                  "connector":6,
+                  "id":1746812,
+                  "kilowatts":72,
+                  "power":1
+                }
+              ]
+            },
+            {
+              "id":616139,
+              "network_id":8,
+              "outlets":[
+                {
+                  "connector":6,
+                  "id":1746817,
+                  "kilowatts":72,
+                  "power":1
+                }
+              ]
+            }
+          ],
+          "review_count":12,
+          "phone":"+1 650-564-9255",
+          "website":"https://www.starbucks.com/store-locator/store/11148",
+          "average_rating":3.5,
+          "primary_photo":[
+            {
+              "width":50,
+              "height":50,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-t/18/47/98/c6/starbucks-inside-and.jpg"
+            },
+            {
+              "width":150,
+              "height":150,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-l/18/47/98/c6/starbucks-inside-and.jpg"
+            },
+            {
+              "width":1708,
+              "height":2046,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-o/18/47/98/c6/starbucks-inside-and.jpg"
+            }
+          ],
+          "open_hours": {
+            "open_type": "AlwaysOpen"
+          },
+          "cps": {
+            "raw": {
+            }
+          },
+          "parking": {
+            "capacity": 2,
+            "reserved_for_disabilities": 1,
+            "levels": 1
+          }
+        }
+      }
+    },
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.08305,
+          37.3881
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Le Boulanger",
+        "matching_name":"Le Boulanger",
+        "description":"Le Boulanger, 650 Castro St, Mountain View, California 94041, United States of America",
+        "place_name":"Le Boulanger, 650 Castro St, Mountain View, California 94041, United States of America",
+        "id":"hmjBdnYBo8NaDG6XR6G3",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"650 Castro St, Mountain View, CA 94041-2055"
+          },
+          {
+            "layer":"street",
+            "name":"castro st"
+          },
+          {
+            "layer":"postcode",
+            "name":"94041"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Old Mountain View"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "food",
+          "food and drink",
+          "restaurant",
+          "cafe",
+          "bakery",
+          "breakfast restaurant",
+          "french restaurant",
+          "sandwich shop"
+        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyRDwySLZNM0SzOTRFMjA8M0C2Mj41RjAA==",
+        "external_ids":{
+          "safegraph":"sg:b06beba1518a429a83ebbfe51c79394e",
+          "tripadvisor":"922316",
+          "foursquare":"4b11b8c5f964a5201f8323e3"
+        },
+        "metadata":{
+          "review_count":15,
+          "phone":"+1 650-961-1787",
+          "website":"https://www.facebook.com/pages/category/Bakery/Le-Boulanger-1073883282767821/",
+          "average_rating":3.5,
+          "primary_photo":[
+            {
+              "width":50,
+              "height":50,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-t/0b/d9/38/e2/img-20160704-100006-largejpg.jpg"
+            },
+            {
+              "width":150,
+              "height":150,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-l/0b/d9/38/e2/img-20160704-100006-largejpg.jpg"
+            },
+            {
+              "width":250,
+              "height":188,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-f/0b/d9/38/e2/img-20160704-100006-largejpg.jpg"
+            },
+            {
+              "width":550,
+              "height":412,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-s/0b/d9/38/e2/img-20160704-100006-largejpg.jpg"
+            },
+            {
+              "width":1040,
+              "height":780,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-o/0b/d9/38/e2/img-20160704-100006-largejpg.jpg"
+            }
+          ],
+          "open_hours": {
+            "open_type": "Scheduled",
+            "open_periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": {
+                    "hour": 9,
+                    "minute": 30
+                  }
+                },
+                "close": {
+                  "day": 0,
+                  "time": {
+                    "hour": 17,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "cps": {
+            "raw": {
+            }
+          },
+          "parking": {
+            "capacity": 4,
+            "reserved_for_disabilities": 2,
+            "levels": 1
+          }
+        }
+      }
+    },
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.07911,
+          37.39287
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Tea Era",
+        "matching_name":"Tea Era",
+        "description":"Tea Era, 271 Castro St, Mountain View, California 94041, United States of America",
+        "place_name":"Tea Era, 271 Castro St, Mountain View, California 94041, United States of America",
+        "id":"mnbLdnYBo8NaDG6XhpMS",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"271 Castro St, Mountain View, CA 94041-1203"
+          },
+          {
+            "layer":"street",
+            "name":"castro st"
+          },
+          {
+            "layer":"postcode",
+            "name":"94041"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Old Mountain View"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "food",
+          "food and drink",
+          "restaurant",
+          "cafe",
+          "teahouse",
+          "bubble tea"
+        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k0QzQyMDo6Q0SzOTRFMjgzTDZEPDtFRjAA==",
+        "external_ids":{
+          "tripadvisor":"944781",
+          "safegraph":"sg:cda37cd6eda9438f8a71c862d03d878b;sg:f141a01863364823af330a833bd30f9d",
+          "foursquare":"4a61202bf964a520f1c11fe3"
+        },
+        "metadata":{
+          "review_count":19,
+          "phone":"+1 650-969-2899",
+          "website":"http://www.teaeracafe.com/",
+          "average_rating":4.5,
+          "primary_photo":[
+            {
+              "width":50,
+              "height":50,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-t/09/66/95/e1/photo0jpg.jpg"
+            },
+            {
+              "width":150,
+              "height":150,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-l/09/66/95/e1/photo0jpg.jpg"
+            },
+            {
+              "width":154,
+              "height":205,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-f/09/66/95/e1/photo0jpg.jpg"
+            },
+            {
+              "width":338,
+              "height":450,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-s/09/66/95/e1/photo0jpg.jpg"
+            },
+            {
+              "width":1536,
+              "height":2048,
+              "url":"http://media-cdn.tripadvisor.com/media/photo-o/09/66/95/e1/photo0jpg.jpg"
+            }
+          ],
+          "open_hours": {
+            "open_type": "PermanentlyClosed"
+          },
+          "cps": {
+            "raw": {
+            }
+          },
+          "parking": {
+            "capacity": 5,
+            "reserved_for_disabilities": 3,
+            "levels": 1
+          }
+        }
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"46:a4b40e46f08bf603328aace583b2e0d6db4eb851",
+  "response_uuid":"544304d0-2007-4354-a599-c522cb150bb0"
+}

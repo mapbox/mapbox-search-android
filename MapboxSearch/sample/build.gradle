@@ -1,0 +1,103 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+}
+
+apply from: "../gradle/ktlint.gradle"
+apply from: "../gradle/dexcount.gradle"
+apply from: "../gradle/versions.gradle"
+apply from: "../gradle/pitest.gradle"
+
+def mapboxApiToken = project.properties['MAPBOX_ACCESS_TOKEN'] ?: System.getenv('MAPBOX_ACCESS_TOKEN')
+if (mapboxApiToken == null) {
+    throw new Exception("API token is not specified.")
+}
+
+def enableSBS = project.hasProperty('ENABLE_SBS') or System.getenv('ENABLE_SBS') != null
+
+android {
+    buildToolsVersion build_tools_version
+    compileSdkVersion compile_sdk_version
+
+    defaultConfig {
+        buildConfigField "String", "MAPBOX_API_TOKEN", "\"$mapboxApiToken\""
+        buildConfigField "boolean", "COVERAGE_ENABLED", "${project.hasProperty('coverage')}"
+        buildConfigField "boolean", "ENABLE_SBS", "${enableSBS}"
+        resValue "string", "mapbox_access_token", mapboxApiToken
+
+        applicationId "com.mapbox.search.sample"
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode 1
+        versionName "0.1.0"
+        testInstrumentationRunner "com.mapbox.search.sample.tools.SampleTestRunner"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            manifestPlaceholders = [appName: "Debug MapboxSearchSample"]
+
+            multiDexEnabled true
+            multiDexKeepProguard file('proguard-multidex-rules.pro')
+        }
+        release {
+            manifestPlaceholders = [appName: "MapboxSearchSample"]
+
+            multiDexEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    lintOptions {
+        disable 'ParcelCreator'
+        abortOnError true
+    }
+}
+
+dependencies {
+    implementation project(':sdk')
+    implementation project(':ui')
+
+    debugImplementation "androidx.multidex:multidex:$multidex_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
+    implementation "androidx.appcompat:appcompat:$android_x_appcompat_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+    implementation "com.mapbox.maps:android:$mapbox_maps_version"
+
+    ktlint "com.pinterest:ktlint:$ktlint_version"
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+
+    androidTestImplementation project(":common-tests")
+
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$ui_automator_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "androidx.test:runner:$android_x_test_runner_version"
+    androidTestImplementation "androidx.test:rules:$android_x_test_rules_version"
+    androidTestImplementation "androidx.test.ext:junit:$android_x_junit_version"
+    androidTestImplementation "com.schibsted.spain:barista:$barista_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation "junit:junit:$junit_version"
+}

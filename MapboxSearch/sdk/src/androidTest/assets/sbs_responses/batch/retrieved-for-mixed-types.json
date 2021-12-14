@@ -1,0 +1,205 @@
+{
+  "type":"FeatureCollection",
+  "features":[
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.077637,
+          37.415762
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 1380 Pear Ave, Mountain View, California 94043, United States of America",
+        "place_name":"Starbucks, 1380 Pear Ave, Mountain View, California 94043, United States of America",
+        "id":"id_test_poi_1",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"1380 Pear Ave"
+          },
+          {
+            "layer":"street",
+            "name":"pear ave"
+          },
+          {
+            "layer":"postcode",
+            "name":"94043"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "food",
+          "food and drink",
+          "coffee shop",
+          "coffee",
+          "cafe",
+          "bakery",
+          "teahouse"
+        ],
+        "internal_id":"id_test_poi_1",
+        "external_ids":{
+          "foursquare":"4aa68140f964a520024a20e3",
+          "safegraph":"sg:3211c4cbf50d40449e4134e84bd01694"
+        },
+        "metadata":{
+
+        }
+      }
+    },
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.08306,
+          37.387505
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+        "place_name":"Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+        "id":"id_test_poi_2",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"750 Castro St"
+          },
+          {
+            "layer":"street",
+            "name":"castro st"
+          },
+          {
+            "layer":"postcode",
+            "name":"94041"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Old Mountain View"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"cafe",
+        "poi_category":[
+          "coffee shop",
+          "coffee",
+          "food and drink",
+          "cafe",
+          "food"
+        ],
+        "internal_id":"id_test_poi_2",
+        "external_ids":{
+          "foursquare":"4740b317f964a520724c1fe3"
+        },
+        "metadata":{
+
+        }
+      }
+    },
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.0943,
+          37.411417
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 580 N Rengstorff Ave, Mountain View, California 94043, United States of America",
+        "place_name":"Starbucks, 580 N Rengstorff Ave, Mountain View, California 94043, United States of America",
+        "id":"id_test_poi_3",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"580 N Rengstorff Ave"
+          },
+          {
+            "layer":"street",
+            "name":"n rengstorff ave"
+          },
+          {
+            "layer":"postcode",
+            "name":"94043"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Monta Loma"
+          },
+          {
+            "layer":"place",
+            "name":"Mountain View"
+          },
+          {
+            "layer":"region",
+            "name":"California"
+          },
+          {
+            "layer":"country",
+            "name":"United States of America"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "food",
+          "food and drink",
+          "coffee shop",
+          "coffee",
+          "cafe",
+          "bakery",
+          "teahouse"
+        ],
+        "internal_id":"id_test_poi_3",
+        "external_ids":{
+          "foursquare":"44b28a68f964a5203d351fe3",
+          "safegraph":"sg:1b038a59a6b84a8db8492acb3e1be506"
+        },
+        "metadata":{
+
+        }
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"30:dff9c036cd6522c9e4cc1e8bf81fe0370c745631",
+  "response_uuid":"205e67a0-70fb-488a-911d-ef3d65e24e56"
+}

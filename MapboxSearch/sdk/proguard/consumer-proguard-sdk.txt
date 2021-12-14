@@ -1,0 +1,23 @@
+# --- Bindgen-generated classes ---
+-keep class com.mapbox.search.internal.bindgen.** {*;}
+
+# --- Mapbox SDKs ---
+-keep class com.mapbox.geojson.** {*;}
+-keep class com.mapbox.bindgen.** {*;}
+
+# --- GSON ---
+# This gson rule is too lenient, but official proguard config from gson doesn't work.
+-keep class com.google.gson.** {*;}
+-keepclassmembers enum * {
+    <fields>;
+}
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn sun.misc.**
+-keepclassmembers,allowobfuscation class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+# --- AutoValue ---
+# AutoValue annotations are retained but dependency is compileOnly.
+-dontwarn com.google.auto.value.**

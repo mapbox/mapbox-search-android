@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="com.mapbox.search.ui.view.search.SearchInputView"
+    >
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        style="@style/MapboxSearchSdk.Text.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mapbox_search_sdk_search_input_view_edit_text_height"
+        android:background="@drawable/mapbox_search_sdk_search_input_edit_text_background"
+        android:drawablePadding="@dimen/mapbox_search_sdk_list_item_icon_horizontal_margin"
+        android:ellipsize="end"
+        android:hint="@string/mapbox_search_sdk_search_input_view_hint_text"
+        android:imeOptions="actionSearch|flagNoExtractUi"
+        android:importantForAutofill="no"
+        android:inputType="textVisiblePassword"
+        android:maxLines="1"
+        android:paddingStart="@dimen/mapbox_search_sdk_list_item_icon_horizontal_margin"
+        android:paddingEnd="@dimen/mapbox_search_sdk_search_input_view_edit_text_padding_end"
+        android:textAlignment="viewStart"
+        android:textColorHint="?attr/mapboxSearchSdkPrimaryTextColor"
+        tools:drawableStart="@drawable/mapbox_search_sdk_ic_mdi_search"
+        />
+
+    <ImageView
+        android:id="@+id/clear_text_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:padding="@dimen/mapbox_search_sdk_list_item_icon_horizontal_margin"
+        android:src="@drawable/mapbox_search_sdk_ic_clear_button"
+        app:tint="?attr/mapboxSearchSdkInputViewClearIconColor"
+        />
+</merge>

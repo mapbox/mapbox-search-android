@@ -1,0 +1,38 @@
+{
+  "requestParamsJSON": "{\"eta_type\":\"navigation\",\"navigation_profile\":\"driving\",\"origin\":[10.1,11.12345],\"route\":\"~fayB_gayB~fayB_gayB\",\"route_geometry\":\"polyline6\",\"sar_type\":\"isochrone\",\"time_deviation\":5.0,\"unsafe_key\":\"unsafe_value\"}",
+  "responseUuid": "0a197057-edf0-4447-be63-9badcf7c19be",
+  "resultCoordinates": [
+    27.234342,
+    53.940465
+  ],
+  "resultId": "place.11543680732831130",
+  "resultIndex": 0,
+  "selectedItemName": "Minsk",
+  "queryString": "Starbucks",
+  "bbox": [
+    0.0,
+    0.0,
+    90.0,
+    45.0
+  ],
+  "country": [
+    "fr",
+    "de"
+  ],
+  "created": "2021-02-03T20:52:06+0300",
+  "endpoint": "http://localhost:8679//search/v1/suggest",
+  "event": "search.feedback",
+  "keyboardLocale": "en",
+  "language": [
+    "en"
+  ],
+  "limit": 6,
+  "orientation": "portrait",
+  "schema": "search.feedback-2.3",
+  "sessionIdentifier": "test-generated-uuid",
+  "types": [
+    "POI",
+    "ADDRESS",
+    "POSTCODE"
+  ]
+}
