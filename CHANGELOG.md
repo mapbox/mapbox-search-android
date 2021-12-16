@@ -1,5 +1,14 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.25-SNAPSHOT
+
+### Mapbox dependencies
+- Search Native SDK `0.46.1`
+- Common SDK `21.0.1`
+- Telemetry SDK `8.1.0`
+
+
+
 ## 1.0.0-beta.24
 
 ### Breaking changes
