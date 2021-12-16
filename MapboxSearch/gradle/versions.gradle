@@ -44,7 +44,7 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = "10.0.0"
+    mapbox_maps_version = "10.2.0"
     telemetry_version = '8.1.0'
     common_sdk_version = '21.0.1'
     mapbox_base_version = '0.6.0'

@@ -20,6 +20,7 @@ import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
+import com.mapbox.search.sample.maps.MapsIntegrationExampleActivity
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -41,8 +42,7 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) : MockServer
 
             CustomThemeActivity::class.java,
 
-            // TODO enable MapsIntegrationExampleActivity when Maps SDK will be available with Common 21
-            // MapsIntegrationExampleActivity::class.java,
+            MapsIntegrationExampleActivity::class.java,
 
             CustomIndexableDataProviderKotlinExample::class.java,
             CustomIndexableDataProviderJavaExample::class.java,
