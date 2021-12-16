@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.24-SNAPSHOT
+## 1.0.0-beta.24
 
 ### Breaking changes
 - [UI] Now initialization methods `SearchPlaceBottomSheetView.initialize()`, `SearchCategoriesBottomSheetView.initialize()`, `SearchResultsView.initialize()` have to be called in order to make these views work properly.
@@ -12,8 +12,8 @@
 - [UI] Fixed a bug with uninitialized properties in created from `SearchBottomSheetView` favorite record.
 
 ### Mapbox dependencies
-- Search Native SDK `0.45.1`
-- Common SDK `21.0.0`
+- Search Native SDK `0.46.1`
+- Common SDK `21.0.1`
 - Telemetry SDK `8.1.0`
 
 
