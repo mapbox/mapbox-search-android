@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchSuggestionType - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.result</a>&nbsp;/&nbsp;<a href="./index.html">SearchSuggestionType</a><br/>
+<br/>
+<h1>SearchSuggestionType</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">SearchSuggestionType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Type of the search suggestion.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-category/index.html">Category</a></h4>
+</td>
+<td>
+<p>Search suggestion of the <a href="-category/index.html">Category</a> type points to the list of <a href="../-search-result/index.html">SearchResult</a> that will be returned after selection.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Category</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SearchSuggestionType</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-indexable-record-item/index.html">IndexableRecordItem</a></h4>
+</td>
+<td>
+<p>Search suggestion of the <a href="-indexable-record-item/index.html">IndexableRecordItem</a> type points to the only <a href="../-indexable-record-search-result/index.html">IndexableRecordSearchResult</a> that will be returned after selection.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">IndexableRecordItem</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SearchSuggestionType</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-query.html">Query</a></h4>
+</td>
+<td>
+<p><a href="-query.html">Query</a> suggestion type points to a new suggestions list, i.e. selection of this suggestion type will result in new suggestions.</p>
+<code><span class="keyword">object </span><span class="identifier">Query</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SearchSuggestionType</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-result-suggestion/index.html">SearchResultSuggestion</a></h4>
+</td>
+<td>
+<p>Search suggestion of the <a href="-search-result-suggestion/index.html">SearchResultSuggestion</a> type points to the only <a href="../-search-result/index.html">SearchResult</a> that will be returned after selection.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchResultSuggestion</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SearchSuggestionType</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

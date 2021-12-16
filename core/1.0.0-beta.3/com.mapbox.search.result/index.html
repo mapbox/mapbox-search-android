@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.mapbox.search.result - sdk</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">sdk</a>&nbsp;/&nbsp;<a href="./index.html">com.mapbox.search.result</a><br/>
+<br/>
+<h2>Package com.mapbox.search.result</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-indexable-record-search-result/index.html">IndexableRecordSearchResult</a></h4>
+</td>
+<td>
+<p>Resolved search object based on some <a href="../com.mapbox.search.record/-indexable-record/index.html">IndexableRecord</a>. As an example, search result is one of user's FavoriteRecord.</p>
+<code><span class="keyword">interface </span><span class="identifier">IndexableRecordSearchResult</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-search-result/index.html"><span class="identifier">SearchResult</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-routable-point/index.html">RoutablePoint</a></h4>
+</td>
+<td>
+<p>Represents entry to the building, associated with original search result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RoutablePoint</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-address/index.html">SearchAddress</a></h4>
+</td>
+<td>
+<p>Represents address of the search result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchAddress</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-result/index.html">SearchResult</a></h4>
+</td>
+<td>
+<p>Resolved search object with populated fields.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchResult</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-result-type/index.html">SearchResultType</a></h4>
+</td>
+<td>
+<p>Defines type of search result.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">SearchResultType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-suggestion/index.html">SearchSuggestion</a></h4>
+</td>
+<td>
+<p>Autocomplete common suggestion type.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchSuggestion</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-suggestion-type/index.html">SearchSuggestionType</a></h4>
+</td>
+<td>
+<p>Type of the search suggestion.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">SearchSuggestionType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-server-search-result/index.html">ServerSearchResult</a></h4>
+</td>
+<td>
+<p>Resolved search object with populated fields and mandatory coordinates field.</p>
+<code><span class="keyword">interface </span><span class="identifier">ServerSearchResult</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-search-result/index.html"><span class="identifier">SearchResult</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

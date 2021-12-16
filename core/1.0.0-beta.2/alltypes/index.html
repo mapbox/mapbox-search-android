@@ -1,0 +1,183 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>alltypes - sdk</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<h3>All Types</h3>
+<table>
+<tbody>
+<tr>
+<h5><a href="../com.mapbox.search/-api-type/index.html">com.mapbox.search.ApiType</a></h5>
+<p>Experimental API, can be changed or removed in the next SDK releases.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-category-search-engine/index.html">com.mapbox.search.CategorySearchEngine</a></h5>
+<p>Category search engine, used for search by category. Instance of it can be retrieved from <a href="../com.mapbox.search/-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Result will be delivered on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-country/index.html">com.mapbox.search.Country</a></h5>
+<p>Countries list to use in <a href="../com.mapbox.search/-search-options/index.html">com.mapbox.search.SearchOptions</a>.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.location/-default-location-provider/index.html">com.mapbox.search.location.DefaultLocationProvider</a></h5>
+<p>Default location provider implementation.
+By default coordinate from location provider used for search. If you specify proximity parameter in search options, it will be used instead of location provider data.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-distance-calculator/index.html">com.mapbox.search.DistanceCalculator</a></h5>
+<p>Fast distance calculator for WGS84 (Earth as spheroid).
+Should be initialized by latitude and used in some not far around area.
+Expected error is 0.04%.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-favorite-record/index.html">com.mapbox.search.record.FavoriteRecord</a></h5>
+<p>Favorite indexable record.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-favorites-data-provider/index.html">com.mapbox.search.record.FavoritesDataProvider</a></h5>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="../com.mapbox.search.record/-local-data-provider/index.html">LocalDataProvider</a> typed to store <a href="../com.mapbox.search.record/-favorite-record/index.html">FavoriteRecord</a> items.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-highlights-calculator/index.html">com.mapbox.search.HighlightsCalculator</a></h5>
+<p>Used to calculate which parts of exact search result name will be highlighted.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-history-data-provider/index.html">com.mapbox.search.record.HistoryDataProvider</a></h5>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="../com.mapbox.search.record/-local-data-provider/index.html">LocalDataProvider</a> typed to store <a href="../com.mapbox.search.record/-history-record/index.html">HistoryRecord</a> items.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-history-record/index.html">com.mapbox.search.record.HistoryRecord</a></h5>
+<p>History indexable record.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-indexable-data-provider/index.html">com.mapbox.search.record.IndexableDataProvider</a></h5>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+Defines an interface for external data indexing.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-indexable-record/index.html">com.mapbox.search.record.IndexableRecord</a></h5>
+<p>Defines data for index that represents external data to be included in search functionality.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-indexable-record-search-result/index.html">com.mapbox.search.result.IndexableRecordSearchResult</a></h5>
+<p>Resolved search object based on some <a href="../com.mapbox.search.record/-indexable-record/index.html">IndexableRecord</a>. As an example, search result is one of user's FavoriteRecord.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-language/index.html">com.mapbox.search.Language</a></h5>
+<p>Preferred languages of the search results.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.record/-local-data-provider/index.html">com.mapbox.search.record.LocalDataProvider</a></h5>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="../com.mapbox.search.record/-indexable-data-provider/index.html">IndexableDataProvider</a> that represents stored locally by the SDK user data.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.location/-location-provider/index.html">com.mapbox.search.location.LocationProvider</a></h5>
+<p>Provides location as geoJson point.
+By default coordinate from location provider used for search. If you specify proximity parameter in search options, it will be used instead of location provider data.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-mapbox-search-sdk/index.html">com.mapbox.search.MapboxSearchSdk</a></h5>
+<p>The entry point to initialize Search SDK.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.location/-point-location-provider/index.html">com.mapbox.search.location.PointLocationProvider</a></h5>
+<p>Fixed-point location provider.
+By default coordinate from location provider used for search. If you specify proximity parameter in search options, it will be used instead of location provider data.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-query-type/index.html">com.mapbox.search.QueryType</a></h5>
+<p>Values to filter results to include only a subset (one or more) of the available feature types.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-request-options/index.html">com.mapbox.search.RequestOptions</a></h5>
+<p>Options describing search request.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-reverse-geocoding-search-engine/index.html">com.mapbox.search.ReverseGeocodingSearchEngine</a></h5>
+<p>Used for reverse geocoding. Instance of it can be retrieved from <a href="../com.mapbox.search/-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Result will be delivered on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-reverse-geo-options/index.html">com.mapbox.search.ReverseGeoOptions</a></h5>
+<p>Search options for reverse geocoding.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-reverse-mode/index.html">com.mapbox.search.ReverseMode</a></h5>
+<p>Decides how results are sorted in a reverse geocoding query if multiple results are requested using a limit other than 1.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-search-address/index.html">com.mapbox.search.result.SearchAddress</a></h5>
+<p>Represents address of the search result.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-callback/index.html">com.mapbox.search.SearchCallback</a></h5>
+<p>Search result callback for category search and reverse geocoding.
+When an event happens, the corresponding method will be called on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-engine/index.html">com.mapbox.search.SearchEngine</a></h5>
+<p>Used for forward geocoding (looking up a place by name to retrieve its geographic coordinates). Instance of it can be retrieved from <a href="../com.mapbox.search/-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Results will be delivered on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-options/index.html">com.mapbox.search.SearchOptions</a></h5>
+<p>Search options, used for forward geocoding and category search.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-request-exception/index.html">com.mapbox.search.SearchRequestException</a></h5>
+<p>Exception thrown when an HTTP response was not successful, i.e. if the code is not in [200..300).</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-request-task/index.html">com.mapbox.search.SearchRequestTask</a></h5>
+<p>Represents any request from any search engine. Should be cancelled if you leave the screen or application and result of search request do not needed anymore to avoid memory leaks.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-search-result/index.html">com.mapbox.search.result.SearchResult</a></h5>
+<p>Resolved search object with populated fields.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-search-result-type/index.html">com.mapbox.search.result.SearchResultType</a></h5>
+<p>Defines type of search result.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-selection-callback/index.html">com.mapbox.search.SearchSelectionCallback</a></h5>
+<p>Callback for <a href="../com.mapbox.search.result/-search-result/index.html">SearchResult</a>, resolved from <a href="../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.
+<a href="../com.mapbox.search/-search-selection-callback/on-result.html">onResult</a> will be called on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-search-suggestion/index.html">com.mapbox.search.result.SearchSuggestion</a></h5>
+<p>Autocomplete common suggestion type.
+To retrieve coordinate and detailed address information, you have to push suggestion
+back to <a href="../com.mapbox.search/-search-engine/select.html">com.mapbox.search.SearchEngine.select</a> method.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-search-suggestions-callback/index.html">com.mapbox.search.SearchSuggestionsCallback</a></h5>
+<p>Used in the first step of forward geocoding to get a list of <a href="../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.
+When an event happens, the corresponding method will be called on the main thread.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-search-suggestion-type/index.html">com.mapbox.search.result.SearchSuggestionType</a></h5>
+<p>Type of the search suggestion.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search.result/-server-search-result/index.html">com.mapbox.search.result.ServerSearchResult</a></h5>
+<p>Resolved search object with populated fields and mandatory coordinates field.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-service-provider/index.html">com.mapbox.search.ServiceProvider</a></h5>
+<p>This class provides access to search-related services and utility classes.</p>
+</tr>
+<tr>
+<h5><a href="../com.mapbox.search/-viewport-provider/index.html">com.mapbox.search.ViewportProvider</a></h5>
+<p>Used to provide map viewport to MapboxSearchSDK instance, if you have map in your application. Provided viewport used for better and more accurate analytics data.</p>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

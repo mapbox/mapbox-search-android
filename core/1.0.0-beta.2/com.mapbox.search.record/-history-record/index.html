@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HistoryRecord - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.record</a>&nbsp;/&nbsp;<a href="./index.html">HistoryRecord</a><br/>
+<br/>
+<h1>HistoryRecord</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">HistoryRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>History indexable record.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../-indexable-record/index.html">IndexableRecord</a></p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>History indexable record.</p>
+<code><span class="identifier">HistoryRecord</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/coordinate">coordinate</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/address">address</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-address/index.html"><span class="identifier">SearchAddress</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/timestamp">timestamp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.HistoryRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, kotlin.Long, com.mapbox.search.result.SearchResultType)/searchResultType">searchResultType</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-result-type/index.html"><span class="identifier">SearchResultType</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="address.html">address</a></h4>
+</td>
+<td>
+<p>History address.</p>
+<code><span class="keyword">val </span><span class="identifier">address</span><span class="symbol">: </span><a href="../../com.mapbox.search.result/-search-address/index.html"><span class="identifier">SearchAddress</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="coordinate.html">coordinate</a></h4>
+</td>
+<td>
+<p>History coordinate.</p>
+<code><span class="keyword">val </span><span class="identifier">coordinate</span><span class="symbol">: </span><span class="identifier">Point</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="id.html">id</a></h4>
+</td>
+<td>
+<p>History item id.</p>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="index-tokens.html">indexTokens</a></h4>
+</td>
+<td>
+<p>Additional string literals that should be used for search index.</p>
+<code><span class="keyword">val </span><span class="identifier">indexTokens</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="name.html">name</a></h4>
+</td>
+<td>
+<p>History name.</p>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-result-type.html">searchResultType</a></h4>
+</td>
+<td>
+<p>Type of search result.</p>
+<code><span class="keyword">val </span><span class="identifier">searchResultType</span><span class="symbol">: </span><a href="../../com.mapbox.search.result/-search-result-type/index.html"><span class="identifier">SearchResultType</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="timestamp.html">timestamp</a></h4>
+</td>
+<td>
+<p>History item creation time.</p>
+<code><span class="keyword">val </span><span class="identifier">timestamp</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

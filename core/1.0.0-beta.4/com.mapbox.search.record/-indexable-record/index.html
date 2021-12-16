@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>IndexableRecord - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.record</a>&nbsp;/&nbsp;<a href="./index.html">IndexableRecord</a><br/>
+<br/>
+<h1>IndexableRecord</h1>
+<code><span class="keyword">interface </span><span class="identifier">IndexableRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Defines data for index that represents external data to be included in search functionality.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="address.html">address</a></h4>
+</td>
+<td>
+<p>Record address.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">address</span><span class="symbol">: </span><a href="../../com.mapbox.search.result/-search-address/index.html"><span class="identifier">SearchAddress</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="coordinate.html">coordinate</a></h4>
+</td>
+<td>
+<p>Record coordinate.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">coordinate</span><span class="symbol">: </span><span class="identifier">Point</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="id.html">id</a></h4>
+</td>
+<td>
+<p>Record unique identifier.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="index-tokens.html">indexTokens</a></h4>
+</td>
+<td>
+<p>Additional string literals that should be included in search index. For example, you may provide non-official names to force search engine match them.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">indexTokens</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="name.html">name</a></h4>
+</td>
+<td>
+<p>Record name.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-favorite-record/index.html">FavoriteRecord</a></h4>
+</td>
+<td>
+<p>Favorite indexable record.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FavoriteRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-history-record/index.html">HistoryRecord</a></h4>
+</td>
+<td>
+<p>History indexable record.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">HistoryRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

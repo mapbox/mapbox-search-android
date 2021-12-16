@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchBottomSheetView.Configuration - ui</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">ui</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search.ui.view</a>&nbsp;/&nbsp;<a href="../index.html">SearchBottomSheetView</a>&nbsp;/&nbsp;<a href="./index.html">Configuration</a><br/>
+<br/>
+<h1>Configuration</h1>
+<code><span class="keyword">class </span><span class="identifier">Configuration</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p><a href="../index.html">SearchBottomSheetView</a> configuration class.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-builder/index.html">Builder</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Builder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p><a href="../index.html">SearchBottomSheetView</a> configuration class.</p>
+<code><span class="identifier">Configuration</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView.Configuration$<init>(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor, com.mapbox.search.SearchOptions, kotlin.collections.List((com.mapbox.search.ui.view.category.Category)), kotlin.collections.List((com.mapbox.search.ui.view.favorite.FavoriteTemplate)))/collapsedStateAnchor">collapsedStateAnchor</span><span class="symbol">:</span>&nbsp;<span class="identifier">CollapsedStateAnchor</span>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_ANCHOR<span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView.Configuration$<init>(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor, com.mapbox.search.SearchOptions, kotlin.collections.List((com.mapbox.search.ui.view.category.Category)), kotlin.collections.List((com.mapbox.search.ui.view.favorite.FavoriteTemplate)))/searchOptions">searchOptions</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchOptions</span>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_SEARCH_OPTIONS<span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView.Configuration$<init>(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor, com.mapbox.search.SearchOptions, kotlin.collections.List((com.mapbox.search.ui.view.category.Category)), kotlin.collections.List((com.mapbox.search.ui.view.favorite.FavoriteTemplate)))/hotCategories">hotCategories</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.mapbox.search.ui.view.category/-category/index.html"><span class="identifier">Category</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_HOT_CATEGORIES<span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView.Configuration$<init>(com.mapbox.search.ui.view.SearchBottomSheetView.CollapsedStateAnchor, com.mapbox.search.SearchOptions, kotlin.collections.List((com.mapbox.search.ui.view.category.Category)), kotlin.collections.List((com.mapbox.search.ui.view.favorite.FavoriteTemplate)))/favoriteTemplates">favoriteTemplates</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.mapbox.search.ui.view.favorite/-favorite-template/index.html"><span class="identifier">FavoriteTemplate</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_FAVORITE_TEMPLATES<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="collapsed-state-anchor.html">collapsedStateAnchor</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">collapsedStateAnchor</span><span class="symbol">: </span><span class="identifier">CollapsedStateAnchor</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="favorite-templates.html">favoriteTemplates</a></h4>
+</td>
+<td>
+<p><a href="../../../com.mapbox.search.ui.view.favorite/-favorite-template/index.html">FavoriteTemplate</a> items to show in favorites list. Each of item is always shown in favorites list even if coordinate and address are not set. These items can not be deleted from UI by user.</p>
+<code><span class="keyword">val </span><span class="identifier">favoriteTemplates</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.mapbox.search.ui.view.favorite/-favorite-template/index.html"><span class="identifier">FavoriteTemplate</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hot-categories.html">hotCategories</a></h4>
+</td>
+<td>
+<p><a href="../../../com.mapbox.search.ui.view.category/-category/index.html">Category</a> items to show on hot categories panel.</p>
+<code><span class="keyword">val </span><span class="identifier">hotCategories</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.mapbox.search.ui.view.category/-category/index.html"><span class="identifier">Category</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-options.html">searchOptions</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">searchOptions</span><span class="symbol">: </span><span class="identifier">SearchOptions</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

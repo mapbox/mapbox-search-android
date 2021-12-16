@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchResultsView.SearchListener - ui</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">ui</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search.ui.view</a>&nbsp;/&nbsp;<a href="../index.html">SearchResultsView</a>&nbsp;/&nbsp;<a href="./index.html">SearchListener</a><br/>
+<br/>
+<h1>SearchListener</h1>
+<code><span class="keyword">interface </span><span class="identifier">SearchListener</span></code>
+<p>Search results view listener.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-history-item-clicked.html">onHistoryItemClicked</a></h4>
+</td>
+<td>
+<p>Called when the history item clicked.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onHistoryItemClicked</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchResultsView.SearchListener$onHistoryItemClicked(com.mapbox.search.record.HistoryRecord)/historyRecord">historyRecord</span><span class="symbol">:</span>&nbsp;<span class="identifier">HistoryRecord</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-populate-query-clicked.html">onPopulateQueryClicked</a></h4>
+</td>
+<td>
+<p>Called, when search suggestion received.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onPopulateQueryClicked</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchResultsView.SearchListener$onPopulateQueryClicked(com.mapbox.search.result.SearchSuggestion)/suggestion">suggestion</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchSuggestion</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-search-result.html">onSearchResult</a></h4>
+</td>
+<td>
+<p>Called when search result received.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onSearchResult</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchResultsView.SearchListener$onSearchResult(com.mapbox.search.result.SearchResult)/searchResult">searchResult</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchResult</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

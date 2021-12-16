@@ -1,0 +1,177 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchOptions.Builder - sdk</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="../index.html">SearchOptions</a>&nbsp;/&nbsp;<a href="./index.html">Builder</a><br/>
+<br/>
+<h1>Builder</h1>
+<code><span class="keyword">class </span><span class="identifier">Builder</span></code>
+<p>Builder for comfortable creation of <a href="../index.html">SearchOptions</a> instance.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Builder for comfortable creation of <a href="../index.html">SearchOptions</a> instance.</p>
+<code><span class="identifier">Builder</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bounding-box.html">boundingBox</a></h4>
+</td>
+<td>
+<p>Limit results to only those contained within the supplied bounding box. The bounding box cannot cross the 180th meridian.</p>
+<code><span class="keyword">var </span><span class="identifier">boundingBox</span><span class="symbol">: </span><span class="identifier">BoundingBox</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="countries.html">countries</a></h4>
+</td>
+<td>
+<p>Limit results to one or more countries.</p>
+<code><span class="keyword">var </span><span class="identifier">countries</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="fuzzy-match.html">fuzzyMatch</a></h4>
+</td>
+<td>
+<p>Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of wahsington, even though the query was misspelled.</p>
+<code><span class="keyword">var </span><span class="identifier">fuzzyMatch</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="languages.html">languages</a></h4>
+</td>
+<td>
+<p>Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
+If language is not set explicitly, then language from default system locale will be used.</p>
+<code><span class="keyword">var </span><span class="identifier">languages</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="limit.html">limit</a></h4>
+</td>
+<td>
+<p>Specify the maximum number of results to return. The maximum supported is 10.</p>
+<code><span class="keyword">var </span><span class="identifier">limit</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="proximity.html">proximity</a></h4>
+</td>
+<td>
+<p>Bias the response to favor results that are closer to this location, provided as Point class instance.</p>
+<code><span class="keyword">var </span><span class="identifier">proximity</span><span class="symbol">: </span><span class="identifier">Point</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="request-debounce.html">requestDebounce</a></h4>
+</td>
+<td>
+<p>Request debounce value in milliseconds. Previous request will be cancelled if the new one made within specified by <a href="request-debounce.html">requestDebounce</a> time interval.</p>
+<code><span class="keyword">var </span><span class="identifier">requestDebounce</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="types.html">types</a></h4>
+</td>
+<td>
+<p>Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.</p>
+<code><span class="keyword">var </span><span class="identifier">types</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bounding-box.html">boundingBox</a></h4>
+</td>
+<td>
+<p>Set bounding box for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">boundingBox</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$boundingBox(com.mapbox.geojson.BoundingBox)/boundingBox">boundingBox</span><span class="symbol">:</span>&nbsp;<span class="identifier">BoundingBox</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="build.html">build</a></h4>
+</td>
+<td>
+<p>Create <a href="../index.html">SearchOptions</a> instance from builder data.</p>
+<code><span class="keyword">fun </span><span class="identifier">build</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../index.html"><span class="identifier">SearchOptions</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="countries.html">countries</a></h4>
+</td>
+<td>
+<p>Set countries for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">countries</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.SearchOptions.Builder$countries(kotlin.Array((com.mapbox.search.Country)))/countries">countries</span><span class="symbol">:</span>&nbsp;<a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">countries</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$countries(kotlin.collections.List((com.mapbox.search.Country)))/countries">countries</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="fuzzy-match.html">fuzzyMatch</a></h4>
+</td>
+<td>
+<p>Set fuzzy match flag for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">fuzzyMatch</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$fuzzyMatch(kotlin.Boolean)/fuzzyMatch">fuzzyMatch</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="languages.html">languages</a></h4>
+</td>
+<td>
+<p>Set languages for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">languages</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.SearchOptions.Builder$languages(kotlin.Array((com.mapbox.search.Language)))/languages">languages</span><span class="symbol">:</span>&nbsp;<a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">languages</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$languages(kotlin.collections.List((com.mapbox.search.Language)))/languages">languages</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="limit.html">limit</a></h4>
+</td>
+<td>
+<p>Set limit for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">limit</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$limit(kotlin.Int)/limit">limit</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="proximity.html">proximity</a></h4>
+</td>
+<td>
+<p>Set proximity for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">proximity</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$proximity(com.mapbox.geojson.Point)/proximity">proximity</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="request-debounce.html">requestDebounce</a></h4>
+</td>
+<td>
+<p>Set debounce for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">requestDebounce</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$requestDebounce(kotlin.Int)/debounce">debounce</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="types.html">types</a></h4>
+</td>
+<td>
+<p>Set types for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">types</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.SearchOptions.Builder$types(kotlin.Array((com.mapbox.search.QueryType)))/types">types</span><span class="symbol">:</span>&nbsp;<a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">types</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchOptions.Builder$types(kotlin.collections.List((com.mapbox.search.QueryType)))/types">types</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

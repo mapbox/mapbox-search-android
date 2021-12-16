@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchEngine.select - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="index.html">SearchEngine</a>&nbsp;/&nbsp;<a href="./select.html">select</a><br/>
+<br/>
+<h1>select</h1>
+<a name="com.mapbox.search.SearchEngine$select(com.mapbox.search.result.SearchSuggestion, com.mapbox.search.SearchSelectionCallback)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">select</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$select(com.mapbox.search.result.SearchSuggestion, com.mapbox.search.SearchSelectionCallback)/suggestion">suggestion</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$select(com.mapbox.search.result.SearchSuggestion, com.mapbox.search.SearchSelectionCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-selection-callback/index.html"><span class="identifier">SearchSelectionCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code>
+<p>The second step of forward geocoding. Call this function to get a <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> (with coordinates) from a <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.</p>
+<h3>Parameters</h3>
+<p><a name="suggestion"></a>
+<code>suggestion</code> - search suggestion to resolve and get the final result with address and coordinates.</p>
+<p><a name="callback"></a>
+<code>callback</code> - callback to retrieve <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> with resolved coordinates.</p>
+<p><strong>Return</strong><br/>
+<a href="../-search-request-task/index.html">SearchRequestTask</a> to be able to cancel request.</p>
+<a name="com.mapbox.search.SearchEngine$select(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), com.mapbox.search.SearchMultipleSelectionCallback)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">select</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$select(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), com.mapbox.search.SearchMultipleSelectionCallback)/suggestions">suggestions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$select(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), com.mapbox.search.SearchMultipleSelectionCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-multiple-selection-callback/index.html"><span class="identifier">SearchMultipleSelectionCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code>
+<p>Function to select multiple suggestions at once.
+Unlike <a href="./select.html">select</a>, resolving always ends up returning list of <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> and can't return new suggestions.</p>
+<p>Note that all the search suggestions must originate from the same search request and only certain suggestions
+can be used in the batch selection, to check if a <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a> can be passed to this function,
+call <a href="../../com.mapbox.search.result/-search-suggestion/is-batch-resolve-supported.html">SearchSuggestion.isBatchResolveSupported</a>.
+With the current implementation, only POI and indexable record suggestions support batch resolving.
+All the suggestions that can't be used in batch resolving will be filtered.</p>
+<h3>Parameters</h3>
+<p><a name="suggestions"></a>
+<code>suggestions</code> - Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.</p>
+<p><strong>Return</strong><br/>
+<a href="../-search-request-task/index.html">SearchRequestTask</a> Task that represents request. Allows further manipulations like request cancellation.</p>
+</BODY>
+</HTML>

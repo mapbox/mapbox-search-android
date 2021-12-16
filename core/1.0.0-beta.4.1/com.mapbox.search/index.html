@@ -1,0 +1,239 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.mapbox.search - sdk</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">sdk</a>&nbsp;/&nbsp;<a href="./index.html">com.mapbox.search</a><br/>
+<br/>
+<h2>Package com.mapbox.search</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-api-type/index.html">ApiType</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ApiType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-category-search-engine/index.html">CategorySearchEngine</a></h4>
+</td>
+<td>
+<p>Category search engine, used for search by category. Instance of it can be retrieved from <a href="-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Result will be delivered on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">CategorySearchEngine</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-country/index.html">Country</a></h4>
+</td>
+<td>
+<p>Countries list to use in <a href="-search-options/index.html">com.mapbox.search.SearchOptions</a>.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Country</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-distance-calculator/index.html">DistanceCalculator</a></h4>
+</td>
+<td>
+<p>Fast distance calculator for WGS84 (Earth as spheroid).
+Should be initialized by latitude and used in some not far around area.
+Expected error is 0.04%.</p>
+<code><span class="keyword">interface </span><span class="identifier">DistanceCalculator</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-highlights-calculator/index.html">HighlightsCalculator</a></h4>
+</td>
+<td>
+<p>Used to calculate which parts of exact search result name will be highlighted.</p>
+<code><span class="keyword">interface </span><span class="identifier">HighlightsCalculator</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-image-info/index.html">ImageInfo</a></h4>
+</td>
+<td>
+<p>Image information.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">ImageInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-language/index.html">Language</a></h4>
+</td>
+<td>
+<p>Preferred languages of the search results.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Language</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-mapbox-search-sdk/index.html">MapboxSearchSdk</a></h4>
+</td>
+<td>
+<p>The entry point to initialize Search SDK.</p>
+<code><span class="keyword">object </span><span class="identifier">MapboxSearchSdk</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-nav-profile/index.html">NavProfile</a></h4>
+</td>
+<td>
+<p>Type of movement. Used to calculate ETA from origin point to search result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">NavProfile</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-query-type/index.html">QueryType</a></h4>
+</td>
+<td>
+<p>Values to filter results to include only a subset (one or more) of the available feature types.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">QueryType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-request-options/index.html">RequestOptions</a></h4>
+</td>
+<td>
+<p>Options describing search request.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RequestOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-reverse-geocoding-search-engine/index.html">ReverseGeocodingSearchEngine</a></h4>
+</td>
+<td>
+<p>Used for reverse geocoding. Instance of it can be retrieved from <a href="-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Result will be delivered on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">ReverseGeocodingSearchEngine</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-reverse-geo-options/index.html">ReverseGeoOptions</a></h4>
+</td>
+<td>
+<p>Search options for reverse geocoding.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">ReverseGeoOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-reverse-mode/index.html">ReverseMode</a></h4>
+</td>
+<td>
+<p>Decides how results are sorted in a reverse geocoding query if multiple results are requested using a limit other than 1.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ReverseMode</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-route-options/index.html">RouteOptions</a></h4>
+</td>
+<td>
+<p>Options to configure Route for search along the route functionality.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RouteOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-callback/index.html">SearchCallback</a></h4>
+</td>
+<td>
+<p>Search result callback for category search and reverse geocoding.
+When an event happens, the corresponding method will be called on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchCallback</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-engine/index.html">SearchEngine</a></h4>
+</td>
+<td>
+<p>Used for forward geocoding (looking up a place by name to retrieve its geographic coordinates). Instance of it can be retrieved from <a href="-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Results will be delivered on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchEngine</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-multiple-selection-callback/index.html">SearchMultipleSelectionCallback</a></h4>
+</td>
+<td>
+<p>Callback called when multiple selection request completes.
+Methods of this callback will be called on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchMultipleSelectionCallback</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-options/index.html">SearchOptions</a></h4>
+</td>
+<td>
+<p>Search options, used for forward geocoding and category search.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-request-task/index.html">SearchRequestTask</a></h4>
+</td>
+<td>
+<p>Represents any request from any search engine. Should be cancelled if you leave the screen or application and result of search request do not needed anymore to avoid memory leaks.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchRequestTask</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-result-metadata/index.html">SearchResultMetadata</a></h4>
+</td>
+<td>
+<p>Search result metadata container. Provides geo place's detailed information if available.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchResultMetadata</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-selection-callback/index.html">SearchSelectionCallback</a></h4>
+</td>
+<td>
+<p>Callback for <a href="../com.mapbox.search.result/-search-result/index.html">SearchResult</a>, resolved from <a href="../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.
+<a href="-search-selection-callback/on-result.html">onResult</a> will be called on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchSelectionCallback</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-search-suggestions-callback/index.html"><span class="identifier">SearchSuggestionsCallback</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-search-suggestions-callback/index.html">SearchSuggestionsCallback</a></h4>
+</td>
+<td>
+<p>Used in the first step of forward geocoding to get a list of <a href="../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.
+When an event happens, the corresponding method will be called on the main thread.</p>
+<code><span class="keyword">interface </span><span class="identifier">SearchSuggestionsCallback</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-service-provider/index.html">ServiceProvider</a></h4>
+</td>
+<td>
+<p>This class provides access to search-related services and utility classes.</p>
+<code><span class="keyword">interface </span><span class="identifier">ServiceProvider</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-viewport-provider/index.html">ViewportProvider</a></h4>
+</td>
+<td>
+<p>Used to provide map viewport to MapboxSearchSDK instance, if you have map in your application. Provided viewport used for better and more accurate analytics data.</p>
+<code><span class="keyword">interface </span><span class="identifier">ViewportProvider</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Exceptions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-search-request-exception/index.html">SearchRequestException</a></h4>
+</td>
+<td>
+<p>Exception thrown when an HTTP response was not successful, i.e. if the code is not in [200..300).</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchRequestException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html"><span class="identifier">RuntimeException</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

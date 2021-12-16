@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchEngine.search - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="index.html">SearchEngine</a>&nbsp;/&nbsp;<a href="./search.html">search</a><br/>
+<br/>
+<h1>search</h1>
+<a name="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">search</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/options">options</span><span class="symbol">:</span>&nbsp;<a href="../-search-options/index.html"><span class="identifier">SearchOptions</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-suggestions-callback/index.html"><span class="identifier">SearchSuggestionsCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code>
+<p>The first step of forward geocoding. Returns a list of <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a> without coordinates.</p>
+<h3>Parameters</h3>
+<p><a name="query"></a>
+<code>query</code> - search query.</p>
+<p><a name="options"></a>
+<code>options</code> - search options.</p>
+<p><a name="callback"></a>
+<code>callback</code> - callback to retrieve list of <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>. Each <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a> can be resolved to <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> (with coordinates) by calling <a href="select.html">select</a>.</p>
+<p><strong>Return</strong><br/>
+<a href="../-search-request-task/index.html">SearchRequestTask</a> to be able to cancel request.</p>
+</BODY>
+</HTML>

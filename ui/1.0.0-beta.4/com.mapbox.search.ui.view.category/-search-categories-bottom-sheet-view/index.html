@@ -1,0 +1,208 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchCategoriesBottomSheetView - ui</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">ui</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.ui.view.category</a>&nbsp;/&nbsp;<a href="./index.html">SearchCategoriesBottomSheetView</a><br/>
+<br/>
+<h1>SearchCategoriesBottomSheetView</h1>
+<code><span class="keyword">class </span><span class="identifier">SearchCategoriesBottomSheetView</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/FrameLayout.html"><span class="identifier">FrameLayout</span></a><span class="symbol">, </span><span class="identifier">AttachedBehavior</span></code>
+<p>View that implements category search. It notifies developers via listeners when a user clicks on a <code>SearchResult</code>, favorite record or wants to initiate a category search.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-bottom-sheet-state/index.html">BottomSheetState</a></h4>
+</td>
+<td>
+<p>State of the bottom sheet.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">BottomSheetState</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-category-loading-state-listener/index.html">CategoryLoadingStateListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">CategoryLoadingStateListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-bottom-sheet-state-changed-listener/index.html">OnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnBottomSheetStateChangedListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-close-click-listener/index.html">OnCloseClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnCloseClickListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-search-result-click-listener/index.html">OnSearchResultClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnSearchResultClickListener</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">SearchCategoriesBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchCategoriesBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchCategoriesBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchCategoriesBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/defStyleRes">defStyleRes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="state.html">state</a></h4>
+</td>
+<td>
+<p>The current state of the bottom sheet.</p>
+<code><span class="keyword">val </span><span class="identifier">state</span><span class="symbol">: </span><span class="identifier">BottomSheetState</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-no name provided-.html">&lt;no name provided&gt;</a></h4>
+</td>
+<td>
+<p>Listener for watching bottom sheet state changes events.</p>
+<code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-category-loading-state-listener.html">addCategoryLoadingStateListener</a></h4>
+</td>
+<td>
+<p>Adds <a href="-category-loading-state-listener/index.html">CategoryLoadingStateListener</a> to know exactly when search started, failed or succeeded with some results.</p>
+<code><span class="keyword">fun </span><span class="identifier">addCategoryLoadingStateListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$addCategoryLoadingStateListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.CategoryLoadingStateListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">CategoryLoadingStateListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-bottom-sheet-state-changed-listener.html">addOnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of bottom sheet events.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnBottomSheetStateChangedListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnBottomSheetStateChangedListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnBottomSheetStateChangedListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-close-click-listener.html">addOnCloseClickListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of close button click.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnCloseClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$addOnCloseClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnCloseClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnCloseClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-search-result-click-listener.html">addOnSearchResultClickListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of search result clicks.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnSearchResultClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$addOnSearchResultClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnSearchResultClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnSearchResultClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="cancel-category-loading.html">cancelCategoryLoading</a></h4>
+</td>
+<td>
+<p>Cancel current category search.</p>
+<code><span class="keyword">fun </span><span class="identifier">cancelCategoryLoading</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="handle-on-back-pressed.html">handleOnBackPressed</a></h4>
+</td>
+<td>
+<p>Back button handler.</p>
+<code><span class="keyword">fun </span><span class="identifier">handleOnBackPressed</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hide.html">hide</a></h4>
+</td>
+<td>
+<p>Switch <a href="./index.html">SearchCategoriesBottomSheetView</a> to hidden state.</p>
+<code><span class="keyword">fun </span><span class="identifier">hide</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="is-hidden.html">isHidden</a></h4>
+</td>
+<td>
+<p>Check if view is hidden in current moment.</p>
+<code><span class="keyword">fun </span><span class="identifier">isHidden</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="open.html">open</a></h4>
+</td>
+<td>
+<p>Switch <a href="./index.html">SearchCategoriesBottomSheetView</a> to opened state.</p>
+<code><span class="keyword">fun </span><span class="identifier">open</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$open(com.mapbox.search.ui.view.category.Category)/category">category</span><span class="symbol">:</span>&nbsp;<a href="../-category/index.html"><span class="identifier">Category</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-category-loading-state-listener.html">removeCategoryLoadingStateListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added <a href="-category-loading-state-listener/index.html">CategoryLoadingStateListener</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeCategoryLoadingStateListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$removeCategoryLoadingStateListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.CategoryLoadingStateListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">CategoryLoadingStateListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-bottom-sheet-state-changed-listener.html">removeOnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added listener.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnBottomSheetStateChangedListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnBottomSheetStateChangedListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnBottomSheetStateChangedListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-close-click-listener.html">removeOnCloseClickListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added <a href="-on-close-click-listener/index.html">OnCloseClickListener</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnCloseClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$removeOnCloseClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnCloseClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnCloseClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-search-result-click-listener.html">removeOnSearchResultClickListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added <a href="-on-search-result-click-listener/index.html">OnSearchResultClickListener</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnSearchResultClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$removeOnSearchResultClickListener(com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView.OnSearchResultClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnSearchResultClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="restore-previous-non-hidden-state.html">restorePreviousNonHiddenState</a></h4>
+</td>
+<td>
+<p>Restores previous view state for <a href="./index.html">SearchCategoriesBottomSheetView</a> with correct<a href="restore-previous-non-hidden-state.html#com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$restorePreviousNonHiddenState(com.mapbox.search.ui.view.category.Category)/category">category</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">restorePreviousNonHiddenState</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView$restorePreviousNonHiddenState(com.mapbox.search.ui.view.category.Category)/category">category</span><span class="symbol">:</span>&nbsp;<a href="../-category/index.html"><span class="identifier">Category</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+com.mapbox.search.ui.view
+com.mapbox.search.ui.view.category
+com.mapbox.search.ui.view.favorite
+com.mapbox.search.ui.view.place
+

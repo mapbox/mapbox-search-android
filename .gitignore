@@ -1,0 +1,4 @@
+.jekyll-cache
+.DS_Store
+MapboxSearch/
+/node_modules

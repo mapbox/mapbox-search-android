@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DistanceCalculator - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">DistanceCalculator</a><br/>
+<br/>
+<h1>DistanceCalculator</h1>
+<code><span class="keyword">interface </span><span class="identifier">DistanceCalculator</span></code>
+<p>Fast distance calculator for WGS84 (Earth as spheroid).
+Should be initialized by latitude and used in some not far around area.
+Expected error is 0.04%.</p>
+<p><strong>Return</strong><br/>
+Distance in meters.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="distance.html">distance</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">distance</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.DistanceCalculator$distance(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/from">from</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.DistanceCalculator$distance(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/to">to</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="square-distance.html">squareDistance</a></h4>
+</td>
+<td>
+<p>This function is faster than distance and used to compare distances.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">squareDistance</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.DistanceCalculator$squareDistance(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/from">from</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.DistanceCalculator$squareDistance(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/to">to</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="distance-on-sphere.html">distanceOnSphere</a></h4>
+</td>
+<td>
+<p>This method provides better result precision with minimal error level, than <a href="distance.html">distance</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">distanceOnSphere</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.DistanceCalculator.Companion$distanceOnSphere(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/from">from</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.DistanceCalculator.Companion$distanceOnSphere(com.mapbox.geojson.Point, com.mapbox.geojson.Point)/to">to</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

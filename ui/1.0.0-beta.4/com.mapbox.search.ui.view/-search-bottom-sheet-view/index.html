@@ -1,0 +1,252 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchBottomSheetView - ui</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">ui</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.ui.view</a>&nbsp;/&nbsp;<a href="./index.html">SearchBottomSheetView</a><br/>
+<br/>
+<h1>SearchBottomSheetView</h1>
+<code><span class="keyword">class </span><span class="identifier">SearchBottomSheetView</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/FrameLayout.html"><span class="identifier">FrameLayout</span></a><span class="symbol">, </span><span class="identifier">AttachedBehavior</span></code>
+<p>View implements forward geocoding functionality. Also can add, edit or delete favorites.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-bottom-sheet-state/index.html">BottomSheetState</a></h4>
+</td>
+<td>
+<p>State of the bottom sheet.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">BottomSheetState</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-collapsed-state-anchor/index.html">CollapsedStateAnchor</a></h4>
+</td>
+<td>
+<p>Anchor for the bottom sheet collapsed state, defines height of the bottom sheet when it is collapsed.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">CollapsedStateAnchor</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-configuration/index.html">Configuration</a></h4>
+</td>
+<td>
+<p><a href="./index.html">SearchBottomSheetView</a> configuration class.</p>
+<code><span class="keyword">class </span><span class="identifier">Configuration</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-bottom-sheet-state-changed-listener/index.html">OnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnBottomSheetStateChangedListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-category-click-listener/index.html">OnCategoryClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnCategoryClickListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-favorite-click-listener/index.html">OnFavoriteClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnFavoriteClickListener</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-on-search-result-click-listener/index.html">OnSearchResultClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">OnSearchResultClickListener</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">SearchBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">SearchBottomSheetView</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Int)/defStyleRes">defStyleRes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="is-hideable-by-drag.html">isHideableByDrag</a></h4>
+</td>
+<td>
+<p>This property is responsible for possibility to toggle <a href="./index.html">SearchBottomSheetView</a> to hidden state by dragging down.</p>
+<code><span class="keyword">var </span><span class="identifier">isHideableByDrag</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="state.html">state</a></h4>
+</td>
+<td>
+<p>The current state of the bottom sheet.</p>
+<code><span class="keyword">val </span><span class="identifier">state</span><span class="symbol">: </span><span class="identifier">BottomSheetState</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-no name provided-.html">&lt;no name provided&gt;</a></h4>
+</td>
+<td>
+<p>Listener for watching bottom sheet state changes events.</p>
+<code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listener for category item click processing.</p>
+<code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listener for search result item click processing.</p>
+<code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listener for favorite item click processing.</p>
+<code><span class="keyword">fun </span><span class="identifier">&lt;no name provided&gt;</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-bottom-sheet-state-changed-listener.html">addOnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of bottom sheet events.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnBottomSheetStateChangedListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$addOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnBottomSheetStateChangedListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnBottomSheetStateChangedListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-category-click-listener.html">addOnCategoryClickListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of category clicks.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnCategoryClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$addOnCategoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnCategoryClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnCategoryClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-favorite-click-listener.html">addOnFavoriteClickListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of clicks on favorites.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnFavoriteClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$addOnFavoriteClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFavoriteClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnFavoriteClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-on-search-result-click-listener.html">addOnSearchResultClickListener</a></h4>
+</td>
+<td>
+<p>Adds a listener to be notified of clicks on search result.</p>
+<code><span class="keyword">fun </span><span class="identifier">addOnSearchResultClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$addOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnSearchResultClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="expand.html">expand</a></h4>
+</td>
+<td>
+<p>Switch <a href="./index.html">SearchBottomSheetView</a> to expanded state.</p>
+<code><span class="keyword">fun </span><span class="identifier">expand</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-behavior.html">getBehavior</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getBehavior</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Behavior</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="handle-on-back-pressed.html">handleOnBackPressed</a></h4>
+</td>
+<td>
+<p>Back button handler.</p>
+<code><span class="keyword">fun </span><span class="identifier">handleOnBackPressed</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hide.html">hide</a></h4>
+</td>
+<td>
+<p>Switch <a href="./index.html">SearchBottomSheetView</a> to hidden state, when 0% of it is visible on the screen.</p>
+<code><span class="keyword">fun </span><span class="identifier">hide</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="initialize-search.html">initializeSearch</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">initializeSearch</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$initializeSearch(android.os.Bundle, com.mapbox.search.ui.view.SearchBottomSheetView.Configuration)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$initializeSearch(android.os.Bundle, com.mapbox.search.ui.view.SearchBottomSheetView.Configuration)/configuration">configuration</span><span class="symbol">:</span>&nbsp;<span class="identifier">Configuration</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="is-hidden.html">isHidden</a></h4>
+</td>
+<td>
+<p>Check if view is hidden in current moment.</p>
+<code><span class="keyword">fun </span><span class="identifier">isHidden</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="open.html">open</a></h4>
+</td>
+<td>
+<p>Switch <a href="./index.html">SearchBottomSheetView</a> to collapsed state, but when part of it is still visible.</p>
+<code><span class="keyword">fun </span><span class="identifier">open</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-bottom-sheet-state-changed-listener.html">removeOnBottomSheetStateChangedListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added listener.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnBottomSheetStateChangedListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$removeOnBottomSheetStateChangedListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnBottomSheetStateChangedListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnBottomSheetStateChangedListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-category-click-listener.html">removeOnCategoryClickListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added listener.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnCategoryClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$removeOnCategoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnCategoryClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnCategoryClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-favorite-click-listener.html">removeOnFavoriteClickListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added listener.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnFavoriteClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$removeOnFavoriteClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFavoriteClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnFavoriteClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-on-search-result-click-listener.html">removeOnSearchResultClickListener</a></h4>
+</td>
+<td>
+<p>Removes a previously added listener.</p>
+<code><span class="keyword">fun </span><span class="identifier">removeOnSearchResultClickListener</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchBottomSheetView$removeOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<span class="identifier">OnSearchResultClickListener</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="restore-previous-non-hidden-state.html">restorePreviousNonHiddenState</a></h4>
+</td>
+<td>
+<p>Restores previous view state if <a href="./index.html">SearchBottomSheetView</a> is currently in hidden state.</p>
+<code><span class="keyword">fun </span><span class="identifier">restorePreviousNonHiddenState</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

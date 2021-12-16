@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.mapbox.search.record - sdk</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">sdk</a>&nbsp;/&nbsp;<a href="./index.html">com.mapbox.search.record</a><br/>
+<br/>
+<h2>Package com.mapbox.search.record</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-favorite-record/index.html">FavoriteRecord</a></h4>
+</td>
+<td>
+<p>Favorite indexable record.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FavoriteRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-favorites-data-provider/index.html">FavoritesDataProvider</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="-local-data-provider/index.html">LocalDataProvider</a> typed to store <a href="-favorite-record/index.html">FavoriteRecord</a> items.</p>
+<code><span class="keyword">interface </span><span class="identifier">FavoritesDataProvider</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-local-data-provider/index.html"><span class="identifier">LocalDataProvider</span></a><span class="symbol">&lt;</span><a href="-favorite-record/index.html"><span class="identifier">FavoriteRecord</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-history-data-provider/index.html">HistoryDataProvider</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="-local-data-provider/index.html">LocalDataProvider</a> typed to store <a href="-history-record/index.html">HistoryRecord</a> items.</p>
+<code><span class="keyword">interface </span><span class="identifier">HistoryDataProvider</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-local-data-provider/index.html"><span class="identifier">LocalDataProvider</span></a><span class="symbol">&lt;</span><a href="-history-record/index.html"><span class="identifier">HistoryRecord</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-history-record/index.html">HistoryRecord</a></h4>
+</td>
+<td>
+<p>History indexable record.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">HistoryRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-indexable-data-provider/index.html">IndexableDataProvider</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+Defines an interface for external data indexing.</p>
+<code><span class="keyword">interface </span><span class="identifier">IndexableDataProvider</span><span class="symbol">&lt;</span><span class="identifier">R</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-indexable-record/index.html">IndexableRecord</a></h4>
+</td>
+<td>
+<p>Defines data for index that represents external data to be included in search functionality.</p>
+<code><span class="keyword">interface </span><span class="identifier">IndexableRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-local-data-provider/index.html">LocalDataProvider</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="-indexable-data-provider/index.html">IndexableDataProvider</a> that represents stored locally by the SDK user data.</p>
+<code><span class="keyword">interface </span><span class="identifier">LocalDataProvider</span><span class="symbol">&lt;</span><span class="identifier">R</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-indexable-data-provider/index.html"><span class="identifier">IndexableDataProvider</span></a><span class="symbol">&lt;</span><span class="identifier">R</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

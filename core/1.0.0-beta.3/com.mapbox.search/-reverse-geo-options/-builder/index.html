@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ReverseGeoOptions.Builder - sdk</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="../index.html">ReverseGeoOptions</a>&nbsp;/&nbsp;<a href="./index.html">Builder</a><br/>
+<br/>
+<h1>Builder</h1>
+<code><span class="keyword">class </span><span class="identifier">Builder</span></code>
+<p>Builder for comfortable creation of <a href="../index.html">ReverseGeoOptions</a> instance.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Builder for comfortable creation of <a href="../index.html">ReverseGeoOptions</a> instance.</p>
+<code><span class="identifier">Builder</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$<init>(com.mapbox.geojson.Point)/center">center</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="center.html">center</a></h4>
+</td>
+<td>
+<p>Coordinates to resolve.</p>
+<code><span class="keyword">val </span><span class="identifier">center</span><span class="symbol">: </span><span class="identifier">Point</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="countries.html">countries</a></h4>
+</td>
+<td>
+<p>Limit results to one or more countries.</p>
+<code><span class="keyword">var </span><span class="identifier">countries</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="languages.html">languages</a></h4>
+</td>
+<td>
+<p>Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.</p>
+<code><span class="keyword">var </span><span class="identifier">languages</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="limit.html">limit</a></h4>
+</td>
+<td>
+<p>Specify the maximum number of results to return. The default is 1 and the maximum supported is 5.
+The default behavior in reverse geocoding is to return at most one feature at each of the multiple levels of the administrative hierarchy (for example, one address, one region, one country). Increasing the limit allows returning multiple features of the same type, but only for one type (for example, multiple address results). Consequently, setting limit to a higher-than-default value requires specifying exactly one types parameter.</p>
+<code><span class="keyword">var </span><span class="identifier">limit</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reverse-mode.html">reverseMode</a></h4>
+</td>
+<td>
+<p>Decides how results are sorted in a reverse geocoding query.</p>
+<code><span class="keyword">var </span><span class="identifier">reverseMode</span><span class="symbol">: </span><a href="../../-reverse-mode/index.html"><span class="identifier">ReverseMode</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="types.html">types</a></h4>
+</td>
+<td>
+<p>Filter results to include only a subset (one or more) of the available feature types.</p>
+<code><span class="keyword">var </span><span class="identifier">types</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="build.html">build</a></h4>
+</td>
+<td>
+<p>Create ReverseGeoOptions from builder instance.</p>
+<code><span class="keyword">fun </span><span class="identifier">build</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../index.html"><span class="identifier">ReverseGeoOptions</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="countries.html">countries</a></h4>
+</td>
+<td>
+<p>Set countries list for builder as vararg.</p>
+<code><span class="keyword">fun </span><span class="identifier">countries</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$countries(kotlin.Array((com.mapbox.search.Country)))/countries">countries</span><span class="symbol">:</span>&nbsp;<a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code>
+<p>Set countries list for builder as List.</p>
+<code><span class="keyword">fun </span><span class="identifier">countries</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$countries(kotlin.collections.List((com.mapbox.search.Country)))/countries">countries</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-country/index.html"><span class="identifier">Country</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="languages.html">languages</a></h4>
+</td>
+<td>
+<p>Set languages for builder as vararg.</p>
+<code><span class="keyword">fun </span><span class="identifier">languages</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$languages(kotlin.Array((com.mapbox.search.Language)))/languages">languages</span><span class="symbol">:</span>&nbsp;<a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code>
+<p>Set languages for builder as list.</p>
+<code><span class="keyword">fun </span><span class="identifier">languages</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$languages(kotlin.collections.List((com.mapbox.search.Language)))/languages">languages</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-language/index.html"><span class="identifier">Language</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="limit.html">limit</a></h4>
+</td>
+<td>
+<p>Set results limit for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">limit</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$limit(kotlin.Int)/limit">limit</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reverse-mode.html">reverseMode</a></h4>
+</td>
+<td>
+<p>Set reverse mode for builder.</p>
+<code><span class="keyword">fun </span><span class="identifier">reverseMode</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$reverseMode(com.mapbox.search.ReverseMode)/reverseMode">reverseMode</span><span class="symbol">:</span>&nbsp;<a href="../../-reverse-mode/index.html"><span class="identifier">ReverseMode</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="types.html">types</a></h4>
+</td>
+<td>
+<p>Set types for builder as vararg.</p>
+<code><span class="keyword">fun </span><span class="identifier">types</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$types(kotlin.Array((com.mapbox.search.QueryType)))/types">types</span><span class="symbol">:</span>&nbsp;<a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code>
+<p>Set types for builder as list.</p>
+<code><span class="keyword">fun </span><span class="identifier">types</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ReverseGeoOptions.Builder$types(kotlin.collections.List((com.mapbox.search.QueryType)))/types">types</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../-query-type/index.html"><span class="identifier">QueryType</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchMultipleSelectionCallback - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">SearchMultipleSelectionCallback</a><br/>
+<br/>
+<h1>SearchMultipleSelectionCallback</h1>
+<code><span class="identifier">@UiThread</span> <span class="keyword">interface </span><span class="identifier">SearchMultipleSelectionCallback</span></code>
+<p>Callback called when multiple selection request completes.
+Methods of this callback will be called on the main thread.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-error.html">onError</a></h4>
+</td>
+<td>
+<p>Called if an error occurred during the request.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onError</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchMultipleSelectionCallback$onError(java.lang.Exception)/e">e</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html"><span class="identifier">Exception</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-result.html">onResult</a></h4>
+</td>
+<td>
+<p>Called when suggestions have been resolved.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onResult</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))/suggestions">suggestions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))/results">results</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-result/index.html"><span class="identifier">SearchResult</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

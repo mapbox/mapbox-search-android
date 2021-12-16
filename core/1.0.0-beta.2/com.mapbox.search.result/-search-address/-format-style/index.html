@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchAddress.FormatStyle - sdk</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search.result</a>&nbsp;/&nbsp;<a href="../index.html">SearchAddress</a>&nbsp;/&nbsp;<a href="./index.html">FormatStyle</a><br/>
+<br/>
+<h1>FormatStyle</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">FormatStyle</span></code>
+<p>Describes how detailed should be formatted address in string representation.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-custom/index.html">Custom</a></h4>
+</td>
+<td>
+<p>Custom variant of formatting. User decides, which address components will be included to formatted address string.</p>
+<code><span class="keyword">class </span><span class="identifier">Custom</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FormatStyle</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-full.html">Full</a></h4>
+</td>
+<td>
+<p>Full variant of address formatting. All existing address components included into formatted address.</p>
+<code><span class="keyword">object </span><span class="identifier">Full</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FormatStyle</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-long.html">Long</a></h4>
+</td>
+<td>
+<p>Variant of formatting, that includes most of address components.</p>
+<code><span class="keyword">object </span><span class="identifier">Long</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FormatStyle</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-medium.html">Medium</a></h4>
+</td>
+<td>
+<p>A bit longer variant of formatting, than <a href="-short.html">Short</a>.</p>
+<code><span class="keyword">object </span><span class="identifier">Medium</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FormatStyle</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-short.html">Short</a></h4>
+</td>
+<td>
+<p>Short variant of formatting.</p>
+<code><span class="keyword">object </span><span class="identifier">Short</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FormatStyle</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

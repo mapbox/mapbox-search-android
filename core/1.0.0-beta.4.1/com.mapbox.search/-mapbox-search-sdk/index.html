@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MapboxSearchSdk - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">MapboxSearchSdk</a><br/>
+<br/>
+<h1>MapboxSearchSdk</h1>
+<code><span class="keyword">object </span><span class="identifier">MapboxSearchSdk</span></code>
+<p>The entry point to initialize Search SDK.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="service-provider.html">serviceProvider</a></h4>
+</td>
+<td>
+<p>Shared service provider instance.</p>
+<code><span class="keyword">val </span><span class="identifier">serviceProvider</span><span class="symbol">: </span><a href="../-service-provider/index.html"><span class="identifier">ServiceProvider</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="create-category-search-engine.html">createCategorySearchEngine</a></h4>
+</td>
+<td>
+<p>Create new <a href="../-category-search-engine/index.html">CategorySearchEngine</a> instance to search by category.</p>
+<code><span class="keyword">fun </span><span class="identifier">createCategorySearchEngine</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-category-search-engine/index.html"><span class="identifier">CategorySearchEngine</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="create-reverse-geocoding-search-engine.html">createReverseGeocodingSearchEngine</a></h4>
+</td>
+<td>
+<p>Create new <a href="../-reverse-geocoding-search-engine/index.html">ReverseGeocodingSearchEngine</a> instance for reverse geocoding.</p>
+<code><span class="keyword">fun </span><span class="identifier">createReverseGeocodingSearchEngine</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-reverse-geocoding-search-engine/index.html"><span class="identifier">ReverseGeocodingSearchEngine</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="create-search-engine.html">createSearchEngine</a></h4>
+</td>
+<td>
+<p>Create new <a href="../-search-engine/index.html">SearchEngine</a> instance for forward geocoding.</p>
+<code><span class="keyword">fun </span><span class="identifier">createSearchEngine</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-engine/index.html"><span class="identifier">SearchEngine</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="initialize.html">initialize</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+Initialize Search SDK.</p>
+<code><span class="keyword">fun </span><span class="identifier">initialize</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/accessToken">accessToken</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/locationProvider">locationProvider</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.location/-location-provider/index.html"><span class="identifier">LocationProvider</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/geocodingEndpointBaseUrl">geocodingEndpointBaseUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_ENDPOINT_GEOCODING<span class="symbol">, </span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/singleBoxSearchBaseUrl">singleBoxSearchBaseUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_ENDPOINT_SBS<span class="symbol">, </span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$initialize(android.app.Application, kotlin.String, com.mapbox.search.location.LocationProvider, kotlin.String, kotlin.String, com.mapbox.search.ViewportProvider)/viewportProvider">viewportProvider</span><span class="symbol">:</span>&nbsp;<a href="../-viewport-provider/index.html"><span class="identifier">ViewportProvider</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-access-token.html">setAccessToken</a></h4>
+</td>
+<td>
+<p>Change current SDK access token in runtime.</p>
+<code><span class="keyword">fun </span><span class="identifier">setAccessToken</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.MapboxSearchSdk$setAccessToken(kotlin.String)/accessToken">accessToken</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

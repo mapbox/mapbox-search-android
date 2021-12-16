@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchEngine - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">SearchEngine</a><br/>
+<br/>
+<h1>SearchEngine</h1>
+<code><span class="keyword">interface </span><span class="identifier">SearchEngine</span></code>
+<p>Used for forward geocoding (looking up a place by name to retrieve its geographic coordinates). Instance of it can be retrieved from <a href="../-mapbox-search-sdk/index.html">MapboxSearchSdk</a>.
+Results will be delivered on the main thread.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="api-type.html">apiType</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+The type of the API used by the Search Engine.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">apiType</span><span class="symbol">: </span><a href="../-api-type/index.html"><span class="identifier">ApiType</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="search.html">search</a></h4>
+</td>
+<td>
+<p>The first step of forward geocoding. Returns a list of <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a> without coordinates.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">search</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/options">options</span><span class="symbol">:</span>&nbsp;<a href="../-search-options/index.html"><span class="identifier">SearchOptions</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$search(kotlin.String, com.mapbox.search.SearchOptions, com.mapbox.search.SearchSuggestionsCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-suggestions-callback/index.html"><span class="identifier">SearchSuggestionsCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="select.html">select</a></h4>
+</td>
+<td>
+<p>The second step of forward geocoding. Call this function to get a <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> (with coordinates) from a <a href="../../com.mapbox.search.result/-search-suggestion/index.html">SearchSuggestion</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">select</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$select(com.mapbox.search.result.SearchSuggestion, com.mapbox.search.SearchSelectionCallback)/suggestion">suggestion</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$select(com.mapbox.search.result.SearchSuggestion, com.mapbox.search.SearchSelectionCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-selection-callback/index.html"><span class="identifier">SearchSelectionCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code>
+<p>Function to select multiple suggestions at once.
+Unlike <a href="select.html">select</a>, resolving always ends up returning list of <a href="../../com.mapbox.search.result/-search-result/index.html">SearchResult</a> and can't return new suggestions.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">select</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchEngine$select(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), com.mapbox.search.SearchMultipleSelectionCallback)/suggestions">suggestions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchEngine$select(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), com.mapbox.search.SearchMultipleSelectionCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../-search-multiple-selection-callback/index.html"><span class="identifier">SearchMultipleSelectionCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-search-request-task/index.html"><span class="identifier">SearchRequestTask</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

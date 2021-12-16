@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchPlace - ui</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">ui</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.ui.view.place</a>&nbsp;/&nbsp;<a href="./index.html">SearchPlace</a><br/>
+<br/>
+<h1>SearchPlace</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SearchPlace</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Search place UI model to show in <a href="../-search-place-bottom-sheet-view/index.html">SearchPlaceBottomSheetView</a>.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Search place UI model to show in <a href="../-search-place-bottom-sheet-view/index.html">SearchPlaceBottomSheetView</a>.</p>
+<code><span class="identifier">SearchPlace</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/address">address</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchAddress</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/resultType">resultType</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchResultType</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/record">record</span><span class="symbol">:</span>&nbsp;<span class="identifier">IndexableRecord</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/coordinate">coordinate</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/routablePoints">routablePoints</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">RoutablePoint</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/categories">categories</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/makiIcon">makiIcon</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace$<init>(kotlin.String, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, com.mapbox.search.record.IndexableRecord, com.mapbox.geojson.Point, kotlin.collections.List((com.mapbox.search.result.RoutablePoint)), kotlin.collections.List((kotlin.String)), kotlin.String, com.mapbox.search.SearchResultMetadata)/metadata">metadata</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchResultMetadata</span><span class="symbol">?</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="address.html">address</a></h4>
+</td>
+<td>
+<p>Search address.</p>
+<code><span class="keyword">val </span><span class="identifier">address</span><span class="symbol">: </span><span class="identifier">SearchAddress</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="categories.html">categories</a></h4>
+</td>
+<td>
+<p>Search place categories.</p>
+<code><span class="keyword">val </span><span class="identifier">categories</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="coordinate.html">coordinate</a></h4>
+</td>
+<td>
+<p>Search place coordinate.</p>
+<code><span class="keyword">val </span><span class="identifier">coordinate</span><span class="symbol">: </span><span class="identifier">Point</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="maki-icon.html">makiIcon</a></h4>
+</td>
+<td>
+<p>maki icon name for search place.</p>
+<code><span class="keyword">val </span><span class="identifier">makiIcon</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="metadata.html">metadata</a></h4>
+</td>
+<td>
+<p>Search result metadata containing geo place's detailed information if available.</p>
+<code><span class="keyword">val </span><span class="identifier">metadata</span><span class="symbol">: </span><span class="identifier">SearchResultMetadata</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="name.html">name</a></h4>
+</td>
+<td>
+<p>Search place name.</p>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="record.html">record</a></h4>
+</td>
+<td>
+<p>IndexableRecord instance for case if search result produced from some user data.</p>
+<code><span class="keyword">val </span><span class="identifier">record</span><span class="symbol">: </span><span class="identifier">IndexableRecord</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="result-type.html">resultType</a></h4>
+</td>
+<td>
+<p>Type of result.</p>
+<code><span class="keyword">val </span><span class="identifier">resultType</span><span class="symbol">: </span><span class="identifier">SearchResultType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="routable-points.html">routablePoints</a></h4>
+</td>
+<td>
+<p>List of points near <a href="coordinate.html">coordinate</a>, that can be used for more convenient navigation.</p>
+<code><span class="keyword">val </span><span class="identifier">routablePoints</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">RoutablePoint</span><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="create-from-search-result.html">createFromSearchResult</a></h4>
+</td>
+<td>
+<p>Creates search place from search result and geojson point.</p>
+<code><span class="keyword">fun </span><span class="identifier">createFromSearchResult</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace.Companion$createFromSearchResult(com.mapbox.search.result.SearchResult, com.mapbox.geojson.Point)/searchResult">searchResult</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchResult</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace.Companion$createFromSearchResult(com.mapbox.search.result.SearchResult, com.mapbox.geojson.Point)/coordinate">coordinate</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">SearchPlace</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="create-from-user-favorite.html">createFromUserFavorite</a></h4>
+</td>
+<td>
+<p>Creates search place from user favorite.</p>
+<code><span class="keyword">fun </span><span class="identifier">createFromUserFavorite</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.place.SearchPlace.Companion$createFromUserFavorite(com.mapbox.search.record.FavoriteRecord)/userFavorite">userFavorite</span><span class="symbol">:</span>&nbsp;<span class="identifier">FavoriteRecord</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">SearchPlace</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

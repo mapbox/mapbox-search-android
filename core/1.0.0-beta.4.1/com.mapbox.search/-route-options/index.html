@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RouteOptions - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">RouteOptions</a><br/>
+<br/>
+<h1>RouteOptions</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RouteOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Options to configure Route for search along the route functionality.</p>
+<h3>Parameters</h3>
+<p><a name="route"></a>
+<code>route</code> - route to search across.</p>
+<p><a name="deviation"></a>
+<code>deviation</code> - option describing maximum detour from route.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-deviation/index.html">Deviation</a></h4>
+</td>
+<td>
+<p>Option describing maximum detour from route.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Deviation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Options to configure Route for search along the route functionality.</p>
+<code><span class="identifier">RouteOptions</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.RouteOptions$<init>(kotlin.collections.List((com.mapbox.geojson.Point)), com.mapbox.search.RouteOptions.Deviation)/route">route</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">Point</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.RouteOptions$<init>(kotlin.collections.List((com.mapbox.geojson.Point)), com.mapbox.search.RouteOptions.Deviation)/deviation">deviation</span><span class="symbol">:</span>&nbsp;<span class="identifier">Deviation</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="deviation.html">deviation</a></h4>
+</td>
+<td>
+<p>option describing maximum detour from route.</p>
+<code><span class="keyword">val </span><span class="identifier">deviation</span><span class="symbol">: </span><span class="identifier">Deviation</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="route.html">route</a></h4>
+</td>
+<td>
+<p>route to search across.</p>
+<code><span class="keyword">val </span><span class="identifier">route</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">Point</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

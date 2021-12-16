@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RequestOptions - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">RequestOptions</a><br/>
+<br/>
+<h1>RequestOptions</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RequestOptions</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Options describing search request.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Options describing search request.</p>
+<code><span class="identifier">RequestOptions</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.RequestOptions$<init>(kotlin.String, com.mapbox.search.SearchOptions, kotlin.Boolean, kotlin.Boolean, kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.RequestOptions$<init>(kotlin.String, com.mapbox.search.SearchOptions, kotlin.Boolean, kotlin.Boolean, kotlin.String)/options">options</span><span class="symbol">:</span>&nbsp;<a href="../-search-options/index.html"><span class="identifier">SearchOptions</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.RequestOptions$<init>(kotlin.String, com.mapbox.search.SearchOptions, kotlin.Boolean, kotlin.Boolean, kotlin.String)/proximityRewritten">proximityRewritten</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.RequestOptions$<init>(kotlin.String, com.mapbox.search.SearchOptions, kotlin.Boolean, kotlin.Boolean, kotlin.String)/originRewritten">originRewritten</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.RequestOptions$<init>(kotlin.String, com.mapbox.search.SearchOptions, kotlin.Boolean, kotlin.Boolean, kotlin.String)/sessionID">sessionID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="options.html">options</a></h4>
+</td>
+<td>
+<p>Search options, that were used for the original request.
+See <a href="proximity-rewritten.html">proximityRewritten</a> and <a href="origin-rewritten.html">originRewritten</a> to check whether some properties have been rewritten</p>
+<code><span class="keyword">val </span><span class="identifier">options</span><span class="symbol">: </span><a href="../-search-options/index.html"><span class="identifier">SearchOptions</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="origin-rewritten.html">originRewritten</a></h4>
+</td>
+<td>
+<p>denotes whether <a href="../-search-options/origin.html">SearchOptions.origin</a> property has been rewritten by the Search SDK.
+This may happen when passed to the <a href="../-search-options/index.html">com.mapbox.search.SearchEngine</a> don't have <a href="../-search-options/origin.html">SearchOptions.origin</a> set.</p>
+<code><span class="keyword">val </span><span class="identifier">originRewritten</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="proximity-rewritten.html">proximityRewritten</a></h4>
+</td>
+<td>
+<p>denotes whether <a href="../-search-options/proximity.html">SearchOptions.proximity</a> property has been rewritten by the Search SDK.
+This may happen when passed to the <a href="../-search-options/index.html">com.mapbox.search.SearchEngine</a> don't have <a href="../-search-options/proximity.html">SearchOptions.proximity</a> set.</p>
+<code><span class="keyword">val </span><span class="identifier">proximityRewritten</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="query.html">query</a></h4>
+</td>
+<td>
+<p>Search query.</p>
+<code><span class="keyword">val </span><span class="identifier">query</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>IndexableDataProvider - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.record</a>&nbsp;/&nbsp;<a href="./index.html">IndexableDataProvider</a><br/>
+<br/>
+<h1>IndexableDataProvider</h1>
+<code><span class="keyword">interface </span><span class="identifier">IndexableDataProvider</span><span class="symbol">&lt;</span><span class="identifier">R</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">&gt;</span></code>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+Defines an interface for external data indexing.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../-local-data-provider/index.html">LocalDataProvider</a></p>
+<p><a href="../-favorites-data-provider/index.html">FavoritesDataProvider</a></p>
+<p><a href="../-history-data-provider/index.html">HistoryDataProvider</a></p>
+</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="data-provider-name.html">dataProviderName</a></h4>
+</td>
+<td>
+<p>Data provider name.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">dataProviderName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="add.html">add</a></h4>
+</td>
+<td>
+<p>Add record to data provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">add</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$add(com.mapbox.search.record.IndexableDataProvider.R)/record">record</span><span class="symbol">:</span>&nbsp;<span class="identifier">R</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-all.html">addAll</a></h4>
+</td>
+<td>
+<p>Add multiple records to data provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addAll</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$addAll(kotlin.collections.List((com.mapbox.search.record.IndexableDataProvider.R)))/records">records</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">R</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="clear.html">clear</a></h4>
+</td>
+<td>
+<p>Removes all of the elements from this data provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">clear</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="contains.html">contains</a></h4>
+</td>
+<td>
+<p>Check by <a href="contains.html#com.mapbox.search.record.IndexableDataProvider$contains(kotlin.String)/id">id</a> if item contains in provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">contains</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$contains(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get.html">get</a></h4>
+</td>
+<td>
+<p>Get item by <a href="get.html#com.mapbox.search.record.IndexableDataProvider$get(kotlin.String)/id">id</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$get(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">R</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-all.html">getAll</a></h4>
+</td>
+<td>
+<p>Get all items from provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">R</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove.html">remove</a></h4>
+</td>
+<td>
+<p>Remove record with <a href="remove.html#com.mapbox.search.record.IndexableDataProvider$remove(kotlin.String)/id">id</a> from data provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">remove</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$remove(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update.html">update</a></h4>
+</td>
+<td>
+<p>Update record in data provider.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">update</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.IndexableDataProvider$update(com.mapbox.search.record.IndexableDataProvider.R)/record">record</span><span class="symbol">:</span>&nbsp;<span class="identifier">R</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-local-data-provider/index.html">LocalDataProvider</a></h4>
+</td>
+<td>
+<p>Experimental API, can be changed or removed in the next SDK releases.
+<a href="./index.html">IndexableDataProvider</a> that represents stored locally by the SDK user data.</p>
+<code><span class="keyword">interface </span><span class="identifier">LocalDataProvider</span><span class="symbol">&lt;</span><span class="identifier">R</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">IndexableDataProvider</span></a><span class="symbol">&lt;</span><span class="identifier">R</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

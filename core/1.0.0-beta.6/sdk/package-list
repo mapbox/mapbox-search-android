@@ -1,0 +1,10 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+com.mapbox.search
+com.mapbox.search.analytics
+com.mapbox.search.location
+com.mapbox.search.metadata
+com.mapbox.search.record
+com.mapbox.search.result
+

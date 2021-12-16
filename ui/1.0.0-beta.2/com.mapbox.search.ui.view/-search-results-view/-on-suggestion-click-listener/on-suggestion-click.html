@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchResultsView.OnSuggestionClickListener.onSuggestionClick - ui</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">ui</a>&nbsp;/&nbsp;<a href="../../index.html">com.mapbox.search.ui.view</a>&nbsp;/&nbsp;<a href="../index.html">SearchResultsView</a>&nbsp;/&nbsp;<a href="index.html">OnSuggestionClickListener</a>&nbsp;/&nbsp;<a href="./on-suggestion-click.html">onSuggestionClick</a><br/>
+<br/>
+<h1>onSuggestionClick</h1>
+<a name="com.mapbox.search.ui.view.SearchResultsView.OnSuggestionClickListener$onSuggestionClick(com.mapbox.search.result.SearchSuggestion)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onSuggestionClick</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ui.view.SearchResultsView.OnSuggestionClickListener$onSuggestionClick(com.mapbox.search.result.SearchSuggestion)/searchSuggestion">searchSuggestion</span><span class="symbol">:</span>&nbsp;<span class="identifier">SearchSuggestion</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Called when a suggestion is clicked. This allows listeners to get a chance to process click on their own.
+<a href="../index.html">SearchResultsView</a> will not process the click if this function returns true.
+If multiple listeners are registered and any of them has processed the click, all the remaining listeners will not be invoked.</p>
+<h3>Parameters</h3>
+<p><a name="searchSuggestion"></a>
+<code>searchSuggestion</code> - The clicked SearchSuggestion object.</p>
+<p><strong>Return</strong><br/>
+True if the listener has processed the click, false otherwise.</p>
+</BODY>
+</HTML>

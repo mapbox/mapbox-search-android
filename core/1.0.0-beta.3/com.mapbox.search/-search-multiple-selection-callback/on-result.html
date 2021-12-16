@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SearchMultipleSelectionCallback.onResult - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="index.html">SearchMultipleSelectionCallback</a>&nbsp;/&nbsp;<a href="./on-result.html">onResult</a><br/>
+<br/>
+<h1>onResult</h1>
+<a name="com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onResult</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))/suggestions">suggestions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-suggestion/index.html"><span class="identifier">SearchSuggestion</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))/results">results</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.mapbox.search.result/-search-result/index.html"><span class="identifier">SearchResult</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when suggestions have been resolved.</p>
+<h3>Parameters</h3>
+<p><a name="suggestions"></a>
+<code>suggestions</code> - The suggestions from which the <a href="on-result.html#com.mapbox.search.SearchMultipleSelectionCallback$onResult(kotlin.collections.List((com.mapbox.search.result.SearchSuggestion)), kotlin.collections.List((com.mapbox.search.result.SearchResult)))/results">results</a> were resolved.
+Note that these suggestions is not necessary the same as ones passed to <a href="../-search-engine/select.html">SearchEngine.select</a>
+because the function filters suggestions that don't support batch resolving.</p>
+<p><a name="results"></a>
+<code>results</code> - Resolved search results for search suggestions.</p>
+</BODY>
+</HTML>

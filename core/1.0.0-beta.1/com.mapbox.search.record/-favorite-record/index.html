@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>FavoriteRecord - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search.record</a>&nbsp;/&nbsp;<a href="./index.html">FavoriteRecord</a><br/>
+<br/>
+<h1>FavoriteRecord</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FavoriteRecord</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-indexable-record/index.html"><span class="identifier">IndexableRecord</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Favorite indexable record.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../-indexable-record/index.html">IndexableRecord</a></p>
+<p><a href="../-history-record/index.html">HistoryRecord</a></p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Favorite indexable record.</p>
+<code><span class="identifier">FavoriteRecord</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/coordinate">coordinate</span><span class="symbol">:</span>&nbsp;<span class="identifier">Point</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/address">address</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-address/index.html"><span class="identifier">SearchAddress</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/searchResultType">searchResultType</span><span class="symbol">:</span>&nbsp;<a href="../../com.mapbox.search.result/-search-result-type/index.html"><span class="identifier">SearchResultType</span></a><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/makiIcon">makiIcon</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.mapbox.search.record.FavoriteRecord$<init>(kotlin.String, kotlin.String, com.mapbox.geojson.Point, com.mapbox.search.result.SearchAddress, com.mapbox.search.result.SearchResultType, kotlin.String, kotlin.collections.List((kotlin.String)))/categories">categories</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="address.html">address</a></h4>
+</td>
+<td>
+<p>Favorite address.</p>
+<code><span class="keyword">val </span><span class="identifier">address</span><span class="symbol">: </span><a href="../../com.mapbox.search.result/-search-address/index.html"><span class="identifier">SearchAddress</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="categories.html">categories</a></h4>
+</td>
+<td>
+<p>Favorite categories list.</p>
+<code><span class="keyword">val </span><span class="identifier">categories</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="coordinate.html">coordinate</a></h4>
+</td>
+<td>
+<p>Favorite coordinate.</p>
+<code><span class="keyword">val </span><span class="identifier">coordinate</span><span class="symbol">: </span><span class="identifier">Point</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="id.html">id</a></h4>
+</td>
+<td>
+<p>Favorite item id.</p>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="index-tokens.html">indexTokens</a></h4>
+</td>
+<td>
+<p>Additional string literals that should be used for search index.</p>
+<code><span class="keyword">val </span><span class="identifier">indexTokens</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="maki-icon.html">makiIcon</a></h4>
+</td>
+<td>
+<p>Favorite icon name.</p>
+<code><span class="keyword">val </span><span class="identifier">makiIcon</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="name.html">name</a></h4>
+</td>
+<td>
+<p>Favorite name.</p>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-result-type.html">searchResultType</a></h4>
+</td>
+<td>
+<p>Favorite search result type.</p>
+<code><span class="keyword">val </span><span class="identifier">searchResultType</span><span class="symbol">: </span><a href="../../com.mapbox.search.result/-search-result-type/index.html"><span class="identifier">SearchResultType</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

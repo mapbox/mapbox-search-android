@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ServiceProvider - sdk</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sdk</a>&nbsp;/&nbsp;<a href="../index.html">com.mapbox.search</a>&nbsp;/&nbsp;<a href="./index.html">ServiceProvider</a><br/>
+<br/>
+<h1>ServiceProvider</h1>
+<code><span class="keyword">interface </span><span class="identifier">ServiceProvider</span></code>
+<p>This class provides access to search-related services and utility classes.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="distance-calculator.html">distanceCalculator</a></h4>
+</td>
+<td>
+<p>Provides entity to calculate distances between geographical points.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">distanceCalculator</span><span class="symbol">(</span><span class="identifier" id="com.mapbox.search.ServiceProvider$distanceCalculator(kotlin.Double)/latitude">latitude</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-distance-calculator/index.html"><span class="identifier">DistanceCalculator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="favorites-data-provider.html">favoritesDataProvider</a></h4>
+</td>
+<td>
+<p>Provides entity to work with <a href="../../com.mapbox.search.record/-favorite-record/index.html">com.mapbox.search.record.FavoriteRecord</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">favoritesDataProvider</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.mapbox.search.record/-favorites-data-provider/index.html"><span class="identifier">FavoritesDataProvider</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="highlights-calculator.html">highlightsCalculator</a></h4>
+</td>
+<td>
+<p>Provides entity to calculate highlights ranges in search results.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">highlightsCalculator</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-highlights-calculator/index.html"><span class="identifier">HighlightsCalculator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="history-data-provider.html">historyDataProvider</a></h4>
+</td>
+<td>
+<p>Provides entity to work with <a href="../../com.mapbox.search.record/-history-record/index.html">com.mapbox.search.record.HistoryRecord</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">historyDataProvider</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.mapbox.search.record/-history-data-provider/index.html"><span class="identifier">HistoryDataProvider</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="location-provider.html">locationProvider</a></h4>
+</td>
+<td>
+<p>Provides entity to get current user location.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">locationProvider</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.mapbox.search.location/-location-provider/index.html"><span class="identifier">LocationProvider</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
