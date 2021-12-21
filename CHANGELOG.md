@@ -5,7 +5,7 @@
 ### Mapbox dependencies
 - Search Native SDK `0.46.1`
 - Common SDK `21.0.1`
-- Telemetry SDK `8.1.0`
+- Telemetry SDK `8.1.1`
 
 
 
