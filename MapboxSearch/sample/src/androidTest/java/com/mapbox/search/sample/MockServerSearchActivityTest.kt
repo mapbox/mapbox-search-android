@@ -7,13 +7,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import com.adevinta.android.barista.rule.cleardata.ClearFilesRule
+import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.mapbox.geojson.Point
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.sample.extensions.enqueue
 import com.mapbox.search.sample.tools.BlockingCompletionCallback
 import com.mapbox.search.sample.tools.MockWebServerRule
-import com.schibsted.spain.barista.rule.cleardata.ClearFilesRule
-import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy

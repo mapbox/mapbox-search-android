@@ -8,7 +8,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
@@ -25,23 +25,23 @@ buildscript {
     configurations.maybeCreate("pitest")
 
     dependencies {
-        classpath "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:1.1.0"
+        classpath "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:1.1.3"
         classpath "com.android.tools.build:gradle:$gradle_plugin"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.6.0.0"
-        pitest "org.pitest:pitest-junit5-plugin:0.10"
-        classpath "pl.droidsonroids.gradle:gradle-pitest-plugin:0.2.5"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:1.0.2"
+        classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0'
+        pitest "org.pitest:pitest-junit5-plugin:0.15"
+        classpath "pl.droidsonroids.gradle:gradle-pitest-plugin:0.2.8"
         classpath "com.jaredsburrows:gradle-license-plugin:0.8.90"
-        classpath 'com.mapbox.gradle.plugins:sdk-registry:0.4.0'
-        classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.8'
+        classpath 'com.mapbox.gradle.plugins:sdk-registry:0.7.0'
+        classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.3.0'
     }
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.5.1"
-    id "org.jetbrains.dokka" version "1.4.30"
-    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.4.0"
+    id "io.gitlab.arturbosch.detekt" version "1.17.0"
+    id "org.jetbrains.dokka" version "1.5.0"
+    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.8.0"
+    id "com.getkeepsafe.dexcount" version "3.0.1"
 }
 
 apiValidation {
@@ -67,7 +67,7 @@ allprojects {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'

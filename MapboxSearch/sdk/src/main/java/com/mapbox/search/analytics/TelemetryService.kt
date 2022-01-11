@@ -7,10 +7,10 @@ import com.mapbox.android.telemetry.MapboxCrashReporter
 import com.mapbox.android.telemetry.MapboxTelemetry
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
-import com.mapbox.search.BuildConfig
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ViewportProvider
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
+import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.logger.logd
@@ -30,7 +30,6 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.UUIDProvider
-import java.lang.Exception
 
 internal class TelemetryService : InternalAnalyticsService, ErrorsReporter {
 

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'de.mannodermaus.android-junit5'
+    id 'com.getkeepsafe.dexcount'
 }
 
 apply plugin: 'org.jetbrains.dokka'
@@ -15,16 +16,15 @@ apply from: "../gradle/publish.gradle"
 apply from: "../gradle/license.gradle"
 
 android {
-    buildToolsVersion build_tools_version
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
 
-        versionName project.property('versionName')
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "VERSION_NAME", "\"$versionName\""
     }
 
     buildTypes {
@@ -33,7 +33,6 @@ android {
             consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"
         }
         release {
-            debuggable false
             jniDebuggable false
             minifyEnabled false
             consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"

@@ -14,10 +14,8 @@ import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestSuggestion
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
 import com.mapbox.search.tests_support.loadTileRegionBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -33,7 +31,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import java.lang.IllegalArgumentException
 import java.util.concurrent.Executor
 
 @Suppress("LargeClass")
@@ -307,36 +304,6 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         )
 
         assertTrue(callback.getResultBlocking() is BlockingSearchSelectionCallback.SearchEngineResult.Error)
-    }
-
-    @Test
-    fun testSelectionForUnsupportedSuggestion() {
-        loadOfflineData()
-
-        val callback = BlockingSearchSelectionCallback()
-
-        searchEngine.search(
-            "15th Street Northwest, Washington, DC",
-            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
-            callback
-        )
-
-        val suggestions =
-            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertTrue(suggestions.isNotEmpty())
-
-        callback.reset()
-
-        searchEngine.select(
-            suggestion = TestSearchSuggestion(),
-            callback = callback
-        )
-
-        val result = callback.getResultBlocking()
-        assertTrue(result is BlockingSearchSelectionCallback.SearchEngineResult.Error)
-
-        result as BlockingSearchSelectionCallback.SearchEngineResult.Error
-        assertTrue(result.e.equalsTo(IllegalArgumentException("SearchSuggestion must provide original response")))
     }
 
     @Test

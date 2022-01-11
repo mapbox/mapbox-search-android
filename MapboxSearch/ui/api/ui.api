@@ -2,8 +2,6 @@ public final class com/mapbox/search/ui/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public static final field VERSION_CODE I
-	public static final field VERSION_NAME Ljava/lang/String;
 	public fun <init> ()V
 }
 
@@ -17,16 +15,7 @@ public final class com/mapbox/search/ui/view/CommonSearchViewConfiguration : and
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public class com/mapbox/search/ui/view/CommonSearchViewConfiguration$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public final class com/mapbox/search/ui/view/DistanceUnitType : java/lang/Enum {
-	public static final field Companion Lcom/mapbox/search/ui/view/DistanceUnitType$Companion;
 	public static final field IMPERIAL Lcom/mapbox/search/ui/view/DistanceUnitType;
 	public static final field METRIC Lcom/mapbox/search/ui/view/DistanceUnitType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/ui/view/DistanceUnitType;
@@ -114,14 +103,6 @@ public final class com/mapbox/search/ui/view/SearchBottomSheetView$Configuration
 	public final fun getHotCategories ()Ljava/util/List;
 	public final fun hotCategories (Ljava/util/List;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
 	public final fun setCollapsedStateAnchor (Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
-}
-
-public class com/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnBottomSheetStateChangedListener {
@@ -245,14 +226,6 @@ public final class com/mapbox/search/ui/view/category/Category$Companion {
 	public final fun findByCanonicalName (Ljava/lang/String;)Lcom/mapbox/search/ui/view/category/Category;
 }
 
-public class com/mapbox/search/ui/view/category/Category$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/category/Category;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/category/Category;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public final class com/mapbox/search/ui/view/category/Category$Presentation : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (II)V
@@ -263,14 +236,6 @@ public final class com/mapbox/search/ui/view/category/Category$Presentation : an
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public class com/mapbox/search/ui/view/category/Category$Presentation$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/category/Category$Presentation;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/category/Category$Presentation;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
@@ -351,14 +316,6 @@ public final class com/mapbox/search/ui/view/favorite/FavoriteTemplate : android
 public final class com/mapbox/search/ui/view/favorite/FavoriteTemplate$Companion {
 }
 
-public class com/mapbox/search/ui/view/favorite/FavoriteTemplate$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/favorite/FavoriteTemplate;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/favorite/FavoriteTemplate;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public abstract class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback : android/os/Parcelable {
 	public fun <init> ()V
 }
@@ -374,14 +331,6 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$FavoriteFeedback$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$FavoriteFeedback;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$FavoriteFeedback;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$HistoryFeedback : com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/search/record/HistoryRecord;)V
@@ -391,14 +340,6 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$HistoryFeedback$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$HistoryFeedback;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$HistoryFeedback;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$SearchResultFeedback : com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback {
@@ -411,14 +352,6 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$SearchResultFeedback$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$SearchResultFeedback;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$SearchResultFeedback;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
@@ -499,14 +432,6 @@ public final class com/mapbox/search/ui/view/place/SearchPlace$Companion {
 	public static synthetic fun createFromSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 }
 
-public class com/mapbox/search/ui/view/place/SearchPlace$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public final class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
 	public static final field Companion Lcom/mapbox/search/ui/view/place/SearchPlaceBottomSheetView$Companion;
 	public static final field DRAGGING I
@@ -573,10 +498,5 @@ public abstract interface class com/mapbox/search/ui/view/place/SearchPlaceBotto
 
 public abstract interface class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView$OnShareClickListener {
 	public abstract fun onShareClick (Lcom/mapbox/search/ui/view/place/SearchPlace;)V
-}
-
-public final class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView$sam$i$android_view_View_OnClickListener$0 : android/view/View$OnClickListener {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun onClick (Landroid/view/View;)V
 }
 

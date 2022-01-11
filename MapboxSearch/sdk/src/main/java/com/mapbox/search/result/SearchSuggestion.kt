@@ -6,7 +6,7 @@ import com.mapbox.search.RequestOptions
 /**
  * Autocomplete common suggestion type.
  */
-public interface SearchSuggestion : Parcelable {
+public sealed interface SearchSuggestion : Parcelable {
 
     /**
      * Unique identifier for suggestion result.

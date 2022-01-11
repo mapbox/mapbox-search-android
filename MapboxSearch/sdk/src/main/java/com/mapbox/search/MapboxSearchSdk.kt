@@ -13,6 +13,7 @@ import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.search.analytics.ErrorsReporter
 import com.mapbox.search.analytics.TelemetryService
+import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.CommonErrorsReporter
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
 import com.mapbox.search.common.logger.searchSdkLogger

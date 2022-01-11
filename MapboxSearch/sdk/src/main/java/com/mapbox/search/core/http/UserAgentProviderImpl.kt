@@ -3,7 +3,7 @@ package com.mapbox.search.core.http
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
-import com.mapbox.search.BuildConfig
+import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.utils.extension.packageInfoOrNull
 import com.mapbox.search.utils.extension.versionCodeCompat
 import java.util.Locale

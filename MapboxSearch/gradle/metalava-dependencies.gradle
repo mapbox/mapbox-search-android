@@ -1,3 +1,5 @@
+apply from: "../gradle/versions.gradle"
+
 configurations {
     metalava
 }
@@ -7,7 +9,6 @@ dependencies {
     metalava files('../metalava/metalava.jar')
 
     def studio_version = '27.2.0-alpha11'
-    def kotlin_version = "1.4.30"
 
     metalava "com.android.tools.external.org-jetbrains:uast:$studio_version"
     metalava "com.android.tools.external.com-intellij:kotlin-compiler:$studio_version"

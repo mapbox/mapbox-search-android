@@ -41,18 +41,14 @@ public interface DistanceCalculator {
     }
 }
 
-internal class DistanceCalculatorImpl : DistanceCalculator {
-
+internal class DistanceCalculatorImpl(
     private val coreDistanceCalculator: CoreDistanceCalculatorInterface
+) : DistanceCalculator {
 
     /**
      * @param latitude the area in which fast distance calculation is performed.
      */
     constructor(latitude: Double) : this(CoreDistanceCalculator(latitude))
-
-    internal constructor(coreDistanceCalculator: CoreDistanceCalculatorInterface) {
-        this.coreDistanceCalculator = coreDistanceCalculator
-    }
 
     override fun distance(from: Point, to: Point): Double {
         return coreDistanceCalculator.distance(from, to)

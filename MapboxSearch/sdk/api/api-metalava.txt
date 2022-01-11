@@ -1204,7 +1204,7 @@ package com.mapbox.search.record {
 
 package com.mapbox.search.result {
 
-  public interface IndexableRecordSearchResult extends com.mapbox.search.result.SearchResult {
+  public sealed interface IndexableRecordSearchResult extends com.mapbox.search.result.SearchResult {
     method public com.mapbox.search.record.IndexableRecord getRecord();
     property public abstract com.mapbox.search.record.IndexableRecord record;
   }
@@ -1316,7 +1316,7 @@ package com.mapbox.search.result {
   public final class SearchAddressKt {
   }
 
-  public interface SearchResult extends android.os.Parcelable {
+  public sealed interface SearchResult extends android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String> getCategories();
     method public com.mapbox.geojson.Point? getCoordinate();
@@ -1364,7 +1364,7 @@ package com.mapbox.search.result {
   public final class SearchResultTypeKt {
   }
 
-  public interface SearchSuggestion extends android.os.Parcelable {
+  public sealed interface SearchSuggestion extends android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
@@ -1416,7 +1416,7 @@ package com.mapbox.search.result {
     property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
   }
 
-  public interface ServerSearchResult extends com.mapbox.search.result.SearchResult {
+  public sealed interface ServerSearchResult extends com.mapbox.search.result.SearchResult {
     property public abstract com.mapbox.geojson.Point coordinate;
   }
 

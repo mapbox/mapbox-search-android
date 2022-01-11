@@ -7,11 +7,11 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
 import com.mapbox.search.sample.Constants.DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS
 import com.mapbox.search.sample.Constants.MAX_NETWORK_REQUEST_TIMEOUT_MILLIS
 import com.mapbox.search.sample.tools.matchers.SearchSdkMatchers.isSearchProgressItem
 import com.mapbox.search.ui.R
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf

@@ -18,6 +18,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListItemCount
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.sample.Constants.CHANGE_CARDS_NAVIGATION_ANIMATION_TIME_MILLIS
 import com.mapbox.search.sample.Constants.DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS
@@ -49,8 +51,6 @@ import com.mapbox.search.ui.view.SearchBottomSheetView
 import com.mapbox.search.ui.view.SearchBottomSheetView.Companion.COLLAPSED
 import com.mapbox.search.ui.view.SearchBottomSheetView.Companion.EXPANDED
 import com.mapbox.search.ui.view.SearchBottomSheetView.Companion.HIDDEN
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListItemCount
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
@@ -134,6 +134,7 @@ class SearchBottomSheetRobot {
     }
 
     /**
+     * @param resultName search result name that should be matched
      * @param addressSubstring part of search result address, that should be matched
      */
     fun selectSearchResult(resultName: String, addressSubstring: String) {
@@ -298,7 +299,9 @@ class SearchBottomSheetRobot {
     }
 
     /**
-     * @param addressSubstring part of favorite item address, that should be matched
+     * @param favoriteName name of the favorite that should be matched
+     * @param addressSubstring part of favorite item address that should be matched
+     * @param itemPosition position of the matched element
      */
     fun verifyFavoriteItem(favoriteName: String, addressSubstring: String, itemPosition: Int) {
         assertCustomAssertionAtPosition(

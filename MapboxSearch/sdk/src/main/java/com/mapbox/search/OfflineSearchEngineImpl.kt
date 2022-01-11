@@ -7,7 +7,6 @@ import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.common.printableName
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -138,17 +137,6 @@ internal class OfflineSearchEngineImpl(
             is IndexableRecordSearchSuggestion -> {
                 executor.execute {
                     callback.onError(IllegalArgumentException("Unsupported suggestion type for offline search: ${suggestion.javaClass.printableName}"))
-                }
-                SearchRequestTaskImpl.completed()
-            }
-            else -> {
-                val error = IllegalArgumentException(
-                    "Unsupported suggestion type for offline search: ${suggestion.javaClass.printableName}"
-                )
-
-                executor.execute {
-                    reportRelease(error)
-                    callback.onError(error)
                 }
                 SearchRequestTaskImpl.completed()
             }

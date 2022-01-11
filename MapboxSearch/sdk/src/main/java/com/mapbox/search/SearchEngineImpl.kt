@@ -2,14 +2,13 @@ package com.mapbox.search
 
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.printableName
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.engine.BaseSearchEngine
 import com.mapbox.search.engine.TwoStepsBatchRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.record.HistoryService
+import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.CoreResponseProvider
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
@@ -122,14 +121,6 @@ internal class SearchEngineImpl(
                 }
                 is ServerSearchSuggestion -> {
                     toResolve.add(suggestion)
-                }
-                else -> {
-                    val error = IllegalArgumentException("Unknown suggestion type ${suggestion.javaClass.printableName}")
-                    executor.execute {
-                        reportRelease(error)
-                        callback.onError(error)
-                    }
-                    return SearchRequestTaskImpl.completed()
                 }
             }
         }
@@ -290,13 +281,8 @@ internal class SearchEngineImpl(
                 )
                 completeSearchResultSelection(resolved)
             }
-            else -> {
-                val error = IllegalArgumentException("Unknown suggestion type ${suggestion.javaClass.printableName}")
-                executor.execute {
-                    reportRelease(error)
-                    callback.onError(error)
-                }
-                return SearchRequestTaskImpl.completed()
+            is BaseSearchSuggestion -> {
+                error("Must be processed")
             }
         }
     }
