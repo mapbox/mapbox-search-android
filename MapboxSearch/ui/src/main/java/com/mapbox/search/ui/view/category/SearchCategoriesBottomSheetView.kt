@@ -74,7 +74,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
         override fun onError(e: Exception) {
             currentRequestStatus.markExecuted()
             val uiError = UiError.fromException(e)
-            postNewState(ViewState.Error(uiError))
+            postNewState(ViewState.Error(e, uiError))
         }
     }
 
@@ -356,7 +356,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
             }
             is ViewState.Error -> {
                 latestCategory?.let { category ->
-                    categoryLoadingStateListeners.forEach { it.onLoadingError(category) }
+                    categoryLoadingStateListeners.forEach { it.onLoadingError(category, state.originalError) }
                 }
                 categoriesAdapter.clearItems()
                 statusText.text = null
@@ -568,24 +568,32 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     public interface CategoryLoadingStateListener {
 
         /**
-         * Called, when category search request is in progress.
+         * Called when category search request started.
+         *
+         * @param category [Category] for which loading request was started.
          */
         public fun onLoadingStart(category: Category)
 
         /**
-         * Called, when category search request successfully ended.
+         * Called when category search request successfully completed.
+         *
+         * @param category [Category] for which [searchResults] were loaded.
+         * @param searchResults Loaded search results for [category].
          */
         public fun onCategoryResultsLoaded(category: Category, searchResults: List<SearchResult>)
 
         /**
-         * Called, when category search request failed.
+         * Called when category search request failed.
+         *
+         * @param category [Category] associated with the failed loading.
+         * @param e Exception occurred during loading.
          */
-        public fun onLoadingError(category: Category)
+        public fun onLoadingError(category: Category, e: Exception)
     }
 
     private sealed class ViewState {
         object Loading : ViewState()
-        data class Error(val uiError: UiError) : ViewState()
+        data class Error(val originalError: Exception, val uiError: UiError) : ViewState()
         data class Results(val results: List<SearchResult>, val responseInfo: ResponseInfo) : ViewState()
     }
 

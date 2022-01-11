@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.25-SNAPSHOT
 
+### Breaking changes
+- [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onLoadingError()` callback provides one more parameter - `Exception` occurred during the request.
+
 ### Bug fixes
 - [CORE] Now `SearchRequestException` contains original detail error message returned from the backend.
 

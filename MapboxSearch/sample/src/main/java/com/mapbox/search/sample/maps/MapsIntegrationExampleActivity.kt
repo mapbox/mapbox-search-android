@@ -134,7 +134,7 @@ class MapsIntegrationExampleActivity : AppCompatActivity() {
                 showMarkers(searchResults.mapNotNull { it.coordinate })
             }
 
-            override fun onLoadingError(category: Category) {}
+            override fun onLoadingError(category: Category, e: Exception) {}
         })
 
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {

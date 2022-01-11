@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
 
-            override fun onLoadingError(category: Category) {}
+            override fun onLoadingError(category: Category, e: Exception) {}
         })
 
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
