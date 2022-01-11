@@ -4,6 +4,7 @@ import androidx.collection.SparseArrayCompat
 import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchRequestException
 import com.mapbox.search.SearchRequestTaskImpl
 import com.mapbox.search.common.reportRelease
 import com.mapbox.search.common.throwDebug
@@ -42,12 +43,11 @@ internal class OneStepRequestCallbackWrapper(
 
             try {
                 if (!response.isSuccessful) {
-                    var error = httpErrorsCache.getAndRemove(response.requestID)
-                    if (error != null) {
-                        reportRelease(error)
-                    } else {
-                        error = Exception("Unknown error. Response: $response")
-                    }
+                    val error = httpErrorsCache.getAndRemove(response.requestID)
+                        ?: SearchRequestException(message = response.message, code = response.httpCode)
+
+                    reportRelease(error)
+
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(error)
                     }

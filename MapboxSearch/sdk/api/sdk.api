@@ -1035,10 +1035,12 @@ public class com/mapbox/search/SearchOptions$Creator : android/os/Parcelable$Cre
 public final class com/mapbox/search/SearchRequestException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;ILjava/lang/Exception;)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Exception;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getCause ()Ljava/lang/Exception;
 	public synthetic fun getCause ()Ljava/lang/Throwable;
 	public final fun getCode ()I
 	public fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun isClientError ()Z
 	public final fun isServerError ()Z
 	public fun toString ()Ljava/lang/String;

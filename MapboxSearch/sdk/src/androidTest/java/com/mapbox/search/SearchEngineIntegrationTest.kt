@@ -888,6 +888,49 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         countDownLatch.await()
     }
 
+    @Test
+    fun testErrorBackendResponseSimpleFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(422)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException("Wrong arguments", 422),
+            (res as SearchEngineResult.Error).e
+        )
+    }
+
+    @Test
+    fun testErrorBackendResponseExtendedFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(400)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException(
+                "Need to include either a route, bbox, proximity, or origin for category searches",
+                400
+            ),
+            (res as SearchEngineResult.Error).e
+        )
+    }
+
     @After
     override fun tearDown() {
         errorsReporter.reset()

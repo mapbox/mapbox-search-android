@@ -6,6 +6,7 @@ import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchRequestException
 import com.mapbox.search.SearchRequestTaskImpl
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
@@ -57,12 +58,13 @@ internal class TwoStepsRequestCallbackWrapper(
 
             try {
                 if (!response.isSuccessful) {
-                    var error = httpErrorsCache.getAndRemove(response.requestID)
-                    if (error != null) {
-                        reportRelease(error)
-                    } else {
-                        error = Exception("Unknown error. Response: $response")
+                    val error = httpErrorsCache.getAndRemove(response.requestID) ?: when {
+                        isOfflineSearch -> Exception("Unknown error. Response: $response")
+                        else -> SearchRequestException(message = response.message, code = response.httpCode)
                     }
+
+                    reportRelease(error)
+
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(error)
                     }

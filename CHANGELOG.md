@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.25-SNAPSHOT
 
+### Bug fixes
+- [CORE] Now `SearchRequestException` contains original detail error message returned from the backend.
+
 ### Mapbox dependencies
 - Search Native SDK `0.46.1`
 - Common SDK `21.0.1`
