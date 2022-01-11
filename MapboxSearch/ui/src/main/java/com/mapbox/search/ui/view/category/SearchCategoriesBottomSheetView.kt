@@ -253,7 +253,9 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
         if (latestCategory == category && currentState !is ViewState.Error) {
             currentState?.takeIf { it is ViewState.Results }?.let { state ->
                 state as ViewState.Results
-                categoryLoadingStateListeners.forEach { it.onCategoryResultsLoaded(category, state.results) }
+                categoryLoadingStateListeners.forEach {
+                    it.onCategoryResultsLoaded(category, state.results, state.responseInfo)
+                }
             }
             return
         }
@@ -336,7 +338,9 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
             is ViewState.Results -> {
                 createAdapterItems(state.results, state.responseInfo) { items ->
                     latestCategory?.let { category ->
-                        categoryLoadingStateListeners.forEach { it.onCategoryResultsLoaded(category, state.results) }
+                        categoryLoadingStateListeners.forEach {
+                            it.onCategoryResultsLoaded(category, state.results, state.responseInfo)
+                        }
                     }
                     categoriesResultRecycler.scrollToPosition(0)
                     categoriesAdapter.items = items
@@ -579,8 +583,13 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
          *
          * @param category [Category] for which [searchResults] were loaded.
          * @param searchResults Loaded search results for [category].
+         * @param responseInfo Search response information.
          */
-        public fun onCategoryResultsLoaded(category: Category, searchResults: List<SearchResult>)
+        public fun onCategoryResultsLoaded(
+            category: Category,
+            searchResults: List<SearchResult>,
+            responseInfo: ResponseInfo
+        )
 
         /**
          * Called when category search request failed.

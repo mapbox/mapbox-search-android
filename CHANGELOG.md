@@ -4,6 +4,7 @@
 
 ### Breaking changes
 - [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onLoadingError()` callback provides one more parameter - `Exception` occurred during the request.
+- [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onCategoryResultsLoaded()` callback provides one more parameter - `ResponseInfo` which contains response information.
 
 ### Bug fixes
 - [CORE] Now `SearchRequestException` contains original detail error message returned from the backend.
