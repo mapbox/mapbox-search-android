@@ -180,9 +180,9 @@ commands:
 #---------- EXECUTORS ----------
 #-------------------------------
 executors:
-  ndk-r21e-executor:
+  default-executor:
     docker:
-      - image: mbgl/android-ndk-r21e:86bcba4d3f
+      - image: mbgl/android-ndk-r22:latest
     working_directory: ~/code
     environment:
       MBX_CI_DOMAIN: o619qyc20d.execute-api.us-east-1.amazonaws.com
@@ -193,7 +193,7 @@ executors:
 #--------------------------
 jobs:
   prepare-and-assemble:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - checkout
       - set-up-aws-for-android
@@ -204,7 +204,7 @@ jobs:
       - write-workspace
 
   static-analysis:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - read-workspace
       - check-license
@@ -213,7 +213,7 @@ jobs:
       - check-public-documentation
 
   pitest-validate:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - read-workspace
       - run:
@@ -221,7 +221,7 @@ jobs:
           command: cd MapboxSearch && bash ../scripts/quick_pitest_check.sh
 
   unit-tests:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - read-workspace
       - codebase-unit-tests
@@ -238,7 +238,7 @@ jobs:
       - write-workspace
 
   instrumentation-tests:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - checkout
       - set-up-aws-for-android
@@ -249,21 +249,21 @@ jobs:
       - run-firebase-sdk-instrumentation
 
   ui-robo-tests:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - read-workspace
       - login-google-cloud-platform
       - run-firebase-sample-robo
 
   ui-instrumentation-tests:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - read-workspace
       - login-google-cloud-platform
       - run-firebase-sample-instrumentation
 
   publish-snapshots:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - checkout
       - set-up-aws-for-android
@@ -273,7 +273,7 @@ jobs:
           command: bash ./scripts/ci-publish-snapshots.sh
 
   publish-release:
-    executor: ndk-r21e-executor
+    executor: default-executor
     steps:
       - checkout
       - set-up-aws-for-android
