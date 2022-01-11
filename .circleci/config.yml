@@ -324,9 +324,9 @@ workflows:
       - ui-instrumentation-tests:
           requires:
             - prepare-and-assemble
-      - pitest-validate:
-          requires:
-            - unit-tests
+#      - pitest-validate:
+#          requires:
+#            - unit-tests
     triggers:
        - schedule:
            cron: "0 0 * * *"
@@ -352,6 +352,6 @@ workflows:
       - ui-instrumentation-tests:
           requires:
             - prepare-and-assemble
-      - pitest-validate:
-          requires:
-            - unit-tests
+#      - pitest-validate:
+#          requires:
+#            - unit-tests

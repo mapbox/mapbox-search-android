@@ -28,7 +28,7 @@ pushd MapboxSearch/
 
 # Check only whether PIT setup doesn't fail.
 # Full PIT test run may be executed locally or via dedicated nightly CI task.
-../scripts/quick_pitest_check.sh
+#../scripts/quick_pitest_check.sh
 
 # To provide argument: .../local_checks.sh --runInstrumentationTests
 if [ "$1" = "--runInstrumentationTests" ]; then
