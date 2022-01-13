@@ -3,7 +3,6 @@ package com.mapbox.search.record
 import com.mapbox.geojson.Point
 import com.mapbox.search.core.CoreResultMetadata
 import com.mapbox.search.core.CoreRoutablePoint
-import com.mapbox.search.core.CoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.RoutablePoint
@@ -16,6 +15,7 @@ import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.assertEqualsJsonify
+import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.tests_support.record.addAllBlocking
@@ -475,17 +475,14 @@ internal class HistoryDataProviderTest {
     private companion object {
         const val TEST_LOCAL_TIME_MILLIS = 12345L
 
-        val TEST_USER_RECORD_SEARCH_RESULT = CoreSearchResult(
-            "result id 1",
-            listOf(ResultType.USER_RECORD),
-            listOf("Result name"),
-            listOf("Default"),
-            null,
-            null,
-            123.0,
-            null,
-            Point.fromLngLat(20.0, 30.0),
-            listOf(
+        val TEST_USER_RECORD_SEARCH_RESULT = createTestCoreSearchResult(
+            id = "result id 1",
+            types = listOf(ResultType.USER_RECORD),
+            names = listOf("Result name"),
+            languages = listOf("Default"),
+            distanceMeters = 123.0,
+            center = Point.fromLngLat(20.0, 30.0),
+            routablePoints = listOf(
                 CoreRoutablePoint(
                     Point.fromLngLat(19.999999, 30.0001),
                     "Entrance 1"
@@ -495,30 +492,18 @@ internal class HistoryDataProviderTest {
                     "Entrance 2"
                 )
             ),
-            emptyList(),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            categories = emptyList(),
         )
 
-        val TEST_POI_SEARCH_RESULT = CoreSearchResult(
-            "test poi result id",
-            listOf(ResultType.POI),
-            listOf("Test POI search result"),
-            listOf("Default"),
-            null,
-            null,
-            100.0,
-            null,
-            Point.fromLngLat(10.0, 11.0),
-            null,
-            emptyList(),
-            null,
-            CoreResultMetadata(
+        val TEST_POI_SEARCH_RESULT = createTestCoreSearchResult(
+            id = "test poi result id",
+            types = listOf(ResultType.POI),
+            names = listOf("Test POI search result"),
+            languages = listOf("Default"),
+            distanceMeters = 100.0,
+            center = Point.fromLngLat(10.0, 11.0),
+            categories = emptyList(),
+            metadata = CoreResultMetadata(
                 3456,
                 "+902 10 70 77",
                 "https://www.museodelprado.es/en/visit-the-museum",
@@ -531,11 +516,6 @@ internal class HistoryDataProviderTest {
                 null,
                 hashMapOf()
             ),
-            null,
-            null,
-            null,
-            null,
-            null
         )
 
         val TEST_HISTORY_RECORD_1 = HistoryRecord(

@@ -156,6 +156,7 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
                 )
             ),
             descriptionAddress = "Eiffel Tower, 5 Avenue Anatole France, 75007 Paris, France",
+            matchingName = "Eiffel Tower",
             center = Point.fromLngLat(2.294464, 48.858353),
             routablePoints = listOf(RoutablePoint(point = Point.fromLngLat(2.294464, 48.858353), name = "Address")),
             icon = "marker",

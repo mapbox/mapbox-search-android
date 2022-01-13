@@ -28,7 +28,6 @@ import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.OriginalResultType
-import com.mapbox.search.result.OriginalSearchResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.result.SearchResultSuggestAction
@@ -39,6 +38,7 @@ import com.mapbox.search.result.mapToCore
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestCoreSearchResponse
+import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.UUIDProvider
@@ -555,31 +555,25 @@ internal class TelemetrySearchEventsFactoryTest {
             )
         )
 
-        val TEST_SEARCH_RESULT = OriginalSearchResult(
-            "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA==",
-            listOf(OriginalResultType.POI),
-            listOf("Tour Eiffel"),
-            listOf("fr"),
-            listOf(SearchAddress()),
-            "5 avenue Anatole France, 75007 Paris, France",
-            7100000.0,
-            Point.fromLngLat(2.294423282146454, 48.85825817805569),
-            null,
-            listOf("site historique", "attraction touristique", "monument", "point de vue"),
-            "marker",
-            null,
-            null,
-            null,
-            null,
-            SearchResultSuggestAction(
+        val TEST_SEARCH_RESULT = createTestOriginalSearchResult(
+            id = "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA==",
+            types = listOf(OriginalResultType.POI),
+            names = listOf("Tour Eiffel"),
+            languages = listOf("fr"),
+            addresses = listOf(SearchAddress()),
+            descriptionAddress = "5 avenue Anatole France, 75007 Paris, France",
+            distanceMeters = 7100000.0,
+            center = Point.fromLngLat(2.294423282146454, 48.85825817805569),
+            categories = listOf("site historique", "attraction touristique", "monument", "point de vue"),
+            icon = "marker",
+            action = SearchResultSuggestAction(
                 "retrieve",
                 "ApIRHSCw9FLmeKhRFdha2Sy8oVmp0-B_Ko22am7vqmh_mcvnj3rskkkBhjrnEczEtxkl7eidXKaRuvSTx8jtc0tYoyZ6QUXiJ4uW5wK7gm5waUK2B0ERxYjwhDVM6l2V_w9ydWevuMT1NEyqa3LVWGJYJwo3Gxq3NY_gq06crd1x-oWFyPM3nevna4qzgZMheenaRJqdCUAM8K0oFhbNKBoPrHNQm1PO1dmE6UneRKouDtmlgM2Hd0-PQPLd9SYbIel2CO_6-XtG2paaLZe0iN4BYug4DcS7MANbEe2AL3Zsy59t6JSVGnWO1QlZMb8Ir8IrPo7d15t1Y5GJYhmgdP1bTI6Z1B03PZZ9AFcVzO8SH3_SQvdxGRbS1aCfcRIxPfkDqtwiYj1j4OHjKZ1rVRFcoQK_W6_cMQ_Jy1qu-CF-eFatBRIRIboDkzPFAL7ja1HSbKDUpMKJN6fZhNsfYkByWzFq1v4YaZNuAC6OmGoNh5_WEO0qUPyEt6PQDVtko27ma97cBgN7AUQxdzFCkRd3ftDF9AFbRAYQvVuI8AZ2CFI3gHODW3UEZzP2hZsBCxUg1y3l763vPE17ioGimZ2LuVjn_7FeT8IbQRHtsJMOhE8reMN25AS9tWEcjOt3uX2ffDga7r79NSeDyN-zRfZuMDZ290lDCOx7XfBXj6Y8EJWVTqQN261uxq6EdREhgT0-HnVLe3Q1R2Ce3A6qca53j7mY0dNNiBK78qiNLl8lsvqYJbeLJZpAX2893SJv15Ufh0Xkv-TYhzURuJNmIie-LdvQCJBtylnOwrnIyo9NH3oZKskC21YE6NRk9KNEpxR4uEqWMrQ3gfM3DMtZFcIw2PYp_Mp0VF0tWpKBg4ej22FNVgMNrO5dn91w_mqulANRwDTrmjXGLUxFE0Fe4S5Z5gHKHMiB6AW23GIePCpprEN2Kwlj0S6bCskorc27mcC8w2sgEHVYUVVMSJM9GGVrkqxmCxcTdiVVrLz8LwdK3I6y2v5i7foONg_IjTbZj9AYnXY2LDqol97AYP0ne4BbgUPtx7PGDfRP9-rbYkSN9BpnnhBZvoQy7JznixmlcpTBhmHjTAJl85u1rGPy-0t5EjA8ToQb_tYaMx5n9CFWMbW10ZoqYHEt-GugTZa_osZ9KJHQLWw-k1jpmQBpkEY0mJszdPC7XGNM7w7Gwgk757zpEyfKT4jCunpUK6MTT6mniRDGBnXRb1AL2U7FNEJCVXL5_Q==",
                 "",
                 byteArrayOf(),
                 true
             ),
-            99,
-            null
+            serverIndex = 99,
         )
 
         val TEST_SERVER_SEARCH_RESULT = ServerSearchResultImpl(
