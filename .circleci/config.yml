@@ -168,9 +168,9 @@ commands:
           no_output_timeout: 10m
           command: |
             cd MapboxSearch
-            ./gradlew :sdk:assembleDebugAndroidTest -Pcoverage
+            ./gradlew :sdk:assembleReleaseAndroidTest
             gcloud firebase test android run \
-            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test sdk/build/outputs/apk/androidTest/debug/mapbox-search-android-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--type instrumentation --app sample/build/outputs/apk/release/sample-release.apk --test sdk/build/outputs/apk/androidTest/release/mapbox-search-android-release-androidTest.apk \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
             	--timeout 300s \
@@ -245,7 +245,7 @@ jobs:
       - restore-gradle-cache
       - login-google-cloud-platform
       - clean-build
-      - assemble-sample-debug
+      - assemble-sample-release
       - run-firebase-sdk-instrumentation
 
   ui-robo-tests:
