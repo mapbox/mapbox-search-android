@@ -1,6 +1,5 @@
 package com.mapbox.search.core.http
 
-import com.mapbox.search.SearchRequestException
 import com.mapbox.search.core.CoreHttpCallback
 import com.mapbox.search.utils.UUIDProvider
 import okhttp3.Call
@@ -47,10 +46,6 @@ internal class HttpClientImpl(
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    if (!response.isSuccessful) {
-                        val exception = SearchRequestException(message = response.message, code = response.code)
-                        errorsCache.put(requestID, exception)
-                    }
                     val bodyText = response.body?.string() ?: ""
                     callback.run(bodyText, response.code)
                 }

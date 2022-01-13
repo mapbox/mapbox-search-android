@@ -312,8 +312,8 @@ public abstract interface annotation class com/mapbox/search/ui/view/category/Se
 }
 
 public abstract interface class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$CategoryLoadingStateListener {
-	public abstract fun onCategoryResultsLoaded (Lcom/mapbox/search/ui/view/category/Category;Ljava/util/List;)V
-	public abstract fun onLoadingError (Lcom/mapbox/search/ui/view/category/Category;)V
+	public abstract fun onCategoryResultsLoaded (Lcom/mapbox/search/ui/view/category/Category;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onLoadingError (Lcom/mapbox/search/ui/view/category/Category;Ljava/lang/Exception;)V
 	public abstract fun onLoadingStart (Lcom/mapbox/search/ui/view/category/Category;)V
 }
 

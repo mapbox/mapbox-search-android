@@ -1,0 +1,6 @@
+{
+  "status_code": 400,
+  "error": "Need to include either a route, bbox, proximity, or origin for category searches",
+  "version": "31:43720ce3c0535cf79cbd52268e91dca3f224933c",
+  "code": "test-code"
+}

@@ -296,8 +296,8 @@ package com.mapbox.search.ui.view.category {
   }
 
   public static interface SearchCategoriesBottomSheetView.CategoryLoadingStateListener {
-    method public void onCategoryResultsLoaded(com.mapbox.search.ui.view.category.Category category, java.util.List<? extends com.mapbox.search.result.SearchResult> searchResults);
-    method public void onLoadingError(com.mapbox.search.ui.view.category.Category category);
+    method public void onCategoryResultsLoaded(com.mapbox.search.ui.view.category.Category category, java.util.List<? extends com.mapbox.search.result.SearchResult> searchResults, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onLoadingError(com.mapbox.search.ui.view.category.Category category, Exception e);
     method public void onLoadingStart(com.mapbox.search.ui.view.category.Category category);
   }
 
