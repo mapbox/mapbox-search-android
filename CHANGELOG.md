@@ -10,8 +10,8 @@
 - [CORE] Now `SearchRequestException` contains original detail error message returned from the backend.
 
 ### Mapbox dependencies
-- Search Native SDK `0.46.1`
-- Common SDK `21.0.1`
+- Search Native SDK `0.47.0`
+- Common SDK `21.1.0-rc.1`
 - Telemetry SDK `8.1.1`
 
 

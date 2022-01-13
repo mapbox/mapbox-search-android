@@ -7,7 +7,6 @@ import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.CoreSearchOptions
 import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.core.CoreSearchResult
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
@@ -21,6 +20,7 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
+import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
@@ -287,25 +287,16 @@ internal class CategorySearchEngineTest {
         val TEST_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
         val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(apiType = ApiType.GEOCODING, responseUuid = TEST_RESPONSE_UUID)
 
-        val TEST_CORE_SEARCH_RESULT = CoreSearchResult(
-            "test result id",
-            listOf(ResultType.ADDRESS),
-            listOf("Result name"),
-            listOf("Default"),
-            listOf(TEST_SEARCH_ADDRESS),
-            null,
-            123.0,
-            null,
-            Point.fromLngLat(20.0, 30.0),
-            emptyList(),
-            emptyList(),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+        val TEST_CORE_SEARCH_RESULT = createTestCoreSearchResult(
+            id = "test result id",
+            types = listOf(ResultType.ADDRESS),
+            names = listOf("Result name"),
+            languages = listOf("Default"),
+            addresses = listOf(TEST_SEARCH_ADDRESS),
+            distanceMeters = 123.0,
+            center = Point.fromLngLat(20.0, 30.0),
+            routablePoints = emptyList(),
+            categories = emptyList(),
         )
 
         val TEST_REQUEST_OPTIONS = createTestRequestOptions(
@@ -321,25 +312,16 @@ internal class CategorySearchEngineTest {
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
-        val TEST_CORE_SEARCH_SUGGESTION = CoreSearchResult(
-            "test result id",
-            listOf(ResultType.ADDRESS),
-            listOf("Result name"),
-            listOf("Default"),
-            listOf(TEST_SEARCH_ADDRESS),
-            null,
-            123.0,
-            null,
-            Point.fromLngLat(20.0, 30.0),
-            emptyList(),
-            emptyList(),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+        val TEST_CORE_SEARCH_SUGGESTION = createTestCoreSearchResult(
+            id = "test result id",
+            types = listOf(ResultType.ADDRESS),
+            names = listOf("Result name"),
+            languages = listOf("Default"),
+            addresses = listOf(TEST_SEARCH_ADDRESS),
+            distanceMeters = 123.0,
+            center = Point.fromLngLat(20.0, 30.0),
+            routablePoints = emptyList(),
+            categories = emptyList(),
         )
 
         val TEST_SEARCH_SUGGESTION = GeocodingCompatSearchSuggestion(

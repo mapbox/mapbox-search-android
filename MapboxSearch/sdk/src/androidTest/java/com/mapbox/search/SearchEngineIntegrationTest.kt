@@ -199,6 +199,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus")),
             descriptionAddress = "Belarus",
+            matchingName = "Minsk",
             distanceMeters = 5000000.0,
             icon = "marker",
             action = SearchResultSuggestAction(
@@ -450,6 +451,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
             distanceMeters = 5000000.0,
+            matchingName = "Minsk",
             center = Point.fromLngLat(27.234342, 53.940465),
             routablePoints = listOf(
                 RoutablePoint(point = Point.fromLngLat(27.234300, 53.973651), name = "City Entrance")
@@ -614,6 +616,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
             descriptionAddress = "Make a new search",
+            matchingName = "Did you mean recursion?",
             icon = "marker",
             action = SearchResultSuggestAction(
                 endpoint = "suggest",
@@ -668,6 +671,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             addresses = listOf(SearchAddress()),
             categories = listOf("Cafe"),
             descriptionAddress = "Category",
+            matchingName = "Cafe",
             icon = "restaurant",
             externalIDs = mapOf("federated" to "category.cafe"),
             action = SearchResultSuggestAction(
@@ -736,6 +740,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 "bubble tea",
             ),
             descriptionAddress = "12 10th St, San Francisco, California 94103, United States of America",
+            matchingName = "SimplexiTea",
             icon = "restaurant",
             externalIDs = mapOf(
                 "mbx_poi" to "category-result-id-1",
