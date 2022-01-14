@@ -37,7 +37,7 @@ ext {
     mockk_version = '1.12.1'
     kotlin_test_dsl_version = '0.1.5'
 
-    equals_verifier_version = "3.5.5"
+    equals_verifier_version = "3.8.2"
 
     pitest_version = '1.6.7'
 

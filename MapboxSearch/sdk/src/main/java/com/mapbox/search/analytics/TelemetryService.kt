@@ -19,7 +19,8 @@ import com.mapbox.search.common.throwDebug
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.BaseSearchResult
+import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
@@ -228,7 +229,7 @@ internal class TelemetryService : InternalAnalyticsService, ErrorsReporter {
             "searchResult of unsupported type (${searchResult.javaClass.simpleName}) was provided. " +
                     "Please, do not use custom types. If it's not the case, contact Search SDK team."
         }
-        require(searchResult is CoreResponseProvider) { "Parameter searchResult must provide original response." }
+        require(searchResult is BaseSearchResult) { "Parameter searchResult must provide original response." }
 
         return eventsFactory.createSearchFeedbackEvent(
             originalSearchResult = searchResult.originalSearchResult,
@@ -256,7 +257,7 @@ internal class TelemetryService : InternalAnalyticsService, ErrorsReporter {
             "searchSuggestion of unsupported type (${searchSuggestion.javaClass.simpleName}) was provided. " +
                     "Please, do not use custom types. If it's not the case, contact Search SDK team."
         }
-        require(searchSuggestion is CoreResponseProvider) { "Parameter searchSuggestion must provide original response." }
+        require(searchSuggestion is BaseSearchSuggestion) { "Parameter searchSuggestion must provide original response." }
 
         return eventsFactory.createSearchFeedbackEvent(
             originalSearchResult = searchSuggestion.originalSearchResult,

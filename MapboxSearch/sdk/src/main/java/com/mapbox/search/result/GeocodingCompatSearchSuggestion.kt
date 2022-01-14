@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 internal data class GeocodingCompatSearchSuggestion(
     override val originalSearchResult: OriginalSearchResult,
     override val requestOptions: RequestOptions
-) : BaseSearchSuggestion() {
+) : BaseSearchSuggestion(originalSearchResult) {
 
     init {
         assertDebug(originalSearchResult.action == null && originalSearchResult.center != null) {

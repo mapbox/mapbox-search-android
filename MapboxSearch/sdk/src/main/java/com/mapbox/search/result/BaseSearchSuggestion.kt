@@ -1,6 +1,8 @@
 package com.mapbox.search.result
 
-internal sealed class BaseSearchSuggestion : SearchSuggestion, CoreResponseProvider {
+internal sealed class BaseSearchSuggestion(
+    open val originalSearchResult: OriginalSearchResult
+) : SearchSuggestion {
 
     override val id: String
         get() = originalSearchResult.id

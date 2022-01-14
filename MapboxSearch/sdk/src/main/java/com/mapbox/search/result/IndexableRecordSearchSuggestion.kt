@@ -9,7 +9,7 @@ internal data class IndexableRecordSearchSuggestion(
     val record: IndexableRecord,
     override val originalSearchResult: OriginalSearchResult,
     override val requestOptions: RequestOptions
-) : BaseSearchSuggestion() {
+) : BaseSearchSuggestion(originalSearchResult) {
 
     init {
         check(originalSearchResult.type == OriginalResultType.USER_RECORD)

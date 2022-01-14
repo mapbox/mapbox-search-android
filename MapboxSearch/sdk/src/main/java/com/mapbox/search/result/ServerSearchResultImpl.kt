@@ -10,7 +10,7 @@ internal data class ServerSearchResultImpl(
     override val types: List<SearchResultType>,
     override val originalSearchResult: OriginalSearchResult,
     override val requestOptions: RequestOptions
-) : BaseSearchResult(), ServerSearchResult {
+) : BaseSearchResult(originalSearchResult), ServerSearchResult {
 
     init {
         assertDebug(originalSearchResult.center != null) {

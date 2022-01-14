@@ -2,7 +2,9 @@ package com.mapbox.search.result
 
 import com.mapbox.search.SearchResultMetadata
 
-internal abstract class BaseSearchResult : SearchResult, CoreResponseProvider {
+internal abstract class BaseSearchResult(
+    open val originalSearchResult: OriginalSearchResult
+) : SearchResult {
 
     override val id: String
         get() = originalSearchResult.id

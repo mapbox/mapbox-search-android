@@ -11,7 +11,7 @@ internal data class IndexableRecordSearchResultImpl(
     override val record: IndexableRecord,
     override val originalSearchResult: OriginalSearchResult,
     override val requestOptions: RequestOptions
-) : BaseSearchResult(), IndexableRecordSearchResult {
+) : BaseSearchResult(originalSearchResult), IndexableRecordSearchResult {
 
     override val id: String
         get() = record.id
