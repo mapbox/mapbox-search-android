@@ -79,6 +79,17 @@ allprojects {
                 password = sdkRegistryToken
             }
         }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/snapshots/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
+                password = sdkRegistryToken
+            }
+        }
     }
 }
 
