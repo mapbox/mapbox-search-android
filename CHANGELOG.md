@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.25-SNAPSHOT
+## 1.0.0-beta.25
 
 ### Breaking changes
 - [CORE] Public interfaces `SearchResult`, `ServerSearchResult`, `IndexableRecordSearchResult`, `SearchSuggestion` have been marked as `sealed` as they were not supposed to be implemented by external code.
