@@ -19,7 +19,6 @@ import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestMainThreadWorker
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.createTestCoreReverseGeoOptions
 import com.mapbox.search.tests_support.createTestCoreSearchAddress
@@ -514,46 +513,6 @@ internal class OfflineSearchEngineTest {
                 Verify("Callback called inside executor", exactly = 2) {
                     executor.execute(any())
                 }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check search selection with non platform suggestion`() = TestCase {
-        Given("OfflineSearchEngine with mocked dependencies") {
-            val slotError = slot<Exception>()
-            val callback = mockk<SearchSelectionCallback>()
-            every { callback.onError(capture(slotError)) } returns Unit
-
-            When("Non platform suggestion selected") {
-                val task = searchEngine.select(
-                    suggestion = TestSearchSuggestion(),
-                    options = TEST_SELECT_OPTIONS,
-                    executor = executor,
-                    callback = callback
-                ) as SearchRequestTaskImpl<*>
-
-                VerifyNo("CoreSearchEngine.onSelected in not called") {
-                    coreEngine.onSelected(any(), any())
-                }
-
-                VerifyOnce("Error passed to callback") {
-                    callback.onError(any())
-                }
-
-                VerifyNo("Other callback functions weren't called") {
-                    callback.onResult(any(), any(), any())
-                    callback.onSuggestions(any(), any())
-                    callback.onCategoryResult(any(), any(), any())
-                }
-
-                Then(
-                    "Error should be IllegalArgumentException",
-                    true,
-                    IllegalArgumentException("SearchSuggestion must provide original response").equalsTo(slotError.captured)
-                )
-
-                Then("SearchRequestTask released reference to callback", true, task.callbackDelegate == null)
             }
         }
     }

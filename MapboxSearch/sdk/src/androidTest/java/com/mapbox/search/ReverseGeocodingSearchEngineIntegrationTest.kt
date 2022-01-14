@@ -115,7 +115,7 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
         assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
-            options.types?.joinToString(separator = ",") { it.name.toLowerCase() },
+            options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
             url.queryParameter("types")
         )
 

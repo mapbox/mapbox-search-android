@@ -24,12 +24,9 @@ import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
-import com.mapbox.search.tests_support.TestCoreResponseSearchSuggestion
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -142,7 +139,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
-            options.types?.joinToString(separator = ",") { it.name.toLowerCase() },
+            options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
             url.queryParameter("types")
         )
 
@@ -559,41 +556,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("place.11543680732831130", selectionResult.result.id)
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
         assertNull(selectionResult.responseInfo.coreSearchResponse)
-    }
-
-    @Test
-    fun testUnknownSuggestionSelection() {
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.select(TestSearchSuggestion(), callback)
-
-        val (error) = callback.getResultBlocking() as SearchEngineResult.Error
-
-        assertTrue(
-            "Error should be IllegalArgumentException",
-            error.equalsTo(
-                IllegalArgumentException("SearchSuggestion must provide original response")
-            )
-        )
-    }
-
-    @Test
-    fun testUnsupportedSuggestionSelection() {
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.select(
-            TestCoreResponseSearchSuggestion(
-                originalSearchResult = createTestOriginalSearchResult()
-            ),
-            callback
-        )
-
-        val (error) = callback.getResultBlocking() as SearchEngineResult.Error
-
-        assertTrue(
-            "Error should be IllegalArgumentException",
-            error.equalsTo(
-                IllegalArgumentException("Unknown suggestion type TestCoreResponseSearchSuggestion")
-            )
-        )
     }
 
     @Test

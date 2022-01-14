@@ -10,11 +10,19 @@ configurations {
 
 dependencies {
     //noinspection GradleDependency
-    baseline("com.mapbox.search:mapbox-search-android:1.0.0-beta.9") {
+    baseline("com.mapbox.search:mapbox-search-android:1.0.0-beta.24") {
         transitive = false
         force = true
     }
+    /*
+    After AGP update default configuration returns empty files set
+
     latest project(path: ':sdk', configuration: 'default')
+     */
+    latest("com.mapbox.search:mapbox-search-android:1.0.0-beta.25-SNAPSHOT") {
+        transitive = false
+        force = true
+    }
 }
 
 tasks.register("japicmp", JapicmpTask) {

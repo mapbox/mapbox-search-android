@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.adevinta.android.barista.assertion.BaristaListAssertions
 import com.mapbox.search.sample.Constants
 import com.mapbox.search.sample.Constants.TEXT_INPUT_DELAY_MILLIS
 import com.mapbox.search.sample.robots.builders.SearchResultsRecyclerBuilder
@@ -18,7 +19,6 @@ import com.mapbox.search.sample.tools.actions.SearchSdkActions.customTypeText
 import com.mapbox.search.sample.tools.matchers.SearchResultByAddressMatcher
 import com.mapbox.search.sample.tools.waitAtLeastOneInstanceOfViewInHierarchy
 import com.mapbox.search.ui.R
-import com.schibsted.spain.barista.assertion.BaristaListAssertions
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
 
@@ -41,7 +41,8 @@ class AddressSearchViewRobot {
     }
 
     /**
-     * @param addressSubstring part of search result address, that should be matched
+     * @param resultName search result name that should be matched
+     * @param addressSubstring part of search result address that should be matched
      */
     fun selectSearchResult(resultName: String, addressSubstring: String) {
         waitAtLeastOneInstanceOfViewInHierarchy(R.id.search_result_item)

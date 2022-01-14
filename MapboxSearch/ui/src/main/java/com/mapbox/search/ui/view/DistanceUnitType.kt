@@ -32,7 +32,7 @@ public enum class DistanceUnitType {
                     else -> METRIC
                 }
             } else {
-                when (locale.country.toUpperCase(locale)) {
+                when (locale.country.uppercase(locale)) {
                     "US", "LR", "MM", "GB" -> IMPERIAL
                     else -> METRIC
                 }
