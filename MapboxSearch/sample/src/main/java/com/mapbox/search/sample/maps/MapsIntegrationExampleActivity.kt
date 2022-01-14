@@ -29,6 +29,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
+import com.mapbox.search.ResponseInfo
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
 import com.mapbox.search.sample.SearchViewBottomSheetsMediator
@@ -130,11 +131,15 @@ class MapsIntegrationExampleActivity : AppCompatActivity() {
         searchCategoriesView.addCategoryLoadingStateListener(object : CategoryLoadingStateListener {
             override fun onLoadingStart(category: Category) {}
 
-            override fun onCategoryResultsLoaded(category: Category, searchResults: List<SearchResult>) {
+            override fun onCategoryResultsLoaded(
+                category: Category,
+                searchResults: List<SearchResult>,
+                responseInfo: ResponseInfo,
+            ) {
                 showMarkers(searchResults.mapNotNull { it.coordinate })
             }
 
-            override fun onLoadingError(category: Category) {}
+            override fun onLoadingError(category: Category, e: Exception) {}
         })
 
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {

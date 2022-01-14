@@ -1,5 +1,26 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.25
+
+### Breaking changes
+- [CORE] Public interfaces `SearchResult`, `ServerSearchResult`, `IndexableRecordSearchResult`, `SearchSuggestion` have been marked as `sealed` as they were not supposed to be implemented by external code.
+- [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onLoadingError()` callback provides one more parameter - `Exception` occurred during the request.
+- [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onCategoryResultsLoaded()` callback provides one more parameter - `ResponseInfo` which contains response information.
+
+### New features
+- [CORE, UI] Now Search SDK documentation and source code is visible in Android Studio.
+
+### Bug fixes
+- [CORE] Now `SearchRequestException` contains original detail error message returned from the backend.
+
+### Mapbox dependencies
+- Search Native SDK `0.47.0`
+- Common SDK `21.1.0-rc.1`
+- Telemetry SDK `8.1.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-beta.24
 
 ### Breaking changes
@@ -15,6 +36,7 @@
 - Search Native SDK `0.46.1`
 - Common SDK `21.0.1`
 - Telemetry SDK `8.1.0`
+- Kotlin `1.4.21`
 
 
 

@@ -16,6 +16,7 @@ afterEvaluate {
                 artifactId project.property('mapboxArtifactName')
                 version project.property('versionName')
 
+                artifact(androidSourcesJar)
                 artifact(androidJavadocsJar)
 
                 pom.withXml {
@@ -41,6 +42,11 @@ afterEvaluate {
             }
         }
     }
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.kotlin.srcDirs
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: dokkaHtml) {

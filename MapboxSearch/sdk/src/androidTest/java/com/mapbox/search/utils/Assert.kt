@@ -1,6 +1,7 @@
 package com.mapbox.search.utils
 
 import org.junit.Assert
+import java.util.Locale
 
 internal fun assertEqualsButNotSame(expected: Any?, actual: Any?) {
     Assert.assertNotSame(expected, actual)
@@ -8,5 +9,5 @@ internal fun assertEqualsButNotSame(expected: Any?, actual: Any?) {
 }
 
 internal fun assertEqualsIgnoreCase(expected: String, actual: String) {
-    Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase())
+    Assert.assertEquals(expected.lowercase(Locale.getDefault()), actual.lowercase(Locale.getDefault()))
 }

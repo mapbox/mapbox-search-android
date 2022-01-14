@@ -111,6 +111,7 @@ internal class OriginalSearchResultTest {
             null,
             null,
             null,
+            null,
             null
         )
 
@@ -121,6 +122,7 @@ internal class OriginalSearchResultTest {
             languages = CORE_EMPTY_SEARCH_RESULT.languages,
             addresses = CORE_EMPTY_SEARCH_RESULT.addresses?.map { it.mapToPlatform() },
             descriptionAddress = CORE_EMPTY_SEARCH_RESULT.descrAddress,
+            matchingName = CORE_EMPTY_SEARCH_RESULT.matchingName,
             distanceMeters = CORE_EMPTY_SEARCH_RESULT.distance,
             center = CORE_EMPTY_SEARCH_RESULT.center,
             routablePoints = CORE_EMPTY_SEARCH_RESULT.routablePoints?.map { it.mapToPlatform() },
@@ -144,6 +146,7 @@ internal class OriginalSearchResultTest {
             languages = CORE_FILLED_SEARCH_RESULT.languages,
             addresses = CORE_FILLED_SEARCH_RESULT.addresses?.map { it.mapToPlatform() },
             descriptionAddress = CORE_FILLED_SEARCH_RESULT.descrAddress,
+            matchingName = CORE_FILLED_SEARCH_RESULT.matchingName,
             distanceMeters = CORE_FILLED_SEARCH_RESULT.distance,
             center = CORE_FILLED_SEARCH_RESULT.center,
             routablePoints = CORE_FILLED_SEARCH_RESULT.routablePoints?.map { it.mapToPlatform() },
@@ -170,6 +173,7 @@ internal class OriginalSearchResultTest {
                     createCoreSearchAddress(postcode = "postcode")
                 ),
                 "Test description address",
+                "Test matching name",
                 123.456,
                 123.0,
                 Point.fromLngLat(10.0, 11.0),

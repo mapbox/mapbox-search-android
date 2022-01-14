@@ -24,12 +24,9 @@ import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
-import com.mapbox.search.tests_support.TestCoreResponseSearchSuggestion
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -142,7 +139,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
-            options.types?.joinToString(separator = ",") { it.name.toLowerCase() },
+            options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
             url.queryParameter("types")
         )
 
@@ -199,6 +196,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus")),
             descriptionAddress = "Belarus",
+            matchingName = "Minsk",
             distanceMeters = 5000000.0,
             icon = "marker",
             action = SearchResultSuggestAction(
@@ -450,6 +448,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
             distanceMeters = 5000000.0,
+            matchingName = "Minsk",
             center = Point.fromLngLat(27.234342, 53.940465),
             routablePoints = listOf(
                 RoutablePoint(point = Point.fromLngLat(27.234300, 53.973651), name = "City Entrance")
@@ -560,41 +559,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testUnknownSuggestionSelection() {
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.select(TestSearchSuggestion(), callback)
-
-        val (error) = callback.getResultBlocking() as SearchEngineResult.Error
-
-        assertTrue(
-            "Error should be IllegalArgumentException",
-            error.equalsTo(
-                IllegalArgumentException("SearchSuggestion must provide original response")
-            )
-        )
-    }
-
-    @Test
-    fun testUnsupportedSuggestionSelection() {
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.select(
-            TestCoreResponseSearchSuggestion(
-                originalSearchResult = createTestOriginalSearchResult()
-            ),
-            callback
-        )
-
-        val (error) = callback.getResultBlocking() as SearchEngineResult.Error
-
-        assertTrue(
-            "Error should be IllegalArgumentException",
-            error.equalsTo(
-                IllegalArgumentException("Unknown suggestion type TestCoreResponseSearchSuggestion")
-            )
-        )
-    }
-
-    @Test
     fun testRecursiveQuerySelection() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-with-recursion-query.json"))
 
@@ -614,6 +578,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
             descriptionAddress = "Make a new search",
+            matchingName = "Did you mean recursion?",
             icon = "marker",
             action = SearchResultSuggestAction(
                 endpoint = "suggest",
@@ -668,6 +633,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             addresses = listOf(SearchAddress()),
             categories = listOf("Cafe"),
             descriptionAddress = "Category",
+            matchingName = "Cafe",
             icon = "restaurant",
             externalIDs = mapOf("federated" to "category.cafe"),
             action = SearchResultSuggestAction(
@@ -736,6 +702,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 "bubble tea",
             ),
             descriptionAddress = "12 10th St, San Francisco, California 94103, United States of America",
+            matchingName = "SimplexiTea",
             icon = "restaurant",
             externalIDs = mapOf(
                 "mbx_poi" to "category-result-id-1",
@@ -886,6 +853,49 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         })
 
         countDownLatch.await()
+    }
+
+    @Test
+    fun testErrorBackendResponseSimpleFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(422)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException("Wrong arguments", 422),
+            (res as SearchEngineResult.Error).e
+        )
+    }
+
+    @Test
+    fun testErrorBackendResponseExtendedFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(400)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException(
+                "Need to include either a route, bbox, proximity, or origin for category searches",
+                400
+            ),
+            (res as SearchEngineResult.Error).e
+        )
     }
 
     @After

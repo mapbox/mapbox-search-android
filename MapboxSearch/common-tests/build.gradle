@@ -11,7 +11,6 @@ if (mapboxApiToken == null) {
 }
 
 android {
-    buildToolsVersion build_tools_version
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
@@ -20,7 +19,6 @@ android {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
 
-        versionName project.property('versionName')
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

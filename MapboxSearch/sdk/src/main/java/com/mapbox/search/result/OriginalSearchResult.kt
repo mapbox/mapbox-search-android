@@ -17,6 +17,7 @@ internal data class OriginalSearchResult(
     val languages: List<String>,
     val addresses: List<SearchAddress>?,
     val descriptionAddress: String?,
+    val matchingName: String?,
     val distanceMeters: Double?,
     val center: Point?,
     val routablePoints: List<RoutablePoint>?,
@@ -63,6 +64,7 @@ internal fun CoreSearchResult.mapToPlatform() = OriginalSearchResult(
     languages = languages,
     addresses = addresses?.map { it.mapToPlatform() },
     descriptionAddress = descrAddress,
+    matchingName = matchingName,
     distanceMeters = distance,
     center = center,
     routablePoints = routablePoints?.map { it.mapToPlatform() },
@@ -74,7 +76,7 @@ internal fun CoreSearchResult.mapToPlatform() = OriginalSearchResult(
     userRecordId = userRecordID,
     action = action?.mapToPlatform(),
     serverIndex = serverIndex,
-    etaMinutes = eta
+    etaMinutes = eta,
 )
 
 internal fun OriginalSearchResult.mapToCore() = CoreSearchResult(
@@ -84,6 +86,7 @@ internal fun OriginalSearchResult.mapToCore() = CoreSearchResult(
     languages,
     addresses?.map { it.mapToCore() },
     descriptionAddress,
+    matchingName,
     distanceMeters,
     etaMinutes,
     center,

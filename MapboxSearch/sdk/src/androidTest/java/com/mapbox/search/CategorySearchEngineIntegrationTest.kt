@@ -8,7 +8,7 @@ import com.mapbox.search.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.BaseSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.RoutablePoint
@@ -189,6 +189,7 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
                 )
             ),
             descriptionAddress = "Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
+            matchingName = "Starbucks",
             center = Point.fromLngLat(-122.08295, 37.38755),
             routablePoints = listOf(
                 RoutablePoint(point = Point.fromLngLat(-122.08295, 37.38755), name = "Address")
@@ -295,7 +296,7 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
         val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, secondRun.results.size)
 
-        val firstResult = secondRun.results.first() as CoreResponseProvider
+        val firstResult = secondRun.results.first() as BaseSearchResult
         /**
          * Despite the changed ID, core should match and merge server result with local indexable record result
          */
@@ -523,6 +524,49 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
         })
 
         countDownLatch.await()
+    }
+
+    @Test
+    fun testErrorBackendResponseSimpleFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(422)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException("Wrong arguments", 422),
+            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+        )
+    }
+
+    @Test
+    fun testErrorBackendResponseExtendedFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(400)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException(
+                "Need to include either a route, bbox, proximity, or origin for category searches",
+                400
+            ),
+            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+        )
     }
 
     @After

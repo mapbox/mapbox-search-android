@@ -6,7 +6,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
-import com.mapbox.search.BuildConfig
+import com.mapbox.search.common.BuildConfig
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

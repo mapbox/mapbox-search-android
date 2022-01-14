@@ -26,6 +26,7 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
+import java.util.Locale
 
 class SearchFlowTest : MockServerSearchActivityTest() {
 
@@ -310,7 +311,7 @@ class SearchFlowTest : MockServerSearchActivityTest() {
             assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
             assertEquals(options.limit?.toString(), url.queryParameter("limit"))
             assertEquals(
-                options.types?.joinToString(separator = ",") { it.name.toLowerCase() },
+                options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
                 url.queryParameter("types")
             )
 

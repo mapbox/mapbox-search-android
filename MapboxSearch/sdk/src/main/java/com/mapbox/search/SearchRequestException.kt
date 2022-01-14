@@ -28,6 +28,32 @@ public class SearchRequestException(
     /**
      * @suppress
      */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SearchRequestException
+
+        if (message != other.message) return false
+        if (code != other.code) return false
+        if (cause != other.cause) return false
+
+        return true
+    }
+
+    /**
+     * @suppress
+     */
+    override fun hashCode(): Int {
+        var result = message.hashCode()
+        result = 31 * result + code
+        result = 31 * result + (cause?.hashCode() ?: 0)
+        return result
+    }
+
+    /**
+     * @suppress
+     */
     override fun toString(): String {
         return "SearchRequestException(message='$message', code=$code, cause=$cause)"
     }

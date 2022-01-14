@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.mapbox.search.ResponseInfo
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
@@ -125,7 +126,11 @@ class MainActivity : AppCompatActivity() {
         searchCategoriesView.addCategoryLoadingStateListener(object : SearchCategoriesBottomSheetView.CategoryLoadingStateListener {
             override fun onLoadingStart(category: Category) {}
 
-            override fun onCategoryResultsLoaded(category: Category, searchResults: List<SearchResult>) {
+            override fun onCategoryResultsLoaded(
+                category: Category,
+                searchResults: List<SearchResult>,
+                responseInfo: ResponseInfo,
+            ) {
                 Toast.makeText(
                     applicationContext,
                     "Loaded ${searchResults.size} results for $category",
@@ -133,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
 
-            override fun onLoadingError(category: Category) {}
+            override fun onLoadingError(category: Category, e: Exception) {}
         })
 
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {

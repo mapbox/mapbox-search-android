@@ -30,7 +30,6 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.search.tests_support.createTestCoreSearchResult
@@ -545,38 +544,6 @@ internal class SearchEngineTest {
                         )
                     )
                 }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check search selection with non platform suggestion`() = TestCase {
-        Given("SearchEngine with mocked dependencies") {
-            val slotCallbackError = slot<Exception>()
-            val callback = mockk<SearchSelectionCallback>()
-            every { callback.onError(capture(slotCallbackError)) } returns Unit
-
-            When("Non platform suggestion selected") {
-                val task = searchEngine.select(
-                    suggestion = TestSearchSuggestion(),
-                    options = SelectOptions(),
-                    executor = executor,
-                    callback = callback
-                ) as SearchRequestTaskImpl<*>
-
-                Verify("CoreSearchEngine.onSelected in not called", exactly = 0) {
-                    coreEngine.onSelected(any(), any())
-                }
-
-                Verify("Error passed to callback") {
-                    callback.onError(any())
-                }
-                Then("Error should be IllegalArgumentException", true, slotCallbackError.captured is IllegalArgumentException)
-
-                Then("SearchRequestTask released reference to callback", true, task.callbackDelegate == null)
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("SearchRequestTask is executed", true, task.isExecuted)
-                // Then("SearchRequestTask is not cancelled", false, task.isCancelled)
             }
         }
     }

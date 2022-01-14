@@ -9,6 +9,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListItemCount
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListNotEmpty
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItem
 import com.mapbox.search.CategorySearchOptions
 import com.mapbox.search.sample.Constants.DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS
 import com.mapbox.search.sample.Constants.MAX_NETWORK_REQUEST_TIMEOUT_MILLIS
@@ -19,9 +22,6 @@ import com.mapbox.search.sample.tools.waitUntilViewAssertionSuccessful
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.view.category.Category
 import com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListItemCount
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
-import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItem
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 

@@ -115,7 +115,7 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
         assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
-            options.types?.joinToString(separator = ",") { it.name.toLowerCase() },
+            options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
             url.queryParameter("types")
         )
 
@@ -156,6 +156,7 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
                 )
             ),
             descriptionAddress = "Eiffel Tower, 5 Avenue Anatole France, 75007 Paris, France",
+            matchingName = "Eiffel Tower",
             center = Point.fromLngLat(2.294464, 48.858353),
             routablePoints = listOf(RoutablePoint(point = Point.fromLngLat(2.294464, 48.858353), name = "Address")),
             icon = "marker",
@@ -361,6 +362,49 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
         })
 
         countDownLatch.await()
+    }
+
+    @Test
+    fun testErrorBackendResponseSimpleFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(422)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException("Wrong arguments", 422),
+            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+        )
+    }
+
+    @Test
+    fun testErrorBackendResponseExtendedFormat() {
+        val errorResponse = MockResponse()
+            .setResponseCode(400)
+            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+
+        val res = callback.getResultBlocking()
+        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+
+        assertEquals(
+            SearchRequestException(
+                "Need to include either a route, bbox, proximity, or origin for category searches",
+                400
+            ),
+            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+        )
     }
 
     @After

@@ -8,12 +8,9 @@ import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
-import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
-import com.mapbox.search.tests_support.TestCoreResponseSearchSuggestion
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -102,32 +99,6 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
             "Error should be IllegalArgumentException",
             error.equalsTo(
                 IllegalArgumentException("All provided suggestions must originate from the same search result!")
-            )
-        )
-    }
-
-    @Test
-    fun testUnsupportedSuggestionSelection() {
-        val callback = BlockingSearchSelectionCallback()
-        val requestOptions = createTestRequestOptions()
-        searchEngine.select(
-            listOf(
-                ServerSearchSuggestion(TEST_ORIGINAL_SEARCH_RESULT, requestOptions),
-                TestCoreResponseSearchSuggestion(
-                    TEST_ORIGINAL_SEARCH_RESULT,
-                    isBatchResolveSupported = true,
-                    requestOptions = requestOptions
-                )
-            ),
-            callback
-        )
-
-        val (error) = callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Error
-
-        assertTrue(
-            "Error should be IllegalArgumentException",
-            error.equalsTo(
-                IllegalArgumentException("Unknown suggestion type TestCoreResponseSearchSuggestion")
             )
         )
     }
