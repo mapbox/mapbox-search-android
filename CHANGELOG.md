@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.25-SNAPSHOT
+## 1.0.0-beta.25
 
 ### Breaking changes
 - [UI] Now `SearchCategoriesBottomSheetView.CategoryLoadingStateListener.onLoadingError()` callback provides one more parameter - `Exception` occurred during the request.
