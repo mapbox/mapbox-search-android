@@ -63,7 +63,13 @@ internal object SearchEntityPresentation {
             ?.firstOrNull { it != null }
             ?.let {
                 //noinspection DefaultLocale
-                context.getString(it.presentation.displayName).capitalize(Locale.getDefault())
+                context.getString(it.presentation.displayName).replaceFirstChar { char ->
+                    if (char.isLowerCase()) {
+                        char.titlecase(Locale.getDefault())
+                    } else {
+                        char.toString()
+                    }
+                }
             }
     }
 

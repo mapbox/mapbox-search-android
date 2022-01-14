@@ -1,5 +1,11 @@
 apply plugin: 'jacoco'
 
+apply from: "../gradle/versions.gradle"
+
+jacoco {
+    // Workaround for https://youtrack.jetbrains.com/issue/KT-44757
+    toolVersion = "$jacoco_tool_version"
+}
 
 project.afterEvaluate {
     // Grab all build types and product flavors

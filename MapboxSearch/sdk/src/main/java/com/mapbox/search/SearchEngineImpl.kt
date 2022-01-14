@@ -2,15 +2,13 @@ package com.mapbox.search
 
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.printableName
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.engine.BaseSearchEngine
 import com.mapbox.search.engine.TwoStepsBatchRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.record.HistoryService
-import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
@@ -97,12 +95,6 @@ internal class SearchEngineImpl(
 
         filtered.forEachIndexed { index, suggestion ->
             when (suggestion) {
-                !is CoreResponseProvider -> {
-                    executor.execute {
-                        callback.onError(IllegalArgumentException("SearchSuggestion must provide original response"))
-                    }
-                    return SearchRequestTaskImpl.completed()
-                }
                 is GeocodingCompatSearchSuggestion -> {
                     val result = ServerSearchResultImpl(
                         listOf(suggestion.searchResultType),
@@ -123,14 +115,6 @@ internal class SearchEngineImpl(
                 is ServerSearchSuggestion -> {
                     toResolve.add(suggestion)
                 }
-                else -> {
-                    val error = IllegalArgumentException("Unknown suggestion type ${suggestion.javaClass.printableName}")
-                    executor.execute {
-                        reportRelease(error)
-                        callback.onError(error)
-                    }
-                    return SearchRequestTaskImpl.completed()
-                }
             }
         }
 
@@ -144,7 +128,7 @@ internal class SearchEngineImpl(
             }
             else -> {
                 val coreSearchResults = toResolve.map {
-                    (it as CoreResponseProvider).originalSearchResult.mapToCore()
+                    (it as BaseSearchSuggestion).originalSearchResult.mapToCore()
                 }
 
                 val resultingFunction: (List<SearchResult>) -> List<SearchResult> = { remoteResults ->
@@ -205,13 +189,14 @@ internal class SearchEngineImpl(
 
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
 
-        fun completeSearchResultSelection(resolved: SearchResult): SearchRequestTask {
+        fun completeSearchResultSelection(
+            suggestion: BaseSearchSuggestion,
+            resolved: SearchResult
+        ): SearchRequestTask {
             val searchRequestTask = SearchRequestTaskImpl(callback)
 
             searchRequestTask += engineExecutorService.submit {
-                if (suggestion is CoreResponseProvider) {
-                    coreEngine.onSelected(coreRequestOptions, suggestion.originalSearchResult.mapToCore())
-                }
+                coreEngine.onSelected(coreRequestOptions, suggestion.originalSearchResult.mapToCore())
 
                 val responseInfo = ResponseInfo(
                     requestOptions = suggestion.requestOptions,
@@ -247,19 +232,13 @@ internal class SearchEngineImpl(
         }
 
         return when (suggestion) {
-            !is CoreResponseProvider -> {
-                executor.execute {
-                    callback.onError(IllegalArgumentException("SearchSuggestion must provide original response"))
-                }
-                SearchRequestTaskImpl.completed()
-            }
             is GeocodingCompatSearchSuggestion -> {
                 val searchResult = ServerSearchResultImpl(
                     listOf(suggestion.searchResultType),
                     suggestion.originalSearchResult,
                     suggestion.requestOptions
                 )
-                completeSearchResultSelection(searchResult)
+                completeSearchResultSelection(suggestion, searchResult)
             }
             is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback, engineExecutorService) { request ->
                 val requestContext = suggestion.requestOptions.requestContext
@@ -288,15 +267,10 @@ internal class SearchEngineImpl(
                     suggestion.originalSearchResult,
                     suggestion.requestOptions
                 )
-                completeSearchResultSelection(resolved)
+                completeSearchResultSelection(suggestion, resolved)
             }
-            else -> {
-                val error = IllegalArgumentException("Unknown suggestion type ${suggestion.javaClass.printableName}")
-                executor.execute {
-                    reportRelease(error)
-                    callback.onError(error)
-                }
-                return SearchRequestTaskImpl.completed()
+            is BaseSearchSuggestion -> {
+                error("Unprocessed suggestion: $suggestion")
             }
         }
     }

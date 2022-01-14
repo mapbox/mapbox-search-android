@@ -13,6 +13,7 @@ import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.POSTCODE
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.REGION
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.STREET
 import kotlinx.parcelize.Parcelize
+import java.util.Locale
 
 /**
  * Represents address of the search result.
@@ -190,7 +191,7 @@ public class SearchAddress @JvmOverloads public constructor(
     }
 
     private fun isCountryWithRegions(country: String?): Boolean = country?.let {
-        listOf("united states of america", "usa").contains(country.toLowerCase())
+        listOf("united states of america", "usa").contains(country.lowercase(Locale.getDefault()))
     } ?: false
 
     /**

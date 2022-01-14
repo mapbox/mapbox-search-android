@@ -6,7 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.BaseSearchResult
 import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.tests_support.BlockingEngineReadyCallback
@@ -14,10 +14,8 @@ import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
-import com.mapbox.search.tests_support.TestSearchSuggestion
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestSuggestion
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
 import com.mapbox.search.tests_support.loadTileRegionBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -33,7 +31,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import java.lang.IllegalArgumentException
 import java.util.concurrent.Executor
 
 @Suppress("LargeClass")
@@ -254,7 +251,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         searchEngine.select(suggestions.first(), callback)
 
         val result = (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Result).result
-        val originalSearchResult = (result as CoreResponseProvider).originalSearchResult
+        val originalSearchResult = (result as BaseSearchResult).originalSearchResult
         val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
         assertEquals(expectedSearchResult, originalSearchResult)
 
@@ -310,36 +307,6 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testSelectionForUnsupportedSuggestion() {
-        loadOfflineData()
-
-        val callback = BlockingSearchSelectionCallback()
-
-        searchEngine.search(
-            "15th Street Northwest, Washington, DC",
-            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
-            callback
-        )
-
-        val suggestions =
-            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertTrue(suggestions.isNotEmpty())
-
-        callback.reset()
-
-        searchEngine.select(
-            suggestion = TestSearchSuggestion(),
-            callback = callback
-        )
-
-        val result = callback.getResultBlocking()
-        assertTrue(result is BlockingSearchSelectionCallback.SearchEngineResult.Error)
-
-        result as BlockingSearchSelectionCallback.SearchEngineResult.Error
-        assertTrue(result.e.equalsTo(IllegalArgumentException("SearchSuggestion must provide original response")))
-    }
-
-    @Test
     fun testForwardGeocodingShortQuery() {
         loadOfflineData()
 
@@ -362,7 +329,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertEquals(1, results.size)
 
-        val originalSearchResult = (results.first() as CoreResponseProvider).originalSearchResult
+        val originalSearchResult = (results.first() as BaseSearchResult).originalSearchResult
         val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
         assertEquals(expectedSearchResult, originalSearchResult)
     }
@@ -400,9 +367,9 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertTrue(results.isNotEmpty())
 
-        val originalSearchResult = (results.first() as CoreResponseProvider).originalSearchResult
+        val originalSearchResult = (results.first() as BaseSearchResult).originalSearchResult
         val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id, distanceMeters = null)
-        assertEquals(expectedResult, (results.first() as CoreResponseProvider).originalSearchResult)
+        assertEquals(expectedResult, (results.first() as BaseSearchResult).originalSearchResult)
     }
 
     @Test

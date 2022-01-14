@@ -7,7 +7,6 @@ import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.common.printableName
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -18,7 +17,7 @@ import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.record.HistoryService
-import com.mapbox.search.result.CoreResponseProvider
+import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchResultFactory
@@ -107,12 +106,6 @@ internal class OfflineSearchEngineImpl(
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
 
         return when (suggestion) {
-            !is CoreResponseProvider -> {
-                executor.execute {
-                    callback.onError(IllegalArgumentException("SearchSuggestion must provide original response"))
-                }
-                SearchRequestTaskImpl.completed()
-            }
             is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(
                 callback, engineExecutorService
             ) { request ->
@@ -141,16 +134,8 @@ internal class OfflineSearchEngineImpl(
                 }
                 SearchRequestTaskImpl.completed()
             }
-            else -> {
-                val error = IllegalArgumentException(
-                    "Unsupported suggestion type for offline search: ${suggestion.javaClass.printableName}"
-                )
-
-                executor.execute {
-                    reportRelease(error)
-                    callback.onError(error)
-                }
-                SearchRequestTaskImpl.completed()
+            is BaseSearchSuggestion -> {
+                error("Unprocessed suggestion: $suggestion")
             }
         }
     }

@@ -9,7 +9,7 @@ internal data class ServerSearchSuggestion(
     override val originalSearchResult: OriginalSearchResult,
     override val requestOptions: RequestOptions,
     private val isFromOffline: Boolean = false
-) : BaseSearchSuggestion() {
+) : BaseSearchSuggestion(originalSearchResult) {
 
     init {
         check(isFromOffline || originalSearchResult.action != null)

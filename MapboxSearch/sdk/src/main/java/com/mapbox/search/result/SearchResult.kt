@@ -9,7 +9,7 @@ import com.mapbox.search.record.IndexableRecord
 /**
  * Resolved search object with populated fields.
  */
-public interface SearchResult : Parcelable {
+public sealed interface SearchResult : Parcelable {
 
     /**
      * Search request options.
@@ -86,7 +86,7 @@ public interface SearchResult : Parcelable {
 /**
  * Resolved search object with populated fields and mandatory coordinates field.
 */
-public interface ServerSearchResult : SearchResult {
+public sealed interface ServerSearchResult : SearchResult {
 
     /**
      * Result coordinates.
@@ -97,7 +97,7 @@ public interface ServerSearchResult : SearchResult {
 /**
  * Resolved search object based on some [IndexableRecord]. As an example, search result is one of user's FavoriteRecord.
  */
-public interface IndexableRecordSearchResult : SearchResult {
+public sealed interface IndexableRecordSearchResult : SearchResult {
 
     /**
      * [IndexableRecord] on which search result based.

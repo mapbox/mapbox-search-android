@@ -7,6 +7,7 @@ plugins {
     id 'kotlin-kapt'
     id 'de.mannodermaus.android-junit5'
     id 'com.mapbox.android.sdk.versions'
+    id 'com.getkeepsafe.dexcount'
 }
 
 apply from: "../gradle/ktlint.gradle"
@@ -20,14 +21,12 @@ apply from: "../gradle/license.gradle"
 apply from: "../gradle/track-public-apis.gradle"
 
 android {
-    buildToolsVersion build_tools_version
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
 
-        versionName project.property('versionName')
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,7 +37,6 @@ android {
             consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"
         }
         release {
-            debuggable false
             jniDebuggable false
             minifyEnabled false
             consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk.txt"
