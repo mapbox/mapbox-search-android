@@ -17,7 +17,7 @@ fi
 
 source scripts/generate_docs.sh
 
-GITHUB_TOKEN=$(./mbx-ci github writer token 2>/dev/null)
+GITHUB_TOKEN=$(./mbx-ci github writer public token 2>/dev/null)
 export GITHUB_TOKEN
 
 TMPDIR=$(mktemp -d)
