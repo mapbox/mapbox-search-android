@@ -27,6 +27,11 @@ public sealed interface SearchResult : Parcelable {
     public val name: String
 
     /**
+     * The feature name, as matched by the search algorithm.
+     */
+    public val matchingName: String?
+
+    /**
      * Additional description for the search result.
      */
     public val descriptionText: String?
@@ -81,6 +86,11 @@ public sealed interface SearchResult : Parcelable {
      * For provided point always returns non-null distance.
      */
     public val distanceMeters: Double?
+
+    /**
+     * Index in response from server.
+     */
+    public val serverIndex: Int?
 }
 
 /**

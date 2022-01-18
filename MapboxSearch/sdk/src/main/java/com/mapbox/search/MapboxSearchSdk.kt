@@ -211,7 +211,14 @@ public object MapboxSearchSdk {
         }
 
         val analyticsService = TelemetryService(
-            application, accessToken, userAgent, locationEngine, viewportProvider, uuidProvider, ::getCoreEngineByApiType, formattedTimeProvider
+            context = application,
+            accessToken = accessToken,
+            userAgent = userAgent,
+            locationEngine = locationEngine,
+            viewportProvider = viewportProvider,
+            uuidProvider = uuidProvider,
+            coreEngineProvider = ::getCoreEngineByApiType,
+            formattedTimeProvider = formattedTimeProvider,
         )
 
         httpErrorsCache = HttpErrorsCacheImpl()

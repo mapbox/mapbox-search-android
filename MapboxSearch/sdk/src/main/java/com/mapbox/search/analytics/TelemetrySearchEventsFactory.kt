@@ -39,7 +39,11 @@ internal class TelemetrySearchEventsFactory(
     private val bitmapEncoder: (Bitmap) -> String = { it.encodeBase64(BITMAP_ENCODE_OPTIONS) }
 ) {
 
-    fun updateCachedSearchFeedbackEvent(cachedEvent: SearchFeedbackEvent, event: FeedbackEvent, currentLocation: Point?) {
+    fun updateCachedSearchFeedbackEvent(
+        cachedEvent: SearchFeedbackEvent,
+        event: FeedbackEvent,
+        currentLocation: Point?,
+    ) {
         cachedEvent.apply {
             this.event = SearchFeedbackEvent.EVENT_NAME
 
@@ -48,7 +52,7 @@ internal class TelemetrySearchEventsFactory(
             feedbackReason = event.reason
 
             // Optional fields
-            fillCommonData(currentLocation)
+            fillCommonData(currentLocation, event.feedbackId ?: uuidProvider.generateUUID())
             cached = true
             feedbackText = event.text ?: feedbackText
             screenshot = event.screenshot?.let(bitmapEncoder) ?: screenshot
@@ -71,6 +75,7 @@ internal class TelemetrySearchEventsFactory(
                 text = event.text,
                 screenshot = event.screenshot,
                 sessionId = event.sessionId,
+                feedbackId = event.feedbackId,
             ),
             asTemplate = false
         )
@@ -79,7 +84,7 @@ internal class TelemetrySearchEventsFactory(
     fun createSearchFeedbackEvent(
         record: IndexableRecord,
         event: FeedbackEvent,
-        currentLocation: Point?
+        currentLocation: Point?,
     ): SearchFeedbackEvent {
         val formattedAddress = record.address?.formattedAddress(FormatStyle.Full)
 
@@ -95,7 +100,7 @@ internal class TelemetrySearchEventsFactory(
             queryString = ""
 
             // Optional fields
-            fillCommonData(currentLocation)
+            fillCommonData(currentLocation, event.feedbackId ?: uuidProvider.generateUUID())
             cached = true // Agreed to mark local favorites as cached
             feedbackText = event.text
             screenshot = event.screenshot?.let(bitmapEncoder)
@@ -115,7 +120,7 @@ internal class TelemetrySearchEventsFactory(
         isReproducible: Boolean? = null,
         event: FeedbackEvent? = null,
         isCached: Boolean? = null,
-        asTemplate: Boolean = false
+        asTemplate: Boolean = false,
     ): SearchFeedbackEvent {
         // TODO remove coreEngineProvider for constructing SearchFeedbackEvent
         val baseEvent = try {
@@ -165,7 +170,7 @@ internal class TelemetrySearchEventsFactory(
             // we don't want specify common data and cached flag, because it will
             // be overridden during sending anyway.
             if (!asTemplate) {
-                fillCommonData(currentLocation)
+                fillCommonData(currentLocation, event?.feedbackId ?: uuidProvider.generateUUID())
                 cached = isCached
             } else {
                 // This properties might be populated by Core SDK, so
@@ -223,7 +228,7 @@ internal class TelemetrySearchEventsFactory(
         }
     }
 
-    private fun SearchFeedbackEvent.fillCommonData(currentLocation: Point?) {
+    private fun SearchFeedbackEvent.fillCommonData(currentLocation: Point?, feedbackId: String) {
         latitude = currentLocation?.latitude()
         longitude = currentLocation?.longitude()
         userAgent = providedUserAgent
@@ -232,7 +237,7 @@ internal class TelemetrySearchEventsFactory(
             mapCenterLatitude = (north() + south()) / 2
             mapCenterLongitude = (east() + west()) / 2
         }
-        feedbackId = uuidProvider.generateUUID()
+        this.feedbackId = feedbackId
         // Absence of "isTest" field is treated as if "isTest = false".
         // So we set it only for `true` cases (same logic on iOS).
         if (BuildConfig.DEBUG) {

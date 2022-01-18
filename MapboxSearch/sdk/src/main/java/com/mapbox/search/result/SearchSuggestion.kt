@@ -20,6 +20,11 @@ public sealed interface SearchSuggestion : Parcelable {
     public val name: String
 
     /**
+     * The feature name, as matched by the search algorithm.
+     */
+    public val matchingName: String?
+
+    /**
      * Suggestion description.
      */
     public val descriptionText: String?
@@ -59,4 +64,9 @@ public sealed interface SearchSuggestion : Parcelable {
      * Denotes whether this suggestion can be passed as a parameter to a batch selection method of the [com.mapbox.search.SearchEngine].
      */
     public val isBatchResolveSupported: Boolean
+
+    /**
+     * Index in response from server.
+     */
+    public val serverIndex: Int?
 }
