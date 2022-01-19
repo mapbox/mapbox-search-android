@@ -619,7 +619,9 @@ package com.mapbox.search {
 
   @kotlinx.parcelize.Parcelize public final class ResponseInfo implements android.os.Parcelable {
     method public com.mapbox.search.RequestOptions getRequestOptions();
+    method public String? getResponseUuid();
     property public final com.mapbox.search.RequestOptions requestOptions;
+    property public final String? responseUuid;
   }
 
   @kotlinx.parcelize.Parcelize public final class ReverseGeoOptions implements android.os.Parcelable {
@@ -927,14 +929,17 @@ package com.mapbox.search.analytics {
   }
 
   public final class FeedbackEvent {
+    ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null, String? feedbackId = null);
     ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null);
     ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null, android.graphics.Bitmap? screenshot = null);
     ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason, String? text = null);
     ctor public FeedbackEvent(@com.mapbox.search.analytics.FeedbackEvent.FeedbackReason String reason);
+    method public String? getFeedbackId();
     method public String getReason();
     method public android.graphics.Bitmap? getScreenshot();
     method public String? getSessionId();
     method public String? getText();
+    property public final String? feedbackId;
     property public final String reason;
     property public final android.graphics.Bitmap? screenshot;
     property public final String? sessionId;
@@ -949,14 +954,17 @@ package com.mapbox.search.analytics {
   }
 
   public final class MissingResultFeedbackEvent {
+    ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null, String? feedbackId = null);
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null);
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null);
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null);
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo);
+    method public String? getFeedbackId();
     method public com.mapbox.search.ResponseInfo getResponseInfo();
     method public android.graphics.Bitmap? getScreenshot();
     method public String? getSessionId();
     method public String? getText();
+    property public final String? feedbackId;
     property public final com.mapbox.search.ResponseInfo responseInfo;
     property public final android.graphics.Bitmap? screenshot;
     property public final String? sessionId;
@@ -1325,10 +1333,12 @@ package com.mapbox.search.result {
     method public Double? getEtaMinutes();
     method public String getId();
     method public String? getMakiIcon();
+    method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
     method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public Integer? getServerIndex();
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String> categories;
@@ -1338,10 +1348,12 @@ package com.mapbox.search.result {
     property public abstract Double? etaMinutes;
     property public abstract String id;
     property public abstract String? makiIcon;
+    property public abstract String? matchingName;
     property public abstract com.mapbox.search.SearchResultMetadata? metadata;
     property public abstract String name;
     property public abstract com.mapbox.search.RequestOptions requestOptions;
     property public abstract java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public abstract Integer? serverIndex;
     property public abstract java.util.List<com.mapbox.search.result.SearchResultType> types;
   }
 
@@ -1371,8 +1383,10 @@ package com.mapbox.search.result {
     method public Double? getEtaMinutes();
     method public String getId();
     method public String? getMakiIcon();
+    method public String? getMatchingName();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
+    method public Integer? getServerIndex();
     method public com.mapbox.search.result.SearchSuggestionType getType();
     method public boolean isBatchResolveSupported();
     property public abstract com.mapbox.search.result.SearchAddress? address;
@@ -1382,8 +1396,10 @@ package com.mapbox.search.result {
     property public abstract String id;
     property public abstract boolean isBatchResolveSupported;
     property public abstract String? makiIcon;
+    property public abstract String? matchingName;
     property public abstract String name;
     property public abstract com.mapbox.search.RequestOptions requestOptions;
+    property public abstract Integer? serverIndex;
     property public abstract com.mapbox.search.result.SearchSuggestionType type;
   }
 

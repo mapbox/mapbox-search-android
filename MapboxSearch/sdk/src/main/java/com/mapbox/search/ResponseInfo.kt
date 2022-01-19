@@ -15,9 +15,10 @@ import kotlinx.parcelize.Parcelize
  * therefore we don't have [CoreSearchResponse].
  *
  * Also, [coreSearchResponse] will equal `null` in the following cases:
- * - User selects [com.mapbox.search.result.SearchSuggestionType.SearchResultSuggestion] search suggestion;
+ * - User selects [com.mapbox.search.result.SearchSuggestionType.SearchResultSuggestion] search suggestion that represents V5 search result;
  * - User selects [com.mapbox.search.result.SearchSuggestionType.IndexableRecordItem] search suggestion;
- * - Batch retrieve of several search suggestions;
+ * - Batch retrieve of several search suggestions that represent V5 search result
+ *      or when all the suggestions is not resolvable in batch request (SearchSuggestion.isBatchResolveSupported == false);
  *
  * @property isReproducible true, if [coreSearchResponse] is not associated with provided [requestOptions],
  * meaning that [RequestOptions] will not contain all parameters, with which [CoreSearchResponse] may be reproduced.
@@ -34,6 +35,12 @@ public class ResponseInfo internal constructor(
     @get:JvmSynthetic
     internal val isReproducible: Boolean,
 ) : Parcelable {
+
+    /**
+     * Service response identifier.
+     */
+    public val responseUuid: String?
+        get() = requestOptions.requestContext.responseUuid
 
     /**
      * @suppress
@@ -67,6 +74,7 @@ public class ResponseInfo internal constructor(
     override fun toString(): String {
         return "ResponseInfo(" +
                 "requestOptions=$requestOptions, " +
+                "responseUuid=$responseUuid, " +
                 "coreSearchResponse=$coreSearchResponse, " +
                 "isReproducible=$isReproducible" +
                 ")"

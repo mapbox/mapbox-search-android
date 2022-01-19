@@ -10,6 +10,9 @@ internal sealed class BaseSearchSuggestion(
     override val name: String
         get() = originalSearchResult.names[0]
 
+    override val matchingName: String?
+        get() = originalSearchResult.matchingName
+
     override val descriptionText: String?
         get() = originalSearchResult.descriptionAddress
 
@@ -28,9 +31,13 @@ internal sealed class BaseSearchSuggestion(
     override val isBatchResolveSupported: Boolean
         get() = originalSearchResult.action?.multiRetrievable == true
 
+    override val serverIndex: Int?
+        get() = originalSearchResult.serverIndex
+
     protected fun baseToString(): String {
         return "id='$id', " +
                 "name='$name', " +
+                "matchingName='$matchingName', " +
                 "address='$address', " +
                 "descriptionText='$descriptionText', " +
                 "distanceMeters='$distanceMeters', " +
@@ -38,6 +45,7 @@ internal sealed class BaseSearchSuggestion(
                 "type='$type', " +
                 "etaMinutes='$etaMinutes', " +
                 "isBatchResolveSupported='$isBatchResolveSupported', " +
+                "serverIndex='$serverIndex', " +
                 "requestOptions='$requestOptions'"
     }
 

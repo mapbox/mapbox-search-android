@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.26-SNAPSHOT
 
+### New features
+- [CORE] New properties are available `SearchSuggestion.matchingName`, `SearchSuggestion.serverIndex`, `SearchResult.matchingName`, `SearchResult.serverIndex`, `ResponseInfo.responseUuid`.
+- [CORE] Now customers can provide their own feedback IDs in `FeedbackEvent.feedbackId` and `MissingResultFeedbackEvent.feedbackId`.
+
 ### Mapbox dependencies
 - Search Native SDK `0.47.0`
 - Common SDK `21.1.0-rc.1`
