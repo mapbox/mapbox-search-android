@@ -708,6 +708,12 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the SavedState Kotlin Extensions.  
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the VersionedParcelable.  
 URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
