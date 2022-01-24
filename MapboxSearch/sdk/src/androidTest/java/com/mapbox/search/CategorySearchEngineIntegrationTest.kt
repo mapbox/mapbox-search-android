@@ -22,6 +22,7 @@ import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
@@ -260,6 +261,16 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testOptionsLimit() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(limit = 1), callback)
+
+        assertEquals(1, callback.getResultBlocking().requireResults().size)
+    }
+
+    @Test
     fun testSuccessfulEmptyResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_empty_response.json"))
 
@@ -272,7 +283,28 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testIndexableRecordsResponse() {
+    fun testIndexableRecordsResponseOnly() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_empty_response.json"))
+
+        val records = (1..10).map {
+            createTestHistoryRecord(
+                id = "id$it",
+                name = "$TEST_CATEGORY $it",
+                categories = listOf(TEST_CATEGORY),
+            )
+        }
+        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+
+        val callback = BlockingSearchCallback()
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+
+        val results = callback.getResultBlocking().requireResults()
+        assertEquals(records.size, results.size)
+        assertTrue(results.all { it is IndexableRecordSearchResult })
+    }
+
+    @Test
+    fun testMixedIndexableRecordsResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
         val callback = BlockingSearchCallback()

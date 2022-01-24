@@ -52,7 +52,8 @@ public class SearchOptions @JvmOverloads public constructor(
     public val languages: List<Language>? = defaultSearchOptionsLanguage(),
 
     /**
-     * Specify the maximum number of results to return. The maximum supported is 10.
+     * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
+     * The maximum number of search results returned from the server is 10.
      */
     public val limit: Int? = null,
 

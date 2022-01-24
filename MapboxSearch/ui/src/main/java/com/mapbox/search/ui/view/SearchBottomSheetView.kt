@@ -172,6 +172,7 @@ public class SearchBottomSheetView @JvmOverloads constructor(
 
         router = Conductor.attachRouter(context.unwrapActivityOrNull()!!, screensContainer, savedInstanceState)
 
+        // TODO(https://github.com/mapbox/mapbox-search-android/issues/16) replace Conductor with more suitable for UI SDK case mechanism
         // Regardless of passed savedInstanceState, conductor stores it's state during activity lifecycle.
         // If savedInstanceState is null here and router already has a root controller,
         // most probably this is an integration bug (developers didn't provide savedInstanceState) or

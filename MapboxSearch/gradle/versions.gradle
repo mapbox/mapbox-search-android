@@ -22,7 +22,7 @@ ext {
     okhttp_interceptor_version = '4.9.0'
     okhttp_mock_version = '1.5.0'
 
-    conductor_version = "2.1.5"
+    conductor_version = "3.1.2"
 
     junit_version = '4.13.2'
     android_x_test_runner_version = '1.4.0'
