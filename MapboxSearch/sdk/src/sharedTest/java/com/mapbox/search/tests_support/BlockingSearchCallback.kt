@@ -30,6 +30,9 @@ internal class BlockingSearchCallback : SearchCallback {
     }
 
     sealed class SearchEngineResult {
+
+        fun requireResults() = (this as Results).results
+
         data class Results(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class Error(val e: Exception) : SearchEngineResult()
     }
