@@ -72,10 +72,7 @@ public class SearchResultsView @JvmOverloads constructor(
     /**
      * [SearchOptions] that will be used for search requests.
      */
-    public var defaultSearchOptions: SearchOptions = SearchOptions(
-        limit = GlobalViewPreferences.SEARCH_LIMIT,
-        requestDebounce = GlobalViewPreferences.DEFAULT_REQUESTS_DEBOUNCE_MILLIS
-    )
+    public var defaultSearchOptions: SearchOptions = GlobalViewPreferences.DEFAULT_SEARCH_OPTIONS
 
     private var commonSearchViewConfiguration = CommonSearchViewConfiguration()
     private var isInitialized = false

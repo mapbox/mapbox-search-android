@@ -32,6 +32,14 @@ public class FeedbackEvent @JvmOverloads public constructor(
      * Unique ID for identifying several related Mapbox events per session.
      */
     public val sessionId: String? = null,
+
+    /**
+     * Unique feedback ID. If the passed value is null, the id will be generated inside the Search SDK.
+     * Normally SDK users don't have to provide it explicitly.
+     * One of the cases, when users should provide their own id,
+     * is when they want to have associated events in different analytics systems.
+     */
+    public val feedbackId: String? = null,
 ) {
 
     /**
@@ -43,12 +51,14 @@ public class FeedbackEvent @JvmOverloads public constructor(
         text: String? = this.text,
         screenshot: Bitmap? = this.screenshot,
         sessionId: String? = this.sessionId,
+        feedbackId: String? = this.feedbackId,
     ): FeedbackEvent {
         return FeedbackEvent(
             reason = reason,
             text = text,
             screenshot = screenshot,
             sessionId = sessionId,
+            feedbackId = feedbackId,
         )
     }
 
@@ -65,6 +75,7 @@ public class FeedbackEvent @JvmOverloads public constructor(
         if (text != other.text) return false
         if (screenshot != other.screenshot) return false
         if (sessionId != other.sessionId) return false
+        if (feedbackId != other.feedbackId) return false
 
         return true
     }
@@ -77,6 +88,7 @@ public class FeedbackEvent @JvmOverloads public constructor(
         result = 31 * result + (text?.hashCode() ?: 0)
         result = 31 * result + (screenshot?.hashCode() ?: 0)
         result = 31 * result + (sessionId?.hashCode() ?: 0)
+        result = 31 * result + (feedbackId?.hashCode() ?: 0)
         return result
     }
 
@@ -88,7 +100,8 @@ public class FeedbackEvent @JvmOverloads public constructor(
                 "reason='$reason', " +
                 "text=$text, " +
                 "screenshot=$screenshot, " +
-                "sessionId=$sessionId" +
+                "sessionId=$sessionId, " +
+                "feedbackId=$feedbackId" +
                 ")"
     }
 

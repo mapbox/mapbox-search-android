@@ -19,10 +19,9 @@ import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.TelemetrySearchEventsFactory
 import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.location.calculateMapZoom
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.BaseSearchResult
-import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
@@ -62,6 +61,8 @@ internal class TelemetrySearchEventsFactoryTest {
     private lateinit var mockBitmap: Bitmap
     private lateinit var jsonSerializer: (Any) -> String
 
+    private lateinit var eventsFactory: TelemetrySearchEventsFactory
+
     @BeforeEach
     fun setUp() {
         coreEngine = mockk()
@@ -71,6 +72,15 @@ internal class TelemetrySearchEventsFactoryTest {
 
         every { coreEngine.makeFeedbackEvent(any(), any()) } returns TEST_CORE_RAW_EVENT
         every { jsonSerializer.invoke(ofType<SearchResultsInfo>()) } returns TEST_SEARCH_RESULTS_INFO_JSON
+
+        eventsFactory = createEventsFactory()
+    }
+
+    private fun createEventsFactory(): TelemetrySearchEventsFactory {
+        return TelemetrySearchEventsFactory(
+            TEST_USER_AGENT, viewportProvider, uuidProvider, { coreEngine },
+            eventJsonParser, formattedDateProvider, jsonSerializer, bitmapEncoder
+        )
     }
 
     @TestFactory
@@ -78,16 +88,16 @@ internal class TelemetrySearchEventsFactoryTest {
         Given("TelemetrySearchEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
-                    event = "search.feedback"
-                    endpoint = "test-endpoint"
+                    event = SearchFeedbackEvent.EVENT_NAME
+                    endpoint = TEST_ENDPOINT
                     requestParamsJson = TEST_REQUEST_PARAMS_JSON
                 }
             }
 
-            val eventsFactory = createEventsFactory()
+            eventsFactory = createEventsFactory()
 
-            listOf<BaseSearchResult>(TEST_SERVER_SEARCH_RESULT, TEST_LOCAL_SEARCH_RESULT).forEach { searchResult ->
-                When("Converting ${searchResult.javaClass.simpleName}") {
+            When("Converting search results with default feedback id") {
+                listOf(TEST_SERVER_SEARCH_RESULT, TEST_LOCAL_SEARCH_RESULT).forEach { searchResult ->
                     val isCached = searchResult is IndexableRecordSearchResult
                     val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                         searchResult.originalSearchResult,
@@ -106,49 +116,48 @@ internal class TelemetrySearchEventsFactoryTest {
                         isCached = isCached
                     )
 
-                    Then("Feedback event contains all values") {
+                    Then("Feedback event for ${searchResult.javaClass.simpleName} contains all values") {
                         assertEqualsJsonify(
                             expectedValue = SearchFeedbackEvent().apply {
-                                event = "search.feedback"
+                                event = SearchFeedbackEvent.EVENT_NAME
                                 cached = searchResult is IndexableRecordSearchResult
                                 created = TEST_EVENT_CREATION_DATE
-                                latitude = 53.911334999999994
-                                longitude = 27.55140833333333
-                                resultIndex = 99
-                                orientation = "portrait"
-                                userAgent = "search-sdk-android-test"
-                                queryString = "Paris Eiffel Tower"
-                                language = listOf("fr", "de", "en")
-                                boundingBox = listOf(-170.0, -80.0, 160.0, 70.0)
-                                proximity = listOf(-88.2960988764769, 36.292616502438)
-                                country = listOf("fr", "de")
-                                endpoint = "test-endpoint"
-                                fuzzyMatch = true
-                                limit = 6
-                                types = listOf("POI", "ADDRESS", "POSTCODE")
-                                proximity = listOf(-88.2960988764769, 36.292616502438)
+                                latitude = TEST_USER_LOCATION.latitude()
+                                longitude = TEST_USER_LOCATION.longitude()
+                                resultIndex = TEST_SEARCH_RESULT.serverIndex
+                                orientation = TEST_REQUEST_OPTIONS.requestContext.screenOrientation?.rawValue
+                                userAgent = TEST_USER_AGENT
+                                queryString = searchResult.requestOptions.query
+                                language = searchResult.requestOptions.options.languages?.map { it.code }
+                                boundingBox = searchResult.requestOptions.options.boundingBox?.coordinates()
+                                proximity = searchResult.requestOptions.options.proximity?.coordinates()
+                                country = searchResult.requestOptions.options.countries?.map { it.code }
+                                endpoint = TEST_ENDPOINT
+                                fuzzyMatch = searchResult.requestOptions.options.fuzzyMatch
+                                limit = searchResult.requestOptions.options.limit
+                                types = searchResult.requestOptions.options.types?.map { it.name }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
-                                selectedItemName = "Tour Eiffel"
-                                keyboardLocale = "de"
-                                mapZoom = 2.0f
-                                mapCenterLatitude = 22.5
-                                mapCenterLongitude = 45.0
+                                selectedItemName = searchResult.originalSearchResult.names.first()
+                                keyboardLocale = TEST_LOCALE.language
+                                mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                                mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                                mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
                                 resultId = when (isCached) {
                                     true -> null
-                                    false -> "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA=="
+                                    false -> searchResult.originalSearchResult.id
                                 }
                                 sessionIdentifier = when (isCached) {
-                                    true -> "<Not available>"
-                                    false -> "test-session-id"
+                                    true -> NOT_AVAILABLE_SESSION_ID
+                                    false -> TEST_SESSION_ID
                                 }
-                                responseUuid = "test-response-uuid"
-                                feedbackId = "test-generated-uuid"
+                                responseUuid = TEST_RESPONSE_UUID
+                                feedbackId = TEST_UUID
                                 if (BuildConfig.DEBUG) {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+                                resultCoordinates = searchResult.coordinate?.coordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = AppMetadata(
                                     name = null,
@@ -157,12 +166,36 @@ internal class TelemetrySearchEventsFactoryTest {
                                     sessionId = TEST_SESSION_ID
                                 )
                                 searchResultsJson = TEST_SEARCH_RESULTS_INFO_JSON
-                                schema = "search.feedback-2.3"
+                                schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                             },
                             actualValue = feedbackEvent
                         )
                     }
                 }
+            }
+
+            When("Converting search results with overridden feedback id") {
+                val overriddenFeedbackId = "overridden-feedback-id"
+
+                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                    TEST_SERVER_SEARCH_RESULT.originalSearchResult,
+                    TEST_SERVER_SEARCH_RESULT.requestOptions,
+                    createTestCoreSearchResponse(
+                        results = listOf(TEST_SEARCH_RESULT.mapToCore())
+                    ),
+                    TEST_USER_LOCATION,
+                    isReproducible = true,
+                    event = FeedbackEvent(
+                        reason = "Missing routable point",
+                        text = "Fix, please!",
+                        screenshot = mockBitmap,
+                        sessionId = TEST_SESSION_ID,
+                        feedbackId = overriddenFeedbackId,
+                    ),
+                    isCached = false
+                )
+
+                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
             }
         }
     }
@@ -172,20 +205,20 @@ internal class TelemetrySearchEventsFactoryTest {
         Given("TelemetrySearchEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
-                    event = "search.feedback"
-                    endpoint = "test-endpoint"
+                    event = SearchFeedbackEvent.EVENT_NAME
+                    endpoint = TEST_ENDPOINT
                     requestParamsJson = TEST_REQUEST_PARAMS_JSON
                 }
             }
 
-            val eventsFactory = createEventsFactory()
+            eventsFactory = createEventsFactory()
 
-            listOf<BaseSearchSuggestion>(
-                TEST_SERVER_SEARCH_SUGGESTION,
-                TEST_LOCAL_SEARCH_SUGGESTION,
-                TEST_GEOCODING_COMPAT_SEARCH_SUGGESTION
-            ).forEach { searchSuggestion ->
-                When("Converting ${searchSuggestion.javaClass.simpleName}") {
+            When("Converting search suggestions with default feedback id") {
+                listOf(
+                    TEST_SERVER_SEARCH_SUGGESTION,
+                    TEST_LOCAL_SEARCH_SUGGESTION,
+                    TEST_GEOCODING_COMPAT_SEARCH_SUGGESTION
+                ).forEach { searchSuggestion ->
                     val isCached = searchSuggestion is IndexableRecordSearchSuggestion
                     val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                         searchSuggestion.originalSearchResult,
@@ -201,58 +234,78 @@ internal class TelemetrySearchEventsFactoryTest {
                         isCached = isCached
                     )
 
-                    Then("Feedback event contains all values") {
+                    Then("Feedback event for ${searchSuggestion.javaClass.simpleName} contains all values") {
                         assertEqualsJsonify(
                             expectedValue = SearchFeedbackEvent().apply {
-                                event = "search.feedback"
+                                event = SearchFeedbackEvent.EVENT_NAME
                                 cached = searchSuggestion is IndexableRecordSearchSuggestion
                                 created = TEST_EVENT_CREATION_DATE
-                                latitude = 53.911334999999994
-                                longitude = 27.55140833333333
-                                resultIndex = 99
-                                orientation = "portrait"
-                                userAgent = "search-sdk-android-test"
-                                queryString = "Paris Eiffel Tower"
-                                language = listOf("fr", "de", "en")
-                                boundingBox = listOf(-170.0, -80.0, 160.0, 70.0)
-                                proximity = listOf(-88.2960988764769, 36.292616502438)
-                                country = listOf("fr", "de")
-                                endpoint = "test-endpoint"
-                                fuzzyMatch = true
-                                limit = 6
-                                types = listOf("POI", "ADDRESS", "POSTCODE")
-                                proximity = listOf(-88.2960988764769, 36.292616502438)
+                                latitude = TEST_USER_LOCATION.latitude()
+                                longitude = TEST_USER_LOCATION.longitude()
+                                resultIndex = searchSuggestion.serverIndex
+                                orientation = TEST_REQUEST_OPTIONS.requestContext.screenOrientation?.rawValue
+                                userAgent = TEST_USER_AGENT
+                                queryString = searchSuggestion.requestOptions.query
+                                language = searchSuggestion.requestOptions.options.languages?.map { it.code }
+                                boundingBox = searchSuggestion.requestOptions.options.boundingBox?.coordinates()
+                                proximity = searchSuggestion.requestOptions.options.proximity?.coordinates()
+                                country = searchSuggestion.requestOptions.options.countries?.map { it.code }
+                                endpoint = TEST_ENDPOINT
+                                fuzzyMatch = searchSuggestion.requestOptions.options.fuzzyMatch
+                                limit = searchSuggestion.requestOptions.options.limit
+                                types = searchSuggestion.requestOptions.options.types?.map { it.name }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
-                                selectedItemName = "Tour Eiffel"
-                                mapZoom = 2.0f
-                                mapCenterLatitude = 22.5
-                                mapCenterLongitude = 45.0
-                                keyboardLocale = "de"
+                                selectedItemName = searchSuggestion.originalSearchResult.names.first()
+                                mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                                mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                                mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
+                                keyboardLocale = TEST_LOCALE.language
                                 resultId = when (isCached) {
                                     true -> null
-                                    false -> "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA=="
+                                    false -> searchSuggestion.originalSearchResult.id
                                 }
                                 sessionIdentifier = when (isCached) {
-                                    true -> "<Not available>"
-                                    false -> "test-session-id"
+                                    true -> NOT_AVAILABLE_SESSION_ID
+                                    false -> TEST_SESSION_ID
                                 }
-                                responseUuid = "test-response-uuid"
-                                feedbackId = "test-generated-uuid"
+                                responseUuid = TEST_RESPONSE_UUID
+                                feedbackId = TEST_UUID
                                 if (BuildConfig.DEBUG) {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+                                resultCoordinates = searchSuggestion.originalSearchResult.center?.coordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = null
                                 searchResultsJson = null
-                                schema = "search.feedback-2.3"
+                                schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                             },
                             actualValue = feedbackEvent
                         )
                     }
                 }
+            }
+
+            When("Converting search suggestion with overridden feedback id") {
+                val overriddenFeedbackId = "overridden-feedback-id"
+
+                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                    TEST_SERVER_SEARCH_SUGGESTION.originalSearchResult,
+                    TEST_SERVER_SEARCH_SUGGESTION.requestOptions,
+                    null,
+                    TEST_USER_LOCATION,
+                    isReproducible = true,
+                    event = FeedbackEvent(
+                        reason = "Missing routable point",
+                        text = "Fix, please!",
+                        screenshot = mockBitmap,
+                        feedbackId = overriddenFeedbackId,
+                    ),
+                    isCached = false
+                )
+
+                Then("Feedback id should be", overriddenFeedbackId, feedbackEvent.feedbackId)
             }
         }
     }
@@ -262,14 +315,14 @@ internal class TelemetrySearchEventsFactoryTest {
         Given("TelemetrySearchEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
-                    event = "search.feedback"
-                    endpoint = "test-endpoint"
+                    event = SearchFeedbackEvent.EVENT_NAME
+                    endpoint = TEST_ENDPOINT
                 }
             }
 
-            val eventsFactory = createEventsFactory()
+            eventsFactory = createEventsFactory()
 
-            When("Converting FavoriteRecord") {
+            When("Converting FavoriteRecord with default feedback id") {
                 val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                     TEST_FAVORITE_RECORD,
                     FeedbackEvent(
@@ -282,38 +335,54 @@ internal class TelemetrySearchEventsFactoryTest {
                 Then("Feedback event contains all values") {
                     assertEqualsJsonify(
                         expectedValue = SearchFeedbackEvent().apply {
-                            event = "search.feedback"
+                            event = SearchFeedbackEvent.EVENT_NAME
                             cached = true
                             created = TEST_EVENT_CREATION_DATE
-                            latitude = 53.911334999999994
-                            longitude = 27.55140833333333
+                            latitude = TEST_USER_LOCATION.latitude()
+                            longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
-                            userAgent = "search-sdk-android-test"
+                            userAgent = TEST_USER_AGENT
                             queryString = ""
                             feedbackReason = "Missing routable point"
                             feedbackText = "Fix, please!"
-                            selectedItemName = "22 Baker street"
-                            mapZoom = 2.0f
-                            mapCenterLatitude = 22.5
-                            mapCenterLongitude = 45.0
-                            sessionIdentifier = "<Not available>"
-                            feedbackId = "test-generated-uuid"
+                            selectedItemName = TEST_FAVORITE_RECORD.address?.formattedAddress(SearchAddress.FormatStyle.Full)
+                            mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                            mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                            mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
+                            sessionIdentifier = NOT_AVAILABLE_SESSION_ID
+                            feedbackId = TEST_UUID
                             if (BuildConfig.DEBUG) {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+                            resultCoordinates = TEST_FAVORITE_RECORD.coordinate.coordinates()
                             requestParamsJson = null
                             appMetadata = null
                             searchResultsJson = null
-                            schema = "search.feedback-2.3"
+                            schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                         },
                         actualValue = feedbackEvent
                     )
                 }
             }
 
-            When("Converting HistoryRecord") {
+            When("Converting FavoriteRecord with overridden feedback id") {
+                val overriddenFeedbackId = "overridden-feedback-id"
+
+                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                    TEST_FAVORITE_RECORD,
+                    FeedbackEvent(
+                        reason = "Missing routable point",
+                        text = "Fix, please!",
+                        screenshot = mockBitmap,
+                        feedbackId = overriddenFeedbackId,
+                    ),
+                    TEST_USER_LOCATION
+                )
+                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
+            }
+
+            When("Converting HistoryRecord with default feedback id") {
                 val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                     TEST_HISTORY_RECORD,
                     FeedbackEvent(
@@ -326,34 +395,50 @@ internal class TelemetrySearchEventsFactoryTest {
                 Then("Feedback event contains all values") {
                     assertEqualsJsonify(
                         expectedValue = SearchFeedbackEvent().apply {
-                            event = "search.feedback"
+                            event = SearchFeedbackEvent.EVENT_NAME
                             cached = true
                             created = TEST_EVENT_CREATION_DATE
-                            latitude = 53.911334999999994
-                            longitude = 27.55140833333333
+                            latitude = TEST_USER_LOCATION.latitude()
+                            longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
-                            userAgent = "search-sdk-android-test"
+                            userAgent = TEST_USER_AGENT
                             queryString = ""
                             feedbackReason = "Missing routable point"
                             feedbackText = "Fix, please!"
-                            selectedItemName = "<No address>"
-                            mapZoom = 2.0f
-                            mapCenterLatitude = 22.5
-                            mapCenterLongitude = 45.0
-                            sessionIdentifier = "<Not available>"
-                            feedbackId = "test-generated-uuid"
+                            selectedItemName = NO_ADDRESS_PLACEHOLDER
+                            mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                            mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                            mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
+                            sessionIdentifier = NOT_AVAILABLE_SESSION_ID
+                            feedbackId = TEST_UUID
                             if (BuildConfig.DEBUG) {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+                            resultCoordinates = TEST_HISTORY_RECORD.coordinate?.coordinates()
                             requestParamsJson = null
                             appMetadata = null
-                            schema = "search.feedback-2.3"
+                            schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                         },
                         actualValue = feedbackEvent
                     )
                 }
+            }
+
+            When("Converting HistoryRecord with overridden feedback id") {
+                val overriddenFeedbackId = "overridden-feedback-id"
+
+                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                    TEST_HISTORY_RECORD,
+                    FeedbackEvent(
+                        reason = "Missing routable point",
+                        text = "Fix, please!",
+                        screenshot = mockBitmap,
+                        feedbackId = overriddenFeedbackId,
+                    ),
+                    TEST_USER_LOCATION
+                )
+                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
             }
         }
     }
@@ -363,15 +448,15 @@ internal class TelemetrySearchEventsFactoryTest {
         Given("TelemetrySearchEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
-                    event = "search.feedback"
-                    endpoint = "test-endpoint"
+                    event = SearchFeedbackEvent.EVENT_NAME
+                    endpoint = TEST_ENDPOINT
                     requestParamsJson = TEST_REQUEST_PARAMS_JSON
                 }
             }
 
-            val eventsFactory = createEventsFactory()
+            eventsFactory = createEventsFactory()
 
-            When("Converting ResponseInfo") {
+            When("Converting ResponseInfo with default feedback id") {
                 val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                     MissingResultFeedbackEvent(
                         ResponseInfo(
@@ -391,33 +476,32 @@ internal class TelemetrySearchEventsFactoryTest {
                 Then("Feedback event contains all values") {
                     assertEqualsJsonify(
                         expectedValue = SearchFeedbackEvent().apply {
-                            event = "search.feedback"
+                            event = SearchFeedbackEvent.EVENT_NAME
                             created = TEST_EVENT_CREATION_DATE
-                            latitude = 53.911334999999994
-                            longitude = 27.55140833333333
+                            latitude = TEST_USER_LOCATION.latitude()
+                            longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
-                            orientation = "portrait"
-                            userAgent = "search-sdk-android-test"
-                            queryString = "Paris Eiffel Tower"
-                            language = listOf("fr", "de", "en")
-                            boundingBox = listOf(-170.0, -80.0, 160.0, 70.0)
-                            proximity = listOf(-88.2960988764769, 36.292616502438)
-                            country = listOf("fr", "de")
-                            endpoint = "test-endpoint"
+                            orientation = TEST_REQUEST_OPTIONS.requestContext.screenOrientation?.rawValue
+                            userAgent = TEST_USER_AGENT
+                            queryString = TEST_REQUEST_OPTIONS.query
+                            language = TEST_SEARCH_OPTIONS.languages?.map { it.code }
+                            boundingBox = TEST_SEARCH_OPTIONS.boundingBox?.coordinates()
+                            proximity = TEST_SEARCH_OPTIONS.proximity?.coordinates()
+                            country = TEST_SEARCH_OPTIONS.countries?.map { it.code }
+                            endpoint = TEST_ENDPOINT
                             fuzzyMatch = true
                             limit = 6
-                            types = listOf("POI", "ADDRESS", "POSTCODE")
-                            proximity = listOf(-88.2960988764769, 36.292616502438)
+                            types = TEST_SEARCH_OPTIONS.types?.map { it.name }
                             feedbackReason = "cannot_find"
                             feedbackText = "Please, add Paris to search results!"
                             selectedItemName = ""
-                            keyboardLocale = "de"
-                            mapZoom = 2.0f
-                            mapCenterLatitude = 22.5
-                            mapCenterLongitude = 45.0
-                            sessionIdentifier = "test-session-id"
-                            responseUuid = "test-response-uuid"
-                            feedbackId = "test-generated-uuid"
+                            keyboardLocale = TEST_LOCALE.language
+                            mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                            mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                            mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
+                            sessionIdentifier = TEST_SESSION_ID
+                            responseUuid = TEST_RESPONSE_UUID
+                            feedbackId = TEST_UUID
                             if (BuildConfig.DEBUG) {
                                 isTest = true
                             }
@@ -430,11 +514,34 @@ internal class TelemetrySearchEventsFactoryTest {
                                 sessionId = TEST_SESSION_ID
                             )
                             searchResultsJson = TEST_SEARCH_RESULTS_INFO_JSON
-                            schema = "search.feedback-2.3"
+                            schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                         },
                         actualValue = feedbackEvent
                     )
                 }
+            }
+
+            When("Converting ResponseInfo with overridden feedback id") {
+                val overriddenFeedbackId = "overridden-feedback-id"
+
+                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                    MissingResultFeedbackEvent(
+                        ResponseInfo(
+                            requestOptions = TEST_REQUEST_OPTIONS,
+                            coreSearchResponse = createTestCoreSearchResponse(
+                                results = listOf(TEST_SEARCH_RESULT.mapToCore())
+                            ),
+                            isReproducible = true,
+                        ),
+                        "Please, add Paris to search results!",
+                        sessionId = TEST_SESSION_ID,
+                        screenshot = mockBitmap,
+                        feedbackId = overriddenFeedbackId,
+                    ),
+                    TEST_USER_LOCATION
+                )
+
+                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
             }
         }
     }
@@ -444,7 +551,7 @@ internal class TelemetrySearchEventsFactoryTest {
         Given("TelemetrySearchEventsFactory with mocked dependencies") {
             val eventsFactory = createEventsFactory()
             val cachedSearchEvent = SearchFeedbackEvent().apply {
-                event = "search.feedback"
+                event = SearchFeedbackEvent.EVENT_NAME
                 selectedItemName = "cached-item"
                 sessionIdentifier = "cached-session-id"
                 resultIndex = -1
@@ -467,22 +574,22 @@ internal class TelemetrySearchEventsFactoryTest {
                 Then("Feedback event was properly created from raw event") {
                     assertEqualsJsonify(
                         expectedValue = SearchFeedbackEvent().apply {
-                            event = "search.feedback"
+                            event = SearchFeedbackEvent.EVENT_NAME
                             cached = true
                             created = TEST_EVENT_CREATION_DATE
-                            latitude = 53.911334999999994
-                            longitude = 27.55140833333333
+                            latitude = TEST_USER_LOCATION.latitude()
+                            longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
-                            userAgent = "search-sdk-android-test"
+                            userAgent = TEST_USER_AGENT
                             queryString = "cached query"
                             feedbackReason = "Missing routable point"
                             feedbackText = "Fix, please!"
                             selectedItemName = "cached-item"
-                            mapZoom = 2.0f
-                            mapCenterLatitude = 22.5
-                            mapCenterLongitude = 45.0
+                            mapZoom = calculateMapZoom(TEST_VIEWPORT)
+                            mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
+                            mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
                             sessionIdentifier = "cached-session-id"
-                            feedbackId = "test-generated-uuid"
+                            feedbackId = TEST_UUID
                             if (BuildConfig.DEBUG) {
                                 isTest = true
                             }
@@ -503,13 +610,6 @@ internal class TelemetrySearchEventsFactoryTest {
         }
     }
 
-    private fun createEventsFactory(): TelemetrySearchEventsFactory {
-        return TelemetrySearchEventsFactory(
-            TEST_USER_AGENT, viewportProvider, uuidProvider, { coreEngine },
-            eventJsonParser, formattedDateProvider, jsonSerializer, bitmapEncoder
-        )
-    }
-
     private companion object {
 
         const val TEST_USER_AGENT = "search-sdk-android-test"
@@ -524,6 +624,13 @@ internal class TelemetrySearchEventsFactoryTest {
         val TEST_USER_PROXIMITY: Point = Point.fromLngLat(-88.2960988764769, 36.292616502438)
         val TEST_ORIGIN_LOCATION: Point = Point.fromLngLat(-88.3, 36.3)
         val TEST_VIEWPORT: BoundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0)
+        val TEST_LOCALE: Locale = Locale.GERMANY
+        const val TEST_RESPONSE_UUID = "test-response-uuid"
+        const val TEST_ENDPOINT = "test-endpoint"
+
+        const val NOT_AVAILABLE_SESSION_ID = "<Not available>"
+        const val SEARCH_FEEDBACK_SCHEMA_VERSION = "search.feedback-2.3"
+        const val NO_ADDRESS_PLACEHOLDER = "<No address>"
 
         val TEST_SEARCH_OPTIONS = SearchOptions(
             proximity = TEST_USER_PROXIMITY,
@@ -549,9 +656,9 @@ internal class TelemetrySearchEventsFactoryTest {
             options = TEST_SEARCH_OPTIONS,
             requestContext = SearchRequestContext(
                 apiType = ApiType.SBS,
-                keyboardLocale = Locale.GERMANY,
+                keyboardLocale = TEST_LOCALE,
                 screenOrientation = ScreenOrientation.PORTRAIT,
-                responseUuid = "test-response-uuid"
+                responseUuid = TEST_RESPONSE_UUID
             )
         )
 
@@ -594,7 +701,7 @@ internal class TelemetrySearchEventsFactoryTest {
         )
 
         val TEST_FAVORITE_RECORD = FavoriteRecord(
-            id = TEST_UUID,
+            id = "test-favorite-record-id",
             name = "Test Local Favorite Name",
             coordinate = Point.fromLngLat(2.294423282146454, 48.85825817805569),
             descriptionText = "Test description text",
@@ -623,7 +730,7 @@ internal class TelemetrySearchEventsFactoryTest {
         )
 
         val TEST_HISTORY_RECORD = HistoryRecord(
-            id = TEST_UUID,
+            id = "test-history-record-id",
             name = "Test Local History Name",
             coordinate = Point.fromLngLat(2.294423282146454, 48.85825817805569),
             descriptionText = "Test description text",
@@ -635,5 +742,11 @@ internal class TelemetrySearchEventsFactoryTest {
             categories = emptyList(),
             timestamp = 123_456_789L
         )
+
+        private fun BoundingBox.coordinates(): List<Double> = listOf(west(), south(), east(), north())
+
+        private fun BoundingBox.centerLatitude() = (north() + south()) / 2
+
+        private fun BoundingBox.centerLongitude() = (east() + west()) / 2
     }
 }

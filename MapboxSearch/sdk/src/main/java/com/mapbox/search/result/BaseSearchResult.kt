@@ -12,6 +12,9 @@ internal abstract class BaseSearchResult(
     override val name: String
         get() = originalSearchResult.names[0]
 
+    override val matchingName: String?
+        get() = originalSearchResult.matchingName
+
     override val descriptionText: String?
         get() = originalSearchResult.descriptionAddress
 
@@ -37,10 +40,14 @@ internal abstract class BaseSearchResult(
     override val distanceMeters: Double?
         get() = originalSearchResult.distanceMeters
 
+    override val serverIndex: Int?
+        get() = originalSearchResult.serverIndex
+
     override fun toString(): String {
         return "SearchResult(" +
                 "id='$id', " +
                 "name='$name', " +
+                "matchingName='$matchingName', " +
                 "address='$address', " +
                 "descriptionText='$descriptionText', " +
                 "routablePoints='$routablePoints', " +
@@ -50,8 +57,9 @@ internal abstract class BaseSearchResult(
                 "types='$types', " +
                 "etaMinutes='$etaMinutes', " +
                 "metadata='$metadata', " +
-                "requestOptions='$requestOptions', " +
-                "distanceMeters='$distanceMeters'" +
+                "distanceMeters='$distanceMeters', " +
+                "serverIndex='$serverIndex', " +
+                "requestOptions='$requestOptions'" +
                 ")"
     }
 }

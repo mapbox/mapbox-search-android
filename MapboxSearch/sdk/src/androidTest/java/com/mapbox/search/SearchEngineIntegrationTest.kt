@@ -186,6 +186,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val res = callback.getResultBlocking()
         assertTrue(res is SearchEngineResult.Suggestions)
         val suggestions = (res as SearchEngineResult.Suggestions).suggestions
+        assertEquals(5, suggestions.size)
+        assertFalse(suggestions.any { it.type is SearchSuggestionType.IndexableRecordItem })
 
         val first = suggestions[0]
 
@@ -236,6 +238,18 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testOptionsLimit() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+
+        val callback = BlockingSearchSelectionCallback()
+        val options = SearchOptions(limit = 3)
+        searchEngine.search(TEST_QUERY, options, callback)
+
+        val res = callback.getResultBlocking()
+        assertEquals(3, res.requireSuggestions().size)
+    }
+
+    @Test
     fun testSuccessfulEmptyResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-empty.json"))
 
@@ -248,10 +262,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testIndexableRecordsResponse() {
+    fun testIndexableRecordsResponseOnly() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-empty.json"))
 
-        val records = (1..3).map {
+        val records = (1..10).map {
             createTestHistoryRecord(
                 id = "id$it",
                 name = "$TEST_QUERY $it",
@@ -324,6 +338,54 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(historyRecord.makiIcon, searchResult.makiIcon)
         assertEquals(historyRecord.metadata, searchResult.metadata)
         assertEquals(historyRecord.type, searchResult.types.first())
+    }
+
+    @Test
+    fun testMixedIndexableRecordsResponse() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+
+        val records = (1..10).map {
+            createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
+        }
+        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val suggestions = callback.getResultBlocking().requireSuggestions()
+
+        // records.size + 5 = records.size + number of suggestions from server
+        assertEquals(records.size + 5, suggestions.size)
+
+        records.indices.forEach { i ->
+            assertTrue(suggestions[i].type is SearchSuggestionType.IndexableRecordItem)
+        }
+        (records.size until suggestions.size).forEach { i ->
+            assertFalse(suggestions[i].type is SearchSuggestionType.IndexableRecordItem)
+        }
+    }
+
+    @Test
+    fun testMixedIndexableRecordsResponseWithLimit() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+
+        val records = (1..3).map {
+            createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
+        }
+        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+
+        val callback = BlockingSearchSelectionCallback()
+        val searchOptions = SearchOptions(limit = records.size + 1)
+        searchEngine.search(TEST_QUERY, searchOptions, callback)
+
+        val suggestions = callback.getResultBlocking().requireSuggestions()
+
+        assertEquals(searchOptions.limit, suggestions.size)
+
+        records.indices.forEach { i ->
+            assertTrue(suggestions[i].type is SearchSuggestionType.IndexableRecordItem)
+        }
+        assertFalse(suggestions.last().type is SearchSuggestionType.IndexableRecordItem)
     }
 
     @Test

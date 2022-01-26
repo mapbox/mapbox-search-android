@@ -36,7 +36,7 @@ internal class CategorySuggestionSearchViewController : BaseSearchController {
         configuration = requireNotNull(bundle.getParcelable(BUNDLE_KEY_CONFIGURATION))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return CategorySuggestionSearchView(container.context).apply {
             init(searchSuggestion, configuration)
             onSearchResultClickListener = { searchResult, responseInfo ->

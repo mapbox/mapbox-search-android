@@ -15,7 +15,7 @@ internal class FeedbackReasonViewController : Controller {
     // Android Studio marks this constructor as unused, but it's needed for Controller
     constructor(args: Bundle?) : super(args)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return FeedbackReasonView(container.context).apply {
             callback = object : FeedbackReasonView.Callback {
                 override fun onBackClick() {

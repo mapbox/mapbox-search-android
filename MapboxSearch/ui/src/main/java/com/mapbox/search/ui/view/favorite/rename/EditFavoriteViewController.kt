@@ -26,7 +26,7 @@ internal class EditFavoriteViewController : BaseSearchController {
         favorite = requireNotNull(favoriteBundle.getParcelable(BUNDLE_KEY_FAVORITE))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return EditFavoriteView(container.context).apply {
             setFavorite(mode, favorite)
             onCloseClickListener = {

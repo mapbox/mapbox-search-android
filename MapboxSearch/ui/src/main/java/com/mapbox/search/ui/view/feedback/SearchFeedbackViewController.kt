@@ -25,7 +25,7 @@ internal class SearchFeedbackViewController : BaseSearchController {
         feedbackMode = requireNotNull(bundle.getParcelable(BUNDLE_KEY_FeedbackMode))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return SearchFeedbackView(container.context).apply {
             init(feedbackMode)
 

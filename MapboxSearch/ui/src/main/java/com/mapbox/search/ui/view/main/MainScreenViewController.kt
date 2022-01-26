@@ -70,7 +70,7 @@ internal class MainScreenViewController : BaseSearchController {
         searchOptions = requireNotNull(restoreSearchOptionsFromBundle(configBundle))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return MainScreenView(container.context).apply {
             id = R.id.main_screen_view
             initializeSearch(configuration)
