@@ -279,8 +279,11 @@ jobs:
       - set-up-aws-for-android
       - restore-gradle-cache
       - run:
-          name: Publish release
-          command: bash ./scripts/ci-publish-release.sh
+          name: Validate declared versions
+          command: bash ./scripts/ci-validate-release-version.sh
+      - run:
+          name: Publish to the SDK registry
+          command: bash ./scripts/ci-publish.sh
       - run:
           name: Create PR in the SDK registry repository
           command: bash ./scripts/ci-create-registry-pr.sh
@@ -300,7 +303,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - main
       - publish-release:
           filters:
             tags:
@@ -333,7 +336,6 @@ workflows:
            filters:
              branches:
                only:
-                 - develop
                  - main
 
   default:

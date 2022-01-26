@@ -23,6 +23,3 @@ then
   echo "Version $declaredVersionName is a SNAPSHOT. Skip publishing."
   exit 1
 fi
-
-echo "Publishing $declaredVersionName release to the SDK registry..."
-source scripts/publish.sh
