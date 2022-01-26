@@ -837,6 +837,8 @@ package com.mapbox.search {
 
   @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {
     method public Double? getAverageRating();
+    method public String? getCountryIso1();
+    method public String? getCountryIso2();
     method public String? getCpsJson();
     method public String? getDescription();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
@@ -848,6 +850,8 @@ package com.mapbox.search {
     method public Integer? getReviewCount();
     method public String? getWebsite();
     property public final Double? averageRating;
+    property public final String? countryIso1;
+    property public final String? countryIso2;
     property public final String? cpsJson;
     property public final String? description;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
@@ -1384,6 +1388,7 @@ package com.mapbox.search.result {
     method public String getId();
     method public String? getMakiIcon();
     method public String? getMatchingName();
+    method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
     method public Integer? getServerIndex();
@@ -1397,6 +1402,7 @@ package com.mapbox.search.result {
     property public abstract boolean isBatchResolveSupported;
     property public abstract String? makiIcon;
     property public abstract String? matchingName;
+    property public abstract com.mapbox.search.SearchResultMetadata? metadata;
     property public abstract String name;
     property public abstract com.mapbox.search.RequestOptions requestOptions;
     property public abstract Integer? serverIndex;

@@ -82,7 +82,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
+                singleBoxSearchBaseUrl = mockServer.url("").toString(),
+                geocodingEndpointBaseUrl = mockServer.url("").toString(),
             ),
             allowReinitialization = true,
             timeProvider = timeProvider,
@@ -212,7 +213,15 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 "carmen" to "place.9038333669154200",
                 "federated" to "carmen.place.9038333669154200",
             ),
-            etaMinutes = 10.5
+            etaMinutes = 10.5,
+            metadata = SearchResultMetadata(
+                metadata = HashMap(
+                    mutableMapOf(
+                        "iso_3166_1" to "by",
+                        "iso_3166_2" to "BY-MI"
+                    )
+                )
+            )
         )
 
         assertEquals(
@@ -517,7 +526,12 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
             icon = "marker",
             metadata = SearchResultMetadata(
-                metadata = hashMapOf(),
+                metadata = HashMap(
+                    mutableMapOf(
+                        "iso_3166_1" to "by",
+                        "iso_3166_2" to "BY-MI"
+                    )
+                ),
                 reviewCount = 17,
                 phone = "+1 650-965-2048",
                 website = "https://www.starbucks.com/store-locator/store/7373/shoreline-pear-1380-pear-avenue-mountain-view-ca-940431360-us",
@@ -958,6 +972,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
             (res as SearchEngineResult.Error).e
         )
+    }
+
+    @Test
+    fun testMetadataForGeocodingAPI() {
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING)
+
+        mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val suggestions = callback.getResultBlocking().requireSuggestions()
+        assertTrue(suggestions.isNotEmpty())
+        assertEquals("fr", suggestions.first().metadata?.countryIso1)
     }
 
     @After

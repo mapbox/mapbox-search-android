@@ -1,0 +1,84 @@
+{
+  "type":"FeatureCollection",
+  "query":[
+    "paris",
+    "eiffel",
+    "tower"
+  ],
+  "features":[
+    {
+      "id":"poi.1236950632550",
+      "type":"Feature",
+      "place_type":[
+        "poi"
+      ],
+      "relevance":0.99,
+      "properties":{
+        "address":"5 avenue Anatole France",
+        "foursquare":"51a2445e5019c80b56934c75",
+        "wikidata":"Q243",
+        "landmark":true,
+        "category":"monument, landmark, historic"
+      },
+      "text_en":"Eiffel Tower",
+      "language_en":"en",
+      "place_name_en":"Eiffel Tower, 5 avenue Anatole France, Paris, 75007, France",
+      "text":"Eiffel Tower",
+      "language":"en",
+      "place_name":"Eiffel Tower, 5 avenue Anatole France, Paris, 75007, France",
+      "center":[
+        2.294786,
+        48.85877975
+      ],
+      "geometry":{
+        "coordinates":[
+          2.294786,
+          48.85877975
+        ],
+        "type":"Point"
+      },
+      "context":[
+        {
+          "id":"neighborhood.8787731989418510",
+          "wikidata":"Q3413275",
+          "text_en":"Gros-Caillou",
+          "language_en":"en",
+          "text":"Gros-Caillou",
+          "language":"en"
+        },
+        {
+          "id":"postcode.6199909826936270",
+          "text_en":"75007",
+          "text":"75007"
+        },
+        {
+          "id":"locality.12325909718432740",
+          "wikidata":"Q259463",
+          "text_en":"7th arrondissement of Paris",
+          "language_en":"en",
+          "text":"7th arrondissement of Paris",
+          "language":"en"
+        },
+        {
+          "id":"place.14749210607497330",
+          "wikidata":"Q90",
+          "short_code":"FR-75",
+          "text_en":"Paris",
+          "language_en":"en",
+          "text":"Paris",
+          "language":"en"
+        },
+        {
+          "id":"country.19008108158641660",
+          "wikidata":"Q142",
+          "short_code":"fr",
+          "text_en":"France",
+          "language_en":"en",
+          "text":"France",
+          "language":"en"
+        }
+      ]
+    }
+  ],
+  "attribution":"NOTICE: © 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare."
+}

@@ -21,10 +21,20 @@ internal class SearchResultMetadataTest {
             val testPrimaryPhotos = listOf(ImageInfo(url = "test-url1", width = 150, height = 100))
             val testOtherPhotos = listOf(ImageInfo(url = "test-url2", width = 500, height = 350))
 
+            val testIso1Key = "iso_3166_1"
+            val testIso1Value = "FR"
+
+            val testIso2Key = "iso_3166_2"
+            val testIso2Value = "FR-J"
+
             val testMetaKey = "key"
             val testValue = "test value"
             val spyMetaMap = spyk(
-                hashMapOf(testMetaKey to testValue)
+                hashMapOf(
+                    testMetaKey to testValue,
+                    testIso1Key to testIso1Value,
+                    testIso2Key to testIso2Value,
+                )
             )
 
             val testOpenHours = OpenHours.Scheduled(
@@ -102,6 +112,14 @@ internal class SearchResultMetadataTest {
                 Verify("CoreResultMetadata.getCpsJson() called") {
                     spyCoreMeta.cpsJson
                 }
+
+                Verify("CoreResultMetadata.data.get(\"iso_3166_1\") called") {
+                    spyMetaMap["iso_3166_1"]
+                }
+
+                Verify("CoreResultMetadata.data.get(\"iso_3166_2\") called") {
+                    spyMetaMap["iso_3166_2"]
+                }
             }
 
             When("reviewCount accessed") {
@@ -156,14 +174,32 @@ internal class SearchResultMetadataTest {
                 }
             }
 
+            When("countryIso1 accessed") {
+                Then("Returned data should be equal to initially provided", testIso1Value, metadata.countryIso1)
+            }
+
+            When("countryIso2 accessed") {
+                Then("Returned data should be equal to initially provided", testIso2Value, metadata.countryIso2)
+            }
+
             When("toString() called") {
                 val value = metadata.toString()
                 Then("Value should be as expected",
-                    "SearchResultMetadata(reviewCount=${originalCoreMeta.reviewCount}, phone=${originalCoreMeta.phone}, " +
-                            "website=${originalCoreMeta.website}, averageRating=${originalCoreMeta.avRating}, " +
+                    "SearchResultMetadata(" +
+                            "extraData=${originalCoreMeta.data}, " +
+                            "reviewCount=${originalCoreMeta.reviewCount}, " +
+                            "phone=${originalCoreMeta.phone}, " +
+                            "website=${originalCoreMeta.website}, " +
+                            "averageRating=${originalCoreMeta.avRating}, " +
                             "description=${originalCoreMeta.description}, " +
-                            "primaryPhotos=$testPrimaryPhotos, otherPhotos=$testOtherPhotos, extraData=${originalCoreMeta.data}, " +
-                            "openHours=$testOpenHours, parking=$testParking, cpsJson=$testCpsJson)",
+                            "primaryPhotos=$testPrimaryPhotos, " +
+                            "otherPhotos=$testOtherPhotos, " +
+                            "openHours=$testOpenHours, " +
+                            "parking=$testParking, " +
+                            "cpsJson=$testCpsJson, " +
+                            "countryIso1=$testIso1Value, " +
+                            "countryIso2=$testIso2Value" +
+                            ")",
                     value
                 )
             }
