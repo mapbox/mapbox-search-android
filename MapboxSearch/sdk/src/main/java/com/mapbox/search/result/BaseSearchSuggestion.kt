@@ -1,6 +1,7 @@
 package com.mapbox.search.result
 
 internal sealed class BaseSearchSuggestion(
+    @Transient
     open val originalSearchResult: OriginalSearchResult
 ) : SearchSuggestion {
 
