@@ -1,14 +1,19 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.26-SNAPSHOT
+## 1.0.0-beta.26
 
 ### New features
 - [CORE] New properties are available `SearchSuggestion.matchingName`, `SearchSuggestion.serverIndex`, `SearchResult.matchingName`, `SearchResult.serverIndex`, `ResponseInfo.responseUuid`.
 - [CORE] Now customers can provide their own feedback IDs in `FeedbackEvent.feedbackId` and `MissingResultFeedbackEvent.feedbackId`.
+- [CORE] Now `SearchSuggestion` provides optional `metadata` property.
+- [CORE] Now `SearchResultMetadata` provides optional `countryIso1` and `countryIso2` properties that provide country codes in `ISO 3166-1` and `ISO 3166-2`. These properties are available for both `SearchResult` and `SearchSuggestion` types, in SBS and V5 APIs.
+
+### Bug fixes
+- [CORE] Fixed GSON serialization for `SearchResult` and `SearchSuggestion`
 
 ### Mapbox dependencies
-- Search Native SDK `0.47.0`
-- Common SDK `21.1.0-rc.1`
+- Search Native SDK `0.49.0`
+- Common SDK `21.1.0`
 - Telemetry SDK `8.1.1`
 - Kotlin `1.5.31`
 

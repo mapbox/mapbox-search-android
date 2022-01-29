@@ -1,6 +1,9 @@
 package com.mapbox.search.result
 
+import com.mapbox.search.SearchResultMetadata
+
 internal sealed class BaseSearchSuggestion(
+    @Transient
     open val originalSearchResult: OriginalSearchResult
 ) : SearchSuggestion {
 
@@ -28,6 +31,9 @@ internal sealed class BaseSearchSuggestion(
     override val etaMinutes: Double?
         get() = originalSearchResult.etaMinutes
 
+    override val metadata: SearchResultMetadata?
+        get() = originalSearchResult.metadata
+
     override val isBatchResolveSupported: Boolean
         get() = originalSearchResult.action?.multiRetrievable == true
 
@@ -44,6 +50,7 @@ internal sealed class BaseSearchSuggestion(
                 "makiIcon='$makiIcon', " +
                 "type='$type', " +
                 "etaMinutes='$etaMinutes', " +
+                "metadata='$metadata', " +
                 "isBatchResolveSupported='$isBatchResolveSupported', " +
                 "serverIndex='$serverIndex', " +
                 "requestOptions='$requestOptions'"

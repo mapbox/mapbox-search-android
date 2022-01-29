@@ -3,6 +3,7 @@ package com.mapbox.search.result
 import com.mapbox.search.SearchResultMetadata
 
 internal abstract class BaseSearchResult(
+    @Transient
     open val originalSearchResult: OriginalSearchResult
 ) : SearchResult {
 

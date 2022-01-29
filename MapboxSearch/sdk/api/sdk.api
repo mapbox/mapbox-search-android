@@ -924,6 +924,8 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
+	public final fun getCountryIso1 ()Ljava/lang/String;
+	public final fun getCountryIso2 ()Ljava/lang/String;
 	public final fun getCpsJson ()Ljava/lang/String;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getExtraData ()Ljava/util/Map;
@@ -1480,6 +1482,7 @@ public abstract interface class com/mapbox/search/result/SearchSuggestion : andr
 	public abstract fun getId ()Ljava/lang/String;
 	public abstract fun getMakiIcon ()Ljava/lang/String;
 	public abstract fun getMatchingName ()Ljava/lang/String;
+	public abstract fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
 	public abstract fun getServerIndex ()Ljava/lang/Integer;

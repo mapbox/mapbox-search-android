@@ -2,6 +2,7 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.search.RequestOptions
+import com.mapbox.search.SearchResultMetadata
 
 /**
  * Autocomplete common suggestion type.
@@ -59,6 +60,11 @@ public sealed interface SearchSuggestion : Parcelable {
      * Estimated time of arrival (in minutes) based on the specified in the [com.mapbox.search.SearchOptions] origin point and navigation profile.
      */
     public val etaMinutes: Double?
+
+    /**
+     * Search result metadata containing geo place's detailed information if available.
+     */
+    public val metadata: SearchResultMetadata?
 
     /**
      * Denotes whether this suggestion can be passed as a parameter to a batch selection method of the [com.mapbox.search.SearchEngine].

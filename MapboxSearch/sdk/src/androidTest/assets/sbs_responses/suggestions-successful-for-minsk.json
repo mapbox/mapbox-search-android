@@ -29,7 +29,11 @@
           "layer":"country.13685961050877970",
           "name":"Belarus"
         }
-      ]
+      ],
+      "metadata":{
+        "iso_3166_1":"by",
+        "iso_3166_2":"BY-MI"
+      }
     },
     {
       "feature_name":"Minsk",
