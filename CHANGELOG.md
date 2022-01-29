@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.26-SNAPSHOT
+## 1.0.0-beta.26
 
 ### New features
 - [CORE] New properties are available `SearchSuggestion.matchingName`, `SearchSuggestion.serverIndex`, `SearchResult.matchingName`, `SearchResult.serverIndex`, `ResponseInfo.responseUuid`.
