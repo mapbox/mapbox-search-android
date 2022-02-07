@@ -68,5 +68,5 @@ TITLE="[mapbox-search-android] add config for ${VERSION}"
 BODY="* Update configuration for Search SDK for Android"
 
 echo ">>> Creating PR to mapbox/api-downloads"
-gh pr create --title "${TITLE}" --body "${BODY}" --reviewer DzmitryFomchyn,friendoye,don1ck
+gh pr create --title "${TITLE}" --body "${BODY}" --reviewer DzmitryFomchyn,kinkard,sarochych,koomisov
 popd > /dev/null
