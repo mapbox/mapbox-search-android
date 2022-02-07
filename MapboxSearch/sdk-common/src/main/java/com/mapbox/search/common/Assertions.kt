@@ -38,6 +38,12 @@ inline fun throwDebug(e: Throwable? = null, message: () -> Any = { "Error!" }) {
     }
 }
 
+fun reportRelease(e: Throwable, message: String) {
+    reportRelease(e) {
+        message
+    }
+}
+
 inline fun reportRelease(e: Throwable, message: () -> Any = { "Error!" }) {
     loge(e, message().toString())
     if (!BuildConfig.DEBUG) {

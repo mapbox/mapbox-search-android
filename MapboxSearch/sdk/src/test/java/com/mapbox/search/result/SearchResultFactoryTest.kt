@@ -3,6 +3,7 @@ package com.mapbox.search.result
 import com.mapbox.geojson.Point
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.reportError
+import com.mapbox.search.common.reportRelease
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
@@ -34,6 +35,26 @@ internal class SearchResultFactoryTest {
                     } != null
 
                     Then("Search result is created should be $expectedCreated", expectedCreated, actualCreated)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check SearchResult with illegal location`() = TestCase {
+        Given("SearchResultFactory instance") {
+            val factory = SearchResultFactory { null }
+
+            When("Search result with NaN location is passed") {
+                val illegalResult = ORIGINAL_SEARCH_RESULT.copy(center = Point.fromLngLat(Double.NaN, Double.NaN))
+
+                factory.createSearchResult(
+                    illegalResult,
+                    REQUEST_OPTIONS
+                )
+
+                Verify("Error reported") {
+                    reportRelease(any(), any<String>())
                 }
             }
         }
