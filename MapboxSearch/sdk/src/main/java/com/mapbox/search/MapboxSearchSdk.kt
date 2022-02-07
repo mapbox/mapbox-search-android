@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import android.Manifest
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
@@ -142,7 +143,8 @@ public object MapboxSearchSdk {
      * @param [application] android application instance.
      * @param [accessToken] mapbox access token.
      * @param [locationEngine] optional location engine instance.
-     * Default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+     * Default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine]. Note that this class requires
+     * [Manifest.permission.ACCESS_COARSE_LOCATION] or [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      * @param [viewportProvider] optional viewport provider.
      * @param [searchSdkSettings] optional Search SDK settings.
      * @param [offlineSearchSettings] optional offline search settings.

@@ -24,6 +24,7 @@
         <activity
             android:name="com.mapbox.search.sample.MainActivity"
             android:windowSoftInputMode="adjustNothing"
+            android:exported="true"
             >
 
             <intent-filter>

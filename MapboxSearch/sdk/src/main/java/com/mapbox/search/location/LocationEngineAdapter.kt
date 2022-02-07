@@ -14,12 +14,15 @@ import com.mapbox.search.common.logger.loge
 import com.mapbox.search.common.logger.logi
 import com.mapbox.search.core.CoreLocationProvider
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import com.mapbox.search.utils.LocalTimeProvider
+import com.mapbox.search.utils.TimeProvider
 
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
 internal class LocationEngineAdapter(
     private val app: Application,
     private val locationEngine: LocationEngine,
+    private val timeProvider: TimeProvider = LocalTimeProvider()
 ) : CoreLocationProvider {
 
     @Volatile
@@ -27,10 +30,8 @@ internal class LocationEngineAdapter(
 
     private val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
         override fun onSuccess(result: LocationEngineResult?) {
-            // LocationEngineResult.locations are ordered from oldest to newest
-            val location = result?.locations?.lastOrNull() ?: result?.lastLocation
-            if (location != null) {
-                lastLocationInfo = LocationInfo(location.toPoint(), System.currentTimeMillis())
+            result?.lastLocation?.let {
+                lastLocationInfo = LocationInfo(it.toPoint(), timeProvider.currentTimeMillis())
             }
             stopLocationListener()
         }
@@ -44,7 +45,21 @@ internal class LocationEngineAdapter(
         if (!PermissionsManager.areLocationPermissionsGranted(app)) {
             logi("Location permission is not granted")
         } else {
-            locationEngine.getLastLocation(locationEngineCallback)
+            locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
+                override fun onSuccess(result: LocationEngineResult?) {
+                    val location = result?.lastLocation
+                    if (location != null) {
+                        lastLocationInfo = LocationInfo(location.toPoint(), timeProvider.currentTimeMillis())
+                    } else {
+                        startLocationListener()
+                    }
+                }
+
+                override fun onFailure(e: Exception) {
+                    loge(e, "Can't access last location")
+                    startLocationListener()
+                }
+            })
         }
     }
 
@@ -69,7 +84,7 @@ internal class LocationEngineAdapter(
             return null
         }
 
-        if (lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= System.currentTimeMillis()) {
+        if (lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
             startLocationListener()
         }
         return lastLocationInfo.point

@@ -6,6 +6,7 @@ import com.mapbox.search.CompletedAsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.common.failDebug
+import com.mapbox.search.common.reportRelease
 import com.mapbox.search.record.DataProviderResolver
 import com.mapbox.search.record.IndexableRecord
 import java.util.concurrent.Executor
@@ -41,6 +42,15 @@ internal class SearchResultFactory(private val dataProviderResolver: DataProvide
         if (!(searchResult.action == null && searchResult.center != null)) {
             failDebug { "Can't create a search result: missing 'action' for non-null 'center'. ${debugInfo()}" }
             return null
+        }
+
+        searchResult.center.let {
+            if (it.latitude().isNaN() || it.longitude().isNaN()) {
+                reportRelease(
+                    IllegalStateException("Location is NaN: $it"),
+                    "Location is NaN: $it. Request: $requestOptions"
+                )
+            }
         }
 
         return when {
