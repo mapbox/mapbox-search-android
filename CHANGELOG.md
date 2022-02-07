@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.27-SNAPSHOT
 
+### Breaking changes
+- [CORE] Search SDK doesn't implicitly request `android.permission.ACCESS_COARSE_LOCATION` permission anymore. Default `LocationEngine` that's passed to `MapboxSearchSdk.initialize()` needs location access in order to work properly.
+
 ### Mapbox dependencies
 - Search Native SDK `0.49.0`
 - Common SDK `21.1.0`
