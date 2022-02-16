@@ -61,7 +61,7 @@ Export your public token as an environment variable `MAPBOX_ACCESS_TOKEN` and yo
 
 
 ## Sample code
-Examples for Mapbox Search SDK for Android are available (here)[https://github.com/mapbox/mapbox-search-android/tree/develop/MapboxSearch/sample].
+Examples for Mapbox Search SDK for Android are available [here](MapboxSearch/sample).
 
 
 ## Custom dictionary
