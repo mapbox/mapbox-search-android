@@ -22,6 +22,7 @@
         <item name="toolbarStyle">@style/Sample.Toolbar</item>
         <item name="searchViewStyle">@style/Sample.SearchView</item>
         <item name="editTextStyle">@style/MapboxSearchSdk.Text.Primary</item>
+        <item name="android:background">?attr/mapboxSearchSdkBackgroundColor</item>
     </style>
 
     <style name="CustomTheme" parent="AppTheme">

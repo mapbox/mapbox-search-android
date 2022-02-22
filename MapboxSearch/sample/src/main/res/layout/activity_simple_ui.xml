@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/SimpleUiTheme"
     tools:context=".SimpleUiSearchActivity"
     >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/SimpleUiTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
@@ -18,11 +18,13 @@
 
     <com.mapbox.search.ui.view.SearchResultsView
         android:id="@+id/search_results_view"
+        style="@style/SimpleUiTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         android:clipToPadding="false"
         android:paddingTop="22dp"
+        android:paddingBottom="22dp"
         />
 
 </merge>
