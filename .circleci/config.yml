@@ -139,33 +139,33 @@ commands:
     steps:
       - run:
           name: Run robo tests on Firebase
-          no_output_timeout: 10m
+          no_output_timeout: 15m
           command: |
             gcloud firebase test android run \
             	--type robo --app MapboxSearch/sample/build/outputs/apk/release/sample-release.apk \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
-            	--timeout 120s \
+            	--timeout 900s \
             	--project mapbox-search-android
 
   run-firebase-sample-instrumentation:
     steps:
       - run:
           name: Run instrumentation tests for sample app on Firebase
-          no_output_timeout: 10m
+          no_output_timeout: 15m
           command: |
             gcloud firebase test android run \
             	--type instrumentation --app MapboxSearch/sample/build/outputs/apk/debug/sample-debug.apk --test MapboxSearch/sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
-            	--timeout 600s \
+            	--timeout 900s \
             	--project mapbox-search-android
 
   run-firebase-sdk-instrumentation:
     steps:
       - run:
           name: Run instrumentation tests for SDK module on Firebase
-          no_output_timeout: 10m
+          no_output_timeout: 15m
           command: |
             cd MapboxSearch
             ./gradlew :sdk:assembleDebugAndroidTest -Pcoverage
@@ -173,7 +173,7 @@ commands:
             	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test sdk/build/outputs/apk/androidTest/debug/mapbox-search-android-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
-            	--timeout 300s \
+            	--timeout 900s \
             	--project mapbox-search-android
 
 #-------------------------------
