@@ -11,8 +11,8 @@
 - [UI] `SearchResultsView.SearchListener` now has more callback functions: `SearchListener.onSuggestions()`, `SearchListener.onCategoryResult()`, and `SearchListener.onError()`.
 
 ### Mapbox dependencies
-- Search Native SDK `0.49.0`
-- Common SDK `21.1.0`
+- Search Native SDK `0.50.0`
+- Common SDK `21.2.0-beta.1`
 - Telemetry SDK `8.1.1`
 - Kotlin `1.5.31`
 
