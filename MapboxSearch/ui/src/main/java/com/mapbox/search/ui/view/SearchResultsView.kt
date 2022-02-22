@@ -111,6 +111,7 @@ public class SearchResultsView @JvmOverloads constructor(
             currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showSuggestions(suggestions, responseInfo)
+                searchResultListeners.forEach { it.onSuggestions(suggestions, responseInfo) }
             }
         }
 
@@ -133,6 +134,7 @@ public class SearchResultsView @JvmOverloads constructor(
             currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showResults(results, responseInfo, fromCategorySuggestion = true)
+                searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
             }
         }
 
@@ -140,6 +142,7 @@ public class SearchResultsView @JvmOverloads constructor(
             currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showError(UiError.fromException(e))
+                searchResultListeners.forEach { it.onError(e) }
             }
         }
     }
@@ -511,11 +514,48 @@ public class SearchResultsView @JvmOverloads constructor(
     public interface SearchListener {
 
         /**
-         * Called when search result is received.
+         * Called when the suggestions list is received,
+         * i.e. when [SearchSuggestionsCallback.onSuggestions] callback called.
+         *
+         * @param suggestions List of [SearchSuggestion] as result of the first step of forward geocoding.
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchSuggestionsCallback.onSuggestions
+         */
+        public fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo)
+
+        /**
+         * Called when a category suggestion has been resolved,
+         * i.e. when [SearchSelectionCallback.onCategoryResult] callback called.
+         *
+         * @param suggestion The category suggestion from which the [results] were resolved.
+         * @param results Search results matched by category search.
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchSelectionCallback.onCategoryResult
+         */
+        public fun onCategoryResult(suggestion: SearchSuggestion, results: List<SearchResult>, responseInfo: ResponseInfo)
+
+        /**
+         * Called when search result is received,
+         * i.e. when [SearchSelectionCallback.onResult] callback called.
+         *
          * @param searchResult Search result.
          * @param responseInfo Search response and request information.
+         *
+         * @see SearchSelectionCallback.onResult
          */
         public fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo)
+
+        /**
+         * Called if an error occurred during the search request,
+         * i.e. when [SearchSuggestionsCallback.onError] callback called.
+         *
+         * @param e Exception, occurred during the request.
+         *
+         * @see SearchSuggestionsCallback.onError
+         */
+        public fun onError(e: Exception)
 
         /**
          * Called when the history item is clicked.

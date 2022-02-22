@@ -32,7 +32,10 @@ internal class MainScreenViewController : BaseSearchController {
     override val cardDraggingAllowed: Boolean = true
 
     var onCategoryClickListener: ((Category) -> Unit)? = null
+    var onCategoryResultsShownClickListener: ((SearchSuggestion, List<SearchResult>, ResponseInfo) -> Unit)? = null
+    var onSuggestionsShownClickListener: ((List<SearchSuggestion>, ResponseInfo) -> Unit)? = null
     var onSearchResultClickListener: ((SearchResult, ResponseInfo) -> Unit)? = null
+    var onErrorShownClickListener: ((Exception) -> Unit)? = null
     var onHistoryItemClickListener: ((HistoryRecord) -> Unit)? = null
     var onFavoriteClickListener: ((FavoriteRecord) -> Unit)? = null
     var cardStateListener: CardStateListener? = null
@@ -90,8 +93,17 @@ internal class MainScreenViewController : BaseSearchController {
         view.onCategoryClickListener = { onCategoryClickListener?.invoke(it) }
         view.onFavoriteAddListener = { openSearchScreen(AddressSearchView.Mode.AddFavorite(searchOptions)) }
         view.onFavoriteRenameListener = { openFavoriteRenameScreen(it) }
+        view.onCategoryResultsShownClickListener = { suggestion, results, responseInfo ->
+            onCategoryResultsShownClickListener?.invoke(suggestion, results, responseInfo)
+        }
+        view.onSuggestionsShownClickListener = { suggestions, responseInfo ->
+            onSuggestionsShownClickListener?.invoke(suggestions, responseInfo)
+        }
         view.onSearchResultClickListener = { searchResult, responseInfo ->
             onSearchResultClickListener?.invoke(searchResult, responseInfo)
+        }
+        view.onErrorShownClickListener = { e ->
+            onErrorShownClickListener?.invoke(e)
         }
         view.onCategorySuggestionClickListener = object : DebounceClickListener<SearchSuggestion>() {
             // We use DebounceClickListener only for category suggestion clicks because
@@ -180,14 +192,23 @@ internal class MainScreenViewController : BaseSearchController {
 
     private fun openCategorySuggestionSearchScreen(searchSuggestion: SearchSuggestion) {
         val controller = CategorySuggestionSearchViewController(searchSuggestion, configuration).apply {
+            onCategoryResultsShownClickListener = { suggestion, results, responseInfo ->
+                this@MainScreenViewController.onCategoryResultsShownClickListener?.invoke(suggestion, results, responseInfo)
+            }
+            onSuggestionsShownClickListener = { suggestions, responseInfo ->
+                this@MainScreenViewController.onSuggestionsShownClickListener?.invoke(suggestions, responseInfo)
+            }
+            onSearchResultClickListener = { searchResult, responseInfo ->
+                this@MainScreenViewController.onSearchResultClickListener?.invoke(searchResult, responseInfo)
+            }
+            onErrorShownClickListener = { e ->
+                this@MainScreenViewController.onErrorShownClickListener?.invoke(e)
+            }
             onBackClickListener = {
                 router.popCurrentController()
                 mainScreenView()?.requestTextFocus()
             }
             onCloseSearchClickListener = { cardStateListener?.onCollapseCard() }
-            onSearchResultClickListener = { searchResult, responseInfo ->
-                this@MainScreenViewController.onSearchResultClickListener?.invoke(searchResult, responseInfo)
-            }
             onFeedbackClickListener = {
                 this@MainScreenViewController.onFeedbackClickListener?.invoke(it)
             }

@@ -43,6 +43,7 @@ public interface SearchSelectionCallback : SearchSuggestionsCallback {
      *
      * @param suggestion The category suggestion from which the [results] were resolved.
      * @param results Search results matched by category search.
+     * @param responseInfo Search response and request information.
      */
     public fun onCategoryResult(
         suggestion: SearchSuggestion,

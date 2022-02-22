@@ -31,8 +31,25 @@ class SimpleUiSearchActivity : AppCompatActivity() {
         }
 
         searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+
+            override fun onCategoryResult(
+                suggestion: SearchSuggestion,
+                results: List<SearchResult>,
+                responseInfo: ResponseInfo
+            ) {
+                Toast.makeText(applicationContext, "Category search results shown", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Search suggestions shown", Toast.LENGTH_SHORT).show()
+            }
+
             override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(e: Exception) {
+                Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
             }
 
             override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
