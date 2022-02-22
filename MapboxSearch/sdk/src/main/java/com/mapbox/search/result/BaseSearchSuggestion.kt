@@ -25,6 +25,9 @@ internal sealed class BaseSearchSuggestion(
     override val distanceMeters: Double?
         get() = originalSearchResult.distanceMeters
 
+    override val categories: List<String>
+        get() = originalSearchResult.categories ?: emptyList()
+
     override val makiIcon: String?
         get() = originalSearchResult.icon
 
@@ -47,6 +50,7 @@ internal sealed class BaseSearchSuggestion(
                 "address='$address', " +
                 "descriptionText='$descriptionText', " +
                 "distanceMeters='$distanceMeters', " +
+                "categories='$categories', " +
                 "makiIcon='$makiIcon', " +
                 "type='$type', " +
                 "etaMinutes='$etaMinutes', " +

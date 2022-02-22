@@ -19,6 +19,9 @@
       "distance": 5000000,
       "eta": 10.5,
       "maki":"marker",
+      "category":[
+        "cafe"
+      ],
       "internal_id":"Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
       "external_ids":{
         "carmen":"place.9038333669154200",

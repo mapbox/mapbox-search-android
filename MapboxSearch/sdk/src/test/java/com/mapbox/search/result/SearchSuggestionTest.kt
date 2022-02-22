@@ -58,6 +58,11 @@ internal class SearchSuggestionTest {
                     assertEquals(ORIGINAL_SEARCH_RESULT_2.distanceMeters, suggestion2.distanceMeters)
                 }
 
+                Then("Suggestion categories should be derived from Search result") {
+                    assertEquals(ORIGINAL_SEARCH_RESULT_1.categories ?: emptyList<String>(), suggestion1.categories)
+                    assertEquals(ORIGINAL_SEARCH_RESULT_2.categories ?: emptyList<String>(), suggestion2.categories)
+                }
+
                 Then("Suggestion makiIcon should be derived from Search result") {
                     assertEquals(ORIGINAL_SEARCH_RESULT_1.icon, suggestion1.makiIcon)
                     assertEquals(ORIGINAL_SEARCH_RESULT_2.icon, suggestion2.makiIcon)

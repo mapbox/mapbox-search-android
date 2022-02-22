@@ -46,6 +46,11 @@ public sealed interface SearchSuggestion : Parcelable {
     public val distanceMeters: Double?
 
     /**
+     * Search suggestion categories.
+     */
+    public val categories: List<String>
+
+    /**
      * Experimental field, can be changed or removed in the next SDK releases.
      * [Maki](https://github.com/mapbox/maki/) icon name for search suggestion.
      */

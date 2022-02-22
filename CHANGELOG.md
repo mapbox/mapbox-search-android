@@ -3,6 +3,7 @@
 ## 1.0.0-beta.27-SNAPSHOT
 
 ### New features
+- [CORE] Now `SearchSuggestion` has a new `categories` property.
 - [UI] `SearchBottomSheetView` has a new callback `SearchBottomSheetView.OnSearchViewStateChangeListener` that notifies subscribers when the "Main search view" changes it's state.
 
 ### Breaking changes

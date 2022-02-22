@@ -1382,6 +1382,7 @@ package com.mapbox.search.result {
 
   public sealed interface SearchSuggestion extends android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public java.util.List<java.lang.String> getCategories();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
@@ -1395,6 +1396,7 @@ package com.mapbox.search.result {
     method public com.mapbox.search.result.SearchSuggestionType getType();
     method public boolean isBatchResolveSupported();
     property public abstract com.mapbox.search.result.SearchAddress? address;
+    property public abstract java.util.List<java.lang.String> categories;
     property public abstract String? descriptionText;
     property public abstract Double? distanceMeters;
     property public abstract Double? etaMinutes;

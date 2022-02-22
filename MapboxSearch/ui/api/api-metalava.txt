@@ -68,6 +68,7 @@ package com.mapbox.search.ui.view {
     method public void addOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackSubmitClickListener listener);
     method public void addOnHistoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnHistoryClickListener listener);
     method public void addOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener listener);
+    method public void addOnSearchViewStateChangeListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchViewStateChangeListener listener);
     method public void expand();
     method public androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<?> getBehavior();
     method public com.mapbox.search.ui.view.SearchMode getSearchMode();
@@ -86,6 +87,7 @@ package com.mapbox.search.ui.view {
     method public void removeOnFeedbackSubmitClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnFeedbackSubmitClickListener listener);
     method public void removeOnHistoryClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnHistoryClickListener listener);
     method public void removeOnSearchResultClickListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchResultClickListener listener);
+    method public void removeOnSearchViewStateChangeListener(com.mapbox.search.ui.view.SearchBottomSheetView.OnSearchViewStateChangeListener listener);
     method public void restorePreviousNonHiddenState();
     method public void setHideableByDrag(boolean value);
     method public void setSearchMode(com.mapbox.search.ui.view.SearchMode value);
@@ -166,6 +168,12 @@ package com.mapbox.search.ui.view {
     method public void onSearchResultClick(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
   }
 
+  public static interface SearchBottomSheetView.OnSearchViewStateChangeListener {
+    method public void onCategoryResultsShown(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onErrorShown(Exception e);
+    method public void onSuggestionsShown(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
+  }
+
   public enum SearchMode {
     enum_constant public static final com.mapbox.search.ui.view.SearchMode AUTO;
     enum_constant public static final com.mapbox.search.ui.view.SearchMode OFFLINE;
@@ -196,10 +204,13 @@ package com.mapbox.search.ui.view {
   }
 
   public static interface SearchResultsView.SearchListener {
+    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onError(Exception e);
     method public void onFeedbackClicked(com.mapbox.search.ResponseInfo responseInfo);
     method public void onHistoryItemClicked(com.mapbox.search.record.HistoryRecord historyRecord);
     method public void onPopulateQueryClicked(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.ResponseInfo responseInfo);
     method public void onSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onSuggestions(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   public final class SearchResultsViewKt {
