@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.27-SNAPSHOT
+## 1.0.0-beta.27
 
 ### New features
 - [CORE] Now `SearchSuggestion` has a new `categories` property.
