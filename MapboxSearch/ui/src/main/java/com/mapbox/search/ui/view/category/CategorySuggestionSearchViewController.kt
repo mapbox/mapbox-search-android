@@ -12,7 +12,10 @@ import com.mapbox.search.ui.view.common.BaseSearchController
 
 internal class CategorySuggestionSearchViewController : BaseSearchController {
 
+    var onCategoryResultsShownClickListener: ((SearchSuggestion, List<SearchResult>, ResponseInfo) -> Unit)? = null
+    var onSuggestionsShownClickListener: ((List<SearchSuggestion>, ResponseInfo) -> Unit)? = null
     var onSearchResultClickListener: ((SearchResult, ResponseInfo) -> Unit)? = null
+    var onErrorShownClickListener: ((Exception) -> Unit)? = null
     var onFeedbackClickListener: ((ResponseInfo) -> Unit)? = null
     var onBackClickListener: (() -> Unit)? = null
     var onCloseSearchClickListener: (() -> Unit)? = null
@@ -39,21 +42,31 @@ internal class CategorySuggestionSearchViewController : BaseSearchController {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         return CategorySuggestionSearchView(container.context).apply {
             init(searchSuggestion, configuration)
-            onSearchResultClickListener = { searchResult, responseInfo ->
-                this@CategorySuggestionSearchViewController.onSearchResultClickListener?.invoke(
-                    searchResult,
-                    responseInfo
-                )
-            }
-            onFeedbackClickListener = {
-                this@CategorySuggestionSearchViewController.onFeedbackClickListener?.invoke(it)
-            }
-            onBackClickListener = {
-                this@CategorySuggestionSearchViewController.onBackClickListener?.invoke()
-            }
-            onCloseClickListener = {
-                this@CategorySuggestionSearchViewController.onCloseSearchClickListener?.invoke()
-            }
+            bindActions(this)
+        }
+    }
+
+    private fun bindActions(view: CategorySuggestionSearchView) {
+        view.onCategoryResultsShownClickListener = { suggestion, results, responseInfo ->
+            onCategoryResultsShownClickListener?.invoke(suggestion, results, responseInfo)
+        }
+        view.onSuggestionsShownClickListener = { suggestions, responseInfo ->
+            onSuggestionsShownClickListener?.invoke(suggestions, responseInfo)
+        }
+        view.onSearchResultClickListener = { searchResult, responseInfo ->
+            onSearchResultClickListener?.invoke(searchResult, responseInfo)
+        }
+        view.onErrorShownClickListener = { e ->
+            onErrorShownClickListener?.invoke(e)
+        }
+        view.onFeedbackClickListener = {
+            onFeedbackClickListener?.invoke(it)
+        }
+        view.onBackClickListener = {
+            onBackClickListener?.invoke()
+        }
+        view.onCloseClickListener = {
+            onCloseSearchClickListener?.invoke()
         }
     }
 

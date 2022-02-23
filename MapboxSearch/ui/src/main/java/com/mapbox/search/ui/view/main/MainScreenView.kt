@@ -74,7 +74,10 @@ internal class MainScreenView : ConstraintLayout {
     var ignoreNextRestoreInstanceState = false
 
     var onCategoryClickListener: ((Category) -> Unit)? = null
+    var onCategoryResultsShownClickListener: ((SearchSuggestion, List<SearchResult>, ResponseInfo) -> Unit)? = null
+    var onSuggestionsShownClickListener: ((List<SearchSuggestion>, ResponseInfo) -> Unit)? = null
     var onSearchResultClickListener: ((SearchResult, ResponseInfo) -> Unit)? = null
+    var onErrorShownClickListener: ((Exception) -> Unit)? = null
     var onCategorySuggestionClickListener: ((SearchSuggestion) -> Unit)? = null
     var cardStateListener: CardStateListener? = null
     var onHistoryItemClickListener: ((HistoryRecord) -> Unit)? = null
@@ -113,8 +116,24 @@ internal class MainScreenView : ConstraintLayout {
 
     private val searchResultsViewListener = object : SearchResultsView.SearchListener {
 
+        override fun onCategoryResult(
+            suggestion: SearchSuggestion,
+            results: List<SearchResult>,
+            responseInfo: ResponseInfo
+        ) {
+            onCategoryResultsShownClickListener?.invoke(suggestion, results, responseInfo)
+        }
+
+        override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+            onSuggestionsShownClickListener?.invoke(suggestions, responseInfo)
+        }
+
         override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
             onSearchResultClickListener?.invoke(searchResult, responseInfo)
+        }
+
+        override fun onError(e: Exception) {
+            onErrorShownClickListener?.invoke(e)
         }
 
         override fun onHistoryItemClicked(historyRecord: HistoryRecord) {

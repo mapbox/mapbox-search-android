@@ -21,7 +21,10 @@ internal class CategorySuggestionSearchView : ConstraintLayout {
 
     var onBackClickListener: (() -> Unit)? = null
     var onCloseClickListener: (() -> Unit)? = null
+    var onCategoryResultsShownClickListener: ((SearchSuggestion, List<SearchResult>, ResponseInfo) -> Unit)? = null
+    var onSuggestionsShownClickListener: ((List<SearchSuggestion>, ResponseInfo) -> Unit)? = null
     var onSearchResultClickListener: ((SearchResult, ResponseInfo) -> Unit)? = null
+    var onErrorShownClickListener: ((Exception) -> Unit)? = null
     var onFeedbackClickListener: ((ResponseInfo) -> Unit)? = null
 
     private val categoryName: TextView
@@ -53,8 +56,25 @@ internal class CategorySuggestionSearchView : ConstraintLayout {
         searchResultsView = findViewById(R.id.search_results_view)
 
         searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+
+            override fun onCategoryResult(
+                suggestion: SearchSuggestion,
+                results: List<SearchResult>,
+                responseInfo: ResponseInfo
+            ) {
+                onCategoryResultsShownClickListener?.invoke(suggestion, results, responseInfo)
+            }
+
+            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                onSuggestionsShownClickListener?.invoke(suggestions, responseInfo)
+            }
+
             override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 onSearchResultClickListener?.invoke(searchResult, responseInfo)
+            }
+
+            override fun onError(e: Exception) {
+                onErrorShownClickListener?.invoke(e)
             }
 
             override fun onHistoryItemClicked(historyRecord: HistoryRecord) {

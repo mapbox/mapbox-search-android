@@ -86,8 +86,25 @@ internal class AddressSearchView : ConstraintLayout {
         }
 
         searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+
+            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                // do nothing
+            }
+
+            override fun onCategoryResult(
+                suggestion: SearchSuggestion,
+                results: List<SearchResult>,
+                responseInfo: ResponseInfo
+            ) {
+                // do nothing
+            }
+
             override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 searchResultListener?.invoke(searchResult)
+            }
+
+            override fun onError(e: Exception) {
+                // do nothing
             }
 
             override fun onHistoryItemClicked(historyRecord: HistoryRecord) {

@@ -1,7 +1,15 @@
 package com.mapbox.search
 
+import android.util.Log
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.Value
+import com.mapbox.common.TileRegion
+import com.mapbox.common.TileRegionError
 import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileRegionLoadProgress
 import com.mapbox.common.TileStore
+import com.mapbox.common.TileStoreObserver
+import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.tests.BuildConfig
@@ -41,6 +49,28 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
     private val testTimeProvider = TimeProvider { CURRENT_TIME_MILLIS }
     private lateinit var searchEngine: OfflineSearchEngine
 
+    private val debugTileStoreObserver = object : TileStoreObserver {
+        override fun onRegionLoadProgress(id: String, progress: TileRegionLoadProgress) {
+            Log.d(LOG_TAG, "onRegionLoadProgress($id, $progress)")
+        }
+
+        override fun onRegionLoadFinished(id: String, region: Expected<TileRegionError, TileRegion>) {
+            Log.d(LOG_TAG, "onRegionLoadFinished($id, $region)")
+        }
+
+        override fun onRegionRemoved(id: String) {
+            Log.d(LOG_TAG, "onRegionRemoved($id)")
+        }
+
+        override fun onRegionGeometryChanged(id: String, geometry: Geometry) {
+            Log.d(LOG_TAG, "onRegionGeometryChanged($id, $geometry)")
+        }
+
+        override fun onRegionMetadataChanged(id: String, value: Value) {
+            Log.d(LOG_TAG, "onRegionMetadataChanged($id, $value)")
+        }
+    }
+
     @Before
     override fun setUp() {
         super.setUp()
@@ -56,6 +86,8 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
         searchEngine = MapboxSearchSdk.getOfflineSearchEngine()
 
+        tileStore.addObserver(debugTileStoreObserver)
+
         waitUntilEngineReady()
     }
 
@@ -68,6 +100,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
     @After
     override fun tearDown() {
         clearOfflineData()
+        tileStore.removeObserver(debugTileStoreObserver)
     }
 
     private fun loadOfflineData() {
@@ -490,6 +523,8 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
     companion object {
 
         private val tileStore: TileStore = TileStore.create()
+
+        private const val LOG_TAG = "OfflineSearchEngineIntegrationTest"
 
         private const val TEST_GROUP_ID = "usa-dc"
         private val MAPBOX_DC_LOCATION: Point = Point.fromLngLat(-77.03399849939174, 38.89992081005698)

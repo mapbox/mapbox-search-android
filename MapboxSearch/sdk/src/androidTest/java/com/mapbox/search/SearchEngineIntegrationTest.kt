@@ -202,6 +202,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             matchingName = "Minsk",
             distanceMeters = 5000000.0,
             icon = "marker",
+            categories = listOf("cafe"),
             action = SearchResultSuggestAction(
                 endpoint = "retrieve",
                 path = "",

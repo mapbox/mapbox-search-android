@@ -1,13 +1,18 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.27-SNAPSHOT
+## 1.0.0-beta.27
+
+### New features
+- [CORE] Now `SearchSuggestion` has a new `categories` property.
+- [UI] `SearchBottomSheetView` has a new callback `SearchBottomSheetView.OnSearchViewStateChangeListener` that notifies subscribers when the "Main search view" changes it's state.
 
 ### Breaking changes
 - [CORE] Search SDK doesn't implicitly request `android.permission.ACCESS_COARSE_LOCATION` permission anymore. Default `LocationEngine` that's passed to `MapboxSearchSdk.initialize()` needs location access in order to work properly.
+- [UI] `SearchResultsView.SearchListener` now has more callback functions: `SearchListener.onSuggestions()`, `SearchListener.onCategoryResult()`, and `SearchListener.onError()`.
 
 ### Mapbox dependencies
-- Search Native SDK `0.49.0`
-- Common SDK `21.1.0`
+- Search Native SDK `0.50.0`
+- Common SDK `21.2.0-beta.1`
 - Telemetry SDK `8.1.1`
 - Kotlin `1.5.31`
 

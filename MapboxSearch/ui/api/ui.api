@@ -41,6 +41,7 @@ public final class com/mapbox/search/ui/view/SearchBottomSheetView : com/mapbox/
 	public final fun addOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackSubmitClickListener;)V
 	public final fun addOnHistoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnHistoryClickListener;)V
 	public final fun addOnSearchResultClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchResultClickListener;)V
+	public final fun addOnSearchViewStateChangeListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener;)V
 	public final fun expand ()V
 	public fun getBehavior ()Landroidx/coordinatorlayout/widget/CoordinatorLayout$Behavior;
 	public final fun getSearchMode ()Lcom/mapbox/search/ui/view/SearchMode;
@@ -59,6 +60,7 @@ public final class com/mapbox/search/ui/view/SearchBottomSheetView : com/mapbox/
 	public final fun removeOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackSubmitClickListener;)V
 	public final fun removeOnHistoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnHistoryClickListener;)V
 	public final fun removeOnSearchResultClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchResultClickListener;)V
+	public final fun removeOnSearchViewStateChangeListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener;)V
 	public final fun restorePreviousNonHiddenState ()V
 	public final fun setHideableByDrag (Z)V
 	public final fun setSearchMode (Lcom/mapbox/search/ui/view/SearchMode;)V
@@ -133,6 +135,12 @@ public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$
 	public abstract fun onSearchResultClick (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
 }
 
+public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener {
+	public abstract fun onCategoryResultsShown (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onErrorShown (Ljava/lang/Exception;)V
+	public abstract fun onSuggestionsShown (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
+}
+
 public final class com/mapbox/search/ui/view/SearchMode : java/lang/Enum {
 	public static final field AUTO Lcom/mapbox/search/ui/view/SearchMode;
 	public static final field OFFLINE Lcom/mapbox/search/ui/view/SearchMode;
@@ -167,10 +175,13 @@ public abstract interface class com/mapbox/search/ui/view/SearchResultsView$OnSu
 }
 
 public abstract interface class com/mapbox/search/ui/view/SearchResultsView$SearchListener {
+	public abstract fun onCategoryResult (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onFeedbackClicked (Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onHistoryItemClicked (Lcom/mapbox/search/record/HistoryRecord;)V
 	public abstract fun onPopulateQueryClicked (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onSuggestions (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 }
 
 public class com/mapbox/search/ui/view/SearchSdkFrameLayout : android/widget/FrameLayout {

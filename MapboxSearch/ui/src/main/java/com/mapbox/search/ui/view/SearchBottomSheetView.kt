@@ -22,6 +22,7 @@ import com.mapbox.search.common.failDebug
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.SearchBottomSheetBehavior
 import com.mapbox.search.ui.utils.extenstion.findControllerByTag
@@ -116,6 +117,7 @@ public class SearchBottomSheetView @JvmOverloads constructor(
     private val onSearchResultClickListeners = CopyOnWriteArrayList<OnSearchResultClickListener>()
     private val onHistoryClickListeners = CopyOnWriteArrayList<OnHistoryClickListener>()
     private val onFavoriteClickListeners = CopyOnWriteArrayList<OnFavoriteClickListener>()
+    private val onSearchViewStateChangeListeners = CopyOnWriteArrayList<OnSearchViewStateChangeListener>()
 
     private lateinit var router: Router
 
@@ -249,8 +251,17 @@ public class SearchBottomSheetView @JvmOverloads constructor(
         controller.onCategoryClickListener = { category ->
             onCategoryClickListeners.forEach { it.onCategoryClick(category) }
         }
+        controller.onCategoryResultsShownClickListener = { suggestion, searchResults, responseInfo ->
+            onSearchViewStateChangeListeners.forEach { it.onCategoryResultsShown(suggestion, searchResults, responseInfo) }
+        }
+        controller.onSuggestionsShownClickListener = { suggestions, responseInfo ->
+            onSearchViewStateChangeListeners.forEach { it.onSuggestionsShown(suggestions, responseInfo) }
+        }
         controller.onSearchResultClickListener = { searchResult, responseInfo ->
             onSearchResultClickListeners.forEach { it.onSearchResultClick(searchResult, responseInfo) }
+        }
+        controller.onErrorShownClickListener = { e ->
+            onSearchViewStateChangeListeners.forEach { it.onErrorShown(e) }
         }
         controller.onHistoryItemClickListener = { historyRecord ->
             onHistoryClickListeners.forEach { it.onHistoryClick(historyRecord) }
@@ -559,6 +570,24 @@ public class SearchBottomSheetView @JvmOverloads constructor(
     }
 
     /**
+     * Adds a listener to be notified of the "Main search view" state changes.
+     *
+     * @param listener The listener to add.
+     */
+    public fun addOnSearchViewStateChangeListener(listener: OnSearchViewStateChangeListener) {
+        onSearchViewStateChangeListeners.add(listener)
+    }
+
+    /**
+     * Removes a previously added listener.
+     *
+     * @param listener The listener to remove.
+     */
+    public fun removeOnSearchViewStateChangeListener(listener: OnSearchViewStateChangeListener) {
+        onSearchViewStateChangeListeners.remove(listener)
+    }
+
+    /**
      * Interface for a listener to be invoked when "Missing result?" button is clicked.
      */
     public fun interface OnFeedbackClickListener {
@@ -636,13 +665,21 @@ public class SearchBottomSheetView @JvmOverloads constructor(
 
     /**
      * Listener for search result item click processing.
+     *
      * @see addOnSearchResultClickListener
      * @see removeOnSearchResultClickListener
+     * @see OnSearchViewStateChangeListener
      */
     public fun interface OnSearchResultClickListener {
 
         /**
-         * Called, when search result item clicked.
+         * Called, when search result is received.
+         * This callback is a called when [SearchResultsView.SearchListener.onSearchResult] is called.
+         *
+         * @param searchResult Search result.
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchResultsView.SearchListener.onSearchResult
          */
         public fun onSearchResultClick(searchResult: SearchResult, responseInfo: ResponseInfo)
     }
@@ -673,6 +710,53 @@ public class SearchBottomSheetView @JvmOverloads constructor(
          * Called when a [FavoriteRecord] has been clicked.
          */
         public fun onFavoriteClick(favorite: FavoriteRecord)
+    }
+
+    /**
+     * Interface for a listener to be invoked when the "Main search view" changes it's state.
+     *
+     * @see addOnSearchViewStateChangeListener
+     * @see removeOnSearchViewStateChangeListener
+     * @see OnSearchResultClickListener
+     */
+    public interface OnSearchViewStateChangeListener {
+
+        /**
+         * Called when the "Main search view" shows search suggestion.
+         * This callback is a called when [SearchResultsView.SearchListener.onSuggestions] is called.
+         *
+         * @param suggestions List of [SearchSuggestion] as result of the first step of forward geocoding.
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchResultsView.SearchListener.onSuggestions
+         */
+        public fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo)
+
+        /**
+         * Called when the "Main search view" shows category search results.
+         * This callback is a called when [SearchResultsView.SearchListener.onCategoryResult] is called.
+         *
+         * @param suggestion The category suggestion from which the [results] were resolved.
+         * @param results Search results matched by category search.
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchResultsView.SearchListener.onCategoryResult
+         */
+        public fun onCategoryResultsShown(
+            suggestion: SearchSuggestion,
+            results: List<SearchResult>,
+            responseInfo: ResponseInfo
+        )
+
+        /**
+         * Called when the "Main search view" shows error.
+         * This callback is a called when [SearchResultsView.SearchListener.onError] is called.
+         *
+         * @param e Exception, occurred during the request.
+         *
+         * @see SearchResultsView.SearchListener.onError
+         */
+        public fun onErrorShown(e: Exception)
     }
 
     /**
