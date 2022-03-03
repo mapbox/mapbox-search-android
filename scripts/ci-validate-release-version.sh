@@ -2,10 +2,10 @@
 
 set -eo pipefail
 
-DECLARED_VERSION_NAME=`cat MapboxSearch/gradle.properties | grep versionName`
+DECLARED_VERSION_NAME=`cat MapboxSearch/gradle.properties | grep VERSION_NAME`
 
 extract_version_name() {
-  [[ $1 =~ (versionName=)?v?(.*) ]]
+  [[ $1 =~ (VERSION_NAME=)?v?(.*) ]]
   local VERSION=${BASH_REMATCH[2]}
   echo "$VERSION"
 }

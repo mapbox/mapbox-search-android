@@ -24,7 +24,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "VERSION_NAME", "\"$versionName\""
+        buildConfigField "String", "VERSION_NAME", "\"$VERSION_NAME\""
     }
 
     buildTypes {

@@ -2,9 +2,9 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.mapbox.sdkRegistry'
 
 project.archivesBaseName = project.property('mapboxArtifactName')
-project.version = project.property('versionName')
+project.version = project.property('VERSION_NAME')
 group = project.property('mapboxArtifactGroup')
-version = project.property('versionName')
+version = project.property('VERSION_NAME')
 
 afterEvaluate {
     publishing {
@@ -14,7 +14,7 @@ afterEvaluate {
 
                 groupId project.property('mapboxArtifactGroup')
                 artifactId project.property('mapboxArtifactName')
-                version project.property('versionName')
+                version project.property('VERSION_NAME')
 
                 artifact(androidSourcesJar)
                 artifact(androidJavadocsJar)
@@ -62,7 +62,7 @@ sdkNameMap["sdk-common"] = "search-sdk-common"
 registry {
     sdkName = sdkNameMap[project.name]
     production = true
-    snapshot = versionName.endsWith("-SNAPSHOT")
+    snapshot = version.endsWith("-SNAPSHOT")
     override = snapshot ? true : false
     dryRun = project.properties['sdkRegistryDryRun'] ?: false
     publications = ["MapboxAndroidSDKPublication"]
