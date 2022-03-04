@@ -4,7 +4,7 @@ set -eo pipefail
 
 pushd MapboxSearch/
 
-searchVersion="$(grep 'versionName' gradle.properties | sed 's/^versionName=//')"
+searchVersion="$(grep 'VERSION_NAME' gradle.properties | sed 's/^VERSION_NAME=//')"
 
 ./gradlew clean
 
