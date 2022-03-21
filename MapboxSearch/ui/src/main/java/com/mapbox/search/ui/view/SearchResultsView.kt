@@ -4,13 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.annotation.UiThread
 import androidx.core.view.postDelayed
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
-import com.mapbox.search.AsyncOperationTask
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngine
 import com.mapbox.search.OfflineSearchOptions
@@ -24,14 +23,12 @@ import com.mapbox.search.common.SearchCommonAsyncOperationTask
 import com.mapbox.search.common.concurrent.checkMainThread
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.common.throwDebug
-import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.ui.utils.CompoundIndexableDataProvider
+import com.mapbox.search.ui.utils.HistoryRecordsInteractor
 import com.mapbox.search.ui.utils.OffsetItemDecoration
 import com.mapbox.search.ui.utils.TaskStatus
-import com.mapbox.search.ui.utils.extenstion.isCompleted
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.common.UiError
 import com.mapbox.search.ui.view.search.SearchHistoryViewHolder
@@ -40,8 +37,6 @@ import com.mapbox.search.ui.view.search.SearchResultViewHolder
 import com.mapbox.search.ui.view.search.SearchResultsItemsCreator
 import com.mapbox.search.ui.view.search.SearchViewResultsAdapter
 import java.util.concurrent.CopyOnWriteArrayList
-
-internal typealias HistoryFavorites = Pair<List<HistoryRecord>, List<FavoriteRecord>>
 
 /**
  * Simplified search view.
@@ -66,7 +61,8 @@ public class SearchResultsView @JvmOverloads constructor(
     private var currentSearchRequestTask: SearchRequestTask? = null
     private var currentSearchRequestStatus: TaskStatus = TaskStatus.idle()
 
-    private var historyLoadingTask: AsyncOperationTask? = null
+    private val historyRecordsInteractor = HistoryRecordsInteractor()
+    private var historyRecordsListener: HistoryRecordsInteractor.HistoryListener? = null
     private var historyDelayedLoadingStateChangeTask: Runnable? = null
 
     /**
@@ -96,11 +92,6 @@ public class SearchResultsView @JvmOverloads constructor(
             logd("isOnlineSearch changed: $value")
             retrySearchRequest()
         }
-
-    private var historyFavoritesDataProvider = CompoundIndexableDataProvider(
-        MapboxSearchSdk.serviceProvider.historyDataProvider(),
-        MapboxSearchSdk.serviceProvider.favoritesDataProvider()
-    )
 
     private lateinit var searchAdapter: SearchViewResultsAdapter
     private val itemsCreator = SearchResultsItemsCreator(context, locationEngine)
@@ -206,6 +197,13 @@ public class SearchResultsView @JvmOverloads constructor(
 
         (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
+        val helper = ItemTouchHelper(
+            HistoryItemSwipeCallback(
+                ItemTouchHelper.LEFT, searchAdapter, ::onHistoryRecordRemoved
+            )
+        )
+        helper.attachToRecyclerView(this)
+
         addItemDecoration(
             OffsetItemDecoration(
                 context,
@@ -270,6 +268,15 @@ public class SearchResultsView @JvmOverloads constructor(
             is Mode.Query -> search(currentMode.query)
             is Mode.Suggestion -> searchSuggestion(currentMode.suggestion)
         }
+    }
+
+    private fun onHistoryRecordRemoved(adapterPosition: Int, record: HistoryRecord) {
+        val newItems = searchAdapter.items.toMutableList().apply {
+            removeAt(adapterPosition)
+        }
+        moveToState(ViewState.History(newItems))
+
+        historyRecordsInteractor.remove(record)
     }
 
     private fun moveToState(state: ViewState) {
@@ -386,21 +393,17 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun loadHistory() {
-        val currentLoadingTask = historyLoadingTask
-        if (currentLoadingTask.isCompleted) {
+        if (historyRecordsListener != null) {
             return
         }
 
         var isLoadingCompleted = false
 
-        historyLoadingTask = historyFavoritesDataProvider.getAll(object : CompletionCallback<HistoryFavorites> {
-            override fun onComplete(result: HistoryFavorites) {
+        val listener = object : HistoryRecordsInteractor.HistoryListener {
+            override fun onHistoryItems(items: List<Pair<HistoryRecord, Boolean>>) {
                 isLoadingCompleted = true
-                val (history, favorites) = result
                 moveToState(
-                    ViewState.History(
-                        itemsCreator.createForHistory(history.sortedByDescending { it.timestamp }, favorites)
-                    )
+                    ViewState.History(itemsCreator.createForHistory(items.sortedByDescending { it.first.timestamp }))
                 )
             }
 
@@ -411,10 +414,13 @@ public class SearchResultsView @JvmOverloads constructor(
                     "Unable to load history records"
                 }
             }
-        })
+        }
+
+        historyRecordsListener = listener
+        historyRecordsInteractor.subscribeToChanges(listener)
 
         historyDelayedLoadingStateChangeTask = postDelayed(300) {
-            if (!isLoadingCompleted && !currentLoadingTask.isCompleted) {
+            if (!isLoadingCompleted) {
                 showLoading()
             }
         }
@@ -429,7 +435,10 @@ public class SearchResultsView @JvmOverloads constructor(
         historyDelayedLoadingStateChangeTask?.let {
             removeCallbacks(it)
         }
-        historyLoadingTask?.cancel()
+        historyRecordsListener?.let {
+            historyRecordsInteractor.unsubscribe(it)
+            historyRecordsListener = null
+        }
     }
 
     /**
@@ -585,6 +594,38 @@ public class SearchResultsView @JvmOverloads constructor(
         data class EmptySearchResults(override val items: List<SearchResultAdapterItem>) : ViewState()
         data class Loading(override val items: List<SearchResultAdapterItem>) : ViewState()
         data class Error(override val items: List<SearchResultAdapterItem>) : ViewState()
+    }
+
+    private class HistoryItemSwipeCallback(
+        swipeDirs: Int,
+        private val adapter: SearchViewResultsAdapter,
+        private val onItemSwiped: (Int, HistoryRecord) -> Unit,
+    ) : ItemTouchHelper.SimpleCallback(0, swipeDirs) {
+
+        private fun extractHistoryItemOrNull(position: Int): SearchResultAdapterItem.History? {
+            if (position < adapter.itemCount) {
+                return adapter.items[position] as? SearchResultAdapterItem.History
+            }
+            return null
+        }
+
+        override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
+            return if (extractHistoryItemOrNull(viewHolder.bindingAdapterPosition) == null) {
+                0
+            } else {
+                super.getSwipeDirs(recyclerView, viewHolder)
+            }
+        }
+
+        override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean = false
+
+        override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
+            val position = viewHolder.bindingAdapterPosition
+            val historyItem = extractHistoryItemOrNull(position)
+            if (historyItem != null) {
+                onItemSwiped(position, historyItem.record)
+            }
+        }
     }
 
     private companion object {
