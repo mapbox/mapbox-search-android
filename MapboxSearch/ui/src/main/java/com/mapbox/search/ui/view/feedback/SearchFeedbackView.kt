@@ -83,6 +83,7 @@ internal class SearchFeedbackView : ConstraintLayout {
         }
 
         findViewById<View>(R.id.feedback_back_button).setOnClickListener {
+            feedbackEditText.hideKeyboard()
             callback?.onBackClick()
         }
 
