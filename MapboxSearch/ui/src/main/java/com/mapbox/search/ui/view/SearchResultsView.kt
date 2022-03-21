@@ -386,20 +386,6 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun loadHistory() {
-        fun showHistory(history: List<HistoryRecord>, favorites: List<FavoriteRecord>) {
-            /**
-             * TODO(web-service/#702):
-             *
-             * Temporary solution for duplicating HistoryRecord items in the UI list.
-             * When a user clicks on a history record, we use only its name to repopulate the search query,
-             * so it doesn't make sense to show duplicating items.
-             * Moreover, in the UI we show only history record's name so users can't distinguish two records with the same
-             * name even if they're actually different.
-             */
-            val distinctItems = history.distinctBy { it.name }
-            moveToState(ViewState.History(itemsCreator.createForHistory(distinctItems, favorites)))
-        }
-
         val currentLoadingTask = historyLoadingTask
         if (currentLoadingTask.isCompleted) {
             return
@@ -411,7 +397,11 @@ public class SearchResultsView @JvmOverloads constructor(
             override fun onComplete(result: HistoryFavorites) {
                 isLoadingCompleted = true
                 val (history, favorites) = result
-                showHistory(history.sortedByDescending { it.timestamp }, favorites)
+                moveToState(
+                    ViewState.History(
+                        itemsCreator.createForHistory(history.sortedByDescending { it.timestamp }, favorites)
+                    )
+                )
             }
 
             override fun onError(e: Exception) {
