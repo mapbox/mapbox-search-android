@@ -61,9 +61,9 @@ class SearchFlowTest : MockServerSearchActivityTest() {
             clickSearchInput()
             verifyHistory {
                 recentSearchesTitle()
-                historyResult(RANELAGH_TERRACE_62_NAME)
+                historyResult(RANELAGH_TERRACE_62_NAME, RANELAGH_TERRACE_62_ADDRESS)
             }
-            selectHistoryItem(RANELAGH_TERRACE_62_NAME)
+            selectHistoryItem(RANELAGH_TERRACE_62_NAME, RANELAGH_TERRACE_62_ADDRESS)
         }
         searchPlaceBottomSheet {
             verifyPlaceName(RANELAGH_TERRACE_62_NAME)
@@ -284,6 +284,7 @@ class SearchFlowTest : MockServerSearchActivityTest() {
     private companion object {
 
         const val RANELAGH_TERRACE_62_NAME = "62 Ranelagh Terrace"
+        const val RANELAGH_TERRACE_62_ADDRESS = "Royal Leamington Spa, Royal Leamington Spa, CV31 3BS, United Kingdom"
         const val RANELAGH_TERRACE_62_ADDRESS_PART = "Royal Leamington Spa"
 
         const val MINSK_QUERY = "Minsk"

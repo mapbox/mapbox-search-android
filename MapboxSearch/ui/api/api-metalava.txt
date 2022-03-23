@@ -213,9 +213,6 @@ package com.mapbox.search.ui.view {
     method public void onSuggestions(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
   }
 
-  public final class SearchResultsViewKt {
-  }
-
   public class SearchSdkFrameLayout extends android.widget.FrameLayout {
     ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null, int defStyleAttr = 0, int defStyleRes = 0);
     ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);

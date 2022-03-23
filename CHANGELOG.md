@@ -2,6 +2,13 @@
 
 ## 1.0.0-beta.28-SNAPSHOT
 
+### New features
+- [UI] Now `SearchBottomSheetView` shows all the available search history records along with their addresses.
+- [UI] Now users can swipe history records left to remove a record from the the recent searches.
+
+### Bug fixes
+- [UI] Now keyboard is hidden automatically when user navigates back from the feedback card or closes it.
+
 ### Mapbox dependencies
 - Search Native SDK `0.50.0`
 - Common SDK `21.2.0-beta.1`

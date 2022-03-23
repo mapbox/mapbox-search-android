@@ -149,12 +149,12 @@ class SearchBottomSheetRobot {
         Thread.sleep(DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS)
     }
 
-    fun selectHistoryItem(itemName: String) {
+    fun selectHistoryItem(historyName: String, historyAddress: String) {
         waitAtLeastOneInstanceOfViewInHierarchy(R.id.search_result_item)
         onView(withId(R.id.search_results_view))
             .perform(
                 actionOnItem<RecyclerView.ViewHolder>(
-                    HistoryItemMatcher(itemName),
+                    HistoryItemMatcher(historyName, historyAddress),
                     click()
                 )
             )

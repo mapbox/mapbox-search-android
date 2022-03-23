@@ -1,20 +1,21 @@
 package com.mapbox.search.ui.view.search
 
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.mapbox.search.ui.R
+import com.mapbox.search.ui.utils.SearchEntityPresentation
 import com.mapbox.search.ui.utils.adapter.BaseViewHolder
-import com.mapbox.search.ui.utils.extenstion.getDrawableCompat
-import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
-import com.mapbox.search.ui.utils.extenstion.setCompoundDrawableStartWithIntrinsicBounds
-import com.mapbox.search.ui.utils.extenstion.setTintCompat
+import com.mapbox.search.ui.utils.extenstion.setTextAndHideIfBlank
 
 internal class SearchHistoryViewHolder(
     parent: ViewGroup,
     private val listener: SearchViewResultsAdapter.SearchListener
 ) : BaseViewHolder<SearchResultAdapterItem.History>(parent, R.layout.mapbox_search_sdk_history_item_layout) {
 
-    private val nameView: TextView = findViewById(R.id.history_item)
+    private val icon: ImageView = findViewById(R.id.icon)
+    private val name: TextView = findViewById(R.id.history_name)
+    private val address: TextView = findViewById(R.id.history_address)
 
     override fun bind(item: SearchResultAdapterItem.History) {
         val drawableRes = if (item.isFavorite) {
@@ -23,13 +24,12 @@ internal class SearchHistoryViewHolder(
             R.drawable.mapbox_search_sdk_ic_history
         }
 
-        val drawable = context
-            .getDrawableCompat(drawableRes)
-            ?.setTintCompat(context.resolveAttrOrThrow(R.attr.mapboxSearchSdkPrimaryTextInactiveColor))
+        icon.setImageResource(drawableRes)
+        name.text = item.record.name
+        address.setTextAndHideIfBlank(
+            SearchEntityPresentation.getAddressOrResultType(context, item.record)
+        )
 
-        nameView.setCompoundDrawableStartWithIntrinsicBounds(drawable)
-
-        nameView.text = item.record.name
         itemView.setOnClickListener {
             listener.onHistoryItemClicked(item.record)
         }

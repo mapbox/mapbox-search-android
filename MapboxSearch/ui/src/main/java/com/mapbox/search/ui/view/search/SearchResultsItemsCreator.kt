@@ -5,7 +5,6 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.common.SearchCommonAsyncOperationTask
 import com.mapbox.search.common.extension.lastKnownLocationOrNull
-import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -17,18 +16,14 @@ internal class SearchResultsItemsCreator(
     private val locationEngine: LocationEngine,
 ) {
 
-    fun createForHistory(history: List<HistoryRecord>, favorites: List<FavoriteRecord>): List<SearchResultAdapterItem> {
-        return if (history.isEmpty()) {
+    fun createForHistory(historyItems: List<Pair<HistoryRecord, Boolean>>): List<SearchResultAdapterItem> {
+        return if (historyItems.isEmpty()) {
             listOf(SearchResultAdapterItem.EmptyHistory)
         } else {
-            val favoritesMap = favorites.associateBy { it.address to it.coordinate }
-            ArrayList<SearchResultAdapterItem>(history.size + 1).apply {
+            ArrayList<SearchResultAdapterItem>(historyItems.size + 1).apply {
                 add(SearchResultAdapterItem.RecentSearchesHeader)
-                val items = history.map {
-                    SearchResultAdapterItem.History(
-                        record = it,
-                        isFavorite = favoritesMap.containsKey(it.address to it.coordinate)
-                    )
+                val items = historyItems.map {
+                    SearchResultAdapterItem.History(record = it.first, isFavorite = it.second)
                 }
                 addAll(items)
             }

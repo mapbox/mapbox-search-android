@@ -30,11 +30,11 @@ class HistoryRecyclerBuilder(@IdRes val recyclerId: Int) {
         )
     }
 
-    fun historyResult(historyName: String) {
+    fun historyResult(historyName: String, historyAddress: String) {
         BaristaListAssertions.assertCustomAssertionAtPosition(
             recyclerId,
             itemPosition++,
-            viewAssertion = ViewAssertions.matches(HistoryItemMatcher(historyName))
+            viewAssertion = ViewAssertions.matches(HistoryItemMatcher(historyName, historyAddress))
         )
     }
 }

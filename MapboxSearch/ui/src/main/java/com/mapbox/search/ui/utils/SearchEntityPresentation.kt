@@ -57,6 +57,16 @@ internal object SearchEntityPresentation {
         }
     }
 
+    fun getAddressOrResultType(context: Context, record: IndexableRecord): String {
+        val descriptionText = record.descriptionText
+        val addressText = record.address?.formattedAddress()
+        return when {
+            !descriptionText.isNullOrBlank() -> descriptionText
+            !addressText.isNullOrBlank() -> addressText
+            else -> getResultTypeName(context, listOf(record.type), record)
+        }
+    }
+
     fun firstCategoryName(context: Context, categories: List<String>?): String? {
         return categories?.asSequence()
             ?.map { Category.findByCanonicalName(it) }

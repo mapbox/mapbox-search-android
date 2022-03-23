@@ -18,6 +18,7 @@ import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.SearchBottomSheetBehavior
 import com.mapbox.search.ui.utils.extenstion.expand
 import com.mapbox.search.ui.utils.extenstion.hide
+import com.mapbox.search.ui.utils.extenstion.hideKeyboard
 import com.mapbox.search.ui.utils.extenstion.isHidden
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.SearchSdkFrameLayout
@@ -97,6 +98,7 @@ public class SearchFeedbackBottomSheetView @JvmOverloads constructor(
 
             if (bottomSheetState == HIDDEN) {
                 navigation.popToRoot()
+                hideKeyboard()
             }
 
             onBottomSheetStateChangedListeners.forEach { it.onStateChanged(bottomSheetState, fromUser) }
