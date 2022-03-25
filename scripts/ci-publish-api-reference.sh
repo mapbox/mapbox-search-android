@@ -6,8 +6,8 @@ SCRIPT_PATH=$(dirname "$0")
 CMAKE_ROOT="${SCRIPT_PATH}/../"
 INITIAL_PATH="$PWD"
 
-DECLARED_VERSION=`cat MapboxSearch/gradle.properties | grep versionName`
-VERSION=${DECLARED_VERSION#versionName=}
+DECLARED_VERSION=`cat MapboxSearch/gradle.properties | grep VERSION_NAME`
+VERSION=${DECLARED_VERSION#VERSION_NAME=}
 
 if [[ $DECLARED_VERSION == *-SNAPSHOT ]]
 then
