@@ -10,8 +10,7 @@ import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
-import com.mapbox.search.tests_support.BlockingDataProviderRegistryCallback
-import com.mapbox.search.tests_support.BlockingDataProviderRegistryCallback.RegistryCallbackResult.Success
+import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
@@ -56,13 +55,13 @@ internal class CustomDataProviderTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
             uuidProvider = uuidProvider,
@@ -71,7 +70,7 @@ internal class CustomDataProviderTest : BaseTest() {
             errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -89,20 +88,23 @@ internal class CustomDataProviderTest : BaseTest() {
         )
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingDataProviderRegistryCallback()
-        MapboxSearchSdk.serviceProvider.globalDataProvidersRegistry()
-            .register(customDataProvider, TEST_CUSTOM_DATA_PROVIDER_PRIORITY, callbacksExecutor, blockingCallback)
+        val blockingCallback = BlockingCompletionCallback<Unit>()
 
-        var res: Any = blockingCallback.getResultBlocking()
-        assertTrue(res is Success)
+        searchEngine.registerDataProvider(
+            dataProvider = customDataProvider,
+            executor = callbacksExecutor,
+            callback = blockingCallback,
+        )
+
+        assertTrue(blockingCallback.getResultBlocking().isResult)
 
         val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
         searchEngine.search(secondCustomRecord.name, options, callback)
 
-        res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
+        var searchResult = callback.getResultBlocking()
+        assertTrue(searchResult is SearchEngineResult.Suggestions)
+        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
 
         assertEquals(
             IndexableRecordSearchSuggestion(
@@ -135,9 +137,9 @@ internal class CustomDataProviderTest : BaseTest() {
         callback.reset()
         searchEngine.select(suggestions[0], callback)
 
-        res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Result)
-        val result = (res as SearchEngineResult.Result).result
+        searchResult = callback.getResultBlocking()
+        assertTrue(searchResult is SearchEngineResult.Result)
+        val result = (searchResult as SearchEngineResult.Result).result
 
         assertTrue(result is IndexableRecordSearchResult)
         result as IndexableRecordSearchResult
@@ -176,23 +178,25 @@ internal class CustomDataProviderTest : BaseTest() {
         }
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingDataProviderRegistryCallback()
-        MapboxSearchSdk.serviceProvider.globalDataProvidersRegistry()
-            .register(customDataProvider, TEST_CUSTOM_DATA_PROVIDER_PRIORITY, callbacksExecutor, blockingCallback)
+        val blockingCallback = BlockingCompletionCallback<Unit>()
 
-        var res: Any = blockingCallback.getResultBlocking()
-        assertTrue(res is BlockingDataProviderRegistryCallback.RegistryCallbackResult.Error)
-        res as BlockingDataProviderRegistryCallback.RegistryCallbackResult.Error
+        searchEngine.registerDataProvider(
+            dataProvider = customDataProvider,
+            executor = callbacksExecutor,
+            callback = blockingCallback,
+        )
 
-        assertTrue(testException.equalsTo(res.e))
+        val res = blockingCallback.getResultBlocking()
+        assertTrue(blockingCallback.getResultBlocking().isError)
+        assertTrue(testException.equalsTo(res.requireError()))
 
         val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
         searchEngine.search(secondCustomRecord.name, options, callback)
 
-        res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
+        val searchResult = callback.getResultBlocking()
+        assertTrue(searchResult is SearchEngineResult.Suggestions)
+        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
 
         assertTrue(
             suggestions.none {
@@ -210,27 +214,32 @@ internal class CustomDataProviderTest : BaseTest() {
         )
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingDataProviderRegistryCallback()
-        MapboxSearchSdk.serviceProvider.globalDataProvidersRegistry()
-            .register(customDataProvider, TEST_CUSTOM_DATA_PROVIDER_PRIORITY, callbacksExecutor, blockingCallback)
+        val blockingCallback = BlockingCompletionCallback<Unit>()
 
-        var res: Any = blockingCallback.getResultBlocking()
-        assertTrue(res is Success)
+        searchEngine.registerDataProvider(
+            dataProvider = customDataProvider,
+            executor = callbacksExecutor,
+            callback = blockingCallback,
+        )
 
-        MapboxSearchSdk.serviceProvider.globalDataProvidersRegistry()
-            .unregister(customDataProvider, callbacksExecutor, blockingCallback)
+        assertTrue(blockingCallback.getResultBlocking().isResult)
 
         blockingCallback.reset()
-        res = blockingCallback.getResultBlocking()
-        assertTrue(res is Success)
+
+        searchEngine.unregisterDataProvider(
+            dataProvider = customDataProvider,
+            executor = callbacksExecutor,
+            callback = blockingCallback,
+        )
+        assertTrue(blockingCallback.getResultBlocking().isResult)
 
         val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
         searchEngine.search(secondCustomRecord.name, options, callback)
 
-        res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
+        val searchResult = callback.getResultBlocking()
+        assertTrue(searchResult is SearchEngineResult.Suggestions)
+        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
 
         assertTrue(
             suggestions.none {
@@ -247,7 +256,7 @@ internal class CustomDataProviderTest : BaseTest() {
     }
 
     private companion object {
-        const val TEST_CUSTOM_DATA_PROVIDER_PRIORITY = 10
+
         val TEST_CUSTOM_USER_RECORDS = listOf(
             CustomRecord.create(
                 name = "Let it be",

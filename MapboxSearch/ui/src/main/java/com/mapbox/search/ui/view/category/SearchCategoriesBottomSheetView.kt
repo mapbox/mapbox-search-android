@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mapbox.search.ApiType
-import com.mapbox.search.CategorySearchEngine
 import com.mapbox.search.CategorySearchOptions
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.common.SearchCommonAsyncOperationTask
 import com.mapbox.search.common.extension.lastKnownLocationOrNull
@@ -62,7 +62,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     private val locationEngine = MapboxSearchSdk.serviceProvider.locationEngine()
     private var asyncItemsCreatorTask: SearchCommonAsyncOperationTask? = null
 
-    private val searchEngine: CategorySearchEngine
+    private val searchEngine: SearchEngine
 
     private val searchCallback = object : SearchCallback {
 
@@ -123,7 +123,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     init {
         LayoutInflater.from(context).inflate(R.layout.mapbox_search_sdk_search_categories_bottom_sheet, this, true)
 
-        searchEngine = MapboxSearchSdk.getCategorySearchEngine()
+        searchEngine = MapboxSearchSdk.getSearchEngine()
 
         behavior.peekHeight = context.getPixelSize(R.dimen.mapbox_search_sdk_categories_card_peek_height)
 

@@ -50,6 +50,10 @@ import java.io.IOException
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
+/**
+ * Contains only forward-geocoding related functionality tests.
+ * See [CategorySearchTest], [ReverseGeocodingSearchTest] for more tests.
+ */
 @Suppress("LargeClass")
 internal class SearchEngineTest {
 
@@ -61,6 +65,7 @@ internal class SearchEngineTest {
     private lateinit var executor: Executor
     private lateinit var engineExecutorService: ExecutorService
     private lateinit var requestContextProvider: SearchRequestContextProvider
+    private lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistry
 
     private lateinit var searchEngine: SearchEngine
 
@@ -87,6 +92,8 @@ internal class SearchEngineTest {
         requestContextProvider = mockk()
         every { requestContextProvider.provide(ApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
 
+        indexableDataProvidersRegistry = mockk()
+
         searchEngine = SearchEngineImpl(
             apiType = ApiType.SBS,
             coreEngine = coreEngine,
@@ -95,6 +102,7 @@ internal class SearchEngineTest {
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
             engineExecutorService = engineExecutorService,
+            indexableDataProvidersRegistry = indexableDataProvidersRegistry,
         )
     }
 

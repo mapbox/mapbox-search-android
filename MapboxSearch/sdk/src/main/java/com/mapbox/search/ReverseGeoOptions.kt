@@ -24,7 +24,7 @@ public enum class ReverseMode {
 
 /**
  * Search options for reverse geocoding.
- * @see ReverseGeocodingSearchEngine
+ * @see SearchEngine
  */
 @Parcelize
 public class ReverseGeoOptions @JvmOverloads public constructor(

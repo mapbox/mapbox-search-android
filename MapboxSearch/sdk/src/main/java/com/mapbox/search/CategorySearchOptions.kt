@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * Search options, used for category search.
- * @see CategorySearchEngine
+ * @see SearchEngine
  */
 @Parcelize
 public class CategorySearchOptions @JvmOverloads public constructor(

@@ -1,10 +1,10 @@
 package com.mapbox.search.tests_support
 
-import com.mapbox.search.record.IndexableDataProviderEngineLayer
-import com.mapbox.search.record.IndexableDataProviderEngineLayer.BatchUpdateOperation
+import com.mapbox.search.record.IndexableDataProviderEngine
+import com.mapbox.search.record.IndexableDataProviderEngine.BatchUpdateOperation
 import com.mapbox.search.record.IndexableRecord
 
-internal class TestDataProviderEngineLayer<R : IndexableRecord> : IndexableDataProviderEngineLayer {
+internal class TestDataProviderEngine<R : IndexableRecord> : IndexableDataProviderEngine {
 
     private var _records: MutableList<IndexableRecord> = mutableListOf()
 

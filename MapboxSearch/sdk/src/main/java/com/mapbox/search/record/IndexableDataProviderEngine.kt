@@ -1,7 +1,7 @@
 package com.mapbox.search.record
 
 import com.mapbox.search.core.CoreUserRecordsLayer
-import com.mapbox.search.record.IndexableDataProviderEngineLayer.BatchUpdateOperation
+import com.mapbox.search.record.IndexableDataProviderEngine.BatchUpdateOperation
 import com.mapbox.search.utils.SyncLocker
 
 /**
@@ -13,7 +13,7 @@ import com.mapbox.search.utils.SyncLocker
  * or when >10000 records are being added) execution may take some time. Please, consider usage of this class
  * from background thread.
  */
-public interface IndexableDataProviderEngineLayer {
+public interface IndexableDataProviderEngine {
 
     /**
      * Adds [IndexableRecord] to search index.
@@ -63,22 +63,22 @@ public interface IndexableDataProviderEngineLayer {
     public fun executeBatchUpdate(batchUpdateOperation: BatchUpdateOperation)
 
     /**
-     * Interface definition for a function to be executed atomically during [IndexableDataProviderEngineLayer] update.
+     * Interface definition for a function to be executed atomically during [IndexableDataProviderEngine] update.
      */
     public fun interface BatchUpdateOperation {
 
         /**
-         * Applies all modifications to [engineLayer], that should be executed atomically.
+         * Applies all modifications to [engine], that should be executed atomically.
          *
-         * @param engineLayer engine layer, that will be updated by this operation.
+         * @param engine engine layer, that will be updated by this operation.
          */
-        public fun execute(engineLayer: IndexableDataProviderEngineLayer)
+        public fun execute(engine: IndexableDataProviderEngine)
     }
 }
 
-internal class IndexableDataProviderEngineLayerImpl private constructor(
+internal class IndexableDataProviderEngineImpl internal constructor(
     internal val coreLayerContext: CoreLayerContext
-) : IndexableDataProviderEngineLayer {
+) : IndexableDataProviderEngine {
 
     override fun add(record: IndexableRecord) {
         val coreRecord = record.mapToCore()
@@ -121,7 +121,7 @@ internal class IndexableDataProviderEngineLayerImpl private constructor(
 
     override fun executeBatchUpdate(batchUpdateOperation: BatchUpdateOperation) {
         coreLayerContext.executeInSync {
-            batchUpdateOperation.execute(this@IndexableDataProviderEngineLayerImpl)
+            batchUpdateOperation.execute(this@IndexableDataProviderEngineImpl)
         }
     }
 
@@ -135,12 +135,5 @@ internal class IndexableDataProviderEngineLayerImpl private constructor(
                 coreLayer.action()
             }
         }
-    }
-
-    companion object {
-
-        fun create(coreLayerContext: CoreLayerContext) = IndexableDataProviderEngineLayerImpl(
-            coreLayerContext = coreLayerContext
-        )
     }
 }

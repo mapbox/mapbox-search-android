@@ -5,9 +5,12 @@ import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.engine.BaseSearchEngine
+import com.mapbox.search.engine.OneStepRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsBatchRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.record.HistoryService
+import com.mapbox.search.record.IndexableDataProvider
+import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.BaseSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
@@ -29,6 +32,7 @@ internal class SearchEngineImpl(
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService,
+    private val indexableDataProvidersRegistry: IndexableDataProvidersRegistry,
 ) : BaseSearchEngine(), SearchEngine {
 
     override fun search(
@@ -273,5 +277,78 @@ internal class SearchEngineImpl(
                 error("Unprocessed suggestion: $suggestion")
             }
         }
+    }
+
+    override fun search(
+        categoryName: String,
+        options: CategorySearchOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): SearchRequestTask {
+        return makeRequest(callback, engineExecutorService) { request ->
+            val requestContext = requestContextProvider.provide(apiType)
+            coreEngine.search(
+                "",
+                listOf(categoryName),
+                options.mapToCoreCategory(),
+                OneStepRequestCallbackWrapper(
+                    httpErrorsCache = httpErrorsCache,
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+        }
+    }
+
+    override fun search(
+        options: ReverseGeoOptions,
+        executor: Executor,
+        callback: SearchCallback
+    ): SearchRequestTask {
+        return makeRequest(callback, engineExecutorService) { request ->
+            val requestContext = requestContextProvider.provide(apiType)
+            coreEngine.reverseGeocoding(
+                options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    httpErrorsCache = httpErrorsCache,
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+        }
+    }
+
+    override fun <R : IndexableRecord> registerDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask {
+        return indexableDataProvidersRegistry.register(
+            dataProvider = dataProvider,
+            searchEngine = coreEngine,
+            executor = executor,
+            callback = callback,
+        )
+    }
+
+    override fun <R : IndexableRecord> unregisterDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask {
+        return indexableDataProvidersRegistry.unregister(
+            dataProvider = dataProvider,
+            searchEngine = coreEngine,
+            executor = executor,
+            callback = callback,
+        )
     }
 }

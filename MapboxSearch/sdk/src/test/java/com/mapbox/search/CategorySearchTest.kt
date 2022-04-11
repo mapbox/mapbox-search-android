@@ -3,9 +3,9 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.reportError
-import com.mapbox.search.core.CoreReverseGeoOptions
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.core.CoreSearchOptions
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
@@ -37,7 +37,11 @@ import java.io.IOException
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-internal class ReverseGeocodingSearchEngineTest {
+/**
+ * Contains only forward-geocoding related functionality tests.
+ * See [SearchEngineTest], [ReverseGeocodingSearchTest] for more tests.
+ */
+internal class CategorySearchTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var dataProviderResolver: DataProviderResolver
@@ -47,7 +51,7 @@ internal class ReverseGeocodingSearchEngineTest {
     private lateinit var engineExecutorService: ExecutorService
     private lateinit var requestContextProvider: SearchRequestContextProvider
 
-    private lateinit var searchEngine: ReverseGeocodingSearchEngine
+    private lateinit var searchEngine: SearchEngine
 
     @BeforeEach
     fun setUp() {
@@ -61,19 +65,22 @@ internal class ReverseGeocodingSearchEngineTest {
 
         every { requestContextProvider.provide(ApiType.GEOCODING) } returns TEST_SEARCH_REQUEST_CONTEXT
 
-        searchEngine = ReverseGeocodingSearchEngineImpl(
+        searchEngine = SearchEngineImpl(
             apiType = ApiType.GEOCODING,
             coreEngine = coreEngine,
             httpErrorsCache = httpErrorsCache,
+            historyService = mockk(),
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
             engineExecutorService = engineExecutorService,
+            indexableDataProvidersRegistry = mockk(),
         )
     }
 
     @TestFactory
-    fun `Check initial successful geocoding call`() = TestCase {
-        Given("GeocodingSearchEngine with mocked dependencies") {
+    fun `Check initial successful search call`() = TestCase {
+        Given("CategorySearchEngine with mocked dependencies") {
+
             val slotSuggestionCallback = slot<(Result<SearchSuggestion>) -> Unit>()
             every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any(), capture(slotSuggestionCallback)) }.answers {
                 slotSuggestionCallback.captured(Result.success(TEST_SEARCH_SUGGESTION))
@@ -81,9 +88,7 @@ internal class ReverseGeocodingSearchEngineTest {
             }
 
             val slotSearchCallback = slot<CoreSearchCallback>()
-            val slotSearchOptions = slot<CoreReverseGeoOptions>()
-
-            every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
+            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
             }
 
@@ -91,6 +96,7 @@ internal class ReverseGeocodingSearchEngineTest {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
                 val searchRequestTask = searchEngine.search(
+                    categoryName = TEST_CATEGORIES_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
@@ -110,7 +116,12 @@ internal class ReverseGeocodingSearchEngineTest {
                 }
 
                 Verify("CoreSearchEngine.search() called") {
-                    coreEngine.reverseGeocoding(slotSearchOptions.captured, slotSearchCallback.captured)
+                    coreEngine.search(
+                        eq(""),
+                        eq(listOf(TEST_CATEGORIES_QUERY)),
+                        eq(TEST_SEARCH_OPTIONS.mapToCoreCategory()),
+                        slotSearchCallback.captured
+                    )
                 }
 
                 Verify("Results passed to callback") {
@@ -125,11 +136,11 @@ internal class ReverseGeocodingSearchEngineTest {
 
     @TestFactory
     fun `Check initial error search call`() = TestCase {
-        Given("GeocodingSearchEngine with mocked dependencies") {
+        Given("CategorySearchEngine with mocked dependencies") {
             val slotSearchCallback = slot<CoreSearchCallback>()
-            val slotSearchOptions = slot<CoreReverseGeoOptions>()
+            val slotSearchOptions = slot<CoreSearchOptions>()
 
-            every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
+            every { coreEngine.search(any(), any(), capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
             }
 
@@ -140,6 +151,7 @@ internal class ReverseGeocodingSearchEngineTest {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
                 val searchRequestTask = searchEngine.search(
+                    categoryName = TEST_CATEGORIES_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
@@ -159,7 +171,12 @@ internal class ReverseGeocodingSearchEngineTest {
                 }
 
                 Verify("CoreSearchEngine.search() called") {
-                    coreEngine.reverseGeocoding(slotSearchOptions.captured, slotSearchCallback.captured)
+                    coreEngine.search(
+                        eq(""),
+                        eq(listOf(TEST_CATEGORIES_QUERY)),
+                        slotSearchOptions.captured,
+                        slotSearchCallback.captured
+                    )
                 }
 
                 Verify("Error cause retrieved from errors cache") {
@@ -175,13 +192,14 @@ internal class ReverseGeocodingSearchEngineTest {
 
     @TestFactory
     fun `Check initial internal error search call`() = TestCase {
-        Given("GeocodingSearchEngine with erroneous core response") {
+        Given("CategorySearchEngine with erroneous core response") {
             val exception = RuntimeException("Test error")
             every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any(), any()) } throws exception
+
             val slotSearchCallback = slot<CoreSearchCallback>()
 
             every {
-                coreEngine.reverseGeocoding(any(), capture(slotSearchCallback))
+                coreEngine.search(any(), any(), any(), capture(slotSearchCallback))
             } answers {
                 val spyResponse = spyk(TEST_SUCCESSFUL_CORE_RESPONSE)
                 every { spyResponse.results } throws exception
@@ -191,16 +209,21 @@ internal class ReverseGeocodingSearchEngineTest {
 
             When("Initial search called") {
                 val callback = mockk<SearchCallback>(relaxed = true)
-                val slotCallbackError = slot<Exception>()
-                every { callback.onError(capture(slotCallbackError)) } returns Unit
+                val slotCalbackError = slot<Exception>()
+                every { callback.onError(capture(slotCalbackError)) } returns Unit
 
                 searchEngine.search(
+                    categoryName = TEST_CATEGORIES_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
                 )
 
-                Then("Exception from core response should be forwarded to callback", slotCallbackError.captured, exception)
+                Then(
+                    "Exception from core response should be forwarded to callback",
+                    slotCalbackError.captured,
+                    exception
+                )
             }
         }
     }
@@ -208,16 +231,17 @@ internal class ReverseGeocodingSearchEngineTest {
 //    TODO(#224): uncomment when isExecuted/isCanceled properties are available
 //    @TestFactory
 //    fun `Check consecutive search calls`() = TestCase {
-//        Given("GeocodingSearchEngine with mocked dependencies") {
+//        Given("CategorySearchEngine with mocked dependencies") {
 //            val slotSearchCallback = slot<CoreSearchCallback>()
 //            val listener = mockk<SearchCallback>(relaxed = true)
 //
-//            every { coreEngine.reverseGeocoding(any(), capture(slotSearchCallback)) } returns Unit
+//            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) } returns Unit
+//
 //            every { searchResultFactory.createSearchSuggestion(any(), any()) } returns TEST_SEARCH_RESULT
 //
 //            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
 //            When("Search function called for the first time") {
-//                searchRequestTask1 = (searchEngine.reverseGeocoding(TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
+//                searchRequestTask1 = (searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
 //
 //                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
 //                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
@@ -226,14 +250,14 @@ internal class ReverseGeocodingSearchEngineTest {
 //
 //            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
 //            When("Search function called for the second time") {
-//                searchRequestTask2 = (searchEngine.reverseGeocoding(TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
+//                searchRequestTask2 = (searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
 //
 //                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
-//                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
+//                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
 //                Then(
-//                    "First task still keeps reference to original listener",
+//                    "First task released reference to original listener",
 //                    true,
-//                    searchRequestTask1?.callbackDelegate != null
+//                    searchRequestTask1?.callbackDelegate == null
 //                )
 //
 //                Then("Second task is not executed", false, searchRequestTask2?.isExecuted)
@@ -257,13 +281,17 @@ internal class ReverseGeocodingSearchEngineTest {
 
     private companion object {
 
-        val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
-        val TEST_SEARCH_OPTIONS = ReverseGeoOptions(center = TEST_POINT)
+        const val TEST_CATEGORIES_QUERY = "cafe"
+
+        val TEST_SEARCH_OPTIONS = CategorySearchOptions()
+
         const val TEST_REQUEST_ID = 123
+
         const val TEST_RESPONSE_UUID = "UUID test"
+
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
-        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(ApiType.GEOCODING, responseUuid = TEST_RESPONSE_UUID)
+        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(apiType = ApiType.GEOCODING, responseUuid = TEST_RESPONSE_UUID)
 
         val TEST_CORE_SEARCH_RESULT = createTestCoreSearchResult(
             id = "test result id",
@@ -278,10 +306,9 @@ internal class ReverseGeocodingSearchEngineTest {
         )
 
         val TEST_REQUEST_OPTIONS = createTestRequestOptions(
-            query = "",
-            options = SearchOptions(
-                proximity = TEST_USER_LOCATION
-            ),
+            "",
+            options = SearchOptions(proximity = TEST_USER_LOCATION),
+            proximityRewritten = true,
             requestContext = TEST_SEARCH_REQUEST_CONTEXT
         )
 

@@ -10,7 +10,7 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.BlockingCompletionCallback
-import com.mapbox.search.tests_support.TestDataProviderEngineLayer
+import com.mapbox.search.tests_support.TestDataProviderEngine
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
@@ -24,7 +24,7 @@ import com.mapbox.search.tests_support.record.addToHistoryIfNeededBlocking
 import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.record.getBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
-import com.mapbox.search.tests_support.record.registerIndexableDataProviderEngineLayerBlocking
+import com.mapbox.search.tests_support.record.registerIndexableDataProviderEngineBlocking
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.MainThreadWorker
 import com.mapbox.test.dsl.TestCase
@@ -41,7 +41,7 @@ import java.util.concurrent.ExecutorService
 @Suppress("LargeClass")
 internal class HistoryDataProviderTest {
 
-    private lateinit var testDataProviderEngineLayer: TestDataProviderEngineLayer<HistoryRecord>
+    private lateinit var testDataProviderEngine: TestDataProviderEngine<HistoryRecord>
     private lateinit var recordsStorage: RecordsFileStorage<HistoryRecord>
     private lateinit var executorService: ExecutorService
     private lateinit var timeProvider: TimeProvider
@@ -52,7 +52,7 @@ internal class HistoryDataProviderTest {
 
     @BeforeEach
     fun setUp() {
-        testDataProviderEngineLayer = TestDataProviderEngineLayer()
+        testDataProviderEngine = TestDataProviderEngine()
 
         recordsStorage = mockk(relaxed = true)
         every { recordsStorage.load() } returns emptyList()
@@ -69,7 +69,7 @@ internal class HistoryDataProviderTest {
         historyDataProvider = HistoryDataProviderImpl(
             recordsStorage, executorService, timeProvider
         )
-        historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testDataProviderEngineLayer, executor)
+        historyDataProvider.registerIndexableDataProviderEngineBlocking(testDataProviderEngine, executor)
     }
 
     @TestFactory
@@ -97,7 +97,7 @@ internal class HistoryDataProviderTest {
                     executorService,
                     timeProvider
                 )
-                historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testDataProviderEngineLayer, executor)
+                historyDataProvider.registerIndexableDataProviderEngineBlocking(testDataProviderEngine, executor)
 
                 Verify("Data loaded from storage", exactly = 1) {
                     recordsStorage.load()
@@ -114,10 +114,10 @@ internal class HistoryDataProviderTest {
                     )
                 }
 
-                Then("TestDataProviderEngineLayer should have initial data") {
+                Then("TestDataProviderEngine should have initial data") {
                     assertEqualsJsonify(
                         listOf(TEST_HISTORY_RECORD_1, TEST_HISTORY_RECORD_2),
-                        testDataProviderEngineLayer.records.sortedBy { it.timestamp }
+                        testDataProviderEngine.records.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -145,7 +145,7 @@ internal class HistoryDataProviderTest {
                     timeProvider,
                     maxRecordsAmount
                 )
-                historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testDataProviderEngineLayer, executor)
+                historyDataProvider.registerIndexableDataProviderEngineBlocking(testDataProviderEngine, executor)
 
                 val expectedRecords = testRecords.sortedBy { it.timestamp }.takeLast(maxRecordsAmount)
 
@@ -156,10 +156,10 @@ internal class HistoryDataProviderTest {
                     )
                 }
 
-                Then("TestDataProviderEngineLayer returns only $maxRecordsAmount records with the latest timestamp") {
+                Then("TestDataProviderEngine returns only $maxRecordsAmount records with the latest timestamp") {
                     assertEqualsJsonify(
                         expectedRecords,
-                        testDataProviderEngineLayer.records.sortedBy { it.timestamp }
+                        testDataProviderEngine.records.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -171,14 +171,14 @@ internal class HistoryDataProviderTest {
         Given("HistoryDataProviderImpl with mocked dependencies") {
             When("History suggestion tried to be added") {
                 historyDataProvider = HistoryDataProviderImpl(recordsStorage, executorService, timeProvider)
-                historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testDataProviderEngineLayer, executor)
+                historyDataProvider.registerIndexableDataProviderEngineBlocking(testDataProviderEngine, executor)
 
                 historyDataProvider.addToHistoryIfNeededBlocking(TEST_HISTORY_SEARCH_RESULT, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
                 Then("Provider still should be empty", 0, allRecords.size)
 
-                Then("No new records added", 0, testDataProviderEngineLayer.records.size)
+                Then("No new records added", 0, testDataProviderEngine.records.size)
 
                 Verify("No data saved", exactly = 0) {
                     recordsStorage.save(any())
@@ -198,8 +198,8 @@ internal class HistoryDataProviderTest {
             )
             every { recordsStorage.load() } returns testRecords
             historyDataProvider = HistoryDataProviderImpl(recordsStorage, executorService, timeProvider, maxRecordsAmount)
-            val testEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-            historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testEngineLayer, executor)
+            val testEngine = TestDataProviderEngine<HistoryRecord>()
+            historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
             When("New records with same timestamp added") {
                 val anotherTestRecords = listOf(
@@ -213,7 +213,7 @@ internal class HistoryDataProviderTest {
                 historyDataProvider.addAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
-                val allEngineLayerRecords = testEngineLayer.records
+                val allEngineRecords = testEngine.records
 
                 Then("Amount of all records equals to $maxRecordsAmount", maxRecordsAmount, allRecords.size)
 
@@ -233,7 +233,7 @@ internal class HistoryDataProviderTest {
                 Then("Only records with latest timestamps are present in engine layer") {
                     assertEqualsJsonify(
                         expectedValue = expectedRecords,
-                        actualValue = allEngineLayerRecords.sortedBy { it.timestamp }
+                        actualValue = allEngineRecords.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -243,7 +243,7 @@ internal class HistoryDataProviderTest {
                 historyDataProvider.addBlocking(singleRecord, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
-                val allEngineLayerRecords = testEngineLayer.records
+                val allEngineRecords = testEngine.records
 
                 Then("Amount of all records equals to $maxRecordsAmount", maxRecordsAmount, allRecords.size)
 
@@ -263,7 +263,7 @@ internal class HistoryDataProviderTest {
                 Then("Only records with latest timestamps are present in engine layer") {
                     assertEqualsJsonify(
                         expectedValue = expectedRecords,
-                        actualValue = allEngineLayerRecords.sortedBy { it.timestamp }
+                        actualValue = allEngineRecords.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -280,8 +280,8 @@ internal class HistoryDataProviderTest {
             }
             every { recordsStorage.load() } returns testRecords
             historyDataProvider = HistoryDataProviderImpl(recordsStorage, executorService, timeProvider, maxRecordsAmount)
-            val testEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-            historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testEngineLayer, executor)
+            val testEngine = TestDataProviderEngine<HistoryRecord>()
+            historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
             When("New records added") {
                 val anotherTestRecords = (6..10).map { index ->
@@ -294,7 +294,7 @@ internal class HistoryDataProviderTest {
                 historyDataProvider.addAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
-                val allEngineLayerRecords = testEngineLayer.records
+                val allEngineRecords = testEngine.records
 
                 Then("Amount of all records equals to $maxRecordsAmount", maxRecordsAmount, allRecords.size)
 
@@ -319,7 +319,7 @@ internal class HistoryDataProviderTest {
                 Then("Only records with latest timestamps are present in engine layer") {
                     assertEqualsJsonify(
                         expectedValue = expectedRecords,
-                        actualValue = allEngineLayerRecords.sortedBy { it.timestamp }
+                        actualValue = allEngineRecords.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -336,8 +336,8 @@ internal class HistoryDataProviderTest {
             }.shuffled()
             every { recordsStorage.load() } returns testRecords
             historyDataProvider = HistoryDataProviderImpl(recordsStorage, executorService, timeProvider, maxRecordsAmount)
-            val testEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-            historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testEngineLayer, executor)
+            val testEngine = TestDataProviderEngine<HistoryRecord>()
+            historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
             When("New records added") {
                 val anotherTestRecords = (150_000..200_000L).map { index ->
@@ -350,7 +350,7 @@ internal class HistoryDataProviderTest {
                 historyDataProvider.addAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
-                val allEngineLayerRecords = testEngineLayer.records
+                val allEngineRecords = testEngine.records
 
                 Then("Amount of all records equals to $maxRecordsAmount", maxRecordsAmount, allRecords.size)
 
@@ -367,7 +367,7 @@ internal class HistoryDataProviderTest {
                 Then("Only records with latest timestamps are present in engine layer") {
                     assertEqualsJsonify(
                         expectedValue = expectedRecords,
-                        actualValue = allEngineLayerRecords.sortedBy { it.timestamp }
+                        actualValue = allEngineRecords.sortedBy { it.timestamp }
                     )
                 }
             }
@@ -379,8 +379,8 @@ internal class HistoryDataProviderTest {
         Given("HistoryDataProviderImpl with mocked dependencies") {
             When("External record suggestion tried to be added") {
                 historyDataProvider.addToHistoryIfNeededBlocking(TEST_FAVORITE_RECORD_SEARCH_RESULT, executor)
-                val testEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-                historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testEngineLayer, executor)
+                val testEngine = TestDataProviderEngine<HistoryRecord>()
+                historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
                 val addedRecord = historyDataProvider.getBlocking(TEST_FAVORITE_RECORD_SEARCH_RESULT.id, executor)
 
@@ -416,7 +416,7 @@ internal class HistoryDataProviderTest {
                 Then(
                     "New record added to core layer",
                     listOf(expectedRecord),
-                    testEngineLayer.records,
+                    testEngine.records,
                 )
             }
         }
@@ -427,8 +427,8 @@ internal class HistoryDataProviderTest {
         Given("HistoryDataProviderImpl with mocked dependencies") {
             When("External record suggestion tried to be added") {
                 historyDataProvider.addToHistoryIfNeededBlocking(TEST_SERVER_SEARCH_RESULT, executor)
-                val testEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-                historyDataProvider.registerIndexableDataProviderEngineLayerBlocking(testEngineLayer, executor)
+                val testEngine = TestDataProviderEngine<HistoryRecord>()
+                historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
                 val blockingCompletionCallback = BlockingCompletionCallback<HistoryRecord?>()
                 historyDataProvider.get(TEST_SERVER_SEARCH_RESULT.id, executor, blockingCompletionCallback)
@@ -466,7 +466,7 @@ internal class HistoryDataProviderTest {
                 Then(
                     "New record added to core layer",
                     listOf(expectedRecord),
-                    testEngineLayer.records,
+                    testEngine.records,
                 )
             }
         }

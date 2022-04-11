@@ -11,10 +11,10 @@ import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.QueryType
 import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchNavigationOptions
 import com.mapbox.search.SearchNavigationProfile
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchSdkSettings
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.utils.FormattedTimeProvider
@@ -50,13 +50,16 @@ internal class TelemetryServiceTest : BaseTest() {
         mockServer = MockWebServer()
         mockServer.start(TEST_WEB_SERVER_PORT)
 
+        val searchEngineSettings = SearchEngineSettings(
+            singleBoxSearchBaseUrl = mockServer.url("").toString(),
+            geocodingEndpointBaseUrl = mockServer.url("").toString()
+        )
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             formattedTimeProvider = formattedTimeProvider,
             uuidProvider = uuidProvider,
@@ -65,7 +68,7 @@ internal class TelemetryServiceTest : BaseTest() {
             errorsReporter = noOpErrorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         analyticsService = MapboxSearchSdk.serviceProvider.analyticsService()
     }

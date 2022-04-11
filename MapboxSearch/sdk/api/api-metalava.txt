@@ -20,13 +20,6 @@ package com.mapbox.search {
   public final class AsyncOperationTaskKt {
   }
 
-  public interface CategorySearchEngine {
-    method public com.mapbox.search.ApiType getApiType();
-    method public com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
-    property public abstract com.mapbox.search.ApiType apiType;
-  }
-
   @kotlinx.parcelize.Parcelize public final class CategorySearchOptions implements android.os.Parcelable {
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
@@ -353,11 +346,6 @@ package com.mapbox.search {
     field public static final com.mapbox.search.Country ZIMBABWE;
   }
 
-  public interface DataProviderInitializationCallback {
-    method public void onError(com.mapbox.search.record.IndexableDataProvider<?> dataProvider, Exception e);
-    method public void onInitialized(com.mapbox.search.record.IndexableDataProvider<?> dataProvider);
-  }
-
   public interface DistanceCalculator {
     method public double distance(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
     method public default static double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
@@ -385,18 +373,6 @@ package com.mapbox.search {
   }
 
   public final class ImageInfoKt {
-  }
-
-  public interface IndexableDataProvidersRegistry {
-    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask register(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, int priority, java.util.concurrent.Executor executor, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
-    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask register(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, int priority, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
-    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregister(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
-    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregister(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.IndexableDataProvidersRegistry.Callback callback);
-  }
-
-  public static interface IndexableDataProvidersRegistry.Callback {
-    method public void onError(Exception e);
-    method public void onSuccess();
   }
 
   @kotlinx.parcelize.Parcelize public final class Language implements android.os.Parcelable {
@@ -444,22 +420,19 @@ package com.mapbox.search {
   }
 
   public final class MapboxSearchSdk {
-    method public static void addDataProviderInitializationCallback(com.mapbox.search.DataProviderInitializationCallback callback);
-    method public static com.mapbox.search.CategorySearchEngine getCategorySearchEngine();
+    method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings searchEngineSettings = com.mapbox.search.MapboxSearchSdk.searchEngineSettings);
+    method public com.mapbox.search.SearchEngine createSearchEngine();
     method public static com.mapbox.search.OfflineSearchEngine getOfflineSearchEngine();
-    method public static com.mapbox.search.ReverseGeocodingSearchEngine getReverseGeocodingSearchEngine();
     method public static com.mapbox.search.SearchEngine getSearchEngine();
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings(), com.mapbox.search.OfflineSearchSettings offlineSearchSettings = OfflineSearchSettings());
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings());
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings(), com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings(), com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings = OfflineSearchEngineSettings());
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings(), com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings());
+    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings());
     method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null);
     method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application));
     method public static void initialize(android.app.Application application, String accessToken);
-    method public static void removeDataProviderInitializationCallback(com.mapbox.search.DataProviderInitializationCallback callback);
     method public static void setAccessToken(String accessToken);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
-    field public static final int LAYER_PRIORITY_FAVORITES = 101; // 0x65
-    field public static final int LAYER_PRIORITY_HISTORY = 100; // 0x64
   }
 
   public final class OfflineIndexChangeEvent {
@@ -544,6 +517,24 @@ package com.mapbox.search {
     method public void onIndexChange(com.mapbox.search.OfflineIndexChangeEvent event);
   }
 
+  public final class OfflineSearchEngineSettings {
+    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore? tileStore = null, java.net.URI? tilesBaseUri = null);
+    method public com.mapbox.common.TileStore? getTileStore();
+    method public java.net.URI? getTilesBaseUri();
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder toBuilder();
+    property public final com.mapbox.common.TileStore? tileStore;
+    property public final java.net.URI? tilesBaseUri;
+    field public static final String DEFAULT_DATASET = "test-dataset";
+    field public static final String DEFAULT_VERSION = "";
+  }
+
+  public static final class OfflineSearchEngineSettings.Builder {
+    ctor public OfflineSearchEngineSettings.Builder();
+    method public com.mapbox.search.OfflineSearchEngineSettings build();
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder tileStore(com.mapbox.common.TileStore? tileStore);
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
+  }
+
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
@@ -566,24 +557,6 @@ package com.mapbox.search {
   }
 
   public final class OfflineSearchOptionsKt {
-  }
-
-  public final class OfflineSearchSettings {
-    ctor public OfflineSearchSettings(com.mapbox.common.TileStore? tileStore = null, java.net.URI? tilesBaseUri = null);
-    method public com.mapbox.common.TileStore? getTileStore();
-    method public java.net.URI? getTilesBaseUri();
-    method public com.mapbox.search.OfflineSearchSettings.Builder toBuilder();
-    property public final com.mapbox.common.TileStore? tileStore;
-    property public final java.net.URI? tilesBaseUri;
-    field public static final String DEFAULT_DATASET = "test-dataset";
-    field public static final String DEFAULT_VERSION = "";
-  }
-
-  public static final class OfflineSearchSettings.Builder {
-    ctor public OfflineSearchSettings.Builder();
-    method public com.mapbox.search.OfflineSearchSettings build();
-    method public com.mapbox.search.OfflineSearchSettings.Builder tileStore(com.mapbox.common.TileStore? tileStore);
-    method public com.mapbox.search.OfflineSearchSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
   }
 
   public enum QueryType {
@@ -662,13 +635,6 @@ package com.mapbox.search {
   public final class ReverseGeoOptionsKt {
   }
 
-  public interface ReverseGeocodingSearchEngine {
-    method public com.mapbox.search.ApiType getApiType();
-    method public com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
-    property public abstract com.mapbox.search.ApiType apiType;
-  }
-
   public enum ReverseMode {
     enum_constant public static final com.mapbox.search.ReverseMode DISTANCE;
     enum_constant public static final com.mapbox.search.ReverseMode SCORE;
@@ -713,14 +679,32 @@ package com.mapbox.search {
 
   public interface SearchEngine {
     method public com.mapbox.search.ApiType getApiType();
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
     method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
     method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
     method public com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
     method public com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
     method public default com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     property public abstract com.mapbox.search.ApiType apiType;
+  }
+
+  public final class SearchEngineSettings {
+    ctor public SearchEngineSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
+    ctor public SearchEngineSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    method public String getGeocodingEndpointBaseUrl();
+    method public String? getSingleBoxSearchBaseUrl();
+    property public final String geocodingEndpointBaseUrl;
+    property public final String? singleBoxSearchBaseUrl;
+    field public static final String DEFAULT_ENDPOINT_GEOCODING = "https://api.mapbox.com";
   }
 
   public interface SearchMultipleSelectionCallback {
@@ -865,26 +849,11 @@ package com.mapbox.search {
   }
 
   public final class SearchSdkSettings {
-    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null, int maxHistoryRecordsAmount = 100);
-    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
-    ctor public SearchSdkSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com");
-    method public String getGeocodingEndpointBaseUrl();
+    ctor public SearchSdkSettings(int maxHistoryRecordsAmount = 100);
     method public int getMaxHistoryRecordsAmount();
-    method public String? getSingleBoxSearchBaseUrl();
-    method public com.mapbox.search.SearchSdkSettings.Builder toBuilder();
-    property public final String geocodingEndpointBaseUrl;
     property public final int maxHistoryRecordsAmount;
-    property public final String? singleBoxSearchBaseUrl;
     field public static final int DEFAULT_MAX_HISTORY_RECORDS_AMOUNT = 100; // 0x64
     field public static final int MAX_HISTORY_RECORDS_AMOUNT_HIGHER_BOUND = 100; // 0x64
-  }
-
-  public static final class SearchSdkSettings.Builder {
-    ctor public SearchSdkSettings.Builder();
-    method public com.mapbox.search.SearchSdkSettings build();
-    method public com.mapbox.search.SearchSdkSettings.Builder geocodingEndpointBaseUrl(String baseUrl);
-    method public com.mapbox.search.SearchSdkSettings.Builder maxHistoryRecordsAmount(int amount);
-    method public com.mapbox.search.SearchSdkSettings.Builder singleBoxSearchBaseUrl(String? baseUrl);
   }
 
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
@@ -907,7 +876,6 @@ package com.mapbox.search {
     method public com.mapbox.search.analytics.AnalyticsService analyticsService();
     method public com.mapbox.search.DistanceCalculator distanceCalculator(double latitude);
     method public com.mapbox.search.record.FavoritesDataProvider favoritesDataProvider();
-    method public com.mapbox.search.IndexableDataProvidersRegistry globalDataProvidersRegistry();
     method public com.mapbox.search.HighlightsCalculator highlightsCalculator();
     method public com.mapbox.search.record.HistoryDataProvider historyDataProvider();
     method public com.mapbox.android.core.location.LocationEngine locationEngine();
@@ -1101,10 +1069,12 @@ package com.mapbox.search.record {
 
   public interface FavoritesDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.FavoriteRecord> {
     field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.favorite";
+    field public static final int PROVIDER_PRIORITY = 101; // 0x65
   }
 
   public interface HistoryDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.HistoryRecord> {
     field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.history";
+    field public static final int PROVIDER_PRIORITY = 100; // 0x64
   }
 
   @kotlinx.parcelize.Parcelize public final class HistoryRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
@@ -1149,29 +1119,31 @@ package com.mapbox.search.record {
     method public com.mapbox.search.AsyncOperationTask getAll(java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
     method public default com.mapbox.search.AsyncOperationTask getAll(com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
     method public String getDataProviderName();
-    method public com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public int getPriority();
+    method public com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public com.mapbox.search.AsyncOperationTask remove(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
     method public default com.mapbox.search.AsyncOperationTask remove(String id, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public default com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngineLayer(com.mapbox.search.record.IndexableDataProviderEngineLayer dataProviderEngineLayer, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
     method public com.mapbox.search.AsyncOperationTask update(R record, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public default com.mapbox.search.AsyncOperationTask update(R record, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     property public abstract String dataProviderName;
+    property public abstract int priority;
   }
 
-  public interface IndexableDataProviderEngineLayer {
+  public interface IndexableDataProviderEngine {
     method public void add(com.mapbox.search.record.IndexableRecord record);
     method public void addAll(Iterable<? extends com.mapbox.search.record.IndexableRecord> records);
     method public void clear();
-    method public void executeBatchUpdate(com.mapbox.search.record.IndexableDataProviderEngineLayer.BatchUpdateOperation batchUpdateOperation);
+    method public void executeBatchUpdate(com.mapbox.search.record.IndexableDataProviderEngine.BatchUpdateOperation batchUpdateOperation);
     method public void remove(String id);
     method public void removeAll(Iterable<java.lang.String> ids);
     method public void update(com.mapbox.search.record.IndexableRecord record);
   }
 
-  public static fun interface IndexableDataProviderEngineLayer.BatchUpdateOperation {
-    method public void execute(com.mapbox.search.record.IndexableDataProviderEngineLayer engineLayer);
+  public static fun interface IndexableDataProviderEngine.BatchUpdateOperation {
+    method public void execute(com.mapbox.search.record.IndexableDataProviderEngine engine);
   }
 
   public interface IndexableRecord extends android.os.Parcelable {
@@ -1205,11 +1177,19 @@ package com.mapbox.search.record {
   public interface LocalDataProvider<R extends com.mapbox.search.record.IndexableRecord> extends com.mapbox.search.record.IndexableDataProvider<R> {
     method public void addOnDataChangedListener(java.util.concurrent.Executor executor, com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
     method public default void addOnDataChangedListener(com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
+    method public void addOnDataProviderEngineRegisterListener(java.util.concurrent.Executor executor, com.mapbox.search.record.LocalDataProvider.OnDataProviderEngineRegisterListener listener);
+    method public default void addOnDataProviderEngineRegisterListener(com.mapbox.search.record.LocalDataProvider.OnDataProviderEngineRegisterListener listener);
     method public void removeOnDataChangedListener(com.mapbox.search.record.LocalDataProvider.OnDataChangedListener<R> listener);
+    method public void removeOnDataProviderEngineRegisterListener(com.mapbox.search.record.LocalDataProvider.OnDataProviderEngineRegisterListener listener);
   }
 
   public static interface LocalDataProvider.OnDataChangedListener<R extends com.mapbox.search.record.IndexableRecord> {
     method public void onDataChanged(java.util.List<? extends R> newData);
+  }
+
+  public static interface LocalDataProvider.OnDataProviderEngineRegisterListener {
+    method public void onEngineRegistered(com.mapbox.search.record.IndexableDataProviderEngine engine);
+    method public void onEngineRegistrationError(Exception e);
   }
 
 }
@@ -1488,6 +1468,9 @@ package com.mapbox.search.utils.extension {
   }
 
   public final class ContextKt {
+  }
+
+  public final class MapKt {
   }
 
   public final class PackageInfoKt {

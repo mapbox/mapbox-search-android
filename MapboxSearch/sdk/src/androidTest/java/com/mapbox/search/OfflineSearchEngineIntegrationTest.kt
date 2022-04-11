@@ -79,7 +79,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
             application = targetApplication,
             accessToken = BuildConfig.MAPBOX_API_TOKEN,
             locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION),
-            offlineSearchSettings = OfflineSearchSettings(tileStore = tileStore),
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(tileStore = tileStore),
             timeProvider = testTimeProvider,
             allowReinitialization = true,
         )

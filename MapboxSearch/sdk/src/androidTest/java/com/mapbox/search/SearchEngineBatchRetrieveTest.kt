@@ -41,18 +41,18 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)

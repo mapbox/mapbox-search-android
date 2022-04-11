@@ -35,7 +35,6 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -48,10 +47,14 @@ import java.util.Locale
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
 
-internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
+/**
+ * Contains only reverse-geocoding related functionality tests.
+ * See [CategorySearchIntegrationTest], [SearchEngineIntegrationTest] for more tests.
+ */
+internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer
-    private lateinit var searchEngine: ReverseGeocodingSearchEngine
+    private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
@@ -67,13 +70,13 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
             uuidProvider = uuidProvider,
@@ -82,7 +85,7 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
             errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createReverseGeocodingSearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -286,11 +289,11 @@ internal class ReverseGeocodingSearchEngineIntegrationTest : BaseTest() {
             val callback = BlockingSearchCallback()
             searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
             if (BuildConfig.DEBUG) {
-                Assert.fail()
+                fail()
             }
         } catch (t: Throwable) {
             if (!BuildConfig.DEBUG) {
-                Assert.fail()
+                fail()
             }
         }
     }

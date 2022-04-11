@@ -4,7 +4,7 @@ package com.mapbox.search.record
 import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingCompletionCallback.CompletionCallbackResult
-import com.mapbox.search.tests_support.TestDataProviderEngineLayer
+import com.mapbox.search.tests_support.TestDataProviderEngine
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.assertEqualsJsonify
@@ -56,13 +56,13 @@ internal class LocalDataProviderTest {
 
             val maxRecordsAmount = 30
             When("TestDataProvider with max records amount = $maxRecordsAmount created") {
-                val testDataProviderEngineLayer = TestDataProviderEngineLayer<HistoryRecord>()
-                TestDataProvider(recordsStorage, executorService, listOf(testDataProviderEngineLayer), maxRecordsAmount)
+                val testDataProviderEngine = TestDataProviderEngine<HistoryRecord>()
+                TestDataProvider(recordsStorage, executorService, listOf(testDataProviderEngine), maxRecordsAmount)
 
-                Then("TestDataProviderEngineLayer returns only $maxRecordsAmount records") {
+                Then("TestDataProviderLayer returns only $maxRecordsAmount records") {
                     assertEqualsJsonify(
                         testRecords.takeLast(maxRecordsAmount),
-                        testDataProviderEngineLayer.records
+                        testDataProviderEngine.records
                     )
                 }
             }
@@ -280,13 +280,14 @@ internal class LocalDataProviderTest {
     private class TestDataProvider(
         recordsStorage: RecordsStorage<HistoryRecord>,
         backgroundTaskExecutorService: ExecutorService,
-        dataProviderEngineLayers: List<IndexableDataProviderEngineLayer> = emptyList(),
+        dataProviderEngines: List<IndexableDataProviderEngine> = emptyList(),
         maxRecordsAmount: Int = Int.MAX_VALUE,
     ) : LocalDataProviderImpl<HistoryRecord>(
         dataProviderName = "Test data provider",
+        priority = 1000,
         recordsStorage = recordsStorage,
         backgroundTaskExecutorService = backgroundTaskExecutorService,
-        dataProviderEngineLayers = CopyOnWriteArrayList(dataProviderEngineLayers),
+        dataProviderEngines = CopyOnWriteArrayList(dataProviderEngines),
         maxRecordsAmount = maxRecordsAmount,
     ) {
 

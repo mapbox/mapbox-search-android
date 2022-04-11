@@ -35,6 +35,12 @@ public interface HistoryDataProvider : LocalDataProvider<HistoryRecord> {
          * [HistoryDataProvider] unique name.
          */
         public const val PROVIDER_NAME: String = "com.mapbox.search.localProvider.history"
+
+        /**
+         * [HistoryDataProvider] priority.
+         * @see [IndexableDataProvider.priority]
+         */
+        public const val PROVIDER_PRIORITY: Int = 100
     }
 }
 
@@ -58,6 +64,7 @@ internal class HistoryDataProviderImpl(
     maxRecordsAmount: Int = Int.MAX_VALUE,
 ) : LocalDataProviderImpl<HistoryRecord>(
     dataProviderName = HistoryDataProvider.PROVIDER_NAME,
+    priority = HistoryDataProvider.PROVIDER_PRIORITY,
     recordsStorage = recordsStorage,
     backgroundTaskExecutorService = backgroundTaskExecutorService,
     maxRecordsAmount = maxRecordsAmount,

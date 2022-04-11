@@ -8,7 +8,7 @@ import android.os.StrictMode.VmPolicy
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.TileStore
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchSettings
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.SearchSdkSettings
 
 open class SampleApplication : Application() {
@@ -26,7 +26,7 @@ open class SampleApplication : Application() {
             accessToken = BuildConfig.MAPBOX_API_TOKEN,
             locationEngine = LocationEngineProvider.getBestLocationEngine(this),
             searchSdkSettings = SearchSdkSettings(maxHistoryRecordsAmount = 5),
-            offlineSearchSettings = OfflineSearchSettings(tileStore = TileStore.create()),
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(tileStore = TileStore.create()),
         )
     }
 

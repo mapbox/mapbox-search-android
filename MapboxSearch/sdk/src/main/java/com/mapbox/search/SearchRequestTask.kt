@@ -6,8 +6,6 @@ import java.util.concurrent.Future
 /**
  * Represents any request from any search engine. Should be cancelled if you leave the screen or application and result of search request do not needed anymore to avoid memory leaks.
  * @see SearchEngine
- * @see CategorySearchEngine
- * @see ReverseGeocodingSearchEngine
  */
 // TODO(#224): replace with AsyncOperationTask and expose isCancelled/isExecuted properties
 public interface SearchRequestTask {

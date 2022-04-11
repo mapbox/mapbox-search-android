@@ -49,14 +49,6 @@ public interface ServiceProvider {
      * @return [AnalyticsService] instance.
      */
     public fun analyticsService(): AnalyticsService
-
-    /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     *
-     * Provides global [IndexableDataProvidersRegistry] instance: all created search engines are associated with this registry.
-     * @return [AnalyticsService] instance.
-     */
-    public fun globalDataProvidersRegistry(): IndexableDataProvidersRegistry
 }
 
 internal interface InternalServiceProvider : ServiceProvider {
@@ -65,8 +57,6 @@ internal interface InternalServiceProvider : ServiceProvider {
     fun historyService(): HistoryService
 
     fun errorsReporter(): ErrorsReporter
-
-    override fun globalDataProvidersRegistry(): DefaultIndexableDataProvidersRegistry
 }
 
 internal class ServiceProviderImpl(
@@ -75,7 +65,6 @@ internal class ServiceProviderImpl(
     private val historyDataProvider: HistoryService,
     private val favoritesDataProvider: FavoritesDataProvider,
     private val errorsReporter: ErrorsReporter,
-    private val globalDataProvidersRegistry: DefaultIndexableDataProvidersRegistry,
 ) : ServiceProvider, InternalServiceProvider {
 
     override fun distanceCalculator(latitude: Double): DistanceCalculator = DistanceCalculatorImpl(latitude)
@@ -95,6 +84,4 @@ internal class ServiceProviderImpl(
     override fun analyticsService(): AnalyticsService = analyticsSender
 
     override fun errorsReporter(): ErrorsReporter = errorsReporter
-
-    override fun globalDataProvidersRegistry(): DefaultIndexableDataProvidersRegistry = globalDataProvidersRegistry
 }

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapbox.geojson.Point;
 import com.mapbox.search.AsyncOperationTask;
 import com.mapbox.search.CompletionCallback;
-import com.mapbox.search.IndexableDataProvidersRegistry;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
@@ -19,7 +18,7 @@ import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.IndexableDataProvider;
-import com.mapbox.search.record.IndexableDataProviderEngineLayer;
+import com.mapbox.search.record.IndexableDataProviderEngine;
 import com.mapbox.search.record.IndexableRecord;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchResultType;
@@ -86,12 +85,12 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         searchEngine = MapboxSearchSdk.getSearchEngine();
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...");
-        registerProviderTask = MapboxSearchSdk.getServiceProvider().globalDataProvidersRegistry().register(
+
+        registerProviderTask = searchEngine.registerDataProvider(
             customDataProvider,
-            200,
-            new IndexableDataProvidersRegistry.Callback() {
+            new CompletionCallback<Unit>() {
                 @Override
-                public void onSuccess() {
+                public void onComplete(Unit result) {
                     Log.i("SearchApiExample", "CustomDataProvider is registered");
                     searchRequestTask = searchEngine.search(
                         "Underdog",
@@ -117,11 +116,12 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         if (searchRequestTask != null) {
             searchRequestTask.cancel();
         }
-        MapboxSearchSdk.getServiceProvider().globalDataProvidersRegistry().unregister(
+
+        searchEngine.unregisterDataProvider(
             customDataProvider,
-            new IndexableDataProvidersRegistry.Callback() {
+            new CompletionCallback<Unit>() {
                 @Override
-                public void onSuccess() {
+                public void onComplete(Unit result) {
                     Log.i("SearchApiExample", "CustomDataProvider is unregistered");
                 }
 
@@ -131,7 +131,6 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
                 }
             }
         );
-
         super.onDestroy();
     }
 
@@ -152,7 +151,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
     private static class InMemoryDataProvider<R extends IndexableRecord> implements IndexableDataProvider<R> {
 
-        private final List<IndexableDataProviderEngineLayer> dataProviderEngineLayers = new ArrayList<>();
+        private final List<IndexableDataProviderEngine> dataProviderEngines = new ArrayList<>();
         private final Map<String, R> records = new LinkedHashMap<>();
 
         private final Executor mainThreadExecutor = SearchSdkMainThreadWorker.INSTANCE.getMainExecutor();
@@ -169,36 +168,41 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             return "SAMPLE_APP_CUSTOM_DATA_PROVIDER";
         }
 
+        @Override
+        public int getPriority() {
+            return 200;
+        }
+
         @NonNull
         @Override
-        public AsyncOperationTask registerIndexableDataProviderEngineLayer(
-            @NonNull IndexableDataProviderEngineLayer dataProviderEngine,
+        public AsyncOperationTask registerIndexableDataProviderEngine(
+            @NonNull IndexableDataProviderEngine dataProviderEngine,
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
             dataProviderEngine.addAll(records.values());
-            dataProviderEngineLayers.add(dataProviderEngine);
+            dataProviderEngines.add(dataProviderEngine);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
             return CompletedAsyncOperationTask.getInstance();
         }
 
         @NonNull
         @Override
-        public AsyncOperationTask registerIndexableDataProviderEngineLayer(
-            @NonNull IndexableDataProviderEngineLayer dataProviderEngine,
+        public AsyncOperationTask registerIndexableDataProviderEngine(
+            @NonNull IndexableDataProviderEngine dataProviderEngine,
             @NonNull CompletionCallback<Unit> callback
         ) {
-            return registerIndexableDataProviderEngineLayer(dataProviderEngine, mainThreadExecutor, callback);
+            return registerIndexableDataProviderEngine(dataProviderEngine, mainThreadExecutor, callback);
         }
 
         @NonNull
         @Override
-        public AsyncOperationTask unregisterIndexableDataProviderEngineLayer(
-            @NonNull IndexableDataProviderEngineLayer dataProviderEngine,
+        public AsyncOperationTask unregisterIndexableDataProviderEngine(
+            @NonNull IndexableDataProviderEngine dataProviderEngine,
             @NonNull Executor executor,
             @NonNull CompletionCallback<Boolean> callback
         ) {
-            boolean isRemoved = dataProviderEngineLayers.remove(dataProviderEngine);
+            boolean isRemoved = dataProviderEngines.remove(dataProviderEngine);
             if (isRemoved) {
                 dataProviderEngine.clear();
             }
@@ -208,11 +212,11 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
         @NonNull
         @Override
-        public AsyncOperationTask unregisterIndexableDataProviderEngineLayer(
-            @NonNull IndexableDataProviderEngineLayer dataProviderEngine,
+        public AsyncOperationTask unregisterIndexableDataProviderEngine(
+            @NonNull IndexableDataProviderEngine dataProviderEngine,
             @NonNull CompletionCallback<Boolean> callback
         ) {
-            return unregisterIndexableDataProviderEngineLayer(dataProviderEngine, mainThreadExecutor, callback);
+            return unregisterIndexableDataProviderEngine(dataProviderEngine, mainThreadExecutor, callback);
         }
 
         @NonNull
@@ -269,8 +273,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
-            for (IndexableDataProviderEngineLayer layer : dataProviderEngineLayers) {
-                layer.add(record);
+            for (IndexableDataProviderEngine engine : dataProviderEngines) {
+                engine.add(record);
             }
             records.put(record.getId(), record);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
@@ -290,8 +294,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
-            for (IndexableDataProviderEngineLayer layer : dataProviderEngineLayers) {
-                layer.addAll(records);
+            for (IndexableDataProviderEngine engine : dataProviderEngines) {
+                engine.addAll(records);
             }
             for (R record : records) {
                 this.records.put(record.getId(), record);
@@ -313,8 +317,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
-            for (IndexableDataProviderEngineLayer layer : dataProviderEngineLayers) {
-                layer.update(record);
+            for (IndexableDataProviderEngine engine : dataProviderEngines) {
+                engine.update(record);
             }
             records.put(record.getId(), record);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
@@ -334,8 +338,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull Executor executor,
             @NonNull CompletionCallback<Boolean> callback
         ) {
-            for (IndexableDataProviderEngineLayer layer : dataProviderEngineLayers) {
-                layer.remove(id);
+            for (IndexableDataProviderEngine engine : dataProviderEngines) {
+                engine.remove(id);
             }
             boolean isRemoved = records.remove(id) != null;
             executor.execute(() -> callback.onComplete(isRemoved));
@@ -351,8 +355,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         @NonNull
         @Override
         public AsyncOperationTask clear(@NonNull Executor executor, @NonNull CompletionCallback<Unit> callback) {
-            for (IndexableDataProviderEngineLayer layer : dataProviderEngineLayers) {
-                layer.clear();
+            for (IndexableDataProviderEngine engine : dataProviderEngines) {
+                engine.clear();
             }
             records.clear();
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));

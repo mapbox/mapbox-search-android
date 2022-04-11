@@ -45,9 +45,65 @@ public interface LocalDataProvider<R : IndexableRecord> : IndexableDataProvider<
     )
 
     /**
-     * Removes listener to stop being notified of data provider changes.
+     * Removes a previously added listener.
+     *
+     * @param listener The listener to remove.
      */
     public fun removeOnDataChangedListener(listener: OnDataChangedListener<R>)
+
+    /**
+     * Adds a listener to be notified when [IndexableDataProviderEngine] registered in this data provider.
+     * When a new listener is added, it will be invoked for each previously registered [IndexableDataProviderEngine].
+     *
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param listener The listener to be notified of registration events.
+     * @see registerIndexableDataProviderEngine
+     */
+    public fun addOnDataProviderEngineRegisterListener(
+        executor: Executor,
+        listener: OnDataProviderEngineRegisterListener
+    )
+
+    /**
+     * Adds a listener to be notified when [IndexableDataProviderEngine] registered in this data provider.
+     * When a new listener is added, it will be invoked for each previously registered [IndexableDataProviderEngine].
+     *
+     * @param listener The listener to be notified of registration events. Events are dispatched on the main thread.
+     * @see registerIndexableDataProviderEngine
+     */
+    public fun addOnDataProviderEngineRegisterListener(
+        listener: OnDataProviderEngineRegisterListener
+    ): Unit = addOnDataProviderEngineRegisterListener(
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        listener = listener,
+    )
+
+    /**
+     * Removes a previously added listener.
+     *
+     * @param listener The listener to remove.
+     */
+    public fun removeOnDataProviderEngineRegisterListener(
+        listener: OnDataProviderEngineRegisterListener
+    )
+
+    /**
+     * Listener to be notified when [IndexableDataProviderEngine] registered in this data provider.
+     */
+    public interface OnDataProviderEngineRegisterListener {
+
+        /**
+         * Invoked when [IndexableDataProviderEngine] has been registered in this data provider.
+         * @param engine Registered [IndexableDataProviderEngine].
+         */
+        public fun onEngineRegistered(engine: IndexableDataProviderEngine)
+
+        /**
+         * Invoked when an error happened during [IndexableDataProviderEngine] registration.
+         * @param e Exception, occurred during registration.
+         */
+        public fun onEngineRegistrationError(e: Exception)
+    }
 
     /**
      * Listener to be notified of data provider changes.
@@ -55,7 +111,7 @@ public interface LocalDataProvider<R : IndexableRecord> : IndexableDataProvider<
     public interface OnDataChangedListener<R : IndexableRecord> {
 
         /**
-         * Called when data provider items changed.
+         * Invoked when data provider items changed.
          * @param newData current items of data provider.
          */
         public fun onDataChanged(newData: List<R>)
@@ -65,14 +121,17 @@ public interface LocalDataProvider<R : IndexableRecord> : IndexableDataProvider<
 @Suppress("LargeClass")
 internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     override val dataProviderName: String,
+    override val priority: Int,
     private val recordsStorage: RecordsStorage<R>,
-    private val dataProviderEngineLayers: CopyOnWriteArrayList<IndexableDataProviderEngineLayer> = CopyOnWriteArrayList(),
+    private val dataProviderEngines: CopyOnWriteArrayList<IndexableDataProviderEngine> = CopyOnWriteArrayList(),
     protected val backgroundTaskExecutorService: ExecutorService = defaultExecutor(dataProviderName),
     protected val maxRecordsAmount: Int = Int.MAX_VALUE,
 ) : IndexableDataProvider<R>, LocalDataProvider<R> {
 
     private val dataChangeListeners: MutableMap<LocalDataProvider.OnDataChangedListener<R>, Executor> = ConcurrentHashMap()
-    private val dataChangeListenersLock = Any()
+
+    private val engineRegisterListeners: MutableMap<LocalDataProvider.OnDataProviderEngineRegisterListener, Executor> = ConcurrentHashMap()
+    private val dataProviderEngineLock = Any()
 
     // TODO this variable must be synchronized so that it can be used in a multi-threaded environment.
     // In fact, now it's used only from one thread (because of Executors.newSingleThreadExecutor())
@@ -100,7 +159,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                 dataState = DataState.Data(records)
 
                 val recordsList = records.values.toList()
-                dataProviderEngineLayers.forEach { dataProviderEngine ->
+                dataProviderEngines.forEach { dataProviderEngine ->
                     dataProviderEngine.addAll(recordsList)
                 }
             } catch (e: Exception) {
@@ -135,10 +194,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
     @WorkerThread
     private fun notifyListeners(records: List<R>) {
-        val listenersMap = synchronized(dataChangeListenersLock) {
-            dataChangeListeners.toMap()
-        }
-        listenersMap.entries.forEach { (listener, executor) ->
+        dataChangeListeners.entries.forEach { (listener, executor) ->
             executor.execute {
                 listener.onDataChanged(records)
             }
@@ -169,8 +225,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         }
     }
 
-    override fun registerIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    override fun registerIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
@@ -178,13 +234,30 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
-                    dataProviderEngineLayer.addAll(dataState.records.values)
-                    dataProviderEngineLayers.add(dataProviderEngineLayer)
+                    dataProviderEngine.addAll(dataState.records.values)
+
+                    synchronized(dataProviderEngineLock) {
+                        dataProviderEngines.add(dataProviderEngine)
+                        engineRegisterListeners.entries.forEach { (listener, executor) ->
+                            executor.execute {
+                                listener.onEngineRegistered(dataProviderEngine)
+                            }
+                        }
+                    }
+
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onComplete(Unit)
                     }
                 }
                 is DataState.Error -> {
+                    synchronized(dataProviderEngineLock) {
+                        engineRegisterListeners.entries.forEach { (listener, executor) ->
+                            executor.execute {
+                                listener.onEngineRegistrationError(dataState.error)
+                            }
+                        }
+                    }
+
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -194,16 +267,16 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         return task
     }
 
-    override fun unregisterIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    override fun unregisterIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask {
         val task = AsyncOperationTaskImpl()
         task += backgroundTaskExecutorService.submit {
-            val isRemoved = dataProviderEngineLayers.remove(dataProviderEngineLayer)
+            val isRemoved = dataProviderEngines.remove(dataProviderEngine)
             if (isRemoved) {
-                dataProviderEngineLayer.clear()
+                dataProviderEngine.clear()
             }
             postOnExecutorIfNeeded(task, executor) {
                 callback.onComplete(isRemoved)
@@ -298,10 +371,10 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                         this.dataState = DataState.Data(data)
 
-                        dataProviderEngineLayers.forEach { dataProviderEngine ->
-                            dataProviderEngine.executeBatchUpdate { layer ->
-                                layer.addAll(records)
-                                layer.removeAll(removeList)
+                        dataProviderEngines.forEach { dataProviderEngine ->
+                            dataProviderEngine.executeBatchUpdate { engine ->
+                                engine.addAll(records)
+                                engine.removeAll(removeList)
                             }
                         }
 
@@ -340,10 +413,10 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                         this.dataState = DataState.Data(data)
 
-                        dataProviderEngineLayers.forEach { dataProviderEngine ->
-                            dataProviderEngine.executeBatchUpdate { layer ->
-                                layer.update(record)
-                                layer.removeAll(removeList)
+                        dataProviderEngines.forEach { dataProviderEngine ->
+                            dataProviderEngine.executeBatchUpdate { engine ->
+                                engine.update(record)
+                                engine.removeAll(removeList)
                             }
                         }
 
@@ -384,7 +457,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                             this.dataState = DataState.Data(data)
                         }
 
-                        dataProviderEngineLayers.forEach { dataProviderEngine ->
+                        dataProviderEngines.forEach { dataProviderEngine ->
                             dataProviderEngine.remove(id)
                         }
 
@@ -425,7 +498,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                             this.dataState = DataState.Data(data)
                         }
 
-                        dataProviderEngineLayers.forEach { dataProviderEngine ->
+                        dataProviderEngines.forEach { dataProviderEngine ->
                             dataProviderEngine.clear()
                         }
 
@@ -451,14 +524,32 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun addOnDataChangedListener(executor: Executor, listener: LocalDataProvider.OnDataChangedListener<R>) {
-        synchronized(dataChangeListenersLock) {
-            dataChangeListeners[listener] = executor
-        }
+        dataChangeListeners[listener] = executor
     }
 
     override fun removeOnDataChangedListener(listener: LocalDataProvider.OnDataChangedListener<R>) {
-        synchronized(dataChangeListenersLock) {
-            dataChangeListeners.remove(listener)
+        dataChangeListeners.remove(listener)
+    }
+
+    override fun addOnDataProviderEngineRegisterListener(
+        executor: Executor,
+        listener: LocalDataProvider.OnDataProviderEngineRegisterListener
+    ) {
+        synchronized(dataProviderEngineLock) {
+            engineRegisterListeners[listener] = executor
+            dataProviderEngines.forEach { engine ->
+                executor.execute {
+                    listener.onEngineRegistered(engine)
+                }
+            }
+        }
+    }
+
+    override fun removeOnDataProviderEngineRegisterListener(
+        listener: LocalDataProvider.OnDataProviderEngineRegisterListener
+    ) {
+        synchronized(dataProviderEngineLock) {
+            engineRegisterListeners.remove(listener)
         }
     }
 
@@ -471,9 +562,9 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     companion object {
-        fun defaultExecutor(layerName: String): ExecutorService {
+        fun defaultExecutor(providerName: String): ExecutorService {
             return Executors.newSingleThreadExecutor { runnable ->
-                Thread(runnable, "LocalDataProvider executor for $layerName")
+                Thread(runnable, "LocalDataProvider executor for $providerName")
             }
         }
     }

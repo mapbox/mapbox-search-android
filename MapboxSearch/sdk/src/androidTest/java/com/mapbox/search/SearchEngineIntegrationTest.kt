@@ -57,6 +57,10 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
+/**
+ * Contains only forward-geocoding related functionality tests.
+ * See [CategorySearchIntegrationTest], [ReverseGeocodingSearchIntegrationTest] for more tests.
+ */
 @Suppress("LargeClass")
 internal class SearchEngineIntegrationTest : BaseTest() {
 
@@ -64,6 +68,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
+    private lateinit var searchEngineSettings: SearchEngineSettings
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
     private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
@@ -77,14 +82,16 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        searchEngineSettings = SearchEngineSettings(
+            singleBoxSearchBaseUrl = mockServer.url("").toString(),
+            geocodingEndpointBaseUrl = mockServer.url("").toString()
+        )
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString(),
-                geocodingEndpointBaseUrl = mockServer.url("").toString(),
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
             uuidProvider = uuidProvider,
@@ -93,7 +100,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -977,7 +984,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMetadataForGeocodingAPI() {
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING, searchEngineSettings, useSharedCoreEngine = true)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
 

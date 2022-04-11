@@ -97,8 +97,8 @@ public interface OfflineSearchEngine {
      * Downloaded data will include addresses and places.
      */
     public fun createTilesetDescriptor(): TilesetDescriptor = createTilesetDescriptor(
-        dataset = OfflineSearchSettings.DEFAULT_DATASET,
-        version = OfflineSearchSettings.DEFAULT_VERSION,
+        dataset = OfflineSearchEngineSettings.DEFAULT_DATASET,
+        version = OfflineSearchEngineSettings.DEFAULT_VERSION,
     )
 
     /**
@@ -115,8 +115,8 @@ public interface OfflineSearchEngine {
      * Downloaded data will include only places.
      */
     public fun createPlacesTilesetDescriptor(): TilesetDescriptor = createPlacesTilesetDescriptor(
-        dataset = OfflineSearchSettings.DEFAULT_DATASET,
-        version = OfflineSearchSettings.DEFAULT_VERSION,
+        dataset = OfflineSearchEngineSettings.DEFAULT_DATASET,
+        version = OfflineSearchEngineSettings.DEFAULT_VERSION,
     )
 
     /**
@@ -317,14 +317,14 @@ public interface OfflineSearchEngine {
      * Adds a listener to be notified of index change events.
      *
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
-     * @param listener The callback to notify when an event happens.
+     * @param listener The listener to notify when an event happens.
      */
     public fun addOnIndexChangeListener(executor: Executor, listener: OnIndexChangeListener)
 
     /**
      * Adds a listener to be notified of index change events.
      *
-     * @param listener The callback to notify when an event happens. Events are dispatched on the main thread.
+     * @param listener The listener to notify when an event happens. Events are dispatched on the main thread.
      */
     public fun addOnIndexChangeListener(listener: OnIndexChangeListener): Unit = addOnIndexChangeListener(
         executor = SearchSdkMainThreadWorker.mainExecutor,
