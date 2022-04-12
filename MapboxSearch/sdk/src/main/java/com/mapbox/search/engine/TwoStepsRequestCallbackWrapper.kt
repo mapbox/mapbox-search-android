@@ -18,6 +18,7 @@ import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.http.HttpErrorsCache
+import com.mapbox.search.internal.bindgen.SearchResponseError
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.markExecutedAndRunOnCallback
 import com.mapbox.search.plusAssign
@@ -57,31 +58,62 @@ internal class TwoStepsRequestCallbackWrapper(
             val tasks = mutableListOf<AsyncOperationTask>()
 
             try {
-                if (!response.isSuccessful) {
-                    val error = httpErrorsCache.getAndRemove(response.requestID) ?: when {
-                        isOfflineSearch -> Exception("Unknown error. Response: $response")
-                        else -> SearchRequestException(message = response.message, code = response.httpCode)
+                if (response.results.isError) {
+                    val coreError = response.results.error
+                    if (coreError == null) {
+                        reportRelease(IllegalStateException("CoreSearchResponse.isError == true but error is null"))
+                        return@execute
                     }
 
-                    reportRelease(error)
+                    when (coreError.typeInfo) {
+                        SearchResponseError.Type.HTTP_ERROR -> {
+                            val error = httpErrorsCache.getAndRemove(response.requestID) ?: SearchRequestException(
+                                message = coreError.httpError.message,
+                                code = coreError.httpError.httpCode
+                            )
 
-                    searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                        onError(error)
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
+                        SearchResponseError.Type.INTERNAL_ERROR -> {
+                            val error = Exception(
+                                "Unable to perform search request: ${coreError.internalError.message}"
+                            )
+
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
+                        SearchResponseError.Type.REQUEST_CANCELLED -> {
+                            searchRequestTask.cancel()
+                        }
+                        null -> {
+                            val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
                     }
                     return@execute
                 }
+
+                val responseResult = requireNotNull(response.results.value)
 
                 val requestOptions = response.request.mapToPlatform(searchRequestContext = newContext)
                 val responseInfo = createResponseInfo(response, requestOptions)
 
                 if (suggestion?.type is SearchSuggestionType.Category) {
-                    val results = response.results.mapNotNull {
+                    val results = responseResult.mapNotNull {
                         val searchResult = it.mapToPlatform()
                         searchResultFactory.createSearchResult(searchResult, requestOptions)
                     }
-                    assertDebug(results.size == response.results.size) {
+                    assertDebug(results.size == responseResult.size) {
                         "Can't parse some data. " +
-                                "Original: ${response.results.map { it.id to it.types }}, " +
+                                "Original: ${responseResult.map { it.id to it.types }}, " +
                                 "parsed: ${results.map { it.id to it.types }}, " +
                                 "requestOptions: $requestOptions"
                     }
@@ -89,12 +121,12 @@ internal class TwoStepsRequestCallbackWrapper(
                         (this as SearchSelectionCallback).onCategoryResult(suggestion, results, responseInfo)
                     }
                 } else if (suggestion != null &&
-                    response.results.size == 1 &&
-                    searchResultFactory.isResolvedSearchResult(response.results.first().mapToPlatform())
+                    responseResult.size == 1 &&
+                    searchResultFactory.isResolvedSearchResult(responseResult.first().mapToPlatform())
                 ) {
-                    val searchResult = searchResultFactory.createSearchResult(response.results.first().mapToPlatform(), requestOptions)
+                    val searchResult = searchResultFactory.createSearchResult(responseResult.first().mapToPlatform(), requestOptions)
                     if (searchResult != null) {
-                        coreEngine.onSelected(response.request, response.results.first())
+                        coreEngine.onSelected(response.request, responseResult.first())
 
                         fun publishResult() {
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
@@ -130,12 +162,12 @@ internal class TwoStepsRequestCallbackWrapper(
                         }
                     } else {
                         searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                            onError(Exception("Can't parse received search result: ${response.results.first()}"))
+                            onError(Exception("Can't parse received search result: ${responseResult.first()}"))
                         }
                     }
                 } else {
                     val results = SparseArrayCompat<Result<SearchSuggestion>>()
-                    response.results.forEachIndexed { index, searchResult ->
+                    responseResult.forEachIndexed { index, searchResult ->
                         val original = searchResult.mapToPlatform()
                         val task = searchResultFactory.createSearchSuggestionAsync(original, requestOptions, apiType, workerExecutor, isOfflineSearch) {
                             if (it.isFailure) {
@@ -146,10 +178,10 @@ internal class TwoStepsRequestCallbackWrapper(
 
                             results.append(index, it)
 
-                            if (results.size() == response.results.size) {
+                            if (results.size() == responseResult.size) {
                                 try {
                                     val suggestions = mutableListOf<SearchSuggestion>()
-                                    response.results.indices.forEach { resultIndex ->
+                                    responseResult.indices.forEach { resultIndex ->
                                         with(results[resultIndex]) {
                                             if (this != null && isSuccess) {
                                                 suggestions.add(getOrThrow())
@@ -160,7 +192,7 @@ internal class TwoStepsRequestCallbackWrapper(
                                         onSuggestions(suggestions, responseInfo)
                                     }
                                 } catch (e: Exception) {
-                                    if (!searchRequestTask.isCanceled && !searchRequestTask.callbackActionExecuted) {
+                                    if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
                                         reportRelease(e)
                                         searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                             onError(e)
@@ -175,7 +207,7 @@ internal class TwoStepsRequestCallbackWrapper(
                         tasks.add(task)
                     }
 
-                    if (response.results.isEmpty()) {
+                    if (responseResult.isEmpty()) {
                         searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                             onSuggestions(emptyList(), responseInfo)
                         }
@@ -184,7 +216,7 @@ internal class TwoStepsRequestCallbackWrapper(
             } catch (e: Exception) {
                 tasks.forEach { it.cancel() }
 
-                if (!searchRequestTask.isCanceled && !searchRequestTask.callbackActionExecuted) {
+                if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
                     reportRelease(e)
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(e)
@@ -196,7 +228,8 @@ internal class TwoStepsRequestCallbackWrapper(
         }
     }
 
-    private fun createResponseInfo(response: CoreSearchResponse, request: RequestOptions): ResponseInfo {
+    private fun createResponseInfo(coreSearchResponse: CoreSearchResponse, request: RequestOptions): ResponseInfo {
+        val response = coreSearchResponse.mapToPlatform()
         return when {
             // If CoreSearchResponse is received for 1st step of forward geocoding or
             // for query (recursive) suggestion retrieval on 2nd step forward geocoding,

@@ -19,6 +19,7 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
+import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
@@ -32,6 +33,7 @@ import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.utils.enqueueMultiple
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockResponse
@@ -494,6 +496,20 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testConsecutiveRequests() {
+        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/category/successful_incorrect_response.json"), 2)
+
+        val task1 = searchEngine.search(TEST_CATEGORY, CategorySearchOptions(requestDebounce = 1000), EmptySearchCallback)
+
+        val callback = BlockingSearchCallback()
+        val task2 = searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        callback.getResultBlocking()
+
+        assertTrue(task1.isCancelled)
+        assertTrue(task2.isDone)
+    }
+
+    @Test
     fun testErrorResponse() {
         mockServer.enqueue(MockResponse().setResponseCode(404))
 
@@ -550,7 +566,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         task = searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), object : SearchCallback {
             override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-                assertTrue((task as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((task as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
 

@@ -234,7 +234,7 @@ internal class TelemetryService : InternalAnalyticsService, ErrorsReporter {
         return eventsFactory.createSearchFeedbackEvent(
             originalSearchResult = searchResult.originalSearchResult,
             requestOptions = searchResult.requestOptions,
-            coreSearchResponse = responseInfo?.coreSearchResponse,
+            searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,
             isReproducible = responseInfo?.isReproducible,
             event = event,
@@ -262,7 +262,7 @@ internal class TelemetryService : InternalAnalyticsService, ErrorsReporter {
         return eventsFactory.createSearchFeedbackEvent(
             originalSearchResult = searchSuggestion.originalSearchResult,
             requestOptions = searchSuggestion.requestOptions,
-            coreSearchResponse = responseInfo?.coreSearchResponse,
+            searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,
             isReproducible = responseInfo?.isReproducible,
             event = event,

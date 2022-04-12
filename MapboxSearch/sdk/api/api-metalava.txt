@@ -814,6 +814,10 @@ package com.mapbox.search {
 
   public interface SearchRequestTask {
     method public void cancel();
+    method public boolean isCancelled();
+    method public boolean isDone();
+    property public abstract boolean isCancelled;
+    property public abstract boolean isDone;
   }
 
   public final class SearchRequestTaskKt {
@@ -1202,6 +1206,9 @@ package com.mapbox.search.result {
   }
 
   public final class OriginalResultTypeKt {
+  }
+
+  public final class OriginalSearchResponseKt {
   }
 
   public final class OriginalSearchResultKt {

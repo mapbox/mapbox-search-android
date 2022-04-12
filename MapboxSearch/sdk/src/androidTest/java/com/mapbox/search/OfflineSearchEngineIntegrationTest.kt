@@ -22,6 +22,7 @@ import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
+import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestSuggestion
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
@@ -242,7 +243,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
         assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Error)
         val error = searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Error
-        assertTrue(error.e.message?.contains("message: Offline regions not added") == true)
+        assertTrue(error.e.message?.contains("Offline regions not added") == true)
     }
 
     @Test
@@ -518,6 +519,18 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         // Probably we should get error here (related to an issue in search-sdk/#578)
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertTrue(results.isEmpty())
+    }
+
+    @Test
+    fun testConsecutiveRequests() {
+        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), EmptySearchSuggestionsCallback)
+
+        val callback = BlockingSearchSelectionCallback()
+        val task2 = searchEngine.search("Baker street", OfflineSearchOptions(), callback)
+        callback.getResultBlocking()
+
+        assertTrue(task1.isCancelled)
+        assertTrue(task2.isDone)
     }
 
     companion object {

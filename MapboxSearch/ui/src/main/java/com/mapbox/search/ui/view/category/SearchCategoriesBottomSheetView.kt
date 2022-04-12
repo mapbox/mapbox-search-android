@@ -26,7 +26,6 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.OffsetItemDecoration
 import com.mapbox.search.ui.utils.SearchBottomSheetBehavior
-import com.mapbox.search.ui.utils.TaskStatus
 import com.mapbox.search.ui.utils.extenstion.collapse
 import com.mapbox.search.ui.utils.extenstion.distanceTo
 import com.mapbox.search.ui.utils.extenstion.getPixelSize
@@ -65,14 +64,11 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     private val searchEngine: SearchEngine
 
     private val searchCallback = object : SearchCallback {
-
         override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-            currentRequestStatus.markExecuted()
             postNewState(ViewState.Results(results, responseInfo))
         }
 
         override fun onError(e: Exception) {
-            currentRequestStatus.markExecuted()
             val uiError = UiError.fromException(e)
             postNewState(ViewState.Error(e, uiError))
         }
@@ -97,7 +93,6 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     private var searchOptions: CategorySearchOptions = GlobalViewPreferences.DEFAULT_CATEGORY_SEARCH_OPTIONS
     private var latestCategory: Category? = null
     private var currentRequest: SearchRequestTask? = null
-    private var currentRequestStatus: TaskStatus = TaskStatus.idle()
 
     private val onBottomSheetStateChangedListeners = CopyOnWriteArrayList<OnBottomSheetStateChangedListener>()
     private val onCloseClickListeners = CopyOnWriteArrayList<OnCloseClickListener>()
@@ -281,13 +276,11 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
             ApiType.GEOCODING -> category.geocodingCanonicalName
             ApiType.SBS -> category.sbsCanonicalName
         }
-        currentRequestStatus.reset()
         currentRequest = searchEngine.search(canonicalName, options = searchOptions, callback = searchCallback)
         postNewState(ViewState.Loading, delayed = delayStateChange)
     }
 
     private fun cancelCategoryLoadingInternal() {
-        currentRequestStatus.markCancelled()
         currentRequest?.cancel()
     }
 
@@ -413,7 +406,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
      */
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (currentRequestStatus.isCancelled) {
+        if (currentRequest?.isCancelled == true) {
             retryLoadCategories()
         }
     }
@@ -429,7 +422,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
     /**
      * @suppress
      */
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         return SavedState(
             cardState = behavior.state,
             peekHeight = behavior.peekHeight,
@@ -451,7 +444,7 @@ public class SearchCategoriesBottomSheetView @JvmOverloads constructor(
             behavior.state = it.cardState
             behavior.peekHeight = it.peekHeight
             previousNonHiddenState = it.previousNonHiddenState
-            this@SearchCategoriesBottomSheetView.commonSearchViewConfiguration = commonSearchViewConfiguration
+            commonSearchViewConfiguration = it.configuration
             it.category?.let { category ->
                 setCategory(category, it.searchOptions)
             }

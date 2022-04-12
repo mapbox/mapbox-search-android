@@ -66,8 +66,8 @@ internal object SdkCustomTypeObjectCreators {
 
     internal val CORE_SEARCH_RESPONSE_CREATOR = CustomTypeObjectCreatorImpl(CoreSearchResponse::class) { mode ->
         listOf(
-            createTestCoreSearchResponse(responseUUID = "test-response-uuid-1"),
-            createTestCoreSearchResponse(responseUUID = "test-response-uuid-2"),
+            createTestCoreSearchResponseSuccess(responseUUID = "test-response-uuid-1"),
+            createTestCoreSearchResponseSuccess(responseUUID = "test-response-uuid-2"),
         )[mode.ordinal]
     }
 

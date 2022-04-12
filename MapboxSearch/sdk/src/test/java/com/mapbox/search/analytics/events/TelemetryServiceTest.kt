@@ -15,8 +15,9 @@ import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.TelemetrySearchEventsFactory
 import com.mapbox.search.analytics.TelemetryService
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.catchThrowable
-import com.mapbox.search.tests_support.createTestCoreSearchResponse
+import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.tests_support.createTestSearchResult
@@ -33,6 +34,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.lang.IllegalStateException
 
+@Suppress("LargeClass")
 internal class TelemetryServiceTest {
 
     private lateinit var context: Context
@@ -73,7 +75,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = searchSuggestion.originalSearchResult,
                     requestOptions = searchSuggestion.requestOptions,
-                    coreSearchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
+                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
                     isReproducible = true,
                     event = TEST_FEEDBACK_EVENT,
@@ -102,7 +104,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = searchSuggestion.originalSearchResult,
                     requestOptions = searchSuggestion.requestOptions,
-                    coreSearchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
+                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
                     isReproducible = true,
                     event = TEST_FEEDBACK_EVENT,
@@ -139,7 +141,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = searchResult.originalSearchResult,
                     requestOptions = searchResult.requestOptions,
-                    coreSearchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
+                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
                     isReproducible = true,
                     event = TEST_FEEDBACK_EVENT,
@@ -169,7 +171,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = searchResult.originalSearchResult,
                     requestOptions = searchResult.requestOptions,
-                    coreSearchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
+                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
                     isReproducible = true,
                     event = TEST_FEEDBACK_EVENT,
@@ -304,7 +306,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = any(),
                     requestOptions = any(),
-                    coreSearchResponse = any(),
+                    searchResponse = any(),
                     currentLocation = null,
                     isReproducible = true,
                     event = null,
@@ -341,7 +343,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = any(),
                     requestOptions = any(),
-                    coreSearchResponse = any(),
+                    searchResponse = any(),
                     currentLocation = null,
                     isReproducible = true,
                     event = null,
@@ -374,7 +376,7 @@ internal class TelemetryServiceTest {
                 eventsFactory.createSearchFeedbackEvent(
                     originalSearchResult = any(),
                     requestOptions = any(),
-                    coreSearchResponse = any(),
+                    searchResponse = any(),
                     currentLocation = null,
                     isReproducible = true,
                     event = null,
@@ -397,7 +399,7 @@ internal class TelemetryServiceTest {
                     eventsFactory.updateCachedSearchFeedbackEvent(any(), any(), TEST_LOCATION)
                 }
 
-                VerifyNo("Telemetry isn't called") {
+                VerifyNo("Telemetry isn't RequestOptionscalled") {
                     mapBoxTelemetry.push(any())
                 }
             }
@@ -411,7 +413,7 @@ internal class TelemetryServiceTest {
         val TEST_FEEDBACK_EVENT = FeedbackEvent("Missing routable point", "Fix, please!")
         val TEST_RESPONSE_INFO = ResponseInfo(
             requestOptions = createTestRequestOptions(),
-            coreSearchResponse = createTestCoreSearchResponse(),
+            coreSearchResponse = createTestCoreSearchResponseSuccess().mapToPlatform(),
             isReproducible = true,
         )
         val TEST_MISSING_RESULT_FEEDBACK_EVENT = MissingResultFeedbackEvent(

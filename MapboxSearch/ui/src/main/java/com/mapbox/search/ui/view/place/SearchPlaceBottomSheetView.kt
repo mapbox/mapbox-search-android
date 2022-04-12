@@ -331,7 +331,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     /**
      * @suppress
      */
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         return SavedState(
             behavior.state,
             behavior.peekHeight,

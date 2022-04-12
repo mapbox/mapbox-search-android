@@ -898,6 +898,8 @@ public final class com/mapbox/search/SearchRequestException : java/lang/RuntimeE
 
 public abstract interface class com/mapbox/search/SearchRequestTask {
 	public abstract fun cancel ()V
+	public abstract fun isCancelled ()Z
+	public abstract fun isDone ()Z
 }
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {

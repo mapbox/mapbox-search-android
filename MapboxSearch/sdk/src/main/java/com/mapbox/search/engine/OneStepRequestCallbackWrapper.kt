@@ -11,6 +11,7 @@ import com.mapbox.search.common.throwDebug
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.http.HttpErrorsCache
+import com.mapbox.search.internal.bindgen.SearchResponseError
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.markExecutedAndRunOnCallback
 import com.mapbox.search.plusAssign
@@ -42,33 +43,66 @@ internal class OneStepRequestCallbackWrapper(
             val tasks = mutableListOf<AsyncOperationTask>()
 
             try {
-                if (!response.isSuccessful) {
-                    val error = httpErrorsCache.getAndRemove(response.requestID)
-                        ?: SearchRequestException(message = response.message, code = response.httpCode)
+                if (response.results.isError) {
+                    val coreError = response.results.error
+                    if (coreError == null) {
+                        reportRelease(IllegalStateException("CoreSearchResponse.isError == true but error is null"))
+                        return@execute
+                    }
 
-                    reportRelease(error)
+                    when (coreError.typeInfo) {
+                        SearchResponseError.Type.HTTP_ERROR -> {
+                            val error = httpErrorsCache.getAndRemove(response.requestID) ?: SearchRequestException(
+                                message = coreError.httpError.message,
+                                code = coreError.httpError.httpCode
+                            )
 
-                    searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                        onError(error)
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
+                        SearchResponseError.Type.INTERNAL_ERROR -> {
+                            val error = Exception(
+                                "Unable to perform search request: ${coreError.internalError.message}"
+                            )
+
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
+                        SearchResponseError.Type.REQUEST_CANCELLED -> {
+                            searchRequestTask.cancel()
+                        }
+                        null -> {
+                            val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
                     }
                     return@execute
                 }
 
+                val responseResult = requireNotNull(response.results.value)
+
                 val request = response.request.mapToPlatform(searchRequestContext = newContext)
-                val responseInfo = ResponseInfo(request, response, isReproducible = !isOffline)
+                val responseInfo = ResponseInfo(request, response.mapToPlatform(), isReproducible = !isOffline)
 
                 val results = SparseArrayCompat<Result<SearchResult>>()
 
                 fun notifyCallbackIfNeeded() {
-                    if (results.size() == response.results.size) {
+                    if (results.size() == responseResult.size) {
                         val searchResults = mutableListOf<SearchResult>()
-                        response.results.indices.forEach { resultIndex ->
+                        responseResult.indices.forEach { resultIndex ->
                             with(results[resultIndex]) {
                                 if (this != null && isSuccess) {
                                     searchResults.add(getOrThrow())
                                 } else {
                                     throwDebug(this?.exceptionOrNull()) {
-                                        "Can't parse data from backend: ${response.results[resultIndex]}"
+                                        "Can't parse data from backend: ${responseResult[resultIndex]}"
                                     }
                                 }
                             }
@@ -79,7 +113,7 @@ internal class OneStepRequestCallbackWrapper(
                     }
                 }
 
-                response.results.forEachIndexed { index, coreSearchResult ->
+                responseResult.forEachIndexed { index, coreSearchResult ->
                     val originalSearchResult = coreSearchResult.mapToPlatform()
                     when {
                         searchResultFactory.isResolvedSearchResult(originalSearchResult) -> {
@@ -112,7 +146,7 @@ internal class OneStepRequestCallbackWrapper(
                     notifyCallbackIfNeeded()
                 }
 
-                if (response.results.isEmpty()) {
+                if (responseResult.isEmpty()) {
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onResults(emptyList(), responseInfo)
                     }
@@ -120,7 +154,7 @@ internal class OneStepRequestCallbackWrapper(
             } catch (e: Exception) {
                 tasks.forEach { it.cancel() }
 
-                if (!searchRequestTask.callbackActionExecuted && !searchRequestTask.isCanceled) {
+                if (!searchRequestTask.callbackActionExecuted && !searchRequestTask.isCancelled) {
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(e)
                     }
