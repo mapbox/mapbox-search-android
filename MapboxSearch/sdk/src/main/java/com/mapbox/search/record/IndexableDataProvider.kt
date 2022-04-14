@@ -20,19 +20,28 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     public val dataProviderName: String
 
     /**
+     * Data provider priority.
+     * In case of multiple data providers registered in a [com.mapbox.search.SearchEngine],
+     * [IndexableRecord]'s with higher priority will be ranked higher in the search results list.
+     *
+     * @see [com.mapbox.search.SearchEngine.registerDataProvider]
+     */
+    public val priority: Int
+
+    /**
      * Experimental API, can be changed or removed in the next SDK releases.
      *
-     * Registers [engine layer][IndexableDataProviderEngineLayer] with this data provider.
+     * Registers [engine][IndexableDataProviderEngine] with this data provider.
      * Allows to keep search index of [search engines][com.mapbox.search.SearchEngine],
      * associated with this data provider, up-to-date.
      *
-     * @param dataProviderEngineLayer engine layer, associated with this data provider.
+     * @param dataProviderEngine engine, associated with this data provider.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
      * @return an object representing pending completion of the task.
      */
-    public fun registerIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    public fun registerIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask
@@ -40,19 +49,19 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     /**
      * Experimental API, can be changed or removed in the next SDK releases.
      *
-     * Registers [engine layer][IndexableDataProviderEngineLayer] with this data provider.
+     * Registers [engine][IndexableDataProviderEngine] with this data provider.
      * Allows to keep search index of [search engines][com.mapbox.search.SearchEngine],
      * associated with this data provider, up-to-date.
      *
-     * @param dataProviderEngineLayer engine layer, associated with this data provider.
+     * @param dataProviderEngine engine, associated with this data provider.
      * @param callback Callback to handle result, triggered on the main thread.
      * @return an object representing pending completion of the task.
      */
-    public fun registerIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    public fun registerIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         callback: CompletionCallback<Unit>,
-    ): AsyncOperationTask = registerIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer = dataProviderEngineLayer,
+    ): AsyncOperationTask = registerIndexableDataProviderEngine(
+        dataProviderEngine = dataProviderEngine,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )
@@ -60,19 +69,19 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     /**
      * Experimental API, can be changed or removed in the next SDK releases.
      *
-     * Unregisters [engine layer][IndexableDataProviderEngineLayer] from this data provider.
+     * Unregisters [engine][IndexableDataProviderEngine] from this data provider.
      *
-     * Passed to [callback] `true` if [dataProviderEngineLayer] was removed and `false` if there was no such layer.
+     * Passed to [callback] `true` if [dataProviderEngine] was removed and `false` if there was no such engine.
      *
-     * @param dataProviderEngineLayer engine layer, associated with this data provider.
+     * @param dataProviderEngine engine, associated with this data provider.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
      * @return an object representing pending completion of the task.
      *
-     * @see registerIndexableDataProviderEngineLayer
+     * @see registerIndexableDataProviderEngine
      */
-    public fun unregisterIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    public fun unregisterIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask
@@ -80,21 +89,21 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     /**
      * Experimental API, can be changed or removed in the next SDK releases.
      *
-     * Unregisters [engine layer][IndexableDataProviderEngineLayer] from this data provider.
+     * Unregisters [engine][IndexableDataProviderEngine] from this data provider.
      *
-     * Passed to [callback] `true` if [dataProviderEngineLayer] was removed and `false` if there was no such layer.
+     * Passed to [callback] `true` if [dataProviderEngine] was removed and `false` if there was no such engine.
      *
-     * @param dataProviderEngineLayer engine layer, associated with this data provider.
+     * @param dataProviderEngine engine, associated with this data provider.
      * @param callback Callback to handle result, triggered on the main thread.
      * @return an object representing pending completion of the task.
      *
-     * @see registerIndexableDataProviderEngineLayer
+     * @see registerIndexableDataProviderEngine
      */
-    public fun unregisterIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    public fun unregisterIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         callback: CompletionCallback<Boolean>,
-    ): AsyncOperationTask = unregisterIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer = dataProviderEngineLayer,
+    ): AsyncOperationTask = unregisterIndexableDataProviderEngine(
+        dataProviderEngine = dataProviderEngine,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )

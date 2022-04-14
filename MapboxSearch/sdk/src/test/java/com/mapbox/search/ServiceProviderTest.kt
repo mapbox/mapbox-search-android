@@ -19,7 +19,6 @@ internal class ServiceProviderTest {
             val historyDataProvider: HistoryService = mockk()
             val favoritesDataProvider: FavoritesDataProvider = mockk()
             val errorsReporter: ErrorsReporter = mockk()
-            val globalDataProvidersRegistry: DefaultIndexableDataProvidersRegistry = mockk()
 
             val serviceProvider = ServiceProviderImpl(
                 analyticsSender = analyticsService,
@@ -27,7 +26,6 @@ internal class ServiceProviderTest {
                 historyDataProvider = historyDataProvider,
                 favoritesDataProvider = favoritesDataProvider,
                 errorsReporter = errorsReporter,
-                globalDataProvidersRegistry = globalDataProvidersRegistry,
             )
 
             When("Get highlightsCalculator") {

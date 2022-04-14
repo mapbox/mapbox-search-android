@@ -1,91 +1,24 @@
 package com.mapbox.search
 
+import com.mapbox.search.record.IndexableDataProvider
+import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
 /**
- * Used in the first step of forward geocoding to get a list of [SearchSuggestion].
- */
-public interface SearchSuggestionsCallback {
-
-    /**
-     * Called when the suggestions list is returned.
-     * @param suggestions List of [SearchSuggestion] as result of the first step of forward geocoding.
-     * @param responseInfo Search response and request information.
-     */
-    public fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo)
-
-    /**
-     * Called if an error occurred during the request.
-     * @param e Exception, occurred during the request.
-     */
-    public fun onError(e: Exception)
-}
-
-/**
- * Callback for [SearchResult], resolved from [SearchSuggestion].
- */
-public interface SearchSelectionCallback : SearchSuggestionsCallback {
-
-    /**
-     * Called when final [SearchResult] resolved.
-     *
-     * @param suggestion The suggestion from which the [result] was resolved.
-     * @param result Resolved search result.
-     * @param responseInfo Search response and request information.
-     */
-    public fun onResult(suggestion: SearchSuggestion, result: SearchResult, responseInfo: ResponseInfo)
-
-    /**
-     * Called when a category suggestion has been resolved.
-     *
-     * @param suggestion The category suggestion from which the [results] were resolved.
-     * @param results Search results matched by category search.
-     * @param responseInfo Search response and request information.
-     */
-    public fun onCategoryResult(
-        suggestion: SearchSuggestion,
-        results: List<SearchResult>,
-        responseInfo: ResponseInfo
-    )
-}
-
-/**
- * Callback called when multiple selection request completes.
- */
-public interface SearchMultipleSelectionCallback {
-
-    /**
-     * Called when suggestions have been resolved.
-     *
-     * @param suggestions The suggestions from which the [results] were resolved.
-     * Note that these suggestions is not necessary the same as ones passed to [SearchEngine.select]
-     * because the function filters suggestions that don't support batch resolving.
-     * @param results Resolved search results for search suggestions.
-     * @param responseInfo Search response and request information.
-     */
-    public fun onResult(
-        suggestions: List<SearchSuggestion>,
-        results: List<SearchResult>,
-        responseInfo: ResponseInfo
-    )
-
-    /**
-     * Called if an error occurred during the request.
-     * @param e exception, occurred during the request.
-     */
-    public fun onError(e: Exception)
-}
-
-/**
- * Used for [forward geocoding](https://docs.mapbox.com/android/search/overview/#single-box-search)
- * (looking up a place by name to retrieve its geographic coordinates).
+ * Performs
+ * - [forward geocoding](https://docs.mapbox.com/android/search/overview/#single-box-search)
+ * (looking up a place by name to retrieve its geographic coordinates)
+ * - [category search](https://docs.mapbox.com/android/search/overview/#single-box-search)(search for places by category name)
+ * - [reverse geocoding](https://docs.mapbox.com/android/search/guides/#reverse-geocoding)(search for places by geographic coordinate)
+ *
+ * Unlike [OfflineSearchEngine], [SearchEngine] API requires an online connection to execute the requests.
  *
  * ## Instantiating
  *
- * To obtain [SearchEngine] instance, please, use [MapboxSearchSdk.getSearchEngine].
+ * Call [MapboxSearchSdk.getSearchEngine] to get instance of a [SearchEngine].
  *
  * ## Forward geocoding algorithm
  *
@@ -115,6 +48,9 @@ public interface SearchMultipleSelectionCallback {
  *
  * If invalid parameters are provided, [RuntimeException] is thrown immediately.
  * Any other error will be propagated to [SearchSuggestionsCallback.onError].
+ *
+ * @see OfflineSearchEngine
+ * @see MapboxSearchSdk.getSearchEngine
  */
 public interface SearchEngine {
 
@@ -131,7 +67,7 @@ public interface SearchEngine {
      * @param options Search options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve list of [SearchSuggestion].
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun search(
         query: String,
@@ -146,7 +82,7 @@ public interface SearchEngine {
      * @param query Search query.
      * @param options Search options.
      * @param callback The callback to retrieve list of [SearchSuggestion]. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun search(
         query: String,
@@ -164,7 +100,7 @@ public interface SearchEngine {
      *
      * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
@@ -182,7 +118,7 @@ public interface SearchEngine {
      * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
      * @param options Options used for controlling internal "select" operation logic.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
@@ -202,7 +138,7 @@ public interface SearchEngine {
      * @param options Options used for controlling internal "select" operation logic.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
@@ -224,7 +160,7 @@ public interface SearchEngine {
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun select(
         suggestions: List<SearchSuggestion>,
@@ -244,13 +180,138 @@ public interface SearchEngine {
      *
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [SearchRequestTask] object representing pending completion of the request.
      */
     public fun select(
         suggestions: List<SearchSuggestion>,
         callback: SearchMultipleSelectionCallback,
     ): SearchRequestTask = select(
         suggestions = suggestions,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Performs a search request for places based on a category.
+     *
+     * @param categoryName Name of category to search.
+     * @param options Category search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Search callback to retrieve results.
+     * @return [SearchRequestTask] object representing pending completion of the request.
+     */
+    public fun search(
+        categoryName: String,
+        options: CategorySearchOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): SearchRequestTask
+
+    /**
+     * Performs a search request for places based on a category.
+     *
+     * @param categoryName Name of category to search.
+     * @param options Category search options.
+     * @param callback Search callback to retrieve results. Events are dispatched on the main thread.
+     * @return [SearchRequestTask] object representing pending completion of the request.
+     */
+    public fun search(
+        categoryName: String,
+        options: CategorySearchOptions,
+        callback: SearchCallback,
+    ): SearchRequestTask = search(
+        categoryName = categoryName,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Performs reverse geocoding.
+     *
+     * @param options Reverse geocoding options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Search result callback.
+     * @return [SearchRequestTask] object representing pending completion of the request.
+     */
+    public fun search(
+        options: ReverseGeoOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): SearchRequestTask
+
+    /**
+     * Performs reverse geocoding.
+     *
+     * @param options Reverse geocoding options.
+     * @param callback Search result callback, delivers results on the main thread.
+     * @return [SearchRequestTask] object representing pending completion of the request.
+     */
+    public fun search(
+        options: ReverseGeoOptions,
+        callback: SearchCallback,
+    ): SearchRequestTask = search(
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Registers [dataProvider] in this [SearchEngine].
+     *
+     * @param dataProvider [IndexableDataProvider] to register.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Callback to handle result.
+     * @return an object representing pending completion of the task.
+     */
+    public fun <R : IndexableRecord> registerDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask
+
+    /**
+     * Registers [dataProvider] in this [SearchEngine].
+     *
+     * @param dataProvider [IndexableDataProvider] to register.
+     * @param callback Callback to handle result. Events are dispatched on the main thread.
+     * @return an object representing pending completion of the task.
+     */
+    public fun <R : IndexableRecord> registerDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask = registerDataProvider(
+        dataProvider = dataProvider,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Unregisters previously registered [IndexableDataProvider].
+     *
+     * @param dataProvider [IndexableDataProvider] to unregister.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Callback to handle result.
+     * @return an object representing pending completion of the task.
+     */
+    public fun <R : IndexableRecord> unregisterDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>,
+    ): AsyncOperationTask
+
+    /**
+     * Unregisters previously registered [IndexableDataProvider].
+     *
+     * @param dataProvider [IndexableDataProvider] to unregister.
+     * @param callback Callback to handle result. Events are dispatched on the main thread.
+     * @return an object representing pending completion of the task.
+     */
+    public fun <R : IndexableRecord> unregisterDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        callback: CompletionCallback<Unit>,
+    ): AsyncOperationTask = unregisterDataProvider(
+        dataProvider = dataProvider,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )

@@ -3,17 +3,17 @@ package com.mapbox.search.sample.api
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.search.CategorySearchEngine
 import com.mapbox.search.CategorySearchOptions
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.result.SearchResult
 
 class CategorySearchKotlinExampleActivity : AppCompatActivity() {
 
-    private lateinit var categorySearchEngine: CategorySearchEngine
+    private lateinit var searchEngine: SearchEngine
     private lateinit var searchRequestTask: SearchRequestTask
 
     private val searchCallback: SearchCallback = object : SearchCallback {
@@ -34,9 +34,8 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        categorySearchEngine = MapboxSearchSdk.getCategorySearchEngine()
-
-        searchRequestTask = categorySearchEngine.search(
+        searchEngine = MapboxSearchSdk.getSearchEngine()
+        searchRequestTask = searchEngine.search(
             "cafe",
             CategorySearchOptions(limit = 1),
             searchCallback

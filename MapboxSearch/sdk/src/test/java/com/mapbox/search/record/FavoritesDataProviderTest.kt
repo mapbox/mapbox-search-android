@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService
 
 internal class FavoritesDataProviderTest {
 
-    private lateinit var dataProviderEngineLayer: IndexableDataProviderEngineLayer
+    private lateinit var dataProviderEngine: IndexableDataProviderEngine
     private lateinit var recordsStorage: RecordsFileStorage<FavoriteRecord>
     private lateinit var executorService: ExecutorService
 
@@ -18,7 +18,7 @@ internal class FavoritesDataProviderTest {
 
     @BeforeEach
     fun setUp() {
-        dataProviderEngineLayer = mockk(relaxed = true)
+        dataProviderEngine = mockk(relaxed = true)
 
         recordsStorage = mockk(relaxed = true)
         every { recordsStorage.load() } returns emptyList()

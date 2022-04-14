@@ -7,14 +7,14 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
-import com.mapbox.search.ReverseGeocodingSearchEngine
 import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.result.SearchResult
 
 class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
 
-    private lateinit var reverseGeocoding: ReverseGeocodingSearchEngine
+    private lateinit var searchEngine: SearchEngine
     private lateinit var searchRequestTask: SearchRequestTask
 
     private val searchCallback = object : SearchCallback {
@@ -35,13 +35,13 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reverseGeocoding = MapboxSearchSdk.getReverseGeocodingSearchEngine()
+        searchEngine = MapboxSearchSdk.getSearchEngine()
 
         val options = ReverseGeoOptions(
             center = Point.fromLngLat(2.294434, 48.858349),
             limit = 1
         )
-        searchRequestTask = reverseGeocoding.search(options, searchCallback)
+        searchRequestTask = searchEngine.search(options, searchCallback)
     }
 
     override fun onDestroy() {

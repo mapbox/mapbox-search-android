@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.Build
 import android.os.LocaleList
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.SearchSdkSettings
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.sample.BuildConfig
 import com.mapbox.search.sample.Constants.TEST_USER_LOCATION
@@ -28,7 +28,7 @@ class TestApp : Application() {
             application = this,
             accessToken = BuildConfig.MAPBOX_API_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
+            searchEngineSettings = SearchEngineSettings(
                 singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             ),
         )

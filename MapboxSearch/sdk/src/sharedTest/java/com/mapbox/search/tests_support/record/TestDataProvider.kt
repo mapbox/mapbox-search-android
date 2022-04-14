@@ -3,8 +3,7 @@ package com.mapbox.search.tests_support.record
 import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.AsyncOperationTaskImpl
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.plusAssign
-import com.mapbox.search.record.IndexableDataProviderEngineLayer
+import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.record.LocalDataProviderImpl
 import com.mapbox.search.runIfNotCancelled
@@ -18,18 +17,22 @@ internal class TestDataProvider<R : IndexableRecord> : LocalDataProviderImpl<R> 
 
     internal constructor(
         dataProviderName: String = "TEST_DATA_PROVIDER",
+        priority: Int = 1000,
         stubStorage: StubRecordsStorage<R> = StubRecordsStorage(),
     ) : super(
         dataProviderName = dataProviderName,
+        priority = priority,
         recordsStorage = stubStorage,
     )
 
     internal constructor(
         executorService: ExecutorService,
         dataProviderName: String = "TEST_DATA_PROVIDER",
+        priority: Int = 1000,
         stubStorage: StubRecordsStorage<R> = StubRecordsStorage(),
     ) : super(
         dataProviderName = dataProviderName,
+        priority = priority,
         recordsStorage = stubStorage,
         backgroundTaskExecutorService = executorService,
     )
@@ -37,22 +40,22 @@ internal class TestDataProvider<R : IndexableRecord> : LocalDataProviderImpl<R> 
     val records: List<R>?
         get() = (dataState as? DataState.Data)?.records?.values?.toList()
 
-    override fun registerIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    override fun registerIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
         return trySubmitOverrideOperation(executor, callback)
-            ?: super.registerIndexableDataProviderEngineLayer(dataProviderEngineLayer, executor, callback)
+            ?: super.registerIndexableDataProviderEngine(dataProviderEngine, executor, callback)
     }
 
-    override fun unregisterIndexableDataProviderEngineLayer(
-        dataProviderEngineLayer: IndexableDataProviderEngineLayer,
+    override fun unregisterIndexableDataProviderEngine(
+        dataProviderEngine: IndexableDataProviderEngine,
         executor: Executor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask {
         return trySubmitOverrideOperation(executor, callback)
-            ?: super.unregisterIndexableDataProviderEngineLayer(dataProviderEngineLayer, executor, callback)
+            ?: super.unregisterIndexableDataProviderEngine(dataProviderEngine, executor, callback)
     }
 
     override fun get(id: String, executor: Executor, callback: CompletionCallback<in R?>): AsyncOperationTask {

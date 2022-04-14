@@ -6,9 +6,10 @@ import com.mapbox.common.TileStoreOptions
 import java.net.URI
 
 /**
- * Defines options for offline tiles endpoint.
+ * Settings used for [OfflineSearchEngine] configuration.
+ * @see MapboxSearchSdk.initialize
  */
-public class OfflineSearchSettings(
+public class OfflineSearchEngineSettings(
 
     /**
      * Tile store instance. It manages downloads and storage for requests to
@@ -37,13 +38,13 @@ public class OfflineSearchSettings(
     public fun copy(
         tileStore: TileStore? = this.tileStore,
         tilesBaseUri: URI? = this.tilesBaseUri,
-    ): OfflineSearchSettings = OfflineSearchSettings(
+    ): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
         tileStore = tileStore,
         tilesBaseUri = tilesBaseUri,
     )
 
     /**
-     * Creates a new [OfflineSearchSettings.Builder] from this instance.
+     * Creates a new [OfflineSearchEngineSettings.Builder] from this instance.
      */
     public fun toBuilder(): Builder = Builder(this)
 
@@ -54,7 +55,7 @@ public class OfflineSearchSettings(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as OfflineSearchSettings
+        other as OfflineSearchEngineSettings
 
         if (tilesBaseUri != other.tilesBaseUri) return false
         if (tileStore != other.tileStore) return false
@@ -82,14 +83,14 @@ public class OfflineSearchSettings(
     }
 
     /**
-     * Builder for [OfflineSearchSettings].
+     * Builder for [OfflineSearchEngineSettings].
      */
     public class Builder() {
 
         private var tileStore: TileStore? = null
         private var tilesBaseUri: URI? = null
 
-        internal constructor(settings: OfflineSearchSettings) : this() {
+        internal constructor(settings: OfflineSearchEngineSettings) : this() {
             tileStore = settings.tileStore
             tilesBaseUri = settings.tilesBaseUri
         }
@@ -111,9 +112,9 @@ public class OfflineSearchSettings(
         public fun tilesBaseUri(tilesBaseUri: URI?): Builder = apply { this.tilesBaseUri = tilesBaseUri }
 
         /**
-         * Create [OfflineSearchSettings] instance from builder data.
+         * Create [OfflineSearchEngineSettings] instance from builder data.
          */
-        public fun build(): OfflineSearchSettings = OfflineSearchSettings(
+        public fun build(): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
             tileStore = tileStore,
             tilesBaseUri = tilesBaseUri,
         )

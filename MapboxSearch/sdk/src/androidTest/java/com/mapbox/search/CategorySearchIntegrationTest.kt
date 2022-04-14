@@ -52,11 +52,15 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
+/**
+ * Contains only category search related functionality tests.
+ * See [ReverseGeocodingSearchIntegrationTest], [SearchEngineIntegrationTest] for more tests.
+ */
 @Suppress("LargeClass")
-internal class CategorySearchEngineIntegrationTest : BaseTest() {
+internal class CategorySearchIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer
-    private lateinit var searchEngine: CategorySearchEngine
+    private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
@@ -72,13 +76,13 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
+
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchSdkSettings = SearchSdkSettings(
-                singleBoxSearchBaseUrl = mockServer.url("").toString()
-            ),
+            searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
             uuidProvider = uuidProvider,
@@ -87,7 +91,7 @@ internal class CategorySearchEngineIntegrationTest : BaseTest() {
             errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createCategorySearchEngine(ApiType.SBS)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)

@@ -29,6 +29,12 @@ internal class BlockingCompletionCallback<T> : CompletionCallback<T> {
 
     sealed class CompletionCallbackResult<T> {
 
+        val isResult: Boolean
+            get() = this is Result
+
+        val isError: Boolean
+            get() = this is Error
+
         fun requireResult() = (this as Result).result
         fun requireError() = (this as Error).e
 

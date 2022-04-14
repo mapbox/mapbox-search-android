@@ -4,7 +4,7 @@ import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 import java.net.URI
 
-internal class OfflineSearchSettingsTest {
+internal class OfflineSearchEngineSettingsTest {
 
     @TestFactory
     fun `Check OfflineSearchSettings default settings`() = TestCase {
@@ -13,19 +13,19 @@ internal class OfflineSearchSettingsTest {
                 Then(
                     "Default url should be as expected",
                     URI.create("https://api-offline-search-staging.tilestream.net"),
-                    OfflineSearchSettings.DEFAULT_ENDPOINT_URI
+                    OfflineSearchEngineSettings.DEFAULT_ENDPOINT_URI
                 )
 
                 Then(
                     "Default dataset should be as expected",
                     "test-dataset",
-                    OfflineSearchSettings.DEFAULT_DATASET
+                    OfflineSearchEngineSettings.DEFAULT_DATASET
                 )
 
                 Then(
                     "Default dataset version should be as expected",
                     "",
-                    OfflineSearchSettings.DEFAULT_VERSION
+                    OfflineSearchEngineSettings.DEFAULT_VERSION
                 )
             }
         }
@@ -35,8 +35,8 @@ internal class OfflineSearchSettingsTest {
     fun `Check OfflineSearchSettings default builder`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with default values") {
-                val actual = OfflineSearchSettings.Builder().build()
-                val expected = OfflineSearchSettings()
+                val actual = OfflineSearchEngineSettings.Builder().build()
+                val expected = OfflineSearchEngineSettings()
 
                 Then("Settings should be equal", expected, actual)
             }
@@ -47,12 +47,12 @@ internal class OfflineSearchSettingsTest {
     fun `Check OfflineSearchSettings builder with all values set`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with test values") {
-                val actual = OfflineSearchSettings.Builder().run {
+                val actual = OfflineSearchEngineSettings.Builder().run {
                     tilesBaseUri(TEST_DEFAULT_ENDPOINT_URI)
                     build()
                 }
 
-                val expected = OfflineSearchSettings(
+                val expected = OfflineSearchEngineSettings(
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
                 )
 
@@ -65,7 +65,7 @@ internal class OfflineSearchSettingsTest {
     fun `Check OfflineSearchSettings toBuilder function`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Object created with toBuilder()") {
-                val settings = OfflineSearchSettings(
+                val settings = OfflineSearchEngineSettings(
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
                 )
 

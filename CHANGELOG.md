@@ -2,6 +2,19 @@
 
 ## 1.0.0-beta.29-SNAPSHOT
 
+### Breaking changes
+- [CORE] `ServiceProvider.globalDataProvidersRegistry()` has been removed. Now customers should use `SearchEngine.registerDataProvider()` for the data providers registration. Interface `IndexableDataProvidersRegistry` and its internal classes are not available anymore either.
+- [CORE] Now `IndexableDataProvider`s should provide `priority` field which affects `IndexableRecord`'s ranking in case of multiple data providers added to a search engine.
+- [CORE] `IndexableDataProviderEngineLayer` has been renamed to `IndexableDataProviderEngine`. Also, functions `registerIndexableDataProviderEngineLayer()` and `unregisterIndexableDataProviderEngineLayer()` of `IndexableDataProvider` have been renamed to `registerIndexableDataProviderEngine()` and `unregisterIndexableDataProviderEngine()`.
+- [CORE] Functionality of `CategorySearchEngine`, and `ReverseGeocodingSearchEngine` have been merged into `SearchEngine`. Also, functions `MapboxSearchSdk.getCategorySearchEngine()`, `MapboxSearchSdk.getReverseGeocodingSearchEngine()` have been removed, call `MapboxSearchSdk.getSearchEngine()` or `MapboxSearchSdk.createSearchEngine()` instead.
+- [CORE] Constants `MapboxSearchSdk.LAYER_PRIORITY_HISTORY`, `MapboxSearchSdk.LAYER_PRIORITY_FAVORITES` have been moved `HistoryDataProvider.PROVIDER_PRIORITY`, and `FavoritesDataProvider.PROVIDER_PRIORITY`.
+- [CORE] `MapboxSearchSdk.addDataProviderInitializationCallback()` and `MapboxSearchSdk.removeDataProviderInitializationCallback()` have been removed along with `DataProviderInitializationCallback` interface. Use `HistoryDataProvider.OnDataProviderEngineRegisterListener()`, and `FavoritesDataProvider.OnDataProviderEngineRegisterListener()` instead.
+- [CORE] Fields `SearchSdkSettings.geocodingEndpointBaseUrl`, and `SearchSdkSettings.singleBoxSearchBaseUrl` have been removed. Now you can configure search engine endpoints with `SearchEngineSettings`. `SearchSdkSettings.Builder` and corresponding functions have also been removed. `MapboxSearchSdk.initialize()` now can accept `SearchEngineSettings`.
+- [CORE] Class `OfflineSearchSettings` has been renamed to `OfflineSearchEngineSettings`. `MapboxSearchSdk.initialize()` argument `offlineSearchSettings` has also been renamed to `offlineSearchEngineSettings`.
+
+### New features
+- [CORE] Now customers can create several independent from each other `SearchEngine`s. See `MapboxSearchSdk.createSearchEngine()`.
+
 ### Mapbox dependencies
 - Search Native SDK `0.51.0`
 - Common SDK `21.2.0`
