@@ -11,11 +11,11 @@ internal class SearchRequestTaskTest {
         Given("SearchRequestTaskImpl") {
             var task: SearchRequestTaskImpl<Runnable>
 
-//            When("SearchRequestTaskImpl created") {
-//                task = SearchRequestTaskImpl()
-//                Then("Task is not executed", false, task.isExecuted)
-//                Then("Task is not cancelled", false, task.isCancelled)
-//            }
+            When("SearchRequestTaskImpl created") {
+                task = SearchRequestTaskImpl()
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is not cancelled", false, task.isCancelled)
+            }
 
             When("callbackDelegate set") {
                 task = SearchRequestTaskImpl()
@@ -37,9 +37,8 @@ internal class SearchRequestTaskTest {
                     callbackAction(delegate)
                 }
 
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is executed", true, task.isExecuted)
-                // Then("Task is not cancelled", false, task.isCancelled)
+                Then("Task is executed", true, task.isDone)
+                Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task releases reference to delegate", true, task.callbackDelegate == null)
             }
 
@@ -48,9 +47,8 @@ internal class SearchRequestTaskTest {
                 val delegate = Runnable {}
                 task.callbackDelegate = delegate
                 task.cancel()
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is not executed", false, task.isExecuted)
-                // Then("Task is cancelled", true, task.isCancelled)
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is cancelled", true, task.isCancelled)
                 Then("Task releases reference to delegate", true, task.callbackDelegate == null)
             }
 
@@ -67,9 +65,8 @@ internal class SearchRequestTaskTest {
                     callbackAction(delegate)
                 }
 
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is still executed", true, task.isExecuted)
-                // Then("Task is not cancelled", false, task.isCancelled)
+                Then("Task is still executed", true, task.isDone)
+                Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task releases reference to delegate", true, task.callbackDelegate == null)
             }
 
@@ -86,9 +83,8 @@ internal class SearchRequestTaskTest {
                     callbackAction(any())
                 }
 
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is not executed", false, task.isExecuted)
-                // Then("Task is still cancelled", true, task.isCancelled)
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is still cancelled", true, task.isCancelled)
                 Then("Task releases reference to delegate", true, task.callbackDelegate == null)
             }
 
@@ -97,9 +93,8 @@ internal class SearchRequestTaskTest {
                 task.markExecutedAndRunOnCallback { }
                 val delegate = Runnable {}
                 task.callbackDelegate = delegate
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is still executed", true, task.isExecuted)
-                // Then("Task is not cancelled", false, task.isCancelled)
+                Then("Task is still executed", true, task.isDone)
+                Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
             }
 
@@ -108,9 +103,8 @@ internal class SearchRequestTaskTest {
                 task.cancel()
                 val delegate = Runnable {}
                 task.callbackDelegate = delegate
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("Task is not executed", false, task.isExecuted)
-                // Then("Task is still cancelled", true, task.isCancelled)
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is still cancelled", true, task.isCancelled)
                 Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
             }
         }

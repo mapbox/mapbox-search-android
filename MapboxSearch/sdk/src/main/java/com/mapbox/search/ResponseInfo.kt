@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import com.mapbox.search.core.CoreSearchResponse
+import com.mapbox.search.result.OriginalSearchResponse
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -31,7 +32,7 @@ import kotlinx.parcelize.Parcelize
 public class ResponseInfo internal constructor(
     public val requestOptions: RequestOptions,
     @get:JvmSynthetic
-    internal val coreSearchResponse: CoreSearchResponse?,
+    internal val coreSearchResponse: OriginalSearchResponse?,
     @get:JvmSynthetic
     internal val isReproducible: Boolean,
 ) : Parcelable {

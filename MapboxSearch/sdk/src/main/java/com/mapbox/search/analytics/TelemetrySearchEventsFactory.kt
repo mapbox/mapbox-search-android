@@ -13,15 +13,14 @@ import com.mapbox.search.analytics.events.SearchResultEntry
 import com.mapbox.search.analytics.events.SearchResultsInfo
 import com.mapbox.search.common.throwDebug
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.location.calculateMapZoom
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.OriginalSearchResponse
 import com.mapbox.search.result.OriginalSearchResult
 import com.mapbox.search.result.SearchAddress.FormatStyle
 import com.mapbox.search.result.mapToCore
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.bitmap.BitmapEncodeOptions
@@ -67,7 +66,7 @@ internal class TelemetrySearchEventsFactory(
         return createSearchFeedbackEvent(
             originalSearchResult = null,
             requestOptions = event.responseInfo.requestOptions,
-            coreSearchResponse = event.responseInfo.coreSearchResponse,
+            searchResponse = event.responseInfo.coreSearchResponse,
             currentLocation = currentLocation,
             isReproducible = event.responseInfo.isReproducible,
             event = FeedbackEvent(
@@ -115,7 +114,7 @@ internal class TelemetrySearchEventsFactory(
     fun createSearchFeedbackEvent(
         originalSearchResult: OriginalSearchResult?,
         requestOptions: RequestOptions,
-        coreSearchResponse: CoreSearchResponse?,
+        searchResponse: OriginalSearchResponse?,
         currentLocation: Point?,
         isReproducible: Boolean? = null,
         event: FeedbackEvent? = null,
@@ -152,7 +151,7 @@ internal class TelemetrySearchEventsFactory(
 
             // Optional fields
             fillRequestOptionsData(requestOptions)
-            fillSearchResultData(coreSearchResponse, isReproducible)
+            fillSearchResultData(searchResponse, isReproducible)
             feedbackText = event?.text
             screenshot = event?.screenshot?.let(bitmapEncoder)
             if (event?.sessionId != null) {
@@ -198,19 +197,19 @@ internal class TelemetrySearchEventsFactory(
         orientation = requestOptions.requestContext.screenOrientation?.rawValue
     }
 
-    private fun SearchFeedbackEvent.fillSearchResultData(coreSearchResponse: CoreSearchResponse?, isReproducible: Boolean?) {
-        val resultEntries = coreSearchResponse?.results?.map { coreResult ->
+    private fun SearchFeedbackEvent.fillSearchResultData(searchResponse: OriginalSearchResponse?, isReproducible: Boolean?) {
+        val results = (searchResponse?.result as? OriginalSearchResponse.Result.Success)?.result
+        val resultEntries = results?.map { coreResult ->
             SearchResultEntry(
-                name = when {
-                    coreResult.types.firstOrNull() == ResultType.USER_RECORD -> "<Local item>"
+                name = when (OriginalResultType.USER_RECORD) {
+                    coreResult.types.firstOrNull() -> "<Local item>"
                     else -> coreResult.names.firstOrNull() ?: ""
                 },
-                address = coreResult.descrAddress ?: coreResult.addresses?.getOrNull(0)
-                    ?.mapToPlatform()
+                address = coreResult.descriptionAddress ?: coreResult.addresses?.getOrNull(0)
                     ?.formattedAddress(FormatStyle.Full),
                 coordinates = coreResult.center?.coordinates(),
-                id = when {
-                    coreResult.types.firstOrNull() == ResultType.USER_RECORD -> "<Local id>"
+                id = when (OriginalResultType.USER_RECORD) {
+                    coreResult.types.firstOrNull() -> "<Local id>"
                     else -> coreResult.id
                 },
                 language = coreResult.languages,

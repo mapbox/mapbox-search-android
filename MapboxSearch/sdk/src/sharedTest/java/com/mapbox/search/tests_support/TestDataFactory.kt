@@ -1,5 +1,6 @@
 package com.mapbox.search.tests_support
 
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.RequestOptions
@@ -18,7 +19,10 @@ import com.mapbox.search.core.CoreSearchOptions
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.CoreSearchResult
 import com.mapbox.search.core.CoreSuggestAction
+import com.mapbox.search.internal.bindgen.HttpError
+import com.mapbox.search.internal.bindgen.RequestCancelled
 import com.mapbox.search.internal.bindgen.ResultType
+import com.mapbox.search.internal.bindgen.SearchResponseError
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
@@ -229,23 +233,31 @@ internal fun createCoreSearchAddress(
     houseNumber, street, neighborhood, locality, postcode, place, district, region, country
 )
 
-@Suppress("LongParameterList")
-internal fun createTestCoreSearchResponse(
-    isSuccessful: Boolean = true,
-    httpCode: Int = 200,
-    message: String = "",
+internal fun createTestCoreSearchResponseSuccess(
     requestId: Int = "test-request-id".hashCode(),
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     results: List<CoreSearchResult> = emptyList(),
+    responseUUID: String = "test-response-uuid"
+) = CoreSearchResponse(
+    requestId, request, ExpectedFactory.createValue(results), responseUUID
+)
+
+internal fun createTestCoreSearchResponseError(
+    httpCode: Int = 400,
+    message: String = "error",
+    requestId: Int = "test-request-id".hashCode(),
+    request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     responseUUID: String = "test-response-uuid",
 ) = CoreSearchResponse(
-    isSuccessful,
-    httpCode,
-    message,
-    requestId,
-    request,
-    results,
-    responseUUID,
+    requestId, request, ExpectedFactory.createError(SearchResponseError(HttpError(httpCode, message))), responseUUID
+)
+
+internal fun createTestCoreSearchResponseCancelled(
+    requestId: Int = "test-request-id".hashCode(),
+    request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
+    responseUUID: String = "test-response-uuid",
+) = CoreSearchResponse(
+    requestId, request, ExpectedFactory.createError(SearchResponseError(RequestCancelled("Request cancelled"))), responseUUID
 )
 
 @Suppress("LongParameterList")

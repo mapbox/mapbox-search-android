@@ -24,6 +24,7 @@ import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
+import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
@@ -37,6 +38,7 @@ import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.utils.enqueueMultiple
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockResponse
@@ -897,7 +899,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         task = searchEngine.search(TEST_QUERY, SearchOptions(), object : SearchSuggestionsCallback {
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
                 searchSuggestions = suggestions
-                assertTrue((task as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((task as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -913,7 +915,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         var selectionTask: SearchRequestTask? = null
         selectionTask = searchEngine.select(searchSuggestions.first(), object : SearchSelectionCallback {
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -922,7 +924,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             }
 
             override fun onResult(suggestion: SearchSuggestion, result: SearchResult, responseInfo: ResponseInfo) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -931,12 +933,26 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
             ) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
         })
 
         countDownLatch.await()
+    }
+
+    @Test
+    fun testConsecutiveRequests() {
+        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"), 2)
+
+        val task1 = searchEngine.search(TEST_QUERY, SearchOptions(requestDebounce = 1000), EmptySearchSuggestionsCallback)
+
+        val callback = BlockingSearchSelectionCallback()
+        val task2 = searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+        callback.getResultBlocking()
+
+        assertTrue(task1.isCancelled)
+        assertTrue(task2.isDone)
     }
 
     @Test

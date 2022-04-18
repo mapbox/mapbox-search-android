@@ -6,7 +6,6 @@ import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreReverseGeoOptions
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
@@ -20,6 +19,9 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
+import com.mapbox.search.tests_support.createTestCoreSearchResponseCancelled
+import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
@@ -103,9 +105,8 @@ internal class ReverseGeocodingSearchTest {
                 ) as SearchRequestTaskImpl<*>
 
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("SearchRequestTask is executed", true, searchRequestTask.isExecuted)
-                // Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
 
                 Verify("Operation is scheduled on engine thread") {
                     engineExecutorService.submit(any())
@@ -122,7 +123,11 @@ internal class ReverseGeocodingSearchTest {
                 Verify("Results passed to callback") {
                     callback.onResults(
                         listOf(TEST_SEARCH_RESULT),
-                        ResponseInfo(TEST_REQUEST_OPTIONS, TEST_SUCCESSFUL_CORE_RESPONSE, isReproducible = true)
+                        ResponseInfo(
+                            TEST_REQUEST_OPTIONS,
+                            TEST_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            isReproducible = true
+                        )
                     )
                 }
             }
@@ -152,9 +157,8 @@ internal class ReverseGeocodingSearchTest {
                 ) as SearchRequestTaskImpl<*>
 
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("SearchRequestTask is executed", true, searchRequestTask.isExecuted)
-                // Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
+                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
                 Verify("Operation is scheduled on engine thread") {
                     engineExecutorService.submit(any())
@@ -211,55 +215,70 @@ internal class ReverseGeocodingSearchTest {
         }
     }
 
-//    TODO(#224): uncomment when isExecuted/isCanceled properties are available
-//    @TestFactory
-//    fun `Check consecutive search calls`() = TestCase {
-//        Given("GeocodingSearchEngine with mocked dependencies") {
-//            val slotSearchCallback = slot<CoreSearchCallback>()
-//            val listener = mockk<SearchCallback>(relaxed = true)
-//
-//            every { coreEngine.reverseGeocoding(any(), capture(slotSearchCallback)) } returns Unit
-//            every { searchResultFactory.createSearchSuggestion(any(), any()) } returns TEST_SEARCH_RESULT
-//
-//            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
-//            When("Search function called for the first time") {
-//                searchRequestTask1 = (searchEngine.reverseGeocoding(TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
-//
-//                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
-//                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
-//                Then("First task keeps original listener", true, searchRequestTask1?.callbackDelegate != null)
-//            }
-//
-//            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
-//            When("Search function called for the second time") {
-//                searchRequestTask2 = (searchEngine.reverseGeocoding(TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
-//
-//                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
-//                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
-//                Then(
-//                    "First task still keeps reference to original listener",
-//                    true,
-//                    searchRequestTask1?.callbackDelegate != null
-//                )
-//
-//                Then("Second task is not executed", false, searchRequestTask2?.isExecuted)
-//                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-//                Then("Second task keeps original listener", true, searchRequestTask2?.callbackDelegate != null)
-//            }
-//
-//            When("Second search request completes") {
-//                slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
-//
-//                Then("Second task is executed", true, searchRequestTask2?.isExecuted)
-//                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-//                Then(
-//                    "Second task released reference to original listener",
-//                    true,
-//                    searchRequestTask2?.callbackDelegate == null
-//                )
-//            }
-//        }
-//    }
+    @TestFactory
+    fun `Check consecutive search calls`() = TestCase {
+        Given("GeocodingSearchEngine with mocked dependencies") {
+            every { searchResultFactory.createSearchResult(any(), any()) } returns TEST_SEARCH_RESULT
+
+            val options1 = ReverseGeoOptions(Point.fromLngLat(10.0, 11.0))
+            val slotSearchCallback1 = slot<CoreSearchCallback>()
+            every { coreEngine.reverseGeocoding(eq(options1.mapToCore()), capture(slotSearchCallback1)) } returns Unit
+
+            val options2 = ReverseGeoOptions(Point.fromLngLat(20.0, 30.0))
+            val slotSearchCallback2 = slot<CoreSearchCallback>()
+            every { coreEngine.reverseGeocoding(eq(options2.mapToCore()), capture(slotSearchCallback2)) } returns Unit
+
+            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the first time") {
+                val callback1 = mockk<SearchCallback>(relaxed = true)
+                searchRequestTask1 = (searchEngine.search(options1, callback1) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task keeps original listener",
+                    true,
+                    searchRequestTask1?.callbackDelegate != null
+                )
+            }
+
+            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the second time and first request automatically cancelled") {
+                slotSearchCallback1.captured.run(createTestCoreSearchResponseCancelled())
+
+                val callback2 = mockk<SearchCallback>(relaxed = true)
+                searchRequestTask2 = (searchEngine.search(options2, callback2) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task still keeps reference to original listener",
+                    false,
+                    searchRequestTask1?.callbackDelegate != null
+                )
+
+                Then("Second task is not executed", false, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task keeps original listener",
+                    true,
+                    searchRequestTask2?.callbackDelegate != null
+                )
+            }
+
+            When("Second search request completes") {
+                slotSearchCallback2.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+
+                Then("Second task is executed", true, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task released reference to original listener",
+                    true,
+                    searchRequestTask2?.callbackDelegate == null
+                )
+            }
+        }
+    }
 
     private companion object {
 
@@ -314,23 +333,18 @@ internal class ReverseGeocodingSearchTest {
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
-        val TEST_SUCCESSFUL_CORE_RESPONSE = CoreSearchResponse(
-            true,
-            200,
-            "ok",
+        val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_ERROR_CORE_RESPONSE = CoreSearchResponse(
-            false,
+        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
             401,
             "Auth failed",
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
-            emptyList(),
             TEST_RESPONSE_UUID
         )
 

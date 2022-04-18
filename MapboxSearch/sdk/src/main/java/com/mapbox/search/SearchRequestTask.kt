@@ -7,17 +7,17 @@ import java.util.concurrent.Future
  * Represents any request from any search engine. Should be cancelled if you leave the screen or application and result of search request do not needed anymore to avoid memory leaks.
  * @see SearchEngine
  */
-// TODO(#224): replace with AsyncOperationTask and expose isCancelled/isExecuted properties
 public interface SearchRequestTask {
 
-    /*
-    Now we can't implement isCancelled flag because there's no reliable way to determine if request has been cancelled by the native core.
-    With the similar reason we don't make public isExecuted flag because cancelled request won't be executed
-    and isExecuted will always be false, which can be confusing for customers.
-
-    val isCancelled: Boolean
-    val isExecuted: Boolean
+    /**
+     * Denotes whether this task completed.
      */
+    public val isDone: Boolean
+
+    /**
+     * Denotes whether this task was cancelled.
+     */
+    public val isCancelled: Boolean
 
     /**
      * Cancels request.
@@ -32,7 +32,7 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
     var callbackDelegate: T? = null
         @Synchronized
         set(value) {
-            field = if (isCanceled || isExecuted) {
+            field = if (isCancelled || isDone) {
                 null
             } else {
                 value
@@ -44,16 +44,16 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
         @Synchronized private set
         @Synchronized get
 
-    var isCanceled: Boolean = false
+    override var isDone: Boolean = false
         @Synchronized private set
         @Synchronized get
 
-    var isExecuted: Boolean = false
+    override var isCancelled: Boolean = false
         @Synchronized private set
         @Synchronized get
 
     val isCompleted: Boolean
-        @Synchronized get() = isCanceled || isExecuted
+        @Synchronized get() = isCancelled || isDone
 
     init {
         callbackDelegate = delegate
@@ -61,11 +61,11 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
     @Synchronized
     fun addInnerTask(task: SearchRequestTask) {
-        if (isExecuted) {
+        if (isDone) {
             return
         }
 
-        if (isCanceled) {
+        if (isCancelled) {
             task.cancel()
             return
         }
@@ -75,11 +75,11 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
     @Synchronized
     override fun cancel() {
-        if (isExecuted) {
+        if (isDone) {
             return
         }
 
-        isCanceled = true
+        isCancelled = true
         innerTasks.forEach {
             it.cancel()
         }
@@ -89,11 +89,11 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
     @Synchronized
     fun markExecutedAndRunOnCallback(action: T.() -> Unit) {
-        if (isCanceled) {
+        if (isCancelled) {
             return
         }
 
-        isExecuted = true
+        isDone = true
 
         val delegate = callbackDelegate
         callbackDelegate = null
@@ -102,14 +102,6 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
             callbackActionExecuted = true
             action(delegate)
         }
-    }
-
-    // We don't actually cancel any request because native core doesn't support it yet,
-    // but we need to mark previously made request as cancelled
-    // because every new submitted to the same SearchEngineInterface request cancels previous one
-    @Synchronized
-    fun markCancelled() {
-        cancel()
     }
 
     companion object {
@@ -134,15 +126,15 @@ internal class FutureSearchRequestTask(
     private val future: Future<*>
 ) : SearchRequestTask {
 
-    val isCanceled: Boolean
+    override val isCancelled: Boolean
         @Synchronized get() = future.isCancelled
 
-    private val isExecuted: Boolean
-        get() = future.isDone
+    override val isDone: Boolean
+        @Synchronized get() = future.isDone
 
     @Synchronized
     override fun cancel() {
-        if (isCanceled || isExecuted) {
+        if (isCancelled || isDone) {
             return
         }
 
@@ -157,8 +149,11 @@ internal class SearchRequestTaskAsyncAdapter(
     private val asyncTask: AsyncOperationTask
 ) : SearchRequestTask {
 
-    val isCanceled: Boolean
+    override val isCancelled: Boolean
         get() = asyncTask.isCancelled
+
+    override val isDone: Boolean
+        get() = asyncTask.isDone
 
     override fun cancel() {
         asyncTask.cancel()

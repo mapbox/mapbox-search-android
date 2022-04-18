@@ -34,9 +34,10 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToCore
+import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
-import com.mapbox.search.tests_support.createTestCoreSearchResponse
+import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.utils.FormattedTimeProvider
@@ -102,9 +103,9 @@ internal class TelemetrySearchEventsFactoryTest {
                     val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                         searchResult.originalSearchResult,
                         searchResult.requestOptions,
-                        createTestCoreSearchResponse(
+                        createTestCoreSearchResponseSuccess(
                             results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                        ),
+                        ).mapToPlatform(),
                         TEST_USER_LOCATION,
                         isReproducible = true,
                         event = FeedbackEvent(
@@ -180,9 +181,9 @@ internal class TelemetrySearchEventsFactoryTest {
                 val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
                     TEST_SERVER_SEARCH_RESULT.originalSearchResult,
                     TEST_SERVER_SEARCH_RESULT.requestOptions,
-                    createTestCoreSearchResponse(
+                    createTestCoreSearchResponseSuccess(
                         results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                    ),
+                    ).mapToPlatform(),
                     TEST_USER_LOCATION,
                     isReproducible = true,
                     event = FeedbackEvent(
@@ -461,9 +462,9 @@ internal class TelemetrySearchEventsFactoryTest {
                     MissingResultFeedbackEvent(
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = createTestCoreSearchResponse(
+                            coreSearchResponse = createTestCoreSearchResponseSuccess(
                                 results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                            ),
+                            ).mapToPlatform(),
                             isReproducible = true,
                         ),
                         "Please, add Paris to search results!",
@@ -528,9 +529,9 @@ internal class TelemetrySearchEventsFactoryTest {
                     MissingResultFeedbackEvent(
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = createTestCoreSearchResponse(
+                            coreSearchResponse = createTestCoreSearchResponseSuccess(
                                 results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                            ),
+                            ).mapToPlatform(),
                             isReproducible = true,
                         ),
                         "Please, add Paris to search results!",

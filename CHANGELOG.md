@@ -14,9 +14,10 @@
 
 ### New features
 - [CORE] Now customers can create several independent from each other `SearchEngine`s. See `MapboxSearchSdk.createSearchEngine()`.
+- [CORE] Now `SearchRequestTask` provides `isDone`, and `isCancelled` properties.
 
 ### Mapbox dependencies
-- Search Native SDK `0.51.0`
+- Search Native SDK `0.52.0`
 - Common SDK `21.2.0`
 - Telemetry SDK `8.1.1`
 - Kotlin `1.5.31`

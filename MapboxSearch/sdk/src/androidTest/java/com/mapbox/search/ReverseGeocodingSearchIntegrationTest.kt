@@ -18,6 +18,7 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingSearchCallback
+import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.record.addBlocking
@@ -29,6 +30,7 @@ import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.utils.enqueueMultiple
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockResponse
@@ -355,7 +357,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         task = searchEngine.search(ReverseGeoOptions(center = TEST_POINT), object : SearchCallback {
             override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-                assertTrue((task as? SearchRequestTaskImpl<*>)?.isExecuted == true)
+                assertTrue((task as? SearchRequestTaskImpl<*>)?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -365,6 +367,21 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         })
 
         countDownLatch.await()
+    }
+
+    @Test
+    fun testConsecutiveRequests() {
+        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"), 2)
+
+        val task1 = searchEngine.search(ReverseGeoOptions(center = TEST_POINT), EmptySearchCallback)
+
+        val callback = BlockingSearchCallback()
+        val task2 = searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+        callback.getResultBlocking()
+
+        // Unlike other searches, reverse geocoding doesn't cancel previous requests, so task1 shouldn't be cancelled by this time
+        assertFalse(task1.isCancelled)
+        assertTrue(task2.isDone)
     }
 
     @Test

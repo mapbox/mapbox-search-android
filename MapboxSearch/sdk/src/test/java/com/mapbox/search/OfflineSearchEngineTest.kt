@@ -22,7 +22,8 @@ import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.createTestCoreReverseGeoOptions
 import com.mapbox.search.tests_support.createTestCoreSearchAddress
-import com.mapbox.search.tests_support.createTestCoreSearchResponse
+import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
@@ -175,7 +176,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE,
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
                             isReproducible = false,
                         )
                     )
@@ -245,7 +246,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE,
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
                             isReproducible = false,
                         )
                     )
@@ -266,12 +267,10 @@ internal class OfflineSearchEngineTest {
                 val testRadius = 3.141
                 val slotSearchCallback = slot<CoreSearchCallback>()
 
-                val coreErrorResponse = createTestCoreSearchResponse(
-                    isSuccessful = false,
+                val coreErrorResponse = createTestCoreSearchResponseError(
                     httpCode = 400,
                     message = "Unknown error",
                     request = TEST_REQUEST_OPTIONS.mapToCore(),
-                    results = emptyList(),
                     responseUUID = TEST_RESPONSE_UUID
                 )
 
@@ -415,7 +414,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE,
+                            coreSearchResponse = TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
                             isReproducible = true,
                         )
                     )
@@ -557,6 +556,79 @@ internal class OfflineSearchEngineTest {
         }
     }
 
+    @TestFactory
+    fun `Check consecutive search calls`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val searchQuery1 = "Query 1"
+            val slotSearchCallback1 = slot<CoreSearchCallback>()
+            every { coreEngine.searchOffline(eq(searchQuery1), any(), any(), capture(slotSearchCallback1)) } returns Unit
+
+            val searchQuery2 = "Query 2"
+            val slotSearchCallback2 = slot<CoreSearchCallback>()
+            every { coreEngine.searchOffline(eq(searchQuery2), any(), any(), capture(slotSearchCallback2)) } returns Unit
+
+            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the first time") {
+                val callback1 = mockk<SearchSuggestionsCallback>(relaxed = true)
+
+                searchRequestTask1 =
+                    (searchEngine.search(searchQuery1, OfflineSearchOptions(), callback1) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task keeps original callback",
+                    true,
+                    searchRequestTask1?.callbackDelegate != null
+                )
+            }
+
+            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the second time and first request automatically cancelled") {
+                /*
+                TODO https://github.com/mapbox/mapbox-search-sdk/issues/830
+                Native Search SDK for the offline search doesn't invoke callback for a cancelled request,
+                so do we in this test
+
+                slotSearchCallback1.captured.run(createTestCoreSearchResponseCancelled())
+                 */
+
+                val callback2 = mockk<SearchSuggestionsCallback>(relaxed = true)
+
+                searchRequestTask2 =
+                    (searchEngine.search(searchQuery2, OfflineSearchOptions(), callback2) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task released reference to original callback",
+                    true,
+                    searchRequestTask1?.callbackDelegate == null
+                )
+
+                Then("Second task is not executed", false, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task keeps original callback",
+                    true,
+                    searchRequestTask2?.callbackDelegate != null
+                )
+            }
+
+            When("Second search request completes") {
+                slotSearchCallback2.captured.run(createTestCoreSearchResponseSuccess())
+
+                Then("Second task is executed", true, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task released reference to original callback",
+                    true,
+                    searchRequestTask2?.callbackDelegate == null
+                )
+            }
+        }
+    }
+
     private companion object {
 
         const val TEST_QUERY = "Minsk"
@@ -587,7 +659,7 @@ internal class OfflineSearchEngineTest {
             isFromOffline = true
         )
 
-        val TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponse(
+        val TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
             request = TEST_REQUEST_OPTIONS.mapToCore(),
             results = listOf(TEST_FORWARD_GEOCODING_CORE_SUGGESTION),
             responseUUID = TEST_RESPONSE_UUID
@@ -599,7 +671,7 @@ internal class OfflineSearchEngineTest {
             center = Point.fromLngLat(20.0, 30.0),
         )
 
-        val TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponse(
+        val TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
             request = TEST_REQUEST_OPTIONS.mapToCore(),
             results = listOf(TEST_RETRIEVED_CORE_SEARCH_RESULT),
             responseUUID = TEST_RESPONSE_UUID

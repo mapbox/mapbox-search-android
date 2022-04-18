@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.ExecutorService
 
+@Suppress("LargeClass")
 internal class IndexableDataProvidersRegistryTest {
 
     private lateinit var syncLocker: SyncLocker

@@ -28,7 +28,6 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
 import com.mapbox.search.ui.utils.OffsetItemDecoration
-import com.mapbox.search.ui.utils.TaskStatus
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.common.UiError
 import com.mapbox.search.ui.view.search.SearchHistoryViewHolder
@@ -59,7 +58,6 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private val locationEngine = MapboxSearchSdk.serviceProvider.locationEngine()
     private var currentSearchRequestTask: SearchRequestTask? = null
-    private var currentSearchRequestStatus: TaskStatus = TaskStatus.idle()
 
     private val historyRecordsInteractor = HistoryRecordsInteractor()
     private var historyRecordsListener: HistoryRecordsInteractor.HistoryListener? = null
@@ -99,7 +97,6 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-            currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showSuggestions(suggestions, responseInfo)
                 searchResultListeners.forEach { it.onSuggestions(suggestions, responseInfo) }
@@ -111,7 +108,6 @@ public class SearchResultsView @JvmOverloads constructor(
             result: SearchResult,
             responseInfo: ResponseInfo
         ) {
-            currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 searchResultListeners.forEach { it.onSearchResult(result, responseInfo) }
             }
@@ -122,7 +118,6 @@ public class SearchResultsView @JvmOverloads constructor(
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         ) {
-            currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showResults(results, responseInfo, fromCategorySuggestion = true)
                 searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
@@ -130,7 +125,6 @@ public class SearchResultsView @JvmOverloads constructor(
         }
 
         override fun onError(e: Exception) {
-            currentSearchRequestStatus.markExecuted()
             if (mode.isQueryNotEmpty()) {
                 showError(UiError.fromException(e))
                 searchResultListeners.forEach { it.onError(e) }
@@ -240,7 +234,7 @@ public class SearchResultsView @JvmOverloads constructor(
             isOnlineSearch = searchMode.isOnlineSearch(reachabilityInterface)
         }
 
-        if (currentSearchRequestStatus.isCancelled) {
+        if (currentSearchRequestTask?.isCancelled == true) {
             retrySearchRequest()
         }
     }
@@ -251,7 +245,6 @@ public class SearchResultsView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         cancelHistoryLoading()
 
-        currentSearchRequestStatus.markCancelled()
         currentSearchRequestTask?.cancel()
 
         reachabilityInterface.removeListener(networkReachabilityListenerId)
@@ -427,7 +420,6 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun cancelCurrentNetworkRequest() {
-        currentSearchRequestStatus.reset()
         currentSearchRequestTask?.cancel()
     }
 

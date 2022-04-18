@@ -6,7 +6,6 @@ import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.CoreSearchOptions
-import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
@@ -20,6 +19,9 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
+import com.mapbox.search.tests_support.createTestCoreSearchResponseCancelled
+import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
@@ -103,9 +105,8 @@ internal class CategorySearchTest {
                 ) as SearchRequestTaskImpl<*>
 
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("SearchRequestTask is executed", true, searchRequestTask.isExecuted)
-                // Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
+                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
                 Verify("Operation is scheduled on engine thread") {
                     engineExecutorService.submit(any())
@@ -127,7 +128,11 @@ internal class CategorySearchTest {
                 Verify("Results passed to callback") {
                     callback.onResults(
                         listOf(TEST_SEARCH_RESULT),
-                        ResponseInfo(TEST_REQUEST_OPTIONS, TEST_SUCCESSFUL_CORE_RESPONSE, isReproducible = true)
+                        ResponseInfo(
+                            TEST_REQUEST_OPTIONS,
+                            TEST_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            isReproducible = true
+                        )
                     )
                 }
             }
@@ -158,9 +163,8 @@ internal class CategorySearchTest {
                 ) as SearchRequestTaskImpl<*>
 
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                // TODO(#224): test isExecuted/isCanceled properties
-                // Then("SearchRequestTask is executed", true, searchRequestTask.isExecuted)
-                // Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
+                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
                 Verify("Operation is scheduled on engine thread") {
                     engineExecutorService.submit(any())
@@ -228,56 +232,72 @@ internal class CategorySearchTest {
         }
     }
 
-//    TODO(#224): uncomment when isExecuted/isCanceled properties are available
-//    @TestFactory
-//    fun `Check consecutive search calls`() = TestCase {
-//        Given("CategorySearchEngine with mocked dependencies") {
-//            val slotSearchCallback = slot<CoreSearchCallback>()
-//            val listener = mockk<SearchCallback>(relaxed = true)
-//
-//            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) } returns Unit
-//
-//            every { searchResultFactory.createSearchSuggestion(any(), any()) } returns TEST_SEARCH_RESULT
-//
-//            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
-//            When("Search function called for the first time") {
-//                searchRequestTask1 = (searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
-//
-//                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
-//                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
-//                Then("First task keeps original listener", true, searchRequestTask1?.callbackDelegate != null)
-//            }
-//
-//            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
-//            When("Search function called for the second time") {
-//                searchRequestTask2 = (searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, listener) as SearchRequestTaskImpl<*>?)
-//
-//                Then("First task is not executed", false, searchRequestTask1?.isExecuted)
-//                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
-//                Then(
-//                    "First task released reference to original listener",
-//                    true,
-//                    searchRequestTask1?.callbackDelegate == null
-//                )
-//
-//                Then("Second task is not executed", false, searchRequestTask2?.isExecuted)
-//                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-//                Then("Second task keeps original listener", true, searchRequestTask2?.callbackDelegate != null)
-//            }
-//
-//            When("Second search request completes") {
-//                slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
-//
-//                Then("Second task is executed", true, searchRequestTask2?.isExecuted)
-//                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-//                Then(
-//                    "Second task released reference to original listener",
-//                    true,
-//                    searchRequestTask2?.callbackDelegate == null
-//                )
-//            }
-//        }
-//    }
+    @TestFactory
+    fun `Check consecutive search calls`() = TestCase {
+        Given("GeocodingSearchEngine with mocked dependencies") {
+            every { searchResultFactory.createSearchResult(any(), any()) } returns TEST_SEARCH_RESULT
+
+            val options = CategorySearchOptions()
+
+            val category1 = "cafe"
+            val slotSearchCallback1 = slot<CoreSearchCallback>()
+            every { coreEngine.search(eq(""), eq(listOf(category1)), any(), capture(slotSearchCallback1)) } returns Unit
+
+            val category2 = "museum"
+            val slotSearchCallback2 = slot<CoreSearchCallback>()
+            every { coreEngine.search(eq(""), eq(listOf(category2)), any(), capture(slotSearchCallback2)) } returns Unit
+
+            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the first time") {
+                val callback1 = mockk<SearchCallback>(relaxed = true)
+                searchRequestTask1 = (searchEngine.search(category1, options, callback1) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task keeps original listener",
+                    true,
+                    searchRequestTask1?.callbackDelegate != null
+                )
+            }
+
+            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
+            When("Search function called for the second time and first request automatically cancelled") {
+                slotSearchCallback1.captured.run(createTestCoreSearchResponseCancelled())
+
+                val callback2 = mockk<SearchCallback>(relaxed = true)
+                searchRequestTask2 = (searchEngine.search(category2, options, callback2) as? SearchRequestTaskImpl<*>)
+
+                Then("First task is not executed", false, searchRequestTask1?.isDone)
+                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
+                Then(
+                    "First task still keeps reference to original listener",
+                    false,
+                    searchRequestTask1?.callbackDelegate != null
+                )
+
+                Then("Second task is not executed", false, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task keeps original listener",
+                    true,
+                    searchRequestTask2?.callbackDelegate != null
+                )
+            }
+
+            When("Second search request completes") {
+                slotSearchCallback2.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+
+                Then("Second task is executed", true, searchRequestTask2?.isDone)
+                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
+                Then(
+                    "Second task released reference to original listener",
+                    true,
+                    searchRequestTask2?.callbackDelegate == null
+                )
+            }
+        }
+    }
 
     private companion object {
 
@@ -335,23 +355,18 @@ internal class CategorySearchTest {
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
-        val TEST_SUCCESSFUL_CORE_RESPONSE = CoreSearchResponse(
-            true,
-            200,
-            "ok",
+        val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_ERROR_CORE_RESPONSE = CoreSearchResponse(
-            false,
+        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
             401,
             "Auth failed",
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
-            emptyList(),
             TEST_RESPONSE_UUID
         )
 
