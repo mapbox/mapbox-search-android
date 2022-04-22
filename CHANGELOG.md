@@ -1,6 +1,16 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.29-SNAPSHOT
+## 1.0.0-beta.30-SNAPSHOT
+
+### Mapbox dependencies
+- Search Native SDK `0.52.0`
+- Common SDK `21.3.0-rc.2`
+- Telemetry SDK `8.1.1`
+- Kotlin `1.5.31`
+
+
+
+## 1.0.0-beta.29
 
 ### Breaking changes
 - [CORE] `ServiceProvider.globalDataProvidersRegistry()` has been removed. Now customers should use `SearchEngine.registerDataProvider()` for the data providers registration. Interface `IndexableDataProvidersRegistry` and its internal classes are not available anymore either.
@@ -18,7 +28,7 @@
 
 ### Mapbox dependencies
 - Search Native SDK `0.52.0`
-- Common SDK `21.2.0`
+- Common SDK `21.3.0-rc.2`
 - Telemetry SDK `8.1.1`
 - Kotlin `1.5.31`
 
