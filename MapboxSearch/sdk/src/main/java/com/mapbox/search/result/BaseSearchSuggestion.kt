@@ -1,6 +1,7 @@
 package com.mapbox.search.result
 
 import com.mapbox.search.SearchResultMetadata
+import java.util.Collections
 
 internal sealed class BaseSearchSuggestion(
     @Transient
@@ -37,6 +38,9 @@ internal sealed class BaseSearchSuggestion(
     override val metadata: SearchResultMetadata?
         get() = originalSearchResult.metadata
 
+    override val externalIDs: Map<String, String>
+        get() = Collections.unmodifiableMap(originalSearchResult.externalIDs ?: emptyMap())
+
     override val isBatchResolveSupported: Boolean
         get() = originalSearchResult.action?.multiRetrievable == true
 
@@ -55,6 +59,7 @@ internal sealed class BaseSearchSuggestion(
                 "type='$type', " +
                 "etaMinutes='$etaMinutes', " +
                 "metadata='$metadata', " +
+                "externalIDs='$externalIDs`, " +
                 "isBatchResolveSupported='$isBatchResolveSupported', " +
                 "serverIndex='$serverIndex', " +
                 "requestOptions='$requestOptions'"
