@@ -1433,6 +1433,7 @@ public abstract interface class com/mapbox/search/result/SearchResult : android/
 	public abstract fun getDescriptionText ()Ljava/lang/String;
 	public abstract fun getDistanceMeters ()Ljava/lang/Double;
 	public abstract fun getEtaMinutes ()Ljava/lang/Double;
+	public abstract fun getExternalIDs ()Ljava/util/Map;
 	public abstract fun getId ()Ljava/lang/String;
 	public abstract fun getMakiIcon ()Ljava/lang/String;
 	public abstract fun getMatchingName ()Ljava/lang/String;
@@ -1465,6 +1466,7 @@ public abstract interface class com/mapbox/search/result/SearchSuggestion : andr
 	public abstract fun getDescriptionText ()Ljava/lang/String;
 	public abstract fun getDistanceMeters ()Ljava/lang/Double;
 	public abstract fun getEtaMinutes ()Ljava/lang/Double;
+	public abstract fun getExternalIDs ()Ljava/util/Map;
 	public abstract fun getId ()Ljava/lang/String;
 	public abstract fun getMakiIcon ()Ljava/lang/String;
 	public abstract fun getMatchingName ()Ljava/lang/String;
