@@ -72,6 +72,12 @@ public sealed interface SearchSuggestion : Parcelable {
     public val metadata: SearchResultMetadata?
 
     /**
+     * Experimental API, can be changed or removed in the next SDK releases.
+     * Map of external ids. Returned Map instance is unmodifiable.
+     */
+    public val externalIDs: Map<String, String>
+
+    /**
      * Denotes whether this suggestion can be passed as a parameter to a batch selection method of the [com.mapbox.search.SearchEngine].
      */
     public val isBatchResolveSupported: Boolean

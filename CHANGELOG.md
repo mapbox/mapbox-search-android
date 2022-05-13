@@ -1,6 +1,9 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.30-SNAPSHOT
+## 1.0.0-beta.29.1
+
+### New features
+- [CORE] `SearchResult` and `SearchSuggestion` now provide `externalIDs` property.
 
 ### Mapbox dependencies
 - Search Native SDK `0.52.0`

@@ -1,6 +1,7 @@
 package com.mapbox.search.result
 
 import com.mapbox.search.SearchResultMetadata
+import java.util.Collections
 
 internal abstract class BaseSearchResult(
     @Transient
@@ -38,6 +39,9 @@ internal abstract class BaseSearchResult(
     override val metadata: SearchResultMetadata?
         get() = originalSearchResult.metadata
 
+    override val externalIDs: Map<String, String>
+        get() = Collections.unmodifiableMap(originalSearchResult.externalIDs ?: emptyMap())
+
     override val distanceMeters: Double?
         get() = originalSearchResult.distanceMeters
 
@@ -58,6 +62,7 @@ internal abstract class BaseSearchResult(
                 "types='$types', " +
                 "etaMinutes='$etaMinutes', " +
                 "metadata='$metadata', " +
+                "externalIDs='$externalIDs`, " +
                 "distanceMeters='$distanceMeters', " +
                 "serverIndex='$serverIndex', " +
                 "requestOptions='$requestOptions'" +

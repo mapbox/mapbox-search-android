@@ -1322,6 +1322,7 @@ package com.mapbox.search.result {
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
+    method public java.util.Map<java.lang.String,java.lang.String> getExternalIDs();
     method public String getId();
     method public String? getMakiIcon();
     method public String? getMatchingName();
@@ -1337,6 +1338,7 @@ package com.mapbox.search.result {
     property public abstract String? descriptionText;
     property public abstract Double? distanceMeters;
     property public abstract Double? etaMinutes;
+    property public abstract java.util.Map<java.lang.String,java.lang.String> externalIDs;
     property public abstract String id;
     property public abstract String? makiIcon;
     property public abstract String? matchingName;
@@ -1373,6 +1375,7 @@ package com.mapbox.search.result {
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
+    method public java.util.Map<java.lang.String,java.lang.String> getExternalIDs();
     method public String getId();
     method public String? getMakiIcon();
     method public String? getMatchingName();
@@ -1387,6 +1390,7 @@ package com.mapbox.search.result {
     property public abstract String? descriptionText;
     property public abstract Double? distanceMeters;
     property public abstract Double? etaMinutes;
+    property public abstract java.util.Map<java.lang.String,java.lang.String> externalIDs;
     property public abstract String id;
     property public abstract boolean isBatchResolveSupported;
     property public abstract String? makiIcon;

@@ -82,6 +82,12 @@ public sealed interface SearchResult : Parcelable {
     public val metadata: SearchResultMetadata?
 
     /**
+     * Experimental API, can be changed or removed in the next SDK releases.
+     * Map of external ids. Returned Map instance is unmodifiable.
+     */
+    public val externalIDs: Map<String, String>
+
+    /**
      * Distance in meters from result to requested origin (for forward geocoding and category search) or provided point (for reverse geocoding).
      * For provided point always returns non-null distance.
      */
