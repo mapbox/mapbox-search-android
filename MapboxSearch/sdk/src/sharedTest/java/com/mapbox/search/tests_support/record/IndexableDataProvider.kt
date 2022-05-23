@@ -53,30 +53,21 @@ internal fun <T : IndexableRecord> IndexableDataProvider<T>.containsBlocking(
     return (callback.getResultBlocking() as BlockingCompletionCallback.CompletionCallbackResult.Result).result
 }
 
-internal fun <T : IndexableRecord> IndexableDataProvider<T>.addBlocking(
+internal fun <T : IndexableRecord> IndexableDataProvider<T>.upsertBlocking(
     record: T,
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor
 ) {
     val callback = BlockingCompletionCallback<Unit>()
-    add(record, executor, callback)
+    upsert(record, executor, callback)
     callback.getResultBlocking()
 }
 
-internal fun <T : IndexableRecord> IndexableDataProvider<T>.addAllBlocking(
+internal fun <T : IndexableRecord> IndexableDataProvider<T>.upsertAllBlocking(
     records: List<T>,
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor
 ) {
     val callback = BlockingCompletionCallback<Unit>()
-    addAll(records, executor, callback)
-    callback.getResultBlocking()
-}
-
-internal fun <T : IndexableRecord> IndexableDataProvider<T>.updateBlocking(
-    record: T,
-    executor: Executor = SearchSdkMainThreadWorker.mainExecutor
-) {
-    val callback = BlockingCompletionCallback<Unit>()
-    update(record, executor, callback)
+    upsertAll(records, executor, callback)
     callback.getResultBlocking()
 }
 

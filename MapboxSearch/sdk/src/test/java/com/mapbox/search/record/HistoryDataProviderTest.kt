@@ -18,13 +18,13 @@ import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.tests_support.record.addAllBlocking
-import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.addToHistoryIfNeededBlocking
 import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.record.getBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.registerIndexableDataProviderEngineBlocking
+import com.mapbox.search.tests_support.record.upsertAllBlocking
+import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.MainThreadWorker
 import com.mapbox.test.dsl.TestCase
@@ -210,7 +210,7 @@ internal class HistoryDataProviderTest {
                     createTestHistoryRecord(id = "test-id-8", timestamp = 400L),
                     createTestHistoryRecord(id = "test-id-9", timestamp = 400L),
                 )
-                historyDataProvider.addAllBlocking(anotherTestRecords, executor)
+                historyDataProvider.upsertAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
                 val allEngineRecords = testEngine.records
@@ -240,7 +240,7 @@ internal class HistoryDataProviderTest {
 
             When("One record added") {
                 val singleRecord = createTestHistoryRecord(id = "test-id-10", timestamp = 1000L)
-                historyDataProvider.addBlocking(singleRecord, executor)
+                historyDataProvider.upsertBlocking(singleRecord, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
                 val allEngineRecords = testEngine.records
@@ -291,7 +291,7 @@ internal class HistoryDataProviderTest {
                         timestamp = 100L + (index - 5) * 150L // [250, | 400, 550, 700, 850]
                     )
                 }
-                historyDataProvider.addAllBlocking(anotherTestRecords, executor)
+                historyDataProvider.upsertAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
                 val allEngineRecords = testEngine.records
@@ -347,7 +347,7 @@ internal class HistoryDataProviderTest {
                         timestamp = index
                     )
                 }.shuffled()
-                historyDataProvider.addAllBlocking(anotherTestRecords, executor)
+                historyDataProvider.upsertAllBlocking(anotherTestRecords, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)
                 val allEngineRecords = testEngine.records

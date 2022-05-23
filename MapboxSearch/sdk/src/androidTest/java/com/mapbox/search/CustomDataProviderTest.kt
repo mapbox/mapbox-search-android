@@ -13,6 +13,7 @@ import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
+import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.CustomRecord
@@ -23,7 +24,6 @@ import com.mapbox.search.tests_support.record.getBlocking
 import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
@@ -43,7 +43,6 @@ internal class CustomDataProviderTest : BaseTest() {
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
-    private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
     private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
@@ -64,7 +63,6 @@ internal class CustomDataProviderTest : BaseTest() {
             searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
-            uuidProvider = uuidProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
             errorsReporter = errorsReporter,
@@ -106,32 +104,32 @@ internal class CustomDataProviderTest : BaseTest() {
         assertTrue(searchResult is SearchEngineResult.Suggestions)
         val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
 
-        assertEquals(
-            IndexableRecordSearchSuggestion(
-                record = secondCustomRecord,
-                originalSearchResult = createTestOriginalSearchResult(
-                    id = secondCustomRecord.id,
-                    layerId = customDataProvider.dataProviderName,
-                    types = listOf(OriginalResultType.USER_RECORD),
-                    names = listOf(secondCustomRecord.name),
-                    center = secondCustomRecord.coordinate,
-                    addresses = listOf(SearchAddress()),
-                    distanceMeters = 0.0,
-                    serverIndex = null,
-                ),
-                requestOptions = TEST_REQUEST_OPTIONS.copy(
-                    query = secondCustomRecord.name,
-                    options = options.copy(
-                        proximity = TEST_USER_LOCATION,
-                        origin = secondCustomRecord.coordinate
-                    ),
-                    proximityRewritten = true,
-                    requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
-                        responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
-                    )
-                )
+        val expectedSuggestion = IndexableRecordSearchSuggestion(
+            record = secondCustomRecord,
+            originalSearchResult = createTestOriginalSearchResult(
+                id = secondCustomRecord.id,
+                layerId = customDataProvider.dataProviderName,
+                types = listOf(OriginalResultType.USER_RECORD),
+                names = listOf(secondCustomRecord.name),
+                center = secondCustomRecord.coordinate,
+                addresses = listOf(SearchAddress()),
+                distanceMeters = 0.0,
+                serverIndex = null,
             ),
-            suggestions[0]
+            requestOptions = TEST_REQUEST_OPTIONS.copy(
+                query = secondCustomRecord.name,
+                options = options.copy(
+                    proximity = TEST_USER_LOCATION,
+                    origin = secondCustomRecord.coordinate
+                ),
+                proximityRewritten = true,
+                requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
+                    responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
+                )
+            )
+        )
+        assertTrue(
+            compareSearchResultWithServerSearchResult(expectedSuggestion, suggestions[0])
         )
 
         callback.reset()

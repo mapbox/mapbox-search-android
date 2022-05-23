@@ -2,10 +2,18 @@
 
 ## 1.0.0-beta.30-SNAPSHOT
 
+### Breaking changes
+- [CORE] `IndexableDataProvider.add()`, and `IndexableDataProvider.update()` have been replaced with a new function `IndexableDataProvider.upsert()`.
+- [CORE] `IndexableDataProvider.addAll()` has been renamed to `IndexableDataProvider.upsertAll()`.
+- [CORE] `IndexableDataProviderEngine.add()`, and `IndexableDataProviderEngine.update()` have been replaced with a new function `IndexableDataProviderEngine.upsert()`.
+- [CORE] `IndexableDataProviderEngine.addAll()` has been renamed to `IndexableDataProviderEngine.upsertAll()`.
+- [CORE] `IndexableDataProviderEngine.executeBatchUpdate()` has been removed along with `IndexableDataProviderEngine.BatchUpdateOperation`. Now `IndexableDataProviderEngine` is a thread-safe entity. If you need multiple operations to be executed one after another, call them in a needed order on the same thread.
+- [CORE] `AnalyticsService.sendRawFeedbackEvent()` has been removed. Events should de sent immediately.
+- [CORE] `AnalyticsService.createRawFeedbackEvent()` functions have been made asynchronous and marked as deprecated. These functions return raw events in a very specific format and should not be used.
+
 ### Mapbox dependencies
-- Search Native SDK `0.52.0`
-- Common SDK `21.3.0-rc.2`
-- Telemetry SDK `8.1.1`
+- Search Native SDK `0.54.1`
+- Common SDK `21.3.0`
 - Kotlin `1.5.31`
 
 

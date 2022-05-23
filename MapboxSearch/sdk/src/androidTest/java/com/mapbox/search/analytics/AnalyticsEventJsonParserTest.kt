@@ -2,140 +2,12 @@ package com.mapbox.search.analytics
 
 import com.mapbox.search.BaseTest
 import com.mapbox.search.analytics.events.AppMetadata
-import com.mapbox.search.analytics.events.BaseSearchEvent
-import com.mapbox.search.analytics.events.BaseSearchSessionEvent
-import com.mapbox.search.analytics.events.QueryChangeEvent
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
-import com.mapbox.search.analytics.events.SearchSelectEvent
-import com.mapbox.search.analytics.events.SearchStartEvent
 import org.json.JSONException
 import org.junit.Assert
 import org.junit.Test
 
 internal class AnalyticsEventJsonParserTest : BaseTest() {
-
-    @Test
-    fun testSearchSelectEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-select-event.json")
-
-        val event = SearchSelectEvent().apply {
-            event = "search.select"
-            resultIndex = 3
-            resultPlaceName = "Minsk"
-            resultId = "region.16795317862473520"
-            fillBaseSearchSessionData()
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
-
-    @Test
-    fun testSearchSelectEventSerialize() {
-        val jsonParser = AnalyticsEventJsonParser()
-
-        val event = SearchSelectEvent().apply {
-            event = "search.select"
-            resultIndex = 3
-            resultPlaceName = "Minsk"
-            resultId = "region.16795317862473520"
-            fillBaseSearchSessionData()
-        }
-
-        val serializedEvent = jsonParser.serialize(event)
-        Assert.assertEquals(event, jsonParser.parse(serializedEvent))
-    }
-
-    @Test
-    fun testEmptySearchSelectEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-select-event-empty.json")
-
-        val event = SearchSelectEvent().apply {
-            event = "search.select"
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
-
-    @Test
-    fun testSearchStartEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-start-event.json")
-
-        val event = SearchStartEvent().apply {
-            event = "search.start"
-            fillBaseSearchSessionData()
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
-
-    @Test
-    fun testSearchStartEventSerialize() {
-        val jsonParser = AnalyticsEventJsonParser()
-
-        val event = SearchStartEvent().apply {
-            event = "search.start"
-            fillBaseSearchSessionData()
-        }
-
-        val serializedEvent = jsonParser.serialize(event)
-        Assert.assertEquals(event, jsonParser.parse(serializedEvent))
-    }
-
-    @Test
-    fun testEmptySearchStartEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-start-event-empty.json")
-
-        val event = SearchStartEvent().apply {
-            event = "search.start"
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
-
-    @Test
-    fun testQueryChangeEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-query-change-event.json")
-
-        val event = QueryChangeEvent().apply {
-            event = "search.query_change"
-            oldQuery = "map"
-            newQuery = "maps"
-            changeType = "keyboard_type"
-            fillBaseSearchData()
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
-
-    @Test
-    fun testQueryChangeEventSerialize() {
-        val jsonParser = AnalyticsEventJsonParser()
-
-        val event = SearchStartEvent().apply {
-            event = "search.start"
-            fillBaseSearchSessionData()
-        }
-
-        val serializedEvent = jsonParser.serialize(event)
-        Assert.assertEquals(event, jsonParser.parse(serializedEvent))
-    }
-
-    @Test
-    fun testEmptyQueryChangeEventParse() {
-        val jsonParser = AnalyticsEventJsonParser()
-        val textJson = readFileFromAssets("search-query-change-event-empty.json")
-
-        val event = QueryChangeEvent().apply {
-            event = "search.query_change"
-        }
-
-        Assert.assertEquals(event, jsonParser.parse(textJson))
-    }
 
     @Test
     fun testFeedbackEventParse() {
@@ -162,7 +34,9 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
                 sessionId = "test-session-id"
             )
             searchResultsJson = "{\"results\":[{\"address\":\"Minsk Region, Belarus, Planet Earth\",\"coordinates\":[27.234342,53.940465],\"external_ids\":{\"carmen\":\"place.11543680732831130\"},\"id\":\"place.11543680732831130\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"PLACE\",\"REGION\"]}],\"multiStepSearch\":true}"
-            fillBaseSearchSessionData()
+            queryString = "Minsk"
+            cached = false
+            fillBaseSearchData()
         }
 
         Assert.assertEquals(event, jsonParser.parse(textJson))
@@ -192,7 +66,9 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
                 sessionId = "test-session-id"
             )
             searchResultsJson = "{\"results\":[{\"address\":\"Minsk Region, Belarus, Planet Earth\",\"coordinates\":[27.234342,53.940465],\"external_ids\":{\"carmen\":\"place.11543680732831130\"},\"id\":\"place.11543680732831130\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"PLACE\",\"REGION\"]}],\"multiStepSearch\":true}"
-            fillBaseSearchSessionData()
+            queryString = "Minsk"
+            cached = false
+            fillBaseSearchData()
         }
 
         val serializedEvent = jsonParser.serialize(event)
@@ -225,20 +101,14 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
     fun testIncorrectEventSerialize() {
         AnalyticsEventJsonParser().serialize(
             SearchFeedbackEvent().apply {
-                event = SearchSelectEvent.EVENT_NAME
+                event = "incorrect event"
             }
         )
     }
 
     private companion object {
 
-        fun BaseSearchSessionEvent.fillBaseSearchSessionData() {
-            fillBaseSearchData()
-            queryString = "Minsk"
-            cached = false
-        }
-
-        fun BaseSearchEvent.fillBaseSearchData() {
+        fun SearchFeedbackEvent.fillBaseSearchData() {
             created = "2020-05-16T23:06:35+0300"
             latitude = 53.911334999999994
             limit = 10

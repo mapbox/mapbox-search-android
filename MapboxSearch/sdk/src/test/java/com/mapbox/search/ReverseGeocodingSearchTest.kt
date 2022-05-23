@@ -6,7 +6,6 @@ import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreReverseGeoOptions
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
 import com.mapbox.search.record.DataProviderResolver
@@ -35,9 +34,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
-import java.io.IOException
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
 
 /**
  * Contains only forward-geocoding related functionality tests.
@@ -47,10 +44,8 @@ internal class ReverseGeocodingSearchTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var dataProviderResolver: DataProviderResolver
-    private lateinit var httpErrorsCache: HttpErrorsCache
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executor: Executor
-    private lateinit var engineExecutorService: ExecutorService
     private lateinit var requestContextProvider: SearchRequestContextProvider
 
     private lateinit var searchEngine: SearchEngine
@@ -59,10 +54,8 @@ internal class ReverseGeocodingSearchTest {
     fun setUp() {
         coreEngine = mockk(relaxed = true)
         dataProviderResolver = mockk()
-        httpErrorsCache = mockk()
         searchResultFactory = spyk(SearchResultFactory(dataProviderResolver))
         executor = spyk(TestExecutor())
-        engineExecutorService = spyk(TestThreadExecutorService())
         requestContextProvider = mockk()
 
         every { requestContextProvider.provide(ApiType.GEOCODING) } returns TEST_SEARCH_REQUEST_CONTEXT
@@ -70,11 +63,10 @@ internal class ReverseGeocodingSearchTest {
         searchEngine = SearchEngineImpl(
             apiType = ApiType.GEOCODING,
             coreEngine = coreEngine,
-            httpErrorsCache = httpErrorsCache,
             historyService = mockk(),
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
-            engineExecutorService = engineExecutorService,
+            engineExecutorService = TestThreadExecutorService(),
             indexableDataProvidersRegistry = mockk(),
         )
     }
@@ -108,10 +100,6 @@ internal class ReverseGeocodingSearchTest {
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
 
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
-
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
                 }
@@ -144,9 +132,6 @@ internal class ReverseGeocodingSearchTest {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
             }
 
-            val errorCause = IOException()
-            every { httpErrorsCache.getAndRemove(TEST_REQUEST_ID) } returns errorCause
-
             When("Initial search called") {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
@@ -160,10 +145,6 @@ internal class ReverseGeocodingSearchTest {
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
-
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
                 }
@@ -172,12 +153,13 @@ internal class ReverseGeocodingSearchTest {
                     coreEngine.reverseGeocoding(slotSearchOptions.captured, slotSearchCallback.captured)
                 }
 
-                Verify("Error cause retrieved from errors cache") {
-                    httpErrorsCache.getAndRemove(TEST_REQUEST_ID)
-                }
-
                 Verify("Error passed to callback") {
-                    callback.onError(errorCause)
+                    callback.onError(
+                        SearchRequestException(
+                            message = TEST_ERROR_CORE_RESPONSE_MESSAGE,
+                            code = TEST_ERROR_CORE_RESPONSE_HTTP_COE,
+                        )
+                    )
                 }
             }
         }
@@ -340,9 +322,13 @@ internal class ReverseGeocodingSearchTest {
             TEST_RESPONSE_UUID
         )
 
+        val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
+
+        val TEST_ERROR_CORE_RESPONSE_HTTP_COE = 401
+
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
-            401,
-            "Auth failed",
+            TEST_ERROR_CORE_RESPONSE_HTTP_COE,
+            TEST_ERROR_CORE_RESPONSE_MESSAGE,
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             TEST_RESPONSE_UUID

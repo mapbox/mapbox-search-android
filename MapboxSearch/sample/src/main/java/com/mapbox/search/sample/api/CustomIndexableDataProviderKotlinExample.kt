@@ -146,7 +146,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor: Executor,
             callback: CompletionCallback<Unit>
         ): AsyncOperationTask {
-            dataProviderEngine.addAll(records.values.toList())
+            dataProviderEngine.upsertAll(records.values.toList())
             dataProviderEngines.add(dataProviderEngine)
             executor.execute {
                 callback.onComplete(Unit)
@@ -198,9 +198,9 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             return CompletedAsyncOperationTask
         }
 
-        override fun add(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
+        override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
             dataProviderEngines.forEach {
-                it.add(record)
+                it.upsert(record)
             }
             records[record.id] = record
             executor.execute {
@@ -209,28 +209,17 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             return CompletedAsyncOperationTask
         }
 
-        override fun addAll(
+        override fun upsertAll(
             records: List<R>,
             executor: Executor,
             callback: CompletionCallback<Unit>
         ): AsyncOperationTask {
             dataProviderEngines.forEach {
-                it.addAll(records)
+                it.upsertAll(records)
             }
             for (record in records) {
                 this.records[record.id] = record
             }
-            executor.execute {
-                callback.onComplete(Unit)
-            }
-            return CompletedAsyncOperationTask
-        }
-
-        override fun update(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
-            dataProviderEngines.forEach {
-                it.update(record)
-            }
-            records[record.id] = record
             executor.execute {
                 callback.onComplete(Unit)
             }

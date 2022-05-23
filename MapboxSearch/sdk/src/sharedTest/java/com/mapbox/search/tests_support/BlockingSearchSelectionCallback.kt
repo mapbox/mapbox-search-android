@@ -43,6 +43,10 @@ internal class BlockingSearchSelectionCallback :
 
         fun requireSuggestions() = (this as Suggestions).suggestions
 
+        fun requireResult() = (this as Result)
+
+        fun requireError() = (this as Error).e
+
         data class Suggestions(val suggestions: List<SearchSuggestion>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class Result(val result: SearchResult, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class CategoryResult(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()

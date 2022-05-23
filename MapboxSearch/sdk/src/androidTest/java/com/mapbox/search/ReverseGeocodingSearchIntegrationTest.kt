@@ -19,15 +19,15 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
+import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
+import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.enqueueMultiple
@@ -60,7 +60,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
-    private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
     private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
@@ -81,7 +80,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
-            uuidProvider = uuidProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
             errorsReporter = errorsReporter,
@@ -126,8 +124,8 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         // We don't test `reverseMode` because SBS doesn't accept it anymore.
 
-        assertEquals(TEST_UUID, request.headers.get("X-Request-ID"))
-        assertEquals(TESTING_USER_AGENT, request.headers.get("User-Agent"))
+        assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
+        assertEquals(TESTING_USER_AGENT, request.headers["User-Agent"])
     }
 
     @Test
@@ -211,32 +209,29 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             )
         )
 
-        assertEquals(
-            ServerSearchResultImpl(
-                listOf(SearchResultType.POI),
-                originalSearchResult,
-                RequestOptions(
-                    query = formatPoints(TEST_POINT),
-                    endpoint = "reverse",
-                    options = SearchOptions(
-                        languages = listOf(Language(Locale.getDefault().language)),
-                        proximity = TEST_POINT,
-                        origin = TEST_POINT
-                    ),
-                    proximityRewritten = false,
-                    originRewritten = false,
-                    sessionID = "",
-                    requestContext = SearchRequestContext(
-                        apiType = ApiType.SBS,
-                        keyboardLocale = TEST_KEYBOARD_LOCALE,
-                        screenOrientation = TEST_ORIENTATION,
-                        responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
-                    )
+        val expectedResult = ServerSearchResultImpl(
+            listOf(SearchResultType.POI),
+            originalSearchResult,
+            RequestOptions(
+                query = formatPoints(TEST_POINT),
+                endpoint = "reverse",
+                options = SearchOptions(
+                    languages = listOf(Language(Locale.getDefault().language)),
+                    proximity = TEST_POINT,
+                    origin = TEST_POINT
+                ),
+                proximityRewritten = false,
+                originRewritten = false,
+                sessionID = "",
+                requestContext = SearchRequestContext(
+                    apiType = ApiType.SBS,
+                    keyboardLocale = TEST_KEYBOARD_LOCALE,
+                    screenOrientation = TEST_ORIENTATION,
+                    responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
                 )
-            ),
-            searchResult
+            )
         )
-
+        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, searchResult))
         assertNotNull(res.responseInfo.coreSearchResponse)
     }
 
@@ -266,7 +261,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val searchResult = firstRun.results.first()
 
-        historyDataProvider.addBlocking(
+        historyDataProvider.upsertBlocking(
             createHistoryRecord(searchResult, timeProvider.currentTimeMillis()),
             callbacksExecutor,
         )
@@ -279,7 +274,12 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertFalse(secondRun.results.any { it is IndexableRecordSearchResult })
-        assertEquals(firstRun.results, secondRun.results)
+        assertEquals(firstRun.results.size, secondRun.results.size)
+        firstRun.results.indices.forEach { index ->
+            assertTrue(
+                compareSearchResultWithServerSearchResult(firstRun.results[index], secondRun.results[index])
+            )
+        }
         assertNotNull(secondRun.responseInfo.coreSearchResponse)
     }
 
@@ -441,7 +441,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         val TEST_POINT: Point = Point.fromLngLat(2.2946, 48.85836)
 
         const val TEST_LOCAL_TIME_MILLIS = 12345L
-        const val TEST_UUID = "test-generated-uuid"
         val TEST_KEYBOARD_LOCALE: Locale = Locale.ENGLISH
         val TEST_ORIENTATION = ScreenOrientation.PORTRAIT
     }

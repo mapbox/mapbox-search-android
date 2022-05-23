@@ -283,7 +283,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
             val listener: (View) -> Unit = {
                 if (addFavoriteTask == null || addFavoriteTask?.isCancelled == true) {
                     val newFavorite = searchPlace.toUserFavorite()
-                    addFavoriteTask = favoritesDataProvider.add(
+                    addFavoriteTask = favoritesDataProvider.upsert(
                         newFavorite,
                         object : CompletionCallback<Unit> {
                             override fun onComplete(result: Unit) {

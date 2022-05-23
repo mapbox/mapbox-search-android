@@ -105,7 +105,7 @@ internal class AddressSearchViewController : BaseSearchController {
             }
         }
 
-        updateFavoriteTask = MapboxSearchSdk.serviceProvider.favoritesDataProvider().update(
+        updateFavoriteTask = MapboxSearchSdk.serviceProvider.favoritesDataProvider().upsert(
             newFavorite,
             object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {

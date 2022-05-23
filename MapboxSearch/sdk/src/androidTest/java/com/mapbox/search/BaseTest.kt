@@ -1,7 +1,6 @@
 package com.mapbox.search
 
 import android.app.Application
-import android.os.Build
 import androidx.annotation.CallSuper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -47,9 +46,11 @@ internal abstract class BaseTest {
         val DEFAULT_TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
 
         val TESTING_USER_AGENT: String
-            get() = "Search SDK sample test/Unknown " +
-                    "(com.mapbox.search.test; build:0; Android ${Build.VERSION.RELEASE}) " +
-                    "MapboxSearchSDK-Android/${BuildConfig.VERSION_NAME}"
+            get() = if (BuildConfig.DEBUG) {
+                "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
+            } else {
+                "search-sdk-android/${BuildConfig.VERSION_NAME}"
+            }
 
         fun Double.format(digits: Int) = "%.${digits}f".format(Locale.ENGLISH, this)
 

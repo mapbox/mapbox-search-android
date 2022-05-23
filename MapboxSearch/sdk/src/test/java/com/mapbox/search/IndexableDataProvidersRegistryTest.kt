@@ -6,11 +6,9 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngineImpl
 import com.mapbox.search.tests_support.TestExecutor
-import com.mapbox.search.tests_support.TestSyncLocker
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.TestDataProvider
-import com.mapbox.search.utils.SyncLocker
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -24,7 +22,6 @@ import java.util.concurrent.ExecutorService
 @Suppress("LargeClass")
 internal class IndexableDataProvidersRegistryTest {
 
-    private lateinit var syncLocker: SyncLocker
     private lateinit var registrationService: DataProviderEngineRegistrationService
     private lateinit var executorService: ExecutorService
 
@@ -41,14 +38,11 @@ internal class IndexableDataProvidersRegistryTest {
 
     @BeforeEach
     fun setUp() {
-        syncLocker = spyk(TestSyncLocker())
         registrationService = mockk(relaxed = true)
         executorService = spyk(TestThreadExecutorService())
 
         dataProviderEngine1 = IndexableDataProviderEngineImpl(
-            IndexableDataProviderEngineImpl.CoreLayerContext(
-                mockk(relaxed = true), syncLocker
-            )
+            mockk(relaxed = true)
         )
         dataProvider1 = spyk(
             TestDataProvider(
@@ -58,9 +52,7 @@ internal class IndexableDataProvidersRegistryTest {
         )
 
         dataProviderEngine2 = IndexableDataProviderEngineImpl(
-            IndexableDataProviderEngineImpl.CoreLayerContext(
-                mockk(relaxed = true), syncLocker
-            )
+            mockk(relaxed = true)
         )
         dataProvider2 = spyk(
             TestDataProvider(
@@ -72,7 +64,7 @@ internal class IndexableDataProvidersRegistryTest {
         searchEngine1 = mockk(relaxed = true)
         searchEngine2 = mockk(relaxed = true)
 
-        registry = IndexableDataProvidersRegistryImpl(syncLocker, registrationService)
+        registry = IndexableDataProvidersRegistryImpl(registrationService)
     }
 
     private fun mockDataProviderRegistration(
@@ -103,12 +95,8 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider1, any())
                 }
 
-                VerifyOnce("SyncLocker triggered") {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyOnce("CoreUserRecordsLayer returned from the service added to the SearchEngine") {
-                    searchEngine1.addUserLayer(dataProviderEngine1.coreLayerContext.coreLayer)
+                    searchEngine1.addUserLayer(dataProviderEngine1.coreLayer)
                 }
 
                 VerifyOnce("Callback executor triggered") {
@@ -142,12 +130,8 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider2, any())
                 }
 
-                Verify("SyncLocker triggered for each CoreSearchEngine.addUserLayer()", exactly = 2) {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyOnce("New CoreUserRecordsLayer added to the SearchEngine") {
-                    searchEngine1.addUserLayer(dataProviderEngine2.coreLayerContext.coreLayer)
+                    searchEngine1.addUserLayer(dataProviderEngine2.coreLayer)
                 }
 
                 VerifyOnce("Callback executor triggered") {
@@ -182,12 +166,8 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider1, any())
                 }
 
-                VerifyOnce("SyncLocker is not triggered again") {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyOnce("CoreUserRecordsLayer is not added to the SearchEngine again") {
-                    searchEngine1.addUserLayer(dataProviderEngine1.coreLayerContext.coreLayer)
+                    searchEngine1.addUserLayer(dataProviderEngine1.coreLayer)
                 }
 
                 VerifyOnce("Callback executor triggered") {
@@ -236,12 +216,8 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider1, any())
                 }
 
-                Verify("SyncLocker triggered for each CoreSearchEngine.addUserLayer()", exactly = 2) {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyOnce("CoreUserRecordsLayer returned from the service added to the SearchEngine") {
-                    searchEngine2.addUserLayer(dataProviderEngine1.coreLayerContext.coreLayer)
+                    searchEngine2.addUserLayer(dataProviderEngine1.coreLayer)
                 }
 
                 VerifyOnce("Callback executor triggered") {
@@ -280,10 +256,6 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider1, any())
                 }
 
-                VerifyNo("SyncLocker is not triggered") {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyNo("No CoreUserRecordsLayer added to the SearchEngine") {
                     searchEngine1.addUserLayer(any())
                 }
@@ -318,10 +290,6 @@ internal class IndexableDataProvidersRegistryTest {
 
                 VerifyOnce("Register process started in the registration service") {
                     registrationService.register(dataProvider1, any())
-                }
-
-                VerifyNo("SyncLocker is not triggered") {
-                    syncLocker.executeInSync(any())
                 }
 
                 VerifyNo("CoreUserRecordsLayer is not added to the SearchEngine") {
@@ -360,12 +328,8 @@ internal class IndexableDataProvidersRegistryTest {
                     registrationService.register(dataProvider1, any())
                 }
 
-                Verify("SyncLocker triggered for core user layer add and remove", exactly = 2) {
-                    syncLocker.executeInSync(any())
-                }
-
                 VerifyOnce("Data provider removed from the SearchEngine") {
-                    searchEngine1.removeUserLayer(eq("Test data provider 1"))
+                    searchEngine1.removeUserLayer(dataProviderEngine1.coreLayer)
                 }
 
                 VerifyOnce("Callback executor triggered") {
@@ -396,10 +360,6 @@ internal class IndexableDataProvidersRegistryTest {
 
                 VerifyNo("Nothing is registered in registration service") {
                     registrationService.register(dataProvider1, any())
-                }
-
-                VerifyNo("SyncLocker is not triggered") {
-                    syncLocker.executeInSync(any())
                 }
 
                 VerifyNo("SearchEngine is not accessed") {

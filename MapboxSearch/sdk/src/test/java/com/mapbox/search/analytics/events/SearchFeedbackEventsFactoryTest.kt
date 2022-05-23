@@ -17,8 +17,9 @@ import com.mapbox.search.ViewportProvider
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
-import com.mapbox.search.analytics.TelemetrySearchEventsFactory
+import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.location.calculateMapZoom
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
@@ -35,6 +36,7 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
+import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
@@ -46,12 +48,13 @@ import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.util.Locale
 
 @Suppress("LargeClass")
-internal class TelemetrySearchEventsFactoryTest {
+internal class SearchFeedbackEventsFactoryTest {
 
     private val viewportProvider = ViewportProvider { TEST_VIEWPORT }
     private val formattedDateProvider = FormattedTimeProvider { TEST_EVENT_CREATION_DATE }
@@ -60,33 +63,40 @@ internal class TelemetrySearchEventsFactoryTest {
     private lateinit var eventJsonParser: AnalyticsEventJsonParser
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var mockBitmap: Bitmap
-    private lateinit var jsonSerializer: (Any) -> String
 
-    private lateinit var eventsFactory: TelemetrySearchEventsFactory
+    private lateinit var feedbackEventsFactory: SearchFeedbackEventsFactory
 
     @BeforeEach
     fun setUp() {
         coreEngine = mockk()
         eventJsonParser = mockk()
         mockBitmap = mockk()
-        jsonSerializer = mockk()
 
-        every { coreEngine.makeFeedbackEvent(any(), any()) } returns TEST_CORE_RAW_EVENT
-        every { jsonSerializer.invoke(ofType<SearchResultsInfo>()) } returns TEST_SEARCH_RESULTS_INFO_JSON
+        val feedbackEventCallbackSlot = slot<FeedbackEventCallback>()
+        every { coreEngine.makeFeedbackEvent(any(), any(), capture(feedbackEventCallbackSlot)) } answers {
+            feedbackEventCallbackSlot.captured.run(TEST_CORE_RAW_EVENT)
+        }
 
-        eventsFactory = createEventsFactory()
+        every { eventJsonParser.serializeAny(any()) } returns TEST_SEARCH_RESULTS_INFO_JSON
+
+        feedbackEventsFactory = createEventsFactory()
     }
 
-    private fun createEventsFactory(): TelemetrySearchEventsFactory {
-        return TelemetrySearchEventsFactory(
-            TEST_USER_AGENT, viewportProvider, uuidProvider, { coreEngine },
-            eventJsonParser, formattedDateProvider, jsonSerializer, bitmapEncoder
+    private fun createEventsFactory(): SearchFeedbackEventsFactory {
+        return SearchFeedbackEventsFactory(
+            TEST_USER_AGENT,
+            viewportProvider,
+            uuidProvider,
+            { coreEngine },
+            eventJsonParser,
+            formattedDateProvider,
+            bitmapEncoder
         )
     }
 
     @TestFactory
     fun `Check SearchResults converts to SearchFeedbackEvent`() = TestCase {
-        Given("TelemetrySearchEventsFactory with mocked dependencies") {
+        Given("SearchFeedbackEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
                     event = SearchFeedbackEvent.EVENT_NAME
@@ -95,12 +105,15 @@ internal class TelemetrySearchEventsFactoryTest {
                 }
             }
 
-            eventsFactory = createEventsFactory()
+            feedbackEventsFactory = createEventsFactory()
 
             When("Converting search results with default feedback id") {
                 listOf(TEST_SERVER_SEARCH_RESULT, TEST_LOCAL_SEARCH_RESULT).forEach { searchResult ->
+                    val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
                     val isCached = searchResult is IndexableRecordSearchResult
-                    val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+
+                    feedbackEventsFactory.createSearchFeedbackEvent(
                         searchResult.originalSearchResult,
                         searchResult.requestOptions,
                         createTestCoreSearchResponseSuccess(
@@ -114,7 +127,8 @@ internal class TelemetrySearchEventsFactoryTest {
                             screenshot = mockBitmap,
                             sessionId = TEST_SESSION_ID,
                         ),
-                        isCached = isCached
+                        isCached = isCached,
+                        callback = callback
                     )
 
                     Then("Feedback event for ${searchResult.javaClass.simpleName} contains all values") {
@@ -169,16 +183,18 @@ internal class TelemetrySearchEventsFactoryTest {
                                 searchResultsJson = TEST_SEARCH_RESULTS_INFO_JSON
                                 schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                             },
-                            actualValue = feedbackEvent
+                            actualValue = callback.getResultBlocking().requireResult()
                         )
                     }
                 }
             }
 
             When("Converting search results with overridden feedback id") {
+                val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
                 val overriddenFeedbackId = "overridden-feedback-id"
 
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_SERVER_SEARCH_RESULT.originalSearchResult,
                     TEST_SERVER_SEARCH_RESULT.requestOptions,
                     createTestCoreSearchResponseSuccess(
@@ -193,17 +209,22 @@ internal class TelemetrySearchEventsFactoryTest {
                         sessionId = TEST_SESSION_ID,
                         feedbackId = overriddenFeedbackId,
                     ),
-                    isCached = false
+                    isCached = false,
+                    callback = callback,
                 )
 
-                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
+                Then(
+                    "Feedback id should be $overriddenFeedbackId",
+                    overriddenFeedbackId,
+                    callback.getResultBlocking().requireResult().feedbackId
+                )
             }
         }
     }
 
     @TestFactory
     fun `Check SearchSuggestion converts to SearchFeedbackEvent`() = TestCase {
-        Given("TelemetrySearchEventsFactory with mocked dependencies") {
+        Given("SearchFeedbackEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
                     event = SearchFeedbackEvent.EVENT_NAME
@@ -212,7 +233,7 @@ internal class TelemetrySearchEventsFactoryTest {
                 }
             }
 
-            eventsFactory = createEventsFactory()
+            feedbackEventsFactory = createEventsFactory()
 
             When("Converting search suggestions with default feedback id") {
                 listOf(
@@ -220,8 +241,11 @@ internal class TelemetrySearchEventsFactoryTest {
                     TEST_LOCAL_SEARCH_SUGGESTION,
                     TEST_GEOCODING_COMPAT_SEARCH_SUGGESTION
                 ).forEach { searchSuggestion ->
+                    val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
                     val isCached = searchSuggestion is IndexableRecordSearchSuggestion
-                    val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+
+                    feedbackEventsFactory.createSearchFeedbackEvent(
                         searchSuggestion.originalSearchResult,
                         searchSuggestion.requestOptions,
                         null,
@@ -232,7 +256,8 @@ internal class TelemetrySearchEventsFactoryTest {
                             text = "Fix, please!",
                             screenshot = mockBitmap,
                         ),
-                        isCached = isCached
+                        isCached = isCached,
+                        callback = callback,
                     )
 
                     Then("Feedback event for ${searchSuggestion.javaClass.simpleName} contains all values") {
@@ -282,16 +307,18 @@ internal class TelemetrySearchEventsFactoryTest {
                                 searchResultsJson = null
                                 schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                             },
-                            actualValue = feedbackEvent
+                            actualValue = callback.getResultBlocking().requireResult()
                         )
                     }
                 }
             }
 
             When("Converting search suggestion with overridden feedback id") {
+                val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
                 val overriddenFeedbackId = "overridden-feedback-id"
 
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_SERVER_SEARCH_SUGGESTION.originalSearchResult,
                     TEST_SERVER_SEARCH_SUGGESTION.requestOptions,
                     null,
@@ -303,17 +330,22 @@ internal class TelemetrySearchEventsFactoryTest {
                         screenshot = mockBitmap,
                         feedbackId = overriddenFeedbackId,
                     ),
-                    isCached = false
+                    isCached = false,
+                    callback = callback
                 )
 
-                Then("Feedback id should be", overriddenFeedbackId, feedbackEvent.feedbackId)
+                Then(
+                    "Feedback id should be",
+                    overriddenFeedbackId,
+                    callback.getResultBlocking().requireResult().feedbackId
+                )
             }
         }
     }
 
     @TestFactory
     fun `Check IndexableRecord converts to SearchFeedbackEvent`() = TestCase {
-        Given("TelemetrySearchEventsFactory with mocked dependencies") {
+        Given("SearchFeedbackEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
                     event = SearchFeedbackEvent.EVENT_NAME
@@ -321,10 +353,10 @@ internal class TelemetrySearchEventsFactoryTest {
                 }
             }
 
-            eventsFactory = createEventsFactory()
+            feedbackEventsFactory = createEventsFactory()
 
             When("Converting FavoriteRecord with default feedback id") {
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_FAVORITE_RECORD,
                     FeedbackEvent(
                         reason = "Missing routable point",
@@ -370,7 +402,7 @@ internal class TelemetrySearchEventsFactoryTest {
             When("Converting FavoriteRecord with overridden feedback id") {
                 val overriddenFeedbackId = "overridden-feedback-id"
 
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_FAVORITE_RECORD,
                     FeedbackEvent(
                         reason = "Missing routable point",
@@ -384,7 +416,7 @@ internal class TelemetrySearchEventsFactoryTest {
             }
 
             When("Converting HistoryRecord with default feedback id") {
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_HISTORY_RECORD,
                     FeedbackEvent(
                         reason = "Missing routable point",
@@ -429,7 +461,7 @@ internal class TelemetrySearchEventsFactoryTest {
             When("Converting HistoryRecord with overridden feedback id") {
                 val overriddenFeedbackId = "overridden-feedback-id"
 
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
+                val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(
                     TEST_HISTORY_RECORD,
                     FeedbackEvent(
                         reason = "Missing routable point",
@@ -446,7 +478,7 @@ internal class TelemetrySearchEventsFactoryTest {
 
     @TestFactory
     fun `Check ResponseInfo converts to SearchFeedbackEvent`() = TestCase {
-        Given("TelemetrySearchEventsFactory with mocked dependencies") {
+        Given("SearchFeedbackEventsFactory with mocked dependencies") {
             every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
                 SearchFeedbackEvent().apply {
                     event = SearchFeedbackEvent.EVENT_NAME
@@ -455,11 +487,13 @@ internal class TelemetrySearchEventsFactoryTest {
                 }
             }
 
-            eventsFactory = createEventsFactory()
+            feedbackEventsFactory = createEventsFactory()
 
             When("Converting ResponseInfo with default feedback id") {
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
-                    MissingResultFeedbackEvent(
+                val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
+                feedbackEventsFactory.createSearchFeedbackEvent(
+                    event = MissingResultFeedbackEvent(
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
                             coreSearchResponse = createTestCoreSearchResponseSuccess(
@@ -471,7 +505,8 @@ internal class TelemetrySearchEventsFactoryTest {
                         sessionId = TEST_SESSION_ID,
                         screenshot = mockBitmap
                     ),
-                    TEST_USER_LOCATION
+                    currentLocation = TEST_USER_LOCATION,
+                    callback = callback,
                 )
 
                 Then("Feedback event contains all values") {
@@ -517,16 +552,18 @@ internal class TelemetrySearchEventsFactoryTest {
                             searchResultsJson = TEST_SEARCH_RESULTS_INFO_JSON
                             schema = SEARCH_FEEDBACK_SCHEMA_VERSION
                         },
-                        actualValue = feedbackEvent
+                        actualValue = callback.getResultBlocking().requireResult()
                     )
                 }
             }
 
             When("Converting ResponseInfo with overridden feedback id") {
+                val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
                 val overriddenFeedbackId = "overridden-feedback-id"
 
-                val feedbackEvent = eventsFactory.createSearchFeedbackEvent(
-                    MissingResultFeedbackEvent(
+                feedbackEventsFactory.createSearchFeedbackEvent(
+                    event = MissingResultFeedbackEvent(
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
                             coreSearchResponse = createTestCoreSearchResponseSuccess(
@@ -539,74 +576,15 @@ internal class TelemetrySearchEventsFactoryTest {
                         screenshot = mockBitmap,
                         feedbackId = overriddenFeedbackId,
                     ),
-                    TEST_USER_LOCATION
+                    currentLocation = TEST_USER_LOCATION,
+                    callback = callback,
                 )
 
-                Then("Feedback id should be $overriddenFeedbackId", overriddenFeedbackId, feedbackEvent.feedbackId)
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check cached SearchFeedbackEvent`() = TestCase {
-        Given("TelemetrySearchEventsFactory with mocked dependencies") {
-            val eventsFactory = createEventsFactory()
-            val cachedSearchEvent = SearchFeedbackEvent().apply {
-                event = SearchFeedbackEvent.EVENT_NAME
-                selectedItemName = "cached-item"
-                sessionIdentifier = "cached-session-id"
-                resultIndex = -1
-                queryString = "cached query"
-                schema = "search.feedback-2.0"
-            }
-
-            When("Updating cached search feedback event: $cachedSearchEvent") {
-                eventsFactory.updateCachedSearchFeedbackEvent(
-                    cachedSearchEvent,
-                    FeedbackEvent(
-                        reason = "Missing routable point",
-                        text = "Fix, please!",
-                        screenshot = mockBitmap,
-                        sessionId = TEST_SESSION_ID
-                    ),
-                    TEST_USER_LOCATION
+                Then(
+                    "Feedback id should be $overriddenFeedbackId",
+                    overriddenFeedbackId,
+                    callback.getResultBlocking().requireResult().feedbackId
                 )
-
-                Then("Feedback event was properly created from raw event") {
-                    assertEqualsJsonify(
-                        expectedValue = SearchFeedbackEvent().apply {
-                            event = SearchFeedbackEvent.EVENT_NAME
-                            cached = true
-                            created = TEST_EVENT_CREATION_DATE
-                            latitude = TEST_USER_LOCATION.latitude()
-                            longitude = TEST_USER_LOCATION.longitude()
-                            resultIndex = -1
-                            userAgent = TEST_USER_AGENT
-                            queryString = "cached query"
-                            feedbackReason = "Missing routable point"
-                            feedbackText = "Fix, please!"
-                            selectedItemName = "cached-item"
-                            mapZoom = calculateMapZoom(TEST_VIEWPORT)
-                            mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
-                            mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
-                            sessionIdentifier = "cached-session-id"
-                            feedbackId = TEST_UUID
-                            if (BuildConfig.DEBUG) {
-                                isTest = true
-                            }
-                            screenshot = TEST_ENCODED_BITMAP
-                            appMetadata = AppMetadata(
-                                name = null,
-                                version = null,
-                                userId = null,
-                                sessionId = TEST_SESSION_ID
-                            )
-                            searchResultsJson = null
-                            schema = "search.feedback-2.0"
-                        },
-                        actualValue = cachedSearchEvent
-                    )
-                }
             }
         }
     }

@@ -27,6 +27,7 @@ internal data class OriginalSearchResult(
     val externalIDs: Map<String, String>?,
     val layerId: String?,
     val userRecordId: String?,
+    val userRecordPriority: Int,
     val action: SearchResultSuggestAction?,
     val serverIndex: Int?,
     val etaMinutes: Double?
@@ -74,6 +75,7 @@ internal fun CoreSearchResult.mapToPlatform() = OriginalSearchResult(
     externalIDs = externalIDs,
     layerId = layer,
     userRecordId = userRecordID,
+    userRecordPriority = userRecordPriority,
     action = action?.mapToPlatform(),
     serverIndex = serverIndex,
     etaMinutes = eta,
@@ -97,6 +99,7 @@ internal fun OriginalSearchResult.mapToCore() = CoreSearchResult(
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },
     layerId,
     userRecordId,
+    userRecordPriority,
     action?.mapToCore(),
     serverIndex,
 )

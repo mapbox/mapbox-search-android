@@ -182,70 +182,47 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     )
 
     /**
-     * Adds a [record] to this data provider.
+     * Insert or update a [record] in this data provider.
      *
      * @param record Record to be added.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
      * @return an object representing pending completion of the task.
      */
-    public fun add(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask
+    public fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask
 
     /**
-     * Adds a [record] to this data provider.
+     * Insert or update a [record] to this data provider.
      *
      * @param record Record to be added.
      * @param callback Callback to handle result, triggered on the main thread.
      * @return an object representing pending completion of the task.
      */
-    public fun add(record: R, callback: CompletionCallback<Unit>): AsyncOperationTask = add(
+    public fun upsert(record: R, callback: CompletionCallback<Unit>): AsyncOperationTask = upsert(
         record = record,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )
 
     /**
-     * Add multiple records to this data provider.
+     * Upsert (insert or update) multiple records to this data provider.
      *
      * @param records Records to be added.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
      * @return an object representing pending completion of the task.
      */
-    public fun addAll(records: List<R>, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask
+    public fun upsertAll(records: List<R>, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask
 
     /**
-     * Add multiple records to this data provider.
+     * Upsert (insert or update) multiple records to this data provider.
      *
      * @param records Records to be added.
      * @param callback Callback to handle result, triggered on the main thread.
      * @return an object representing pending completion of the task.
      */
-    public fun addAll(records: List<R>, callback: CompletionCallback<Unit>): AsyncOperationTask = addAll(
+    public fun upsertAll(records: List<R>, callback: CompletionCallback<Unit>): AsyncOperationTask = upsertAll(
         records = records,
-        executor = SearchSdkMainThreadWorker.mainExecutor,
-        callback = callback,
-    )
-
-    /**
-     * Updates [record] in this data provider.
-     *
-     * @param record Record to update.
-     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
-     * @param callback Callback to handle result.
-     * @return an object representing pending completion of the task.
-     */
-    public fun update(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask
-
-    /**
-     * Updates [record] in this data provider.
-     *
-     * @param record Record to update.
-     * @param callback Callback to handle result, triggered on the main thread.
-     * @return an object representing pending completion of the task.
-     */
-    public fun update(record: R, callback: CompletionCallback<Unit>): AsyncOperationTask = update(
-        record = record,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )

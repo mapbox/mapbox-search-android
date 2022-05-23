@@ -7,7 +7,6 @@ import com.mapbox.search.CompletionCallback
 import com.mapbox.search.common.failDebug
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreUserRecordsLayer
-import com.mapbox.search.utils.SyncLocker
 import java.util.concurrent.Executor
 
 internal interface DataProviderEngineRegistrationService {
@@ -20,8 +19,7 @@ internal interface DataProviderEngineRegistrationService {
 
 internal class DataProviderEngineRegistrationServiceImpl(
     private val registryExecutor: Executor,
-    private val syncLocker: SyncLocker,
-    private val coreLayerProvider: (String, Int) -> CoreUserRecordsLayer = ::createCoreLayer,
+    private val coreLayerProvider: (String, Int) -> CoreUserRecordsLayer = Companion::createCoreLayer,
 ) : DataProviderEngineRegistrationService {
 
     private val processingProviders = mutableMapOf<String, RegistrationProcessMetadata>()
@@ -54,11 +52,9 @@ internal class DataProviderEngineRegistrationServiceImpl(
         }
 
         val engine = IndexableDataProviderEngineImpl(
-            coreLayerContext = IndexableDataProviderEngineImpl.CoreLayerContext(
-                coreLayerProvider(
-                    dataProvider.dataProviderName,
-                    dataProvider.priority
-                ), syncLocker
+            coreLayer = coreLayerProvider(
+                dataProvider.dataProviderName,
+                dataProvider.priority
             )
         )
 

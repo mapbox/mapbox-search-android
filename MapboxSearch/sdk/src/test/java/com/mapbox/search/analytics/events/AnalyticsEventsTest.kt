@@ -6,42 +6,6 @@ import org.junit.jupiter.api.TestFactory
 internal class AnalyticsEventsTest {
 
     @TestFactory
-    fun `Check test query changed events for validity`() = TestCase {
-        TEST_QUERY_CHANGE_EVENTS.forEach { (inputValue, expectedValue) ->
-            Given("QueryChangedEvent = $inputValue") {
-                When("QueryChangedEvent = $inputValue") {
-                    val actualValue = inputValue.isValid
-                    Then("Event is valid should be <$expectedValue>", expectedValue, actualValue)
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check test search start events for validity`() = TestCase {
-        TEST_SEARCH_START_EVENTS.forEach { (inputValue, expectedValue) ->
-            Given("SearchStartEvent = $inputValue") {
-                When("SearchStartEvent = $inputValue") {
-                    val actualValue = inputValue.isValid
-                    Then("Event is valid should be <$expectedValue>", expectedValue, actualValue)
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check test search select events for validity`() = TestCase {
-        TEST_SEARCH_SELECT_EVENTS.forEach { (inputValue, expectedValue) ->
-            Given("SearchSelectEvent = $inputValue") {
-                When("SearchSelectEvent = $inputValue") {
-                    val actualValue = inputValue.isValid
-                    Then("Event is valid should be <$expectedValue>", expectedValue, actualValue)
-                }
-            }
-        }
-    }
-
-    @TestFactory
     fun `Check test search feedback events for validity`() = TestCase {
         TEST_SEARCH_FEEDBACK_EVENTS.forEach { (inputValue, expectedValue) ->
             Given("SearchFeedbackEvent = $inputValue") {
@@ -72,42 +36,7 @@ internal class AnalyticsEventsTest {
         const val TEST_FEEDBACK_REASON = "Other reason"
         const val TEST_FEEDBACK_TEXT = "Incorrect coordinates"
         const val TEST_RESPONSE_UUID = "e0a2b1d6-3621-11eb-adc1-0242ac120002"
-        const val SEARCH_QUERY_CHANGED_EVENT_NAME = "search.query_change"
-        const val SEARCH_START_EVENT_NAME = "search.start"
-        const val SEARCH_SELECT_EVENT_NAME = "search.select"
         const val SEARCH_FEEDBACK_EVENT_NAME = "search.feedback"
-
-        val TEST_QUERY_CHANGE_EVENTS: Map<QueryChangeEvent, Boolean>
-            get() = mapOf(
-                QueryChangeEvent().apply { event = null; newQuery = "aa"; oldQuery = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                QueryChangeEvent().apply { event = ""; newQuery = "aa"; oldQuery = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                QueryChangeEvent().apply { event = SEARCH_QUERY_CHANGED_EVENT_NAME; newQuery = null; oldQuery = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                QueryChangeEvent().apply { event = SEARCH_QUERY_CHANGED_EVENT_NAME; newQuery = "aa"; oldQuery = null; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                QueryChangeEvent().apply { event = SEARCH_QUERY_CHANGED_EVENT_NAME; newQuery = "aa"; oldQuery = "a"; sessionIdentifier = null; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                QueryChangeEvent().apply { event = SEARCH_QUERY_CHANGED_EVENT_NAME; newQuery = "aa"; oldQuery = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = null } to false,
-                QueryChangeEvent().apply { event = SEARCH_QUERY_CHANGED_EVENT_NAME; newQuery = "aa"; oldQuery = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to true
-            )
-
-        val TEST_SEARCH_START_EVENTS: Map<SearchStartEvent, Boolean>
-            get() = mapOf(
-                SearchStartEvent().apply { event = null; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                SearchStartEvent().apply { event = ""; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                SearchStartEvent().apply { event = SEARCH_START_EVENT_NAME; queryString = null; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                SearchStartEvent().apply { event = SEARCH_START_EVENT_NAME; queryString = "a"; sessionIdentifier = null; created = TEST_TIME_IN_CORRECT_FORMAT } to false,
-                SearchStartEvent().apply { event = SEARCH_START_EVENT_NAME; queryString = null; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = null } to false,
-                SearchStartEvent().apply { event = SEARCH_START_EVENT_NAME; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = null } to false
-            )
-
-        val TEST_SEARCH_SELECT_EVENTS: Map<SearchSelectEvent, Boolean>
-            get() = mapOf(
-                SearchSelectEvent().apply { event = null; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = TEST_RESULT_INDEX } to false,
-                SearchSelectEvent().apply { event = ""; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = TEST_RESULT_INDEX } to false,
-                SearchSelectEvent().apply { event = SEARCH_SELECT_EVENT_NAME; queryString = null; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = TEST_RESULT_INDEX } to false,
-                SearchSelectEvent().apply { event = SEARCH_SELECT_EVENT_NAME; queryString = "a"; sessionIdentifier = null; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = TEST_RESULT_INDEX } to false,
-                SearchSelectEvent().apply { event = SEARCH_SELECT_EVENT_NAME; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = null; resultIndex = TEST_RESULT_INDEX } to false,
-                SearchSelectEvent().apply { event = SEARCH_SELECT_EVENT_NAME; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = null } to false,
-                SearchSelectEvent().apply { event = SEARCH_SELECT_EVENT_NAME; queryString = "a"; sessionIdentifier = TEST_SESSION_IDENTIFIER; created = TEST_TIME_IN_CORRECT_FORMAT; resultIndex = TEST_RESULT_INDEX } to true,
-            )
 
         val TEST_SEARCH_FEEDBACK_EVENTS: Map<SearchFeedbackEvent, Boolean>
             get() = mapOf(

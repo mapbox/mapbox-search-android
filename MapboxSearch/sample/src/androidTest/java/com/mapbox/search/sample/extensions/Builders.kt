@@ -8,3 +8,10 @@ fun SearchResultsRecyclerBuilder.noInternetConnectionError() {
         errorSubtitle = "You’re offline. Try to reconnect."
     )
 }
+
+fun SearchResultsRecyclerBuilder.unknownError() {
+    error(
+        errorTitle = "Error",
+        errorSubtitle = "Something went wrong."
+    )
+}

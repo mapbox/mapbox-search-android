@@ -6,8 +6,8 @@ import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.registerDataProviderBlocking
 import com.mapbox.search.tests_support.searchBlocking
 import com.mapbox.search.tests_support.unregisterDataProviderBlocking
@@ -175,11 +175,11 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     }
 
     private fun addTestHistoryAndFavorites(numberOfRecords: Int = 3) {
-        historyDataProvider.addAllBlocking(
+        historyDataProvider.upsertAllBlocking(
             (1..numberOfRecords).map { createTestHistoryRecord(id = "id-history-$it", name = "$TEST_QUERY $it") }
         )
 
-        favoritesDataProvider.addAllBlocking(
+        favoritesDataProvider.upsertAllBlocking(
             (1..numberOfRecords).map { createTestFavoriteRecord(id = "id-favorite-$it", name = "$TEST_QUERY $it") }
         )
     }

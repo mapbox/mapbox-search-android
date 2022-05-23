@@ -1,33 +1,33 @@
 {
-  "requestParamsJSON": "{\"eta_type\":\"navigation\",\"navigation_profile\":\"driving\",\"origin\":[10.1,11.12345],\"route\":\"~fayB_gayB~fayB_gayB\",\"route_geometry\":\"polyline6\",\"sar_type\":\"isochrone\",\"time_deviation\":5.0,\"unsafe_key\":\"unsafe_value\"}",
-  "responseUuid": "bf62f6f4-92db-11eb-a8b3-0242ac130003",
-  "resultId": "Y2OAgKLU9Mz8PAA\u003d.Y2OAgOTEotzUPAA\u003d.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
-  "resultIndex": 0,
-  "searchResultsJSON": "{\"multiStepSearch\":false,\"results\":[{\"address\":\"Belarus\",\"category\":[\"cafe\"],\"external_ids\":{\"carmen\":\"place.9038333669154200\",\"federated\":\"carmen.place.9038333669154200\"},\"id\":\"Y2OAgKLU9Mz8PAA\\u003d.Y2OAgOTEotzUPAA\\u003d.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"REGION\"]},{\"address\":\"Minsk Region, Belarus\",\"external_ids\":{\"carmen\":\"place.11543680732831130\",\"federated\":\"carmen.place.11543680732831130\"},\"id\":\"Y2WAgIKcxORUAA\\u003d\\u003d.Y2OAgOTEotzUPAA\\u003d.RcwxDsIwDAVQjoI89wSM7CxcAKWJ1VqkNrKdoUIchpsSMFW9vf-__D7EPSFLY9cVTnDGmrQZDKA4kXCPLsR2P16DAxQyV8rem65HTRm30ddinqVgtFVyquRriJGmeRSdRUokqRRFsx03bsuI-t-n5ffn9QE\\u003d\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"PLACE\",\"REGION\"]},{\"address\":\"Mia\\u0027s Minks, 3249 Stevens Creek Blvd Ste 205, San Jose, California 95117, United States of America\",\"category\":[\"salon\",\"services\",\"cosmetics shop\",\"shopping\"],\"external_ids\":{\"federated\":\"poi.eMOCM3UBVg8uHqZ3mhvp\",\"poi\":\"eMOCM3UBVg8uHqZ3mhvp\",\"safegraph\":\"sg:2a639711389b4d71805e6845c2995294\"},\"id\":\"Y2aAgIL8TAA\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.ATUAyv8tAAAAAAAAAHNhZmVncmFwaC5zZzoyYTYzOTcxMTM4OWI0ZDcxODA1ZTY4NDVjMjk5NTI5NA\\u003d\\u003d\",\"language\":[\"en\"],\"name\":\"Mia\\u0027s Minks\",\"result_type\":[\"POI\"]},{\"address\":\"Category\",\"category\":[\"Cafe\"],\"external_ids\":{\"federated\":\"category.cafe\"},\"id\":\"42CAgOTEktT0_KJKAA\\u003d\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.Y2GAgOTEtFQA\",\"language\":[\"en\"],\"name\":\"Cafe\",\"result_type\":[\"CATEGORY\"]},{\"address\":\"Category\",\"category\":[\"Flower Shop\"],\"external_ids\":{\"federated\":\"category.florist\"},\"id\":\"42CAgOTEktT0_KJKAA\\u003d\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.Y2eAgLSc_KLM4hIA\",\"language\":[\"en\"],\"name\":\"Flower Shop\",\"result_type\":[\"CATEGORY\"]}]}",
-  "selectedItemName": "Minsk",
-  "queryString": "Starbucks",
-  "bbox": [
+  "bbox":[
     0.0,
     0.0,
     90.0,
     45.0
   ],
-  "country": [
+  "country":[
     "fr",
     "de"
   ],
-  "created": "2021-02-03T20:52:06+0300",
-  "endpoint": "http://localhost:8679//search/v1/suggest",
-  "event": "search.feedback",
-  "keyboardLocale": "en",
-  "language": [
+  "created":"2021-02-03T20:52:06+0300",
+  "endpoint":"http://localhost:8679//search/v1/suggest",
+  "event":"search.feedback",
+  "keyboardLocale":"en",
+  "language":[
     "en"
   ],
-  "limit": 6,
-  "orientation": "portrait",
-  "schema": "search.feedback-2.3",
-  "sessionIdentifier": "test-generated-uuid",
-  "types": [
+  "limit":6,
+  "orientation":"portrait",
+  "queryString":"Starbucks",
+  "requestParamsJSON":"{\"eta_type\":\"navigation\",\"navigation_profile\":\"driving\",\"origin\":[10.1,11.12345],\"route\":\"~fayB_gayB~fayB_gayB\",\"route_geometry\":\"polyline6\",\"sar_type\":\"isochrone\",\"time_deviation\":5.0,\"unsafe_key\":\"unsafe_value\"}",
+  "responseUuid":"bf62f6f4-92db-11eb-a8b3-0242ac130003",
+  "resultId":"Y2OAgKLU9Mz8PAA\u003d.Y2OAgOTEotzUPAA\u003d.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
+  "resultIndex":0,
+  "schema":"search.feedback-2.3",
+  "searchResultsJSON":"{\"multiStepSearch\":false,\"results\":[{\"address\":\"Belarus\",\"category\":[\"cafe\"],\"external_ids\":{\"carmen\":\"place.9038333669154200\",\"federated\":\"carmen.place.9038333669154200\"},\"id\":\"Y2OAgKLU9Mz8PAA\\u003d.Y2OAgOTEotzUPAA\\u003d.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"REGION\"]},{\"address\":\"Minsk Region, Belarus\",\"external_ids\":{\"carmen\":\"place.11543680732831130\",\"federated\":\"carmen.place.11543680732831130\"},\"id\":\"Y2WAgIKcxORUAA\\u003d\\u003d.Y2OAgOTEotzUPAA\\u003d.RcwxDsIwDAVQjoI89wSM7CxcAKWJ1VqkNrKdoUIchpsSMFW9vf-__D7EPSFLY9cVTnDGmrQZDKA4kXCPLsR2P16DAxQyV8rem65HTRm30ddinqVgtFVyquRriJGmeRSdRUokqRRFsx03bsuI-t-n5ffn9QE\\u003d\",\"language\":[\"en\"],\"name\":\"Minsk\",\"result_type\":[\"PLACE\",\"REGION\"]},{\"address\":\"Mia\\u0027s Minks, 3249 Stevens Creek Blvd Ste 205, San Jose, California 95117, United States of America\",\"category\":[\"salon\",\"services\",\"cosmetics shop\",\"shopping\"],\"external_ids\":{\"federated\":\"poi.eMOCM3UBVg8uHqZ3mhvp\",\"poi\":\"eMOCM3UBVg8uHqZ3mhvp\",\"safegraph\":\"sg:2a639711389b4d71805e6845c2995294\"},\"id\":\"Y2aAgIL8TAA\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.ATUAyv8tAAAAAAAAAHNhZmVncmFwaC5zZzoyYTYzOTcxMTM4OWI0ZDcxODA1ZTY4NDVjMjk5NTI5NA\\u003d\\u003d\",\"language\":[\"en\"],\"name\":\"Mia\\u0027s Minks\",\"result_type\":[\"POI\"]},{\"address\":\"Category\",\"category\":[\"Cafe\"],\"external_ids\":{\"federated\":\"category.cafe\"},\"id\":\"42CAgOTEktT0_KJKAA\\u003d\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.Y2GAgOTEtFQA\",\"language\":[\"en\"],\"name\":\"Cafe\",\"result_type\":[\"CATEGORY\"]},{\"address\":\"Category\",\"category\":[\"Flower Shop\"],\"external_ids\":{\"federated\":\"category.florist\"},\"id\":\"42CAgOTEktT0_KJKAA\\u003d\\u003d.42eAgMSCTN2C_Ezd4tSisszkVAA\\u003d.Y2eAgLSc_KLM4hIA\",\"language\":[\"en\"],\"name\":\"Flower Shop\",\"result_type\":[\"CATEGORY\"]}]}",
+  "selectedItemName":"Minsk",
+  "sessionIdentifier":"test-generated-uuid",
+  "types":[
     "POI",
     "ADDRESS",
     "POSTCODE"

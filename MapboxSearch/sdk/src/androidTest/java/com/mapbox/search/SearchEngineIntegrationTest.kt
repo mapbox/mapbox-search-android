@@ -25,17 +25,19 @@ import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
+import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.record.addAllBlocking
-import com.mapbox.search.tests_support.record.addBlocking
+import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
+import com.mapbox.search.tests_support.record.upsertAllBlocking
+import com.mapbox.search.tests_support.record.upsertBlocking
+import com.mapbox.search.tests_support.searchBlocking
 import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.enqueueMultiple
@@ -72,7 +74,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private lateinit var searchEngineSettings: SearchEngineSettings
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
-    private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
     private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
@@ -96,7 +97,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
-            uuidProvider = uuidProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
             errorsReporter = errorsReporter,
@@ -163,7 +163,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.
 
-        assertEquals(TEST_UUID, request.headers["X-Request-ID"])
+        assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
         assertEquals(TESTING_USER_AGENT, request.headers["User-Agent"])
     }
 
@@ -234,19 +234,17 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             )
         )
 
-        assertEquals(
-            ServerSearchSuggestion(
-                originalSearchResult,
-                TEST_REQUEST_OPTIONS.copy(
-                    options = options.copy(proximity = TEST_USER_LOCATION),
-                    proximityRewritten = true,
-                    requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
-                        responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
-                    )
+        val expectedResult = ServerSearchSuggestion(
+            originalSearchResult,
+            TEST_REQUEST_OPTIONS.copy(
+                options = options.copy(proximity = TEST_USER_LOCATION),
+                proximityRewritten = true,
+                requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
+                    responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
                 )
-            ),
-            first
+            )
         )
+        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, first))
 
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE, SearchResultType.REGION), suggestions[1].type)
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.POI), suggestions[2].type)
@@ -310,7 +308,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             )
         }
 
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(limit = records.size), callback)
@@ -366,7 +364,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val records = (1..10).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
         }
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(), callback)
@@ -391,7 +389,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
         }
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         val searchOptions = SearchOptions(limit = records.size + 1)
@@ -415,7 +413,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
         }
 
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(ignoreIndexableRecords = true), callback)
@@ -434,7 +432,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(
@@ -453,7 +451,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
@@ -476,7 +474,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
@@ -577,22 +575,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             externalIDs = mapOf("carmen" to "place.11543680732831130")
         )
 
-        assertEquals(
-            ServerSearchResultImpl(
-                listOf(SearchResultType.PLACE, SearchResultType.REGION),
-                originalSearchResult,
-                TEST_REQUEST_OPTIONS.run {
-                    copy(
-                        options = options.copy(proximity = TEST_USER_LOCATION),
-                        proximityRewritten = true,
-                        requestContext = requestContext.copy(
-                            responseUuid = "0a197057-edf0-4447-be63-9badcf7c19be"
-                        )
+        val expectedResult = ServerSearchResultImpl(
+            listOf(SearchResultType.PLACE, SearchResultType.REGION),
+            originalSearchResult,
+            TEST_REQUEST_OPTIONS.run {
+                copy(
+                    options = options.copy(proximity = TEST_USER_LOCATION),
+                    proximityRewritten = true,
+                    requestContext = requestContext.copy(
+                        responseUuid = "0a197057-edf0-4447-be63-9badcf7c19be"
                     )
-                }
-            ),
-            searchResult
+                )
+            }
         )
+        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, searchResult))
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
 
@@ -675,16 +671,15 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        assertEquals(
-            ServerSearchSuggestion(
-                recursionSearchResult,
-                TEST_REQUEST_OPTIONS.copy(
-                    options = options.copy(proximity = TEST_USER_LOCATION),
-                    proximityRewritten = true
-                )
-            ),
-            suggestions.first()
+        val expectedResult = ServerSearchSuggestion(
+            recursionSearchResult,
+            TEST_REQUEST_OPTIONS.copy(
+                options = options.copy(proximity = TEST_USER_LOCATION),
+                proximityRewritten = true
+            )
         )
+
+        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, suggestions.first()))
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-with-recursion-query.json"))
 
@@ -694,7 +689,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val selectionResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
 
         val newSuggestions = selectionResult.suggestions
-        assertEquals(suggestions, newSuggestions)
+        assertEquals(suggestions.size, newSuggestions.size)
+        newSuggestions.indices.forEach { index ->
+            assertTrue(compareSearchResultWithServerSearchResult(suggestions[index], newSuggestions[index]))
+        }
 
         assertNotNull(selectionResult.responseInfo.coreSearchResponse)
     }
@@ -731,24 +729,22 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        assertEquals(
-            ServerSearchSuggestion(
-                originalCategorySuggestion,
-                TEST_REQUEST_OPTIONS.run {
-                    copy(
-                        options = options.copy(
-                            proximity = TEST_USER_LOCATION,
-                            types = listOf(QueryType.CATEGORY)
-                        ),
-                        proximityRewritten = true,
-                        requestContext = requestContext.copy(
-                            responseUuid = "be35d556-9e14-4303-be15-57497c331348"
-                        ),
-                    )
-                }
-            ),
-            suggestions.first()
+        val expectedSearchSuggestion = ServerSearchSuggestion(
+            originalCategorySuggestion,
+            TEST_REQUEST_OPTIONS.run {
+                copy(
+                    options = options.copy(
+                        proximity = TEST_USER_LOCATION,
+                        types = listOf(QueryType.CATEGORY)
+                    ),
+                    proximityRewritten = true,
+                    requestContext = requestContext.copy(
+                        responseUuid = "be35d556-9e14-4303-be15-57497c331348"
+                    ),
+                )
+            }
         )
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
 
         assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)
         assertEquals(SearchSuggestionType.Category("internet_cafe"), suggestions[1].type)
@@ -797,25 +793,24 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             distanceMeters = 1.2674344310855685E7,
         )
 
-        assertEquals(
-            ServerSearchResultImpl(
-                listOf(SearchResultType.POI),
-                originalCategorySearchResult,
-                TEST_REQUEST_OPTIONS.run {
-                    copy(
-                        options = options.copy(
-                            proximity = TEST_USER_LOCATION,
-                            types = listOf(QueryType.CATEGORY)
-                        ),
-                        proximityRewritten = true,
-                        requestContext = requestContext.copy(
-                            responseUuid = "730bb97b-b30f-4e54-9772-8af2d4e0edf0"
-                        ),
-                    )
-                }
-            ),
-            categoryResults.first()
+        val expectedSearchResult = ServerSearchResultImpl(
+            listOf(SearchResultType.POI),
+            originalCategorySearchResult,
+            TEST_REQUEST_OPTIONS.run {
+                copy(
+                    options = options.copy(
+                        proximity = TEST_USER_LOCATION,
+                        types = listOf(QueryType.CATEGORY)
+                    ),
+                    proximityRewritten = true,
+                    requestContext = requestContext.copy(
+                        responseUuid = "730bb97b-b30f-4e54-9772-8af2d4e0edf0"
+                    ),
+                )
+            }
         )
+
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, categoryResults.first()))
 
         assertEquals(categoryResults.size, 3)
 
@@ -870,6 +865,21 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         if (!BuildConfig.DEBUG) {
             assertEquals(errorsReporter.capturedErrors, listOf(res.e))
         }
+    }
+
+    @Test
+    fun testNetworkErrorForConsecutiveRequests() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
+
+        val successfulResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+        assertTrue(successfulResponse.requireSuggestions().isNotEmpty())
+
+        val errorResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+
+        // TODO(https://github.com/mapbox/mapbox-search-sdk/issues/870)
+        // Native Search SDK should return Http Error here. See testNetworkError() test.
+        assertTrue(errorResponse.requireError().equalsTo(Exception("Unable to perform search request: Invalid json response")))
     }
 
     @Test

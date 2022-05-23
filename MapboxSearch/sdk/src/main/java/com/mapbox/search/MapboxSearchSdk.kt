@@ -12,8 +12,12 @@ import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.module.LibraryLoader
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
+import com.mapbox.search.analytics.AnalyticsEventJsonParser
+import com.mapbox.search.analytics.AnalyticsServiceImpl
+import com.mapbox.search.analytics.CrashEventsFactory
 import com.mapbox.search.analytics.ErrorsReporter
-import com.mapbox.search.analytics.TelemetryService
+import com.mapbox.search.analytics.SearchEventsService
+import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.CommonErrorsReporter
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
@@ -23,14 +27,6 @@ import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreLocationProvider
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.PlatformClientImpl
-import com.mapbox.search.core.http.AsyncHttpCallbackDecorator
-import com.mapbox.search.core.http.HttpClientImpl
-import com.mapbox.search.core.http.HttpErrorsCache
-import com.mapbox.search.core.http.HttpErrorsCacheImpl
-import com.mapbox.search.core.http.OkHttpHelper
-import com.mapbox.search.core.http.UserAgentProviderImpl
-import com.mapbox.search.internal.bindgen.PlatformClient
 import com.mapbox.search.location.LocationEngineAdapter
 import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
@@ -40,12 +36,11 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
 import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.utils.AndroidKeyboardLocaleProvider
+import com.mapbox.search.utils.AppInfoProviderImpl
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.FormattedTimeProviderImpl
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.LocalTimeProvider
-import com.mapbox.search.utils.SyncLocker
-import com.mapbox.search.utils.SyncLockerImpl
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.UUIDProviderImpl
@@ -73,17 +68,14 @@ public object MapboxSearchSdk {
     } else {
         "search-sdk-android/${BuildConfig.VERSION_NAME}"
     }
-    private val globalDataProvidersLock: SyncLocker = SyncLockerImpl()
 
     private var isInitialized = false
 
     // Strong references for bindgen interfaces
-    private lateinit var platformClient: PlatformClient
     private lateinit var coreLocationProvider: CoreLocationProvider
 
     private lateinit var searchRequestContextProvider: SearchRequestContextProvider
 
-    private lateinit var httpErrorsCache: HttpErrorsCache
     private lateinit var searchResultFactory: SearchResultFactory
 
     private lateinit var tileStore: TileStore
@@ -202,26 +194,33 @@ public object MapboxSearchSdk {
             load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
         }
 
-        val analyticsService = TelemetryService(
-            context = application,
-            accessToken = accessToken,
-            userAgent = userAgent,
-            locationEngine = locationEngine,
+        val eventJsonParser = AnalyticsEventJsonParser()
+
+        val searchFeedbackEventsFactory = SearchFeedbackEventsFactory(
+            providedUserAgent = userAgent,
             viewportProvider = viewportProvider,
             uuidProvider = uuidProvider,
             coreEngineProvider = ::getCoreEngineByApiType,
+            eventJsonParser = eventJsonParser,
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        httpErrorsCache = HttpErrorsCacheImpl()
+        val crashEventsFactory = CrashEventsFactory(
+            timeProvider = LocalTimeProvider(),
+            appInfoProvider = AppInfoProviderImpl(
+                context = application,
+                searchSdkPackageName = com.mapbox.search.BuildConfig.LIBRARY_PACKAGE_NAME,
+                searchSdkVersionName = BuildConfig.VERSION_NAME
+            )
+        )
 
-        val debugLogsEnabled = System.getProperty("com.mapbox.mapboxsearch.enableDebugLogs")?.toBoolean() == true
-
-        val httpClient = HttpClientImpl(
-            client = OkHttpHelper(debugLogsEnabled).getClient(),
-            errorsCache = httpErrorsCache,
-            uuidProvider = uuidProvider,
-            userAgentProvider = UserAgentProviderImpl(application)
+        val analyticsService = AnalyticsServiceImpl(
+            context = application,
+            eventsService = SearchEventsService(accessToken, userAgent),
+            eventsJsonParser = eventJsonParser,
+            feedbackEventsFactory = searchFeedbackEventsFactory,
+            crashEventsFactory = crashEventsFactory,
+            locationEngine = locationEngine,
         )
 
         searchEnginesExecutor = Executors.newSingleThreadExecutor { runnable ->
@@ -234,19 +233,6 @@ public object MapboxSearchSdk {
             Thread(runnable, "Global DataProviderRegistry executor")
         }
 
-        platformClient = PlatformClientImpl(
-            httpClient = httpClient,
-            analyticsService = analyticsService,
-            uuidProvider = uuidProvider,
-            callbackDecorator = {
-                AsyncHttpCallbackDecorator(
-                    executor = searchEnginesExecutor,
-                    syncLocker = globalDataProvidersLock,
-                    originalCallback = it,
-                )
-            },
-        )
-
         coreLocationProvider = WrapperLocationProvider(locationProvider, viewportProvider)
 
         geocodingCoreSearchEngine = createCoreEngineByApiType(ApiType.GEOCODING, searchEngineSettings)
@@ -258,10 +244,8 @@ public object MapboxSearchSdk {
         )
 
         indexableDataProvidersRegistry = IndexableDataProvidersRegistryImpl(
-            syncLocker = globalDataProvidersLock,
             dataProviderEngineRegistrationService = DataProviderEngineRegistrationServiceImpl(
                 registryExecutor = globalDataProvidersRegistryExecutor,
-                syncLocker = globalDataProvidersLock,
             )
         )
 
@@ -362,7 +346,7 @@ public object MapboxSearchSdk {
         return when (type) {
             MapboxModuleType.CommonLibraryLoader -> arrayOf()
             MapboxModuleType.CommonLogger -> arrayOf()
-            MapboxModuleType.CommonHttpClient, // TODO support common Http service
+            MapboxModuleType.CommonHttpClient -> arrayOf()
             MapboxModuleType.NavigationRouter,
             MapboxModuleType.NavigationTripNotification,
             MapboxModuleType.MapTelemetry -> throw IllegalArgumentException("not supported: $type")
@@ -439,7 +423,6 @@ public object MapboxSearchSdk {
         return SearchEngineImpl(
             apiType,
             coreEngine,
-            httpErrorsCache,
             internalServiceProvider.historyService(),
             searchRequestContextProvider,
             searchResultFactory,
@@ -463,7 +446,6 @@ public object MapboxSearchSdk {
         checkInitialized()
         return OfflineSearchEngineImpl(
             coreEngine = coreEngine,
-            httpErrorsCache = httpErrorsCache,
             historyService = internalServiceProvider.historyService(),
             requestContextProvider = searchRequestContextProvider,
             searchResultFactory = searchResultFactory,
@@ -482,8 +464,8 @@ public object MapboxSearchSdk {
         }
 
         return CoreSearchEngine(
-            CoreEngineOptions(accessToken, endpoint, apiType.mapToCore(), userAgent),
-            platformClient,
+            // TODO allow customer to customize events url
+            CoreEngineOptions(accessToken, endpoint, apiType.mapToCore(), userAgent, null),
             coreLocationProvider,
         ).apply {
             coreSearchEngines.add(this)
