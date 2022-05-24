@@ -89,17 +89,17 @@ internal class LocalDataProviderTest {
             },
             "add()" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.add(mockk(), executor, callback)
+                val task = dataProvider.upsert(mockk(), executor, callback)
                 callback.getResultBlocking() to task
             },
             "addAll()" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.addAll(mockk(), executor, callback)
+                val task = dataProvider.upsertAll(mockk(), executor, callback)
                 callback.getResultBlocking() to task
             },
-            "update" to { dataProvider ->
+            "upsert" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.update(mockk(), executor, callback)
+                val task = dataProvider.upsert(mockk(), executor, callback)
                 callback.getResultBlocking() to task
             },
             "remove()" to { dataProvider ->
@@ -179,17 +179,17 @@ internal class LocalDataProviderTest {
         val testCases = mapOf<String, (TestDataProvider) -> Pair<CompletionCallbackResult<*>, AsyncOperationTask>>(
             "add()" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.add(createTestHistoryRecord("new record id-1"), executor, callback)
+                val task = dataProvider.upsert(createTestHistoryRecord("new record id-1"), executor, callback)
                 callback.getResultBlocking() to task
             },
             "addAll()" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.addAll(listOf(createTestHistoryRecord("new record id-1")), executor, callback)
+                val task = dataProvider.upsertAll(listOf(createTestHistoryRecord("new record id-1")), executor, callback)
                 callback.getResultBlocking() to task
             },
             "update" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.update(createTestHistoryRecord("new record id-1"), executor, callback)
+                val task = dataProvider.upsert(createTestHistoryRecord("new record id-1"), executor, callback)
                 callback.getResultBlocking() to task
             },
             "remove()" to { dataProvider ->

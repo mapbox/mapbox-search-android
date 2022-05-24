@@ -5,7 +5,6 @@ import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.record.DataProviderResolver
 import com.mapbox.search.record.FavoritesDataProvider
@@ -53,7 +52,6 @@ internal class OfflineSearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var dataProviderResolver: DataProviderResolver
-    private lateinit var httpErrorsCache: HttpErrorsCache
     private lateinit var historyService: HistoryService
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executorService: ExecutorService
@@ -67,7 +65,6 @@ internal class OfflineSearchEngineTest {
 
     @BeforeEach
     fun setUp() {
-        httpErrorsCache = mockk()
         historyService = mockk(relaxed = true)
         executorService = spyk(TestThreadExecutorService())
         mainThreadWorker = spyk(TestMainThreadWorker())
@@ -101,7 +98,6 @@ internal class OfflineSearchEngineTest {
     private fun createSearchEngine() {
         searchEngine = OfflineSearchEngineImpl(
             coreEngine = coreEngine,
-            httpErrorsCache = httpErrorsCache,
             historyService = historyService,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,

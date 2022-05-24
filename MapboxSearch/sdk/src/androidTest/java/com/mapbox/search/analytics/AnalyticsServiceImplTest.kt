@@ -16,29 +16,30 @@ import com.mapbox.search.SearchNavigationOptions
 import com.mapbox.search.SearchNavigationProfile
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
+import com.mapbox.search.tests_support.fixNonDeterminedFields
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.UUIDProvider
+import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.utils.removeJsonPrettyPrinting
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-internal class TelemetryServiceTest : BaseTest() {
+internal class AnalyticsServiceImplTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer
     private lateinit var searchEngine: SearchEngine
     private lateinit var analyticsService: AnalyticsService
 
     private val formattedTimeProvider: FormattedTimeProvider = FormattedTimeProvider { TEST_LOCAL_TIME_FORMATTED }
-    private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
     private val noOpErrorsReporter: ErrorsReporter = ErrorsReporter {}
@@ -62,7 +63,6 @@ internal class TelemetryServiceTest : BaseTest() {
             searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             formattedTimeProvider = formattedTimeProvider,
-            uuidProvider = uuidProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
             errorsReporter = noOpErrorsReporter,
@@ -99,15 +99,23 @@ internal class TelemetryServiceTest : BaseTest() {
 
         val res = callback.getResultBlocking()
         val (suggestions, responseInfo) = res as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions
-        val suggestion = suggestions.first()
 
-        val rawEvent = analyticsService.createRawFeedbackEvent(suggestion, responseInfo)
+        val feedbackEventCallback = BlockingCompletionCallback<String>()
+
+        @Suppress("DEPRECATION")
+        analyticsService.createRawFeedbackEvent(
+            suggestions.first().fixNonDeterminedFields(-1, TEST_UUID),
+            responseInfo.fixNonDeterminedFields(TEST_UUID),
+            SearchSdkMainThreadWorker.mainExecutor,
+            feedbackEventCallback
+        )
+        val rawEvent = feedbackEventCallback.getResultBlocking().requireResult()
 
         val expectedRawEvent = readBytesFromAssets("analytics/search-suggestion-raw-feedback.json")
             .let(::String)
             .removeJsonPrettyPrinting()
 
-        Assert.assertEquals(expectedRawEvent, rawEvent)
+        assertEquals(expectedRawEvent, rawEvent)
     }
 
     @Test
@@ -145,13 +153,22 @@ internal class TelemetryServiceTest : BaseTest() {
         val selectionResult = callback.getResultBlocking()
         val (searchResult, responseInfo) = selectionResult as BlockingSearchSelectionCallback.SearchEngineResult.Result
 
-        val rawEvent = analyticsService.createRawFeedbackEvent(searchResult, responseInfo)
+        val feedbackEventCallback = BlockingCompletionCallback<String>()
+
+        @Suppress("DEPRECATION")
+        analyticsService.createRawFeedbackEvent(
+            searchResult.fixNonDeterminedFields(-1, TEST_UUID),
+            responseInfo.fixNonDeterminedFields(TEST_UUID),
+            SearchSdkMainThreadWorker.mainExecutor,
+            feedbackEventCallback
+        )
+        val rawEvent = feedbackEventCallback.getResultBlocking().requireResult()
 
         val expectedRawEvent = readBytesFromAssets("analytics/search-result-raw-feedback.json")
             .let(::String)
             .removeJsonPrettyPrinting()
 
-        Assert.assertEquals(expectedRawEvent, rawEvent)
+        assertEquals(expectedRawEvent, rawEvent)
     }
 
     @After

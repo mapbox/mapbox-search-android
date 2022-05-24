@@ -132,7 +132,7 @@ internal class EditFavoriteView : LinearLayout {
 
         setAddressText(favorite.address?.formattedAddress(SearchAddress.FormatStyle.Full))
         doneButton.setOnClickListener {
-            updateFavoriteTask = MapboxSearchSdk.serviceProvider.favoritesDataProvider().update(
+            updateFavoriteTask = MapboxSearchSdk.serviceProvider.favoritesDataProvider().upsert(
                 favorite.copy(name = nameEditText.text.trim().toString()),
                 object : CompletionCallback<Unit> {
                     override fun onComplete(result: Unit) {

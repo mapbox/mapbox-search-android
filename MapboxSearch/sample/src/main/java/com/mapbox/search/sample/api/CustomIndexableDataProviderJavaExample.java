@@ -180,7 +180,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
-            dataProviderEngine.addAll(records.values());
+            dataProviderEngine.upsertAll(records.values());
             dataProviderEngines.add(dataProviderEngine);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
             return CompletedAsyncOperationTask.getInstance();
@@ -268,13 +268,13 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
         @NonNull
         @Override
-        public AsyncOperationTask add(
+        public AsyncOperationTask upsert(
             @NonNull R record,
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
             for (IndexableDataProviderEngine engine : dataProviderEngines) {
-                engine.add(record);
+                engine.upsert(record);
             }
             records.put(record.getId(), record);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
@@ -283,19 +283,19 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
         @NonNull
         @Override
-        public AsyncOperationTask add(@NonNull R record, @NonNull CompletionCallback<Unit> callback) {
-            return add(record, mainThreadExecutor, callback);
+        public AsyncOperationTask upsert(@NonNull R record, @NonNull CompletionCallback<Unit> callback) {
+            return upsert(record, mainThreadExecutor, callback);
         }
 
         @NonNull
         @Override
-        public AsyncOperationTask addAll(
+        public AsyncOperationTask upsertAll(
             @NonNull List<? extends R> records,
             @NonNull Executor executor,
             @NonNull CompletionCallback<Unit> callback
         ) {
             for (IndexableDataProviderEngine engine : dataProviderEngines) {
-                engine.addAll(records);
+                engine.upsertAll(records);
             }
             for (R record : records) {
                 this.records.put(record.getId(), record);
@@ -306,29 +306,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
         @NonNull
         @Override
-        public AsyncOperationTask addAll(@NonNull List<? extends R> records, @NonNull CompletionCallback<Unit> callback) {
-            return addAll(records, mainThreadExecutor, callback);
-        }
-
-        @NonNull
-        @Override
-        public AsyncOperationTask update(
-            @NonNull R record,
-            @NonNull Executor executor,
-            @NonNull CompletionCallback<Unit> callback
-        ) {
-            for (IndexableDataProviderEngine engine : dataProviderEngines) {
-                engine.update(record);
-            }
-            records.put(record.getId(), record);
-            executor.execute(() -> callback.onComplete(Unit.INSTANCE));
-            return CompletedAsyncOperationTask.getInstance();
-        }
-
-        @NonNull
-        @Override
-        public AsyncOperationTask update(@NonNull R record, @NonNull CompletionCallback<Unit> callback) {
-            return update(record, mainThreadExecutor, callback);
+        public AsyncOperationTask upsertAll(@NonNull List<? extends R> records, @NonNull CompletionCallback<Unit> callback) {
+            return upsertAll(records, mainThreadExecutor, callback);
         }
 
         @NonNull

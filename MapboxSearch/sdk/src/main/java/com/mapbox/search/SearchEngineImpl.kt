@@ -3,7 +3,6 @@ package com.mapbox.search
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.engine.BaseSearchEngine
 import com.mapbox.search.engine.OneStepRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsBatchRequestCallbackWrapper
@@ -27,7 +26,6 @@ import java.util.concurrent.ExecutorService
 internal class SearchEngineImpl(
     override val apiType: ApiType,
     private val coreEngine: CoreSearchEngineInterface,
-    private val httpErrorsCache: HttpErrorsCache,
     private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
@@ -43,13 +41,12 @@ internal class SearchEngineImpl(
     ): SearchRequestTask {
         logd("search($query, $options) called")
 
-        return makeRequest(callback, engineExecutorService) { request ->
+        return makeRequest(callback) { request ->
             val requestContext = requestContextProvider.provide(apiType)
             coreEngine.search(query, emptyList(), options.mapToCore(),
                 TwoStepsRequestCallbackWrapper(
                     apiType = apiType,
                     coreEngine = coreEngine,
-                    httpErrorsCache = httpErrorsCache,
                     historyService = historyService,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
@@ -137,7 +134,7 @@ internal class SearchEngineImpl(
 
                 val resultingFunction: (List<SearchResult>) -> List<SearchResult> = { remoteResults ->
                     assertDebug(remoteResults.size == toResolve.size) {
-                        "Not all items has been resolved. " +
+                        "Not all items have been resolved. " +
                                 "To resolve: ${toResolve.map { it.id to it.type }}, " +
                                 "actual: ${remoteResults.map { it.id to it.types }}"
                     }
@@ -160,7 +157,7 @@ internal class SearchEngineImpl(
                     }
                 }
 
-                makeRequest(callback, engineExecutorService) { searchRequestTask ->
+                makeRequest(callback) { searchRequestTask ->
                     val requestOptions = toResolve.first().requestOptions
                     val requestContext = requestOptions.requestContext
                     coreEngine.retrieveBucket(
@@ -168,7 +165,6 @@ internal class SearchEngineImpl(
                         coreSearchResults,
                         TwoStepsBatchRequestCallbackWrapper(
                             suggestions = filtered,
-                            httpErrorsCache = httpErrorsCache,
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
@@ -199,24 +195,25 @@ internal class SearchEngineImpl(
         ): SearchRequestTask {
             val searchRequestTask = SearchRequestTaskImpl(callback)
 
-            searchRequestTask += engineExecutorService.submit {
-                coreEngine.onSelected(coreRequestOptions, suggestion.originalSearchResult.mapToCore())
+            coreEngine.onSelected(coreRequestOptions, suggestion.originalSearchResult.mapToCore())
 
-                val responseInfo = ResponseInfo(
-                    requestOptions = suggestion.requestOptions,
-                    coreSearchResponse = null,
-                    isReproducible = false
-                )
+            val responseInfo = ResponseInfo(
+                requestOptions = suggestion.requestOptions,
+                coreSearchResponse = null,
+                isReproducible = false
+            )
 
-                if (!options.addResultToHistory) {
-                    searchRequestTask.markExecutedAndRunOnCallback(executor) {
-                        onResult(suggestion, resolved, responseInfo)
-                    }
-                    return@submit
+            if (!options.addResultToHistory) {
+                searchRequestTask.markExecutedAndRunOnCallback(executor) {
+                    onResult(suggestion, resolved, responseInfo)
                 }
+                return searchRequestTask
+            }
 
-                if (!searchRequestTask.isCompleted) {
-                    searchRequestTask += historyService.addToHistoryIfNeeded(resolved, engineExecutorService, object : CompletionCallback<Boolean> {
+            if (!searchRequestTask.isCompleted) {
+                searchRequestTask += historyService.addToHistoryIfNeeded(
+                    searchResult = resolved,
+                    callback = object : CompletionCallback<Boolean> {
                         override fun onComplete(result: Boolean) {
                             searchRequestTask.markExecutedAndRunOnCallback(executor) {
                                 onResult(suggestion, resolved, responseInfo)
@@ -228,10 +225,9 @@ internal class SearchEngineImpl(
                                 onError(e)
                             }
                         }
-                    })
-                }
+                    }
+                )
             }
-
             return searchRequestTask
         }
 
@@ -244,7 +240,7 @@ internal class SearchEngineImpl(
                 )
                 completeSearchResultSelection(suggestion, searchResult)
             }
-            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback, engineExecutorService) { request ->
+            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback) { request ->
                 val requestContext = suggestion.requestOptions.requestContext
                 coreEngine.retrieve(
                     coreRequestOptions,
@@ -252,7 +248,6 @@ internal class SearchEngineImpl(
                     TwoStepsRequestCallbackWrapper(
                         apiType = apiType,
                         coreEngine = coreEngine,
-                        httpErrorsCache = httpErrorsCache,
                         historyService = historyService,
                         searchResultFactory = searchResultFactory,
                         callbackExecutor = executor,
@@ -285,14 +280,13 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback,
     ): SearchRequestTask {
-        return makeRequest(callback, engineExecutorService) { request ->
+        return makeRequest(callback) { request ->
             val requestContext = requestContextProvider.provide(apiType)
             coreEngine.search(
                 "",
                 listOf(categoryName),
                 options.mapToCoreCategory(),
                 OneStepRequestCallbackWrapper(
-                    httpErrorsCache = httpErrorsCache,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
@@ -309,12 +303,11 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback
     ): SearchRequestTask {
-        return makeRequest(callback, engineExecutorService) { request ->
+        return makeRequest(callback) { request ->
             val requestContext = requestContextProvider.provide(apiType)
             coreEngine.reverseGeocoding(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
-                    httpErrorsCache = httpErrorsCache,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,

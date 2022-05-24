@@ -20,17 +20,17 @@ import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
+import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.record.addAllBlocking
-import com.mapbox.search.tests_support.record.addBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
+import com.mapbox.search.tests_support.record.upsertAllBlocking
+import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.enqueueMultiple
@@ -66,7 +66,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
-    private val uuidProvider: UUIDProvider = UUIDProvider { TEST_UUID }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
     private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
@@ -87,7 +86,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             searchEngineSettings = searchEngineSettings,
             allowReinitialization = true,
             timeProvider = timeProvider,
-            uuidProvider = uuidProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
             errorsReporter = errorsReporter,
@@ -142,7 +140,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertEquals(TEST_ROUTE_OPTIONS.timeDeviationMinutes.formatToBackendConvention(), url.queryParameter("time_deviation"))
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.
 
-        assertEquals(TEST_UUID, request.headers["X-Request-ID"])
+        assertFalse(request.headers["X-Request-ID"].isNullOrBlank())
         assertEquals(TESTING_USER_AGENT, request.headers["User-Agent"])
     }
 
@@ -238,31 +236,29 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             externalIDs = mapOf(
                 "tripadvisor" to "4113702",
                 "foursquare" to "4740b317f964a520724c1fe3",
+            ),
+        )
+
+        val expected = ServerSearchResultImpl(
+            listOf(SearchResultType.POI),
+            originalSearchResult,
+            RequestOptions(
+                query = TEST_CATEGORY,
+                endpoint = "category",
+                options = SearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION),
+                proximityRewritten = true,
+                originRewritten = true,
+                sessionID = "any",
+                requestContext = SearchRequestContext(
+                    apiType = ApiType.SBS,
+                    keyboardLocale = TEST_KEYBOARD_LOCALE,
+                    screenOrientation = TEST_ORIENTATION,
+                    responseUuid = "544304d0-2007-4354-a599-c522cb150bb0"
+                )
             )
         )
 
-        assertEquals(
-            ServerSearchResultImpl(
-                listOf(SearchResultType.POI),
-                originalSearchResult,
-                RequestOptions(
-                    query = TEST_CATEGORY,
-                    endpoint = "category",
-                    options = SearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION),
-                    proximityRewritten = true,
-                    originRewritten = true,
-                    sessionID = TEST_UUID,
-                    requestContext = SearchRequestContext(
-                        apiType = ApiType.SBS,
-                        keyboardLocale = TEST_KEYBOARD_LOCALE,
-                        screenOrientation = TEST_ORIENTATION,
-                        responseUuid = "544304d0-2007-4354-a599-c522cb150bb0"
-                    )
-                )
-            ),
-            searchResult
-        )
-
+        assertTrue(compareSearchResultWithServerSearchResult(expected, searchResult))
         assertNotNull(res.responseInfo.coreSearchResponse)
     }
 
@@ -299,7 +295,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 categories = listOf(TEST_CATEGORY),
             )
         }
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchCallback()
         searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
@@ -322,7 +318,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
         assertNotNull(firstRun.responseInfo.coreSearchResponse)
 
-        historyDataProvider.addBlocking(
+        historyDataProvider.upsertBlocking(
             createHistoryRecord(firstRun.results.first(), timeProvider.currentTimeMillis()),
             callbacksExecutor,
         )
@@ -356,8 +352,8 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         assertNotNull(secondRun.responseInfo.coreSearchResponse)
 
-        assertEquals(secondRun.results[1], firstRun.results[1])
-        assertEquals(secondRun.results[2], firstRun.results[2])
+        assertTrue(compareSearchResultWithServerSearchResult(secondRun.results[1], firstRun.results[1]))
+        assertTrue(compareSearchResultWithServerSearchResult(secondRun.results[2], firstRun.results[2]))
     }
 
     @Test
@@ -373,7 +369,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
         assertNotNull(firstRun.responseInfo.coreSearchResponse)
 
-        historyDataProvider.addBlocking(
+        historyDataProvider.upsertBlocking(
             createHistoryRecord(firstRun.results.first(), timeProvider.currentTimeMillis()),
             callbacksExecutor,
         )
@@ -399,7 +395,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             coordinate = recordCoordinate,
             categories = listOf(TEST_CATEGORY),
         )
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         val callback = BlockingSearchCallback()
         searchEngine.search(
@@ -427,7 +423,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             coordinate = recordCoordinate,
             categories = listOf(TEST_CATEGORY),
         )
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
@@ -458,7 +454,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             coordinate = recordCoordinate,
             categories = listOf(TEST_CATEGORY),
         )
-        historyDataProvider.addBlocking(record, callbacksExecutor)
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
@@ -635,7 +631,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
 
         const val TEST_LOCAL_TIME_MILLIS = 12345L
-        const val TEST_UUID = "test-generated-uuid"
         val TEST_KEYBOARD_LOCALE: Locale = Locale.ENGLISH
         val TEST_ORIENTATION = ScreenOrientation.PORTRAIT
 

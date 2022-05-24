@@ -10,6 +10,7 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.utils.LocalTimeProvider
 import com.mapbox.search.utils.TimeProvider
+import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.PriorityQueue
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -47,7 +48,7 @@ public interface HistoryDataProvider : LocalDataProvider<HistoryRecord> {
 internal interface HistoryService : HistoryDataProvider {
     fun addToHistoryIfNeeded(
         searchResult: SearchResult,
-        executor: Executor,
+        executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask
 }
@@ -125,7 +126,7 @@ internal class HistoryDataProviderImpl(
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask {
         return if (!searchResult.isHistory) {
-            add(
+            upsert(
                 HistoryRecord(
                     id = searchResult.id,
                     name = searchResult.name,

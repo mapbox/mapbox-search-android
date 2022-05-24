@@ -97,7 +97,7 @@ abstract class MockServerSearchActivityTest {
 
     protected fun createNoNetworkConnectionResponse(): MockResponse {
         return MockResponse()
-            .setSocketPolicy(SocketPolicy.NO_RESPONSE)
+            .setSocketPolicy(SocketPolicy.DISCONNECT_AT_START)
     }
 
     protected fun MockWebServer.enqueueSuccessfulResponses(

@@ -8,7 +8,6 @@ import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.CoreSearchOptions
 import com.mapbox.search.core.CoreSearchResult
-import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
 import com.mapbox.search.record.DataProviderResolver
@@ -48,9 +47,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
-import java.io.IOException
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
 
 /**
  * Contains only forward-geocoding related functionality tests.
@@ -61,11 +58,9 @@ internal class SearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var dataProviderResolver: DataProviderResolver
-    private lateinit var httpErrorsCache: HttpErrorsCache
     private lateinit var historyService: HistoryService
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executor: Executor
-    private lateinit var engineExecutorService: ExecutorService
     private lateinit var requestContextProvider: SearchRequestContextProvider
     private lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistry
 
@@ -74,7 +69,6 @@ internal class SearchEngineTest {
     @BeforeEach
     fun setUp() {
         coreEngine = mockk(relaxed = true)
-        httpErrorsCache = mockk()
         historyService = mockk(relaxed = true)
 
         dataProviderResolver = mockk()
@@ -89,7 +83,6 @@ internal class SearchEngineTest {
         }
 
         executor = spyk(TestExecutor())
-        engineExecutorService = spyk(TestThreadExecutorService())
 
         requestContextProvider = mockk()
         every { requestContextProvider.provide(ApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
@@ -99,11 +92,10 @@ internal class SearchEngineTest {
         searchEngine = SearchEngineImpl(
             apiType = ApiType.SBS,
             coreEngine = coreEngine,
-            httpErrorsCache = httpErrorsCache,
             historyService = historyService,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
-            engineExecutorService = engineExecutorService,
+            engineExecutorService = TestThreadExecutorService(),
             indexableDataProvidersRegistry = indexableDataProvidersRegistry,
         )
     }
@@ -130,10 +122,6 @@ internal class SearchEngineTest {
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
-
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -174,9 +162,6 @@ internal class SearchEngineTest {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
             }
 
-            val errorCause = IOException()
-            every { httpErrorsCache.getAndRemove(TEST_REQUEST_ID) } returns errorCause
-
             When("Initial search called") {
                 val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
 
@@ -191,10 +176,6 @@ internal class SearchEngineTest {
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
-
                 Verify("CoreSearchEngine.search() called") {
                     coreEngine.search(
                         eq(TEST_QUERY),
@@ -208,12 +189,13 @@ internal class SearchEngineTest {
                     executor.execute(any())
                 }
 
-                Verify("Error cause retrieved from errors cache") {
-                    httpErrorsCache.getAndRemove(TEST_REQUEST_ID)
-                }
-
                 Verify("Error passed to callback") {
-                    callback.onError(errorCause)
+                    callback.onError(
+                        SearchRequestException(
+                            message = TEST_ERROR_CORE_RESPONSE_MESSAGE,
+                            code = TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
+                        )
+                    )
                 }
             }
         }
@@ -374,10 +356,6 @@ internal class SearchEngineTest {
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
 
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
-
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
                 }
@@ -445,10 +423,6 @@ internal class SearchEngineTest {
                 Then("SearchRequestTask released reference to callback", null, searchRequestTask.callbackDelegate)
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
-
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -532,10 +506,6 @@ internal class SearchEngineTest {
                 Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
                 Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
                 Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
-
-                Verify("Operation is scheduled on engine thread") {
-                    engineExecutorService.submit(any())
-                }
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -650,9 +620,13 @@ internal class SearchEngineTest {
             TEST_RESPONSE_UUID
         )
 
+        val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
+
+        val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
+
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
-            401,
-            "Auth failed",
+            TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
+            TEST_ERROR_CORE_RESPONSE_MESSAGE,
             TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS,
             TEST_RESPONSE_UUID

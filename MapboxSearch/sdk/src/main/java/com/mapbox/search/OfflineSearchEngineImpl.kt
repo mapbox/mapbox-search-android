@@ -10,7 +10,6 @@ import com.mapbox.search.common.printableName
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.http.HttpErrorsCache
 import com.mapbox.search.engine.BaseSearchEngine
 import com.mapbox.search.engine.OneStepRequestCallbackWrapper
 import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
@@ -29,7 +28,6 @@ import java.util.concurrent.ExecutorService
 
 internal class OfflineSearchEngineImpl(
     private val coreEngine: CoreSearchEngineInterface,
-    private val httpErrorsCache: HttpErrorsCache,
     private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
@@ -50,6 +48,12 @@ internal class OfflineSearchEngineImpl(
         coreEngine.setTileStore(tileStore) {
             synchronized(initializationLock) {
                 isEngineReady = true
+                engineReadyCallbacks.forEach { (callback, executor) ->
+                    executor.execute {
+                        callback.onEngineReady()
+                    }
+                }
+                engineReadyCallbacks.clear()
             }
             logd("setTileStore done")
         }
@@ -75,12 +79,11 @@ internal class OfflineSearchEngineImpl(
     ): SearchRequestTask {
         logd("search($query, $options) called")
 
-        return makeRequest(callback, engineExecutorService) { request ->
+        return makeRequest(callback) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
                 TwoStepsRequestCallbackWrapper(
                     coreEngine = coreEngine,
-                    httpErrorsCache = httpErrorsCache,
                     historyService = historyService,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
@@ -106,15 +109,12 @@ internal class OfflineSearchEngineImpl(
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
 
         return when (suggestion) {
-            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(
-                callback, engineExecutorService
-            ) { request ->
+            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback) { request ->
                 coreEngine.retrieveOffline(
                     coreRequestOptions,
                     suggestion.originalSearchResult.mapToCore(),
                     TwoStepsRequestCallbackWrapper(
                         coreEngine = coreEngine,
-                        httpErrorsCache = httpErrorsCache,
                         historyService = historyService,
                         searchResultFactory = searchResultFactory,
                         callbackExecutor = executor,
@@ -145,11 +145,10 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: SearchCallback
     ): SearchRequestTask {
-        return makeRequest(callback, engineExecutorService) { request: SearchRequestTaskImpl<SearchCallback> ->
+        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
             coreEngine.reverseGeocodingOffline(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
-                    httpErrorsCache = httpErrorsCache,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
@@ -175,13 +174,12 @@ internal class OfflineSearchEngineImpl(
             return SearchRequestTaskImpl.completed()
         }
 
-        return makeRequest(callback, engineExecutorService) { request: SearchRequestTaskImpl<SearchCallback> ->
+        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
             coreEngine.getAddressesOffline(
                 street,
                 proximity,
                 radiusMeters,
                 OneStepRequestCallbackWrapper(
-                    httpErrorsCache = httpErrorsCache,
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,

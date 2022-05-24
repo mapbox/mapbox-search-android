@@ -76,7 +76,7 @@ public class FavoritesDataProviderJavaExample extends AppCompatActivity {
             null
         );
 
-        task = favoritesDataProvider.add(newFavorite, addFavoriteCallback);
+        task = favoritesDataProvider.upsert(newFavorite, addFavoriteCallback);
     }
 
     @Override

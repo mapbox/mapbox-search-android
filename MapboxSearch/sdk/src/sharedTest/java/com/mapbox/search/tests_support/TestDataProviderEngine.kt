@@ -1,7 +1,6 @@
 package com.mapbox.search.tests_support
 
 import com.mapbox.search.record.IndexableDataProviderEngine
-import com.mapbox.search.record.IndexableDataProviderEngine.BatchUpdateOperation
 import com.mapbox.search.record.IndexableRecord
 
 internal class TestDataProviderEngine<R : IndexableRecord> : IndexableDataProviderEngine {
@@ -12,22 +11,14 @@ internal class TestDataProviderEngine<R : IndexableRecord> : IndexableDataProvid
     val records: List<R>
         get() = _records.toList() as List<R>
 
-    override fun add(record: IndexableRecord) {
+    override fun upsert(record: IndexableRecord) {
+        _records.remove(record)
         _records.add(record)
     }
 
-    override fun addAll(records: Iterable<IndexableRecord>) {
-        this._records.addAll(records)
-    }
-
-    override fun update(record: IndexableRecord) {
-        _records.replaceAll {
-            if (record.id == it.id) {
-                record
-            } else {
-                it
-            }
-        }
+    override fun upsertAll(records: Iterable<IndexableRecord>) {
+        _records.removeAll(records)
+        _records.addAll(records)
     }
 
     override fun remove(id: String) {
@@ -41,9 +32,5 @@ internal class TestDataProviderEngine<R : IndexableRecord> : IndexableDataProvid
 
     override fun clear() {
         _records.clear()
-    }
-
-    override fun executeBatchUpdate(batchUpdateOperation: BatchUpdateOperation) {
-        batchUpdateOperation.execute(this)
     }
 }

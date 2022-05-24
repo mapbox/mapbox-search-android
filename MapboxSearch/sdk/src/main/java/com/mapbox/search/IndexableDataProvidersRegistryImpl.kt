@@ -7,12 +7,10 @@ import com.mapbox.search.record.DataProviderResolver
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngineImpl
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.utils.SyncLocker
 import com.mapbox.search.utils.extension.addValue
 import java.util.concurrent.Executor
 
 internal class IndexableDataProvidersRegistryImpl(
-    private val syncLocker: SyncLocker,
     private val dataProviderEngineRegistrationService: DataProviderEngineRegistrationService
 ) : IndexableDataProvidersRegistry, DataProviderResolver {
 
@@ -38,10 +36,8 @@ internal class IndexableDataProvidersRegistryImpl(
 
         val dataProviderContext = registry.dataProviderContext(dataProvider.dataProviderName)
         if (dataProviderContext != null) {
-            syncLocker.executeInSync {
-                registry.register(dataProvider, searchEngine)
-                searchEngine.addUserLayer(dataProviderContext.engine.coreLayerContext.coreLayer)
-            }
+            registry.register(dataProvider, searchEngine)
+            searchEngine.addUserLayer(dataProviderContext.engine.coreLayer)
             executor.execute { callback.onComplete(Unit) }
             return CompletedAsyncOperationTask
         }
@@ -51,24 +47,22 @@ internal class IndexableDataProvidersRegistryImpl(
             dataProvider,
             object : CompletionCallback<IndexableDataProviderEngineImpl> {
                 override fun onComplete(result: IndexableDataProviderEngineImpl) {
-                    syncLocker.executeInSync {
-                        task.runIfNotCancelled {
-                            runSynchronized {
-                                registry.registerDataProviderContext(
-                                    dataProvider,
-                                    DataProviderContext(
-                                        engine = result,
-                                        provider = dataProvider,
-                                    )
+                    task.runIfNotCancelled {
+                        runSynchronized {
+                            registry.registerDataProviderContext(
+                                dataProvider,
+                                DataProviderContext(
+                                    engine = result,
+                                    provider = dataProvider,
                                 )
-                                registry.register(dataProvider, searchEngine)
-                                searchEngine.addUserLayer(result.coreLayerContext.coreLayer)
-                            }
+                            )
+                            registry.register(dataProvider, searchEngine)
+                            searchEngine.addUserLayer(result.coreLayer)
+                        }
 
-                            executor.execute {
-                                task.onComplete()
-                                callback.onComplete(Unit)
-                            }
+                        executor.execute {
+                            task.onComplete()
+                            callback.onComplete(Unit)
                         }
                     }
                 }
@@ -104,17 +98,21 @@ internal class IndexableDataProvidersRegistryImpl(
             return CompletedAsyncOperationTask
         }
 
+        val context = registry.dataProviderContext(dataProvider.dataProviderName)
+        assertDebug(context != null) {
+            "Null context for registered data provider. Data provider: ${dataProvider.dataProviderName}"
+        }
+        context ?: return CompletedAsyncOperationTask
+
         val task = AsyncOperationTaskImpl()
-        syncLocker.executeInSync {
-            task.runIfNotCancelled {
-                runSynchronized {
-                    registry.unregister(dataProvider, searchEngine)
-                    searchEngine.removeUserLayer(dataProvider.dataProviderName)
-                }
-                executor.execute {
-                    task.onComplete()
-                    callback.onComplete(Unit)
-                }
+        task.runIfNotCancelled {
+            runSynchronized {
+                registry.unregister(dataProvider, searchEngine)
+                searchEngine.removeUserLayer(context.engine.coreLayer)
+            }
+            executor.execute {
+                task.onComplete()
+                callback.onComplete(Unit)
             }
         }
         return task

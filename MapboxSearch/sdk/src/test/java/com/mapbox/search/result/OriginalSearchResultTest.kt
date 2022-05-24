@@ -91,7 +91,7 @@ internal class OriginalSearchResultTest {
             listOf(OriginalResultType.REGION, OriginalResultType.ADDRESS, OriginalResultType.POI) to false,
             emptyList<OriginalResultType>() to false,
             listOf(OriginalResultType.PLACE, OriginalResultType.CATEGORY) to false,
-        ) + OriginalResultType.values().map { listOf(it) to true }.toMap()
+        ) + OriginalResultType.values().associate { listOf(it) to true }
 
         val CORE_EMPTY_SEARCH_RESULT = CoreSearchResult(
             "Empty result id",
@@ -111,6 +111,7 @@ internal class OriginalSearchResultTest {
             null,
             null,
             null,
+            -1,
             null,
             null
         )
@@ -132,6 +133,7 @@ internal class OriginalSearchResultTest {
             externalIDs = CORE_EMPTY_SEARCH_RESULT.externalIDs,
             layerId = CORE_EMPTY_SEARCH_RESULT.layer,
             userRecordId = CORE_EMPTY_SEARCH_RESULT.userRecordID,
+            userRecordPriority = CORE_EMPTY_SEARCH_RESULT.userRecordPriority,
             action = CORE_EMPTY_SEARCH_RESULT.action?.mapToPlatform(),
             serverIndex = CORE_EMPTY_SEARCH_RESULT.serverIndex,
             etaMinutes = CORE_EMPTY_SEARCH_RESULT.eta
@@ -156,6 +158,7 @@ internal class OriginalSearchResultTest {
             externalIDs = CORE_FILLED_SEARCH_RESULT.externalIDs,
             layerId = CORE_FILLED_SEARCH_RESULT.layer,
             userRecordId = CORE_FILLED_SEARCH_RESULT.userRecordID,
+            userRecordPriority = CORE_FILLED_SEARCH_RESULT.userRecordPriority,
             action = CORE_FILLED_SEARCH_RESULT.action?.mapToPlatform(),
             serverIndex = CORE_FILLED_SEARCH_RESULT.serverIndex,
             etaMinutes = CORE_FILLED_SEARCH_RESULT.eta
@@ -200,6 +203,7 @@ internal class OriginalSearchResultTest {
                 hashMapOf("external id 1" to "123", "external id 2" to "456", "external id 3" to "789"),
                 "test layer id",
                 "test user record id",
+                -1,
                 CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
                 123
             )

@@ -1,8 +1,6 @@
 package com.mapbox.search.record
 
 import com.mapbox.search.core.CoreUserRecordsLayer
-import com.mapbox.search.record.IndexableDataProviderEngine.BatchUpdateOperation
-import com.mapbox.search.utils.SyncLocker
 
 /**
  * Provides a mechanism for search index changes in core layers.
@@ -16,25 +14,18 @@ import com.mapbox.search.utils.SyncLocker
 public interface IndexableDataProviderEngine {
 
     /**
-     * Adds [IndexableRecord] to search index.
+     * Insert or update existing [IndexableRecord] to search index.
      *
      * @param record record to be added.
      */
-    public fun add(record: IndexableRecord)
+    public fun upsert(record: IndexableRecord)
 
     /**
      * Adds a bunch of [IndexableRecord] to search index.
      *
      * @param records records to be added.
      */
-    public fun addAll(records: Iterable<IndexableRecord>)
-
-    /**
-     * Updates [IndexableRecord] in search index.
-     *
-     * @param record record to be updated.
-     */
-    public fun update(record: IndexableRecord)
+    public fun upsertAll(records: Iterable<IndexableRecord>)
 
     /**
      * Removes [IndexableRecord] with specified [id] from search index.
@@ -54,86 +45,31 @@ public interface IndexableDataProviderEngine {
      * Clears the whole search index.
      */
     public fun clear()
-
-    /**
-     * Atomically executes all operations on engine layer.
-     *
-     * @param batchUpdateOperation lambda, that will be executed atomically.
-     */
-    public fun executeBatchUpdate(batchUpdateOperation: BatchUpdateOperation)
-
-    /**
-     * Interface definition for a function to be executed atomically during [IndexableDataProviderEngine] update.
-     */
-    public fun interface BatchUpdateOperation {
-
-        /**
-         * Applies all modifications to [engine], that should be executed atomically.
-         *
-         * @param engine engine layer, that will be updated by this operation.
-         */
-        public fun execute(engine: IndexableDataProviderEngine)
-    }
 }
 
 internal class IndexableDataProviderEngineImpl internal constructor(
-    internal val coreLayerContext: CoreLayerContext
+    val coreLayer: CoreUserRecordsLayer
 ) : IndexableDataProviderEngine {
 
-    override fun add(record: IndexableRecord) {
+    override fun upsert(record: IndexableRecord) {
         val coreRecord = record.mapToCore()
-        coreLayerContext.executeInSync {
-            add(coreRecord)
-        }
+        coreLayer.upsert(coreRecord)
     }
 
-    override fun addAll(records: Iterable<IndexableRecord>) {
+    override fun upsertAll(records: Iterable<IndexableRecord>) {
         val coreRecords = records.map { it.mapToCore() }
-        coreLayerContext.executeInSync {
-            addMulti(coreRecords)
-        }
-    }
-
-    override fun update(record: IndexableRecord) {
-        val coreRecord = record.mapToCore()
-        coreLayerContext.executeInSync {
-            update(coreRecord)
-        }
+        coreLayer.upsertMulti(coreRecords)
     }
 
     override fun remove(id: String) {
-        coreLayerContext.executeInSync {
-            remove(id)
-        }
+        coreLayer.remove(id)
     }
 
     override fun removeAll(ids: Iterable<String>) {
-        coreLayerContext.executeInSync {
-            removeMulti(ids.toList())
-        }
+        coreLayer.removeMulti(ids.toList())
     }
 
     override fun clear() {
-        coreLayerContext.executeInSync {
-            clear()
-        }
-    }
-
-    override fun executeBatchUpdate(batchUpdateOperation: BatchUpdateOperation) {
-        coreLayerContext.executeInSync {
-            batchUpdateOperation.execute(this@IndexableDataProviderEngineImpl)
-        }
-    }
-
-    internal data class CoreLayerContext(
-        val coreLayer: CoreUserRecordsLayer,
-        val syncLocker: SyncLocker,
-    ) {
-
-        fun executeInSync(action: CoreUserRecordsLayer.() -> Unit) {
-            syncLocker.executeInSync {
-                coreLayer.action()
-            }
-        }
+        coreLayer.clear()
     }
 }

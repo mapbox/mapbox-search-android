@@ -12,8 +12,8 @@ import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
-import com.mapbox.search.tests_support.record.addAllBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import okhttp3.mockwebserver.MockResponse
@@ -166,7 +166,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
         }
 
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(limit = records.size), callback)
@@ -201,7 +201,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
             createTestHistoryRecord(id = "history_item_$it", name = "$TEST_QUERY $it")
         }
 
-        historyDataProvider.addAllBlocking(records, callbacksExecutor)
+        historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
         val callback = BlockingSearchSelectionCallback()
         searchEngine.search(TEST_QUERY, SearchOptions(), callback)

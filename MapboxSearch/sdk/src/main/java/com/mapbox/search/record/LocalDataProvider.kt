@@ -160,7 +160,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                 val recordsList = records.values.toList()
                 dataProviderEngines.forEach { dataProviderEngine ->
-                    dataProviderEngine.addAll(recordsList)
+                    dataProviderEngine.upsertAll(recordsList)
                 }
             } catch (e: Exception) {
                 dataState = DataState.Error(e)
@@ -234,7 +234,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
-                    dataProviderEngine.addAll(dataState.records.values)
+                    dataProviderEngine.upsertAll(dataState.records.values)
 
                     synchronized(dataProviderEngineLock) {
                         dataProviderEngines.add(dataProviderEngine)
@@ -348,12 +348,11 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         return task
     }
 
-    // TODO should we replace old item when we add a new with the same id?
-    override fun add(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
-        return addAll(listOf(record), executor, callback)
+    override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
+        return upsertAll(listOf(record), executor, callback)
     }
 
-    override fun addAll(
+    override fun upsertAll(
         records: List<R>,
         executor: Executor,
         callback: CompletionCallback<Unit>
@@ -372,52 +371,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                         this.dataState = DataState.Data(data)
 
                         dataProviderEngines.forEach { dataProviderEngine ->
-                            dataProviderEngine.executeBatchUpdate { engine ->
-                                engine.addAll(records)
-                                engine.removeAll(removeList)
-                            }
-                        }
-
-                        postOnExecutorIfNeeded(task, executor) {
-                            callback.onComplete(Unit)
-                        }
-
-                        notifyListeners(recordsList)
-                    } catch (e: Exception) {
-                        postOnExecutorIfNeeded(task, executor) {
-                            callback.onError(e)
-                        }
-                    }
-                }
-                is DataState.Error -> {
-                    postOnExecutorIfNeeded(task, executor) {
-                        callback.onError(dataState.error)
-                    }
-                }
-            }
-        }
-        return task
-    }
-
-    override fun update(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
-        task += backgroundTaskExecutorService.submit {
-            when (val dataState = getLocalData()) {
-                is DataState.Data -> {
-                    try {
-                        val data = dataState.recordsCopy()
-                        val removeList = data.addAndTrimRecords(listOf(record)).map { it.id }
-
-                        val recordsList = data.values.toList()
-                        persistData(recordsList)
-
-                        this.dataState = DataState.Data(data)
-
-                        dataProviderEngines.forEach { dataProviderEngine ->
-                            dataProviderEngine.executeBatchUpdate { engine ->
-                                engine.update(record)
-                                engine.removeAll(removeList)
-                            }
+                            dataProviderEngine.upsertAll(records)
+                            dataProviderEngine.removeAll(removeList)
                         }
 
                         postOnExecutorIfNeeded(task, executor) {

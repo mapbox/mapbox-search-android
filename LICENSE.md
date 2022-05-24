@@ -107,12 +107,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-Mapbox Search Android uses portions of the Android Support Library core utils.  
-URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
 Mapbox Search Android uses portions of the Android Support Library Cursor Adapter.  
 URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -120,12 +114,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 ===========================================================================
 
 Mapbox Search Android uses portions of the Android Support Library Custom View.  
-URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Android Support Library Document File.  
 URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -150,18 +138,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 ===========================================================================
 
 Mapbox Search Android uses portions of the Android Support Library loader.  
-URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Android Support Library Local Broadcast Manager.  
-URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Android Support Library Print.  
 URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -289,12 +265,6 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 Mapbox Search Android uses portions of the Mapbox Search Native SDK for Android.  
 URL: [https://github.com/mapbox/mapbox-search-android](https://github.com/mapbox/mapbox-search-android)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Mapbox Telemetry for Android.  
-URL: [https://github.com/mapbox/mapbox-events-android](https://github.com/mapbox/mapbox-events-android)  
-License: [MIT](https://mit-license.org)
 
 ===========================================================================
 
@@ -669,12 +639,6 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 Mapbox Search Android uses portions of the Mapbox Search Native SDK for Android.  
 URL: [https://github.com/mapbox/mapbox-search-android](https://github.com/mapbox/mapbox-search-android)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Mapbox Telemetry for Android.  
-URL: [https://github.com/mapbox/mapbox-events-android](https://github.com/mapbox/mapbox-events-android)  
-License: [MIT](https://mit-license.org)
 
 ===========================================================================
 

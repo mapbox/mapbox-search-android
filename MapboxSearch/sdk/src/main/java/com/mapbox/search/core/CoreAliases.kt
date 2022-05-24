@@ -1,10 +1,7 @@
 package com.mapbox.search.core
 
-internal typealias CoreHttpCallback = com.mapbox.search.internal.bindgen.HttpCallback
 internal typealias CoreLocationProvider = com.mapbox.search.internal.bindgen.LocationProvider
-internal typealias CoreLogLevel = com.mapbox.search.internal.bindgen.LogLevel
 internal typealias CoreBoundingBox = com.mapbox.search.internal.bindgen.LonLatBBox
-internal typealias CorePlatformClient = com.mapbox.search.internal.bindgen.PlatformClient
 internal typealias CoreQueryType = com.mapbox.search.internal.bindgen.QueryType
 internal typealias CoreRequestOptions = com.mapbox.search.internal.bindgen.RequestOptions
 internal typealias CoreResultType = com.mapbox.search.internal.bindgen.ResultType
@@ -16,7 +13,6 @@ internal typealias CoreSearchOptions = com.mapbox.search.internal.bindgen.Search
 internal typealias CoreSearchResponse = com.mapbox.search.internal.bindgen.SearchResponse
 internal typealias CoreSearchResult = com.mapbox.search.internal.bindgen.SearchResult
 internal typealias CoreSuggestAction = com.mapbox.search.internal.bindgen.SuggestAction
-internal typealias CoreTaskFunction = com.mapbox.search.internal.bindgen.TaskFunction
 internal typealias CoreSearchAddress = com.mapbox.search.internal.bindgen.SearchAddress
 internal typealias CoreReverseMode = com.mapbox.search.internal.bindgen.ReverseMode
 internal typealias CoreReverseGeoOptions = com.mapbox.search.internal.bindgen.ReverseGeoOptions

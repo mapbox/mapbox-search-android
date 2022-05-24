@@ -56,6 +56,7 @@ internal fun createTestOriginalSearchResult(
     externalIDs: Map<String, String>? = null,
     layerId: String? = null,
     userRecordId: String? = null,
+    userRecordPriority: Int = -1,
     action: SearchResultSuggestAction? = null,
     serverIndex: Int? = 0,
     etaMinutes: Double? = null,
@@ -76,6 +77,7 @@ internal fun createTestOriginalSearchResult(
     externalIDs = externalIDs,
     layerId = layerId,
     userRecordId = userRecordId,
+    userRecordPriority = userRecordPriority,
     action = action,
     serverIndex = serverIndex,
     etaMinutes = etaMinutes
@@ -279,6 +281,7 @@ internal fun createTestCoreSearchResult(
     externalIDs: Map<String, String>? = null,
     layerId: String? = null,
     userRecordId: String? = null,
+    userRecordPriority: Int = 0,
     action: CoreSuggestAction? = null,
     serverIndex: Int? = 0,
 ) = CoreSearchResult(
@@ -299,6 +302,7 @@ internal fun createTestCoreSearchResult(
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },
     layerId,
     userRecordId,
+    userRecordPriority,
     action,
     serverIndex
 )

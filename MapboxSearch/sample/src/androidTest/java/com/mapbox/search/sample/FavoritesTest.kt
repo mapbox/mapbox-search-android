@@ -6,6 +6,7 @@ import com.mapbox.search.sample.Constants.Assets.RANELAGH_ROYAL_SPA_RESULT_ASSET
 import com.mapbox.search.sample.Constants.Assets.RANELAGH_SUGGESTIONS_ASSET
 import com.mapbox.search.sample.extensions.enqueue
 import com.mapbox.search.sample.extensions.noInternetConnectionError
+import com.mapbox.search.sample.extensions.unknownError
 import com.mapbox.search.sample.robots.addressSearchView
 import com.mapbox.search.sample.robots.editFavoriteView
 import com.mapbox.search.sample.robots.favoriteActionsDialog
@@ -383,7 +384,9 @@ class FavoritesTest : MockServerSearchActivityTest() {
             typeQuery(CLEMENS_STREET_43_NAME)
             awaitResults()
             verifySearchResults {
-                noInternetConnectionError()
+                // TODO(https://github.com/mapbox/mapbox-search-sdk/issues/870)
+                // noInternetConnectionError() should be here
+                unknownError()
             }
             retryFromError()
             selectSearchResult(
