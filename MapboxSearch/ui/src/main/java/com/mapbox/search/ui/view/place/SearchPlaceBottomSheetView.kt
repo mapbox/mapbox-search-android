@@ -296,7 +296,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
                             override fun onError(e: Exception) {
                                 // Shouldn't happen with favorites
                                 throwDebug(e) {
-                                    "Unable to add favorite"
+                                    "Unable to add favorite: ${e.message}"
                                 }
                             }
                         })

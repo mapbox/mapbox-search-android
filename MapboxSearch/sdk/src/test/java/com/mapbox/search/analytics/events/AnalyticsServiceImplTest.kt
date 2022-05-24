@@ -16,6 +16,9 @@ import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.SearchEventsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
+import com.mapbox.search.common.reportError
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.TestExecutor
@@ -33,8 +36,10 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.lang.IllegalStateException
@@ -465,5 +470,19 @@ internal class AnalyticsServiceImplTest {
             TEST_RESPONSE_INFO,
             "Fix, please!"
         )
+
+        @Suppress("DEPRECATION", "JVM_STATIC_IN_PRIVATE_COMPANION")
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+        }
     }
 }

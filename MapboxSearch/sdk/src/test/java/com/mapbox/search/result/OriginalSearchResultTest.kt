@@ -5,6 +5,8 @@ import com.mapbox.search.BuildConfig
 import com.mapbox.search.Language
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
 import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreResultMetadata
 import com.mapbox.search.core.CoreRoutablePoint
@@ -213,6 +215,7 @@ internal class OriginalSearchResultTest {
         @BeforeAll
         @JvmStatic
         fun setUpAll() {
+            resetLogImpl()
             mockkStatic(ASSERTIONS_KT_CLASS_NAME)
             every { reportError(any()) } returns Unit
         }
@@ -221,6 +224,7 @@ internal class OriginalSearchResultTest {
         @AfterAll
         @JvmStatic
         fun tearDownAll() {
+            reinitializeLogImpl()
             unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
     }

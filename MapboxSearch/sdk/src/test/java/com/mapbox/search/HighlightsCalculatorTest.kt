@@ -1,8 +1,12 @@
 package com.mapbox.search
 
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 
 internal class HighlightsCalculatorTest {
@@ -81,5 +85,19 @@ internal class HighlightsCalculatorTest {
                 emptyList()
             )
         )
+
+        @Suppress("DEPRECATION", "JVM_STATIC_IN_PRIVATE_COMPANION")
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+        }
     }
 }

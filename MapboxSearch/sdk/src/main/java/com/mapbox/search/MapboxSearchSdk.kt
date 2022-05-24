@@ -22,7 +22,6 @@ import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.CommonErrorsReporter
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
 import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.logger.searchSdkLogger
 import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreLocationProvider
 import com.mapbox.search.core.CoreSearchEngine
@@ -184,10 +183,6 @@ public object MapboxSearchSdk {
             SearchSdkMainThreadWorker.isMainThread
         }
 
-        searchSdkLogger = MapboxModuleProvider.createModule(
-            MapboxModuleType.CommonLogger, ::mapboxModuleParamsProvider
-        )
-
         MapboxModuleProvider.createModule<LibraryLoader>(
             MapboxModuleType.CommonLibraryLoader, ::mapboxModuleParamsProvider
         ).run {
@@ -306,7 +301,7 @@ public object MapboxSearchSdk {
             }
 
             override fun onError(e: Exception) {
-                logd(e, "Unable to register ${provider.dataProviderName} data provider for $apiType")
+                logd("Unable to register ${provider.dataProviderName} data provider for $apiType: ${e.message}")
             }
         }
 

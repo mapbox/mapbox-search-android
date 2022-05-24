@@ -96,9 +96,6 @@ dependencies {
     implementation "androidx.collection:collection-ktx:$androidx_collection_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
 
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_interceptor_version"
-
     api "com.mapbox.common:common:$common_sdk_version"
     api "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
 

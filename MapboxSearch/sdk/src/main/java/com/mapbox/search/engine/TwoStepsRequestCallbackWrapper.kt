@@ -166,8 +166,9 @@ internal class TwoStepsRequestCallbackWrapper(
                         val original = searchResult.mapToPlatform()
                         val task = searchResultFactory.createSearchSuggestionAsync(original, requestOptions, apiType, workerExecutor, isOfflineSearch) {
                             if (it.isFailure) {
-                                throwDebug(it.exceptionOrNull()) {
-                                    "Can't create suggestions ${response.results}"
+                                val e = it.exceptionOrNull()
+                                throwDebug(e) {
+                                    "Can't create suggestions ${response.results}: ${e?.message}"
                                 }
                             }
 

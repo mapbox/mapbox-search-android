@@ -31,21 +31,11 @@ inline fun throwDebug(e: Throwable? = null, message: () -> Any = { "Error!" }) {
     if (BuildConfig.DEBUG) {
         throw exception
     }
-    if (e != null) {
-        logw(e, message().toString())
-    } else {
-        logw(message().toString())
-    }
+    loge(message().toString())
 }
 
-fun reportRelease(e: Throwable, message: String) {
-    reportRelease(e) {
-        message
-    }
-}
-
-inline fun reportRelease(e: Throwable, message: () -> Any = { "Error!" }) {
-    loge(e, message().toString())
+fun reportRelease(e: Throwable, message: String = "Error occurred") {
+    loge("$message. Error: ${e.message}")
     if (!BuildConfig.DEBUG) {
         @Suppress("DEPRECATION")
         reportError(e)

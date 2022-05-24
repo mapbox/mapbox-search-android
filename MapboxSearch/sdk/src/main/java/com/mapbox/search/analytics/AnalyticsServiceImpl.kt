@@ -109,7 +109,7 @@ internal class AnalyticsServiceImpl(
                     }
 
                     override fun onError(e: Exception) {
-                        loge(e, "Unable to send event: $event")
+                        loge("Unable to send event $event: ${e.message}")
                     }
                 }
             )
@@ -133,7 +133,7 @@ internal class AnalyticsServiceImpl(
                     }
 
                     override fun onError(e: Exception) {
-                        loge(e, "Unable to send event: $event")
+                        loge("Unable to send event $event: ${e.message}")
                     }
                 }
             )
@@ -165,7 +165,7 @@ internal class AnalyticsServiceImpl(
                     }
 
                     override fun onError(e: Exception) {
-                        loge(e, "Unable to send event: $event")
+                        loge("Unable to send event $event: ${e.message}")
                     }
                 }
             )
@@ -181,8 +181,7 @@ internal class AnalyticsServiceImpl(
             eventsService.sendEventJson(jsonEvent)
             logd("Feedback event: $feedbackEvent")
         } catch (e: Exception) {
-            loge(e, "Unable to send event: $feedbackEvent")
-            throwDebug(e)
+            throwDebug(e) { "Unable to send event: $feedbackEvent: ${e.message}" }
         }
     }
 

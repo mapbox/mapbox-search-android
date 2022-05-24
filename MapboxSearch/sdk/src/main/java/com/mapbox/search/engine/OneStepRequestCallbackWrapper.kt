@@ -96,8 +96,9 @@ internal class OneStepRequestCallbackWrapper(
                                 if (this != null && isSuccess) {
                                     searchResults.add(getOrThrow())
                                 } else {
-                                    throwDebug(this?.exceptionOrNull()) {
-                                        "Can't parse data from backend: ${responseResult[resultIndex]}"
+                                    val e = this?.exceptionOrNull()
+                                    throwDebug(e) {
+                                        "Can't parse data from backend: ${responseResult[resultIndex]}: ${e?.message}"
                                     }
                                 }
                             }

@@ -2,6 +2,8 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
 import com.mapbox.search.common.reportError
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -360,6 +362,7 @@ internal class CategorySearchTest {
         @BeforeAll
         @JvmStatic
         fun setUpAll() {
+            resetLogImpl()
             mockkStatic(ASSERTIONS_KT_CLASS_NAME)
             every { reportError(any()) } returns Unit
         }
@@ -368,6 +371,7 @@ internal class CategorySearchTest {
         @AfterAll
         @JvmStatic
         fun tearDownAll() {
+            reinitializeLogImpl()
             unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
     }
