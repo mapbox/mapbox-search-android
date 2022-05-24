@@ -156,7 +156,7 @@ internal class LocationEngineAdapterTest {
             every { latitude } returns point.latitude()
         }
 
-        @Suppress("DEPRECATION", "JVM_STATIC_IN_PRIVATE_COMPANION")
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
         @BeforeAll
         @JvmStatic
         fun setUpAll() {
