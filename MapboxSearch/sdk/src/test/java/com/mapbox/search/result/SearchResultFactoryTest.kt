@@ -2,12 +2,12 @@ package com.mapbox.search.result
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.reportError
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
 import com.mapbox.search.common.reportRelease
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
-import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.junit.jupiter.api.AfterAll
@@ -92,18 +92,19 @@ internal class SearchResultFactoryTest {
             types = listOf(OriginalResultType.POI)
         )
 
-        @Suppress("DEPRECATION", "JVM_STATIC_IN_PRIVATE_COMPANION")
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
         @BeforeAll
         @JvmStatic
         fun setUpAll() {
+            resetLogImpl()
             mockkStatic(ASSERTIONS_KT_CLASS_NAME)
-            every { reportError(any()) } returns Unit
         }
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
         @AfterAll
         @JvmStatic
         fun tearDownAll() {
+            reinitializeLogImpl()
             unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
     }

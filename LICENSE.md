@@ -268,24 +268,6 @@ License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
 
 ===========================================================================
 
-Mapbox Search Android uses portions of the okhttp.  
-URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the okhttp-logging-interceptor.  
-URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Okio.  
-URL: [https://github.com/square/okio/](https://github.com/square/okio/)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
 Mapbox Search Android uses portions of the Parcelize Runtime.  
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)  
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -644,24 +626,6 @@ License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
 
 Mapbox Search Android uses portions of the Material Components for Android.  
 URL: [https://github.com/material-components/material-components-android](https://github.com/material-components/material-components-android)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the okhttp.  
-URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the okhttp-logging-interceptor.  
-URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the Okio.  
-URL: [https://github.com/square/okio/](https://github.com/square/okio/)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================

@@ -9,8 +9,6 @@ import com.mapbox.search.CompletionCallback
 import com.mapbox.search.plusAssign
 import com.mapbox.search.runIfNotCancelled
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
-import okhttp3.internal.notifyAll
-import okhttp3.internal.wait
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
@@ -138,7 +136,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     @Volatile
     protected var dataState: DataState<R>? = null
 
-    private val initializingLock: Any = Any()
+    private val initializingLock = Object()
 
     init {
         require(maxRecordsAmount > 0) {

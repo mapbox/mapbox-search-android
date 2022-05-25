@@ -37,7 +37,7 @@ internal class LocationEngineAdapter(
         }
 
         override fun onFailure(e: Exception) {
-            loge(e, "Can't access location")
+            loge("Can't access location: ${e.message}")
         }
     }
 
@@ -56,7 +56,7 @@ internal class LocationEngineAdapter(
                 }
 
                 override fun onFailure(e: Exception) {
-                    loge(e, "Can't access last location")
+                    loge("Can't access last location: ${e.message}")
                     startLocationListener()
                 }
             })
@@ -71,7 +71,7 @@ internal class LocationEngineAdapter(
 
             locationEngine.requestLocationUpdates(request, locationEngineCallback, Looper.getMainLooper())
         } catch (e: Exception) {
-            loge(e, "Error during location request")
+            loge("Error during location request: ${e.message}")
         }
     }
 

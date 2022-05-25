@@ -7,6 +7,8 @@ import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.logger.reinitializeLogImpl
+import com.mapbox.search.common.logger.resetLogImpl
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
@@ -14,7 +16,9 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 
@@ -150,6 +154,20 @@ internal class LocationEngineAdapterTest {
         private fun createMockedLocation(point: Point): Location = mockk<Location>().apply {
             every { longitude } returns point.longitude()
             every { latitude } returns point.latitude()
+        }
+
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
         }
     }
 }

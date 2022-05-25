@@ -119,7 +119,7 @@ internal class AddressSearchViewController : BaseSearchController {
                     }
 
                     throwDebug(e) {
-                        "Unable to update favorite record"
+                        "Unable to update favorite record: ${e.message}"
                     }
                     router.popToRoot()
                 }

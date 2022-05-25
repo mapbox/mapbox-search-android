@@ -49,7 +49,7 @@ internal class CrashEventsFactory(
                 put(key, value)
             }
         } catch (e: JSONException) {
-            loge(e, "Failed json encode value: $value")
+            loge("Failed json encode value: $value: ${e.message}")
         }
     }
 
@@ -64,7 +64,7 @@ internal class CrashEventsFactory(
             }
             jsonArray
         } catch (e: JSONException) {
-            loge(e, "Failed to create JSON array for custom data")
+            loge("Failed to create JSON array for custom data: ${e.message}")
             null
         }
     }

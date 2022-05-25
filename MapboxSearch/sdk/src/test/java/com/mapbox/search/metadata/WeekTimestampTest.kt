@@ -2,10 +2,8 @@ package com.mapbox.search.metadata
 
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.reportError
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.test.dsl.TestCase
-import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.junit.jupiter.api.AfterAll
@@ -52,8 +50,6 @@ internal class WeekTimestampTest {
         @JvmStatic
         fun setUpAll() {
             mockkStatic(ASSERTIONS_KT_CLASS_NAME)
-            @Suppress("DEPRECATION")
-            every { reportError(any()) } returns Unit
         }
 
         @AfterAll

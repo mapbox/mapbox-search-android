@@ -404,7 +404,7 @@ public class SearchResultsView @JvmOverloads constructor(
                 isLoadingCompleted = true
                 showError(UiError.UnknownError)
                 throwDebug(e) {
-                    "Unable to load history records"
+                    "Unable to load history records: ${e.message}"
                 }
             }
         }

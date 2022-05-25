@@ -144,7 +144,7 @@ internal class EditFavoriteView : LinearLayout {
                         Toast.makeText(context, R.string.mapbox_search_sdk_favorite_update_error, Toast.LENGTH_SHORT).show()
 
                         throwDebug(e) {
-                            "Unable to update favorite record"
+                            "Unable to update favorite record: ${e.message}"
                         }
                     }
                 }
