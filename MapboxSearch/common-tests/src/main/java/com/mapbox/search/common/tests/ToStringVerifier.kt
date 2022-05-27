@@ -5,7 +5,6 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 import kotlin.reflect.jvm.javaField
 
-@ExperimentalStdlibApi
 class ToStringVerifier(
     private val clazz: KClass<*>,
     private val objectsFactory: ObjectsFactory = ReflectionObjectsFactory(),

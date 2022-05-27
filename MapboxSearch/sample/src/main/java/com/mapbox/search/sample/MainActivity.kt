@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
@@ -165,6 +166,10 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.open_simple_ui -> {
                 startActivity(Intent(this, SimpleUiSearchActivity::class.java))
+                true
+            }
+            R.id.open_address_autofill_example -> {
+                startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
                 true
             }
             R.id.open_custom_data_provider_kt_example -> {

@@ -35,6 +35,7 @@ if [ "$1" = "--update" ]; then
 
   ./gradlew :sdk:updateApi
   ./gradlew :ui:updateApi
+  ./gradlew :autofill:updateApi
 
   ./gradlew :ui:generatePublicXml
 fi

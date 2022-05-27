@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.31-SNAPSHOT
 
+### New features
+- [CORE] Autofill SDK prototype is available now
+
 ### Mapbox dependencies
 - Search Native SDK `0.54.1`
 - Common SDK `21.3.0`
@@ -17,7 +20,7 @@
 - [CORE] `IndexableDataProviderEngine.add()`, and `IndexableDataProviderEngine.update()` have been replaced with a new function `IndexableDataProviderEngine.upsert()`.
 - [CORE] `IndexableDataProviderEngine.addAll()` has been renamed to `IndexableDataProviderEngine.upsertAll()`.
 - [CORE] `IndexableDataProviderEngine.executeBatchUpdate()` has been removed along with `IndexableDataProviderEngine.BatchUpdateOperation`. Now `IndexableDataProviderEngine` is a thread-safe entity. If you need multiple operations to be executed one after another, call them in a needed order on the same thread.
-- [CORE] `AnalyticsService.sendRawFeedbackEvent()` has been removed. Events should de sent immediately.
+- [CORE] `AnalyticsService.sendRawFeedbackEvent()` has been removed. Events should be sent immediately.
 - [CORE] `AnalyticsService.createRawFeedbackEvent()` functions have been made asynchronous and marked as deprecated. These functions return raw events in a very specific format and should not be used.
 
 ### Mapbox dependencies

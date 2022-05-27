@@ -6,7 +6,6 @@ import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 
-@ExperimentalStdlibApi
 internal class SearchRequestExceptionTest {
 
     @TestFactory

@@ -1,8 +1,8 @@
 package com.mapbox.search.tests_support
 
-import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.RouteOptions
+import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.core.CoreSearchResponse
@@ -16,13 +16,6 @@ import java.net.URI
 import java.util.concurrent.TimeUnit
 
 internal object SdkCustomTypeObjectCreators {
-
-    internal val POINT_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(Point::class) { mode ->
-        listOf(
-            Point.fromLngLat(27.0, 52.0),
-            Point.fromLngLat(-17.0, 23.0),
-        )[mode.ordinal]
-    }
 
     internal val ROUTE_OPTIONS_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(RouteOptions::class) { mode ->
         listOf(
@@ -54,13 +47,6 @@ internal object SdkCustomTypeObjectCreators {
         listOf(
             OpenHours.AlwaysOpen,
             OpenHours.PermanentlyClosed,
-        )[mode.ordinal]
-    }
-
-    internal val BOUNDING_BOX_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(BoundingBox::class) { mode ->
-        listOf(
-            BoundingBox.fromPoints(Point.fromLngLat(1.0, 2.0), Point.fromLngLat(3.0, 4.0)),
-            BoundingBox.fromPoints(Point.fromLngLat(5.0, 6.0), Point.fromLngLat(7.0, 8.0)),
         )[mode.ordinal]
     }
 
@@ -97,15 +83,13 @@ internal object SdkCustomTypeObjectCreators {
     }
 
     internal val ALL_CREATORS = listOf<CustomTypeObjectCreator>(
-        POINT_OBJECT_CREATOR,
         ROUTE_OPTIONS_OBJECT_CREATOR,
         WEEK_TIMESTAMP_OBJECT_CREATOR,
         OPEN_HOURS_OBJECT_CREATOR,
-        BOUNDING_BOX_OBJECT_CREATOR,
         CORE_SEARCH_RESPONSE_CREATOR,
         ORIGINAL_SEARCH_RESULT_OBJECT_CREATOR,
         INDEXABLE_RECORD_OBJECT_CREATOR,
         URI_OBJECT_CREATOR,
         EXCEPTION_CREATOR,
-    )
+    ) + CommonSdkTypeObjectCreators.ALL_CREATORS
 }
