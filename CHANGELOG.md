@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.30-SNAPSHOT
+## 1.0.0-beta.30
 
 ### Breaking changes
 - [CORE] `IndexableDataProvider.add()`, and `IndexableDataProvider.update()` have been replaced with a new function `IndexableDataProvider.upsert()`.
