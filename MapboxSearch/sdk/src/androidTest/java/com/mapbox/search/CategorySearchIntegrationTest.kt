@@ -11,6 +11,7 @@ import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.BaseSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
@@ -196,6 +197,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             descriptionAddress = "Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
             matchingName = "Starbucks",
             center = Point.fromLngLat(-122.08295, 37.38755),
+            accuracy = ResultAccuracy.Point,
             routablePoints = listOf(
                 RoutablePoint(point = Point.fromLngLat(-122.08295, 37.38755), name = "Address")
             ),
@@ -610,7 +612,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                "Need to include either a route, bbox, proximity, or origin for category searches",
+                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             (res as BlockingSearchCallback.SearchEngineResult.Error).e

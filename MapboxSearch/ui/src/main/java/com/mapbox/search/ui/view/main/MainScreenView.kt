@@ -132,6 +132,10 @@ internal class MainScreenView : ConstraintLayout {
             onSearchResultClickListener?.invoke(searchResult, responseInfo)
         }
 
+        override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            // do nothing
+        }
+
         override fun onError(e: Exception) {
             onErrorShownClickListener?.invoke(e)
         }

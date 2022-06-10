@@ -11,6 +11,7 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
@@ -529,6 +530,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             distanceMeters = 5000000.0,
             matchingName = "Minsk",
             center = Point.fromLngLat(27.234342, 53.940465),
+            accuracy = ResultAccuracy.Rooftop,
             routablePoints = listOf(
                 RoutablePoint(point = Point.fromLngLat(27.234300, 53.973651), name = "City Entrance")
             ),
@@ -765,6 +767,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             types = listOf(OriginalResultType.POI),
             names = listOf("SimplexiTea"),
             center = Point.fromLngLat(-122.41721, 37.775934),
+            accuracy = ResultAccuracy.Point,
             languages = listOf("def"),
             addresses = listOf(SearchAddress(
                 country = "United States of America",
@@ -1001,7 +1004,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                "Need to include either a route, bbox, proximity, or origin for category searches",
+                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             (res as SearchEngineResult.Error).e

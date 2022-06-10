@@ -73,6 +73,10 @@ internal class CategorySuggestionSearchView : ConstraintLayout {
                 onSearchResultClickListener?.invoke(searchResult, responseInfo)
             }
 
+            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+                // shouldn't be called in this context
+            }
+
             override fun onError(e: Exception) {
                 onErrorShownClickListener?.invoke(e)
             }

@@ -63,6 +63,11 @@ public sealed interface SearchResult : Parcelable {
     public val coordinate: Point?
 
     /**
+     * A point accuracy metric for the returned address.
+     */
+    public val accuracy: ResultAccuracy?
+
+    /**
      * Non-empty list of resolved [SearchResult] types.
      */
     public val types: List<SearchResultType>

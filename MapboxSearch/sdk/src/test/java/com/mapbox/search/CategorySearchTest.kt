@@ -288,8 +288,6 @@ internal class CategorySearchTest {
 
         val TEST_SEARCH_OPTIONS = CategorySearchOptions()
 
-        const val TEST_REQUEST_ID = 123
-
         const val TEST_RESPONSE_UUID = "UUID test"
 
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
@@ -339,7 +337,6 @@ internal class CategorySearchTest {
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
@@ -352,7 +349,6 @@ internal class CategorySearchTest {
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
             TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             TEST_RESPONSE_UUID
         )

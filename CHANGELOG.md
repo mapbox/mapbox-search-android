@@ -2,14 +2,19 @@
 
 ## 1.0.0-beta.31-SNAPSHOT
 
-### Bug fixes
-- [CORE] Fixed a bug in the previous version of the Search SDK which didn't include http service implementation by default.
-- 
+### Breaking changes
+- [CORE] `OfflineSearchEngine` is a 1-step search now, which means that `SearchResult`'s returned in the first step without `SearchSuggestion` selection. `OfflineSearchEngine.select()` function has been removed. `OfflineSearchEngine.search()` accepts `SearchCallback` callback type.
+- [UI] Now `SearchResultsView.SearchListener` has a new function `onOfflineSearchResults()`.
+
 ### New features
 - [CORE] Autofill SDK prototype is available now.
 
+### Bug fixes
+- [CORE] Fixed a bug in the previous version of the Search SDK which didn't include http service implementation by default.
+- [CORE] Now `SearchResult` provides a new `accuracy` field which is a point accuracy metric for the returned address.
+
 ### Mapbox dependencies
-- Search Native SDK `0.54.1`
+- Search Native SDK `0.55.0`
 - Common SDK `21.3.0`
 - Kotlin `1.5.31`
 

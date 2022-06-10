@@ -179,6 +179,7 @@ public abstract interface class com/mapbox/search/ui/view/SearchResultsView$Sear
 	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onFeedbackClicked (Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onHistoryItemClicked (Lcom/mapbox/search/record/HistoryRecord;)V
+	public abstract fun onOfflineSearchResults (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onPopulateQueryClicked (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onSuggestions (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V

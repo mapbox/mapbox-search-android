@@ -441,7 +441,6 @@ public object MapboxSearchSdk {
         checkInitialized()
         return OfflineSearchEngineImpl(
             coreEngine = coreEngine,
-            historyService = internalServiceProvider.historyService(),
             requestContextProvider = searchRequestContextProvider,
             searchResultFactory = searchResultFactory,
             engineExecutorService = offlineSearchEngineExecutor,

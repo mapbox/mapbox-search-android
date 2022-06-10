@@ -48,6 +48,10 @@ class SimpleUiSearchActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
             }
 
+            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
+            }
+
             override fun onError(e: Exception) {
                 Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
             }

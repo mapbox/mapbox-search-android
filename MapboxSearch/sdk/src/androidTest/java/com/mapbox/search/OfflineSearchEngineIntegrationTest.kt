@@ -13,7 +13,6 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.tests.BuildConfig
-import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.BaseSearchResult
 import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.SearchAddress
@@ -21,11 +20,9 @@ import com.mapbox.search.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
-import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
-import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
+import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
-import com.mapbox.search.tests_support.createTestSuggestion
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
 import com.mapbox.search.tests_support.loadTileRegionBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -33,7 +30,6 @@ import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.removeTileRegionBlocking
 import com.mapbox.search.tests_support.reverseGeocodingBlocking
 import com.mapbox.search.tests_support.searchBlocking
-import com.mapbox.search.tests_support.selectBlocking
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import org.junit.After
@@ -138,19 +134,13 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
             )
         }
 
-        // Forward geocoding 1st step
+        // Forward geocoding
         val searchResult = searchEngine.searchBlocking("1")
-        assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Suggestions)
-        val suggestions = searchResult.requireSuggestions()
-        assertTrue(suggestions.isNotEmpty())
-
-        // Forward geocoding 2nd step
-        val selectionResult = searchEngine.selectBlocking(suggestions.first())
-        assertTrue(selectionResult is BlockingSearchSelectionCallback.SearchEngineResult.Result)
-        val selectedSearchResult = selectionResult.requireResult()
+        assertTrue(searchResult is SearchEngineResult.Results)
+        assertTrue(searchResult.requireResults().isNotEmpty())
 
         // Reverse geocoding
-        val reverseResult = searchEngine.reverseGeocodingBlocking(selectedSearchResult.result.coordinate!!)
+        val reverseResult = searchEngine.reverseGeocodingBlocking(searchResult.requireResults().first().coordinate!!)
         assertTrue(reverseResult is SearchEngineResult.Results)
         assertTrue(reverseResult.requireResults().isNotEmpty())
     }
@@ -217,7 +207,7 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
     @Test
     fun testSearchRequestWithoutAddedRegions() {
         val result = searchEngine.searchBlocking("123")
-        assertTrue(result is BlockingSearchSelectionCallback.SearchEngineResult.Error)
+        assertTrue(result is SearchEngineResult.Error)
     }
 
     @Test
@@ -292,8 +282,8 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
             OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
         )
 
-        assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Error)
-        val error = searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Error
+        assertTrue(searchResult is SearchEngineResult.Error)
+        val error = searchResult as SearchEngineResult.Error
         assertTrue(error.e.message?.contains("Offline regions not added") == true)
     }
 
@@ -306,10 +296,8 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
             OfflineSearchOptions(),
         )
 
-        assertTrue(searchResult is BlockingSearchSelectionCallback.SearchEngineResult.Suggestions)
-
-        val suggestions = (searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertEquals(0, suggestions.size)
+        assertTrue(searchResult is SearchEngineResult.Results)
+        assertEquals(0, searchResult.requireResults().size)
     }
 
     @Test
@@ -319,23 +307,17 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
 
-        val callback = BlockingSearchSelectionCallback()
-
-        searchEngine.search(
+        val searchEngineResult = searchEngine.searchBlocking(
             "2011 15th Street Northwest, Washington, District of Columbia",
             OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
-            callback
         )
 
-        val suggestions =
-            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertEquals(9, suggestions.size)
+        assertTrue(searchEngineResult is SearchEngineResult.Results)
 
-        callback.reset()
+        val results = searchEngineResult.requireResults()
+        assertEquals(9, results.size)
 
-        searchEngine.select(suggestions.first(), callback)
-
-        val result = (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Result).result
+        val result = results.first()
         val originalSearchResult = (result as BaseSearchResult).originalSearchResult
         val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
         assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, originalSearchResult))
@@ -343,52 +325,10 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val historyRecords = historyDataProvider.getAllBlocking(callbacksExecutor)
 
         assertEquals(
-            "Selected offline search result added to search history",
-            1,
+            "No item added to search history",
+            0,
             historyRecords.size
         )
-
-        val expectedHistoryRecord = HistoryRecord(
-            id = expectedSearchResult.id,
-            name = expectedSearchResult.names.first(),
-            descriptionText = expectedSearchResult.descriptionAddress,
-            address = expectedSearchResult.addresses?.first(),
-            routablePoints = expectedSearchResult.routablePoints,
-            categories = expectedSearchResult.categories ?: emptyList(),
-            makiIcon = expectedSearchResult.icon,
-            coordinate = expectedSearchResult.center,
-            type = expectedSearchResult.types.first().tryMapToSearchResultType()!!,
-            metadata = expectedSearchResult.metadata,
-            timestamp = testTimeProvider.currentTimeMillis(),
-        )
-
-        assertEquals(expectedHistoryRecord, historyRecords.first())
-    }
-
-    @Test
-    fun testSelectionForNonOfflineSuggestion() {
-        loadOfflineData()
-
-        val callback = BlockingSearchSelectionCallback()
-
-        searchEngine.search(
-            "15th Street Northwest, Washington, DC",
-            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
-            callback
-        )
-
-        val suggestions =
-            (callback.getResultBlocking() as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertTrue(suggestions.isNotEmpty())
-
-        callback.reset()
-
-        searchEngine.select(
-            suggestion = createTestSuggestion(isFromOffline = false),
-            callback = callback
-        )
-
-        assertTrue(callback.getResultBlocking() is BlockingSearchSelectionCallback.SearchEngineResult.Error)
     }
 
     @Test
@@ -396,8 +336,8 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         loadOfflineData()
 
         val searchResult = searchEngine.searchBlocking("1")
-        val suggestions = (searchResult as BlockingSearchSelectionCallback.SearchEngineResult.Suggestions).suggestions
-        assertEquals(10, suggestions.size)
+        assertTrue(searchResult is SearchEngineResult.Results)
+        assertEquals(10, searchResult.requireResults().size)
     }
 
     @Test
@@ -579,9 +519,9 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), EmptySearchSuggestionsCallback)
+        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), EmptySearchCallback)
 
-        val callback = BlockingSearchSelectionCallback()
+        val callback = BlockingSearchCallback()
         val task2 = searchEngine.search("Baker street", OfflineSearchOptions(), callback)
         callback.getResultBlocking()
 

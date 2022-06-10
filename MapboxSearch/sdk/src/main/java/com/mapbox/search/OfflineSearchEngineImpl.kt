@@ -6,29 +6,19 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
 import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.printableName
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.engine.BaseSearchEngine
 import com.mapbox.search.engine.OneStepRequestCallbackWrapper
-import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
-import com.mapbox.search.record.HistoryService
-import com.mapbox.search.result.BaseSearchSuggestion
-import com.mapbox.search.result.GeocodingCompatSearchSuggestion
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchResultFactory
-import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.ServerSearchSuggestion
-import com.mapbox.search.result.mapToCore
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
 internal class OfflineSearchEngineImpl(
     private val coreEngine: CoreSearchEngineInterface,
-    private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService,
@@ -75,68 +65,22 @@ internal class OfflineSearchEngineImpl(
         query: String,
         options: OfflineSearchOptions,
         executor: Executor,
-        callback: SearchSuggestionsCallback
+        callback: SearchCallback
     ): SearchRequestTask {
         logd("search($query, $options) called")
 
         return makeRequest(callback) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
-                TwoStepsRequestCallbackWrapper(
-                    coreEngine = coreEngine,
-                    historyService = historyService,
+                OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    suggestion = null,
-                    selectOptions = null,
-                    isOfflineSearch = true,
+                    isOffline = true,
                 )
             )
-        }
-    }
-
-    override fun select(
-        suggestion: SearchSuggestion,
-        options: SelectOptions,
-        executor: Executor,
-        callback: SearchSelectionCallback
-    ): SearchRequestTask {
-        logd("select($suggestion) called")
-
-        val coreRequestOptions = suggestion.requestOptions.mapToCore()
-
-        return when (suggestion) {
-            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback) { request ->
-                coreEngine.retrieveOffline(
-                    coreRequestOptions,
-                    suggestion.originalSearchResult.mapToCore(),
-                    TwoStepsRequestCallbackWrapper(
-                        coreEngine = coreEngine,
-                        historyService = historyService,
-                        searchResultFactory = searchResultFactory,
-                        callbackExecutor = executor,
-                        workerExecutor = engineExecutorService,
-                        searchRequestTask = request,
-                        searchRequestContext = suggestion.requestOptions.requestContext,
-                        suggestion = suggestion,
-                        selectOptions = options,
-                        isOfflineSearch = true,
-                    )
-                )
-            }
-            is GeocodingCompatSearchSuggestion,
-            is IndexableRecordSearchSuggestion -> {
-                executor.execute {
-                    callback.onError(IllegalArgumentException("Unsupported suggestion type for offline search: ${suggestion.javaClass.printableName}"))
-                }
-                SearchRequestTaskImpl.completed()
-            }
-            is BaseSearchSuggestion -> {
-                error("Unprocessed suggestion: $suggestion")
-            }
         }
     }
 

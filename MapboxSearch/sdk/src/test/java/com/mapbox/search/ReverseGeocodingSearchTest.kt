@@ -267,7 +267,6 @@ internal class ReverseGeocodingSearchTest {
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_OPTIONS = ReverseGeoOptions(center = TEST_POINT)
-        const val TEST_REQUEST_ID = 123
         const val TEST_RESPONSE_UUID = "UUID test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
@@ -317,20 +316,18 @@ internal class ReverseGeocodingSearchTest {
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
+        const val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
 
-        val TEST_ERROR_CORE_RESPONSE_HTTP_COE = 401
+        const val TEST_ERROR_CORE_RESPONSE_HTTP_COE = 401
 
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
             TEST_ERROR_CORE_RESPONSE_HTTP_COE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS.mapToCore(),
             TEST_RESPONSE_UUID
         )

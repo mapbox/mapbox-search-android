@@ -7,13 +7,15 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.geojson.Point
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.OfflineIndexChangeEvent
+import com.mapbox.search.OfflineIndexChangeEvent.EventType
+import com.mapbox.search.OfflineIndexErrorEvent
 import com.mapbox.search.OfflineSearchEngine
 import com.mapbox.search.OfflineSearchOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchRequestTask
-import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchSuggestion
 
 class OfflineSearchKotlinExampleActivity : Activity() {
 
@@ -31,31 +33,10 @@ class OfflineSearchKotlinExampleActivity : Activity() {
         }
     }
 
-    private val searchCallback = object : SearchSelectionCallback {
+    private val searchCallback = object : SearchCallback {
 
-        override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-            if (suggestions.isEmpty()) {
-                Log.i("SearchApiExample", "No suggestions found")
-            } else {
-                Log.i("SearchApiExample", "Search suggestions: $suggestions.\nSelecting first suggestion...")
-                searchRequestTask = searchEngine.select(suggestions.first(), this)
-            }
-        }
-
-        override fun onResult(
-            suggestion: SearchSuggestion,
-            result: SearchResult,
-            responseInfo: ResponseInfo
-        ) {
-            Log.i("SearchApiExample", "Search result: $result")
-        }
-
-        override fun onCategoryResult(
-            suggestion: SearchSuggestion,
-            results: List<SearchResult>,
-            responseInfo: ResponseInfo
-        ) {
-            Log.i("SearchApiExample", "Category search results: $results")
+        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            Log.i("SearchApiExample", "Search results: $results")
         }
 
         override fun onError(e: Exception) {
@@ -83,21 +64,37 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         Log.i("SearchApiExample", "Loading tiles...")
 
-        tilesLoadingTask = tileStore.loadTileRegion(
-            "Washington DC",
-            tileRegionLoadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
-            { region ->
-                if (region.isValue) {
-                    Log.i("SearchApiExample", "Tiles successfully loaded")
+        val tileRegionId = "Washington DC"
+
+        searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
+            override fun onIndexChange(event: OfflineIndexChangeEvent) {
+                if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
+                    Log.i("SearchApiExample", "$tileRegionId was successfully added or updated")
+
                     searchRequestTask = searchEngine.search(
                         "Cafe",
                         OfflineSearchOptions(),
                         searchCallback
                     )
-                } else {
-                    Log.i("SearchApiExample", "Tiles loading error: ${region.error}")
                 }
+            }
+
+            override fun onError(event: OfflineIndexErrorEvent) {
+                Log.i("SearchApiExample", "Offline index error: $event")
+            }
+        })
+
+        tilesLoadingTask = tileStore.loadTileRegion(
+            tileRegionId,
+            tileRegionLoadOptions,
+            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+            { result ->
+                val printableResult = if (result.isValue) {
+                    result.value
+                } else {
+                    result.error
+                }
+                Log.i("SearchApiExample", "$tileRegionId loading result: $printableResult")
             }
         )
     }

@@ -3,7 +3,6 @@ package com.mapbox.search
 import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
-import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
@@ -134,7 +133,7 @@ public interface OfflineSearchEngine {
         query: String,
         options: OfflineSearchOptions,
         executor: Executor,
-        callback: SearchSuggestionsCallback,
+        callback: SearchCallback,
     ): SearchRequestTask
 
     /**
@@ -150,68 +149,10 @@ public interface OfflineSearchEngine {
     public fun search(
         query: String,
         options: OfflineSearchOptions,
-        callback: SearchSuggestionsCallback,
+        callback: SearchCallback,
     ): SearchRequestTask = search(
         query = query,
         options = options,
-        executor = SearchSdkMainThreadWorker.mainExecutor,
-        callback = callback,
-    )
-
-    /**
-     * The second step of the offline forward geocoding. Call this function to get a [SearchResult] (with coordinates) from a [SearchSuggestion].
-     *
-     * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
-     * @param options Options used for controlling internal "select" operation logic.
-     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
-     * @param callback Callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
-     *
-     * @see [SearchEngine.select].
-     */
-    public fun select(
-        suggestion: SearchSuggestion,
-        options: SelectOptions,
-        executor: Executor,
-        callback: SearchSelectionCallback,
-    ): SearchRequestTask
-
-    /**
-     * The second step of the offline forward geocoding. Call this function to get a [SearchResult] (with coordinates) from a [SearchSuggestion].
-     *
-     * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
-     * @param options Options used for controlling internal "select" operation logic.
-     * @param callback Callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
-     *
-     * @see [SearchEngine.select].
-     */
-    public fun select(
-        suggestion: SearchSuggestion,
-        options: SelectOptions,
-        callback: SearchSelectionCallback,
-    ): SearchRequestTask = select(
-        suggestion = suggestion,
-        options = options,
-        executor = SearchSdkMainThreadWorker.mainExecutor,
-        callback = callback,
-    )
-
-    /**
-     * The second step of the offline forward geocoding. Call this function to get a [SearchResult] (with coordinates) from a [SearchSuggestion].
-     *
-     * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
-     * @param callback Callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object which allows to cancel the request.
-     *
-     * @see [SearchEngine.select].
-     */
-    public fun select(
-        suggestion: SearchSuggestion,
-        callback: SearchSelectionCallback,
-    ): SearchRequestTask = select(
-        suggestion = suggestion,
-        options = SelectOptions(),
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )

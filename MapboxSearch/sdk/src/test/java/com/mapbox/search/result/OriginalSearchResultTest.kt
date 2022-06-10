@@ -7,6 +7,7 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.logger.reinitializeLogImpl
 import com.mapbox.search.common.logger.resetLogImpl
+import com.mapbox.search.core.CoreResultAccuracy
 import com.mapbox.search.core.CoreResultMetadata
 import com.mapbox.search.core.CoreRoutablePoint
 import com.mapbox.search.core.CoreSearchResult
@@ -111,6 +112,7 @@ internal class OriginalSearchResultTest {
             null,
             null,
             null,
+            null,
             -1,
             null,
             null
@@ -126,6 +128,7 @@ internal class OriginalSearchResultTest {
             matchingName = CORE_EMPTY_SEARCH_RESULT.matchingName,
             distanceMeters = CORE_EMPTY_SEARCH_RESULT.distance,
             center = CORE_EMPTY_SEARCH_RESULT.center,
+            accuracy = CORE_EMPTY_SEARCH_RESULT.accuracy?.mapToPlatform(),
             routablePoints = CORE_EMPTY_SEARCH_RESULT.routablePoints?.map { it.mapToPlatform() },
             categories = CORE_EMPTY_SEARCH_RESULT.categories,
             icon = CORE_EMPTY_SEARCH_RESULT.icon,
@@ -151,6 +154,7 @@ internal class OriginalSearchResultTest {
             matchingName = CORE_FILLED_SEARCH_RESULT.matchingName,
             distanceMeters = CORE_FILLED_SEARCH_RESULT.distance,
             center = CORE_FILLED_SEARCH_RESULT.center,
+            accuracy = CORE_FILLED_SEARCH_RESULT.accuracy?.mapToPlatform(),
             routablePoints = CORE_FILLED_SEARCH_RESULT.routablePoints?.map { it.mapToPlatform() },
             categories = CORE_FILLED_SEARCH_RESULT.categories,
             icon = CORE_FILLED_SEARCH_RESULT.icon,
@@ -180,6 +184,7 @@ internal class OriginalSearchResultTest {
                 123.456,
                 123.0,
                 Point.fromLngLat(10.0, 11.0),
+                CoreResultAccuracy.POINT,
                 listOf(
                     CoreRoutablePoint(Point.fromLngLat(1.0, 2.0), "test point 1"),
                     CoreRoutablePoint(Point.fromLngLat(2.0, 3.0), "test point 2"),

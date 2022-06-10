@@ -33,6 +33,9 @@ internal abstract class BaseSearchResult(
     override val makiIcon: String?
         get() = originalSearchResult.icon
 
+    override val accuracy: ResultAccuracy?
+        get() = originalSearchResult.accuracy
+
     override val etaMinutes: Double?
         get() = originalSearchResult.etaMinutes
 
@@ -59,6 +62,7 @@ internal abstract class BaseSearchResult(
                 "categories='$categories', " +
                 "makiIcon='$makiIcon', " +
                 "coordinate='$coordinate', " +
+                "accuracy='$accuracy', " +
                 "types='$types', " +
                 "etaMinutes='$etaMinutes', " +
                 "metadata='$metadata', " +

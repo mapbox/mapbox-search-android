@@ -517,13 +517,10 @@ public abstract interface class com/mapbox/search/OfflineSearchEngine {
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/OfflineSearchEngine$OnIndexChangeListener;)V
 	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
 	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
 	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
 	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -533,10 +530,8 @@ public final class com/mapbox/search/OfflineSearchEngine$DefaultImpls {
 	public static fun createPlacesTilesetDescriptor (Lcom/mapbox/search/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor (Lcom/mapbox/search/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun reverseGeocoding (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun search (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public static fun search (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
 	public static fun searchAddressesNearby (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun select (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun select (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
 }
 
 public abstract interface class com/mapbox/search/OfflineSearchEngine$EngineReadyCallback {
@@ -1303,6 +1298,59 @@ public abstract interface class com/mapbox/search/result/IndexableRecordSearchRe
 	public abstract fun getRecord ()Lcom/mapbox/search/record/IndexableRecord;
 }
 
+public abstract class com/mapbox/search/result/ResultAccuracy : android/os/Parcelable {
+	public fun <init> ()V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Approximate : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Approximate;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Interpolated : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Interpolated;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Intersection : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Intersection;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Parcel : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Parcel;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Point : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Point;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Rooftop : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Rooftop;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Street : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Street;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
 public final class com/mapbox/search/result/RoutablePoint : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V
@@ -1414,6 +1462,7 @@ public final class com/mapbox/search/result/SearchAddress$FormatStyle$Short : co
 }
 
 public abstract interface class com/mapbox/search/result/SearchResult : android/os/Parcelable {
+	public abstract fun getAccuracy ()Lcom/mapbox/search/result/ResultAccuracy;
 	public abstract fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
 	public abstract fun getCategories ()Ljava/util/List;
 	public abstract fun getCoordinate ()Lcom/mapbox/geojson/Point;

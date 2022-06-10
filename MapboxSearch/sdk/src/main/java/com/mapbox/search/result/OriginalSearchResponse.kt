@@ -2,12 +2,11 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.internal.bindgen.SearchResponseError
+import com.mapbox.search.core.CoreSearchResponseErrorType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class OriginalSearchResponse(
-    val requestId: Int,
     val result: Result,
     val responseUUID: String
 ) : Parcelable {
@@ -18,6 +17,8 @@ internal data class OriginalSearchResponse(
         data class Success(val result: List<OriginalSearchResult>) : Result()
 
         sealed class Error : Result() {
+            @Parcelize
+            data class ConnectionError(val message: String) : Error()
 
             @Parcelize
             data class ServerError(val httpCode: Int, val message: String) : Error()
@@ -40,14 +41,17 @@ internal fun CoreSearchResponse.mapToPlatform(): OriginalSearchResponse {
     } else {
         val error = requireNotNull(results.error)
         when (error.typeInfo) {
-            SearchResponseError.Type.HTTP_ERROR -> OriginalSearchResponse.Result.Error.ServerError(
+            CoreSearchResponseErrorType.CONNECTION_ERROR -> OriginalSearchResponse.Result.Error.ConnectionError(
+                error.httpError.message
+            )
+            CoreSearchResponseErrorType.HTTP_ERROR -> OriginalSearchResponse.Result.Error.ServerError(
                 error.httpError.httpCode,
                 error.httpError.message
             )
-            SearchResponseError.Type.INTERNAL_ERROR -> OriginalSearchResponse.Result.Error.InternalError(
+            CoreSearchResponseErrorType.INTERNAL_ERROR -> OriginalSearchResponse.Result.Error.InternalError(
                 error.internalError.message
             )
-            SearchResponseError.Type.REQUEST_CANCELLED -> OriginalSearchResponse.Result.Error.RequestCancelled(
+            CoreSearchResponseErrorType.REQUEST_CANCELLED -> OriginalSearchResponse.Result.Error.RequestCancelled(
                 error.requestCancelled.reason
             )
             null -> throw IllegalStateException()
@@ -55,7 +59,6 @@ internal fun CoreSearchResponse.mapToPlatform(): OriginalSearchResponse {
     }
 
     return OriginalSearchResponse(
-        requestId = requestID,
         result = result,
         responseUUID = responseUUID
     )

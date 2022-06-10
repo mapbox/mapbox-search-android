@@ -496,13 +496,10 @@ package com.mapbox.search {
     method public void removeOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
     method public com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
-    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, com.mapbox.search.SearchCallback callback);
     method public com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.SearchCallback callback);
-    method public com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
-    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
-    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
     method public void selectTileset(String? dataset, String? version);
     property public abstract com.mapbox.common.TileStore tileStore;
   }
@@ -1205,6 +1202,41 @@ package com.mapbox.search.result {
   public final class OriginalSearchResultKt {
   }
 
+  public abstract class ResultAccuracy implements android.os.Parcelable {
+    ctor public ResultAccuracy();
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Approximate extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Approximate INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Interpolated extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Interpolated INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Intersection extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Intersection INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Parcel extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Parcel INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Point extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Point INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Rooftop extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Rooftop INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Street extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Street INSTANCE;
+  }
+
+  public final class ResultAccuracyKt {
+  }
+
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
     ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
     method public String getName();
@@ -1307,6 +1339,7 @@ package com.mapbox.search.result {
   }
 
   public sealed interface SearchResult extends android.os.Parcelable {
+    method public com.mapbox.search.result.ResultAccuracy? getAccuracy();
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String> getCategories();
     method public com.mapbox.geojson.Point? getCoordinate();
@@ -1323,6 +1356,7 @@ package com.mapbox.search.result {
     method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
+    property public abstract com.mapbox.search.result.ResultAccuracy? accuracy;
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String> categories;
     property public abstract com.mapbox.geojson.Point? coordinate;

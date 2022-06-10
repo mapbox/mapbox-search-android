@@ -575,7 +575,6 @@ internal class SearchEngineTest {
 
         const val TEST_QUERY = "Minsk"
         val TEST_SEARCH_OPTIONS = SearchOptions()
-        const val TEST_REQUEST_ID = 123
         const val TEST_RESPONSE_UUID = "UUID test"
         const val TEST_RESPONSE_UUID_2 = "UUID test 2"
         const val TEST_DESCRIPTION_TEXT = "Test description text"
@@ -615,20 +614,18 @@ internal class SearchEngineTest {
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS,
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
+        const val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
 
-        val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
+        const val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
 
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
             TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS,
             TEST_RESPONSE_UUID
         )

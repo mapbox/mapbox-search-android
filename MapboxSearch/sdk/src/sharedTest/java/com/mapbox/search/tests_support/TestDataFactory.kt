@@ -9,6 +9,7 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.core.CoreBoundingBox
 import com.mapbox.search.core.CoreQueryType
 import com.mapbox.search.core.CoreRequestOptions
+import com.mapbox.search.core.CoreResultAccuracy
 import com.mapbox.search.core.CoreResultMetadata
 import com.mapbox.search.core.CoreResultType
 import com.mapbox.search.core.CoreReverseGeoOptions
@@ -17,17 +18,18 @@ import com.mapbox.search.core.CoreRoutablePoint
 import com.mapbox.search.core.CoreSearchAddress
 import com.mapbox.search.core.CoreSearchOptions
 import com.mapbox.search.core.CoreSearchResponse
+import com.mapbox.search.core.CoreSearchResponseError
 import com.mapbox.search.core.CoreSearchResult
 import com.mapbox.search.core.CoreSuggestAction
 import com.mapbox.search.internal.bindgen.HttpError
 import com.mapbox.search.internal.bindgen.RequestCancelled
 import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.internal.bindgen.SearchResponseError
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.OriginalSearchResult
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
@@ -49,6 +51,7 @@ internal fun createTestOriginalSearchResult(
     matchingName: String? = null,
     distanceMeters: Double? = null,
     center: Point? = null,
+    accuracy: ResultAccuracy? = null,
     routablePoints: List<RoutablePoint>? = null,
     categories: List<String>? = null,
     icon: String? = null,
@@ -70,6 +73,7 @@ internal fun createTestOriginalSearchResult(
     distanceMeters = distanceMeters,
     matchingName = matchingName,
     center = center,
+    accuracy = accuracy,
     routablePoints = routablePoints,
     categories = categories,
     icon = icon,
@@ -236,30 +240,27 @@ internal fun createCoreSearchAddress(
 )
 
 internal fun createTestCoreSearchResponseSuccess(
-    requestId: Int = "test-request-id".hashCode(),
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     results: List<CoreSearchResult> = emptyList(),
     responseUUID: String = "test-response-uuid"
 ) = CoreSearchResponse(
-    requestId, request, ExpectedFactory.createValue(results), responseUUID
+    request, ExpectedFactory.createValue(results), responseUUID
 )
 
 internal fun createTestCoreSearchResponseError(
     httpCode: Int = 400,
     message: String = "error",
-    requestId: Int = "test-request-id".hashCode(),
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     responseUUID: String = "test-response-uuid",
 ) = CoreSearchResponse(
-    requestId, request, ExpectedFactory.createError(SearchResponseError(HttpError(httpCode, message))), responseUUID
+    request, ExpectedFactory.createError(CoreSearchResponseError(HttpError(httpCode, message))), responseUUID
 )
 
 internal fun createTestCoreSearchResponseCancelled(
-    requestId: Int = "test-request-id".hashCode(),
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     responseUUID: String = "test-response-uuid",
 ) = CoreSearchResponse(
-    requestId, request, ExpectedFactory.createError(SearchResponseError(RequestCancelled("Request cancelled"))), responseUUID
+    request, ExpectedFactory.createError(CoreSearchResponseError(RequestCancelled("Request cancelled"))), responseUUID
 )
 
 @Suppress("LongParameterList")
@@ -274,6 +275,7 @@ internal fun createTestCoreSearchResult(
     distanceMeters: Double? = null,
     etaMinutes: Double? = null,
     center: Point? = null,
+    accuracy: CoreResultAccuracy? = null,
     routablePoints: List<CoreRoutablePoint>? = null,
     categories: List<String>? = null,
     icon: String? = null,
@@ -295,6 +297,7 @@ internal fun createTestCoreSearchResult(
     distanceMeters,
     etaMinutes,
     center,
+    accuracy,
     routablePoints,
     categories,
     icon,

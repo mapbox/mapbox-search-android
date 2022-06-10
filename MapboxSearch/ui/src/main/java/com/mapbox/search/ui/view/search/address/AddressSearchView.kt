@@ -103,6 +103,10 @@ internal class AddressSearchView : ConstraintLayout {
                 searchResultListener?.invoke(searchResult)
             }
 
+            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+                // do nothing
+            }
+
             override fun onError(e: Exception) {
                 // do nothing
             }
