@@ -20,7 +20,6 @@ import com.mapbox.search.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
-import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
@@ -519,13 +518,23 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), EmptySearchCallback)
+        loadOfflineData()
 
-        val callback = BlockingSearchCallback()
-        val task2 = searchEngine.search("Baker street", OfflineSearchOptions(), callback)
-        callback.getResultBlocking()
+        val callback1 = BlockingSearchCallback()
+        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), callback1)
+
+        val callback2 = BlockingSearchCallback()
+        val task2 = searchEngine.search("Baker street", OfflineSearchOptions(), callback2)
+        callback2.getResultBlocking()
+
+        val result = callback1.getResultBlocking()
+        assertTrue(result is SearchEngineResult.Error)
+
+        val exception = (result as SearchEngineResult.Error).e
+        assertEquals(SearchCancellationException("Canceled by a new search request"), exception)
 
         assertTrue(task1.isCancelled)
+
         assertTrue(task2.isDone)
     }
 

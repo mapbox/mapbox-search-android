@@ -74,7 +74,7 @@ internal class ReverseGeocodingSearchTest {
 
     @TestFactory
     fun `Check initial successful geocoding call`() = TestCase {
-        Given("GeocodingSearchEngine with mocked dependencies") {
+        Given("SearchEngine with mocked dependencies") {
             val slotSuggestionCallback = slot<(Result<SearchSuggestion>) -> Unit>()
             every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any(), capture(slotSuggestionCallback)) }.answers {
                 slotSuggestionCallback.captured(Result.success(TEST_SEARCH_SUGGESTION))
@@ -125,7 +125,7 @@ internal class ReverseGeocodingSearchTest {
 
     @TestFactory
     fun `Check initial error search call`() = TestCase {
-        Given("GeocodingSearchEngine with mocked dependencies") {
+        Given("SearchEngine with mocked dependencies") {
             val slotSearchCallback = slot<CoreSearchCallback>()
             val slotSearchOptions = slot<CoreReverseGeoOptions>()
 
@@ -168,7 +168,7 @@ internal class ReverseGeocodingSearchTest {
 
     @TestFactory
     fun `Check initial internal error search call`() = TestCase {
-        Given("GeocodingSearchEngine with erroneous core response") {
+        Given("SearchEngine with erroneous core response") {
             val exception = RuntimeException("Test error")
             every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any(), any()) } throws exception
             val slotSearchCallback = slot<CoreSearchCallback>()
@@ -199,66 +199,31 @@ internal class ReverseGeocodingSearchTest {
     }
 
     @TestFactory
-    fun `Check consecutive search calls`() = TestCase {
-        Given("GeocodingSearchEngine with mocked dependencies") {
-            every { searchResultFactory.createSearchResult(any(), any()) } returns TEST_SEARCH_RESULT
+    fun `Check search call cancellation`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val cancellationReason = "Request cancelled"
 
-            val options1 = ReverseGeoOptions(Point.fromLngLat(10.0, 11.0))
-            val slotSearchCallback1 = slot<CoreSearchCallback>()
-            every { coreEngine.reverseGeocoding(eq(options1.mapToCore()), capture(slotSearchCallback1)) } returns Unit
-
-            val options2 = ReverseGeoOptions(Point.fromLngLat(20.0, 30.0))
-            val slotSearchCallback2 = slot<CoreSearchCallback>()
-            every { coreEngine.reverseGeocoding(eq(options2.mapToCore()), capture(slotSearchCallback2)) } returns Unit
-
-            var searchRequestTask1: SearchRequestTaskImpl<*>? = null
-            When("Search function called for the first time") {
-                val callback1 = mockk<SearchCallback>(relaxed = true)
-                searchRequestTask1 = (searchEngine.search(options1, callback1) as? SearchRequestTaskImpl<*>)
-
-                Then("First task is not executed", false, searchRequestTask1?.isDone)
-                Then("First task is not cancelled", false, searchRequestTask1?.isCancelled)
-                Then(
-                    "First task keeps original listener",
-                    true,
-                    searchRequestTask1?.callbackDelegate != null
-                )
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.reverseGeocoding(eq(TEST_SEARCH_OPTIONS.mapToCore()), capture(slotSearchCallback)) } answers {
+                slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
             }
 
-            var searchRequestTask2: SearchRequestTaskImpl<*>? = null
-            When("Search function called for the second time and first request automatically cancelled") {
-                slotSearchCallback1.captured.run(createTestCoreSearchResponseCancelled())
+            When("Search request cancelled by the Search SDK") {
+                val callback = mockk<SearchCallback>(relaxed = true)
 
-                val callback2 = mockk<SearchCallback>(relaxed = true)
-                searchRequestTask2 = (searchEngine.search(options2, callback2) as? SearchRequestTaskImpl<*>)
+                val task = (searchEngine.search(TEST_SEARCH_OPTIONS, callback) as? SearchRequestTaskImpl<*>)
 
-                Then("First task is not executed", false, searchRequestTask1?.isDone)
-                Then("First task is cancelled", true, searchRequestTask1?.isCancelled)
+                Then("Task is not executed", false, task?.isDone)
+                Then("Task is cancelled", true, task?.isCancelled)
                 Then(
-                    "First task still keeps reference to original listener",
-                    false,
-                    searchRequestTask1?.callbackDelegate != null
-                )
-
-                Then("Second task is not executed", false, searchRequestTask2?.isDone)
-                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-                Then(
-                    "Second task keeps original listener",
+                    "Task released reference to original callback",
                     true,
-                    searchRequestTask2?.callbackDelegate != null
+                    task?.callbackDelegate == null
                 )
-            }
 
-            When("Second search request completes") {
-                slotSearchCallback2.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
-
-                Then("Second task is executed", true, searchRequestTask2?.isDone)
-                Then("Second task is not cancelled", false, searchRequestTask2?.isCancelled)
-                Then(
-                    "Second task released reference to original listener",
-                    true,
-                    searchRequestTask2?.callbackDelegate == null
-                )
+                VerifyOnce("Callback called with cancellation error") {
+                    callback.onError(eq(SearchCancellationException(cancellationReason)))
+                }
             }
         }
     }

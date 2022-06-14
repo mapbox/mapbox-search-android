@@ -75,7 +75,7 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
     @Synchronized
     override fun cancel() {
-        if (isDone) {
+        if (isCompleted) {
             return
         }
 
@@ -88,6 +88,22 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
     }
 
     @Synchronized
+    fun markCancelledAndRunOnCallback(action: T.() -> Unit) {
+        if (isCompleted) {
+            return
+        }
+
+        val delegate = callbackDelegate
+        callbackDelegate = null
+
+        cancel()
+
+        delegate ?: return
+        callbackActionExecuted = true
+        action(delegate)
+    }
+
+    @Synchronized
     fun markExecutedAndRunOnCallback(action: T.() -> Unit) {
         if (isCancelled) {
             return
@@ -95,13 +111,10 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
         isDone = true
 
-        val delegate = callbackDelegate
+        val delegate = callbackDelegate ?: return
         callbackDelegate = null
-
-        if (delegate != null) {
-            callbackActionExecuted = true
-            action(delegate)
-        }
+        callbackActionExecuted = true
+        action(delegate)
     }
 
     companion object {
@@ -119,6 +132,12 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 internal fun <T> SearchRequestTaskImpl<T>.markExecutedAndRunOnCallback(executor: Executor, action: T.() -> Unit) {
     executor.execute {
         markExecutedAndRunOnCallback(action)
+    }
+}
+
+internal fun <T> SearchRequestTaskImpl<T>.markCancelledAndRunOnCallback(executor: Executor, action: T.() -> Unit) {
+    executor.execute {
+        markCancelledAndRunOnCallback(action)
     }
 }
 

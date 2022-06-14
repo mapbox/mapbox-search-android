@@ -107,6 +107,56 @@ internal class SearchRequestTaskTest {
                 Then("Task is still cancelled", true, task.isCancelled)
                 Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
             }
+
+            When("markExecutedAndRunOnCallback() called on non completed task") {
+                val delegate = Runnable {}
+                task = SearchRequestTaskImpl(delegate)
+
+                val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
+                task.markCancelledAndRunOnCallback(callbackAction)
+
+                Verify("Callback action executed") {
+                    callbackAction(delegate)
+                }
+
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is cancelled", true, task.isCancelled)
+                Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
+            }
+
+            When("markExecutedAndRunOnCallback() called on executed task") {
+                val delegate = Runnable {}
+                task = SearchRequestTaskImpl(delegate)
+                task.markExecutedAndRunOnCallback { }
+
+                val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
+                task.markCancelledAndRunOnCallback(callbackAction)
+
+                VerifyNo("Callback action is not executed") {
+                    callbackAction(delegate)
+                }
+
+                Then("Task is executed", true, task.isDone)
+                Then("Task is not cancelled", false, task.isCancelled)
+                Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
+            }
+
+            When("markExecutedAndRunOnCallback() called on cancelled task") {
+                val delegate = Runnable {}
+                task = SearchRequestTaskImpl(delegate)
+                task.cancel()
+
+                val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
+                task.markCancelledAndRunOnCallback(callbackAction)
+
+                VerifyNo("Callback action is not executed") {
+                    callbackAction(delegate)
+                }
+
+                Then("Task is not executed", false, task.isDone)
+                Then("Task is cancelled", true, task.isCancelled)
+                Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
+            }
         }
     }
 }
