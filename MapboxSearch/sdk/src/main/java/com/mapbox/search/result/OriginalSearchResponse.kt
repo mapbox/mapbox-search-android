@@ -21,7 +21,7 @@ internal data class OriginalSearchResponse(
             data class ConnectionError(val message: String) : Error()
 
             @Parcelize
-            data class ServerError(val httpCode: Int, val message: String) : Error()
+            data class HttpError(val httpCode: Int, val message: String) : Error()
 
             @Parcelize
             data class InternalError(val message: String) : Error()
@@ -42,9 +42,9 @@ internal fun CoreSearchResponse.mapToPlatform(): OriginalSearchResponse {
         val error = requireNotNull(results.error)
         when (error.typeInfo) {
             CoreSearchResponseErrorType.CONNECTION_ERROR -> OriginalSearchResponse.Result.Error.ConnectionError(
-                error.httpError.message
+                error.connectionError.message
             )
-            CoreSearchResponseErrorType.HTTP_ERROR -> OriginalSearchResponse.Result.Error.ServerError(
+            CoreSearchResponseErrorType.HTTP_ERROR -> OriginalSearchResponse.Result.Error.HttpError(
                 error.httpError.httpCode,
                 error.httpError.message
             )

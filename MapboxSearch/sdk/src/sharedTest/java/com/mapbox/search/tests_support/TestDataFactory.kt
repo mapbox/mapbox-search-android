@@ -21,7 +21,9 @@ import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.CoreSearchResponseError
 import com.mapbox.search.core.CoreSearchResult
 import com.mapbox.search.core.CoreSuggestAction
+import com.mapbox.search.internal.bindgen.ConnectionError
 import com.mapbox.search.internal.bindgen.HttpError
+import com.mapbox.search.internal.bindgen.InternalError
 import com.mapbox.search.internal.bindgen.RequestCancelled
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.mapToCore
@@ -247,7 +249,7 @@ internal fun createTestCoreSearchResponseSuccess(
     request, ExpectedFactory.createValue(results), responseUUID
 )
 
-internal fun createTestCoreSearchResponseError(
+internal fun createTestCoreSearchResponseHttpError(
     httpCode: Int = 400,
     message: String = "error",
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
@@ -256,11 +258,28 @@ internal fun createTestCoreSearchResponseError(
     request, ExpectedFactory.createError(CoreSearchResponseError(HttpError(httpCode, message))), responseUUID
 )
 
-internal fun createTestCoreSearchResponseCancelled(
+internal fun createTestCoreSearchResponseInternalError(
+    message: String = "Test internal error",
     request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
     responseUUID: String = "test-response-uuid",
 ) = CoreSearchResponse(
-    request, ExpectedFactory.createError(CoreSearchResponseError(RequestCancelled("Request cancelled"))), responseUUID
+    request, ExpectedFactory.createError(CoreSearchResponseError(InternalError(message))), responseUUID
+)
+
+internal fun createTestCoreSearchResponseConnectionError(
+    message: String = "Test connection error",
+    request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
+    responseUUID: String = "test-response-uuid",
+) = CoreSearchResponse(
+    request, ExpectedFactory.createError(CoreSearchResponseError(ConnectionError(message))), responseUUID
+)
+
+internal fun createTestCoreSearchResponseCancelled(
+    reason: String = "Request cancelled",
+    request: CoreRequestOptions = createTestRequestOptions().mapToCore(),
+    responseUUID: String = "test-response-uuid",
+) = CoreSearchResponse(
+    request, ExpectedFactory.createError(CoreSearchResponseError(RequestCancelled(reason))), responseUUID
 )
 
 @Suppress("LongParameterList")

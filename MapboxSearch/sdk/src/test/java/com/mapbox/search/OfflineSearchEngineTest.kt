@@ -19,7 +19,7 @@ import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.createTestCoreReverseGeoOptions
 import com.mapbox.search.tests_support.createTestCoreSearchAddress
-import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseHttpError
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
@@ -253,7 +253,7 @@ internal class OfflineSearchEngineTest {
                 val testRadius = 3.141
                 val slotSearchCallback = slot<CoreSearchCallback>()
 
-                val coreErrorResponse = createTestCoreSearchResponseError(
+                val coreErrorResponse = createTestCoreSearchResponseHttpError(
                     httpCode = 400,
                     message = "Unknown error",
                     request = TEST_REQUEST_OPTIONS.mapToCore(),

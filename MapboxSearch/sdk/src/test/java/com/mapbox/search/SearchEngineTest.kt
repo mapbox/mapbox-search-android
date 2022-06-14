@@ -32,7 +32,7 @@ import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.search.tests_support.createTestCoreSearchResponseCancelled
-import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseHttpError
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestCoreSuggestAction
@@ -623,7 +623,7 @@ internal class SearchEngineTest {
 
         const val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
 
-        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
+        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseHttpError(
             TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
             TEST_REQUEST_OPTIONS,
