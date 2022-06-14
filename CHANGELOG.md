@@ -2,8 +2,11 @@
 
 ## 1.0.0-beta.31-SNAPSHOT
 
+### Bug fixes
+- [CORE] Fixed a bug in the previous version of the Search SDK which didn't include http service implementation by default.
+- 
 ### New features
-- [CORE] Autofill SDK prototype is available now
+- [CORE] Autofill SDK prototype is available now.
 
 ### Mapbox dependencies
 - Search Native SDK `0.54.1`
