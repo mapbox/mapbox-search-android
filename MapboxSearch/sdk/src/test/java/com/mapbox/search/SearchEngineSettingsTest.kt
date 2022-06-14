@@ -7,7 +7,6 @@ import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
 
-@ExperimentalStdlibApi
 internal class SearchEngineSettingsTest {
 
     private val reflectionObjectFactory = ReflectionObjectsFactory(

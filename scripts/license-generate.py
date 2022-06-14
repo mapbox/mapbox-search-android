@@ -19,9 +19,9 @@ def generateLicense(licenseFile, moduleName):
 
         with open(path + "/%s/build/reports/licenses/licenseReleaseReport.json" % moduleName, 'r') as dataFile:
             data = json.load(dataFile)
-            
+
             uniqueProjects = set()
-            
+
             for entry in data:
                 projectName = entry["project"]
                 if not projectName in uniqueProjects :
@@ -58,11 +58,13 @@ try:
         license = "The Apache Software License, Version 2.0"
         license_url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
         licenseFile.write("URL: [%s](%s)  \n" % (project, url) + "License: [%s](%s)" % (license, license_url))
-        
+
         licenseFile.write("\n\n#### Search Core module\n")
         generateLicense(licenseFile, "sdk")
         licenseFile.write("\n\n#### Search UI module\n")
         generateLicense(licenseFile, "ui")
+        licenseFile.write("\n\n#### Search Autofill module\n")
+        generateLicense(licenseFile, "autofill")
 
     licenseFile.close()
 except IOError as err:

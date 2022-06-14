@@ -1,0 +1,80 @@
+public abstract interface class com/mapbox/search/autofill/AddressAutofill {
+	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
+	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/autofill/AddressAutofill$Companion {
+	public final fun create (Lcom/mapbox/search/SearchEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/search/Language;)V
+	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/search/Language;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountries ()Ljava/util/List;
+	public final fun getLanguage ()Lcom/mapbox/search/Language;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public abstract class com/mapbox/search/autofill/AddressAutofillResponse : android/os/Parcelable {
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillResponse$Error : com/mapbox/search/autofill/AddressAutofillResponse {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/Exception;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/Exception;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillResponse$Suggestions : com/mapbox/search/autofill/AddressAutofillResponse {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/List;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSuggestions ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
+	public final fun getSuggestion ()Lcom/mapbox/search/autofill/AddressAutofillSuggestion;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillSuggestion : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getFormattedAddress ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun result ()Lcom/mapbox/search/autofill/AddressAutofillResult;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+

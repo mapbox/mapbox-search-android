@@ -6,7 +6,6 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.full.functions
 import kotlin.reflect.jvm.javaField
 
-@ExperimentalStdlibApi
 @Suppress("SpreadOperator")
 class CopyVerifier(
     private val clazz: KClass<*>,

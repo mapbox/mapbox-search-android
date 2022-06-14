@@ -35,7 +35,6 @@ interface ObjectsFactory {
     }
 }
 
-@ExperimentalStdlibApi
 @Suppress("TooGenericExceptionThrown")
 class ReflectionObjectsFactory(
     private val extraCreators: List<CustomTypeObjectCreator> = emptyList(),

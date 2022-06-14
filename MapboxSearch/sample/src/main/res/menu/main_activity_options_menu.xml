@@ -8,6 +8,11 @@
         />
 
     <item
+        android:id="@+id/open_address_autofill_example"
+        android:title="@string/action_address_autofill_example"
+        />
+
+    <item
         android:id="@+id/open_custom_data_provider_kt_example"
         android:title="@string/action_open_custom_data_provider_kt_example"
         />

@@ -66,10 +66,12 @@ commands:
             ./gradlew :sdk:lint
             ./gradlew :ui:lint
             ./gradlew :sdk-common:lint
+            ./gradlew :autofill:lint
             ./gradlew :sample:lint
             ./gradlew :sdk:ktlint
             ./gradlew :ui:ktlint
             ./gradlew :sdk-common:ktlint
+            ./gradlew :autofill:ktlint
             ./gradlew :sample:ktlint
             ./gradlew detektAll
 
@@ -125,6 +127,7 @@ commands:
             ./gradlew :sdk:testDebugUnitTest -Pcoverage
             ./gradlew :ui:testDebugUnitTest -Pcoverage
             ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
+            ./gradlew :autofill:testDebugUnitTest -Pcoverage
 
   store-results:
     parameters:

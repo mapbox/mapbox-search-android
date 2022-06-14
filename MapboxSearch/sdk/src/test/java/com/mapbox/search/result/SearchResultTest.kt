@@ -6,12 +6,12 @@ import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.withPrefabTestBoundingBox
+import com.mapbox.search.common.withPrefabTestPoint
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.tests_support.withPrefabTestBoundingBox
 import com.mapbox.search.tests_support.withPrefabTestOriginalSearchResult
-import com.mapbox.search.tests_support.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -21,7 +21,6 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 
-@ExperimentalStdlibApi
 internal class SearchResultTest {
 
     @TestFactory

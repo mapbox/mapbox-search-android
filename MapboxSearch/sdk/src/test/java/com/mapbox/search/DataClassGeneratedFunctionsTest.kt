@@ -26,7 +26,6 @@ import org.junit.jupiter.api.TestFactory
 /**
  * Test to track migration from data/sealed/enum class to a regular class.
  */
-@ExperimentalStdlibApi
 internal class DataClassGeneratedFunctionsTest {
 
     private val reflectionObjectFactory = ReflectionObjectsFactory(

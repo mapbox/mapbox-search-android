@@ -12,30 +12,37 @@ public enum class QueryType {
      * Country query type.
      */
     COUNTRY,
+
     /**
      * Region query type.
      */
     REGION,
+
     /**
      * Postcode query type.
      */
     POSTCODE,
+
     /**
      * District query type.
      */
     DISTRICT,
+
     /**
      * Place query type.
      */
     PLACE,
+
     /**
      * Locality query type.
      */
     LOCALITY,
+
     /**
      * Neighborhood query type.
      */
     NEIGHBORHOOD,
+
     /**
      * Street query type.
      *
@@ -43,14 +50,17 @@ public enum class QueryType {
      */
     @Reserved(SBS)
     STREET,
+
     /**
      * Address query type.
      */
     ADDRESS,
+
     /**
      * Poi query type.
      */
     POI,
+
     /**
      * Category query type.
      *

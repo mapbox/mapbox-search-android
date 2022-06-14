@@ -71,6 +71,7 @@ android {
 dependencies {
     implementation project(':sdk')
     implementation project(':ui')
+    implementation project(':autofill')
 
     debugImplementation "androidx.multidex:multidex:$multidex_version"
 
@@ -78,7 +79,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$android_x_appcompat_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx"
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 

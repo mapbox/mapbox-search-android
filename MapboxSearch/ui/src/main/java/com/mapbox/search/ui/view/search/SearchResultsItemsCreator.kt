@@ -50,7 +50,6 @@ internal class SearchResultsItemsCreator(
             val resultItems = results.map {
                 val distance = it.distanceMeters ?: it.coordinate?.let { coordinate ->
                     location?.distanceTo(coordinate)
-                    null
                 }
                 SearchResultAdapterItem.Result.Resolved(
                     resolved = it,

@@ -4,14 +4,14 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.withPrefabTestBoundingBox
+import com.mapbox.search.common.withPrefabTestPoint
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.tests_support.withPrefabTestBoundingBox
 import com.mapbox.search.tests_support.withPrefabTestOriginalSearchResult
-import com.mapbox.search.tests_support.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.spyk
@@ -22,7 +22,6 @@ import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.TestFactory
 
 @Suppress("LargeClass")
-@ExperimentalStdlibApi
 internal class SearchSuggestionTest {
 
     @TestFactory

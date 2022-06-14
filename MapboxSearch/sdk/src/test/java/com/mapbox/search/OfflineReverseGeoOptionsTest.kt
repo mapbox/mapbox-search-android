@@ -3,14 +3,13 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.withPrefabTestPoint
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.tests_support.createTestCoreReverseGeoOptions
-import com.mapbox.search.tests_support.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
 
-@ExperimentalStdlibApi
 internal class OfflineReverseGeoOptionsTest {
 
     private val reflectionObjectFactory = ReflectionObjectsFactory(
