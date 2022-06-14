@@ -220,6 +220,12 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the Mapbox Android Commmon OkHttp SDK.  
+URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Mapbox Android Commmon SDK.  
 URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
@@ -265,6 +271,18 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 Mapbox Search Android uses portions of the Mapbox Search Native SDK for Android.  
 URL: [https://github.com/mapbox/mapbox-search-android](https://github.com/mapbox/mapbox-search-android)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the okhttp.  
+URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Okio.  
+URL: [https://github.com/square/okio/](https://github.com/square/okio/)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
@@ -576,6 +594,12 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the Mapbox Android Commmon OkHttp SDK.  
+URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Mapbox Android Commmon SDK.  
 URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
@@ -626,6 +650,18 @@ License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
 
 Mapbox Search Android uses portions of the Material Components for Android.  
 URL: [https://github.com/material-components/material-components-android](https://github.com/material-components/material-components-android)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the okhttp.  
+URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Okio.  
+URL: [https://github.com/square/okio/](https://github.com/square/okio/)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -872,6 +908,12 @@ License: [The Apache Software License, Version 2.0](https://www.apache.org/licen
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the Mapbox Android Commmon OkHttp SDK.  
+URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Mapbox Android Commmon SDK.  
 URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
@@ -917,6 +959,18 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 Mapbox Search Android uses portions of the Mapbox Search Native SDK for Android.  
 URL: [https://github.com/mapbox/mapbox-search-android](https://github.com/mapbox/mapbox-search-android)  
 License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the okhttp.  
+URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Okio.  
+URL: [https://github.com/square/okio/](https://github.com/square/okio/)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
