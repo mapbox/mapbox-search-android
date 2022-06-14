@@ -32,7 +32,7 @@ import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.search.tests_support.createTestCoreSearchResponseCancelled
-import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseHttpError
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestCoreSuggestAction
@@ -575,7 +575,6 @@ internal class SearchEngineTest {
 
         const val TEST_QUERY = "Minsk"
         val TEST_SEARCH_OPTIONS = SearchOptions()
-        const val TEST_REQUEST_ID = 123
         const val TEST_RESPONSE_UUID = "UUID test"
         const val TEST_RESPONSE_UUID_2 = "UUID test 2"
         const val TEST_DESCRIPTION_TEXT = "Test description text"
@@ -615,20 +614,18 @@ internal class SearchEngineTest {
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS,
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
+        const val TEST_ERROR_CORE_RESPONSE_MESSAGE = "Auth failed"
 
-        val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
+        const val TEST_ERROR_CORE_RESPONSE_HTTP_CODE = 401
 
-        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseError(
+        val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseHttpError(
             TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
-            TEST_REQUEST_ID,
             TEST_REQUEST_OPTIONS,
             TEST_RESPONSE_UUID
         )

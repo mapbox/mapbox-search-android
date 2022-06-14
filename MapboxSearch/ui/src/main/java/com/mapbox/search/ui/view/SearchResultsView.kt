@@ -14,6 +14,7 @@ import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngine
 import com.mapbox.search.OfflineSearchOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchRequestTask
@@ -121,6 +122,23 @@ public class SearchResultsView @JvmOverloads constructor(
             if (mode.isQueryNotEmpty()) {
                 showResults(results, responseInfo, fromCategorySuggestion = true)
                 searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
+            }
+        }
+
+        override fun onError(e: Exception) {
+            if (mode.isQueryNotEmpty()) {
+                showError(UiError.fromException(e))
+                searchResultListeners.forEach { it.onError(e) }
+            }
+        }
+    }
+
+    private val offlineSearchCallback = object : SearchCallback {
+
+        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            if (mode.isQueryNotEmpty()) {
+                showResults(results, responseInfo, fromCategorySuggestion = false)
+                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
             }
         }
 
@@ -323,7 +341,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
             currentSearchRequestTask = when (isOnlineSearch) {
                 true -> searchEngine.search(query, options, searchCallback)
-                false -> offlineSearchEngine.search(query, options.mapToOfflineOptions(), searchCallback)
+                false -> offlineSearchEngine.search(query, options.mapToOfflineOptions(), offlineSearchCallback)
             }
         }
     }
@@ -347,11 +365,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private fun onSuggestionSelected(searchSuggestion: SearchSuggestion) {
         cancelCurrentNetworkRequest()
-
-        currentSearchRequestTask = when (isOnlineSearch) {
-            true -> searchEngine.select(searchSuggestion, searchCallback)
-            false -> offlineSearchEngine.select(searchSuggestion, searchCallback)
-        }
+        currentSearchRequestTask = searchEngine.select(searchSuggestion, searchCallback)
     }
 
     private fun showLoading() {
@@ -537,6 +551,17 @@ public class SearchResultsView @JvmOverloads constructor(
          * @see SearchSelectionCallback.onResult
          */
         public fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo)
+
+        /**
+         * Called when offline search results shown,
+         * i.e. when [SearchCallback.onResults] callback called.
+         *
+         * @param results List of [SearchResult].
+         * @param responseInfo Search response and request information.
+         *
+         * @see SearchCallback.onResult
+         */
+        public fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo)
 
         /**
          * Called if an error occurred during the search request,

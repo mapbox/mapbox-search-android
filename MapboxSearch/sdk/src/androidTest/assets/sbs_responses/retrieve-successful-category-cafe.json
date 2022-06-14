@@ -70,6 +70,7 @@
           "mbx_poi": "category-result-id-1",
           "federated": "category-result-id-1-federated"
         },
+        "accuracy": "point",
         "mapbox_id": "CkIKQDVkN2U0Zjk0MDIzOGY2NDY0NzM2NjNlMWQ0ZWQzOWM5NWJlYmEzMmIxYjM3NzExYTE2NDEzYzgwZjI0M2NmMmQ="
       }
     },
@@ -142,6 +143,7 @@
           "mbx_poi": "category-result-id-2",
           "federated": "category-result-id-2-federated"
         },
+        "accuracy": "rooftop",
         "mapbox_id": "CkIKQDBiNTEzMDk2ZjBhNmI0YTA4NDk0YTQ5MjRjZWExZTFmNWZhN2EwMWFiNDAyYTE5YzQ1ODE1NzA1NTUyYjM5Njc="
       }
     },

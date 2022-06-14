@@ -57,6 +57,7 @@
           "foursquare":"51a2445e5019c80b56934c75",
           "tripadvisor":"188151"
         },
+        "accuracy": "point",
         "routable_points":[
           {
             "name":"Address",

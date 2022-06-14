@@ -32,3 +32,6 @@ internal typealias CoreOfflineIndexChangeEvent = com.mapbox.search.internal.bind
 internal typealias CoreOfflineIndexChangeEventType = com.mapbox.search.internal.bindgen.OfflineIndexChangeEventType
 internal typealias CoreOfflineIndexError = com.mapbox.search.internal.bindgen.OfflineIndexError
 internal typealias CoreOfflineIndexObserver = com.mapbox.search.internal.bindgen.OfflineIndexObserver
+internal typealias CoreResultAccuracy = com.mapbox.search.internal.bindgen.ResultAccuracy
+internal typealias CoreSearchResponseError = com.mapbox.search.internal.bindgen.Error
+internal typealias CoreSearchResponseErrorType = com.mapbox.search.internal.bindgen.Error.Type

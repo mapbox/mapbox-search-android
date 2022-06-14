@@ -11,6 +11,7 @@ import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchRequestContext
@@ -161,6 +162,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             descriptionAddress = "Eiffel Tower, 5 Avenue Anatole France, 75007 Paris, France",
             matchingName = "Eiffel Tower",
             center = Point.fromLngLat(2.294464, 48.858353),
+            accuracy = ResultAccuracy.Point,
             routablePoints = listOf(RoutablePoint(point = Point.fromLngLat(2.294464, 48.858353), name = "Address")),
             icon = "marker",
             distanceMeters = 10.009866290988025,
@@ -420,7 +422,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                "Need to include either a route, bbox, proximity, or origin for category searches",
+                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             (res as BlockingSearchCallback.SearchEngineResult.Error).e

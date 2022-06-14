@@ -46,6 +46,7 @@
         "external_ids":{
           "carmen":"place.11543680732831130"
         },
+        "accuracy": "rooftop",
         "metadata":{
           "iso_3166_1":"by",
           "iso_3166_2":"BY-MI",

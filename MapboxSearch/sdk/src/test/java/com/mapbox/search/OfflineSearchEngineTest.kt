@@ -8,26 +8,21 @@ import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.record.DataProviderResolver
-import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryService
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.createTestCoreReverseGeoOptions
 import com.mapbox.search.tests_support.createTestCoreSearchAddress
-import com.mapbox.search.tests_support.createTestCoreSearchResponseError
+import com.mapbox.search.tests_support.createTestCoreSearchResponseHttpError
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
-import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.utils.concurrent.MainThreadWorker
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.test.dsl.TestCase
@@ -99,7 +94,6 @@ internal class OfflineSearchEngineTest {
     private fun createSearchEngine() {
         searchEngine = OfflineSearchEngineImpl(
             coreEngine = coreEngine,
-            historyService = historyService,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
             engineExecutorService = executorService,
@@ -120,12 +114,7 @@ internal class OfflineSearchEngineTest {
 
         val searchOfflineSlotCallback = slot<CoreSearchCallback>()
         every { coreEngine.searchOffline(any(), any(), any(), capture(searchOfflineSlotCallback)) } answers {
-            searchOfflineSlotCallback.captured.run(TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE)
-        }
-
-        val retrieveOfflineSlotCallback = slot<CoreSearchCallback>()
-        every { coreEngine.retrieveOffline(any(), any(), capture(retrieveOfflineSlotCallback)) } answers {
-            retrieveOfflineSlotCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+            searchOfflineSlotCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
         }
 
         mockHistoryService()
@@ -264,7 +253,7 @@ internal class OfflineSearchEngineTest {
                 val testRadius = 3.141
                 val slotSearchCallback = slot<CoreSearchCallback>()
 
-                val coreErrorResponse = createTestCoreSearchResponseError(
+                val coreErrorResponse = createTestCoreSearchResponseHttpError(
                     httpCode = 400,
                     message = "Unknown error",
                     request = TEST_REQUEST_OPTIONS.mapToCore(),
@@ -378,11 +367,11 @@ internal class OfflineSearchEngineTest {
         Given("OfflineSearchEngine with mocked dependencies") {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
-                slotSearchCallback.captured.run(TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE)
+                slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
             }
 
             When("Initial search called") {
-                val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
+                val callback = mockk<SearchCallback>(relaxed = true)
 
                 val searchRequestTask = searchEngine.search(
                     query = TEST_QUERY,
@@ -407,81 +396,18 @@ internal class OfflineSearchEngineTest {
                 }
 
                 VerifyOnce("Results passed to callback") {
-                    callback.onSuggestions(
-                        listOf(TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION),
+                    callback.onResults(
+                        listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
-                            isReproducible = true,
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            isReproducible = false,
                         )
                     )
                 }
 
                 VerifyNo("onError() wasn't called") {
                     callback.onError(any())
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check offline forward geocoding selection`() = TestCase {
-        Given("OfflineSearchEngine with mocked dependencies") {
-            val slotSearchCallback = slot<CoreSearchCallback>()
-            every { coreEngine.retrieveOffline(any(), any(), capture(slotSearchCallback)) } answers {
-                slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
-            }
-
-            val historyServiceCompletionCallbackSlot = mockHistoryService()
-
-            When("Suggestion selected") {
-                val callback = mockk<SearchSelectionCallback>(relaxed = true)
-
-                val searchRequestTask = searchEngine.select(
-                    suggestion = TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION,
-                    options = TEST_SELECT_OPTIONS,
-                    executor = executor,
-                    callback = callback
-                ) as SearchRequestTaskImpl<*>
-
-                VerifyOnce("CoreSearchEngine.retrieveOffline() Called") {
-                    coreEngine.retrieveOffline(any(), any(), any())
-                }
-
-                Then("SearchRequestTask released reference to callback", null, searchRequestTask.callbackDelegate)
-
-                VerifyOnce("Callbacks called inside executor") {
-                    executor.execute(any())
-                }
-
-                VerifyOnce("CoreSearchEngine.onSelected() called") {
-                    coreEngine.onSelected(TEST_REQUEST_OPTIONS.mapToCore(), TEST_RETRIEVED_CORE_SEARCH_RESULT)
-                }
-
-                VerifyOnce("Selected result added to search history") {
-                    historyService.addToHistoryIfNeeded(
-                        searchResult = TEST_SEARCH_RESULT,
-                        executor = executorService,
-                        callback = historyServiceCompletionCallbackSlot.captured
-                    )
-                }
-
-                VerifyOnce("Results passed to callback") {
-                    callback.onResult(
-                        TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION,
-                        TEST_SEARCH_RESULT,
-                        ResponseInfo(
-                            requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = null,
-                            isReproducible = false,
-                        )
-                    )
-                }
-
-                VerifyNo("Other callback functions weren't called") {
-                    callback.onError(any())
-                    callback.onSuggestions(any(), any())
-                    callback.onCategoryResult(any(), any(), any())
                 }
             }
         }
@@ -497,58 +423,13 @@ internal class OfflineSearchEngineTest {
                     callback = mockk(relaxed = true)
                 )
 
-                searchEngine.select(
-                    suggestion = TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION,
-                    callback = mockk(relaxed = true)
-                )
-
-                Verify("SearchSdkMainThreadWorker.mainExecutor accessed", exactly = 2) {
+                Verify("SearchSdkMainThreadWorker.mainExecutor accessed", exactly = 1) {
                     testMainThreadWorker.mainExecutor
                 }
 
-                Verify("Callback called inside executor", exactly = 2) {
+                Verify("Callback called inside executor", exactly = 1) {
                     executor.execute(any())
                 }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check search selection with unsupported suggestion type`() = TestCase {
-        Given("OfflineSearchEngine with mocked dependencies") {
-            val slotError = slot<Exception>()
-            val callback = mockk<SearchSelectionCallback>()
-            every { callback.onError(capture(slotError)) } returns Unit
-
-            When("Non platform suggestion selected") {
-                val task = searchEngine.select(
-                    suggestion = TEST_USER_RECORD_SEARCH_SUGGESTION,
-                    options = TEST_SELECT_OPTIONS,
-                    executor = executor,
-                    callback = callback
-                ) as SearchRequestTaskImpl<*>
-
-                VerifyNo("CoreSearchEngine.onSelected in not called") {
-                    coreEngine.onSelected(any(), any())
-                }
-
-                VerifyOnce("Error passed to callback") {
-                    callback.onError(any())
-                }
-
-                VerifyNo("Other callback functions weren't called") {
-                    callback.onResult(any(), any(), any())
-                    callback.onSuggestions(any(), any())
-                    callback.onCategoryResult(any(), any(), any())
-                }
-
-                Then(
-                    "Error should be IllegalArgumentException",
-                    true,
-                    IllegalArgumentException("Unsupported suggestion type for offline search: IndexableRecordSearchSuggestion").equalsTo(slotError.captured)
-                )
-
-                Then("SearchRequestTask released reference to callback", true, task.callbackDelegate == null)
             }
         }
     }
@@ -566,7 +447,7 @@ internal class OfflineSearchEngineTest {
 
             var searchRequestTask1: SearchRequestTaskImpl<*>? = null
             When("Search function called for the first time") {
-                val callback1 = mockk<SearchSuggestionsCallback>(relaxed = true)
+                val callback1 = mockk<SearchCallback>(relaxed = true)
 
                 searchRequestTask1 =
                     (searchEngine.search(searchQuery1, OfflineSearchOptions(), callback1) as? SearchRequestTaskImpl<*>)
@@ -590,7 +471,7 @@ internal class OfflineSearchEngineTest {
                 slotSearchCallback1.captured.run(createTestCoreSearchResponseCancelled())
                  */
 
-                val callback2 = mockk<SearchSuggestionsCallback>(relaxed = true)
+                val callback2 = mockk<SearchCallback>(relaxed = true)
 
                 searchRequestTask2 =
                     (searchEngine.search(searchQuery2, OfflineSearchOptions(), callback2) as? SearchRequestTaskImpl<*>)
@@ -637,29 +518,10 @@ internal class OfflineSearchEngineTest {
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_ADDRESS = createTestCoreSearchAddress()
 
-        val TEST_SELECT_OPTIONS = SelectOptions()
-
         val TEST_REQUEST_OPTIONS = createTestRequestOptions(
             query = "",
             options = SearchOptions(proximity = TEST_USER_LOCATION),
             requestContext = TEST_SEARCH_REQUEST_CONTEXT
-        )
-
-        val TEST_FORWARD_GEOCODING_CORE_SUGGESTION = createTestCoreSearchResult(
-            types = listOf(ResultType.ADDRESS),
-            addresses = listOf(TEST_SEARCH_ADDRESS),
-        )
-
-        val TEST_FORWARD_GEOCODING_PLATFORM_SUGGESTION = ServerSearchSuggestion(
-            originalSearchResult = TEST_FORWARD_GEOCODING_CORE_SUGGESTION.mapToPlatform(),
-            requestOptions = TEST_REQUEST_OPTIONS,
-            isFromOffline = true
-        )
-
-        val TEST_FORWARD_GEOCODING_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            request = TEST_REQUEST_OPTIONS.mapToCore(),
-            results = listOf(TEST_FORWARD_GEOCODING_CORE_SUGGESTION),
-            responseUUID = TEST_RESPONSE_UUID
         )
 
         val TEST_RETRIEVED_CORE_SEARCH_RESULT = createTestCoreSearchResult(
@@ -678,20 +540,6 @@ internal class OfflineSearchEngineTest {
             types = listOf(SearchResultType.ADDRESS),
             originalSearchResult = TEST_RETRIEVED_CORE_SEARCH_RESULT.mapToPlatform(),
             requestOptions = TEST_REQUEST_OPTIONS
-        )
-
-        val TEST_USER_RECORD_SEARCH_RESULT = createTestCoreSearchResult(
-            id = "test-record-id",
-            types = listOf(ResultType.USER_RECORD),
-            center = Point.fromLngLat(20.0, 30.0),
-            layerId = FavoritesDataProvider.PROVIDER_NAME,
-            userRecordId = "test-record-id"
-        )
-
-        val TEST_USER_RECORD_SEARCH_SUGGESTION = IndexableRecordSearchSuggestion(
-            createTestFavoriteRecord(),
-            originalSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToPlatform(),
-            requestOptions = TEST_REQUEST_OPTIONS,
         )
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")

@@ -9,7 +9,7 @@ import com.mapbox.search.common.reportRelease
 import com.mapbox.search.common.throwDebug
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.internal.bindgen.SearchResponseError
+import com.mapbox.search.core.CoreSearchResponseErrorType
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.markExecutedAndRunOnCallback
 import com.mapbox.search.plusAssign
@@ -18,6 +18,7 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.utils.extension.toPlatformHttpException
+import java.io.IOException
 import java.util.concurrent.Executor
 
 internal class OneStepRequestCallbackWrapper(
@@ -49,7 +50,17 @@ internal class OneStepRequestCallbackWrapper(
                     }
 
                     when (coreError.typeInfo) {
-                        SearchResponseError.Type.HTTP_ERROR -> {
+                        CoreSearchResponseErrorType.CONNECTION_ERROR -> {
+                            val error = IOException(
+                                "Unable to perform search request: ${coreError.connectionError.message}"
+                            )
+
+                            reportRelease(error)
+                            searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                                onError(error)
+                            }
+                        }
+                        CoreSearchResponseErrorType.HTTP_ERROR -> {
                             val error = coreError.toPlatformHttpException()
 
                             reportRelease(error)
@@ -57,7 +68,7 @@ internal class OneStepRequestCallbackWrapper(
                                 onError(error)
                             }
                         }
-                        SearchResponseError.Type.INTERNAL_ERROR -> {
+                        CoreSearchResponseErrorType.INTERNAL_ERROR -> {
                             val error = Exception(
                                 "Unable to perform search request: ${coreError.internalError.message}"
                             )
@@ -67,7 +78,7 @@ internal class OneStepRequestCallbackWrapper(
                                 onError(error)
                             }
                         }
-                        SearchResponseError.Type.REQUEST_CANCELLED -> {
+                        CoreSearchResponseErrorType.REQUEST_CANCELLED -> {
                             searchRequestTask.cancel()
                         }
                         null -> {
