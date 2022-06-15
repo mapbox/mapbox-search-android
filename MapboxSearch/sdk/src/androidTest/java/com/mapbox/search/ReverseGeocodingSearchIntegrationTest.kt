@@ -126,7 +126,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         // We don't test `reverseMode` because SBS doesn't accept it anymore.
 
         assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
-        assertEquals(TESTING_USER_AGENT, request.headers["User-Agent"])
     }
 
     @Test

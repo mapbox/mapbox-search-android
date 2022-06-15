@@ -516,28 +516,6 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         assertTrue(results.isEmpty())
     }
 
-    @Test
-    fun testConsecutiveRequests() {
-        loadOfflineData()
-
-        val callback1 = BlockingSearchCallback()
-        val task1 = searchEngine.search("Baker street", OfflineSearchOptions(), callback1)
-
-        val callback2 = BlockingSearchCallback()
-        val task2 = searchEngine.search("Baker street", OfflineSearchOptions(), callback2)
-        callback2.getResultBlocking()
-
-        val result = callback1.getResultBlocking()
-        assertTrue(result is SearchEngineResult.Error)
-
-        val exception = (result as SearchEngineResult.Error).e
-        assertEquals(SearchCancellationException("Canceled by a new search request"), exception)
-
-        assertTrue(task1.isCancelled)
-
-        assertTrue(task2.isDone)
-    }
-
     companion object {
 
         private val tileStore: TileStore = TileStore.create()
