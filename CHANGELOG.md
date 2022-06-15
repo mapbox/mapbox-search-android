@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.31-SNAPSHOT
+## 1.0.0-beta.31
 
 ### Breaking changes
 - [CORE] `OfflineSearchEngine` is a 1-step search now, which means that `SearchResult`'s returned in the first step without `SearchSuggestion` selection. `OfflineSearchEngine.select()` function has been removed. `OfflineSearchEngine.search()` accepts `SearchCallback` callback type.
