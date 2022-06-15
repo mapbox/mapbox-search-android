@@ -23,7 +23,7 @@ internal class OfflineSearchEngineImpl(
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService,
     override val tileStore: TileStore,
-) : BaseSearchEngine(autoCancelPreviousRequest = true), OfflineSearchEngine {
+) : BaseSearchEngine(), OfflineSearchEngine {
 
     private val initializationLock = Any()
     private val engineReadyCallbacks = mutableMapOf<EngineReadyCallback, Executor>()

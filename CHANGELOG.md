@@ -4,6 +4,7 @@
 
 ### Breaking changes
 - [CORE] `OfflineSearchEngine` is a 1-step search now, which means that `SearchResult`'s returned in the first step without `SearchSuggestion` selection. `OfflineSearchEngine.select()` function has been removed. `OfflineSearchEngine.search()` accepts `SearchCallback` callback type.
+- [CORE] Now automatically cancelled by the Search SDK search requests made to the `SearchEngine` and `OfflineSearchEngine` will be passing `SearchCancellationException` to the corresponding callbacks of `SearchCallback`, `SearchSuggestionsCallback`, and `SearchSelectionCallback`.
 - [UI] Now `SearchResultsView.SearchListener` has a new function `onOfflineSearchResults()`.
 
 ### New features

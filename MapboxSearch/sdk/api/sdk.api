@@ -733,6 +733,14 @@ public abstract interface class com/mapbox/search/SearchCallback {
 	public abstract fun onResults (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 }
 
+public final class com/mapbox/search/SearchCancellationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class com/mapbox/search/SearchEngine {
 	public abstract fun getApiType ()Lcom/mapbox/search/ApiType;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/AsyncOperationTask;

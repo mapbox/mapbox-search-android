@@ -3,7 +3,6 @@ package com.mapbox.search
 import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
-import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
@@ -119,7 +118,9 @@ public interface OfflineSearchEngine {
     )
 
     /**
-     * The first step of the offline forward geocoding. Returns a list of [SearchSuggestion] without coordinates.
+     * Performs forward geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param query Search query.
      * @param options Search options.
@@ -137,7 +138,9 @@ public interface OfflineSearchEngine {
     ): SearchRequestTask
 
     /**
-     * The first step of the offline forward geocoding. Returns a list of [SearchSuggestion] without coordinates.
+     * Performs forward geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param query Search query.
      * @param options Search options.
@@ -158,7 +161,9 @@ public interface OfflineSearchEngine {
     )
 
     /**
-     * Performs reverse geocoding.
+     * Performs reverse geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param options Reverse geocoding options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
@@ -172,7 +177,9 @@ public interface OfflineSearchEngine {
     ): SearchRequestTask
 
     /**
-     * Performs reverse geocoding.
+     * Performs reverse geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param options Reverse geocoding options.
      * @param callback Search result callback, delivers results on the main thread.
@@ -189,6 +196,8 @@ public interface OfflineSearchEngine {
 
     /**
      * Searches for addresses nearby (around [proximity] point), matched with specified [street] name.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param street Street name to match.
      * @param proximity Coordinate to search in its vicinity.
@@ -207,6 +216,8 @@ public interface OfflineSearchEngine {
 
     /**
      * Searches for addresses nearby (around [proximity] point), matched with specified [street] name.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
      *
      * @param street Street name to match.
      * @param proximity Coordinate to search in its vicinity.

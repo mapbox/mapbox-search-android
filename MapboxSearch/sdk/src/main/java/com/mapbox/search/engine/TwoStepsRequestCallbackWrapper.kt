@@ -6,6 +6,7 @@ import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchCancellationException
 import com.mapbox.search.SearchRequestTaskImpl
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
@@ -18,6 +19,7 @@ import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.CoreSearchResponseErrorType
 import com.mapbox.search.mapToPlatform
+import com.mapbox.search.markCancelledAndRunOnCallback
 import com.mapbox.search.markExecutedAndRunOnCallback
 import com.mapbox.search.plusAssign
 import com.mapbox.search.record.HistoryService
@@ -94,7 +96,9 @@ internal class TwoStepsRequestCallbackWrapper(
                             }
                         }
                         CoreSearchResponseErrorType.REQUEST_CANCELLED -> {
-                            searchRequestTask.cancel()
+                            searchRequestTask.markCancelledAndRunOnCallback(callbackExecutor) {
+                                onError(SearchCancellationException(coreError.requestCancelled.reason))
+                            }
                         }
                         null -> {
                             val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")

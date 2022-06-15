@@ -674,6 +674,11 @@ package com.mapbox.search {
     method public void onResults(java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
+  public final class SearchCancellationException extends java.lang.RuntimeException {
+    ctor public SearchCancellationException(String message);
+    property public String message;
+  }
+
   public interface SearchEngine {
     method public com.mapbox.search.ApiType getApiType();
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);

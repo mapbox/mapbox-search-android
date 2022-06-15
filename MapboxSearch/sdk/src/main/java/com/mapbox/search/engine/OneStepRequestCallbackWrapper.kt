@@ -4,6 +4,7 @@ import androidx.collection.SparseArrayCompat
 import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
+import com.mapbox.search.SearchCancellationException
 import com.mapbox.search.SearchRequestTaskImpl
 import com.mapbox.search.common.reportRelease
 import com.mapbox.search.common.throwDebug
@@ -11,6 +12,7 @@ import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.core.CoreSearchResponseErrorType
 import com.mapbox.search.mapToPlatform
+import com.mapbox.search.markCancelledAndRunOnCallback
 import com.mapbox.search.markExecutedAndRunOnCallback
 import com.mapbox.search.plusAssign
 import com.mapbox.search.result.SearchRequestContext
@@ -79,7 +81,9 @@ internal class OneStepRequestCallbackWrapper(
                             }
                         }
                         CoreSearchResponseErrorType.REQUEST_CANCELLED -> {
-                            searchRequestTask.cancel()
+                            searchRequestTask.markCancelledAndRunOnCallback(callbackExecutor) {
+                                onError(SearchCancellationException(coreError.requestCancelled.reason))
+                            }
                         }
                         null -> {
                             val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")
