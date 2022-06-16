@@ -1,5 +1,14 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.33-SNAPSHOT
+
+### Mapbox dependencies
+- Search Native SDK `0.56.0`
+- Common SDK `22.0.0`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-beta.32
 
 Same release as `1.0.0-beta.31` but with Common SDK `22.0.0`.
@@ -20,10 +29,10 @@ Same release as `1.0.0-beta.31` but with Common SDK `22.0.0`.
 
 ### New features
 - [CORE] Autofill SDK prototype is available now.
+- [CORE] Now `SearchResult` provides a new `accuracy` field which is a point accuracy metric for the returned address.
 
 ### Bug fixes
 - [CORE] Fixed a bug in the previous version of the Search SDK which didn't include http service implementation by default.
-- [CORE] Now `SearchResult` provides a new `accuracy` field which is a point accuracy metric for the returned address.
 
 ### Mapbox dependencies
 - Search Native SDK `0.55.0`
