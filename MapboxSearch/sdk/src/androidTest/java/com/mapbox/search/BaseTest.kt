@@ -5,7 +5,6 @@ import androidx.annotation.CallSuper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
-import com.mapbox.search.common.BuildConfig
 import okhttp3.mockwebserver.MockResponse
 import org.junit.After
 import org.junit.Before
@@ -44,13 +43,6 @@ internal abstract class BaseTest {
 
         const val DEFAULT_TEST_ACCESS_TOKEN = "pk.test"
         val DEFAULT_TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
-
-        val TESTING_USER_AGENT: String
-            get() = if (BuildConfig.DEBUG) {
-                "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
-            } else {
-                "search-sdk-android/${BuildConfig.VERSION_NAME}"
-            }
 
         fun Double.format(digits: Int) = "%.${digits}f".format(Locale.ENGLISH, this)
 

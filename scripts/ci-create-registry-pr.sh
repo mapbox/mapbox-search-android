@@ -37,6 +37,9 @@ cp "$INITIAL_PATH/sdk-registry-config-templates/search-sdk-common-android.yaml" 
 # For iOS, both SDK and UI SDK artifacts are described in a `search-sdk` config
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-ui-sdk-android.yaml" "${TMPDIR}/config/search-ui-sdk/${VERSION}.yaml"
 
+mkdir -p "${TMPDIR}/config/search-autofill-sdk"
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-autofill-android.yaml" "${TMPDIR}/config/search-autofill-sdk/${VERSION}.yaml"
+
 if grep -q ios "${TMPDIR}/config/search-sdk/${VERSION}.yaml"; then
   cp "$INITIAL_PATH/sdk-registry-config-templates/search-sdk-android-ios.yaml" "${TMPDIR}/config/search-sdk/${VERSION}.yaml"
 else

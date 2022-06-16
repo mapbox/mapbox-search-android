@@ -142,7 +142,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.
 
         assertFalse(request.headers["X-Request-ID"].isNullOrBlank())
-        assertEquals(TESTING_USER_AGENT, request.headers["User-Agent"])
     }
 
     @Test
