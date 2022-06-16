@@ -9,5 +9,6 @@ pushd MapboxSearch/
 ./gradlew :sdk:mapboxSDKRegistryUpload
 ./gradlew :ui:mapboxSDKRegistryUpload
 ./gradlew :sdk-common:mapboxSDKRegistryUpload
+./gradlew :autofill:mapboxSDKRegistryUpload
 
 popd
