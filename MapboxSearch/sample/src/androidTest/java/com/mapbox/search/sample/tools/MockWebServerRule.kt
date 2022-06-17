@@ -10,12 +10,12 @@ class MockWebServerRule : TestWatcher() {
 
     lateinit var mockServer: MockWebServer
 
-    override fun starting(description: Description?) {
+    override fun starting(description: Description) {
         mockServer = MockWebServer()
         mockServer.start(DEFAULT_PORT)
     }
 
-    override fun finished(description: Description?) {
+    override fun finished(description: Description) {
         try {
             mockServer.shutdown()
         } catch (e: IOException) {

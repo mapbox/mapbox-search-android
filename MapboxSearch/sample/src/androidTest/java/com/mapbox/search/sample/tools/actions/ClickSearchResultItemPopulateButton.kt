@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.matcher.ViewMatchers
-import com.mapbox.search.sample.R
+import com.mapbox.search.ui.R
 import org.hamcrest.Matcher
 
 class ClickSearchResultItemPopulateButton : ViewAction {

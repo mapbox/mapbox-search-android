@@ -9,62 +9,23 @@
     <dimen name="mapbox_search_sdk_dimen_6x">24dp</dimen>
     <dimen name="mapbox_search_sdk_dimen_7x">28dp</dimen>
     <dimen name="mapbox_search_sdk_dimen_8x">32dp</dimen>
-    <dimen name="mapbox_search_sdk_dimen_9x">36dp</dimen>
-    <dimen name="mapbox_search_sdk_dimen_10x">40dp</dimen>
-    <dimen name="mapbox_search_sdk_dimen_11x">44dp</dimen>
-    <dimen name="mapbox_search_sdk_dimen_12x">48dp</dimen>
-
 
     <dimen name="mapbox_search_sdk_extra_touch_area">12dp</dimen>
     <dimen name="mapbox_search_sdk_button_extra_tap_area_edge_offset">6dp</dimen>
 
     <dimen name="mapbox_search_sdk_primary_layout_offset">22dp</dimen>
     <dimen name="mapbox_search_sdk_list_item_icon_horizontal_margin">10dp</dimen>
-    <dimen name="mapbox_search_sdk_list_item_height_simple_item">50dp</dimen>
     <dimen name="mapbox_search_sdk_list_item_height_complex_item">68dp</dimen>
     <dimen name="mapbox_search_sdk_list_complex_item_top_margin">14dp</dimen>
-    <dimen name="mapbox_search_sdk_list_complex_item_bottom_margin">10dp</dimen>
-
-    <dimen name="mapbox_search_sdk_list_item_height_add_favorite">59dp</dimen>
 
     <dimen name="mapbox_search_sdk_list_item_start_padding_with_start_icon_margin">32dp</dimen>
 
-    <dimen name="mapbox_search_sdk_search_view_tongue_corner_radius">2dp</dimen>
-    <dimen name="mapbox_search_sdk_search_view_tongue_height">4dp</dimen>
-    <dimen name="mapbox_search_sdk_search_view_tongue_width">48dp</dimen>
-    <dimen name="mapbox_search_sdk_search_view_tongue_margin_top">10dp</dimen>
     <dimen name="mapbox_search_sdk_search_view_margin_horizontal">16dp</dimen>
     <dimen name="mapbox_search_sdk_search_view_max_width">380dp</dimen>
     <dimen name="mapbox_search_sdk_search_view_margin_top">16dp</dimen>
     <dimen name="mapbox_search_sdk_search_view_background_radius">8dp</dimen>
 
-    <dimen name="mapbox_search_sdk_search_view_hot_category_size">44dp</dimen>
-
-    <dimen name="mapbox_search_sdk_search_input_view_drawable_padding">10dp</dimen>
-    <dimen name="mapbox_search_sdk_search_input_view_layout_margin_top">10dp</dimen>
-    <dimen name="mapbox_search_sdk_search_input_view_edit_text_height">44dp</dimen>
-    <dimen name="mapbox_search_sdk_search_input_view_edit_text_corner_radius">4dp</dimen>
-    <dimen name="mapbox_search_sdk_search_input_view_edit_text_padding_start">16dp</dimen>
-    <!-- mapbox_search_sdk_search_input_view_edit_text_horizontal_padding + mapbox_search_sdk_ic_clear_button's width + 8dp-->
-    <dimen name="mapbox_search_sdk_search_input_view_edit_text_padding_end">48dp</dimen>
-
-    <dimen name="mapbox_search_sdk_search_input_view_edit_text_vertical_padding">12dp</dimen>
-
-    <dimen name="mapbox_search_sdk_category_suggestion_search_view_title_top_margin">22dp</dimen>
-    <dimen name="mapbox_search_sdk_category_suggestion_search_view_back_button_start_margin">16dp</dimen>
-
     <dimen name="mapbox_search_sdk_search_history_item_name_margin_top">12dp</dimen>
 
-    <dimen name="mapbox_search_sdk_search_tab_view_container_tab_background_radius">6dp</dimen>
-    <dimen name="mapbox_search_sdk_search_tab_view_container_tab_height">26dp</dimen>
-    <dimen name="mapbox_search_sdk_search_tab_view_container_tab_horizontal_padding">16dp</dimen>
-    <dimen name="mapbox_search_sdk_search_tab_view_container_tab_min_width">100dp</dimen>
-
-    <dimen name="mapbox_search_sdk_toolbar_height">60dp</dimen>
-    <dimen name="mapbox_search_sdk_toolbar_horizontal_margins">16dp</dimen>
-    <dimen name="mapbox_search_sdk_toolbar_elevation">2dp</dimen>
-
     <dimen name="mapbox_search_sdk_divider_height">1dp</dimen>
-
-    <dimen name="mapbox_search_sdk_categories_card_peek_height">320dp</dimen>
 </resources>

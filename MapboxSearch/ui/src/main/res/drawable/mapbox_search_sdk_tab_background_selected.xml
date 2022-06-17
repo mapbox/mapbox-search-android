@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="@dimen/mapbox_search_sdk_search_tab_view_container_tab_background_radius" />
-    <solid android:color="?attr/mapboxSearchSdkPrimaryAccentColor" />
-</shape>

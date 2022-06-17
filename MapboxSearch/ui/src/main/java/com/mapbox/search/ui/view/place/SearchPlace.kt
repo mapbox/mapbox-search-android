@@ -13,7 +13,6 @@ import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback
 import kotlinx.parcelize.Parcelize
 
 /**

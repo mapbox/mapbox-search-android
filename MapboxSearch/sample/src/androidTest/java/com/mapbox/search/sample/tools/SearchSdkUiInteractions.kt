@@ -22,7 +22,7 @@ object SearchSdkUiInteractions {
         Thread.sleep(DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS)
         waitUntilViewAssertionSuccessful(timeout = MAX_NETWORK_REQUEST_TIMEOUT_MILLIS) {
             assertCustomAssertionAtPosition(
-                R.id.search_results_view,
+                com.mapbox.search.sample.R.id.search_results_view,
                 0,
                 viewAssertion = matches(not(isSearchProgressItem()))
             )

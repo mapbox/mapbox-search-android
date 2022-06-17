@@ -61,17 +61,4 @@
         <item name="mapboxSearchSdkBackgroundColor">#252525</item>
     </style>
 
-    <!-- Internal themes -->
-    <eat-comment/>
-
-    <style name="MapboxSearchSdk.Internal.Theme.CursorTinting" parent="">
-        <item name="colorAccent">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
-        <item name="colorControlNormal">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
-        <item name="colorPrimary">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
-    </style>
-
-    <style name="MapboxSearchSdk.Internal.Theme.BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="android:colorBackground">?attr/mapboxSearchSdkBackgroundColor</item>
-    </style>
-
 </resources>

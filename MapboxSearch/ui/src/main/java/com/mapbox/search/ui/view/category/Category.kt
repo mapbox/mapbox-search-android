@@ -6,38 +6,30 @@ import androidx.annotation.StringRes
 import com.mapbox.search.ui.R
 import kotlinx.parcelize.Parcelize
 
-/*
- * TODO(search-sdk/#708): Review categories list
- *
- * Internal doc:
- * SBS categories canonical names https://github.com/mapbox/tag-to-category/blob/master/reference/categories.csv
- */
-
 /**
- * Experimental API, can be changed or removed in the next SDK releases.
- *
  * Represents a category of POI. This class also defines a list of commonly used categories.
+ * Internal: SBS categories canonical names https://github.com/mapbox/tag-to-category/blob/master/reference/categories.csv
  */
 @Suppress("LargeClass")
 @Parcelize
-public class Category(
+internal class Category(
 
     /**
      * Category canonical name used in Geocoding API. Can be empty if you don't use SBS endpoint for search.
      * See [List of the most common POI categories](https://docs.mapbox.com/api/search/geocoding/#point-of-interest-category-coverage).
      */
-    public val geocodingCanonicalName: String,
+    val geocodingCanonicalName: String,
 
     /**
      * Category canonical name used in Single Box Search API. Can be empty if you don't use SBS endpoint for search.
      * Contact our team if you need more information about SBS categories.
      */
-    public val sbsCanonicalName: String,
+    val sbsCanonicalName: String,
 
     /**
      * Category visual presentation.
      */
-    public val presentation: Presentation
+    val presentation: Presentation
 ) : Parcelable {
 
     /**

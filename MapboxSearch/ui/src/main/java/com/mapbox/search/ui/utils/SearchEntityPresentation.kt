@@ -1,7 +1,6 @@
 package com.mapbox.search.ui.utils
 
 import android.content.Context
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
@@ -12,19 +11,11 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
-import com.mapbox.search.ui.utils.maki.MakiToDrawableIdMapper
 import com.mapbox.search.ui.view.category.Category
 import com.mapbox.search.ui.view.place.SearchPlace
 import java.util.Locale
 
 internal object SearchEntityPresentation {
-
-    @DrawableRes
-    fun pickEntityDrawable(makiIcon: String?, categories: List<String>?, @DrawableRes fallback: Int): Int {
-        return MakiToDrawableIdMapper.getDrawableIdByMaki(makiIcon) ?: categories?.asSequence()
-                ?.map { Category.findByCanonicalName(it) }
-                ?.firstOrNull { it != null }?.presentation?.icon ?: fallback
-    }
 
     fun getAddressOrResultType(context: Context, searchSuggestion: SearchSuggestion): String? {
         val descriptionText = searchSuggestion.descriptionText

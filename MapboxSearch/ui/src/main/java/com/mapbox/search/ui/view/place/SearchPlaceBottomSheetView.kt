@@ -28,7 +28,6 @@ import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchSdkFrameLayout
 import com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
-import com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback
 import kotlinx.parcelize.Parcelize
 import java.util.UUID
 import java.util.concurrent.CopyOnWriteArrayList

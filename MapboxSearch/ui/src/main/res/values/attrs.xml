@@ -59,20 +59,8 @@
     <!-- Internal attributes -->
     <eat-comment/>
 
-    <declare-styleable name="HotCategoriesView">
-        <attr name="categoryItemIconWidth" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="MapboxSdkButtonWithIcon">
         <attr name="iconSrc" format="integer" />
         <attr name="drawableTintCompat" format="color" />
-    </declare-styleable>
-
-    <declare-styleable name="MapboxFadeView">
-        <attr name="mode" format="enum">
-            <enum name="normal" value="0"/>
-            <enum name="light" value="1"/>
-        </attr>
-        <attr name="fadeColor" format="color"/>
     </declare-styleable>
 </resources>

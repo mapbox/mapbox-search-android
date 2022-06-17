@@ -2,7 +2,7 @@ package com.mapbox.search.sample.tools.matchers
 
 import android.view.View
 import android.widget.TextView
-import com.mapbox.search.sample.R
+import com.mapbox.search.ui.R
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 

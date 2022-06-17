@@ -1,82 +1,112 @@
 package com.mapbox.search.sample
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
+import com.mapbox.search.ResponseInfo
+import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
-import com.mapbox.search.ui.view.SearchBottomSheetView
-import com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView
-import com.mapbox.search.ui.view.feedback.SearchFeedbackBottomSheetView
-import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import com.mapbox.search.ui.view.SearchResultsView
 
 class CustomThemeActivity : AppCompatActivity() {
 
-    private lateinit var searchBottomSheetView: SearchBottomSheetView
-    private lateinit var searchPlaceView: SearchPlaceBottomSheetView
-    private lateinit var searchCategoriesView: SearchCategoriesBottomSheetView
-    private lateinit var feedbackBottomSheetView: SearchFeedbackBottomSheetView
-
-    private lateinit var cardsMediator: SearchViewBottomSheetsMediator
+    private lateinit var searchResultsView: SearchResultsView
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_custom_theme)
 
-        searchBottomSheetView = findViewById(R.id.search_view)
-        searchBottomSheetView.initializeSearch(savedInstanceState, SearchBottomSheetView.Configuration())
-
-        searchPlaceView = findViewById(R.id.search_place_view)
-        searchPlaceView.initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
-
-        searchCategoriesView = findViewById(R.id.search_categories_view)
-        searchCategoriesView.initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
-
-        feedbackBottomSheetView = findViewById(R.id.search_feedback_view)
-        feedbackBottomSheetView.initialize(savedInstanceState)
-
-        cardsMediator = SearchViewBottomSheetsMediator(
-            searchBottomSheetView,
-            searchPlaceView,
-            searchCategoriesView,
-            feedbackBottomSheetView,
-        )
-
-        savedInstanceState?.let {
-            cardsMediator.onRestoreInstanceState(it)
+        searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
+            initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
+            isVisible = false
         }
 
-        if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_LOCATION
-            )
+        searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+
+            override fun onCategoryResult(
+                suggestion: SearchSuggestion,
+                results: List<SearchResult>,
+                responseInfo: ResponseInfo
+            ) {
+                Toast.makeText(applicationContext, "Category search results shown", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Search suggestions shown", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(e: Exception) {
+                Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
+                if (::searchView.isInitialized) {
+                    searchView.setQuery(historyRecord.name, true)
+                }
+            }
+
+            override fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
+                if (::searchView.isInitialized) {
+                    searchView.setQuery(suggestion.name, true)
+                }
+            }
+
+            override fun onFeedbackClicked(responseInfo: ResponseInfo) {
+                // Not implemented
+            }
+        })
+
+        findViewById<Toolbar>(R.id.toolbar).apply {
+            title = getString(R.string.simple_ui_toolbar_title)
+            setSupportActionBar(this)
         }
     }
 
-    override fun onBackPressed() {
-        if (!cardsMediator.handleOnBackPressed()) {
-            super.onBackPressed()
-        }
-    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.simple_ui_activity_options_menu, menu)
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        cardsMediator.onSaveInstanceState(outState)
-        super.onSaveInstanceState(outState)
-    }
+        val searchActionView = menu.findItem(R.id.action_search)
+        searchActionView.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                searchResultsView.isVisible = true
+                return true
+            }
 
-    private companion object {
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                searchResultsView.isVisible = false
+                return true
+            }
+        })
 
-        const val PERMISSIONS_REQUEST_LOCATION = 0
+        searchView = searchActionView.actionView as SearchView
+        searchView.queryHint = getString(R.string.query_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
 
-        fun Context.isPermissionGranted(permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-        }
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchResultsView.search(newText)
+                return false
+            }
+        })
+        return true
     }
 }

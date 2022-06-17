@@ -5,8 +5,6 @@ import androidx.annotation.IdRes
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
-fun withId(@IdRes viewId: Int, matcherDescription: String) = SingleViewIdMatcher(viewId, matcherDescription)
-
 class SingleViewIdMatcher(
     @IdRes private val viewId: Int,
     private val matcherDescription: String

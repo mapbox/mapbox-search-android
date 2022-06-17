@@ -22,125 +22,6 @@ public final class com/mapbox/search/ui/view/DistanceUnitType : java/lang/Enum {
 	public static fun values ()[Lcom/mapbox/search/ui/view/DistanceUnitType;
 }
 
-public final class com/mapbox/search/ui/view/SearchBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
-	public static final field COLLAPSED I
-	public static final field Companion Lcom/mapbox/search/ui/view/SearchBottomSheetView$Companion;
-	public static final field DRAGGING I
-	public static final field EXPANDED I
-	public static final field HIDDEN I
-	public static final field SETTLING I
-	public fun <init> (Landroid/content/Context;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
-	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun addOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun addOnCategoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnCategoryClickListener;)V
-	public final fun addOnFavoriteClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFavoriteClickListener;)V
-	public final fun addOnFeedbackClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackClickListener;)V
-	public final fun addOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackSubmitClickListener;)V
-	public final fun addOnHistoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnHistoryClickListener;)V
-	public final fun addOnSearchResultClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchResultClickListener;)V
-	public final fun addOnSearchViewStateChangeListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener;)V
-	public final fun expand ()V
-	public fun getBehavior ()Landroidx/coordinatorlayout/widget/CoordinatorLayout$Behavior;
-	public final fun getSearchMode ()Lcom/mapbox/search/ui/view/SearchMode;
-	public final fun getSearchOptions ()Lcom/mapbox/search/SearchOptions;
-	public final fun getState ()I
-	public final fun handleOnBackPressed ()Z
-	public final fun hide ()V
-	public final fun initializeSearch (Landroid/os/Bundle;Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration;)V
-	public final fun isHidden ()Z
-	public final fun isHideableByDrag ()Z
-	public final fun open ()V
-	public final fun removeOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun removeOnCategoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnCategoryClickListener;)V
-	public final fun removeOnFavoriteClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFavoriteClickListener;)V
-	public final fun removeOnFeedbackClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackClickListener;)V
-	public final fun removeOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackSubmitClickListener;)V
-	public final fun removeOnHistoryClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnHistoryClickListener;)V
-	public final fun removeOnSearchResultClickListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchResultClickListener;)V
-	public final fun removeOnSearchViewStateChangeListener (Lcom/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener;)V
-	public final fun restorePreviousNonHiddenState ()V
-	public final fun setHideableByDrag (Z)V
-	public final fun setSearchMode (Lcom/mapbox/search/ui/view/SearchMode;)V
-	public final fun setSearchOptions (Lcom/mapbox/search/SearchOptions;)V
-}
-
-public abstract interface annotation class com/mapbox/search/ui/view/SearchBottomSheetView$BottomSheetState : java/lang/annotation/Annotation {
-}
-
-public final class com/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor : java/lang/Enum {
-	public static final field HOT_CATEGORIES Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-	public static final field SEARCH_BAR Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-	public static fun values ()[Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-}
-
-public final class com/mapbox/search/ui/view/SearchBottomSheetView$Companion {
-}
-
-public final class com/mapbox/search/ui/view/SearchBottomSheetView$Configuration : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> ()V
-	public fun <init> (Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;)V
-	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun describeContents ()I
-	public final fun getCollapsedStateAnchor ()Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-	public final fun getCommonSearchViewConfiguration ()Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
-	public final fun getFavoriteTemplates ()Ljava/util/List;
-	public final fun getHotCategories ()Ljava/util/List;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder {
-	public fun <init> ()V
-	public final fun build ()Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration;
-	public final fun commonSearchViewConfiguration (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
-	public final fun favoriteTemplates (Ljava/util/List;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
-	public final fun getCollapsedStateAnchor ()Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;
-	public final fun getCommonSearchViewConfiguration ()Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
-	public final fun getFavoriteTemplates ()Ljava/util/List;
-	public final fun getHotCategories ()Ljava/util/List;
-	public final fun hotCategories (Ljava/util/List;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
-	public final fun setCollapsedStateAnchor (Lcom/mapbox/search/ui/view/SearchBottomSheetView$CollapsedStateAnchor;)Lcom/mapbox/search/ui/view/SearchBottomSheetView$Configuration$Builder;
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnBottomSheetStateChangedListener {
-	public abstract fun onStateChanged (IZ)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnCategoryClickListener {
-	public abstract fun onCategoryClick (Lcom/mapbox/search/ui/view/category/Category;)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnFavoriteClickListener {
-	public abstract fun onFavoriteClick (Lcom/mapbox/search/record/FavoriteRecord;)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackClickListener {
-	public abstract fun onMissingResultClick (Lcom/mapbox/search/ResponseInfo;)Z
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnFeedbackSubmitClickListener {
-	public abstract fun onSendMissingResultFeedback (Ljava/lang/String;Lcom/mapbox/search/ResponseInfo;)Z
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnHistoryClickListener {
-	public abstract fun onHistoryClick (Lcom/mapbox/search/record/HistoryRecord;)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnSearchResultClickListener {
-	public abstract fun onSearchResultClick (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/SearchBottomSheetView$OnSearchViewStateChangeListener {
-	public abstract fun onCategoryResultsShown (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
-	public abstract fun onErrorShown (Ljava/lang/Exception;)V
-	public abstract fun onSuggestionsShown (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
-}
-
 public final class com/mapbox/search/ui/view/SearchMode : java/lang/Enum {
 	public static final field AUTO Lcom/mapbox/search/ui/view/SearchMode;
 	public static final field OFFLINE Lcom/mapbox/search/ui/view/SearchMode;
@@ -197,142 +78,11 @@ public class com/mapbox/search/ui/view/SearchSdkFrameLayout : android/widget/Fra
 	public final fun setMaxWidth (I)V
 }
 
-public final class com/mapbox/search/ui/view/category/Category : android/os/Parcelable {
-	public static final field ATM Lcom/mapbox/search/ui/view/category/Category;
-	public static final field AUTO_REPAIR_MECHANIC Lcom/mapbox/search/ui/view/category/Category;
-	public static final field BARS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field BUS_STATION Lcom/mapbox/search/ui/view/category/Category;
-	public static final field CLOTHING_STORE Lcom/mapbox/search/ui/view/category/Category;
-	public static final field COFFEE_SHOP_CAFE Lcom/mapbox/search/ui/view/category/Category;
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field Companion Lcom/mapbox/search/ui/view/category/Category$Companion;
-	public static final field EMERGENCY_ROOM Lcom/mapbox/search/ui/view/category/Category;
-	public static final field EV_CHARGING_STATION Lcom/mapbox/search/ui/view/category/Category;
-	public static final field GAS_STATION Lcom/mapbox/search/ui/view/category/Category;
-	public static final field GYM_FITNESS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field HOSPITAL Lcom/mapbox/search/ui/view/category/Category;
-	public static final field HOTEL Lcom/mapbox/search/ui/view/category/Category;
-	public static final field MOVIE_THEATERS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field MUSEUMS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field NIGHT_CLUBS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field PARKING Lcom/mapbox/search/ui/view/category/Category;
-	public static final field PARKS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field PHARMACY Lcom/mapbox/search/ui/view/category/Category;
-	public static final field RAILWAY_STATION Lcom/mapbox/search/ui/view/category/Category;
-	public static final field RESTAURANTS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field SHOPPING_MALLS Lcom/mapbox/search/ui/view/category/Category;
-	public static final field SUPERMARKET_GROCERY Lcom/mapbox/search/ui/view/category/Category;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/ui/view/category/Category$Presentation;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public static final fun findByCanonicalName (Ljava/lang/String;)Lcom/mapbox/search/ui/view/category/Category;
-	public final fun getGeocodingCanonicalName ()Ljava/lang/String;
-	public final fun getPresentation ()Lcom/mapbox/search/ui/view/category/Category$Presentation;
-	public final fun getSbsCanonicalName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/ui/view/category/Category$Companion {
-	public final fun findByCanonicalName (Ljava/lang/String;)Lcom/mapbox/search/ui/view/category/Category;
-}
-
-public final class com/mapbox/search/ui/view/category/Category$Presentation : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (II)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDisplayName ()I
-	public final fun getIcon ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
-	public static final field COLLAPSED I
-	public static final field Companion Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$Companion;
-	public static final field DRAGGING I
-	public static final field EXPANDED I
-	public static final field HIDDEN I
-	public static final field SETTLING I
-	public fun <init> (Landroid/content/Context;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
-	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun addCategoryLoadingStateListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$CategoryLoadingStateListener;)V
-	public final fun addOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun addOnCloseClickListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnCloseClickListener;)V
-	public final fun addOnSearchResultClickListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnSearchResultClickListener;)V
-	public final fun cancelCategoryLoading ()V
-	public fun getBehavior ()Landroidx/coordinatorlayout/widget/CoordinatorLayout$Behavior;
-	public final fun getState ()I
-	public final fun handleOnBackPressed ()Z
-	public final fun hide ()V
-	public final fun initialize (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;)V
-	public final fun isHidden ()Z
-	public final fun open (Lcom/mapbox/search/ui/view/category/Category;)V
-	public final fun open (Lcom/mapbox/search/ui/view/category/Category;Lcom/mapbox/search/CategorySearchOptions;)V
-	public static synthetic fun open$default (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView;Lcom/mapbox/search/ui/view/category/Category;Lcom/mapbox/search/CategorySearchOptions;ILjava/lang/Object;)V
-	public final fun removeCategoryLoadingStateListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$CategoryLoadingStateListener;)V
-	public final fun removeOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun removeOnCloseClickListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnCloseClickListener;)V
-	public final fun removeOnSearchResultClickListener (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnSearchResultClickListener;)V
-	public final fun restorePreviousNonHiddenState (Lcom/mapbox/search/ui/view/category/Category;)V
-	public final fun restorePreviousNonHiddenState (Lcom/mapbox/search/ui/view/category/Category;Lcom/mapbox/search/CategorySearchOptions;)V
-	public static synthetic fun restorePreviousNonHiddenState$default (Lcom/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView;Lcom/mapbox/search/ui/view/category/Category;Lcom/mapbox/search/CategorySearchOptions;ILjava/lang/Object;)V
-}
-
-public abstract interface annotation class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$BottomSheetState : java/lang/annotation/Annotation {
-}
-
-public abstract interface class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$CategoryLoadingStateListener {
-	public abstract fun onCategoryResultsLoaded (Lcom/mapbox/search/ui/view/category/Category;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
-	public abstract fun onLoadingError (Lcom/mapbox/search/ui/view/category/Category;Ljava/lang/Exception;)V
-	public abstract fun onLoadingStart (Lcom/mapbox/search/ui/view/category/Category;)V
-}
-
-public final class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$Companion {
-}
-
-public abstract interface class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnBottomSheetStateChangedListener {
-	public abstract fun onStateChanged (IZ)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnCloseClickListener {
-	public abstract fun onCloseClick ()V
-}
-
-public abstract interface class com/mapbox/search/ui/view/category/SearchCategoriesBottomSheetView$OnSearchResultClickListener {
-	public abstract fun onSearchResultClick (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
-}
-
-public final class com/mapbox/search/ui/view/favorite/FavoriteTemplate : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field Companion Lcom/mapbox/search/ui/view/favorite/FavoriteTemplate$Companion;
-	public static final field HOME_DEFAULT_TEMPLATE_ID Ljava/lang/String;
-	public static final field WORK_DEFAULT_TEMPLATE_ID Ljava/lang/String;
-	public fun <init> (Ljava/lang/String;II)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getId ()Ljava/lang/String;
-	public final fun getNameId ()I
-	public final fun getResourceId ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/ui/view/favorite/FavoriteTemplate$Companion {
-}
-
-public abstract class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback : android/os/Parcelable {
+public abstract class com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback : android/os/Parcelable {
 	public fun <init> ()V
 }
 
-public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$FavoriteFeedback : com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback {
+public final class com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback$FavoriteFeedback : com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/search/record/FavoriteRecord;)V
 	public fun describeContents ()I
@@ -343,7 +93,7 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$HistoryFeedback : com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback {
+public final class com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback$HistoryFeedback : com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/search/record/HistoryRecord;)V
 	public fun describeContents ()I
@@ -354,7 +104,7 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback$SearchResultFeedback : com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback {
+public final class com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback$SearchResultFeedback : com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
 	public fun describeContents ()I
@@ -366,55 +116,12 @@ public final class com/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedba
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {
-	public static final field Companion Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$Companion;
-	public static final field DRAGGING I
-	public static final field HIDDEN I
-	public static final field OPEN I
-	public static final field SETTLING I
-	public fun <init> (Landroid/content/Context;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
-	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun addOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun addOnCloseClickListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnCloseClickListener;)V
-	public final fun addOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnFeedbackSubmitClickListener;)V
-	public fun getBehavior ()Landroidx/coordinatorlayout/widget/CoordinatorLayout$Behavior;
-	public final fun handleOnBackPressed ()Z
-	public final fun hide ()V
-	public final fun initialize (Landroid/os/Bundle;)V
-	public final fun isHidden ()Z
-	public final fun open (Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;)V
-	public final fun removeOnBottomSheetStateChangedListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnBottomSheetStateChangedListener;)V
-	public final fun removeOnCloseClickListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnCloseClickListener;)V
-	public final fun removeOnFeedbackSubmitClickListener (Lcom/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnFeedbackSubmitClickListener;)V
-}
-
-public abstract interface annotation class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$BottomSheetState : java/lang/annotation/Annotation {
-}
-
-public final class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$Companion {
-}
-
-public abstract interface class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnBottomSheetStateChangedListener {
-	public abstract fun onStateChanged (IZ)V
-}
-
-public abstract interface class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnCloseClickListener {
-	public abstract fun onCloseClick ()V
-}
-
-public abstract interface class com/mapbox/search/ui/view/feedback/SearchFeedbackBottomSheetView$OnFeedbackSubmitClickListener {
-	public abstract fun onSendIncorrectResultFeedback (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;)Z
-}
-
 public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;)V
-	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static synthetic fun copy$default (Lcom/mapbox/search/ui/view/place/SearchPlace;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)V
+	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static synthetic fun copy$default (Lcom/mapbox/search/ui/view/place/SearchPlace;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
@@ -425,7 +132,7 @@ public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parc
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDescriptionText ()Ljava/lang/String;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
-	public final fun getFeedback ()Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;
+	public final fun getFeedback ()Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
@@ -497,7 +204,7 @@ public abstract interface class com/mapbox/search/ui/view/place/SearchPlaceBotto
 }
 
 public abstract interface class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView$OnFeedbackClickListener {
-	public abstract fun onFeedbackClick (Lcom/mapbox/search/ui/view/place/SearchPlace;Lcom/mapbox/search/ui/view/feedback/IncorrectSearchPlaceFeedback;)V
+	public abstract fun onFeedbackClick (Lcom/mapbox/search/ui/view/place/SearchPlace;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)V
 }
 
 public abstract interface class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView$OnNavigateClickListener {

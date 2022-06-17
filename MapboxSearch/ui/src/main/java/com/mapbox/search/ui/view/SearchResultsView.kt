@@ -98,7 +98,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 showSuggestions(suggestions, responseInfo)
                 searchResultListeners.forEach { it.onSuggestions(suggestions, responseInfo) }
             }
@@ -109,7 +109,7 @@ public class SearchResultsView @JvmOverloads constructor(
             result: SearchResult,
             responseInfo: ResponseInfo
         ) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 searchResultListeners.forEach { it.onSearchResult(result, responseInfo) }
             }
         }
@@ -119,14 +119,14 @@ public class SearchResultsView @JvmOverloads constructor(
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         ) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 showResults(results, responseInfo, fromCategorySuggestion = true)
                 searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
             }
         }
 
         override fun onError(e: Exception) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 showError(UiError.fromException(e))
                 searchResultListeners.forEach { it.onError(e) }
             }
@@ -136,14 +136,14 @@ public class SearchResultsView @JvmOverloads constructor(
     private val offlineSearchCallback = object : SearchCallback {
 
         override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 showResults(results, responseInfo, fromCategorySuggestion = false)
                 searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
             }
         }
 
         override fun onError(e: Exception) {
-            if (mode.isQueryNotEmpty()) {
+            if (searchQuery.isNotEmpty()) {
                 showError(UiError.fromException(e))
                 searchResultListeners.forEach { it.onError(e) }
             }
@@ -151,7 +151,7 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private var searchResultsShown = false
-    private var mode: Mode = Mode.Query("")
+    private var searchQuery: String = ""
 
     private val searchResultListeners = CopyOnWriteArrayList<SearchListener>()
     private val onSuggestionClickListeners = CopyOnWriteArrayList<OnSuggestionClickListener>()
@@ -275,10 +275,7 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun retrySearchRequest() {
-        when (val currentMode = mode) {
-            is Mode.Query -> search(currentMode.query)
-            is Mode.Suggestion -> searchSuggestion(currentMode.suggestion)
-        }
+        search(searchQuery)
     }
 
     private fun onHistoryRecordRemoved(adapterPosition: Int, record: HistoryRecord) {
@@ -329,7 +326,7 @@ public class SearchResultsView @JvmOverloads constructor(
         checkInitialized()
         checkMainThread()
 
-        mode = Mode.Query(query)
+        searchQuery = query
         if (query.isEmpty()) {
             loadHistory()
         } else {
@@ -344,23 +341,6 @@ public class SearchResultsView @JvmOverloads constructor(
                 false -> offlineSearchEngine.search(query, options.mapToOfflineOptions(), offlineSearchCallback)
             }
         }
-    }
-
-    /*
-        TODO
-        if we continue searching with suggestion we must be sure that we use the same SearchEngine.
-        It's true With the current implementation (in fact MapboxSearchSdk.createSearchEngine() returns the same instance)
-        but we should make it more clear and reliable
-     */
-    @UiThread
-    internal fun searchSuggestion(searchSuggestion: SearchSuggestion) {
-        checkMainThread()
-
-        cancelHistoryLoading()
-
-        mode = Mode.Suggestion(searchSuggestion)
-        showLoading()
-        onSuggestionSelected(searchSuggestion)
     }
 
     private fun onSuggestionSelected(searchSuggestion: SearchSuggestion) {
@@ -559,7 +539,7 @@ public class SearchResultsView @JvmOverloads constructor(
          * @param results List of [SearchResult].
          * @param responseInfo Search response and request information.
          *
-         * @see SearchCallback.onResult
+         * @see SearchCallback.onResults
          */
         public fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo)
 
@@ -591,14 +571,6 @@ public class SearchResultsView @JvmOverloads constructor(
          * @param responseInfo Search response and request information.
          */
         public fun onFeedbackClicked(responseInfo: ResponseInfo)
-    }
-
-    private sealed class Mode {
-
-        fun isQueryNotEmpty() = !(this is Query && query.isEmpty())
-
-        class Query(val query: String) : Mode()
-        class Suggestion(val suggestion: SearchSuggestion) : Mode()
     }
 
     private sealed class ViewState {

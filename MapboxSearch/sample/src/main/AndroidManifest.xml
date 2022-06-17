@@ -23,7 +23,6 @@
 
         <activity
             android:name="com.mapbox.search.sample.MainActivity"
-            android:windowSoftInputMode="adjustNothing"
             android:exported="true"
             >
 
@@ -33,11 +32,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SimpleUiSearchActivity" />
-
         <activity
             android:name=".CustomThemeActivity"
-            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/CustomTheme"
             />
 
@@ -60,11 +56,6 @@
         <activity android:name=".api.FavoritesDataProviderKotlinExample" />
         <activity android:name=".api.FavoritesDataProviderJavaExample" />
         <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
-
-        <activity
-            android:name=".maps.MapsIntegrationExampleActivity"
-            android:windowSoftInputMode="adjustNothing"
-            />
 
     </application>
 

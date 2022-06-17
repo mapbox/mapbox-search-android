@@ -535,12 +535,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-Mapbox Search Android uses portions of the Conductor.  
-URL: [https://github.com/bluelinelabs/Conductor](https://github.com/bluelinelabs/Conductor)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
 Mapbox Search Android uses portions of the Core Kotlin Extensions.  
 URL: [https://developer.android.com/jetpack/androidx/releases/core#1.6.0](https://developer.android.com/jetpack/androidx/releases/core#1.6.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -669,12 +663,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Search Android uses portions of the Parcelize Runtime.  
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)  
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the SavedState Kotlin Extensions.  
-URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)  
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 

@@ -1,4 +1,4 @@
-package com.mapbox.search.ui.view.feedback
+package com.mapbox.search.ui.view.place
 
 import android.os.Parcelable
 import com.mapbox.search.ResponseInfo

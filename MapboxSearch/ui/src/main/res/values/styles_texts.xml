@@ -4,13 +4,9 @@
     <dimen name="mapbox_search_sdk_text_size_tiny">11sp</dimen>
     <dimen name="mapbox_search_sdk_text_size_small">13sp</dimen>
     <dimen name="mapbox_search_sdk_text_size_normal">15sp</dimen>
-    <dimen name="mapbox_search_sdk_text_size_large">18sp</dimen>
 
     <dimen name="mapbox_search_sdk_text_small_min_height">22dp</dimen>
     <dimen name="mapbox_search_sdk_text_normal_min_height">22dp</dimen>
-
-    <string name="mapbox_search_sdk_font_family_medium">sans-serif-medium</string>
-    <string name="mapbox_search_sdk_font_family_bold">sans-serif-bold</string>
 
     <style name="MapboxSearchSdk.Text.Base" parent="">
         <item name="android:textAlignment">viewStart</item>
@@ -55,20 +51,6 @@
         <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_small</item>
         <item name="android:minHeight">@dimen/mapbox_search_sdk_text_small_min_height</item>
         <item name="android:gravity">start|center_vertical</item>
-    </style>
-
-    <style name="MapboxSearchSdk.Text.ToolbarTitle" parent="MapboxSearchSdk.Text.RobotoMedium">
-        <item name="android:textColor">?attr/mapboxSearchSdkPrimaryTextColor</item>
-        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_large</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="MapboxSearchSdk.Text.TabTitle" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">@dimen/mapbox_search_sdk_text_size_tiny</item>
-        <item name="android:textColor">?attr/mapboxSearchSdkOnPrimaryAccentColor</item>
-        <item name="android:textStyle">bold</item>
-        <item name="textAllCaps">true</item>
     </style>
 
     <style name="MapboxSearchSdk.Text.Distance" parent="MapboxSearchSdk.Text.RobotoRegular">
