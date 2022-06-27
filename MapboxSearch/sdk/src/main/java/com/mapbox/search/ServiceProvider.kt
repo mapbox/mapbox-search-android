@@ -43,12 +43,6 @@ public interface ServiceProvider {
      * @return [LocationEngine] instance.
      */
     public fun locationEngine(): LocationEngine
-
-    /**
-     * Provides entity to track analytics events.
-     * @return [AnalyticsService] instance.
-     */
-    public fun analyticsService(): AnalyticsService
 }
 
 internal interface InternalServiceProvider : ServiceProvider {
@@ -80,8 +74,6 @@ internal class ServiceProviderImpl(
     override fun internalAnalyticsService(): InternalAnalyticsService = analyticsSender
 
     override fun locationEngine(): LocationEngine = locationEngine
-
-    override fun analyticsService(): AnalyticsService = analyticsSender
 
     override fun errorsReporter(): ErrorsReporter = errorsReporter
 }

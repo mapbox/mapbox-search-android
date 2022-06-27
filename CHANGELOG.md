@@ -5,6 +5,7 @@
 ### Breaking changes
 - [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
+- [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine` and can be retrieved from it via `SearchEngine.analyticsService`.
 
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`
@@ -221,7 +222,7 @@ Same release as `1.0.0-beta.31` but with Common SDK `22.0.0`.
 ### Bug fixes
 - [CORE] Fixed bug related to unexpected cancellation of scheduled `SearchEngine` request when another search request was fired from `CategorySearchEngine` or from another `SearchEngine`.
 - [CORE] Fixed bug in `HistoryDataProvider` when records weren't removed from `IndexableDataProviderEngineLayer` during the trimming of obsolete records.
-- [UI] Fixed several bugs related to state restoration, keyboard showing and UI lagginess. 
+- [UI] Fixed several bugs related to state restoration, keyboard showing and UI lagginess.
 
 ### Mapbox dependencies
 - Search Native SDK `0.44.1`
@@ -369,7 +370,7 @@ Same release as `1.0.0-beta.31` but with Common SDK `22.0.0`.
 ## v1.0.0-beta.15
 
 ### Breaking changes
-- [CORE] Async functions in `IndexableDataProvider` and `OfflineSearchEngine.addOfflineRegion()` now return `AsyncOperationTask` object instead of `Future`. 
+- [CORE] Async functions in `IndexableDataProvider` and `OfflineSearchEngine.addOfflineRegion()` now return `AsyncOperationTask` object instead of `Future`.
 - [CORE] Function `DistanceCalculator.squareDistance()` has been removed.
 - [UI] Property `SearchBottomSheetView.Configuration.searchOptions` and corresponding `Configuration.Builder` function have been removed. Now you can provide `SearchOptions` through `SearchBottomSheetView.searchOptions` and override them for each new request.
 - [UI] New `distanceMeters` property has been added to `SearchPlace`. Therefore, `copy()`, `createFromSearchResult()` and `createFromIndexableRecord()` methods and `SearchPlace` constructor accept `distanceMeters` parameter now.
@@ -519,7 +520,7 @@ Same release as `1.0.0-beta.31` but with Common SDK `22.0.0`.
 
 ### New features
 - [CORE] New `AnalyticsService.sendMissingResultFeedback()` method has been added. This method allows users to send feedback for use cases, when expected POI / place wasn't found in search results. Also new `MissingResultFeedbackEvent` class has been added.
-- [CORE] New `sessionId` property has been added to `FeedbackEvent`. 
+- [CORE] New `sessionId` property has been added to `FeedbackEvent`.
 - [CORE] New `EtaType`, `SearchNavigationOptions`, `RouteOptions.Deviation.SarType` classes have been added. Also, `RouteOptions.Deviation` and its subclasses has new `sarType: SarType?` property.
 - [CORE] Similarly to the `SearchSuggestion` type, now `SearchResult` also provides `descriptionText` field.
 - [UI] All types of `SearchSuggestion/SearchResult` will be shown in the description label (previously only first was shown).

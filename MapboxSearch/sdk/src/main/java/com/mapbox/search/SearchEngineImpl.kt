@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -25,6 +26,7 @@ import java.util.concurrent.ExecutorService
 
 internal class SearchEngineImpl(
     override val apiType: ApiType,
+    override val analyticsService: AnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,

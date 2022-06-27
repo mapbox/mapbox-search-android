@@ -14,14 +14,13 @@ internal class ServiceProviderTest {
     @TestFactory
     fun `Check ServiceProviderImpl`() = TestCase {
         Given("ServiceProviderImpl with mocked dependencies") {
-            val analyticsService: InternalAnalyticsService = mockk()
             val locationEngine: LocationEngine = mockk()
             val historyDataProvider: HistoryService = mockk()
             val favoritesDataProvider: FavoritesDataProvider = mockk()
             val errorsReporter: ErrorsReporter = mockk()
 
             val serviceProvider = ServiceProviderImpl(
-                analyticsSender = analyticsService,
+                analyticsSender = mockk(),
                 locationEngine = locationEngine,
                 historyDataProvider = historyDataProvider,
                 favoritesDataProvider = favoritesDataProvider,
@@ -48,19 +47,9 @@ internal class ServiceProviderTest {
                 Then("Returned value is HighlightsCalculatorImpl", historyDataProvider, value)
             }
 
-            When("Get internalAnalyticsService") {
-                val value = serviceProvider.internalAnalyticsService()
-                Then("Returned value is HighlightsCalculatorImpl", analyticsService, value)
-            }
-
             When("Get locationEngine") {
                 val value = serviceProvider.locationEngine()
                 Then("Returned value is HighlightsCalculatorImpl", locationEngine, value)
-            }
-
-            When("Get analyticsService") {
-                val value = serviceProvider.analyticsService()
-                Then("Returned value is AnalyticsService", analyticsService, value)
             }
 
             When("Get errorsReporter") {

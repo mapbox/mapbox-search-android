@@ -70,7 +70,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
 
         searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
 
-        analyticsService = MapboxSearchSdk.serviceProvider.analyticsService()
+        analyticsService = MapboxSearchSdk.getSearchEngine().analyticsService
     }
 
     @Test
