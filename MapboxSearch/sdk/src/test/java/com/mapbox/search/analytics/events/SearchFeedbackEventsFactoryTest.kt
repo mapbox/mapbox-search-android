@@ -87,7 +87,7 @@ internal class SearchFeedbackEventsFactoryTest {
             TEST_USER_AGENT,
             viewportProvider,
             uuidProvider,
-            { coreEngine },
+            coreEngine,
             eventJsonParser,
             formattedDateProvider,
             bitmapEncoder

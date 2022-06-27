@@ -37,7 +37,6 @@ internal class AnalyticsServiceImplTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer
     private lateinit var searchEngine: SearchEngine
-    private lateinit var analyticsService: AnalyticsService
 
     private val formattedTimeProvider: FormattedTimeProvider = FormattedTimeProvider { TEST_LOCAL_TIME_FORMATTED }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
@@ -69,8 +68,6 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         )
 
         searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
-
-        analyticsService = MapboxSearchSdk.getSearchEngine().analyticsService
     }
 
     @Test
@@ -103,7 +100,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         val feedbackEventCallback = BlockingCompletionCallback<String>()
 
         @Suppress("DEPRECATION")
-        analyticsService.createRawFeedbackEvent(
+        searchEngine.analyticsService.createRawFeedbackEvent(
             suggestions.first().fixNonDeterminedFields(-1, TEST_UUID),
             responseInfo.fixNonDeterminedFields(TEST_UUID),
             SearchSdkMainThreadWorker.mainExecutor,
@@ -156,7 +153,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         val feedbackEventCallback = BlockingCompletionCallback<String>()
 
         @Suppress("DEPRECATION")
-        analyticsService.createRawFeedbackEvent(
+        searchEngine.analyticsService.createRawFeedbackEvent(
             searchResult.fixNonDeterminedFields(-1, TEST_UUID),
             responseInfo.fixNonDeterminedFields(TEST_UUID),
             SearchSdkMainThreadWorker.mainExecutor,

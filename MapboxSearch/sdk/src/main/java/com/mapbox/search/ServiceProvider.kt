@@ -1,9 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.ErrorsReporter
-import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryService
@@ -46,19 +44,13 @@ public interface ServiceProvider {
 }
 
 internal interface InternalServiceProvider : ServiceProvider {
-    fun internalAnalyticsService(): InternalAnalyticsService
-
     fun historyService(): HistoryService
-
-    fun errorsReporter(): ErrorsReporter
 }
 
 internal class ServiceProviderImpl(
-    private val analyticsSender: InternalAnalyticsService,
     private val locationEngine: LocationEngine,
     private val historyDataProvider: HistoryService,
     private val favoritesDataProvider: FavoritesDataProvider,
-    private val errorsReporter: ErrorsReporter,
 ) : ServiceProvider, InternalServiceProvider {
 
     override fun distanceCalculator(latitude: Double): DistanceCalculator = DistanceCalculatorImpl(latitude)
@@ -71,9 +63,5 @@ internal class ServiceProviderImpl(
 
     override fun historyService(): HistoryService = historyDataProvider
 
-    override fun internalAnalyticsService(): InternalAnalyticsService = analyticsSender
-
     override fun locationEngine(): LocationEngine = locationEngine
-
-    override fun errorsReporter(): ErrorsReporter = errorsReporter
 }

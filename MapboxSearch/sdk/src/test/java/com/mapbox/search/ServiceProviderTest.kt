@@ -1,8 +1,6 @@
 package com.mapbox.search
 
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.search.analytics.ErrorsReporter
-import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryService
 import com.mapbox.test.dsl.TestCase
@@ -17,14 +15,11 @@ internal class ServiceProviderTest {
             val locationEngine: LocationEngine = mockk()
             val historyDataProvider: HistoryService = mockk()
             val favoritesDataProvider: FavoritesDataProvider = mockk()
-            val errorsReporter: ErrorsReporter = mockk()
 
             val serviceProvider = ServiceProviderImpl(
-                analyticsSender = mockk(),
                 locationEngine = locationEngine,
                 historyDataProvider = historyDataProvider,
                 favoritesDataProvider = favoritesDataProvider,
-                errorsReporter = errorsReporter,
             )
 
             When("Get highlightsCalculator") {
@@ -50,11 +45,6 @@ internal class ServiceProviderTest {
             When("Get locationEngine") {
                 val value = serviceProvider.locationEngine()
                 Then("Returned value is HighlightsCalculatorImpl", locationEngine, value)
-            }
-
-            When("Get errorsReporter") {
-                val value = serviceProvider.errorsReporter()
-                Then("Returned value is ErrorsReporter", errorsReporter, value)
             }
         }
     }
