@@ -44,15 +44,6 @@ internal class SearchResultFactory(private val dataProviderResolver: DataProvide
             return null
         }
 
-        searchResult.center.let {
-            if (it.latitude().isNaN() || it.longitude().isNaN()) {
-                reportRelease(
-                    IllegalStateException("Location is NaN: $it"),
-                    "Location is NaN: $it. Request: $requestOptions"
-                )
-            }
-        }
-
         return when {
             searchResult.types.isValidMultiType() && searchResult.types.all { it.isSearchResultType } -> {
                 val searchResultTypes = searchResult.types.map { it.tryMapToSearchResultType()!! }
