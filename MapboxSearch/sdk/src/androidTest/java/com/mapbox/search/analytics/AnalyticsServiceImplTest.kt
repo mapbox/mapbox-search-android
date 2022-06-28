@@ -21,6 +21,7 @@ import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.fixNonDeterminedFields
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.KeyboardLocaleProvider
+import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
@@ -41,7 +42,6 @@ internal class AnalyticsServiceImplTest : BaseTest() {
     private val formattedTimeProvider: FormattedTimeProvider = FormattedTimeProvider { TEST_LOCAL_TIME_FORMATTED }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
-    private val noOpErrorsReporter: ErrorsReporter = ErrorsReporter {}
 
     @Before
     override fun setUp() {
@@ -64,10 +64,13 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             formattedTimeProvider = formattedTimeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
-            errorsReporter = noOpErrorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngine(
+            apiType = ApiType.SBS,
+            searchEngineSettings = searchEngineSettings,
+            useSharedCoreEngine = true,
+        )
     }
 
     @Test

@@ -32,7 +32,7 @@ internal class AnalyticsServiceImpl(
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
     private val crashEventsFactory: CrashEventsFactory,
     private val locationEngine: LocationEngine
-) : InternalAnalyticsService, ErrorsReporter {
+) : InternalAnalyticsService {
 
     override fun createRawFeedbackEvent(
         searchResult: SearchResult,

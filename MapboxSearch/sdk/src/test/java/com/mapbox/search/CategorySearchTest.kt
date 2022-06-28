@@ -63,7 +63,7 @@ internal class CategorySearchTest {
 
         searchEngine = SearchEngineImpl(
             apiType = ApiType.GEOCODING,
-            analyticsService = mockk(),
+            analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
             historyService = mockk(),
             requestContextProvider = requestContextProvider,

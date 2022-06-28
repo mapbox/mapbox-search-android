@@ -1,7 +1,6 @@
 package com.mapbox.search
 
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.search.analytics.ErrorsReporter
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryService

@@ -21,8 +21,8 @@ import com.mapbox.search.tests_support.record.StubRecordsStorage
 import com.mapbox.search.tests_support.record.TestDataProvider
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getBlocking
-import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
+import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
@@ -45,7 +45,7 @@ internal class CustomDataProviderTest : BaseTest() {
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
-    private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
+    private val analyticsService: TestAnalyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -54,21 +54,22 @@ internal class CustomDataProviderTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
-
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = searchEngineSettings,
+            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
             allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
-            errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngine(
+            apiType = ApiType.SBS,
+            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            analyticsService = analyticsService
+        )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -248,7 +249,6 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @After
     override fun tearDown() {
-        errorsReporter.reset()
         mockServer.shutdown()
         super.tearDown()
     }

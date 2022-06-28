@@ -26,8 +26,8 @@ import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
-import com.mapbox.search.utils.CaptureErrorsReporter
 import com.mapbox.search.utils.KeyboardLocaleProvider
+import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
@@ -63,7 +63,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
-    private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
+    private val analyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -72,21 +72,22 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
-
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = searchEngineSettings,
+            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
             allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
-            errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngine(
+            apiType = ApiType.SBS,
+            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            analyticsService = analyticsService
+        )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -313,7 +314,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         res as BlockingSearchCallback.SearchEngineResult.Error
 
         if (!BuildConfig.DEBUG) {
-            assertEquals(errorsReporter.capturedErrors, listOf(res.e))
+            assertEquals(analyticsService.capturedErrors, listOf(res.e))
         }
     }
 
@@ -329,7 +330,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         res as BlockingSearchCallback.SearchEngineResult.Error
 
         if (!BuildConfig.DEBUG) {
-            assertEquals(errorsReporter.capturedErrors, listOf(res.e))
+            assertEquals(analyticsService.capturedErrors, listOf(res.e))
         }
     }
 
@@ -345,7 +346,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         res as BlockingSearchCallback.SearchEngineResult.Error
 
         if (!BuildConfig.DEBUG) {
-            assertEquals(errorsReporter.capturedErrors, listOf(res.e))
+            assertEquals(analyticsService.capturedErrors, listOf(res.e))
         }
     }
 
@@ -430,7 +431,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @After
     override fun tearDown() {
-        errorsReporter.reset()
+        analyticsService.reset()
         mockServer.shutdown()
         super.tearDown()
     }

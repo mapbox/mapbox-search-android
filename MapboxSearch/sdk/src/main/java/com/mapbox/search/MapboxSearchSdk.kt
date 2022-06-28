@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import android.Manifest
 import android.app.Application
+import androidx.annotation.VisibleForTesting
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.annotation.module.MapboxModuleType
@@ -15,11 +16,10 @@ import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
-import com.mapbox.search.analytics.ErrorsReporter
+import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.analytics.SearchEventsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
-import com.mapbox.search.common.CommonErrorsReporter
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreEngineOptions
@@ -172,7 +172,6 @@ public object MapboxSearchSdk {
         uuidProvider: UUIDProvider = UUIDProviderImpl(),
         keyboardLocaleProvider: KeyboardLocaleProvider = AndroidKeyboardLocaleProvider(application),
         orientationProvider: ScreenOrientationProvider = AndroidScreenOrientationProvider(application),
-        errorsReporter: ErrorsReporter? = null,
         dataLoader: DataLoader<ByteArray> = InternalDataLoader(application, InternalFileSystem()),
     ) {
         check(allowReinitialization || !isInitialized) {
@@ -266,12 +265,6 @@ public object MapboxSearchSdk {
         sbsSearchEngineShared = createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
         geocodingSearchEngineShared = createSearchEngine(ApiType.GEOCODING, searchEngineSettings, useSharedCoreEngine = true)
         offlineSearchEngineShared = createOfflineSearchEngine(sbsCoreSearchEngine)
-
-        val analyticsService = createAnalyticsService(application, accessToken, sbsCoreSearchEngine)
-        CommonErrorsReporter.reporter = {
-            // TODO errors reporter shouldn't be a global thing
-            (errorsReporter ?: analyticsService).reportError(it)
-        }
     }
 
     private fun createAnalyticsService(
@@ -430,14 +423,24 @@ public object MapboxSearchSdk {
         checkInitialized()
 
         val coreEngine = if (useSharedCoreEngine) {
-            getCoreEngineByApiType(apiType)
+            getSharedCoreEngineByApiType(apiType)
         } else {
             createCoreEngineByApiType(apiType, searchEngineSettings)
         }
 
+        return createSearchEngine(apiType, coreEngine, createAnalyticsService(application, accessToken, coreEngine))
+    }
+
+    internal fun createSearchEngine(
+        apiType: ApiType,
+        coreEngine: CoreSearchEngineInterface,
+        analyticsService: InternalAnalyticsService,
+    ): SearchEngine {
+        checkInitialized()
+
         return SearchEngineImpl(
             apiType,
-            createAnalyticsService(application, accessToken, coreEngine),
+            analyticsService,
             coreEngine,
             internalServiceProvider.historyService(),
             searchRequestContextProvider,
@@ -469,7 +472,8 @@ public object MapboxSearchSdk {
         )
     }
 
-    private fun createCoreEngineByApiType(
+    @VisibleForTesting
+    internal fun createCoreEngineByApiType(
         apiType: ApiType,
         searchEngineSettings: SearchEngineSettings
     ): CoreSearchEngineInterface {
@@ -487,7 +491,8 @@ public object MapboxSearchSdk {
         }
     }
 
-    private fun getCoreEngineByApiType(apiType: ApiType): CoreSearchEngineInterface {
+    @VisibleForTesting
+    internal fun getSharedCoreEngineByApiType(apiType: ApiType): CoreSearchEngineInterface {
         return when (apiType) {
             ApiType.GEOCODING -> geocodingCoreSearchEngine
             ApiType.SBS -> sbsCoreSearchEngine

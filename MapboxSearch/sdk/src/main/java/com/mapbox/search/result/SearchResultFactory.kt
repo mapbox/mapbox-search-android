@@ -6,7 +6,6 @@ import com.mapbox.search.CompletedAsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.common.failDebug
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.record.DataProviderResolver
 import com.mapbox.search.record.IndexableRecord
 import java.util.concurrent.Executor
