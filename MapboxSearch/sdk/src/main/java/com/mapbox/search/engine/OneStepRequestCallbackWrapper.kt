@@ -30,7 +30,7 @@ internal class OneStepRequestCallbackWrapper(
     private val workerExecutor: Executor,
     private val searchRequestTask: SearchRequestTaskImpl<SearchCallback>,
     private val searchRequestContext: SearchRequestContext,
-    private val analyticsService: InternalAnalyticsService?,
+    private val analyticsService: InternalAnalyticsService,
     private val isOffline: Boolean
 ) : CoreSearchCallback {
 
@@ -49,7 +49,7 @@ internal class OneStepRequestCallbackWrapper(
                 if (response.results.isError) {
                     val coreError = response.results.error
                     if (coreError == null) {
-                        analyticsService?.reportRelease(
+                        analyticsService.reportRelease(
                             IllegalStateException("CoreSearchResponse.isError == true but error is null")
                         )
                         return@execute
@@ -61,7 +61,7 @@ internal class OneStepRequestCallbackWrapper(
                                 "Unable to perform search request: ${coreError.connectionError.message}"
                             )
 
-                            analyticsService?.reportRelease(error)
+                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -69,7 +69,7 @@ internal class OneStepRequestCallbackWrapper(
                         CoreSearchResponseErrorType.HTTP_ERROR -> {
                             val error = coreError.toPlatformHttpException()
 
-                            analyticsService?.reportRelease(error)
+                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -79,7 +79,7 @@ internal class OneStepRequestCallbackWrapper(
                                 "Unable to perform search request: ${coreError.internalError.message}"
                             )
 
-                            analyticsService?.reportRelease(error)
+                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -91,7 +91,7 @@ internal class OneStepRequestCallbackWrapper(
                         }
                         null -> {
                             val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")
-                            analyticsService?.reportRelease(error)
+                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -173,7 +173,7 @@ internal class OneStepRequestCallbackWrapper(
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(e)
                     }
-                    analyticsService?.reportRelease(e)
+                    analyticsService.reportRelease(e)
                 } else {
                     throw e
                 }

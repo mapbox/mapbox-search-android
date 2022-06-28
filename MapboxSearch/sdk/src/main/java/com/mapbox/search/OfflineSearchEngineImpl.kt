@@ -5,6 +5,7 @@ import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
@@ -18,6 +19,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
 internal class OfflineSearchEngineImpl(
+    override val analyticsService: InternalAnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
@@ -78,7 +80,7 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = null,
+                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )
@@ -99,7 +101,7 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = null,
+                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )
@@ -131,7 +133,7 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = null,
+                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )

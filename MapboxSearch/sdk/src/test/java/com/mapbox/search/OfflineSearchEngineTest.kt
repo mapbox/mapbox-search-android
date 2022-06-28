@@ -94,6 +94,7 @@ internal class OfflineSearchEngineTest {
 
     private fun createSearchEngine() {
         searchEngine = OfflineSearchEngineImpl(
+            analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,

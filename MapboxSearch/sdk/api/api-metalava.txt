@@ -491,6 +491,7 @@ package com.mapbox.search {
     method public default com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset, String version);
     method public default com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method public com.mapbox.search.analytics.AnalyticsService getAnalyticsService();
     method public com.mapbox.common.TileStore getTileStore();
     method public void removeEngineReadyCallback(com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
@@ -501,6 +502,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.SearchCallback callback);
     method public void selectTileset(String? dataset, String? version);
+    property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
     property public abstract com.mapbox.common.TileStore tileStore;
   }
 

@@ -512,6 +512,7 @@ public abstract interface class com/mapbox/search/OfflineSearchEngine {
 	public abstract fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun getAnalyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun getTileStore ()Lcom/mapbox/common/TileStore;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/OfflineSearchEngine$EngineReadyCallback;)V
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/OfflineSearchEngine$OnIndexChangeListener;)V

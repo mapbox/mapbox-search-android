@@ -21,7 +21,6 @@ import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.fixNonDeterminedFields
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider

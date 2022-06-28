@@ -464,6 +464,7 @@ public object MapboxSearchSdk {
     private fun createOfflineSearchEngine(coreEngine: CoreSearchEngineInterface): OfflineSearchEngine {
         checkInitialized()
         return OfflineSearchEngineImpl(
+            analyticsService = createAnalyticsService(application, accessToken, coreEngine),
             coreEngine = coreEngine,
             requestContextProvider = searchRequestContextProvider,
             searchResultFactory = searchResultFactory,
