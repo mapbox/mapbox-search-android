@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.33-SNAPSHOT
 
+### Breaking changes
+- [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
+- [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
+
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`
 - Common SDK `22.0.0`

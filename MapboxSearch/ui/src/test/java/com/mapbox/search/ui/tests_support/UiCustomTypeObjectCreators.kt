@@ -7,7 +7,7 @@ import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.ui.view.feedback.IncorrectSearchPlaceFeedback
+import com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback
 
 internal object UiCustomTypeObjectCreators {
 

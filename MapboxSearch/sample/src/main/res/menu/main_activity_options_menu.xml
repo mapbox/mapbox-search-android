@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <item
-        android:id="@+id/open_simple_ui"
-        android:title="@string/action_open_simple_ui_example"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title=""
+        app:iconTint="?colorPrimary"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
         />
 
     <item
@@ -105,10 +111,5 @@
     <item
         android:id="@+id/open_favorites_data_provider_kt_example"
         android:title="@string/action_open_favorites_data_provider_kt_example"
-        />
-
-    <item
-        android:id="@+id/open_maps_integration_example"
-        android:title="@string/action_open_maps_integration_example"
         />
 </menu>

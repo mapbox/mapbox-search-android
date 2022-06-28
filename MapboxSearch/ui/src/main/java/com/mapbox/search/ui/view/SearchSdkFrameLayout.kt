@@ -8,7 +8,6 @@ import androidx.annotation.Px
 import androidx.core.content.withStyledAttributes
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.extenstion.getPixelSize
-import com.mapbox.search.ui.view.category.SearchCategoriesBottomSheetView
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 
 /**

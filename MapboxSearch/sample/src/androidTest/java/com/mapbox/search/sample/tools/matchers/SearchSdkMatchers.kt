@@ -1,6 +1,6 @@
 package com.mapbox.search.sample.tools.matchers
 
-import com.mapbox.search.sample.R
+import com.mapbox.search.ui.R
 
 object SearchSdkMatchers {
 
@@ -12,11 +12,6 @@ object SearchSdkMatchers {
     fun isEmptySearchResultsItem() = SingleViewIdMatcher(
         viewId = R.id.result_not_items,
         matcherDescription = "Matcher for empty search results holder"
-    )
-
-    fun isCategorySearchResultItem() = SingleViewIdMatcher(
-        viewId = R.id.category_result_container_view,
-        matcherDescription = "Matcher for category search result holder"
     )
 
     fun isSearchProgressItem() = SingleViewIdMatcher(

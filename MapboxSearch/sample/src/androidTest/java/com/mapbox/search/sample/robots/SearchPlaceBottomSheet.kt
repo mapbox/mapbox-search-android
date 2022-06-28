@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.mapbox.search.sample.Constants.DOUBLE_ANDROID_ANIMATION_DELAY_MILLIS
-import com.mapbox.search.sample.Constants.SINGLE_ANDROID_ANIMATION_DELAY_MILLIS
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import org.hamcrest.Matchers.`is`
@@ -24,12 +23,6 @@ fun searchPlaceBottomSheet(block: SearchPlaceBottomSheet.() -> Unit) {
 
 @RobotDsl
 class SearchPlaceBottomSheet {
-
-    fun addToFavorite() {
-        onView(withId(R.id.search_result_button_favorite))
-            .perform(click())
-        Thread.sleep(SINGLE_ANDROID_ANIMATION_DELAY_MILLIS)
-    }
 
     fun close() {
         onView(allOf(withId(R.id.card_close_button), withParent(withId(R.id.search_place_card))))
