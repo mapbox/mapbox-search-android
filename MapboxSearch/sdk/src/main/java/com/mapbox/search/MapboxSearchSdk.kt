@@ -5,14 +5,10 @@ import android.app.Application
 import androidx.annotation.VisibleForTesting
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
-import com.mapbox.common.module.LibraryLoader
-import com.mapbox.common.module.provider.MapboxModuleProvider
-import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
@@ -59,8 +55,6 @@ import java.util.concurrent.Executors
  */
 @Suppress("LargeClass")
 public object MapboxSearchSdk {
-
-    private const val SEARCH_SDK_NATIVE_LIBRARY_NAME = "SearchCore"
 
     private val userAgent = if (BuildConfig.DEBUG) {
         "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
@@ -192,12 +186,6 @@ public object MapboxSearchSdk {
 
         CommonMainThreadChecker.isOnMainLooper = {
             SearchSdkMainThreadWorker.isMainThread
-        }
-
-        MapboxModuleProvider.createModule<LibraryLoader>(
-            MapboxModuleType.CommonLibraryLoader, ::mapboxModuleParamsProvider
-        ).run {
-            load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
         }
 
         searchEnginesExecutor = Executors.newSingleThreadExecutor { runnable ->
@@ -348,17 +336,6 @@ public object MapboxSearchSdk {
             executor = SearchSdkMainThreadWorker.mainExecutor,
             callback = DataProviderInitializationCallback(ApiType.GEOCODING, favoritesDataProvider)
         )
-    }
-
-    private fun mapboxModuleParamsProvider(type: MapboxModuleType): Array<ModuleProviderArgument> {
-        return when (type) {
-            MapboxModuleType.CommonLibraryLoader -> arrayOf()
-            MapboxModuleType.CommonLogger -> arrayOf()
-            MapboxModuleType.CommonHttpClient -> arrayOf()
-            MapboxModuleType.NavigationRouter,
-            MapboxModuleType.NavigationTripNotification,
-            MapboxModuleType.MapTelemetry -> throw IllegalArgumentException("not supported: $type")
-        }
     }
 
     /**

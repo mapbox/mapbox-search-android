@@ -70,7 +70,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.appcompat:appcompat:$android_x_appcompat_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
