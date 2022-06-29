@@ -92,6 +92,7 @@ internal class SearchEngineTest {
 
         searchEngine = SearchEngineImpl(
             apiType = ApiType.SBS,
+            analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
             historyService = historyService,
             requestContextProvider = requestContextProvider,

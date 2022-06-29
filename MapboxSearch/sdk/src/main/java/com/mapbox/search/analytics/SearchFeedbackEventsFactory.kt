@@ -3,7 +3,6 @@ package com.mapbox.search.analytics
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import com.mapbox.geojson.Point
-import com.mapbox.search.ApiType
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
@@ -31,7 +30,7 @@ internal class SearchFeedbackEventsFactory(
     private val providedUserAgent: String,
     private val viewportProvider: ViewportProvider?,
     private val uuidProvider: UUIDProvider,
-    private val coreEngineProvider: (ApiType) -> CoreSearchEngineInterface,
+    private val coreSearchEngine: CoreSearchEngineInterface,
     private val eventJsonParser: AnalyticsEventJsonParser,
     private val formattedTimeProvider: FormattedTimeProvider,
     private val bitmapEncoder: (Bitmap) -> String = { it.encodeBase64(BITMAP_ENCODE_OPTIONS) }
@@ -103,8 +102,7 @@ internal class SearchFeedbackEventsFactory(
         asTemplate: Boolean = false,
         callback: CompletionCallback<SearchFeedbackEvent>
     ) {
-        val engine = coreEngineProvider(requestOptions.requestContext.apiType)
-        engine.makeFeedbackEvent(requestOptions.mapToCore(), originalSearchResult?.mapToCore()) {
+        coreSearchEngine.makeFeedbackEvent(requestOptions.mapToCore(), originalSearchResult?.mapToCore()) {
             val baseEvent = eventJsonParser.parse(it) as? SearchFeedbackEvent
             if (baseEvent == null) {
                 callback.onError(Exception("Unable to parse event: $it"))

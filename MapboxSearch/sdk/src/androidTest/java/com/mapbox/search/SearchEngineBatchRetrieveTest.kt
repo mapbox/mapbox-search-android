@@ -14,7 +14,7 @@ import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
-import com.mapbox.search.utils.CaptureErrorsReporter
+import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -32,7 +32,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
     private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
-    private val errorsReporter: CaptureErrorsReporter = CaptureErrorsReporter()
+    private val analyticsService: TestAnalyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -41,18 +41,19 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        val searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString())
-
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = searchEngineSettings,
+            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
             allowReinitialization = true,
-            errorsReporter = errorsReporter,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngine(
+            apiType = ApiType.SBS,
+            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            analyticsService = analyticsService
+        )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
@@ -269,13 +270,13 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
         res as BlockingSearchSelectionCallback.SearchEngineResult.Error
 
         if (!BuildConfig.DEBUG) {
-            assertEquals(errorsReporter.capturedErrors, listOf(res.e))
+            assertEquals(analyticsService.capturedErrors, listOf(res.e))
         }
     }
 
     @After
     override fun tearDown() {
-        errorsReporter.reset()
+        analyticsService.reset()
         mockServer.shutdown()
         super.tearDown()
     }

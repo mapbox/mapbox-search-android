@@ -512,6 +512,7 @@ public abstract interface class com/mapbox/search/OfflineSearchEngine {
 	public abstract fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun getAnalyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun getTileStore ()Lcom/mapbox/common/TileStore;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/OfflineSearchEngine$EngineReadyCallback;)V
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/OfflineSearchEngine$OnIndexChangeListener;)V
@@ -742,6 +743,7 @@ public final class com/mapbox/search/SearchCancellationException : java/lang/Run
 }
 
 public abstract interface class com/mapbox/search/SearchEngine {
+	public abstract fun getAnalyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun getApiType ()Lcom/mapbox/search/ApiType;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/AsyncOperationTask;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/AsyncOperationTask;
@@ -967,7 +969,6 @@ public final class com/mapbox/search/SelectOptions : android/os/Parcelable {
 }
 
 public abstract interface class com/mapbox/search/ServiceProvider {
-	public abstract fun analyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun distanceCalculator (D)Lcom/mapbox/search/DistanceCalculator;
 	public abstract fun favoritesDataProvider ()Lcom/mapbox/search/record/FavoritesDataProvider;
 	public abstract fun highlightsCalculator ()Lcom/mapbox/search/HighlightsCalculator;

@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
@@ -67,6 +68,11 @@ public interface OfflineSearchEngine {
      * [TileStore] object used for offline tiles management.
      */
     public val tileStore: TileStore
+
+    /**
+     * [AnalyticsService] instance associated with this [OfflineSearchEngine].
+     */
+    public val analyticsService: AnalyticsService
 
     /**
      * Selects preferable tileset for offline search. If dataset or version is set, [OfflineSearchEngine] will try to

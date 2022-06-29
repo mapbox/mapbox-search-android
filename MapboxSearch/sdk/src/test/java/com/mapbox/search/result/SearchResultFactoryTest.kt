@@ -1,17 +1,9 @@
 package com.mapbox.search.result
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
-import com.mapbox.search.common.reportRelease
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 
 internal class SearchResultFactoryTest {
@@ -35,26 +27,6 @@ internal class SearchResultFactoryTest {
                     } != null
 
                     Then("Search result is created should be $expectedCreated", expectedCreated, actualCreated)
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check SearchResult with illegal location`() = TestCase {
-        Given("SearchResultFactory instance") {
-            val factory = SearchResultFactory { null }
-
-            When("Search result with NaN location is passed") {
-                val illegalResult = ORIGINAL_SEARCH_RESULT.copy(center = Point.fromLngLat(Double.NaN, Double.NaN))
-
-                factory.createSearchResult(
-                    illegalResult,
-                    REQUEST_OPTIONS
-                )
-
-                Verify("Error reported") {
-                    reportRelease(any(), any<String>())
                 }
             }
         }
@@ -91,21 +63,5 @@ internal class SearchResultFactoryTest {
             center = Point.fromLngLat(1.0, 1.0),
             types = listOf(OriginalResultType.POI)
         )
-
-        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
-        @BeforeAll
-        @JvmStatic
-        fun setUpAll() {
-            resetLogImpl()
-            mockkStatic(ASSERTIONS_KT_CLASS_NAME)
-        }
-
-        @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
-        @AfterAll
-        @JvmStatic
-        fun tearDownAll() {
-            reinitializeLogImpl()
-            unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
-        }
     }
 }

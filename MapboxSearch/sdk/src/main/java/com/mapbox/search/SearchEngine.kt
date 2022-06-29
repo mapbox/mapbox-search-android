@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
@@ -59,6 +60,11 @@ public interface SearchEngine {
      * The type of the API used by the Search Engine.
      */
     public val apiType: ApiType
+
+    /**
+     * [AnalyticsService] instance associated with this [SearchEngine].
+     */
+    public val analyticsService: AnalyticsService
 
     /**
      * The first step of forward geocoding. Returns a list of [SearchSuggestion] without coordinates.
