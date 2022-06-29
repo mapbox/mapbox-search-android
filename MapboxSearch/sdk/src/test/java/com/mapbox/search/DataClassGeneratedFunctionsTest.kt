@@ -71,7 +71,6 @@ internal class DataClassGeneratedFunctionsTest {
             ParkingData::class,
             FeedbackEvent::class,
             MissingResultFeedbackEvent::class,
-            SearchSdkSettings::class,
             SelectOptions::class,
             OfflineIndexChangeEvent::class,
             OfflineIndexErrorEvent::class,

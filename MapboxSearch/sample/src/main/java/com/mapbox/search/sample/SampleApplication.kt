@@ -15,7 +15,6 @@ import com.mapbox.common.HttpServiceInterceptorInterface
 import com.mapbox.common.TileStore
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.SearchSdkSettings
 
 open class SampleApplication : Application() {
 
@@ -33,7 +32,6 @@ open class SampleApplication : Application() {
             application = this,
             accessToken = BuildConfig.MAPBOX_API_TOKEN,
             locationEngine = LocationEngineProvider.getBestLocationEngine(this),
-            searchSdkSettings = SearchSdkSettings(maxHistoryRecordsAmount = 5),
             offlineSearchEngineSettings = OfflineSearchEngineSettings(tileStore = TileStore.create()),
         )
     }

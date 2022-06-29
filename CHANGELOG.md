@@ -6,6 +6,7 @@
 - [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
 - [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
+- [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
 
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`

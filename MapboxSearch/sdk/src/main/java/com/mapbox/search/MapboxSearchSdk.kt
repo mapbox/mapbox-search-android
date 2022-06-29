@@ -90,7 +90,6 @@ public object MapboxSearchSdk {
     private val coreSearchEngines: MutableSet<CoreSearchEngineInterface> = Collections.newSetFromMap(WeakHashMap())
     private val analyticsServices: MutableSet<AnalyticsServiceImpl> = Collections.newSetFromMap(WeakHashMap())
     private lateinit var accessToken: String
-    private lateinit var searchSdkSettings: SearchSdkSettings
     private lateinit var searchEngineSettings: SearchEngineSettings
 
     private lateinit var sbsCoreSearchEngine: CoreSearchEngineInterface
@@ -122,7 +121,6 @@ public object MapboxSearchSdk {
      * Default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine]. Note that this class requires
      * [Manifest.permission.ACCESS_COARSE_LOCATION] or [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      * @param [viewportProvider] optional viewport provider.
-     * @param [searchSdkSettings] optional Search SDK settings.
      * @param [searchEngineSettings] optional [SearchEngine] settings.
      * @param [offlineSearchEngineSettings] optional offline search settings.
      *
@@ -136,7 +134,6 @@ public object MapboxSearchSdk {
         locationEngine: LocationEngine = LocationEngineProvider.getBestLocationEngine(application),
         viewportProvider: ViewportProvider? = null,
         searchEngineSettings: SearchEngineSettings = SearchEngineSettings(),
-        searchSdkSettings: SearchSdkSettings = SearchSdkSettings(),
         offlineSearchEngineSettings: OfflineSearchEngineSettings = OfflineSearchEngineSettings(),
     ) {
         initializeInternal(
@@ -144,7 +141,6 @@ public object MapboxSearchSdk {
             accessToken = accessToken,
             locationEngine = locationEngine,
             viewportProvider = viewportProvider,
-            searchSdkSettings = searchSdkSettings,
             searchEngineSettings = searchEngineSettings,
             offlineSearchEngineSettings = offlineSearchEngineSettings,
             allowReinitialization = false
@@ -157,7 +153,6 @@ public object MapboxSearchSdk {
         accessToken: String,
         locationEngine: LocationEngine,
         viewportProvider: ViewportProvider? = null,
-        searchSdkSettings: SearchSdkSettings = SearchSdkSettings(),
         searchEngineSettings: SearchEngineSettings = SearchEngineSettings(),
         offlineSearchEngineSettings: OfflineSearchEngineSettings = OfflineSearchEngineSettings(),
         allowReinitialization: Boolean = false,
@@ -176,7 +171,6 @@ public object MapboxSearchSdk {
 
         this.application = application
         this.accessToken = accessToken
-        this.searchSdkSettings = searchSdkSettings
         this.searchEngineSettings = searchEngineSettings
         this.locationEngine = locationEngine
         this.viewportProvider = viewportProvider
@@ -217,7 +211,6 @@ public object MapboxSearchSdk {
         val historyDataProvider = HistoryDataProviderImpl(
             recordsStorage = RecordsFileStorage.History(dataLoader),
             timeProvider = timeProvider,
-            maxRecordsAmount = searchSdkSettings.maxHistoryRecordsAmount,
         )
 
         val favoritesDataProvider = FavoritesDataProviderImpl(
