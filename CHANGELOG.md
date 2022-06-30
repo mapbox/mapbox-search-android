@@ -6,6 +6,7 @@
 - [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
 - [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
+- [CORE] `ServiceProvider.locationEngine()` function has been removed. Now `LocationEngine` instance can be retrieved from settings used for search engines instantiation.
 - [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
 - [CORE] Now `SearchEngineSettings` and `OfflineSearchEngineSettings` accept new constructor parameters. `OfflineSearchEngineSettings.copy()` function's signature and `OfflineSearchEngineSettings.Builder` have also been changed. `SearchEngineSettings` provides `SearchEngineSettings.Builder` type and new `copy()` and `toBuilder()` functions.
 

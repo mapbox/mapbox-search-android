@@ -4,10 +4,6 @@ import android.Manifest
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.common.TileDataDomain
-import com.mapbox.common.TileStore
-import com.mapbox.common.TileStoreOptions
-import java.net.URI
 
 /**
  * Settings used for [SearchEngine] configuration.

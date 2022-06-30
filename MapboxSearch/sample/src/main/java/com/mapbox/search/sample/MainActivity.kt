@@ -23,7 +23,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
+import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineCallback
+import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Feature
@@ -73,6 +75,7 @@ import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 class MainActivity : AppCompatActivity() {
 
     private val serviceProvider = MapboxSearchSdk.serviceProvider
+    private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -87,6 +90,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
@@ -379,7 +384,7 @@ class MainActivity : AppCompatActivity() {
             callback(null)
         }
 
-        serviceProvider.locationEngine().getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
+        locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
             override fun onSuccess(result: LocationEngineResult?) {
                 val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
                     Point.fromLngLat(location.longitude, location.latitude)

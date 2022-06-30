@@ -57,7 +57,6 @@ public class SearchResultsView @JvmOverloads constructor(
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
 
-    private val locationEngine = MapboxSearchSdk.serviceProvider.locationEngine()
     private var currentSearchRequestTask: SearchRequestTask? = null
 
     private val historyRecordsInteractor = HistoryRecordsInteractor()
@@ -93,7 +92,7 @@ public class SearchResultsView @JvmOverloads constructor(
         }
 
     private lateinit var searchAdapter: SearchViewResultsAdapter
-    private val itemsCreator = SearchResultsItemsCreator(context, locationEngine)
+    private lateinit var itemsCreator: SearchResultsItemsCreator
     private var asyncItemsCreatorTask: SearchCommonAsyncOperationTask? = null
 
     private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
@@ -204,6 +203,8 @@ public class SearchResultsView @JvmOverloads constructor(
 
         searchEngine = MapboxSearchSdk.getSearchEngine()
         offlineSearchEngine = MapboxSearchSdk.getOfflineSearchEngine()
+
+        itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
 
         searchAdapter.searchResultsListener = innerSearchResultsCallback
 

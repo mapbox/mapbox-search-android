@@ -6,7 +6,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.DownloadOptions
 import com.mapbox.common.HttpRequest
 import com.mapbox.common.HttpResponse

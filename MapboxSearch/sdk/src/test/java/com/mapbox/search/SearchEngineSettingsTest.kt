@@ -1,19 +1,16 @@
 package com.mapbox.search
 
 import android.content.Context
-import android.se.omapi.SEService
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.common.TileStore
 import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
-import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.tests_support.MockedTypesObjectCreators
+import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockk
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
-import java.net.URI
 
 internal class SearchEngineSettingsTest {
 

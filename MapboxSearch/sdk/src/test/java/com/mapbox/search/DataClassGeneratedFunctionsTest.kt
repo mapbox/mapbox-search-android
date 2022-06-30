@@ -19,7 +19,6 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
-import com.mapbox.search.tests_support.MockedTypesObjectCreators
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
