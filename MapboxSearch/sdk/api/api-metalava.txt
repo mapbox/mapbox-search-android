@@ -425,12 +425,7 @@ package com.mapbox.search {
     method public static com.mapbox.search.OfflineSearchEngine getOfflineSearchEngine();
     method public static com.mapbox.search.SearchEngine getSearchEngine();
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings(), com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings(), com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings = OfflineSearchEngineSettings());
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings(), com.mapbox.search.SearchSdkSettings searchSdkSettings = SearchSdkSettings());
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.search.SearchEngineSettings searchEngineSettings = SearchEngineSettings());
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application), com.mapbox.search.ViewportProvider? viewportProvider = null);
-    method public static void initialize(android.app.Application application, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(application));
-    method public static void initialize(android.app.Application application, String accessToken);
+    method public static void initialize(com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
     method public static void setAccessToken(String accessToken);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
   }
@@ -517,21 +512,41 @@ package com.mapbox.search {
   }
 
   public final class OfflineSearchEngineSettings {
-    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore? tileStore = null, java.net.URI? tilesBaseUri = null);
-    method public com.mapbox.common.TileStore? getTileStore();
-    method public java.net.URI? getTilesBaseUri();
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.common.TileStore tileStore = defaultTileStore());
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext));
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken);
+    method public String getAccessToken();
+    method public android.content.Context getApplicationContext();
+    method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
+    method public com.mapbox.common.TileStore getTileStore();
+    method public java.net.URI getTilesBaseUri();
+    method public com.mapbox.search.ViewportProvider? getViewportProvider();
     method public com.mapbox.search.OfflineSearchEngineSettings.Builder toBuilder();
-    property public final com.mapbox.common.TileStore? tileStore;
-    property public final java.net.URI? tilesBaseUri;
+    property public final String accessToken;
+    property public final android.content.Context applicationContext;
+    property public final com.mapbox.android.core.location.LocationEngine locationEngine;
+    property public final com.mapbox.common.TileStore tileStore;
+    property public final java.net.URI tilesBaseUri;
+    property public final com.mapbox.search.ViewportProvider? viewportProvider;
     field public static final String DEFAULT_DATASET = "test-dataset";
     field public static final String DEFAULT_VERSION = "";
   }
 
   public static final class OfflineSearchEngineSettings.Builder {
-    ctor public OfflineSearchEngineSettings.Builder();
+    ctor public OfflineSearchEngineSettings.Builder(android.content.Context applicationContext, String accessToken);
     method public com.mapbox.search.OfflineSearchEngineSettings build();
-    method public com.mapbox.search.OfflineSearchEngineSettings.Builder tileStore(com.mapbox.common.TileStore? tileStore);
+    method public String getAccessToken();
+    method public android.content.Context getApplicationContext();
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
+    method public void setAccessToken(String p);
+    method public void setApplicationContext(android.content.Context p);
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder tileStore(com.mapbox.common.TileStore tileStore);
     method public com.mapbox.search.OfflineSearchEngineSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
+    method public com.mapbox.search.OfflineSearchEngineSettings.Builder viewportProvider(com.mapbox.search.ViewportProvider? viewportProvider);
+    property public final String accessToken;
+    property public final android.content.Context applicationContext;
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
@@ -704,13 +719,40 @@ package com.mapbox.search {
   }
 
   public final class SearchEngineSettings {
-    ctor public SearchEngineSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
-    ctor public SearchEngineSettings(String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    ctor public SearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
+    ctor public SearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    ctor public SearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    ctor public SearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext));
+    ctor public SearchEngineSettings(android.content.Context applicationContext, String accessToken);
+    method public String getAccessToken();
+    method public android.content.Context getApplicationContext();
     method public String getGeocodingEndpointBaseUrl();
+    method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
     method public String? getSingleBoxSearchBaseUrl();
+    method public com.mapbox.search.ViewportProvider? getViewportProvider();
+    method public com.mapbox.search.SearchEngineSettings.Builder toBuilder();
+    property public final String accessToken;
+    property public final android.content.Context applicationContext;
     property public final String geocodingEndpointBaseUrl;
+    property public final com.mapbox.android.core.location.LocationEngine locationEngine;
     property public final String? singleBoxSearchBaseUrl;
+    property public final com.mapbox.search.ViewportProvider? viewportProvider;
     field public static final String DEFAULT_ENDPOINT_GEOCODING = "https://api.mapbox.com";
+  }
+
+  public static final class SearchEngineSettings.Builder {
+    ctor public SearchEngineSettings.Builder(android.content.Context applicationContext, String accessToken);
+    method public com.mapbox.search.SearchEngineSettings build();
+    method public com.mapbox.search.SearchEngineSettings.Builder geocodingEndpointBaseUrl(String geocodingEndpointBaseUrl);
+    method public String getAccessToken();
+    method public android.content.Context getApplicationContext();
+    method public com.mapbox.search.SearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
+    method public void setAccessToken(String p);
+    method public void setApplicationContext(android.content.Context p);
+    method public com.mapbox.search.SearchEngineSettings.Builder singleBoxSearchBaseUrl(String? singleBoxSearchBaseUrl);
+    method public com.mapbox.search.SearchEngineSettings.Builder viewportProvider(com.mapbox.search.ViewportProvider? viewportProvider);
+    property public final String accessToken;
+    property public final android.content.Context applicationContext;
   }
 
   public interface SearchMultipleSelectionCallback {
@@ -856,14 +898,6 @@ package com.mapbox.search {
     property public final java.util.List<com.mapbox.search.ImageInfo>? primaryPhotos;
     property public final Integer? reviewCount;
     property public final String? website;
-  }
-
-  public final class SearchSdkSettings {
-    ctor public SearchSdkSettings(int maxHistoryRecordsAmount = 100);
-    method public int getMaxHistoryRecordsAmount();
-    property public final int maxHistoryRecordsAmount;
-    field public static final int DEFAULT_MAX_HISTORY_RECORDS_AMOUNT = 100; // 0x64
-    field public static final int MAX_HISTORY_RECORDS_AMOUNT_HIGHER_BOUND = 100; // 0x64
   }
 
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {

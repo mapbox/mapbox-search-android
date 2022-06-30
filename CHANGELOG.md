@@ -7,6 +7,7 @@
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
 - [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
 - [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
+- [CORE] Now `SearchEngineSettings` and `OfflineSearchEngineSettings` accept new constructor parameters. `OfflineSearchEngineSettings.copy()` function's signature and `OfflineSearchEngineSettings.Builder` have also been changed. `SearchEngineSettings` provides `SearchEngineSettings.Builder` type and new `copy()` and `toBuilder()` functions.
 
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`

@@ -19,6 +19,7 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
+import com.mapbox.search.tests_support.MockedTypesObjectCreators
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
@@ -36,7 +37,6 @@ internal class DataClassGeneratedFunctionsTest {
     fun `Test generated equals(), hashCode() and toString() methods`() = TestCase {
         listOf(
             // regular classes and objects
-            OfflineSearchEngineSettings::class,
             SearchOptions::class,
             SearchNavigationProfile::class,
             SearchNavigationOptions::class,
@@ -152,7 +152,6 @@ internal class DataClassGeneratedFunctionsTest {
     fun `Test generated copy() method`() = TestCase {
         listOf(
             // custom copy() implementation
-            OfflineSearchEngineSettings::class,
             SearchOptions::class,
             ReverseGeoOptions::class,
             RequestOptions::class,

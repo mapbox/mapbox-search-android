@@ -17,13 +17,14 @@ import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.result.SearchResultFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 internal class OfflineSearchEngineImpl(
     override val analyticsService: InternalAnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
-    private val engineExecutorService: ExecutorService,
+    private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
     override val tileStore: TileStore,
 ) : BaseSearchEngine(), OfflineSearchEngine {
 
@@ -194,6 +195,12 @@ internal class OfflineSearchEngineImpl(
             executor.execute {
                 listener.onError(e.mapToPlatformType())
             }
+        }
+    }
+
+    private companion object {
+        val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
+            Thread(runnable, "OfflineSearchEngine executor")
         }
     }
 }

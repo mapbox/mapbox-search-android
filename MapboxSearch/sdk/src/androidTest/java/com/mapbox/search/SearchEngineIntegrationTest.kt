@@ -87,15 +87,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         mockServer = MockWebServer()
 
         searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
+            accessToken = TEST_ACCESS_TOKEN,
+            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString(),
             geocodingEndpointBaseUrl = mockServer.url("").toString()
         )
 
         MapboxSearchSdk.initializeInternal(
-            application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             searchEngineSettings = searchEngineSettings,
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+                applicationContext = targetApplication,
+                accessToken = TEST_ACCESS_TOKEN,
+                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            ),
             allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,

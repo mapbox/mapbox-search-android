@@ -15,6 +15,7 @@ import com.mapbox.common.HttpServiceInterceptorInterface
 import com.mapbox.common.TileStore
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngineSettings
+import com.mapbox.search.SearchEngineSettings
 
 open class SampleApplication : Application() {
 
@@ -29,10 +30,12 @@ open class SampleApplication : Application() {
         enableDebugHttpLogs()
 
         MapboxSearchSdk.initialize(
-            application = this,
-            accessToken = BuildConfig.MAPBOX_API_TOKEN,
-            locationEngine = LocationEngineProvider.getBestLocationEngine(this),
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(tileStore = TileStore.create()),
+            searchEngineSettings = SearchEngineSettings(
+                applicationContext = this, accessToken = BuildConfig.MAPBOX_API_TOKEN
+            ),
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+                applicationContext = this, accessToken = BuildConfig.MAPBOX_API_TOKEN, tileStore = TileStore.create()
+            ),
         )
     }
 

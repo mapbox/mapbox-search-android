@@ -8,6 +8,7 @@ import com.mapbox.search.Country
 import com.mapbox.search.EtaType
 import com.mapbox.search.Language
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.QueryType
 import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchEngine
@@ -50,15 +51,20 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         mockServer.start(TEST_WEB_SERVER_PORT)
 
         val searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
+            accessToken = TEST_ACCESS_TOKEN,
+            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString(),
             geocodingEndpointBaseUrl = mockServer.url("").toString()
         )
 
         MapboxSearchSdk.initializeInternal(
-            application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             searchEngineSettings = searchEngineSettings,
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+                applicationContext = targetApplication,
+                accessToken = TEST_ACCESS_TOKEN,
+                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            ),
             allowReinitialization = true,
             formattedTimeProvider = formattedTimeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,

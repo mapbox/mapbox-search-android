@@ -42,10 +42,17 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
         mockServer = MockWebServer()
 
         MapboxSearchSdk.initializeInternal(
-            application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
+            searchEngineSettings = SearchEngineSettings(
+                applicationContext = targetApplication,
+                accessToken = TEST_ACCESS_TOKEN,
+                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+                singleBoxSearchBaseUrl = mockServer.url("").toString()
+            ),
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+                applicationContext = targetApplication,
+                accessToken = TEST_ACCESS_TOKEN,
+                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            ),
             allowReinitialization = true,
         )
 

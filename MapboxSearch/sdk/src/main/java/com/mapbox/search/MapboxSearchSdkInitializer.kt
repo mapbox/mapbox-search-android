@@ -15,6 +15,7 @@ internal class MapboxSearchSdkInitializer : Initializer<MapboxSearchSdk> {
         CommonMainThreadChecker.isOnMainLooper = {
             SearchSdkMainThreadWorker.isMainThread
         }
+
         return MapboxSearchSdk
     }
 
