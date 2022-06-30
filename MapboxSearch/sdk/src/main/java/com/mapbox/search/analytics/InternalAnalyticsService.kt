@@ -5,7 +5,6 @@ import com.mapbox.search.common.logger.loge
 
 internal interface InternalAnalyticsService : AnalyticsService {
     fun reportError(throwable: Throwable)
-    fun setAccessToken(accessToken: String)
 }
 
 @JvmSynthetic

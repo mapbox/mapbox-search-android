@@ -244,10 +244,6 @@ internal class AnalyticsServiceImpl(
         )
     }
 
-    override fun setAccessToken(accessToken: String) {
-        eventsService.updateAccessToken(accessToken)
-    }
-
     override fun reportError(throwable: Throwable) {
         if (!crashEventsFactory.isAllowedForAnalytics(throwable)) {
             logd("$throwable is not Search SDK related error. Skip it.")

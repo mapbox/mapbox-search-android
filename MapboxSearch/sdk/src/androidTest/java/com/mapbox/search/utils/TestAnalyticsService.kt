@@ -60,10 +60,6 @@ internal class TestAnalyticsService : InternalAnalyticsService {
         errors.add(throwable)
     }
 
-    override fun setAccessToken(accessToken: String) {
-        // Nothing to do
-    }
-
     fun reset() {
         errors = mutableListOf()
     }

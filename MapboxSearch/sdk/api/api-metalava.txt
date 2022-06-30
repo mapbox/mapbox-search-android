@@ -426,7 +426,6 @@ package com.mapbox.search {
     method public static com.mapbox.search.SearchEngine getSearchEngine();
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
     method public static void initialize(com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
-    method public static void setAccessToken(String accessToken);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
   }
 

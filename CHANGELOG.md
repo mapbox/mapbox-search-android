@@ -9,6 +9,7 @@
 - [CORE] `ServiceProvider.locationEngine()` function has been removed. Now `LocationEngine` instance can be retrieved from settings used for search engines instantiation.
 - [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
 - [CORE] Now `SearchEngineSettings` and `OfflineSearchEngineSettings` accept new constructor parameters. `OfflineSearchEngineSettings.copy()` function's signature and `OfflineSearchEngineSettings.Builder` have also been changed. `SearchEngineSettings` provides `SearchEngineSettings.Builder` type and new `copy()` and `toBuilder()` functions.
+- [CORE] `MapboxSearchSdk.setAccessToken()` function has been removed. Now in case of changed token a new instance of `SearchEngine` or `OfflineSearchEngine` should be instanciated.
 
 ### New features
 - [CORE] `SearchEngine` and `OfflineSearchEngine` provide `settings` property that return settings object used for engine initialization.

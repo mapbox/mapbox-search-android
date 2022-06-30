@@ -1,9 +1,12 @@
 package com.mapbox.search
 
 import android.Manifest
+import android.app.Application
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.search.location.LocationEngineAdapter
+import com.mapbox.search.location.WrapperLocationProvider
 
 /**
  * Settings used for [SearchEngine] configuration.
@@ -43,6 +46,15 @@ public class SearchEngineSettings @JvmOverloads constructor(
      */
     public val singleBoxSearchBaseUrl: String? = null,
 ) {
+
+    internal val application: Application
+        get() = applicationContext.applicationContext as Application
+
+    internal val wrapperLocationProvider: WrapperLocationProvider
+        get() = WrapperLocationProvider(
+            LocationEngineAdapter(application, locationEngine),
+            viewportProvider
+        )
 
     /**
      * Creates a copy of this object with overridden parameters.

@@ -6,19 +6,10 @@ import com.mapbox.common.EventsService
 import com.mapbox.common.EventsServiceOptions
 import com.mapbox.search.common.logger.loge
 
-internal class SearchEventsService(
-    token: String,
-    private val userAgent: String,
-) {
+internal class SearchEventsService(token: String, userAgent: String) {
 
-    private var eventsService: EventsService
+    private val eventsService = EventsService(EventsServiceOptions(token, userAgent, null))
 
-    init {
-        val options = EventsServiceOptions(token, userAgent, null)
-        eventsService = EventsService(options)
-    }
-
-    @Synchronized
     fun sendEventJson(eventJson: String) {
         val eventValue = Value.fromJson(eventJson)
         if (eventValue.isValue) {
@@ -31,11 +22,5 @@ internal class SearchEventsService(
         } else {
             loge("Unable to create event from json event: ${eventValue.error}")
         }
-    }
-
-    @Synchronized
-    fun updateAccessToken(newToken: String) {
-        val options = EventsServiceOptions(newToken, userAgent, null)
-        eventsService = EventsService(options)
     }
 }

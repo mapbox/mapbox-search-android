@@ -2,9 +2,6 @@ package com.mapbox.search
 
 import android.app.Application
 import androidx.annotation.VisibleForTesting
-import com.mapbox.bindgen.Value
-import com.mapbox.common.TileDataDomain
-import com.mapbox.common.TileStoreOptions
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
@@ -17,8 +14,6 @@ import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreLocationProvider
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.location.LocationEngineAdapter
-import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
 import com.mapbox.search.record.FavoritesDataProviderImpl
 import com.mapbox.search.record.HistoryDataProviderImpl
@@ -40,8 +35,6 @@ import com.mapbox.search.utils.loader.DataLoader
 import com.mapbox.search.utils.loader.InternalDataLoader
 import com.mapbox.search.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
-import java.util.Collections
-import java.util.WeakHashMap
 
 /**
  * The entry point to initialize Search SDK.
@@ -70,9 +63,6 @@ public object MapboxSearchSdk {
 
     @get:JvmSynthetic
     internal lateinit var internalServiceProvider: InternalServiceProvider
-
-    private val coreSearchEngines: MutableSet<CoreSearchEngineInterface> = Collections.newSetFromMap(WeakHashMap())
-    private val analyticsServices: MutableSet<AnalyticsServiceImpl> = Collections.newSetFromMap(WeakHashMap())
 
     private lateinit var searchEngineSettings: SearchEngineSettings
     private lateinit var offlineSearchEngineSettings: OfflineSearchEngineSettings
@@ -116,15 +106,6 @@ public object MapboxSearchSdk {
             allowReinitialization = false
         )
     }
-
-    private val SearchEngineSettings.application: Application
-        get() = applicationContext.applicationContext as Application
-
-    private val SearchEngineSettings.locationProvider: CoreLocationProvider
-        get() = LocationEngineAdapter(application, locationEngine)
-
-    private val SearchEngineSettings.wrapperLocationProvider: WrapperLocationProvider
-        get() = WrapperLocationProvider(locationProvider, viewportProvider)
 
     @Suppress("LongParameterList")
     internal fun initializeInternal(
@@ -212,7 +193,7 @@ public object MapboxSearchSdk {
             )
         )
 
-        val analyticsService = AnalyticsServiceImpl(
+        return AnalyticsServiceImpl(
             context = application,
             eventsService = SearchEventsService(accessToken, userAgent),
             eventsJsonParser = eventJsonParser,
@@ -220,8 +201,6 @@ public object MapboxSearchSdk {
             crashEventsFactory = crashEventsFactory,
             locationEngine = searchEngineSettings.locationEngine,
         )
-        analyticsServices.add(analyticsService)
-        return analyticsService
     }
 
     private fun registerDefaultDataProviders() {
@@ -267,26 +246,6 @@ public object MapboxSearchSdk {
             searchEngine = geocodingCoreSearchEngine,
             executor = SearchSdkMainThreadWorker.mainExecutor,
             callback = DataProviderInitializationCallback(ApiType.GEOCODING, favoritesDataProvider)
-        )
-    }
-
-    /**
-     * Change current SDK access token in runtime.
-     * @param [accessToken] new access token.
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
-     *
-     * TODO FIXME remove
-     */
-    @JvmStatic
-    public fun setAccessToken(accessToken: String) {
-        checkInitialized()
-        // this.accessToken = accessToken
-        coreSearchEngines.forEach { it.setAccessToken(accessToken) }
-        analyticsServices.forEach { it.setAccessToken(accessToken) }
-        offlineSearchEngineSettings.tileStore.setOption(
-            TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-            TileDataDomain.SEARCH,
-            Value.valueOf(accessToken)
         )
     }
 
@@ -406,9 +365,7 @@ public object MapboxSearchSdk {
             // TODO allow customer to customize events url
             CoreEngineOptions(searchEngineSettings.accessToken, endpoint, apiType.mapToCore(), userAgent, null),
             coreLocationProvider,
-        ).apply {
-            coreSearchEngines.add(this)
-        }
+        )
     }
 
     @VisibleForTesting

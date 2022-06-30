@@ -452,7 +452,6 @@ public final class com/mapbox/search/MapboxSearchSdk {
 	public static final fun getSearchEngine ()Lcom/mapbox/search/SearchEngine;
 	public static final fun getServiceProvider ()Lcom/mapbox/search/ServiceProvider;
 	public static final fun initialize (Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;)V
-	public static final fun setAccessToken (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/search/OfflineIndexChangeEvent {
