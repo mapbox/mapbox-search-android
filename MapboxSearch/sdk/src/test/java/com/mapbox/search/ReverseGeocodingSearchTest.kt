@@ -63,6 +63,7 @@ internal class ReverseGeocodingSearchTest {
 
         searchEngine = SearchEngineImpl(
             apiType = ApiType.GEOCODING,
+            settings = mockk(),
             analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
             historyService = mockk(),

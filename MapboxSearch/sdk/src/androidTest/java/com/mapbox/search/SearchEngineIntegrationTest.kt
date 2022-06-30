@@ -109,6 +109,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         searchEngine = MapboxSearchSdk.createSearchEngine(
             apiType = ApiType.SBS,
+            searchEngineSettings = searchEngineSettings,
             coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
             analyticsService = analyticsService
         )

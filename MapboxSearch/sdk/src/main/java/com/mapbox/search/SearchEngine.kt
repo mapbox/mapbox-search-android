@@ -62,6 +62,12 @@ public interface SearchEngine {
     public val apiType: ApiType
 
     /**
+     * Experimental API, can be changed or removed in the next SDK releases.
+     * Settings used for [SearchEngine] initialization.
+     */
+    public val settings: SearchEngineSettings
+
+    /**
      * [AnalyticsService] instance associated with this [SearchEngine].
      */
     public val analyticsService: AnalyticsService

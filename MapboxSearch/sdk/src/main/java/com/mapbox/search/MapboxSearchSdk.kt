@@ -187,7 +187,7 @@ public object MapboxSearchSdk {
 
         sbsSearchEngineShared = createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
         geocodingSearchEngineShared = createSearchEngine(ApiType.GEOCODING, searchEngineSettings, useSharedCoreEngine = true)
-        offlineSearchEngineShared = createOfflineSearchEngine(sbsCoreSearchEngine)
+        offlineSearchEngineShared = createOfflineSearchEngine(offlineSearchEngineSettings, sbsCoreSearchEngine)
     }
 
     private fun createAnalyticsService(
@@ -343,12 +343,13 @@ public object MapboxSearchSdk {
         }
 
         return with(searchEngineSettings) {
-            createSearchEngine(apiType, coreEngine, createAnalyticsService(application, accessToken, coreEngine))
+            createSearchEngine(apiType, searchEngineSettings, coreEngine, createAnalyticsService(application, accessToken, coreEngine))
         }
     }
 
     internal fun createSearchEngine(
         apiType: ApiType,
+        searchEngineSettings: SearchEngineSettings,
         coreEngine: CoreSearchEngineInterface,
         analyticsService: InternalAnalyticsService,
     ): SearchEngine {
@@ -356,6 +357,7 @@ public object MapboxSearchSdk {
 
         return SearchEngineImpl(
             apiType,
+            searchEngineSettings,
             analyticsService,
             coreEngine,
             internalServiceProvider.historyService(),
@@ -376,10 +378,14 @@ public object MapboxSearchSdk {
         return offlineSearchEngineShared
     }
 
-    private fun createOfflineSearchEngine(coreEngine: CoreSearchEngineInterface): OfflineSearchEngine {
+    private fun createOfflineSearchEngine(
+        settings: OfflineSearchEngineSettings,
+        coreEngine: CoreSearchEngineInterface
+    ): OfflineSearchEngine {
         checkInitialized()
         return with(searchEngineSettings) {
             OfflineSearchEngineImpl(
+                settings = settings,
                 analyticsService = createAnalyticsService(application, accessToken, coreEngine),
                 coreEngine = coreEngine,
                 requestContextProvider = searchRequestContextProvider,

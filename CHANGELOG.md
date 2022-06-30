@@ -9,6 +9,9 @@
 - [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
 - [CORE] Now `SearchEngineSettings` and `OfflineSearchEngineSettings` accept new constructor parameters. `OfflineSearchEngineSettings.copy()` function's signature and `OfflineSearchEngineSettings.Builder` have also been changed. `SearchEngineSettings` provides `SearchEngineSettings.Builder` type and new `copy()` and `toBuilder()` functions.
 
+### New features
+- [CORE] `SearchEngine` and `OfflineSearchEngine` provide `settings` property that return settings object used for engine initialization.
+
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`
 - Common SDK `22.0.0`

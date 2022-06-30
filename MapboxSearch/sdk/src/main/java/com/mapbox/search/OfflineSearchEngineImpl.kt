@@ -21,6 +21,7 @@ import java.util.concurrent.Executors
 
 internal class OfflineSearchEngineImpl(
     override val analyticsService: InternalAnalyticsService,
+    override val settings: OfflineSearchEngineSettings,
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,

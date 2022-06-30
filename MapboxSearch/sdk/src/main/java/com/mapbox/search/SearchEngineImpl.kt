@@ -27,6 +27,7 @@ import java.util.concurrent.Executors
 
 internal class SearchEngineImpl(
     override val apiType: ApiType,
+    override val settings: SearchEngineSettings,
     override val analyticsService: InternalAnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val historyService: HistoryService,
