@@ -83,8 +83,8 @@ internal class OfflineSearchEngineSettingsTest {
                 val expected = OfflineSearchEngineSettings(
                     applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
-                    tileStore = TEST_MOCKED_TILE_STORE
+                    tileStore = TEST_MOCKED_TILE_STORE,
+                    locationEngine = TEST_MOCKED_LOCATION_ENGINE
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -106,9 +106,9 @@ internal class OfflineSearchEngineSettingsTest {
                 val expected = OfflineSearchEngineSettings(
                     applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
-                    tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
                     tileStore = TEST_MOCKED_TILE_STORE,
+                    tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
+                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                 )
 
@@ -124,9 +124,9 @@ internal class OfflineSearchEngineSettingsTest {
                 val settings = OfflineSearchEngineSettings(
                     applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
-                    tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
                     tileStore = TEST_MOCKED_TILE_STORE,
+                    tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
+                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                 )
 

@@ -202,7 +202,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(configuration.searchEngineSettings)
 
-        offlineSearchEngine = MapboxSearchSdk.getOfflineSearchEngine()
+        offlineSearchEngine = MapboxSearchSdk.createOfflineSearchEngine(configuration.offlineSearchEngineSettings)
 
         itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
 

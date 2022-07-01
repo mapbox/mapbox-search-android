@@ -1,6 +1,7 @@
 package com.mapbox.search
 
 import android.Manifest
+import android.app.Application
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
@@ -8,6 +9,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
+import com.mapbox.search.location.LocationEngineAdapter
+import com.mapbox.search.location.WrapperLocationProvider
 import java.net.URI
 
 /**
@@ -26,19 +29,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     public val accessToken: String,
 
     /**
-     * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
-     * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
-     * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
-     */
-    public val locationEngine: LocationEngine = defaultLocationEngine(applicationContext),
-
-    /**
-     * Viewport provider instance.
-     */
-    public val viewportProvider: ViewportProvider? = null,
-
-    /**
      * Tile store instance. It manages downloads and storage for requests to
      * tile-related API endpoints. When creating the [TileStore] make sure to call
      * [TileStore.setOption] with [TileStoreOptions.MAPBOX_ACCESS_TOKEN] and your token.
@@ -53,24 +43,29 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
      * This Uri will be used for [TileStoreOptions.MAPBOX_APIURL] option with [TileDataDomain.SEARCH] domain.
      */
     public val tilesBaseUri: URI = DEFAULT_ENDPOINT_URI,
+
+    /**
+     * The mechanism responsible for providing location approximations to the SDK.
+     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+     * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
+     * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
+     */
+    public val locationEngine: LocationEngine = defaultLocationEngine(applicationContext),
+
+    /**
+     * Viewport provider instance.
+     */
+    public val viewportProvider: ViewportProvider? = null,
 ) {
 
-    // TODO should it be done automatically by the SDK or be responsibility of SDK user?
-    internal fun initializeTileStore(): TileStore {
-        tileStore.setOption(
-            TileStoreOptions.MAPBOX_APIURL,
-            TileDataDomain.SEARCH,
-            Value.valueOf(tilesBaseUri.toString())
-        )
+    internal val application: Application
+        get() = applicationContext.applicationContext as Application
 
-        tileStore.setOption(
-            TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-            TileDataDomain.SEARCH,
-            Value.valueOf(accessToken)
+    internal val wrapperLocationProvider: WrapperLocationProvider
+        get() = WrapperLocationProvider(
+            LocationEngineAdapter(application, locationEngine),
+            viewportProvider
         )
-
-        return tileStore
-    }
 
     /**
      * Creates a copy of this object with overridden parameters.
@@ -79,17 +74,17 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     public fun copy(
         applicationContext: Context = this.applicationContext,
         accessToken: String = this.accessToken,
-        locationEngine: LocationEngine = this.locationEngine,
-        viewportProvider: ViewportProvider? = this.viewportProvider,
         tileStore: TileStore = this.tileStore,
         tilesBaseUri: URI = this.tilesBaseUri,
+        locationEngine: LocationEngine = this.locationEngine,
+        viewportProvider: ViewportProvider? = this.viewportProvider,
     ): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
         applicationContext = applicationContext,
         accessToken = accessToken,
-        locationEngine = locationEngine,
-        viewportProvider = viewportProvider,
         tileStore = tileStore,
         tilesBaseUri = tilesBaseUri,
+        locationEngine = locationEngine,
+        viewportProvider = viewportProvider,
     )
 
     /**
@@ -210,10 +205,10 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         public fun build(): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
             applicationContext = applicationContext,
             accessToken = accessToken,
-            locationEngine = locationEngine ?: defaultLocationEngine(applicationContext),
-            viewportProvider = viewportProvider,
             tileStore = tileStore ?: defaultTileStore(),
             tilesBaseUri = tilesBaseUri ?: DEFAULT_ENDPOINT_URI,
+            locationEngine = locationEngine ?: defaultLocationEngine(applicationContext),
+            viewportProvider = viewportProvider,
         )
     }
 

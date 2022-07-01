@@ -31,7 +31,6 @@ import com.mapbox.search.tests_support.reverseGeocodingBlocking
 import com.mapbox.search.tests_support.searchBlocking
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -76,23 +75,18 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         super.setUp()
 
         MapboxSearchSdk.initializeInternal(
-            searchEngineSettings = SearchEngineSettings(
-                applicationContext = targetApplication,
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION),
-                singleBoxSearchBaseUrl = MockWebServer().url("").toString()
-            ),
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                applicationContext = targetApplication,
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION),
-                tileStore = tileStore
-            ),
-            allowReinitialization = true,
+            application = targetApplication,
             timeProvider = testTimeProvider,
         )
 
-        searchEngine = MapboxSearchSdk.getOfflineSearchEngine()
+        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+            OfflineSearchEngineSettings(
+                applicationContext = targetApplication,
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                tileStore = tileStore,
+                locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
+            )
+        )
 
         tileStore.addObserver(debugTileStoreObserver)
 

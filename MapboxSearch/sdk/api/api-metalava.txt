@@ -420,13 +420,12 @@ package com.mapbox.search {
   }
 
   public final class MapboxSearchSdk {
+    method public static com.mapbox.search.OfflineSearchEngine createOfflineSearchEngine(com.mapbox.search.OfflineSearchEngineSettings settings);
     method public static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
-    method public static com.mapbox.search.OfflineSearchEngine getOfflineSearchEngine();
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
-    method public static void initialize(com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
   }
 
@@ -488,7 +487,6 @@ package com.mapbox.search {
     method public default com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
     method public com.mapbox.search.analytics.AnalyticsService getAnalyticsService();
     method public com.mapbox.search.OfflineSearchEngineSettings getSettings();
-    method public com.mapbox.common.TileStore getTileStore();
     method public void removeEngineReadyCallback(com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
     method public com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
@@ -500,7 +498,6 @@ package com.mapbox.search {
     method public void selectTileset(String? dataset, String? version);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
     property public abstract com.mapbox.search.OfflineSearchEngineSettings settings;
-    property public abstract com.mapbox.common.TileStore tileStore;
   }
 
   public static interface OfflineSearchEngine.EngineReadyCallback {
@@ -514,10 +511,10 @@ package com.mapbox.search {
   }
 
   public final class OfflineSearchEngineSettings {
-    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
-    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null, com.mapbox.common.TileStore tileStore = defaultTileStore());
-    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null);
-    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext));
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(applicationContext));
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
+    ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore());
     ctor public OfflineSearchEngineSettings(android.content.Context applicationContext, String accessToken);
     method public String getAccessToken();
     method public android.content.Context getApplicationContext();

@@ -50,7 +50,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         mockServer = MockWebServer()
         mockServer.start(TEST_WEB_SERVER_PORT)
 
-        MapboxSearchSdk.reinitializeInternal(
+        MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             formattedTimeProvider = formattedTimeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,

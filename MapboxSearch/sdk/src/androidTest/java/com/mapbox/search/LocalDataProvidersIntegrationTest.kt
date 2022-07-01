@@ -21,7 +21,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
     override fun setUp() {
         super.setUp()
 
-        MapboxSearchSdk.reinitializeInternal(targetApplication)
+        MapboxSearchSdk.initializeInternal(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
             applicationContext = targetApplication,

@@ -40,7 +40,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
             geocodingEndpointBaseUrl = mockServer.url("").toString()
         )
 
-        MapboxSearchSdk.reinitializeInternal(targetApplication)
+        MapboxSearchSdk.initializeInternal(targetApplication)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking()

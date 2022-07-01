@@ -21,21 +21,10 @@ open class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        System.setProperty("com.mapbox.mapboxsearch.enableSBS", BuildConfig.ENABLE_SBS.toString())
+        enableDebugHttpLogs()
         enableStrictMode()
         LeakCanaryConfiguration.apply()
-
-        System.setProperty("com.mapbox.mapboxsearch.enableSBS", BuildConfig.ENABLE_SBS.toString())
-
-        enableDebugHttpLogs()
-
-        MapboxSearchSdk.initialize(
-            searchEngineSettings = SearchEngineSettings(
-                applicationContext = this, accessToken = BuildConfig.MAPBOX_API_TOKEN
-            ),
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                applicationContext = this, accessToken = BuildConfig.MAPBOX_API_TOKEN, tileStore = TileStore.create()
-            ),
-        )
     }
 
     private fun enableDebugHttpLogs() {

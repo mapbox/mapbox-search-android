@@ -27,21 +27,22 @@ class TestApp : Application() {
 
         System.setProperty("com.mapbox.mapboxsearch.enableSBS", true.toString())
 
-        val locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION)
-
-        MapboxSearchSdk.initialize(
-            searchEngineSettings = SearchEngineSettings(
-                applicationContext = this,
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                locationEngine = locationEngine,
-                singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
-            ),
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                applicationContext = this,
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                locationEngine = locationEngine,
-                tileStore = TileStore.create()
-            ),
-        )
+        // TODO FIXME
+//        val locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION)
+//
+//        MapboxSearchSdk.initialize(
+//            searchEngineSettings = SearchEngineSettings(
+//                applicationContext = this,
+//                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+//                locationEngine = locationEngine,
+//                singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
+//            ),
+//            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+//                applicationContext = this,
+//                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+//                tileStore = TileStore.create(),
+//                locationEngine = locationEngine
+//            ),
+//        )
     }
 }

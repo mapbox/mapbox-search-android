@@ -55,7 +55,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.reinitializeInternal(
+        MapboxSearchSdk.initializeInternal(
             application = targetApplication,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,

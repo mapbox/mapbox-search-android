@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineIndexChangeEvent
 import com.mapbox.search.OfflineIndexChangeEvent.EventType
 import com.mapbox.search.OfflineIndexErrorEvent
 import com.mapbox.search.OfflineSearchEngine
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.OfflineSearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.sample.BuildConfig
 
 class OfflineSearchKotlinExampleActivity : Activity() {
 
@@ -47,10 +50,17 @@ class OfflineSearchKotlinExampleActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.getOfflineSearchEngine()
-        searchEngine.addEngineReadyCallback(engineReadyCallback)
+        val tileStore = TileStore.create()
 
-        val tileStore = searchEngine.tileStore
+        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+            OfflineSearchEngineSettings(
+                applicationContext = this,
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                tileStore = tileStore
+            )
+        )
+
+        searchEngine.addEngineReadyCallback(engineReadyCallback)
 
         val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
 

@@ -42,7 +42,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.reinitializeInternal(targetApplication)
+        MapboxSearchSdk.initializeInternal(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
             applicationContext = targetApplication,

@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import android.app.Application
 import android.content.Context
 import androidx.startup.Initializer
 import com.mapbox.common.MapboxSDKCommonInitializer
@@ -9,7 +10,7 @@ internal class MapboxSearchSdkInitializer : Initializer<MapboxSearchSdk> {
 
     override fun create(context: Context): MapboxSearchSdk {
         CommonSingletonModuleProvider.loaderInstance.load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
-
+        MapboxSearchSdk.initializeInternal(context.applicationContext as Application)
         return MapboxSearchSdk
     }
 

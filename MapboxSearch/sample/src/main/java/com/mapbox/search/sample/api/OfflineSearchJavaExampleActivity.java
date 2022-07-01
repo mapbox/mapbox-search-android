@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapbox.android.core.location.LocationEngineProvider;
 import com.mapbox.common.Cancelable;
 import com.mapbox.common.TileRegionLoadOptions;
 import com.mapbox.common.TileStore;
@@ -18,11 +19,13 @@ import com.mapbox.search.OfflineIndexChangeEvent.EventType;
 import com.mapbox.search.OfflineIndexErrorEvent;
 import com.mapbox.search.OfflineSearchEngine;
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback;
+import com.mapbox.search.OfflineSearchEngineSettings;
 import com.mapbox.search.OfflineSearchOptions;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchCallback;
 import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.result.SearchResult;
+import com.mapbox.search.sample.BuildConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,10 +66,17 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.getOfflineSearchEngine();
-        searchEngine.addEngineReadyCallback(engineReadyCallback);
+        final TileStore tileStore = TileStore.create();
 
-        final TileStore tileStore = searchEngine.getTileStore();
+        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+            new OfflineSearchEngineSettings(
+                this,
+                BuildConfig.MAPBOX_API_TOKEN,
+                tileStore
+            )
+        );
+
+        searchEngine.addEngineReadyCallback(engineReadyCallback);
 
         final Point dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516);
 

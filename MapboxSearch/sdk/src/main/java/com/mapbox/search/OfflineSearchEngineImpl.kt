@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
@@ -26,7 +25,6 @@ internal class OfflineSearchEngineImpl(
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
-    override val tileStore: TileStore,
 ) : BaseSearchEngine(), OfflineSearchEngine {
 
     private val initializationLock = Any()
@@ -39,7 +37,7 @@ internal class OfflineSearchEngineImpl(
     private var isEngineReady: Boolean = true
 
     init {
-        coreEngine.setTileStore(tileStore) {
+        coreEngine.setTileStore(settings.tileStore) {
             synchronized(initializationLock) {
                 isEngineReady = true
                 engineReadyCallbacks.forEach { (callback, executor) ->
