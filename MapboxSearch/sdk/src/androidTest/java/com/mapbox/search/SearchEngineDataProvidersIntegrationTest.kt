@@ -52,11 +52,11 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     }
 
     /**
-     * The shared [SearchEngine] (acquired from [MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders]) should have
+     * The [SearchEngine] acquired from [MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders] has
      * [HistoryDataProvider] and [FavoritesDataProvider] registered.
      */
     @Test
-    fun testSharedSearchEngineDefaultDataProviders() {
+    fun testSearchEngineWithDefaultDataProviders() {
         val sharedSearchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
@@ -65,10 +65,11 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     }
 
     /**
-     * [HistoryDataProvider] and [FavoritesDataProvider] can be unregistered from the shared [SearchEngine].
+     * [HistoryDataProvider] and [FavoritesDataProvider] can be unregistered from the [SearchEngine]
+     * acquired from [MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders].
      */
     @Test
-    fun testSharedSearchEngineDefaultDataProvidersUnregister() {
+    fun testSearchEngineWithDefaultDataProvidersUnregister() {
         val sharedSearchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,

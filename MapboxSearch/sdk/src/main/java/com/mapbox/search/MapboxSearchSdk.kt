@@ -62,11 +62,11 @@ public object MapboxSearchSdk {
 
     private lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
 
-    @get:JvmSynthetic
+    @JvmSynthetic
     internal lateinit var internalServiceProvider: InternalServiceProvider
 
     /**
-     * Shared [ServiceProvider] instance.
+     * [ServiceProvider] instance.
      *
      * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
      */
@@ -77,6 +77,7 @@ public object MapboxSearchSdk {
             return internalServiceProvider
         }
 
+    @JvmSynthetic
     internal fun initializeInternal(
         application: Application,
         timeProvider: TimeProvider = LocalTimeProvider(),

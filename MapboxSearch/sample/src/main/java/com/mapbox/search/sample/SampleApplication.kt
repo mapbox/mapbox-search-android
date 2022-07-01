@@ -11,10 +11,6 @@ import com.mapbox.common.HttpRequest
 import com.mapbox.common.HttpResponse
 import com.mapbox.common.HttpServiceFactory
 import com.mapbox.common.HttpServiceInterceptorInterface
-import com.mapbox.common.TileStore
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.SearchEngineSettings
 
 open class SampleApplication : Application() {
 

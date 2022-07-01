@@ -10,6 +10,7 @@ import com.mapbox.search.location.WrapperLocationProvider
 
 /**
  * Settings used for [SearchEngine] configuration.
+ * @see SearchEngine
  */
 public class SearchEngineSettings @JvmOverloads constructor(
 

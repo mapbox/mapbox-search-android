@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
@@ -15,6 +14,7 @@ import java.net.URI
 
 /**
  * Settings used for [OfflineSearchEngine] configuration.
+ * @see OfflineSearchEngine
  */
 public class OfflineSearchEngineSettings @JvmOverloads constructor(
 

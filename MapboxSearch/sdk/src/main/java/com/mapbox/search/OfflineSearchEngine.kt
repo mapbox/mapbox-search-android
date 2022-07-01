@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.AnalyticsService
