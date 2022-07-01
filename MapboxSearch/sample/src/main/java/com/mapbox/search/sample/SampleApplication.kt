@@ -45,17 +45,17 @@ open class SampleApplication : Application() {
 
         HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
             override fun onRequest(request: HttpRequest): HttpRequest {
-                Log.i("SearchApiExample", "onRequest: $request")
+                Log.i("SearchSdkHttp", "onRequest: $request")
                 return request
             }
 
             override fun onDownload(download: DownloadOptions): DownloadOptions {
-                Log.i("SearchApiExample", "onDownload: $download")
+                Log.i("SearchSdkHttp", "onDownload: $download")
                 return download
             }
 
             override fun onResponse(response: HttpResponse): HttpResponse {
-                Log.i("SearchApiExample", "onResponse: $response")
+                Log.i("SearchSdkHttp", "onResponse: $response")
                 return response
             }
         })
