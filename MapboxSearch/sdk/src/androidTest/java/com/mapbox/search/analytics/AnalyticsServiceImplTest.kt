@@ -8,7 +8,6 @@ import com.mapbox.search.Country
 import com.mapbox.search.EtaType
 import com.mapbox.search.Language
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.QueryType
 import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchEngine
@@ -19,6 +18,7 @@ import com.mapbox.search.SearchOptions
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.fixNonDeterminedFields
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.KeyboardLocaleProvider
@@ -50,6 +50,13 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         mockServer = MockWebServer()
         mockServer.start(TEST_WEB_SERVER_PORT)
 
+        MapboxSearchSdk.reinitializeInternal(
+            application = targetApplication,
+            formattedTimeProvider = formattedTimeProvider,
+            keyboardLocaleProvider = keyboardLocaleProvider,
+            orientationProvider = orientationProvider,
+        )
+
         val searchEngineSettings = SearchEngineSettings(
             applicationContext = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
@@ -58,23 +65,9 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             geocodingEndpointBaseUrl = mockServer.url("").toString()
         )
 
-        MapboxSearchSdk.initializeInternal(
-            searchEngineSettings = searchEngineSettings,
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                applicationContext = targetApplication,
-                accessToken = TEST_ACCESS_TOKEN,
-                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            ),
-            allowReinitialization = true,
-            formattedTimeProvider = formattedTimeProvider,
-            keyboardLocaleProvider = keyboardLocaleProvider,
-            orientationProvider = orientationProvider,
-        )
-
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            searchEngineSettings = searchEngineSettings,
-            useSharedCoreEngine = true,
+            settings = searchEngineSettings,
         )
     }
 

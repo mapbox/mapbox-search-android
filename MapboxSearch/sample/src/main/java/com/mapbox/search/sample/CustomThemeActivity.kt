@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -26,7 +28,14 @@ class CustomThemeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_custom_theme)
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
-            initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
+            val context = this@CustomThemeActivity
+            initialize(
+                SearchResultsView.Configuration(
+                    commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
+                    searchEngineSettings = SearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN),
+                    offlineSearchEngineSettings = OfflineSearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN)
+                )
+            )
             isVisible = false
         }
 

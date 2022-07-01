@@ -3,7 +3,9 @@ package com.mapbox.search.sample.tools
 import android.app.Application
 import android.os.Build
 import android.os.LocaleList
+import com.mapbox.common.TileStore
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.sample.BuildConfig
@@ -24,12 +26,21 @@ class TestApp : Application() {
         }
 
         System.setProperty("com.mapbox.mapboxsearch.enableSBS", true.toString())
+
+        val locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION)
+
         MapboxSearchSdk.initialize(
-            application = this,
-            accessToken = BuildConfig.MAPBOX_API_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             searchEngineSettings = SearchEngineSettings(
+                applicationContext = this,
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                locationEngine = locationEngine,
                 singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
+            ),
+            offlineSearchEngineSettings = OfflineSearchEngineSettings(
+                applicationContext = this,
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                locationEngine = locationEngine,
+                tileStore = TileStore.create()
             ),
         )
     }

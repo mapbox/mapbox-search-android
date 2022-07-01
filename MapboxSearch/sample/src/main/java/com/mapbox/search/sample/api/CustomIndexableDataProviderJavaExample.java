@@ -13,6 +13,7 @@ import com.mapbox.search.CompletionCallback;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
+import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
 import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
@@ -23,6 +24,7 @@ import com.mapbox.search.record.IndexableRecord;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchResultType;
 import com.mapbox.search.result.SearchSuggestion;
+import com.mapbox.search.sample.BuildConfig;
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker;
 
 import java.util.ArrayList;
@@ -82,7 +84,9 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.getSearchEngine();
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            new SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        );
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...");
 

@@ -22,6 +22,7 @@ import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
@@ -72,29 +73,23 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
+        MapboxSearchSdk.reinitializeInternal(
+            application = targetApplication,
+            timeProvider = timeProvider,
+            keyboardLocaleProvider = keyboardLocaleProvider,
+            orientationProvider = orientationProvider,
+        )
+
         val searchEngineSettings = SearchEngineSettings(
             applicationContext = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
-        MapboxSearchSdk.initializeInternal(
-            searchEngineSettings = searchEngineSettings,
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                applicationContext = targetApplication,
-                accessToken = TEST_ACCESS_TOKEN,
-                locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            ),
-            allowReinitialization = true,
-            timeProvider = timeProvider,
-            keyboardLocaleProvider = keyboardLocaleProvider,
-            orientationProvider = orientationProvider,
-        )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            searchEngineSettings = searchEngineSettings,
-            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            settings = searchEngineSettings,
             analyticsService = analyticsService
         )
 

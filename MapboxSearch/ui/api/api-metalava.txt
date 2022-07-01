@@ -61,7 +61,7 @@ package com.mapbox.search.ui.view {
     method public void addSearchListener(com.mapbox.search.ui.view.SearchResultsView.SearchListener listener);
     method public com.mapbox.search.SearchOptions getDefaultSearchOptions();
     method public com.mapbox.search.ui.view.SearchMode getSearchMode();
-    method public void initialize(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonSearchViewConfiguration);
+    method public void initialize(com.mapbox.search.ui.view.SearchResultsView.Configuration configuration);
     method public void removeOnSuggestionClickListener(com.mapbox.search.ui.view.SearchResultsView.OnSuggestionClickListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.view.SearchResultsView.SearchListener listener);
     method @UiThread public void search(String query, com.mapbox.search.SearchOptions options = defaultSearchOptions);
@@ -70,6 +70,16 @@ package com.mapbox.search.ui.view {
     method public void setSearchMode(com.mapbox.search.ui.view.SearchMode value);
     property public final com.mapbox.search.SearchOptions defaultSearchOptions;
     property public final com.mapbox.search.ui.view.SearchMode searchMode;
+  }
+
+  public static final class SearchResultsView.Configuration {
+    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
+    method public com.mapbox.search.ui.view.CommonSearchViewConfiguration getCommonConfiguration();
+    method public com.mapbox.search.OfflineSearchEngineSettings getOfflineSearchEngineSettings();
+    method public com.mapbox.search.SearchEngineSettings getSearchEngineSettings();
+    property public final com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration;
+    property public final com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings;
+    property public final com.mapbox.search.SearchEngineSettings searchEngineSettings;
   }
 
   public static fun interface SearchResultsView.OnSuggestionClickListener {

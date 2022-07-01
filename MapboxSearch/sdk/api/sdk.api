@@ -445,11 +445,12 @@ public final class com/mapbox/search/Language$Companion {
 
 public final class com/mapbox/search/MapboxSearchSdk {
 	public static final field INSTANCE Lcom/mapbox/search/MapboxSearchSdk;
-	public final fun createSearchEngine ()Lcom/mapbox/search/SearchEngine;
-	public final fun createSearchEngine (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
-	public static synthetic fun createSearchEngine$default (Lcom/mapbox/search/MapboxSearchSdk;Lcom/mapbox/search/SearchEngineSettings;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
+	public static final fun createSearchEngine (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
+	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
+	public static synthetic fun createSearchEngineWithBuiltInDataProviders$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
 	public static final fun getOfflineSearchEngine ()Lcom/mapbox/search/OfflineSearchEngine;
-	public static final fun getSearchEngine ()Lcom/mapbox/search/SearchEngine;
 	public static final fun getServiceProvider ()Lcom/mapbox/search/ServiceProvider;
 	public static final fun initialize (Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;)V
 }

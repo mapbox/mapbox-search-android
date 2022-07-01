@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
+import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchMultipleSelectionCallback;
 import com.mapbox.search.SearchOptions;
 import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchSuggestion;
+import com.mapbox.search.sample.BuildConfig;
 
 import java.util.List;
 
@@ -69,7 +71,9 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.getSearchEngine();
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            new SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        );
 
         final SearchOptions options = new SearchOptions.Builder()
             .build();

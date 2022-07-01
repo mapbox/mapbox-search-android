@@ -8,8 +8,10 @@ import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.sample.BuildConfig
 
 class CategorySearchKotlinExampleActivity : AppCompatActivity() {
 
@@ -34,7 +36,10 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.getSearchEngine()
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        )
+
         searchRequestTask = searchEngine.search(
             "cafe",
             CategorySearchOptions(limit = 1),
