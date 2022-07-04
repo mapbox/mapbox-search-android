@@ -179,6 +179,21 @@ commands:
             	--timeout 900s \
             	--project mapbox-search-android
 
+  run-firebase-ui-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for UI module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :ui:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test ui/build/outputs/apk/androidTest/debug/mapbox-search-android-ui-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
 #-------------------------------
 #---------- EXECUTORS ----------
 #-------------------------------
@@ -251,14 +266,25 @@ jobs:
       - assemble-sample-debug
       - run-firebase-sdk-instrumentation
 
-  ui-robo-tests:
+  ui-instrumentation-tests:
+    executor: default-executor
+    steps:
+      - checkout
+      - set-up-aws-for-android
+      - restore-gradle-cache
+      - login-google-cloud-platform
+      - clean-build
+      - assemble-sample-debug
+      - run-firebase-ui-instrumentation
+
+  sample-robo-tests:
     executor: default-executor
     steps:
       - read-workspace
       - login-google-cloud-platform
       - run-firebase-sample-robo
 
-  ui-instrumentation-tests:
+  sample-instrumentation-tests:
     executor: default-executor
     steps:
       - read-workspace
@@ -318,16 +344,17 @@ workflows:
     jobs:
       - prepare-and-assemble
       - instrumentation-tests
+      - ui-instrumentation-tests
       - static-analysis:
           requires:
             - prepare-and-assemble
       - unit-tests:
           requires:
             - prepare-and-assemble
-      - ui-robo-tests:
+      - sample-robo-tests:
           requires:
             - prepare-and-assemble
-      - ui-instrumentation-tests:
+      - sample-instrumentation-tests:
           requires:
             - prepare-and-assemble
 #      - pitest-validate:
@@ -345,16 +372,17 @@ workflows:
     jobs:
       - prepare-and-assemble
       - instrumentation-tests
+      - ui-instrumentation-tests
       - static-analysis:
           requires:
             - prepare-and-assemble
       - unit-tests:
           requires:
             - prepare-and-assemble
-      - ui-robo-tests:
+      - sample-robo-tests:
           requires:
             - prepare-and-assemble
-      - ui-instrumentation-tests:
+      - sample-instrumentation-tests:
           requires:
             - prepare-and-assemble
 #      - pitest-validate:
