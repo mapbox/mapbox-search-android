@@ -18,7 +18,9 @@ import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
+import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
+import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryDataProviderImpl
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
@@ -30,6 +32,7 @@ import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.FormattedTimeProviderImpl
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.LocalTimeProvider
+import com.mapbox.search.utils.LoggingCompletionCallback
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.UUIDProviderImpl
@@ -121,7 +124,27 @@ public object MapboxSearchSdk {
 
         searchResultFactory = SearchResultFactory(indexableDataProvidersRegistry)
 
+        preregisterDefaultDataProviders(
+            historyDataProvider, favoritesDataProvider
+        )
+
         isInitialized = true
+    }
+
+    private fun preregisterDefaultDataProviders(
+        historyDataProvider: HistoryDataProvider,
+        favoritesDataProvider: FavoritesDataProvider
+    ) {
+        indexableDataProvidersRegistry.preregister(
+            historyDataProvider,
+            SearchSdkMainThreadWorker.mainExecutor,
+            LoggingCompletionCallback("HistoryDataProvider register")
+        )
+        indexableDataProvidersRegistry.preregister(
+            favoritesDataProvider,
+            SearchSdkMainThreadWorker.mainExecutor,
+            LoggingCompletionCallback("FavoritesDataProvider register")
+        )
     }
 
     private fun createAnalyticsService(
@@ -184,12 +207,6 @@ public object MapboxSearchSdk {
             locationEngine = locationEngine,
         )
     }
-
-//    TODO preregister history and favorite data providers so that consecutive calls will be faster
-//    private fun registerDefaultDataProviders() {
-//        indexableDataProvidersRegistry.register(historyDataProvider)
-//        indexableDataProvidersRegistry.register(favoritesDataProvider)
-//    }
 
     /**
      * Creates a new instance of the [SearchEngine].

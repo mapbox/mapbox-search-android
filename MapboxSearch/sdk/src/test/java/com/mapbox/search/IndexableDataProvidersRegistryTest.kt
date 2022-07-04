@@ -390,4 +390,62 @@ internal class IndexableDataProvidersRegistryTest {
             }
         }
     }
+
+    @TestFactory
+    fun `Check successful data provider preregistration`() = TestCase {
+        Given("IndexableDataProvidersRegistry with mocked dependencies") {
+            mockDataProviderRegistration()
+
+            When("Preregister provider for the first time") {
+                val callbackExecutor = spyk(TestExecutor())
+                val callback: CompletionCallback<Unit> = mockk(relaxed = true)
+
+                val task = registry.preregister(dataProvider1, callbackExecutor, callback)
+
+                VerifyOnce("Data provider registered in the registration service") {
+                    registrationService.register(dataProvider1, any())
+                }
+
+                VerifyOnce("Callback executor triggered") {
+                    callbackExecutor.execute(any())
+                }
+
+                VerifyOnce("Completion result passed to callback") {
+                    callback.onComplete(Unit)
+                }
+
+                Then("Task completes", true, task.isDone)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check data provider consecutive preregistration`() = TestCase {
+        Given("IndexableDataProvidersRegistry with mocked dependencies") {
+            mockDataProviderRegistration()
+
+            registry.preregister(dataProvider1, TestExecutor(), mockk(relaxed = true))
+
+            When("Preregister provider for the first time") {
+                val callbackExecutor = spyk(TestExecutor())
+                val callback: CompletionCallback<Unit> = mockk(relaxed = true)
+
+                val task = registry.preregister(dataProvider1, callbackExecutor, callback)
+
+                VerifyOnce("Data provider registered in the registration service only once") {
+                    registrationService.register(dataProvider1, any())
+                }
+
+                VerifyOnce("Callback executor for second registration triggered") {
+                    callbackExecutor.execute(any())
+                }
+
+                VerifyOnce("Completion result passed to callback") {
+                    callback.onComplete(Unit)
+                }
+
+                Then("Task completes", true, task.isDone)
+            }
+        }
+    }
 }
