@@ -22,6 +22,7 @@ import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
@@ -74,18 +75,21 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
-            allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        val searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
+            accessToken = TEST_ACCESS_TOKEN,
+            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            singleBoxSearchBaseUrl = mockServer.url("").toString()
+        )
+
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            settings = searchEngineSettings,
             analyticsService = analyticsService
         )
 

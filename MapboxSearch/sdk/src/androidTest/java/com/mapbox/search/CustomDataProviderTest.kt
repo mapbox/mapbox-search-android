@@ -14,6 +14,7 @@ import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.CustomRecord
@@ -56,18 +57,21 @@ internal class CustomDataProviderTest : BaseTest() {
 
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
-            allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        val searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
+            accessToken = TEST_ACCESS_TOKEN,
+            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            singleBoxSearchBaseUrl = mockServer.url("").toString()
+        )
+
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            settings = searchEngineSettings,
             analyticsService = analyticsService
         )
 

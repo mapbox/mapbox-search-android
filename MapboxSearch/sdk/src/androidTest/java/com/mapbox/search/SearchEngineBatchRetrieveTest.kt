@@ -9,6 +9,7 @@ import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
@@ -41,17 +42,18 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(
-            application = targetApplication,
+        MapboxSearchSdk.initializeInternal(targetApplication)
+
+        val searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = SearchEngineSettings(singleBoxSearchBaseUrl = mockServer.url("").toString()),
-            allowReinitialization = true,
+            singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            settings = searchEngineSettings,
             analyticsService = analyticsService
         )
 

@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryService
@@ -34,12 +33,6 @@ public interface ServiceProvider {
      * @return [HistoryDataProvider] instance.
      */
     public fun historyDataProvider(): HistoryDataProvider
-
-    /**
-     * Provides entity to get current user location.
-     * @return [LocationEngine] instance.
-     */
-    public fun locationEngine(): LocationEngine
 }
 
 internal interface InternalServiceProvider : ServiceProvider {
@@ -47,7 +40,6 @@ internal interface InternalServiceProvider : ServiceProvider {
 }
 
 internal class ServiceProviderImpl(
-    private val locationEngine: LocationEngine,
     private val historyDataProvider: HistoryService,
     private val favoritesDataProvider: FavoritesDataProvider,
 ) : ServiceProvider, InternalServiceProvider {
@@ -61,6 +53,4 @@ internal class ServiceProviderImpl(
     override fun historyDataProvider(): HistoryDataProvider = historyDataProvider
 
     override fun historyService(): HistoryService = historyDataProvider
-
-    override fun locationEngine(): LocationEngine = locationEngine
 }

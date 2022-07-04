@@ -8,6 +8,8 @@ import com.mapbox.search.common.failDebug
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreUserRecordsLayer
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 internal interface DataProviderEngineRegistrationService {
 
@@ -18,7 +20,7 @@ internal interface DataProviderEngineRegistrationService {
 }
 
 internal class DataProviderEngineRegistrationServiceImpl(
-    private val registryExecutor: Executor,
+    private val registryExecutor: Executor = DEFAULT_EXECUTOR,
     private val coreLayerProvider: (String, Int) -> CoreUserRecordsLayer = Companion::createCoreLayer,
 ) : DataProviderEngineRegistrationService {
 
@@ -145,6 +147,11 @@ internal class DataProviderEngineRegistrationServiceImpl(
     }
 
     private companion object {
+
+        val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
+            Thread(runnable, "Global DataProviderRegistry executor")
+        }
+
         fun createCoreLayer(name: String, priority: Int): CoreUserRecordsLayer {
             return CoreSearchEngine.createUserLayer(name, priority)
         }

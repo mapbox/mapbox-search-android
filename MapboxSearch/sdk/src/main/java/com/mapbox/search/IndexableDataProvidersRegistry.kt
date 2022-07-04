@@ -7,6 +7,12 @@ import java.util.concurrent.Executor
 
 internal interface IndexableDataProvidersRegistry {
 
+    fun <R : IndexableRecord> preregister(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask
+
     fun <R : IndexableRecord> register(
         dataProvider: IndexableDataProvider<R>,
         searchEngine: CoreSearchEngineInterface,

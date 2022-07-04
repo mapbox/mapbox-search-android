@@ -1,8 +1,12 @@
 package com.mapbox.search.tests_support
 
+import com.mapbox.search.ApiType
+import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SelectOptions
+import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchSuggestion
@@ -45,4 +49,17 @@ internal fun <R : IndexableRecord> SearchEngine.unregisterDataProviderBlocking(
     val callback = BlockingCompletionCallback<Unit>()
     unregisterDataProvider(dataProvider, executor, callback)
     return callback.getResultBlocking()
+}
+
+internal fun MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+    apiType: ApiType,
+    settings: SearchEngineSettings,
+    analyticsService: InternalAnalyticsService? = null,
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+): SearchEngine {
+    val callback = BlockingCompletionCallback<Unit>()
+    val searchEngine = createSearchEngineWithBuiltInDataProviders(apiType, settings, analyticsService, executor, callback)
+    val result = callback.getResultBlocking()
+    require(result.isResult)
+    return searchEngine
 }

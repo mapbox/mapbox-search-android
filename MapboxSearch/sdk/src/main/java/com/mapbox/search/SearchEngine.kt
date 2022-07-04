@@ -19,7 +19,7 @@ import java.util.concurrent.Executor
  *
  * ## Instantiating
  *
- * Call [MapboxSearchSdk.getSearchEngine] to get instance of a [SearchEngine].
+ * Call [MapboxSearchSdk.createSearchEngine] to get instance of a [SearchEngine].
  *
  * ## Forward geocoding algorithm
  *
@@ -51,7 +51,7 @@ import java.util.concurrent.Executor
  * Any other error will be propagated to [SearchSuggestionsCallback.onError].
  *
  * @see OfflineSearchEngine
- * @see MapboxSearchSdk.getSearchEngine
+ * @see MapboxSearchSdk.createSearchEngine
  */
 public interface SearchEngine {
 
@@ -60,6 +60,12 @@ public interface SearchEngine {
      * The type of the API used by the Search Engine.
      */
     public val apiType: ApiType
+
+    /**
+     * Experimental API, can be changed or removed in the next SDK releases.
+     * Settings used for [SearchEngine] initialization.
+     */
+    public val settings: SearchEngineSettings
 
     /**
      * [AnalyticsService] instance associated with this [SearchEngine].

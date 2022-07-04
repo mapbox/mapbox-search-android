@@ -9,11 +9,12 @@ ext {
 
     multidex_version = '2.0.1'
 
-    android_x_annotation_version = '1.3.0'
+    androidx_annotation_version = '1.3.0'
     androidx_collection_version = '1.2.0'
-    android_x_appcompat_version = '1.3.1' // 1.4.0 is available but its minCompileSdk is 31. We can't bump it now because not all customers have migrated to API 31
+    androidx_appcompat_version = '1.3.1' // 1.4.0 is available but its minCompileSdk is 31. We can't bump it now because not all customers have migrated to API 31
     androidx_core_version = '1.6.0' // 1.7.0 is available but its minCompileSdk is 31. We can't bump it now because not all customers have migrated to API 31
-    androidx_lifecycle_runtime_ktx = '2.4.1'
+    androidx_lifecycle_runtime_ktx_version = '2.4.1'
+    androidx_startup_runtime_version = '1.1.1'
 
     recyclerview_version = '1.2.1'
     constraint_layout_version = '2.1.3'
@@ -24,9 +25,9 @@ ext {
     okhttp_mock_version = '1.5.0'
 
     junit_version = '4.13.2'
-    android_x_test_runner_version = '1.4.0'
-    android_x_test_rules_version = '1.4.0'
-    android_x_junit_version = '1.1.3'
+    androidx_test_runner_version = '1.4.0'
+    androidx_test_rules_version = '1.4.0'
+    androidx_junit_version = '1.1.3'
     barista_version = "4.2.0"
     ui_automator_version = "2.2.0"
     espresso_version = '3.0.2'
@@ -40,7 +41,7 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = "10.6.0-rc.1"
+    mapbox_maps_version = "10.6.0"
     common_sdk_version = '22.0.0'
     mapbox_base_version = '0.8.0'
     mapbox_android_core_version = '5.0.1'

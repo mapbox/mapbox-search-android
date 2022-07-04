@@ -9,8 +9,10 @@ import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.sample.BuildConfig
 
 class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
 
@@ -35,7 +37,9 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.getSearchEngine()
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        )
 
         val options = ReverseGeoOptions(
             center = Point.fromLngLat(2.294434, 48.858349),

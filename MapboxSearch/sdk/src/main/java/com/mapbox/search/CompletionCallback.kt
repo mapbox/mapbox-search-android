@@ -18,3 +18,9 @@ public interface CompletionCallback<T> {
      */
     public fun onError(e: Exception)
 }
+
+internal class StubCompletionCallback<T> : CompletionCallback<T> {
+    override fun onComplete(result: T) {}
+
+    override fun onError(e: Exception) {}
+}

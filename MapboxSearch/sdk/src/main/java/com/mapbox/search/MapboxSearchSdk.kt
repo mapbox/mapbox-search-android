@@ -1,45 +1,38 @@
 package com.mapbox.search
 
-import android.Manifest
 import android.app.Application
-import androidx.annotation.VisibleForTesting
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.bindgen.Value
+import com.mapbox.common.EventsService
+import com.mapbox.common.EventsServiceOptions
 import com.mapbox.common.TileDataDomain
-import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
-import com.mapbox.common.module.LibraryLoader
-import com.mapbox.common.module.provider.MapboxModuleProvider
-import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
 import com.mapbox.search.analytics.InternalAnalyticsService
-import com.mapbox.search.analytics.SearchEventsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
-import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreEngineOptions
-import com.mapbox.search.core.CoreLocationProvider
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.location.LocationEngineAdapter
-import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
+import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
+import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryDataProviderImpl
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
 import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.utils.AppInfoProviderImpl
+import com.mapbox.search.utils.CompoundCompletionCallback
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.FormattedTimeProviderImpl
 import com.mapbox.search.utils.KeyboardLocaleProvider
 import com.mapbox.search.utils.LocalTimeProvider
+import com.mapbox.search.utils.LoggingCompletionCallback
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.UUIDProvider
 import com.mapbox.search.utils.UUIDProviderImpl
@@ -49,18 +42,13 @@ import com.mapbox.search.utils.loader.DataLoader
 import com.mapbox.search.utils.loader.InternalDataLoader
 import com.mapbox.search.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.utils.orientation.ScreenOrientationProvider
-import java.util.Collections
-import java.util.WeakHashMap
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import java.util.concurrent.Executor
 
 /**
  * The entry point to initialize Search SDK.
  */
 @Suppress("LargeClass")
 public object MapboxSearchSdk {
-
-    private const val SEARCH_SDK_NATIVE_LIBRARY_NAME = "SearchCore"
 
     private val userAgent = if (BuildConfig.DEBUG) {
         "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
@@ -70,44 +58,19 @@ public object MapboxSearchSdk {
 
     private var isInitialized = false
 
-    // Strong references for bindgen interfaces
-    private lateinit var coreLocationProvider: CoreLocationProvider
-
-    private lateinit var application: Application
     private lateinit var searchRequestContextProvider: SearchRequestContextProvider
     private lateinit var searchResultFactory: SearchResultFactory
-    private lateinit var locationEngine: LocationEngine
-    private var viewportProvider: ViewportProvider? = null
     private lateinit var timeProvider: TimeProvider
     private lateinit var formattedTimeProvider: FormattedTimeProvider
     private lateinit var uuidProvider: UUIDProvider
 
-    private lateinit var tileStore: TileStore
-
-    private lateinit var searchEnginesExecutor: ExecutorService
-    private lateinit var offlineSearchEngineExecutor: ExecutorService
-    private lateinit var globalDataProvidersRegistryExecutor: ExecutorService
-
     private lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
 
-    @get:JvmSynthetic
+    @JvmSynthetic
     internal lateinit var internalServiceProvider: InternalServiceProvider
 
-    private val coreSearchEngines: MutableSet<CoreSearchEngineInterface> = Collections.newSetFromMap(WeakHashMap())
-    private val analyticsServices: MutableSet<AnalyticsServiceImpl> = Collections.newSetFromMap(WeakHashMap())
-    private lateinit var accessToken: String
-    private lateinit var searchSdkSettings: SearchSdkSettings
-    private lateinit var searchEngineSettings: SearchEngineSettings
-
-    private lateinit var sbsCoreSearchEngine: CoreSearchEngineInterface
-    private lateinit var geocodingCoreSearchEngine: CoreSearchEngineInterface
-
-    private lateinit var sbsSearchEngineShared: SearchEngine
-    private lateinit var geocodingSearchEngineShared: SearchEngine
-    private lateinit var offlineSearchEngineShared: OfflineSearchEngine
-
     /**
-     * Shared [ServiceProvider] instance.
+     * [ServiceProvider] instance.
      *
      * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
      */
@@ -118,55 +81,9 @@ public object MapboxSearchSdk {
             return internalServiceProvider
         }
 
-    /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     * Initialize Search SDK.
-     *
-     * @param [application] android application instance.
-     * @param [accessToken] mapbox access token.
-     * @param [locationEngine] optional location engine instance.
-     * Default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine]. Note that this class requires
-     * [Manifest.permission.ACCESS_COARSE_LOCATION] or [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
-     * @param [viewportProvider] optional viewport provider.
-     * @param [searchSdkSettings] optional Search SDK settings.
-     * @param [searchEngineSettings] optional [SearchEngine] settings.
-     * @param [offlineSearchEngineSettings] optional offline search settings.
-     *
-     * @throws IllegalStateException if [MapboxSearchSdk] has already been initialized.
-     */
-    @JvmOverloads
-    @JvmStatic
-    public fun initialize(
-        application: Application,
-        accessToken: String,
-        locationEngine: LocationEngine = LocationEngineProvider.getBestLocationEngine(application),
-        viewportProvider: ViewportProvider? = null,
-        searchEngineSettings: SearchEngineSettings = SearchEngineSettings(),
-        searchSdkSettings: SearchSdkSettings = SearchSdkSettings(),
-        offlineSearchEngineSettings: OfflineSearchEngineSettings = OfflineSearchEngineSettings(),
-    ) {
-        initializeInternal(
-            application = application,
-            accessToken = accessToken,
-            locationEngine = locationEngine,
-            viewportProvider = viewportProvider,
-            searchSdkSettings = searchSdkSettings,
-            searchEngineSettings = searchEngineSettings,
-            offlineSearchEngineSettings = offlineSearchEngineSettings,
-            allowReinitialization = false
-        )
-    }
-
-    @Suppress("LongParameterList")
+    @JvmSynthetic
     internal fun initializeInternal(
         application: Application,
-        accessToken: String,
-        locationEngine: LocationEngine,
-        viewportProvider: ViewportProvider? = null,
-        searchSdkSettings: SearchSdkSettings = SearchSdkSettings(),
-        searchEngineSettings: SearchEngineSettings = SearchEngineSettings(),
-        offlineSearchEngineSettings: OfflineSearchEngineSettings = OfflineSearchEngineSettings(),
-        allowReinitialization: Boolean = false,
         timeProvider: TimeProvider = LocalTimeProvider(),
         formattedTimeProvider: FormattedTimeProvider = FormattedTimeProviderImpl(timeProvider),
         uuidProvider: UUIDProvider = UUIDProviderImpl(),
@@ -174,18 +91,6 @@ public object MapboxSearchSdk {
         orientationProvider: ScreenOrientationProvider = AndroidScreenOrientationProvider(application),
         dataLoader: DataLoader<ByteArray> = InternalDataLoader(application, InternalFileSystem()),
     ) {
-        check(allowReinitialization || !isInitialized) {
-            "Already initialized"
-        }
-
-        val locationProvider = LocationEngineAdapter(application, locationEngine)
-
-        this.application = application
-        this.accessToken = accessToken
-        this.searchSdkSettings = searchSdkSettings
-        this.searchEngineSettings = searchEngineSettings
-        this.locationEngine = locationEngine
-        this.viewportProvider = viewportProvider
         this.timeProvider = timeProvider
         this.formattedTimeProvider = formattedTimeProvider
         this.uuidProvider = uuidProvider
@@ -194,42 +99,18 @@ public object MapboxSearchSdk {
             SearchSdkMainThreadWorker.isMainThread
         }
 
-        MapboxModuleProvider.createModule<LibraryLoader>(
-            MapboxModuleType.CommonLibraryLoader, ::mapboxModuleParamsProvider
-        ).run {
-            load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
-        }
-
-        searchEnginesExecutor = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "SearchEngine executor")
-        }
-        offlineSearchEngineExecutor = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "OfflineSearchEngine executor")
-        }
-        globalDataProvidersRegistryExecutor = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "Global DataProviderRegistry executor")
-        }
-
-        coreLocationProvider = WrapperLocationProvider(locationProvider, viewportProvider)
-
-        geocodingCoreSearchEngine = createCoreEngineByApiType(ApiType.GEOCODING, searchEngineSettings)
-        sbsCoreSearchEngine = createCoreEngineByApiType(ApiType.SBS, searchEngineSettings)
-
         searchRequestContextProvider = SearchRequestContextProvider(
             keyboardLocaleProvider,
             orientationProvider
         )
 
         indexableDataProvidersRegistry = IndexableDataProvidersRegistryImpl(
-            dataProviderEngineRegistrationService = DataProviderEngineRegistrationServiceImpl(
-                registryExecutor = globalDataProvidersRegistryExecutor,
-            )
+            dataProviderEngineRegistrationService = DataProviderEngineRegistrationServiceImpl()
         )
 
         val historyDataProvider = HistoryDataProviderImpl(
             recordsStorage = RecordsFileStorage.History(dataLoader),
             timeProvider = timeProvider,
-            maxRecordsAmount = searchSdkSettings.maxHistoryRecordsAmount,
         )
 
         val favoritesDataProvider = FavoritesDataProviderImpl(
@@ -237,40 +118,63 @@ public object MapboxSearchSdk {
         )
 
         internalServiceProvider = ServiceProviderImpl(
-            locationEngine = locationEngine,
             historyDataProvider = historyDataProvider,
             favoritesDataProvider = favoritesDataProvider,
         )
 
         searchResultFactory = SearchResultFactory(indexableDataProvidersRegistry)
 
-        tileStore = offlineSearchEngineSettings.tileStore ?: TileStore.create()
-
-        tileStore.setOption(
-            TileStoreOptions.MAPBOX_APIURL,
-            TileDataDomain.SEARCH,
-            Value.valueOf(offlineSearchEngineSettings.tilesBaseUriOrDefault().toString())
+        preregisterDefaultDataProviders(
+            historyDataProvider, favoritesDataProvider
         )
-
-        tileStore.setOption(
-            TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-            TileDataDomain.SEARCH,
-            Value.valueOf(accessToken)
-        )
-
-        registerDefaultDataProviders()
 
         isInitialized = true
-
-        sbsSearchEngineShared = createSearchEngine(ApiType.SBS, searchEngineSettings, useSharedCoreEngine = true)
-        geocodingSearchEngineShared = createSearchEngine(ApiType.GEOCODING, searchEngineSettings, useSharedCoreEngine = true)
-        offlineSearchEngineShared = createOfflineSearchEngine(sbsCoreSearchEngine)
     }
+
+    private fun preregisterDefaultDataProviders(
+        historyDataProvider: HistoryDataProvider,
+        favoritesDataProvider: FavoritesDataProvider
+    ) {
+        indexableDataProvidersRegistry.preregister(
+            historyDataProvider,
+            SearchSdkMainThreadWorker.mainExecutor,
+            LoggingCompletionCallback("HistoryDataProvider register")
+        )
+        indexableDataProvidersRegistry.preregister(
+            favoritesDataProvider,
+            SearchSdkMainThreadWorker.mainExecutor,
+            LoggingCompletionCallback("FavoritesDataProvider register")
+        )
+    }
+
+    private fun createAnalyticsService(
+        settings: OfflineSearchEngineSettings,
+        coreSearchEngine: CoreSearchEngineInterface,
+    ) = createAnalyticsService(
+        application = settings.application,
+        accessToken = settings.accessToken,
+        coreSearchEngine = coreSearchEngine,
+        locationEngine = settings.locationEngine,
+        viewportProvider = settings.viewportProvider
+    )
+
+    private fun createAnalyticsService(
+        settings: SearchEngineSettings,
+        coreSearchEngine: CoreSearchEngineInterface,
+    ) = createAnalyticsService(
+        application = settings.application,
+        accessToken = settings.accessToken,
+        coreSearchEngine = coreSearchEngine,
+        locationEngine = settings.locationEngine,
+        viewportProvider = settings.viewportProvider
+    )
 
     private fun createAnalyticsService(
         application: Application,
         accessToken: String,
-        coreSearchEngine: CoreSearchEngineInterface
+        coreSearchEngine: CoreSearchEngineInterface,
+        locationEngine: LocationEngine,
+        viewportProvider: ViewportProvider?,
     ): AnalyticsServiceImpl {
         val eventJsonParser = AnalyticsEventJsonParser()
 
@@ -292,189 +196,147 @@ public object MapboxSearchSdk {
             )
         )
 
-        val analyticsService = AnalyticsServiceImpl(
+        val eventsService = EventsService(EventsServiceOptions(accessToken, userAgent, null))
+
+        return AnalyticsServiceImpl(
             context = application,
-            eventsService = SearchEventsService(accessToken, userAgent),
+            eventsService = eventsService,
             eventsJsonParser = eventJsonParser,
             feedbackEventsFactory = searchFeedbackEventsFactory,
             crashEventsFactory = crashEventsFactory,
             locationEngine = locationEngine,
         )
-        analyticsServices.add(analyticsService)
-        return analyticsService
-    }
-
-    private fun registerDefaultDataProviders() {
-        class DataProviderInitializationCallback(
-            private val apiType: ApiType,
-            private val provider: IndexableDataProvider<*>,
-        ) : CompletionCallback<Unit> {
-            override fun onComplete(result: Unit) {
-                logd("Data provider ${provider.dataProviderName} was registered for $apiType")
-            }
-
-            override fun onError(e: Exception) {
-                logd("Unable to register ${provider.dataProviderName} data provider for $apiType: ${e.message}")
-            }
-        }
-
-        val historyDataProvider = internalServiceProvider.historyDataProvider()
-        val favoritesDataProvider = internalServiceProvider.favoritesDataProvider()
-
-        indexableDataProvidersRegistry.register(
-            dataProvider = historyDataProvider,
-            searchEngine = sbsCoreSearchEngine,
-            executor = SearchSdkMainThreadWorker.mainExecutor,
-            callback = DataProviderInitializationCallback(ApiType.SBS, historyDataProvider)
-        )
-
-        indexableDataProvidersRegistry.register(
-            dataProvider = historyDataProvider,
-            searchEngine = geocodingCoreSearchEngine,
-            executor = SearchSdkMainThreadWorker.mainExecutor,
-            callback = DataProviderInitializationCallback(ApiType.GEOCODING, historyDataProvider)
-        )
-
-        indexableDataProvidersRegistry.register(
-            dataProvider = favoritesDataProvider,
-            searchEngine = sbsCoreSearchEngine,
-            executor = SearchSdkMainThreadWorker.mainExecutor,
-            callback = DataProviderInitializationCallback(ApiType.SBS, favoritesDataProvider)
-        )
-
-        indexableDataProvidersRegistry.register(
-            dataProvider = favoritesDataProvider,
-            searchEngine = geocodingCoreSearchEngine,
-            executor = SearchSdkMainThreadWorker.mainExecutor,
-            callback = DataProviderInitializationCallback(ApiType.GEOCODING, favoritesDataProvider)
-        )
-    }
-
-    private fun mapboxModuleParamsProvider(type: MapboxModuleType): Array<ModuleProviderArgument> {
-        return when (type) {
-            MapboxModuleType.CommonLibraryLoader -> arrayOf()
-            MapboxModuleType.CommonLogger -> arrayOf()
-            MapboxModuleType.CommonHttpClient -> arrayOf()
-            MapboxModuleType.NavigationRouter,
-            MapboxModuleType.NavigationTripNotification,
-            MapboxModuleType.MapTelemetry -> throw IllegalArgumentException("not supported: $type")
-        }
-    }
-
-    /**
-     * Change current SDK access token in runtime.
-     * @param [accessToken] new access token.
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
-     */
-    @JvmStatic
-    public fun setAccessToken(accessToken: String) {
-        checkInitialized()
-        this.accessToken = accessToken
-        coreSearchEngines.forEach { it.setAccessToken(accessToken) }
-        analyticsServices.forEach { it.setAccessToken(accessToken) }
-        tileStore.setOption(
-            TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-            TileDataDomain.SEARCH,
-            Value.valueOf(accessToken)
-        )
-    }
-
-    /**
-     * Get a shared instance of the [SearchEngine].
-     * Shared [SearchEngine] has [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider]
-     * registered by default.
-     *
-     * @return shared instance instance of [SearchEngine].
-     * @see createSearchEngine
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
-     */
-    @JvmStatic
-    public fun getSearchEngine(): SearchEngine {
-        return when (getDefaultApiType()) {
-            ApiType.GEOCODING -> geocodingSearchEngineShared
-            ApiType.SBS -> sbsSearchEngineShared
-        }
     }
 
     /**
      * Creates a new instance of the [SearchEngine].
-     * Unlike the shared instance of the [SearchEngine] acquired from [getSearchEngine],
-     * a new instance doesn't have any [IndexableDataProvider] registered.
+     * A new instance doesn't have any [IndexableDataProvider] registered by default.
      *
-     * @param searchEngineSettings Optional [SearchEngine] settings.
-     * By default [SearchEngineSettings] passed to [MapboxSearchSdk.initialize] will be used.
+     * @param settings [SearchEngine] settings.
      *
      * @return a new instance instance of [SearchEngine].
-     * @see [getSearchEngine]
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
+     * @see createSearchEngineWithBuiltInDataProviders
+     */
+    @JvmStatic
+    public fun createSearchEngine(settings: SearchEngineSettings): SearchEngine {
+        return createSearchEngine(getDefaultApiType(), settings)
+    }
+
+    /**
+     * Creates a new instance of the [SearchEngine] with
+     * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider]
+     * registered by default.
+     *
+     * @param settings [SearchEngine] settings.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Callback to handle result.
+     *
+     * @return a new instance of [SearchEngine].
+     * @see createSearchEngine
      */
     @JvmOverloads
-    public fun createSearchEngine(
-        searchEngineSettings: SearchEngineSettings = this.searchEngineSettings
+    @JvmStatic
+    public fun createSearchEngineWithBuiltInDataProviders(
+        settings: SearchEngineSettings,
+        executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback: CompletionCallback<Unit> = StubCompletionCallback()
     ): SearchEngine {
-        return createSearchEngine(getDefaultApiType(), searchEngineSettings, useSharedCoreEngine = false)
+        return createSearchEngineWithBuiltInDataProviders(getDefaultApiType(), settings, null, executor, callback)
+    }
+
+    internal fun createSearchEngineWithBuiltInDataProviders(
+        apiType: ApiType,
+        settings: SearchEngineSettings,
+        analyticsService: InternalAnalyticsService? = null,
+        executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback: CompletionCallback<Unit> = StubCompletionCallback()
+    ): SearchEngine {
+        val coreEngine = createCoreEngineByApiType(apiType, settings)
+
+        val searchEngine = createSearchEngine(
+            apiType,
+            settings,
+            coreEngine,
+            analyticsService ?: createAnalyticsService(settings, coreEngine)
+        )
+
+        val compoundCallback = CompoundCompletionCallback(2, executor, callback)
+        compoundCallback.addInnerTask(
+            searchEngine.registerDataProvider(serviceProvider.historyDataProvider(), executor, compoundCallback)
+        )
+        compoundCallback.addInnerTask(
+            searchEngine.registerDataProvider(serviceProvider.favoritesDataProvider(), executor, compoundCallback)
+        )
+
+        return searchEngine
     }
 
     internal fun createSearchEngine(
         apiType: ApiType,
-        searchEngineSettings: SearchEngineSettings,
-        useSharedCoreEngine: Boolean
-    ): SearchEngine {
-        checkInitialized()
-
-        val coreEngine = if (useSharedCoreEngine) {
-            getSharedCoreEngineByApiType(apiType)
-        } else {
-            createCoreEngineByApiType(apiType, searchEngineSettings)
-        }
-
-        return createSearchEngine(apiType, coreEngine, createAnalyticsService(application, accessToken, coreEngine))
-    }
-
-    internal fun createSearchEngine(
-        apiType: ApiType,
-        coreEngine: CoreSearchEngineInterface,
-        analyticsService: InternalAnalyticsService,
+        settings: SearchEngineSettings,
+        coreEngine: CoreSearchEngineInterface = createCoreEngineByApiType(apiType, settings),
+        analyticsService: InternalAnalyticsService = createAnalyticsService(settings, coreEngine),
     ): SearchEngine {
         checkInitialized()
 
         return SearchEngineImpl(
             apiType,
+            settings,
             analyticsService,
             coreEngine,
             internalServiceProvider.historyService(),
             searchRequestContextProvider,
             searchResultFactory,
-            searchEnginesExecutor,
-            indexableDataProvidersRegistry
+            indexableDataProvidersRegistry = indexableDataProvidersRegistry
         )
     }
 
     /**
-     * Gets a shared instance of the [OfflineSearchEngine].
-     * @return shared instance of the [OfflineSearchEngine].
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
+     * Creates a new instance of [OfflineSearchEngine].
+     *
+     * @param settings [OfflineSearchEngine] settings.
+     *
+     * @return a new instance of [OfflineSearchEngine].
      */
     @JvmStatic
-    public fun getOfflineSearchEngine(): OfflineSearchEngine {
+    public fun createOfflineSearchEngine(settings: OfflineSearchEngineSettings): OfflineSearchEngine {
         checkInitialized()
-        return offlineSearchEngineShared
-    }
 
-    private fun createOfflineSearchEngine(coreEngine: CoreSearchEngineInterface): OfflineSearchEngine {
-        checkInitialized()
+        with(settings) {
+            tileStore.setOption(
+                TileStoreOptions.MAPBOX_APIURL,
+                TileDataDomain.SEARCH,
+                Value.valueOf(tilesBaseUri.toString())
+            )
+
+            tileStore.setOption(
+                TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+                TileDataDomain.SEARCH,
+                Value.valueOf(accessToken)
+            )
+        }
+
+        val coreEngine = CoreSearchEngine(
+            CoreEngineOptions(
+                settings.accessToken,
+                SearchEngineSettings.DEFAULT_ENDPOINT_GEOCODING,
+                ApiType.SBS.mapToCore(),
+                userAgent,
+                null
+            ),
+            settings.wrapperLocationProvider,
+        )
+
         return OfflineSearchEngineImpl(
-            analyticsService = createAnalyticsService(application, accessToken, coreEngine),
+            analyticsService = createAnalyticsService(settings, coreEngine),
+            settings = settings,
             coreEngine = coreEngine,
             requestContextProvider = searchRequestContextProvider,
             searchResultFactory = searchResultFactory,
-            engineExecutorService = offlineSearchEngineExecutor,
-            tileStore = tileStore,
         )
     }
 
-    @VisibleForTesting
-    internal fun createCoreEngineByApiType(
+    private fun createCoreEngineByApiType(
         apiType: ApiType,
         searchEngineSettings: SearchEngineSettings
     ): CoreSearchEngineInterface {
@@ -485,19 +347,9 @@ public object MapboxSearchSdk {
 
         return CoreSearchEngine(
             // TODO allow customer to customize events url
-            CoreEngineOptions(accessToken, endpoint, apiType.mapToCore(), userAgent, null),
-            coreLocationProvider,
-        ).apply {
-            coreSearchEngines.add(this)
-        }
-    }
-
-    @VisibleForTesting
-    internal fun getSharedCoreEngineByApiType(apiType: ApiType): CoreSearchEngineInterface {
-        return when (apiType) {
-            ApiType.GEOCODING -> geocodingCoreSearchEngine
-            ApiType.SBS -> sbsCoreSearchEngine
-        }
+            CoreEngineOptions(searchEngineSettings.accessToken, endpoint, apiType.mapToCore(), userAgent, null),
+            searchEngineSettings.wrapperLocationProvider,
+        )
     }
 
     private fun getDefaultApiType(): ApiType {

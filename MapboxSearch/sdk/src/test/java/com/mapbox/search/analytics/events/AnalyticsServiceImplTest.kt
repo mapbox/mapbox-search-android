@@ -4,6 +4,9 @@ import android.content.Context
 import android.location.Location
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.bindgen.Value
+import com.mapbox.common.Event
+import com.mapbox.common.EventsServiceInterface
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.CompletionCallback
@@ -13,7 +16,6 @@ import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
-import com.mapbox.search.analytics.SearchEventsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.logger.reinitializeLogImpl
@@ -49,7 +51,7 @@ internal class AnalyticsServiceImplTest {
 
     private lateinit var context: Context
     private lateinit var locationEngine: LocationEngine
-    private lateinit var eventsService: SearchEventsService
+    private lateinit var eventsService: EventsServiceInterface
     private lateinit var eventsJsonParser: AnalyticsEventJsonParser
     private lateinit var feedbackEventsFactory: SearchFeedbackEventsFactory
     private lateinit var crashEventsFactory: CrashEventsFactory
@@ -85,7 +87,7 @@ internal class AnalyticsServiceImplTest {
 
         every {
             eventsJsonParser.serialize(validMockedFeedbackEvent)
-        } returns TEST_SERIALIZED_FEEDBACK_EVENT
+        } returns TEST_SERIALIZED_FEEDBACK_EVENT_RAW
 
         mockkStatic(PermissionsManager::class)
         every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
@@ -125,7 +127,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyOnce("Event sent") {
-                    eventsService.sendEventJson(TEST_SERIALIZED_FEEDBACK_EVENT)
+                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
                 }
             }
         }
@@ -200,7 +202,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyOnce("Event sent") {
-                    eventsService.sendEventJson(TEST_SERIALIZED_FEEDBACK_EVENT)
+                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
                 }
             }
         }
@@ -260,7 +262,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyOnce("Event sent") {
-                    eventsService.sendEventJson(TEST_SERIALIZED_FEEDBACK_EVENT)
+                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
                 }
             }
         }
@@ -308,7 +310,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyOnce("Event sent") {
-                    eventsService.sendEventJson(TEST_SERIALIZED_FEEDBACK_EVENT)
+                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
                 }
             }
         }
@@ -404,7 +406,9 @@ internal class AnalyticsServiceImplTest {
     fun `reportError called with allowed exception`() = TestCase {
         Given("AnalyticsService with mocked dependencies") {
             val throwable = mockk<Throwable>()
-            val errorJson = "error json"
+            val errorJson = "{\"event\":\"mobile.crash\"}"
+
+            val errorEvent = Event(requireNotNull(Value.fromJson(errorJson).value))
 
             every { crashEventsFactory.isAllowedForAnalytics(throwable) } returns true
             every { crashEventsFactory.createEvent(eq(throwable), any(), any()) } returns errorJson
@@ -421,7 +425,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyOnce("Event sent") {
-                    eventsService.sendEventJson(errorJson)
+                    eventsService.sendEvent(errorEvent, any())
                 }
             }
         }
@@ -446,7 +450,7 @@ internal class AnalyticsServiceImplTest {
                 }
 
                 VerifyNo("Event not sent") {
-                    eventsService.sendEventJson(any())
+                    eventsService.sendEvent(any(), any())
                 }
             }
         }
@@ -456,7 +460,8 @@ internal class AnalyticsServiceImplTest {
 
         const val TEST_RAW_EVENT = "{\"event\":\"search.feedback\"}"
 
-        const val TEST_SERIALIZED_FEEDBACK_EVENT = "{\"event\":\"search.feedback\"}"
+        const val TEST_SERIALIZED_FEEDBACK_EVENT_RAW = "{\"event\":\"search.feedback\"}"
+        val TEST_SERIALIZED_FEEDBACK_EVENT = Event(requireNotNull(Value.fromJson(TEST_SERIALIZED_FEEDBACK_EVENT_RAW).value))
 
         val TEST_LOCATION: Point = Point.fromLngLat(10.0, 20.0)
         val TEST_FEEDBACK_EVENT = FeedbackEvent("Missing routable point", "Fix, please!")

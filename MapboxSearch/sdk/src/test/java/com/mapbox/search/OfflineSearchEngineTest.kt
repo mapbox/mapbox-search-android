@@ -93,13 +93,16 @@ internal class OfflineSearchEngineTest {
     }
 
     private fun createSearchEngine() {
+        val settings = mockk<OfflineSearchEngineSettings>(relaxed = true)
+        every { settings.tileStore } returns mockk()
+
         searchEngine = OfflineSearchEngineImpl(
             analyticsService = mockk(relaxed = true),
+            settings = settings,
             coreEngine = coreEngine,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
-            engineExecutorService = executorService,
-            tileStore = mockk()
+            engineExecutorService = executorService
         )
     }
 

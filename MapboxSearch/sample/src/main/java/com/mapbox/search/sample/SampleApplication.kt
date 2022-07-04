@@ -6,36 +6,21 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.DownloadOptions
 import com.mapbox.common.HttpRequest
 import com.mapbox.common.HttpResponse
 import com.mapbox.common.HttpServiceFactory
 import com.mapbox.common.HttpServiceInterceptorInterface
-import com.mapbox.common.TileStore
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.SearchSdkSettings
 
 open class SampleApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
+        System.setProperty("com.mapbox.mapboxsearch.enableSBS", BuildConfig.ENABLE_SBS.toString())
+        enableDebugHttpLogs()
         enableStrictMode()
         LeakCanaryConfiguration.apply()
-
-        System.setProperty("com.mapbox.mapboxsearch.enableSBS", BuildConfig.ENABLE_SBS.toString())
-
-        enableDebugHttpLogs()
-
-        MapboxSearchSdk.initialize(
-            application = this,
-            accessToken = BuildConfig.MAPBOX_API_TOKEN,
-            locationEngine = LocationEngineProvider.getBestLocationEngine(this),
-            searchSdkSettings = SearchSdkSettings(maxHistoryRecordsAmount = 5),
-            offlineSearchEngineSettings = OfflineSearchEngineSettings(tileStore = TileStore.create()),
-        )
     }
 
     private fun enableDebugHttpLogs() {
@@ -45,17 +30,17 @@ open class SampleApplication : Application() {
 
         HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
             override fun onRequest(request: HttpRequest): HttpRequest {
-                Log.i("SearchApiExample", "onRequest: $request")
+                Log.i("SearchSdkHttp", "onRequest: $request")
                 return request
             }
 
             override fun onDownload(download: DownloadOptions): DownloadOptions {
-                Log.i("SearchApiExample", "onDownload: $download")
+                Log.i("SearchSdkHttp", "onDownload: $download")
                 return download
             }
 
             override fun onResponse(response: HttpResponse): HttpResponse {
-                Log.i("SearchApiExample", "onResponse: $response")
+                Log.i("SearchSdkHttp", "onResponse: $response")
                 return response
             }
         })

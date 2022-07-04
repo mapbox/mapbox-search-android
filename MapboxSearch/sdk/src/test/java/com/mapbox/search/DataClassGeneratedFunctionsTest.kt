@@ -36,7 +36,6 @@ internal class DataClassGeneratedFunctionsTest {
     fun `Test generated equals(), hashCode() and toString() methods`() = TestCase {
         listOf(
             // regular classes and objects
-            OfflineSearchEngineSettings::class,
             SearchOptions::class,
             SearchNavigationProfile::class,
             SearchNavigationOptions::class,
@@ -71,7 +70,6 @@ internal class DataClassGeneratedFunctionsTest {
             ParkingData::class,
             FeedbackEvent::class,
             MissingResultFeedbackEvent::class,
-            SearchSdkSettings::class,
             SelectOptions::class,
             OfflineIndexChangeEvent::class,
             OfflineIndexErrorEvent::class,
@@ -153,7 +151,6 @@ internal class DataClassGeneratedFunctionsTest {
     fun `Test generated copy() method`() = TestCase {
         listOf(
             // custom copy() implementation
-            OfflineSearchEngineSettings::class,
             SearchOptions::class,
             ReverseGeoOptions::class,
             RequestOptions::class,

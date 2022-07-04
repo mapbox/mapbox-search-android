@@ -24,7 +24,6 @@ android {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
 
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,7 +69,7 @@ dependencies {
     implementation project(path: ':sdk-common')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$android_x_appcompat_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
@@ -87,4 +86,12 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    androidTestImplementation project(":common-tests")
+    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation "com.adevinta.android:barista:$barista_version"
 }

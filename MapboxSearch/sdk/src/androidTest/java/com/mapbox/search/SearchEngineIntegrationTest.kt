@@ -28,6 +28,7 @@ import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEng
 import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
@@ -86,25 +87,24 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        searchEngineSettings = SearchEngineSettings(
-            singleBoxSearchBaseUrl = mockServer.url("").toString(),
-            geocodingEndpointBaseUrl = mockServer.url("").toString()
-        )
-
         MapboxSearchSdk.initializeInternal(
             application = targetApplication,
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            searchEngineSettings = searchEngineSettings,
-            allowReinitialization = true,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
             orientationProvider = orientationProvider,
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(
+        searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
+            accessToken = TEST_ACCESS_TOKEN,
+            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            singleBoxSearchBaseUrl = mockServer.url("").toString(),
+            geocodingEndpointBaseUrl = mockServer.url("").toString()
+        )
+
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
-            coreEngine = MapboxSearchSdk.getSharedCoreEngineByApiType(ApiType.SBS),
+            settings = searchEngineSettings,
             analyticsService = analyticsService
         )
 
@@ -1015,7 +1015,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMetadataForGeocodingAPI() {
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING, searchEngineSettings, useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
 

@@ -9,6 +9,7 @@ import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
@@ -19,6 +20,7 @@ import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.sample.BuildConfig
 import java.util.ArrayList
 import java.util.UUID
 import java.util.concurrent.Executor
@@ -72,7 +74,9 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.getSearchEngine()
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")
         registerProviderTask = searchEngine.registerDataProvider(

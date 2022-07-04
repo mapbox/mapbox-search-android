@@ -5,9 +5,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillResponse
+import com.mapbox.search.sample.BuildConfig
 
 class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
 
@@ -16,7 +18,11 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addressAutofill = AddressAutofill.create(MapboxSearchSdk.createSearchEngine())
+        addressAutofill = AddressAutofill.create(
+            MapboxSearchSdk.createSearchEngine(
+                SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+            )
+        )
 
         lifecycleScope.launchWhenCreated {
             val response = addressAutofill.suggestions(

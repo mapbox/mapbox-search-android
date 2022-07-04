@@ -23,7 +23,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
+import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineCallback
+import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Feature
@@ -41,7 +43,9 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -73,6 +77,7 @@ import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 class MainActivity : AppCompatActivity() {
 
     private val serviceProvider = MapboxSearchSdk.serviceProvider
+    private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -87,6 +92,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
@@ -120,7 +127,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
-            initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
+            val context = this@MainActivity
+            initialize(
+                SearchResultsView.Configuration(
+                    commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
+                    searchEngineSettings = SearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN),
+                    offlineSearchEngineSettings = OfflineSearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN)
+                )
+            )
             isVisible = false
         }
 
@@ -379,7 +393,7 @@ class MainActivity : AppCompatActivity() {
             callback(null)
         }
 
-        serviceProvider.locationEngine().getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
+        locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
             override fun onSuccess(result: LocationEngineResult?) {
                 val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
                     Point.fromLngLat(location.longitude, location.latitude)

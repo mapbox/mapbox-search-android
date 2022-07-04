@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
@@ -17,14 +16,15 @@ import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.result.SearchResultFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 internal class OfflineSearchEngineImpl(
     override val analyticsService: InternalAnalyticsService,
+    override val settings: OfflineSearchEngineSettings,
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
-    private val engineExecutorService: ExecutorService,
-    override val tileStore: TileStore,
+    private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
 ) : BaseSearchEngine(), OfflineSearchEngine {
 
     private val initializationLock = Any()
@@ -37,7 +37,7 @@ internal class OfflineSearchEngineImpl(
     private var isEngineReady: Boolean = true
 
     init {
-        coreEngine.setTileStore(tileStore) {
+        coreEngine.setTileStore(settings.tileStore) {
             synchronized(initializationLock) {
                 isEngineReady = true
                 engineReadyCallbacks.forEach { (callback, executor) ->
@@ -194,6 +194,12 @@ internal class OfflineSearchEngineImpl(
             executor.execute {
                 listener.onError(e.mapToPlatformType())
             }
+        }
+    }
+
+    private companion object {
+        val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
+            Thread(runnable, "OfflineSearchEngine executor")
         }
     }
 }

@@ -23,15 +23,17 @@ import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToCore
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 internal class SearchEngineImpl(
     override val apiType: ApiType,
+    override val settings: SearchEngineSettings,
     override val analyticsService: InternalAnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
-    private val engineExecutorService: ExecutorService,
+    private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
     private val indexableDataProvidersRegistry: IndexableDataProvidersRegistry,
 ) : BaseSearchEngine(), SearchEngine {
 
@@ -350,5 +352,11 @@ internal class SearchEngineImpl(
             executor = executor,
             callback = callback,
         )
+    }
+
+    private companion object {
+        val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
+            Thread(runnable, "SearchEngine executor")
+        }
     }
 }

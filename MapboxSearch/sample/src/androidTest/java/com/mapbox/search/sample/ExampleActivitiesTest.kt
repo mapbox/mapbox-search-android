@@ -2,6 +2,8 @@ package com.mapbox.search.sample
 
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
+import androidx.test.rule.GrantPermissionRule
+import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
@@ -21,12 +23,25 @@ import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-class ExampleActivitiesTest(private val clazz: Class<out Activity>) : MockServerSearchActivityTest() {
+class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
+
+    private val permissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
+
+    private val flakyRule = FlakyTestRule().apply {
+        allowFlakyAttemptsByDefault(3)
+    }
+
+    @Rule
+    @JvmField
+    var chain: RuleChain = RuleChain.outerRule(flakyRule)
+        .around(permissionRule)
 
     @Test
     fun testActivityLaunchesWithoutCrash() {

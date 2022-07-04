@@ -4,7 +4,9 @@ import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.tests_support.BlockingOnDataProviderEngineRegisterListener
+import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -19,14 +21,16 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
     override fun setUp() {
         super.setUp()
 
-        MapboxSearchSdk.initializeInternal(
-            application = targetApplication,
+        MapboxSearchSdk.initializeInternal(targetApplication)
+
+        val searchEngineSettings = SearchEngineSettings(
+            applicationContext = targetApplication,
             accessToken = DEFAULT_TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
-            allowReinitialization = true,
+            singleBoxSearchBaseUrl = MockWebServer().url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.SBS, SearchEngineSettings(), useSharedCoreEngine = true)
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(ApiType.SBS, searchEngineSettings)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
         historyDataProvider.clearBlocking()

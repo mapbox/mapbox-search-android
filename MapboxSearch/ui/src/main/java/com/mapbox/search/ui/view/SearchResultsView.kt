@@ -12,10 +12,12 @@ import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngine
+import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.OfflineSearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
@@ -57,7 +59,6 @@ public class SearchResultsView @JvmOverloads constructor(
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
 
-    private val locationEngine = MapboxSearchSdk.serviceProvider.locationEngine()
     private var currentSearchRequestTask: SearchRequestTask? = null
 
     private val historyRecordsInteractor = HistoryRecordsInteractor()
@@ -69,7 +70,6 @@ public class SearchResultsView @JvmOverloads constructor(
      */
     public var defaultSearchOptions: SearchOptions = GlobalViewPreferences.DEFAULT_SEARCH_OPTIONS
 
-    private var commonSearchViewConfiguration = CommonSearchViewConfiguration()
     private var isInitialized = false
 
     /**
@@ -93,7 +93,7 @@ public class SearchResultsView @JvmOverloads constructor(
         }
 
     private lateinit var searchAdapter: SearchViewResultsAdapter
-    private val itemsCreator = SearchResultsItemsCreator(context, locationEngine)
+    private lateinit var itemsCreator: SearchResultsItemsCreator
     private var asyncItemsCreatorTask: SearchCommonAsyncOperationTask? = null
 
     private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
@@ -185,25 +185,26 @@ public class SearchResultsView @JvmOverloads constructor(
      * Initializes the inner state of this view and defines configuration options.
      * It's obligatory to call this method as soon as the view is created.
      *
-     * @param commonSearchViewConfiguration Configuration options.
+     * @param configuration Configuration options.
      *
      * @throws [IllegalStateException] if this method has already been called.
      */
-    public fun initialize(commonSearchViewConfiguration: CommonSearchViewConfiguration) {
+    public fun initialize(configuration: Configuration) {
         check(!isInitialized) {
             "Already initialized"
         }
         isInitialized = true
 
-        this.commonSearchViewConfiguration = commonSearchViewConfiguration
-
-        searchAdapter = SearchViewResultsAdapter(commonSearchViewConfiguration.distanceUnitType)
+        searchAdapter = SearchViewResultsAdapter(configuration.commonConfiguration.distanceUnitType)
 
         super.setLayoutManager(LinearLayoutManager(context))
         super.setAdapter(searchAdapter)
 
-        searchEngine = MapboxSearchSdk.getSearchEngine()
-        offlineSearchEngine = MapboxSearchSdk.getOfflineSearchEngine()
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(configuration.searchEngineSettings)
+
+        offlineSearchEngine = MapboxSearchSdk.createOfflineSearchEngine(configuration.offlineSearchEngineSettings)
+
+        itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
 
         searchAdapter.searchResultsListener = innerSearchResultsCallback
 
@@ -616,6 +617,26 @@ public class SearchResultsView @JvmOverloads constructor(
             }
         }
     }
+
+    /**
+     * Configuration option used for [SearchResultsView] configeration.
+     */
+    public class Configuration(
+        /**
+         * Common configuration options used for Search SDK views.
+         */
+        public val commonConfiguration: CommonSearchViewConfiguration,
+
+        /**
+         * Settings used for [SearchEngine] configuration.
+         */
+        public val searchEngineSettings: SearchEngineSettings,
+
+        /**
+         * Settings used for [OfflineSearchEngine] configuration.
+         */
+        public val offlineSearchEngineSettings: OfflineSearchEngineSettings,
+    )
 
     private companion object {
 

@@ -62,7 +62,7 @@ internal class HistoryDataProviderImpl(
      * during the test `addRecords()` function gets called before HistoryDataProviderImpl
      * finished initialization of its properties.
      */
-    maxRecordsAmount: Int = Int.MAX_VALUE,
+    maxRecordsAmount: Int = DEFAULT_MAX_HISTORY_RECORDS_AMOUNT
 ) : LocalDataProviderImpl<HistoryRecord>(
     dataProviderName = HistoryDataProvider.PROVIDER_NAME,
     priority = HistoryDataProvider.PROVIDER_PRIORITY,
@@ -160,6 +160,8 @@ internal class HistoryDataProviderImpl(
     }
 
     private companion object {
+
+        const val DEFAULT_MAX_HISTORY_RECORDS_AMOUNT: Int = 100
 
         val SearchSuggestion.isHistory: Boolean
             get() = this is IndexableRecordSearchSuggestion && type.isHistoryRecord

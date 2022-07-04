@@ -6,11 +6,13 @@ import android.util.Log
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.sample.BuildConfig
 
 class ForwardGeocodingKotlinExampleActivity : Activity() {
 
@@ -51,7 +53,10 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        searchEngine = MapboxSearchSdk.getSearchEngine()
+
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+        )
 
         searchRequestTask = searchEngine.search(
             "Paris Eiffel Tower",

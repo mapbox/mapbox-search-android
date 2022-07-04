@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.common.TileStore
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.AnalyticsService
@@ -9,7 +8,7 @@ import java.util.concurrent.Executor
 
 /**
  * The [OfflineSearchEngine] interface provides forward and reverse geocoding search that works offline.
- * An instance of the [OfflineSearchEngine] can be obtained with [MapboxSearchSdk.getOfflineSearchEngine].
+ * An instance of the [OfflineSearchEngine] can be obtained with [MapboxSearchSdk.createOfflineSearchEngine].
  *
  * Offline forward geocoding search works in a two-step manner, see [SearchEngine] for more details.
  *
@@ -65,9 +64,10 @@ public interface OfflineSearchEngine {
     }
 
     /**
-     * [TileStore] object used for offline tiles management.
+     * Experimental API, can be changed or removed in the next SDK releases.
+     * Settings used for [OfflineSearchEngine] initialization.
      */
-    public val tileStore: TileStore
+    public val settings: OfflineSearchEngineSettings
 
     /**
      * [AnalyticsService] instance associated with this [OfflineSearchEngine].

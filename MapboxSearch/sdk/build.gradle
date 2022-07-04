@@ -91,9 +91,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "androidx.annotation:annotation:$android_x_annotation_version"
+    implementation "androidx.annotation:annotation:$androidx_annotation_version"
     implementation "androidx.collection:collection-ktx:$androidx_collection_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
 
     api "com.mapbox.common:common:$common_sdk_version"
     // Explicit dependency for http service implementation, should be declared on the Common SDK side
@@ -124,8 +125,8 @@ dependencies {
     testImplementation project(":common-tests")
 
     androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
-    androidTestImplementation "androidx.test:runner:$android_x_test_runner_version"
-    androidTestImplementation "androidx.test.ext:junit:$android_x_junit_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     androidTestImplementation project(":common-tests")

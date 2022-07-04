@@ -31,7 +31,7 @@ android {
         targetSdkVersion target_sdk_version
         versionCode 1
         versionName "0.1.0"
-        testInstrumentationRunner "com.mapbox.search.sample.tools.SampleTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -77,9 +77,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "androidx.appcompat:appcompat:$android_x_appcompat_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
@@ -94,9 +94,9 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$ui_automator_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "androidx.test:runner:$android_x_test_runner_version"
-    androidTestImplementation "androidx.test:rules:$android_x_test_rules_version"
-    androidTestImplementation "androidx.test.ext:junit:$android_x_junit_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test:rules:$androidx_test_rules_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "com.adevinta.android:barista:$barista_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     androidTestImplementation "junit:junit:$junit_version"

@@ -72,6 +72,9 @@ internal class AsyncOperationTaskImpl : AsyncOperationTask {
         @Synchronized private set
         @Synchronized get
 
+    val isCompleted: Boolean
+        @Synchronized get() = isCancelled || isDone
+
     @Synchronized
     fun addInnerTask(cancelable: CancelableWrapper) {
         if (isDone) {
@@ -91,6 +94,8 @@ internal class AsyncOperationTaskImpl : AsyncOperationTask {
         if (isDone || isCancelled) {
             return
         }
+
+        cancelableList.clear()
 
         isDone = true
         onCancelCallback = null

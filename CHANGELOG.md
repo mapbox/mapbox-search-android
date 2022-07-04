@@ -3,9 +3,22 @@
 ## 1.0.0-beta.33-SNAPSHOT
 
 ### Breaking changes
+- [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
+- [CORE] `ServiceProvider.locationEngine()` function has been removed. Now `LocationEngine` instance can be retrieved from settings used for search engines instantiation.
+- [CORE] `SearchSdkSettings` class has been removed. Now default max number of history records is always 100.
+- [CORE] Now `SearchEngineSettings` and `OfflineSearchEngineSettings` accept new constructor parameters. `OfflineSearchEngineSettings.copy()` function's signature and `OfflineSearchEngineSettings.Builder` have also been changed. `SearchEngineSettings` provides `SearchEngineSettings.Builder` type and new `copy()` and `toBuilder()` functions.
+- [CORE] `MapboxSearchSdk.initialize()` function has been removed. Now it's not needed to initialize Search SDK explicitly.
+- [CORE] `MapboxSearchSdk.setAccessToken()` function has been removed. Now in case of changed token a new instance of `SearchEngine` or `OfflineSearchEngine` should be created.
+- [CORE] `MapboxSearchSdk.getSearchEngine()` function has been removed, call `MapboxSearchSdk.createSearchEngine()` function instead.
+- [CORE] `MapboxSearchSdk.createSearchEngine()` function without parameters has been removed. Now `SearchEngineSettings` should always be provided as an argument.
+- [CORE] `MapboxSearchSdk.getOfflineSearchEngine()` function has been removed, call `MapboxSearchSdk.createOfflineSearchEngine()` function instead.
+- [CORE] `OfflineSearchEngine.tileStore` property has been removed, call `OfflineSearchEngine.settings.tileStore` instead.
+- [UI] `SearchResultsView.initialize()` now accepts `SearchResultsView.Configuration` object.
 - [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
-- [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
+
+### New features
+- [CORE] `SearchEngine` and `OfflineSearchEngine` provide `settings` property that return settings object used for engine initialization.
 
 ### Mapbox dependencies
 - Search Native SDK `0.56.0`

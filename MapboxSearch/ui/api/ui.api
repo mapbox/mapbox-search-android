@@ -39,7 +39,7 @@ public final class com/mapbox/search/ui/view/SearchResultsView : androidx/recycl
 	public final fun addSearchListener (Lcom/mapbox/search/ui/view/SearchResultsView$SearchListener;)V
 	public final fun getDefaultSearchOptions ()Lcom/mapbox/search/SearchOptions;
 	public final fun getSearchMode ()Lcom/mapbox/search/ui/view/SearchMode;
-	public final fun initialize (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;)V
+	public final fun initialize (Lcom/mapbox/search/ui/view/SearchResultsView$Configuration;)V
 	public final fun removeOnSuggestionClickListener (Lcom/mapbox/search/ui/view/SearchResultsView$OnSuggestionClickListener;)V
 	public final fun removeSearchListener (Lcom/mapbox/search/ui/view/SearchResultsView$SearchListener;)V
 	public final fun search (Ljava/lang/String;)V
@@ -49,6 +49,13 @@ public final class com/mapbox/search/ui/view/SearchResultsView : androidx/recycl
 	public final fun setDefaultSearchOptions (Lcom/mapbox/search/SearchOptions;)V
 	public fun setLayoutManager (Landroidx/recyclerview/widget/RecyclerView$LayoutManager;)V
 	public final fun setSearchMode (Lcom/mapbox/search/ui/view/SearchMode;)V
+}
+
+public final class com/mapbox/search/ui/view/SearchResultsView$Configuration {
+	public fun <init> (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;)V
+	public final fun getCommonConfiguration ()Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
+	public final fun getOfflineSearchEngineSettings ()Lcom/mapbox/search/OfflineSearchEngineSettings;
+	public final fun getSearchEngineSettings ()Lcom/mapbox/search/SearchEngineSettings;
 }
 
 public abstract interface class com/mapbox/search/ui/view/SearchResultsView$OnSuggestionClickListener {

@@ -16,6 +16,53 @@ internal class IndexableDataProvidersRegistryImpl(
 
     private val registry = Registry()
 
+    override fun <R : IndexableRecord> preregister(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask {
+        val dataProviderContext = registry.dataProviderContext(dataProvider.dataProviderName)
+        if (dataProviderContext != null) {
+            executor.execute { callback.onComplete(Unit) }
+            return CompletedAsyncOperationTask
+        }
+
+        val task = AsyncOperationTaskImpl()
+        task += dataProviderEngineRegistrationService.register(
+            dataProvider,
+            object : CompletionCallback<IndexableDataProviderEngineImpl> {
+                override fun onComplete(result: IndexableDataProviderEngineImpl) {
+                    task.runIfNotCancelled {
+                        runSynchronized {
+                            registry.registerDataProviderContext(
+                                dataProvider,
+                                DataProviderContext(
+                                    engine = result,
+                                    provider = dataProvider,
+                                )
+                            )
+                        }
+
+                        executor.execute {
+                            task.onComplete()
+                            callback.onComplete(Unit)
+                        }
+                    }
+                }
+
+                override fun onError(e: Exception) {
+                    executor.execute {
+                        task.runIfNotCancelled {
+                            task.onComplete()
+                            callback.onError(e)
+                        }
+                    }
+                }
+            }
+        )
+        return task
+    }
+
     @Synchronized
     override fun <R : IndexableRecord> register(
         dataProvider: IndexableDataProvider<R>,
