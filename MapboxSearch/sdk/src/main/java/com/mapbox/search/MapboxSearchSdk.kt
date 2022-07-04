@@ -3,13 +3,14 @@ package com.mapbox.search
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Value
+import com.mapbox.common.EventsService
+import com.mapbox.common.EventsServiceOptions
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.CrashEventsFactory
 import com.mapbox.search.analytics.InternalAnalyticsService
-import com.mapbox.search.analytics.SearchEventsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
@@ -172,9 +173,11 @@ public object MapboxSearchSdk {
             )
         )
 
+        val eventsService = EventsService(EventsServiceOptions(accessToken, userAgent, null))
+
         return AnalyticsServiceImpl(
             context = application,
-            eventsService = SearchEventsService(accessToken, userAgent),
+            eventsService = eventsService,
             eventsJsonParser = eventJsonParser,
             feedbackEventsFactory = searchFeedbackEventsFactory,
             crashEventsFactory = crashEventsFactory,

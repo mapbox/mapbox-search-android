@@ -2,6 +2,9 @@ package com.mapbox.search.analytics
 
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.bindgen.Value
+import com.mapbox.common.Event
+import com.mapbox.common.EventsServiceInterface
 import com.mapbox.geojson.Point
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
@@ -27,7 +30,7 @@ import java.util.concurrent.Executor
 
 internal class AnalyticsServiceImpl(
     private val context: Context,
-    private val eventsService: SearchEventsService,
+    private val eventsService: EventsServiceInterface,
     private val eventsJsonParser: AnalyticsEventJsonParser,
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
     private val crashEventsFactory: CrashEventsFactory,
@@ -178,7 +181,7 @@ internal class AnalyticsServiceImpl(
                 "Event is not valid $feedbackEvent"
             }
             val jsonEvent = eventsJsonParser.serialize(feedbackEvent)
-            eventsService.sendEventJson(jsonEvent)
+            sendEventJson(jsonEvent)
             logd("Feedback event: $feedbackEvent")
         } catch (e: Exception) {
             throwDebug(e) { "Unable to send event: $feedbackEvent: ${e.message}" }
@@ -251,6 +254,20 @@ internal class AnalyticsServiceImpl(
         }
 
         val event = crashEventsFactory.createEvent(throwable, isSilent = true, customData = null)
-        eventsService.sendEventJson(event)
+        sendEventJson(event)
+    }
+
+    private fun sendEventJson(eventJson: String) {
+        val eventValue = Value.fromJson(eventJson)
+        if (eventValue.isValue) {
+            val event = Event(eventValue.value!!)
+            eventsService.sendEvent(event) { error ->
+                if (error != null) {
+                    loge("Unable to send event: $error")
+                }
+            }
+        } else {
+            loge("Unable to create event from json event: ${eventValue.error}")
+        }
     }
 }
