@@ -5,19 +5,41 @@ public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 }
 
 public final class com/mapbox/search/autofill/AddressAutofill$Companion {
-	public final fun create (Lcom/mapbox/search/SearchEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public final fun create (Landroid/content/Context;Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofillOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
 	public fun <init> (Ljava/util/List;)V
-	public fun <init> (Ljava/util/List;Lcom/mapbox/search/Language;)V
-	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/search/Language;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/search/autofill/AddressAutofillOptions$Language;)V
+	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/search/autofill/AddressAutofillOptions$Language;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountries ()Ljava/util/List;
-	public final fun getLanguage ()Lcom/mapbox/search/Language;
+	public final fun getLanguage ()Lcom/mapbox/search/autofill/AddressAutofillOptions$Language;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillOptions$Country : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillOptions$Language : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -52,7 +74,7 @@ public final class com/mapbox/search/autofill/AddressAutofillResult : android/os
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
+	public final fun getAddress ()Lcom/mapbox/search/autofill/AddressComponents;
 	public final fun getSuggestion ()Lcom/mapbox/search/autofill/AddressAutofillSuggestion;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -67,6 +89,25 @@ public final class com/mapbox/search/autofill/AddressAutofillSuggestion : androi
 	public final fun getFormattedAddress ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun result ()Lcom/mapbox/search/autofill/AddressAutofillResult;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressComponents : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public synthetic fun <init> (Lcom/mapbox/search/result/SearchAddress;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getDistrict ()Ljava/lang/String;
+	public final fun getHouseNumber ()Ljava/lang/String;
+	public final fun getLocality ()Ljava/lang/String;
+	public final fun getNeighborhood ()Ljava/lang/String;
+	public final fun getPlace ()Ljava/lang/String;
+	public final fun getPostcode ()Ljava/lang/String;
+	public final fun getRegion ()Ljava/lang/String;
+	public final fun getStreet ()Ljava/lang/String;
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }

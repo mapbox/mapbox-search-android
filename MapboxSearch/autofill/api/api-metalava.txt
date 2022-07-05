@@ -7,12 +7,24 @@ package com.mapbox.search.autofill {
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillOptions implements android.os.Parcelable {
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.Country>? countries = null, com.mapbox.search.Language? language = defaultSearchOptionsLanguage());
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.Country>? countries = null);
-    method public java.util.List<com.mapbox.search.Country>? getCountries();
-    method public com.mapbox.search.Language? getLanguage();
-    property public final java.util.List<com.mapbox.search.Country>? countries;
-    property public final com.mapbox.search.Language? language;
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries = null, com.mapbox.search.autofill.AddressAutofillOptions.Language? language = defaultSearchOptionsLanguage());
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries = null);
+    method public java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? getCountries();
+    method public com.mapbox.search.autofill.AddressAutofillOptions.Language? getLanguage();
+    property public final java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries;
+    property public final com.mapbox.search.autofill.AddressAutofillOptions.Language? language;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class AddressAutofillOptions.Country implements android.os.Parcelable {
+    ctor public AddressAutofillOptions.Country(String code);
+    method public String getCode();
+    property public final String code;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class AddressAutofillOptions.Language implements android.os.Parcelable {
+    ctor public AddressAutofillOptions.Language(String code);
+    method public String getCode();
+    property public final String code;
   }
 
   public abstract sealed class AddressAutofillResponse implements android.os.Parcelable {
@@ -31,9 +43,9 @@ package com.mapbox.search.autofill {
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillResult implements android.os.Parcelable {
-    method public com.mapbox.search.result.SearchAddress getAddress();
+    method public com.mapbox.search.autofill.AddressComponents getAddress();
     method public com.mapbox.search.autofill.AddressAutofillSuggestion getSuggestion();
-    property public final com.mapbox.search.result.SearchAddress address;
+    property public final com.mapbox.search.autofill.AddressComponents address;
     property public final com.mapbox.search.autofill.AddressAutofillSuggestion suggestion;
   }
 
@@ -43,6 +55,27 @@ package com.mapbox.search.autofill {
     method public com.mapbox.search.autofill.AddressAutofillResult result();
     property public final com.mapbox.geojson.Point coordinate;
     property public final String formattedAddress;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class AddressComponents implements android.os.Parcelable {
+    method public String? getCountry();
+    method public String? getDistrict();
+    method public String? getHouseNumber();
+    method public String? getLocality();
+    method public String? getNeighborhood();
+    method public String? getPlace();
+    method public String? getPostcode();
+    method public String? getRegion();
+    method public String? getStreet();
+    property public final String? country;
+    property public final String? district;
+    property public final String? houseNumber;
+    property public final String? locality;
+    property public final String? neighborhood;
+    property public final String? place;
+    property public final String? postcode;
+    property public final String? region;
+    property public final String? street;
   }
 
 }

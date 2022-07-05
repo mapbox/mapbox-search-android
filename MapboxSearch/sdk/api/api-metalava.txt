@@ -2,6 +2,7 @@
 package com.mapbox.search {
 
   public enum ApiType {
+    enum_constant public static final com.mapbox.search.ApiType AUTOFILL;
     enum_constant public static final com.mapbox.search.ApiType GEOCODING;
     enum_constant public static final com.mapbox.search.ApiType SBS;
   }
@@ -426,6 +427,7 @@ package com.mapbox.search {
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
+    method public static com.mapbox.search.SearchEngine internalCreateAutofillSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
   }
 

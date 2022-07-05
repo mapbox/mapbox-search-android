@@ -79,7 +79,7 @@ internal class SearchResultFactory(private val dataProviderResolver: DataProvide
                     return CompletedAsyncOperationTask
                 }
             }
-            ApiType.SBS -> {
+            ApiType.SBS, ApiType.AUTOFILL -> {
                 if (!isOffline && searchResult.action == null && searchResult.type != OriginalResultType.USER_RECORD) {
                     failDebug { "Can't create search suggestion from. ${debugInfo()}" }
                     callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
@@ -112,7 +112,7 @@ internal class SearchResultFactory(private val dataProviderResolver: DataProvide
                             CompletedAsyncOperationTask
                         }
                     }
-                    ApiType.SBS -> {
+                    ApiType.SBS, ApiType.AUTOFILL -> {
                         if (searchResult.types.isValidMultiType() && searchResult.center == null) {
                             val value = ServerSearchSuggestion(searchResult, requestOptions, isFromOffline = isOffline)
                             callback(Result.success(value))
