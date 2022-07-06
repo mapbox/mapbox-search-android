@@ -379,9 +379,6 @@ workflows:
       - unit-tests:
           requires:
             - prepare-and-assemble
-      - sample-robo-tests:
-          requires:
-            - prepare-and-assemble
       - sample-instrumentation-tests:
           requires:
             - prepare-and-assemble
