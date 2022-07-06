@@ -23,6 +23,8 @@
 
 ### New features
 - [CORE] `SearchEngine` and `OfflineSearchEngine` provide `settings` property that return settings object used for engine initialization.
+- [UI] Now clicked by a user in `SearchResultsView` search results will be automatically added to the search history.
+- [AUTOFILL] Now autofill works on top of the special-purpose version of the Geocoding V5 API.
 
 ### Mapbox dependencies
 - Search Native SDK `0.57.0`

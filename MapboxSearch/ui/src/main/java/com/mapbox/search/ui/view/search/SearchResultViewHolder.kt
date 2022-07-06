@@ -106,7 +106,7 @@ internal class SearchResultViewHolder(
         val result = item.resolved
         val responseInfo = item.responseInfo
         val distanceMeters = item.distanceMeters
-        val highlightQuery = item.highlightQuery
+        val highlightQuery = item.searchContext != SearchContext.CATEGORY
 
         nameView.text = if (highlightQuery) {
             formattedResultName(result.name, result.requestOptions.query)
@@ -130,7 +130,7 @@ internal class SearchResultViewHolder(
         populateView.isVisible = false
 
         itemView.setOnClickListener {
-            listener.onResultItemClicked(result, responseInfo)
+            listener.onResultItemClicked(item.searchContext, result, responseInfo)
         }
     }
 

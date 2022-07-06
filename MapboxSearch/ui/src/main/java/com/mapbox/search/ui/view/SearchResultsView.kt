@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
+import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngine
 import com.mapbox.search.OfflineSearchEngineSettings
@@ -26,13 +27,16 @@ import com.mapbox.search.common.SearchCommonAsyncOperationTask
 import com.mapbox.search.common.concurrent.checkMainThread
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.common.throwDebug
+import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
 import com.mapbox.search.ui.utils.OffsetItemDecoration
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.common.UiError
+import com.mapbox.search.ui.view.search.SearchContext
 import com.mapbox.search.ui.view.search.SearchHistoryViewHolder
 import com.mapbox.search.ui.view.search.SearchResultAdapterItem
 import com.mapbox.search.ui.view.search.SearchResultViewHolder
@@ -55,6 +59,7 @@ public class SearchResultsView @JvmOverloads constructor(
     // TODO decouple View from Model
     private lateinit var searchEngine: SearchEngine
     private lateinit var offlineSearchEngine: OfflineSearchEngine
+    private lateinit var historyDataProvider: HistoryDataProvider
 
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
@@ -120,7 +125,7 @@ public class SearchResultsView @JvmOverloads constructor(
             responseInfo: ResponseInfo
         ) {
             if (searchQuery.isNotEmpty()) {
-                showResults(results, responseInfo, fromCategorySuggestion = true)
+                showResults(results, responseInfo, SearchContext.CATEGORY)
                 searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
             }
         }
@@ -137,7 +142,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
         override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
             if (searchQuery.isNotEmpty()) {
-                showResults(results, responseInfo, fromCategorySuggestion = false)
+                showResults(results, responseInfo, SearchContext.OFFLINE)
                 searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
             }
         }
@@ -164,7 +169,19 @@ public class SearchResultsView @JvmOverloads constructor(
             }
         }
 
-        override fun onResultItemClicked(searchResult: SearchResult, responseInfo: ResponseInfo) {
+        override fun onResultItemClicked(
+            searchContext: SearchContext,
+            searchResult: SearchResult,
+            responseInfo: ResponseInfo
+        ) {
+            when (searchContext) {
+                SearchContext.CATEGORY, SearchContext.OFFLINE -> {
+                    addToHistoryIfNeeded(searchResult)
+                }
+                SearchContext.REGULAR -> {
+                    // Do nothing
+                }
+            }
             searchResultListeners.forEach { it.onSearchResult(searchResult, responseInfo) }
         }
 
@@ -204,6 +221,8 @@ public class SearchResultsView @JvmOverloads constructor(
 
         offlineSearchEngine = MapboxSearchSdk.createOfflineSearchEngine(configuration.offlineSearchEngineSettings)
 
+        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+
         itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
 
         searchAdapter.searchResultsListener = innerSearchResultsCallback
@@ -241,6 +260,36 @@ public class SearchResultsView @JvmOverloads constructor(
         check(isInitialized) {
             "Initialize this view first"
         }
+    }
+
+    private fun addToHistoryIfNeeded(searchResult: SearchResult) {
+        val isHistory = searchResult is IndexableRecordSearchResult && searchResult.record is HistoryRecord
+        if (isHistory) return
+
+        historyDataProvider.upsert(
+            HistoryRecord(
+                id = searchResult.id,
+                name = searchResult.name,
+                descriptionText = searchResult.descriptionText,
+                address = searchResult.address,
+                routablePoints = searchResult.routablePoints,
+                categories = searchResult.categories,
+                makiIcon = searchResult.makiIcon,
+                coordinate = searchResult.coordinate,
+                type = searchResult.types.first(),
+                metadata = searchResult.metadata,
+                timestamp = System.currentTimeMillis(),
+            ),
+            object : CompletionCallback<Unit> {
+                override fun onComplete(result: Unit) {
+                    logd("Search result added to history")
+                }
+
+                override fun onError(e: Exception) {
+                    logd("Unable to add SearchResult to history: ${e.message}")
+                }
+            }
+        )
     }
 
     /**
@@ -365,7 +414,7 @@ public class SearchResultsView @JvmOverloads constructor(
         }
     }
 
-    private fun showResults(results: List<SearchResult>, responseInfo: ResponseInfo, fromCategorySuggestion: Boolean) {
+    private fun showResults(results: List<SearchResult>, responseInfo: ResponseInfo, searchContext: SearchContext) {
         if (results.isEmpty()) {
             moveToState(ViewState.EmptySearchResults(itemsCreator.createForEmptySearchResults(responseInfo)))
         } else {
@@ -373,7 +422,7 @@ public class SearchResultsView @JvmOverloads constructor(
             asyncItemsCreatorTask = itemsCreator.createForSearchResults(
                 results = results,
                 responseInfo = responseInfo,
-                fromCategorySuggestion = fromCategorySuggestion
+                searchContext = searchContext,
             ) { items ->
                 moveToState(ViewState.Results(items))
             }
