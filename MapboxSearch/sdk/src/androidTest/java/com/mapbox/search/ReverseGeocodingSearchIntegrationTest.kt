@@ -81,7 +81,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         )
 
         val searchEngineSettings = SearchEngineSettings(
-            applicationContext = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()

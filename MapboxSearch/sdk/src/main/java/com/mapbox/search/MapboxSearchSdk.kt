@@ -17,6 +17,8 @@ import com.mapbox.search.common.concurrent.CommonMainThreadChecker
 import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.location.LocationEngineAdapter
+import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
@@ -67,6 +69,9 @@ public object MapboxSearchSdk {
     private lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
 
     @JvmSynthetic
+    internal lateinit var application: Application
+
+    @JvmSynthetic
     internal lateinit var internalServiceProvider: InternalServiceProvider
 
     /**
@@ -91,6 +96,7 @@ public object MapboxSearchSdk {
         orientationProvider: ScreenOrientationProvider = AndroidScreenOrientationProvider(application),
         dataLoader: DataLoader<ByteArray> = InternalDataLoader(application, InternalFileSystem()),
     ) {
+        this.application = application
         this.timeProvider = timeProvider
         this.formattedTimeProvider = formattedTimeProvider
         this.uuidProvider = uuidProvider
@@ -151,7 +157,7 @@ public object MapboxSearchSdk {
         settings: OfflineSearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
     ) = createAnalyticsService(
-        application = settings.application,
+        application = application,
         accessToken = settings.accessToken,
         coreSearchEngine = coreSearchEngine,
         locationEngine = settings.locationEngine,
@@ -162,7 +168,7 @@ public object MapboxSearchSdk {
         settings: SearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
     ) = createAnalyticsService(
-        application = settings.application,
+        application = application,
         accessToken = settings.accessToken,
         coreSearchEngine = coreSearchEngine,
         locationEngine = settings.locationEngine,
@@ -335,7 +341,10 @@ public object MapboxSearchSdk {
                 userAgent,
                 null
             ),
-            settings.wrapperLocationProvider,
+            WrapperLocationProvider(
+                LocationEngineAdapter(application, settings.locationEngine),
+                settings.viewportProvider
+            ),
         )
 
         return OfflineSearchEngineImpl(
@@ -349,18 +358,21 @@ public object MapboxSearchSdk {
 
     private fun createCoreEngineByApiType(
         apiType: ApiType,
-        searchEngineSettings: SearchEngineSettings
+        settings: SearchEngineSettings
     ): CoreSearchEngineInterface {
         val endpoint = when (apiType) {
-            ApiType.GEOCODING -> searchEngineSettings.geocodingEndpointBaseUrl
-            ApiType.SBS -> searchEngineSettings.singleBoxSearchBaseUrl
+            ApiType.GEOCODING -> settings.geocodingEndpointBaseUrl
+            ApiType.SBS -> settings.singleBoxSearchBaseUrl
             ApiType.AUTOFILL -> null
         }
 
         return CoreSearchEngine(
             // TODO allow customer to customize events url
-            CoreEngineOptions(searchEngineSettings.accessToken, endpoint, apiType.mapToCore(), userAgent, null),
-            searchEngineSettings.wrapperLocationProvider,
+            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), userAgent, null),
+            WrapperLocationProvider(
+                LocationEngineAdapter(application, settings.locationEngine),
+                settings.viewportProvider
+            ),
         )
     }
 

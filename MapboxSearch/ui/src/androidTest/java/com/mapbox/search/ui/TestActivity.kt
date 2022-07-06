@@ -78,19 +78,15 @@ public class TestActivity : AppCompatActivity() {
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
-            val context = this@TestActivity.applicationContext
-
             initialize(
                 SearchResultsView.Configuration(
                     commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
                     searchEngineSettings = SearchEngineSettings(
-                        applicationContext = context,
                         accessToken = BuildConfig.MAPBOX_API_TOKEN,
                         locationEngine = locationEngine,
                         singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
                     ),
                     offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                        applicationContext = context,
                         accessToken = BuildConfig.MAPBOX_API_TOKEN,
                         locationEngine = locationEngine,
                     )

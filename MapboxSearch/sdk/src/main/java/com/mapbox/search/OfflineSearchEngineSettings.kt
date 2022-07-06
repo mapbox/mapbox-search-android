@@ -1,15 +1,11 @@
 package com.mapbox.search
 
 import android.Manifest
-import android.app.Application
-import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
-import com.mapbox.search.location.LocationEngineAdapter
-import com.mapbox.search.location.WrapperLocationProvider
 import java.net.URI
 
 /**
@@ -17,11 +13,6 @@ import java.net.URI
  * @see OfflineSearchEngine
  */
 public class OfflineSearchEngineSettings @JvmOverloads constructor(
-
-    /**
-     * The Context of the Android Application.
-     */
-    public val applicationContext: Context,
 
     /**
      * [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
@@ -50,7 +41,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    public val locationEngine: LocationEngine = defaultLocationEngine(applicationContext),
+    public val locationEngine: LocationEngine = defaultLocationEngine(),
 
     /**
      * Viewport provider instance.
@@ -58,28 +49,17 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     public val viewportProvider: ViewportProvider? = null,
 ) {
 
-    internal val application: Application
-        get() = applicationContext.applicationContext as Application
-
-    internal val wrapperLocationProvider: WrapperLocationProvider
-        get() = WrapperLocationProvider(
-            LocationEngineAdapter(application, locationEngine),
-            viewportProvider
-        )
-
     /**
      * Creates a copy of this object with overridden parameters.
      */
     @JvmSynthetic
     public fun copy(
-        applicationContext: Context = this.applicationContext,
         accessToken: String = this.accessToken,
         tileStore: TileStore = this.tileStore,
         tilesBaseUri: URI = this.tilesBaseUri,
         locationEngine: LocationEngine = this.locationEngine,
         viewportProvider: ViewportProvider? = this.viewportProvider,
     ): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
-        applicationContext = applicationContext,
         accessToken = accessToken,
         tileStore = tileStore,
         tilesBaseUri = tilesBaseUri,
@@ -101,7 +81,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 
         other as OfflineSearchEngineSettings
 
-        if (applicationContext != other.applicationContext) return false
         if (accessToken != other.accessToken) return false
         if (locationEngine != other.locationEngine) return false
         if (viewportProvider != other.viewportProvider) return false
@@ -115,8 +94,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = applicationContext.hashCode()
-        result = 31 * result + accessToken.hashCode()
+        var result = accessToken.hashCode()
         result = 31 * result + locationEngine.hashCode()
         result = 31 * result + (viewportProvider?.hashCode() ?: 0)
         result = 31 * result + tileStore.hashCode()
@@ -129,7 +107,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
      */
     override fun toString(): String {
         return "OfflineSearchEngineSettings(" +
-                "applicationContext=$applicationContext, " +
                 "accessToken='$accessToken', " +
                 "locationEngine=$locationEngine, " +
                 "viewportProvider=$viewportProvider, " +
@@ -144,11 +121,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     public class Builder(
 
         /**
-         * The Context of the Android Application.
-         */
-        public var applicationContext: Context,
-
-        /**
          * [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
          */
         public var accessToken: String,
@@ -159,7 +131,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         private var tileStore: TileStore? = null
         private var tilesBaseUri: URI? = null
 
-        internal constructor(settings: OfflineSearchEngineSettings) : this(settings.applicationContext, settings.accessToken) {
+        internal constructor(settings: OfflineSearchEngineSettings) : this(settings.accessToken) {
             locationEngine = settings.locationEngine
             viewportProvider = settings.viewportProvider
             tileStore = settings.tileStore
@@ -203,11 +175,10 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
          * Create [OfflineSearchEngineSettings] instance from builder data.
          */
         public fun build(): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
-            applicationContext = applicationContext,
             accessToken = accessToken,
             tileStore = tileStore ?: defaultTileStore(),
             tilesBaseUri = tilesBaseUri ?: DEFAULT_ENDPOINT_URI,
-            locationEngine = locationEngine ?: defaultLocationEngine(applicationContext),
+            locationEngine = locationEngine ?: defaultLocationEngine(),
             viewportProvider = viewportProvider,
         )
     }
@@ -219,6 +190,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         const val DEFAULT_VERSION = ""
 
         private fun defaultTileStore() = TileStore.create()
-        private fun defaultLocationEngine(context: Context) = LocationEngineProvider.getBestLocationEngine(context)
+        private fun defaultLocationEngine() = LocationEngineProvider.getBestLocationEngine(MapboxSearchSdk.application)
     }
 }

@@ -17,7 +17,6 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         addressAutofill = AddressAutofill.create(
-            context = this,
             accessToken = BuildConfig.MAPBOX_API_TOKEN,
         )
 

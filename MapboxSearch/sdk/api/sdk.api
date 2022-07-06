@@ -543,17 +543,16 @@ public abstract interface class com/mapbox/search/OfflineSearchEngine$OnIndexCha
 public final class com/mapbox/search/OfflineSearchEngineSettings {
 	public static final field DEFAULT_DATASET Ljava/lang/String;
 	public static final field DEFAULT_VERSION Ljava/lang/String;
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
-	public synthetic fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/OfflineSearchEngineSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/search/OfflineSearchEngineSettings;Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;ILjava/lang/Object;)Lcom/mapbox/search/OfflineSearchEngineSettings;
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/OfflineSearchEngineSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/search/OfflineSearchEngineSettings;Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;ILjava/lang/Object;)Lcom/mapbox/search/OfflineSearchEngineSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getApplicationContext ()Landroid/content/Context;
 	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
 	public final fun getTileStore ()Lcom/mapbox/common/TileStore;
 	public final fun getTilesBaseUri ()Ljava/net/URI;
@@ -564,13 +563,11 @@ public final class com/mapbox/search/OfflineSearchEngineSettings {
 }
 
 public final class com/mapbox/search/OfflineSearchEngineSettings$Builder {
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun build ()Lcom/mapbox/search/OfflineSearchEngineSettings;
 	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getApplicationContext ()Landroid/content/Context;
 	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/OfflineSearchEngineSettings$Builder;
 	public final fun setAccessToken (Ljava/lang/String;)V
-	public final fun setApplicationContext (Landroid/content/Context;)V
 	public final fun tileStore (Lcom/mapbox/common/TileStore;)Lcom/mapbox/search/OfflineSearchEngineSettings$Builder;
 	public final fun tilesBaseUri (Ljava/net/URI;)Lcom/mapbox/search/OfflineSearchEngineSettings$Builder;
 	public final fun viewportProvider (Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/OfflineSearchEngineSettings$Builder;
@@ -784,17 +781,16 @@ public final class com/mapbox/search/SearchEngine$DefaultImpls {
 
 public final class com/mapbox/search/SearchEngineSettings {
 	public static final field DEFAULT_ENDPOINT_GEOCODING Ljava/lang/String;
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getApplicationContext ()Landroid/content/Context;
 	public final fun getGeocodingEndpointBaseUrl ()Ljava/lang/String;
 	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
 	public final fun getSingleBoxSearchBaseUrl ()Ljava/lang/String;
@@ -805,14 +801,12 @@ public final class com/mapbox/search/SearchEngineSettings {
 }
 
 public final class com/mapbox/search/SearchEngineSettings$Builder {
-	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun build ()Lcom/mapbox/search/SearchEngineSettings;
 	public final fun geocodingEndpointBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getApplicationContext ()Landroid/content/Context;
 	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun setAccessToken (Ljava/lang/String;)V
-	public final fun setApplicationContext (Landroid/content/Context;)V
 	public final fun singleBoxSearchBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun viewportProvider (Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 }

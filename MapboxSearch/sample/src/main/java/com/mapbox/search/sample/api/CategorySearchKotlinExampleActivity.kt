@@ -37,7 +37,7 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+            SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )
 
         searchRequestTask = searchEngine.search(

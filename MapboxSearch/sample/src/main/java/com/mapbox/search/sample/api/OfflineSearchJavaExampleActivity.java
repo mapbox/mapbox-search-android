@@ -70,7 +70,6 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
 
         searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
             new OfflineSearchEngineSettings(
-                this,
                 BuildConfig.MAPBOX_API_TOKEN,
                 tileStore
             )
