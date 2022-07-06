@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
 import com.mapbox.search.common.tests.CopyVerifier
@@ -75,13 +74,12 @@ internal class OfflineSearchEngineSettingsTest {
     fun `Check OfflineSearchSettings default builder`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with default values") {
-                val actual = OfflineSearchEngineSettings.Builder(TEST_MOCKED_CONTEXT, TEST_ACCESS_TOKEN)
+                val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
                     .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .build()
 
                 val expected = OfflineSearchEngineSettings(
-                    applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     locationEngine = TEST_MOCKED_LOCATION_ENGINE
@@ -96,7 +94,7 @@ internal class OfflineSearchEngineSettingsTest {
     fun `Check OfflineSearchSettings builder with all values set`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with test values") {
-                val actual = OfflineSearchEngineSettings.Builder(TEST_MOCKED_CONTEXT, TEST_ACCESS_TOKEN)
+                val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
                     .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .tilesBaseUri(TEST_DEFAULT_ENDPOINT_URI)
@@ -104,7 +102,6 @@ internal class OfflineSearchEngineSettingsTest {
                     .build()
 
                 val expected = OfflineSearchEngineSettings(
-                    applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
@@ -122,7 +119,6 @@ internal class OfflineSearchEngineSettingsTest {
         Given("OfflineSearchSettings builder") {
             When("Object created with toBuilder()") {
                 val settings = OfflineSearchEngineSettings(
-                    applicationContext = TEST_MOCKED_CONTEXT,
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
@@ -138,7 +134,6 @@ internal class OfflineSearchEngineSettingsTest {
     private companion object {
         val TEST_DEFAULT_ENDPOINT_URI: URI = URI.create("https://api-offline-search-staging.tilestream.net")
         const val TEST_ACCESS_TOKEN = "test token"
-        val TEST_MOCKED_CONTEXT: Context = mockk(relaxed = true)
         val TEST_MOCKED_LOCATION_ENGINE: LocationEngine = mockk(relaxed = true)
         val TEST_MOCKED_TILE_STORE: TileStore = mockk(relaxed = true)
         val TEST_MOCKED_VIEWPORT_PROVIDER: ViewportProvider = mockk(relaxed = true)

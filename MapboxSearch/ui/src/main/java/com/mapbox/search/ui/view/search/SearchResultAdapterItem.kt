@@ -33,7 +33,7 @@ internal sealed class SearchResultAdapterItem {
             val resolved: SearchResult,
             val responseInfo: ResponseInfo,
             val distanceMeters: Double?,
-            val highlightQuery: Boolean,
+            val searchContext: SearchContext,
         ) : Result()
     }
 }

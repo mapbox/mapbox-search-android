@@ -58,11 +58,10 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         )
 
         val searchEngineSettings = SearchEngineSettings(
-            applicationContext = targetApplication,
             accessToken = TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
-            singleBoxSearchBaseUrl = mockServer.url("").toString(),
-            geocodingEndpointBaseUrl = mockServer.url("").toString()
+            geocodingEndpointBaseUrl = mockServer.url("").toString(),
+            singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(

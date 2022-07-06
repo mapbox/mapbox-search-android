@@ -42,7 +42,7 @@ internal class SearchResultsItemsCreator(
     fun createForSearchResults(
         results: List<SearchResult>,
         responseInfo: ResponseInfo,
-        fromCategorySuggestion: Boolean,
+        searchContext: SearchContext,
         callback: (List<SearchResultAdapterItem>) -> Unit,
     ): SearchCommonAsyncOperationTask {
         check(results.isNotEmpty())
@@ -55,7 +55,7 @@ internal class SearchResultsItemsCreator(
                     resolved = it,
                     responseInfo = responseInfo,
                     distanceMeters = distance,
-                    highlightQuery = !fromCategorySuggestion,
+                    searchContext = searchContext,
                 )
             }
             callback(resultItems + SearchResultAdapterItem.MissingResultFeedback(responseInfo))

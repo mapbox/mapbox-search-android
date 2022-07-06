@@ -127,12 +127,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
-            val context = this@MainActivity
             initialize(
                 SearchResultsView.Configuration(
                     commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
-                    searchEngineSettings = SearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN),
-                    offlineSearchEngineSettings = OfflineSearchEngineSettings(context, BuildConfig.MAPBOX_API_TOKEN)
+                    searchEngineSettings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
+                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
                 )
             )
             isVisible = false

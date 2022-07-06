@@ -81,7 +81,6 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
         searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
             OfflineSearchEngineSettings(
-                applicationContext = targetApplication,
                 accessToken = BuildConfig.MAPBOX_API_TOKEN,
                 tileStore = tileStore,
                 locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION)

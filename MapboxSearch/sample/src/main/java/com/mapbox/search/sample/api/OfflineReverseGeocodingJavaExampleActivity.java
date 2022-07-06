@@ -68,7 +68,6 @@ public class OfflineReverseGeocodingJavaExampleActivity extends AppCompatActivit
 
         searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
             new OfflineSearchEngineSettings(
-                this,
                 BuildConfig.MAPBOX_API_TOKEN,
                 tileStore
             )

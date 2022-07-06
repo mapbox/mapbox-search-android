@@ -24,8 +24,12 @@ internal class SearchViewResultsAdapter(
             searchResultsListener?.onSuggestionItemClicked(searchSuggestion)
         }
 
-        override fun onResultItemClicked(searchResult: SearchResult, responseInfo: ResponseInfo) {
-            searchResultsListener?.onResultItemClicked(searchResult, responseInfo)
+        override fun onResultItemClicked(
+            searchContext: SearchContext,
+            searchResult: SearchResult,
+            responseInfo: ResponseInfo
+        ) {
+            searchResultsListener?.onResultItemClicked(searchContext, searchResult, responseInfo)
         }
 
         override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
@@ -57,7 +61,9 @@ internal class SearchViewResultsAdapter(
                 is SearchResultAdapterItem.Result.Suggestion ->
                     "Search result: ${item.suggestion.id}, distance: ${item.suggestion.distanceMeters}"
                 is SearchResultAdapterItem.Result.Resolved ->
-                    "Search result: ${item.resolved.id}, distance: ${item.distanceMeters}, highlightQuery: ${item.highlightQuery}"
+                    "Search result: ${item.resolved.id}, " +
+                            "distance: ${item.distanceMeters}, " +
+                            "searchContext: ${item.searchContext}"
             }
             is SearchResultAdapterItem.MissingResultFeedback -> "Missing result feedback: ${item.responseInfo}"
         }
@@ -137,7 +143,7 @@ internal class SearchViewResultsAdapter(
 
         fun onSuggestionItemClicked(searchSuggestion: SearchSuggestion)
 
-        fun onResultItemClicked(searchResult: SearchResult, responseInfo: ResponseInfo)
+        fun onResultItemClicked(searchContext: SearchContext, searchResult: SearchResult, responseInfo: ResponseInfo)
 
         fun onHistoryItemClicked(historyRecord: HistoryRecord)
 

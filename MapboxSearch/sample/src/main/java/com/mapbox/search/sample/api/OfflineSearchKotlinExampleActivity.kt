@@ -54,7 +54,6 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
             OfflineSearchEngineSettings(
-                applicationContext = this,
                 accessToken = BuildConfig.MAPBOX_API_TOKEN,
                 tileStore = tileStore
             )

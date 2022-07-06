@@ -46,7 +46,7 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
+            new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         );
 
         final CategorySearchOptions options = new CategorySearchOptions.Builder()
