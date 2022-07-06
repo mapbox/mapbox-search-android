@@ -1,6 +1,6 @@
 package com.mapbox.search.ui
 
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -16,7 +16,7 @@ import org.junit.Test
 internal class SearchResultsViewTest : MockServerSearchActivityTest() {
 
     private fun openSearchView() {
-        Espresso.onView(ViewMatchers.withId(R.id.action_search))
+        onView(ViewMatchers.withId(R.id.action_search))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             .perform(ViewActions.click())
     }

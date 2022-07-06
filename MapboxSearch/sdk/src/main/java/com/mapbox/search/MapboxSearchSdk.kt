@@ -223,6 +223,15 @@ public object MapboxSearchSdk {
     }
 
     /**
+     * Internal function that must not be used by external customers. WIll be removed in the next Search SDK updates.
+     * TODO https://github.com/mapbox/mapbox-search-android-internal/issues/799
+     */
+    @JvmStatic
+    public fun internalCreateAutofillSearchEngine(settings: SearchEngineSettings): SearchEngine {
+        return createSearchEngine(ApiType.AUTOFILL, settings)
+    }
+
+    /**
      * Creates a new instance of the [SearchEngine] with
      * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider]
      * registered by default.
@@ -244,6 +253,7 @@ public object MapboxSearchSdk {
         return createSearchEngineWithBuiltInDataProviders(getDefaultApiType(), settings, null, executor, callback)
     }
 
+    @JvmSynthetic
     internal fun createSearchEngineWithBuiltInDataProviders(
         apiType: ApiType,
         settings: SearchEngineSettings,
@@ -271,6 +281,7 @@ public object MapboxSearchSdk {
         return searchEngine
     }
 
+    @JvmSynthetic
     internal fun createSearchEngine(
         apiType: ApiType,
         settings: SearchEngineSettings,
@@ -343,6 +354,7 @@ public object MapboxSearchSdk {
         val endpoint = when (apiType) {
             ApiType.GEOCODING -> searchEngineSettings.geocodingEndpointBaseUrl
             ApiType.SBS -> searchEngineSettings.singleBoxSearchBaseUrl
+            ApiType.AUTOFILL -> null
         }
 
         return CoreSearchEngine(

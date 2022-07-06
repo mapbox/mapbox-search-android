@@ -13,16 +13,20 @@
 - [CORE] `MapboxSearchSdk.createSearchEngine()` function without parameters has been removed. Now `SearchEngineSettings` should always be provided as an argument.
 - [CORE] `MapboxSearchSdk.getOfflineSearchEngine()` function has been removed, call `MapboxSearchSdk.createOfflineSearchEngine()` function instead.
 - [CORE] `OfflineSearchEngine.tileStore` property has been removed, call `OfflineSearchEngine.settings.tileStore` instead.
+- [CORE] Now `ApiType` has a new `AUTOFILL` constant.
 - [UI] `SearchResultsView.initialize()` now accepts `SearchResultsView.Configuration` object.
 - [UI] `SearchBottomSheetView`, `SearchCategoriesBottomSheetView`, `SearchFeedbackBottomSheetView` views are not supported anymore. These views and their nested types have been removed from the Search SDK. Also, unused types such as `IncorrectSearchPlaceFeedback`, `FavoriteTemplate`, `Category` are not available either.
 - [UI] `IncorrectSearchPlaceFeedback` has been moved to `com.mapbox.search.ui.view.place` package.
+- [AUTOFILL] `AddressAutofill.create(searchEngine: SearchEngine)` has been replaced with `AddressAutofill.create(context: Context, accessToken: String)`.
+- [AUTOFILL] `AddressAutofillOptions.countries` now is a list of `AddressAutofillOptions.Country` values and `AddressAutofillOptions.language` is `AddressAutofillOptions.Language` value.
+- [AUTOFILL] `AddressAutofillResult.address` now is an instance of `AddressAutofillResult.Address` type.
 
 ### New features
 - [CORE] `SearchEngine` and `OfflineSearchEngine` provide `settings` property that return settings object used for engine initialization.
 
 ### Mapbox dependencies
-- Search Native SDK `0.56.0`
-- Common SDK `22.0.0`
+- Search Native SDK `0.57.0`
+- Common SDK `22.1.0-beta.1`
 - Kotlin `1.5.31`
 
 

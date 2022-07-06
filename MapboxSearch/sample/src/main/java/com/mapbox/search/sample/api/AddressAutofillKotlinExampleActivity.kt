@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillResponse
@@ -19,14 +17,13 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         addressAutofill = AddressAutofill.create(
-            MapboxSearchSdk.createSearchEngine(
-                SearchEngineSettings(this, BuildConfig.MAPBOX_API_TOKEN)
-            )
+            context = this,
+            accessToken = BuildConfig.MAPBOX_API_TOKEN,
         )
 
         lifecycleScope.launchWhenCreated {
             val response = addressAutofill.suggestions(
-                query = "street",
+                query = "740 15th St NW, Washington",
                 options = AddressAutofillOptions()
             )
 

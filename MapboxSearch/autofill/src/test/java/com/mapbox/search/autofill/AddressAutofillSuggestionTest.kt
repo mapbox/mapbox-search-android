@@ -18,7 +18,7 @@ internal class AddressAutofillSuggestionTest {
         Given("${AddressAutofillSuggestion::class.java.simpleName} instance") {
             val formattedAddress = "Test formatted address"
             val coordinate = Point.fromLngLat(10.0, 11.0)
-            val address = SearchAddress()
+            val address = AddressComponents.fromCoreSdkAddress(SearchAddress(country = "test"))!!
 
             val suggestion = AddressAutofillSuggestion(formattedAddress, coordinate, address)
 

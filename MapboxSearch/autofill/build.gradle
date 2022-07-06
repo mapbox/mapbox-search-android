@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    api project(path: ':sdk')
+    implementation project(path: ':sdk')
     implementation project(path: ':sdk-common')
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
