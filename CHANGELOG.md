@@ -1,6 +1,6 @@
 # Internal changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.33-SNAPSHOT
+## 1.0.0-beta.33
 
 ### Breaking changes
 - [CORE] `ServiceProvider.analyticsService()` function has been removed. Now `AnalyticsService` instance is associated with `SearchEngine`, and `OfflineSearchEngine`. `AnalyticsService` can be retrieved from `SearchEngine.analyticsService`, and `OfflineSearchEngine.analyticsService`.
