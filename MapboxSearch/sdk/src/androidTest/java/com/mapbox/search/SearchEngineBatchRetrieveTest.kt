@@ -15,7 +15,6 @@ import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
-import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -33,7 +32,6 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
     private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
-    private val analyticsService: TestAnalyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -53,7 +51,6 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
-            analyticsService = analyticsService
         )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
@@ -268,16 +265,10 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         val res = callback.getResultBlocking()
         assertTrue(res is BlockingSearchSelectionCallback.SearchEngineResult.Error && res.e is SearchRequestException && res.e.code == 404)
-        res as BlockingSearchSelectionCallback.SearchEngineResult.Error
-
-        if (!BuildConfig.DEBUG) {
-            assertEquals(analyticsService.capturedErrors, listOf(res.e))
-        }
     }
 
     @After
     override fun tearDown() {
-        analyticsService.reset()
         mockServer.shutdown()
         super.tearDown()
     }

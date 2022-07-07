@@ -4,7 +4,7 @@ import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
-import com.mapbox.search.analytics.InternalAnalyticsService
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreOfflineIndexObserver
 import com.mapbox.search.core.CoreSearchEngine
@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 internal class OfflineSearchEngineImpl(
-    override val analyticsService: InternalAnalyticsService,
+    override val analyticsService: AnalyticsService,
     override val settings: OfflineSearchEngineSettings,
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
@@ -80,7 +80,6 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )
@@ -101,7 +100,6 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )
@@ -133,7 +131,6 @@ internal class OfflineSearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContextProvider.provide(ApiType.SBS),
-                    analyticsService = analyticsService,
                     isOffline = true,
                 )
             )

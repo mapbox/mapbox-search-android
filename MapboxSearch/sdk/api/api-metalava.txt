@@ -959,9 +959,6 @@ package com.mapbox.search.analytics {
     field public static final String OTHER = "other_result_issue";
   }
 
-  public final class InternalAnalyticsServiceKt {
-  }
-
   public final class MissingResultFeedbackEvent {
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null, String? feedbackId = null);
     ctor public MissingResultFeedbackEvent(com.mapbox.search.ResponseInfo responseInfo, String? text = null, android.graphics.Bitmap? screenshot = null, String? sessionId = null);

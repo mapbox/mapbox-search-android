@@ -33,9 +33,8 @@ internal class AnalyticsServiceImpl(
     private val eventsService: EventsServiceInterface,
     private val eventsJsonParser: AnalyticsEventJsonParser,
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
-    private val crashEventsFactory: CrashEventsFactory,
     private val locationEngine: LocationEngine
-) : InternalAnalyticsService {
+) : AnalyticsService {
 
     override fun createRawFeedbackEvent(
         searchResult: SearchResult,
@@ -245,16 +244,6 @@ internal class AnalyticsServiceImpl(
             asTemplate = asTemplate,
             callback = callback,
         )
-    }
-
-    override fun reportError(throwable: Throwable) {
-        if (!crashEventsFactory.isAllowedForAnalytics(throwable)) {
-            logd("$throwable is not Search SDK related error. Skip it.")
-            return
-        }
-
-        val event = crashEventsFactory.createEvent(throwable, isSilent = true, customData = null)
-        sendEventJson(event)
     }
 
     private fun sendEventJson(eventJson: String) {

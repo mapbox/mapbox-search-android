@@ -8,9 +8,8 @@ import com.mapbox.common.EventsServiceOptions
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.AnalyticsServiceImpl
-import com.mapbox.search.analytics.CrashEventsFactory
-import com.mapbox.search.analytics.InternalAnalyticsService
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
@@ -28,7 +27,6 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
 import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.utils.AndroidKeyboardLocaleProvider
-import com.mapbox.search.utils.AppInfoProviderImpl
 import com.mapbox.search.utils.CompoundCompletionCallback
 import com.mapbox.search.utils.FormattedTimeProvider
 import com.mapbox.search.utils.FormattedTimeProviderImpl
@@ -193,15 +191,6 @@ public object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val crashEventsFactory = CrashEventsFactory(
-            timeProvider = timeProvider,
-            appInfoProvider = AppInfoProviderImpl(
-                context = application,
-                searchSdkPackageName = com.mapbox.search.BuildConfig.LIBRARY_PACKAGE_NAME,
-                searchSdkVersionName = BuildConfig.VERSION_NAME
-            )
-        )
-
         val eventsService = EventsService(EventsServiceOptions(accessToken, userAgent, null))
 
         return AnalyticsServiceImpl(
@@ -209,7 +198,6 @@ public object MapboxSearchSdk {
             eventsService = eventsService,
             eventsJsonParser = eventJsonParser,
             feedbackEventsFactory = searchFeedbackEventsFactory,
-            crashEventsFactory = crashEventsFactory,
             locationEngine = locationEngine,
         )
     }
@@ -263,7 +251,7 @@ public object MapboxSearchSdk {
     internal fun createSearchEngineWithBuiltInDataProviders(
         apiType: ApiType,
         settings: SearchEngineSettings,
-        analyticsService: InternalAnalyticsService? = null,
+        analyticsService: AnalyticsService? = null,
         executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
         callback: CompletionCallback<Unit> = StubCompletionCallback()
     ): SearchEngine {
@@ -292,7 +280,7 @@ public object MapboxSearchSdk {
         apiType: ApiType,
         settings: SearchEngineSettings,
         coreEngine: CoreSearchEngineInterface = createCoreEngineByApiType(apiType, settings),
-        analyticsService: InternalAnalyticsService = createAnalyticsService(settings, coreEngine),
+        analyticsService: AnalyticsService = createAnalyticsService(settings, coreEngine),
     ): SearchEngine {
         checkInitialized()
 
