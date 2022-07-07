@@ -11,9 +11,8 @@ import com.mapbox.search.SearchRequestTaskImpl
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.SelectOptions
-import com.mapbox.search.analytics.InternalAnalyticsService
-import com.mapbox.search.analytics.reportRelease
 import com.mapbox.search.common.assertDebug
+import com.mapbox.search.common.failDebug
 import com.mapbox.search.common.throwDebug
 import com.mapbox.search.core.CoreSearchCallback
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -44,7 +43,6 @@ internal class TwoStepsRequestCallbackWrapper(
     private val searchRequestContext: SearchRequestContext,
     private val suggestion: SearchSuggestion?,
     private val selectOptions: SelectOptions?,
-    private val analyticsService: InternalAnalyticsService,
     private val isOfflineSearch: Boolean,
 ) : CoreSearchCallback {
 
@@ -64,9 +62,9 @@ internal class TwoStepsRequestCallbackWrapper(
                 if (response.results.isError) {
                     val coreError = response.results.error
                     if (coreError == null) {
-                        analyticsService.reportRelease(
-                            IllegalStateException("CoreSearchResponse.isError == true but error is null")
-                        )
+                        failDebug {
+                            "CoreSearchResponse.isError == true but error is null"
+                        }
                         return@execute
                     }
 
@@ -76,7 +74,6 @@ internal class TwoStepsRequestCallbackWrapper(
                                 "Unable to perform search request: ${coreError.connectionError.message}"
                             )
 
-                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -84,7 +81,6 @@ internal class TwoStepsRequestCallbackWrapper(
                         CoreSearchResponseErrorType.HTTP_ERROR -> {
                             val error = coreError.toPlatformHttpException()
 
-                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -94,7 +90,6 @@ internal class TwoStepsRequestCallbackWrapper(
                                 "Unable to perform search request: ${coreError.internalError.message}"
                             )
 
-                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -106,7 +101,6 @@ internal class TwoStepsRequestCallbackWrapper(
                         }
                         null -> {
                             val error = IllegalStateException("CoreSearchResponse.error.typeInfo is null")
-                            analyticsService.reportRelease(error)
                             searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                 onError(error)
                             }
@@ -208,7 +202,6 @@ internal class TwoStepsRequestCallbackWrapper(
                                     }
                                 } catch (e: Exception) {
                                     if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
-                                        analyticsService.reportRelease(e)
                                         searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                                             onError(e)
                                         }
@@ -232,7 +225,6 @@ internal class TwoStepsRequestCallbackWrapper(
                 tasks.forEach { it.cancel() }
 
                 if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
-                    analyticsService.reportRelease(e)
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         onError(e)
                     }

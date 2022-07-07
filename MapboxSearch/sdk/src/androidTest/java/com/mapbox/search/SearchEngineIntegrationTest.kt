@@ -38,7 +38,6 @@ import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.tests_support.searchBlocking
 import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
@@ -78,7 +77,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
-    private val analyticsService: TestAnalyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -104,7 +102,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
-            analyticsService = analyticsService
         )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
@@ -848,11 +845,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val res = callback.getResultBlocking()
         assertTrue(res is SearchEngineResult.Error && res.e is SearchRequestException && res.e.code == 404)
-        res as SearchEngineResult.Error
-
-        if (!BuildConfig.DEBUG) {
-            assertEquals(analyticsService.capturedErrors, listOf(res.e))
-        }
     }
 
     @Test
@@ -864,11 +856,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val res = callback.getResultBlocking()
         assertTrue(res is SearchEngineResult.Error && res.e is IOException)
-        res as SearchEngineResult.Error
-
-        if (!BuildConfig.DEBUG) {
-            assertEquals(analyticsService.capturedErrors, listOf(res.e))
-        }
     }
 
     @Test
@@ -895,11 +882,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val res = callback.getResultBlocking()
         assertTrue(res is SearchEngineResult.Error)
-        res as SearchEngineResult.Error
-
-        if (!BuildConfig.DEBUG) {
-            assertEquals(analyticsService.capturedErrors, listOf(res.e))
-        }
     }
 
     @Test
@@ -1028,7 +1010,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @After
     override fun tearDown() {
-        analyticsService.reset()
         mockServer.shutdown()
         super.tearDown()
     }
