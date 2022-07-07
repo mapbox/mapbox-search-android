@@ -13,7 +13,6 @@ import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
-import com.mapbox.search.analytics.CrashEventsFactory
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
@@ -54,7 +53,6 @@ internal class AnalyticsServiceImplTest {
     private lateinit var eventsService: EventsServiceInterface
     private lateinit var eventsJsonParser: AnalyticsEventJsonParser
     private lateinit var feedbackEventsFactory: SearchFeedbackEventsFactory
-    private lateinit var crashEventsFactory: CrashEventsFactory
     private lateinit var analyticsServiceImpl: AnalyticsServiceImpl
     private lateinit var callbackExecutor: Executor
 
@@ -72,7 +70,6 @@ internal class AnalyticsServiceImplTest {
         eventsService = mockk(relaxed = true)
         eventsJsonParser = mockk()
         feedbackEventsFactory = mockk(relaxed = true)
-        crashEventsFactory = mockk(relaxed = true)
         callbackExecutor = spyk(TestExecutor())
 
         validMockedFeedbackEvent = mockk()
@@ -82,7 +79,7 @@ internal class AnalyticsServiceImplTest {
         every { invalidMockedFeedbackEvent.isValid } returns false
 
         analyticsServiceImpl = AnalyticsServiceImpl(
-            context, eventsService, eventsJsonParser, feedbackEventsFactory, crashEventsFactory, locationEngine
+            context, eventsService, eventsJsonParser, feedbackEventsFactory, locationEngine
         )
 
         every {
@@ -397,60 +394,6 @@ internal class AnalyticsServiceImplTest {
 
                 Verify("Callback called inside executor", exactly = 2) {
                     callbackExecutor.execute(any())
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `reportError called with allowed exception`() = TestCase {
-        Given("AnalyticsService with mocked dependencies") {
-            val throwable = mockk<Throwable>()
-            val errorJson = "{\"event\":\"mobile.crash\"}"
-
-            val errorEvent = Event(requireNotNull(Value.fromJson(errorJson).value))
-
-            every { crashEventsFactory.isAllowedForAnalytics(throwable) } returns true
-            every { crashEventsFactory.createEvent(eq(throwable), any(), any()) } returns errorJson
-
-            When("reportError() called") {
-                analyticsServiceImpl.reportError(throwable)
-
-                VerifyOnce("Checked if error is allowed to be sent") {
-                    crashEventsFactory.isAllowedForAnalytics(throwable)
-                }
-
-                VerifyOnce("Json event created") {
-                    crashEventsFactory.createEvent(eq(throwable), eq(true), null)
-                }
-
-                VerifyOnce("Event sent") {
-                    eventsService.sendEvent(errorEvent, any())
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `reportError called with not allowed exception`() = TestCase {
-        Given("AnalyticsService with mocked dependencies") {
-            val throwable = mockk<Throwable>()
-
-            every { crashEventsFactory.isAllowedForAnalytics(throwable) } returns false
-
-            When("reportError() called") {
-                analyticsServiceImpl.reportError(throwable)
-
-                VerifyOnce("Checked if error is allowed to be sent") {
-                    crashEventsFactory.isAllowedForAnalytics(throwable)
-                }
-
-                VerifyNo("Json event is not created") {
-                    crashEventsFactory.createEvent(any(), any(), any())
-                }
-
-                VerifyNo("Event not sent") {
-                    eventsService.sendEvent(any(), any())
                 }
             }
         }

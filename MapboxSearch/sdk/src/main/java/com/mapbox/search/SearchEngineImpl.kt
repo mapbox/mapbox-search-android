@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.search.analytics.InternalAnalyticsService
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.common.assertDebug
 import com.mapbox.search.common.logger.logd
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -28,7 +28,7 @@ import java.util.concurrent.Executors
 internal class SearchEngineImpl(
     override val apiType: ApiType,
     override val settings: SearchEngineSettings,
-    override val analyticsService: InternalAnalyticsService,
+    override val analyticsService: AnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
     private val historyService: HistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
@@ -59,7 +59,6 @@ internal class SearchEngineImpl(
                     searchRequestContext = requestContext,
                     suggestion = null,
                     selectOptions = null,
-                    analyticsService = analyticsService,
                     isOfflineSearch = false,
                 )
             )
@@ -176,7 +175,6 @@ internal class SearchEngineImpl(
                             searchRequestTask = searchRequestTask,
                             resultingFunction = resultingFunction,
                             searchRequestContext = requestContext,
-                            analyticsService = analyticsService,
                         )
                     )
                 }
@@ -262,7 +260,6 @@ internal class SearchEngineImpl(
                         searchRequestContext = requestContext,
                         suggestion = suggestion,
                         selectOptions = options,
-                        analyticsService = analyticsService,
                         isOfflineSearch = false,
                     )
                 )
@@ -299,7 +296,6 @@ internal class SearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContext,
-                    analyticsService = analyticsService,
                     isOffline = false,
                 )
             )
@@ -321,7 +317,6 @@ internal class SearchEngineImpl(
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
                     searchRequestContext = requestContext,
-                    analyticsService = analyticsService,
                     isOffline = false,
                 )
             )

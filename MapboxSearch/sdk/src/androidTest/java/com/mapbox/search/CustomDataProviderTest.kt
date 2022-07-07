@@ -23,7 +23,6 @@ import com.mapbox.search.tests_support.record.TestDataProvider
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getBlocking
 import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TestAnalyticsService
 import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.orientation.ScreenOrientation
@@ -46,7 +45,6 @@ internal class CustomDataProviderTest : BaseTest() {
     private val timeProvider: TimeProvider = TimeProvider { TEST_LOCAL_TIME_MILLIS }
     private val keyboardLocaleProvider: KeyboardLocaleProvider = KeyboardLocaleProvider { TEST_KEYBOARD_LOCALE }
     private val orientationProvider: ScreenOrientationProvider = ScreenOrientationProvider { TEST_ORIENTATION }
-    private val analyticsService: TestAnalyticsService = TestAnalyticsService()
     private val callbacksExecutor: Executor = SearchSdkMainThreadWorker.mainExecutor
 
     @Before
@@ -71,7 +69,6 @@ internal class CustomDataProviderTest : BaseTest() {
         searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
-            analyticsService = analyticsService
         )
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
