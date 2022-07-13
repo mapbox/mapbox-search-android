@@ -18,6 +18,10 @@ import kotlinx.parcelize.Parcelize
  *
  * @property originRewritten denotes whether [SearchOptions.origin] property has been rewritten by the Search SDK.
  * This may happen when passed to the [com.mapbox.search.SearchEngine] [SearchOptions] don't have [SearchOptions.origin] set.
+ *
+ * @property endpoint Search method. One of { "suggest", "category", "reverse" }.
+ *
+ * @property sessionID Session ID that groups a series of requests for billing purposes.
  */
 @Parcelize
 public class RequestOptions internal constructor(
@@ -25,8 +29,8 @@ public class RequestOptions internal constructor(
     public val options: SearchOptions,
     public val proximityRewritten: Boolean,
     public val originRewritten: Boolean,
-    @get:JvmSynthetic internal val endpoint: String,
-    @get:JvmSynthetic internal val sessionID: String,
+    public val endpoint: String,
+    public val sessionID: String,
     @get:JvmSynthetic internal val requestContext: SearchRequestContext,
 ) : Parcelable {
 

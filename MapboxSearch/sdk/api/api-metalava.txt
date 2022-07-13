@@ -587,14 +587,18 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class RequestOptions implements android.os.Parcelable {
+    method public String getEndpoint();
     method public com.mapbox.search.SearchOptions getOptions();
     method public boolean getOriginRewritten();
     method public boolean getProximityRewritten();
     method public String getQuery();
+    method public String getSessionID();
+    property public final String endpoint;
     property public final com.mapbox.search.SearchOptions options;
     property public final boolean originRewritten;
     property public final boolean proximityRewritten;
     property public final String query;
+    property public final String sessionID;
   }
 
   public final class RequestOptionsKt {
