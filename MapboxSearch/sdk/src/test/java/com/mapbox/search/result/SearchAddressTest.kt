@@ -34,13 +34,15 @@ internal class SearchAddressTest {
     }
 
     @TestFactory
-    fun `Check formattedAddress for region address`() = TestCase {
+    fun `Check formattedAddress for country with regions`() = TestCase {
         Given("Full SearchAddresses") {
-            val address = REGION_SEARCH_ADDRESS
-            When("Call default formattedAddress for region $address") {
-                val actualValue = address.formattedAddress()
-                val expectedValue = "$HOUSE_NUMBER $STREET, $PLACE, $REGION"
-                Then("It should be <$expectedValue>", expectedValue, actualValue)
+            listOf("united states of america", "united states", "usa").forEach { country ->
+                val address = FULL_SEARCH_ADDRESS.copy(country = country)
+                When("Call default formattedAddress for country = $country") {
+                    val actualValue = address.formattedAddress()
+                    val expectedValue = "$HOUSE_NUMBER $STREET, $PLACE, $REGION"
+                    Then("It should be <$expectedValue>", expectedValue, actualValue)
+                }
             }
         }
     }
@@ -55,8 +57,8 @@ internal class SearchAddressTest {
                 SearchAddress.FormatStyle.Long to "$HOUSE_NUMBER $STREET, $NEIGHBORHOOD, $LOCALITY, $PLACE, $DISTRICT, $REGION, $COUNTRY",
                 SearchAddress.FormatStyle.Full to "$HOUSE_NUMBER $STREET, $NEIGHBORHOOD, $LOCALITY, $PLACE, $DISTRICT, $REGION, $COUNTRY, $POSTCODE",
 
-                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.HOUSE_NUMBER) to "$HOUSE_NUMBER",
-                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.REGION) to "$REGION",
+                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.HOUSE_NUMBER) to HOUSE_NUMBER,
+                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.REGION) to REGION,
 
                 SearchAddress.FormatStyle.Custom(
                     SearchAddress.FormatComponent.HOUSE_NUMBER,
@@ -102,8 +104,7 @@ internal class SearchAddressTest {
         const val COUNTRY = "country"
 
         val EMPTY_SEARCH_ADDRESS = SearchAddress("", "", "", "", "", "", "", "", "")
-        val NULL_SEARCH_ADDRESS =
-            SearchAddress(null, null, null, null, null, null, null, null, null)
+        val NULL_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
         val FULL_SEARCH_ADDRESS = SearchAddress(
             HOUSE_NUMBER,
             STREET,
@@ -115,9 +116,5 @@ internal class SearchAddressTest {
             REGION,
             COUNTRY
         )
-
-        val REGION_SEARCH_ADDRESS = FULL_SEARCH_ADDRESS.toBuilder()
-            .country(country = "USA")
-            .build()
     }
 }

@@ -191,7 +191,7 @@ public class SearchAddress @JvmOverloads public constructor(
     }
 
     private fun isCountryWithRegions(country: String?): Boolean = country?.let {
-        listOf("united states of america", "usa").contains(country.lowercase(Locale.getDefault()))
+        listOf("united states of america", "united states", "usa").contains(country.lowercase(Locale.getDefault()))
     } ?: false
 
     /**

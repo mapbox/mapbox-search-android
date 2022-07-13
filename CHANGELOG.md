@@ -1,6 +1,12 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.34-SNAPSHOT
+## 1.0.0-beta.33.1
+
+### New features
+- [CORE] Now `RequestOptions` provides new fields `endpoint` and `sessionID`.
+
+### Bug fixes
+- [CORE] Now `SearchAddress.formattedAddress(FormatStyle.Medium)` for address with country `United States` includes region.
 
 ### Mapbox dependencies
 - Search Native SDK `0.57.0`
