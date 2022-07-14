@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.34-SNAPSHOT
+## 1.0.0-beta.34
 
 ### Breaking changes
 - [CORE] Undocumented system property used to enable SBS API Type is deprecated. Use `MapboxSearchSdk.createSearchEngine(ApiType, SearchEngineSettings)`, and `MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(ApiType, SearchEngineSettings)` instead. Note that SBS Api Type is still in beta and not available publicly.
