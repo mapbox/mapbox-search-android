@@ -56,6 +56,8 @@
         <activity android:name=".api.FavoritesDataProviderKotlinExample" />
         <activity android:name=".api.FavoritesDataProviderJavaExample" />
         <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
+        <activity android:name=".api.JapanSearchJavaExampleActivity" />
+        <activity android:name=".api.JapanSearchKotlinExampleActivity" />
 
     </application>
 

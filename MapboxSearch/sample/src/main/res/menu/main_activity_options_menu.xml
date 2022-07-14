@@ -94,6 +94,16 @@
         />
 
     <item
+        android:id="@+id/open_japan_search_java_example"
+        android:title="@string/action_open_japan_search_java_example"
+        />
+
+    <item
+        android:id="@+id/open_japan_search_kt_example"
+        android:title="@string/action_open_japan_search_kt_example"
+        />
+
+    <item
         android:id="@+id/open_history_data_provider_java_example"
         android:title="@string/action_open_history_data_provider_java_example"
         />
