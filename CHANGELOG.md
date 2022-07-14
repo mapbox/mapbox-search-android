@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.34-SNAPSHOT
 
+### Breaking changes
+- [AUTOFILL] `AddressAutofill.suggestions(String, AddressAutofillOptions)` has been replaced with `AddressAutofill.suggestions(Query, AddressAutofillOptions)`. Call `Query.create()` to create an instance of `Query`.
+
 ### Mapbox dependencies
 - Search Native SDK `0.57.0`
 - Common SDK `22.1.0-beta.1`

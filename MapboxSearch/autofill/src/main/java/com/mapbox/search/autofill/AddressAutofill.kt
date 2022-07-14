@@ -29,7 +29,7 @@ public interface AddressAutofill {
      * @return Result of the search request represented by [AddressAutofillResponse].
      */
     public suspend fun suggestions(
-        query: String,
+        query: Query,
         options: AddressAutofillOptions
     ): AddressAutofillResponse
 

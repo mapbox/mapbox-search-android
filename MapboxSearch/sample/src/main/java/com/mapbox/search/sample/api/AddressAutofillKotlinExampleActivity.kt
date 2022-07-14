@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillResponse
+import com.mapbox.search.autofill.Query
 import com.mapbox.search.sample.BuildConfig
 
 class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
@@ -21,8 +22,10 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
         )
 
         lifecycleScope.launchWhenCreated {
+            val query = Query.create("740 15th St NW, Washington") ?: return@launchWhenCreated
+
             val response = addressAutofill.suggestions(
-                query = "740 15th St NW, Washington",
+                query = query,
                 options = AddressAutofillOptions()
             )
 
