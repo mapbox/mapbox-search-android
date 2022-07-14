@@ -42,6 +42,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
+import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
@@ -62,6 +63,8 @@ import com.mapbox.search.sample.api.ForwardGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
 import com.mapbox.search.sample.api.HistoryDataProviderKotlinExample
+import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
+import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
@@ -127,11 +130,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
+            val apiType = if (BuildConfig.ENABLE_SBS) {
+                ApiType.SBS
+            } else {
+                ApiType.GEOCODING
+            }
+
             initialize(
                 SearchResultsView.Configuration(
                     commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
                     searchEngineSettings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
-                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
+                    apiType = apiType,
                 )
             )
             isVisible = false
@@ -318,6 +328,14 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_reverse_geocoding_java_example -> {
                 startActivity(Intent(this, ReverseGeocodingJavaExampleActivity::class.java))
+                true
+            }
+            R.id.open_japan_search_kt_example -> {
+                startActivity(Intent(this, JapanSearchKotlinExampleActivity::class.java))
+                true
+            }
+            R.id.open_japan_search_java_example -> {
+                startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
                 true
             }
             R.id.open_category_search_kt_example -> {

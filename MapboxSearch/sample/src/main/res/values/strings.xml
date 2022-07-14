@@ -14,6 +14,8 @@
     <string name="action_open_offline_search_java_example">Open offline search Java example</string>
     <string name="action_open_offline_reverse_geocoding_kt_example">Open offline reverse geocoding Kotlin example</string>
     <string name="action_open_offline_reverse_geocoding_java_example">Open offline reverse geocoding Java example</string>
+    <string name="action_open_japan_search_kt_example">Open Japan Search Kotlin example</string>
+    <string name="action_open_japan_search_java_example">Open Japan Search Java example</string>
     <string name="action_open_history_data_provider_kt_example">Open History Data Provider Kotlin example</string>
     <string name="action_open_history_data_provider_java_example">Open History Data Provider Java example</string>
     <string name="action_open_favorites_data_provider_kt_example">Open Favorites Data Provider Kotlin example</string>

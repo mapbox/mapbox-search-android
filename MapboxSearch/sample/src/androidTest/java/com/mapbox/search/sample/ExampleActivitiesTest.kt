@@ -17,6 +17,8 @@ import com.mapbox.search.sample.api.ForwardGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
 import com.mapbox.search.sample.api.HistoryDataProviderKotlinExample
+import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
+import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
@@ -77,6 +79,9 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
 
             OfflineReverseGeocodingKotlinExampleActivity::class.java,
             OfflineReverseGeocodingJavaExampleActivity::class.java,
+
+            JapanSearchKotlinExampleActivity::class.java,
+            JapanSearchJavaExampleActivity::class.java,
 
             HistoryDataProviderKotlinExample::class.java,
             HistoryDataProviderJavaExample::class.java,

@@ -1,7 +1,7 @@
 public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun suggestions (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofill$Companion {
@@ -117,5 +117,19 @@ public final class com/mapbox/search/autofill/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class com/mapbox/search/autofill/Query {
+	public static final field Companion Lcom/mapbox/search/autofill/Query$Companion;
+	public static final field MIN_QUERY_LENGTH I
+	public static final fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/Query;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getQuery ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/autofill/Query$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/Query;
 }
 

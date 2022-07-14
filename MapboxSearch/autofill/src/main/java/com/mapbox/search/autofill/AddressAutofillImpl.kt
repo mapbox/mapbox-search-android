@@ -40,9 +40,9 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
         }
     }
 
-    override suspend fun suggestions(query: String, options: AddressAutofillOptions): AddressAutofillResponse {
+    override suspend fun suggestions(query: Query, options: AddressAutofillOptions): AddressAutofillResponse {
         val response = searchEngine.search(
-            query = query,
+            query = query.query,
             options = SearchOptions(
                 countries = options.countries?.map { it.toCoreSdkType() },
                 languages = options.language?.let { listOf(it.toCoreSdkType()) },

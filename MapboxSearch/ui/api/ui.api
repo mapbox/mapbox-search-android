@@ -53,6 +53,9 @@ public final class com/mapbox/search/ui/view/SearchResultsView : androidx/recycl
 
 public final class com/mapbox/search/ui/view/SearchResultsView$Configuration {
 	public fun <init> (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;)V
+	public fun <init> (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;Lcom/mapbox/search/ApiType;)V
+	public synthetic fun <init> (Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/search/OfflineSearchEngineSettings;Lcom/mapbox/search/ApiType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getApiType ()Lcom/mapbox/search/ApiType;
 	public final fun getCommonConfiguration ()Lcom/mapbox/search/ui/view/CommonSearchViewConfiguration;
 	public final fun getOfflineSearchEngineSettings ()Lcom/mapbox/search/OfflineSearchEngineSettings;
 	public final fun getSearchEngineSettings ()Lcom/mapbox/search/SearchEngineSettings;

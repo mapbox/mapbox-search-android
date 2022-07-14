@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
+import com.mapbox.search.ApiType
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngine
@@ -217,7 +218,10 @@ public class SearchResultsView @JvmOverloads constructor(
         super.setLayoutManager(LinearLayoutManager(context))
         super.setAdapter(searchAdapter)
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(configuration.searchEngineSettings)
+        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+            configuration.apiType,
+            configuration.searchEngineSettings
+        )
 
         offlineSearchEngine = MapboxSearchSdk.createOfflineSearchEngine(configuration.offlineSearchEngineSettings)
 
@@ -668,9 +672,9 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     /**
-     * Configuration option used for [SearchResultsView] configeration.
+     * Options used for [SearchResultsView] configuration.
      */
-    public class Configuration(
+    public class Configuration @JvmOverloads public constructor(
         /**
          * Common configuration options used for Search SDK views.
          */
@@ -685,6 +689,15 @@ public class SearchResultsView @JvmOverloads constructor(
          * Settings used for [OfflineSearchEngine] configuration.
          */
         public val offlineSearchEngineSettings: OfflineSearchEngineSettings,
+
+        /**
+         * Experimental API, can be changed or removed in the next SDK releases.
+         *
+         * The type of the API used by the Search Engines.
+         * Note that [ApiType.GEOCODING] (default) is the only available publicly.
+         * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+         */
+        public val apiType: ApiType = ApiType.GEOCODING,
     )
 
     private companion object {

@@ -1,6 +1,13 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.34-SNAPSHOT
+## 1.0.0-beta.34
+
+### Breaking changes
+- [CORE] Undocumented system property used to enable SBS API Type is deprecated. Use `MapboxSearchSdk.createSearchEngine(ApiType, SearchEngineSettings)`, and `MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(ApiType, SearchEngineSettings)` instead. Note that SBS Api Type is still in beta and not available publicly.
+- [AUTOFILL] `AddressAutofill.suggestions(String, AddressAutofillOptions)` has been replaced with `AddressAutofill.suggestions(Query, AddressAutofillOptions)`. Call `Query.create()` to create an instance of `Query`.
+
+### New features
+- [CORE] `MapboxSearchSdk.createSearchEngine(ApiType, SearchEngineSettings)`, and `MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(ApiType, SearchEngineSettings)` functions are available that allow to choose API Type. Note that `ApiType.GEOCODING` is the only API Type available publicly.
 
 ### Mapbox dependencies
 - Search Native SDK `0.57.0`

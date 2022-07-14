@@ -423,11 +423,14 @@ package com.mapbox.search {
   public final class MapboxSearchSdk {
     method public static com.mapbox.search.OfflineSearchEngine createOfflineSearchEngine(com.mapbox.search.OfflineSearchEngineSettings settings);
     method public static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
+    method public static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
+    method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
+    method public static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
     method public static com.mapbox.search.ServiceProvider getServiceProvider();
-    method public static com.mapbox.search.SearchEngine internalCreateAutofillSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     field public static final com.mapbox.search.MapboxSearchSdk INSTANCE;
   }
 

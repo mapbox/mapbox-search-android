@@ -13,6 +13,7 @@ import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.concurrent.CommonMainThreadChecker
+import com.mapbox.search.common.logger.logw
 import com.mapbox.search.core.CoreEngineOptions
 import com.mapbox.search.core.CoreSearchEngine
 import com.mapbox.search.core.CoreSearchEngineInterface
@@ -203,7 +204,7 @@ public object MapboxSearchSdk {
     }
 
     /**
-     * Creates a new instance of the [SearchEngine].
+     * Creates a new instance of the [SearchEngine] with a default [ApiType].
      * A new instance doesn't have any [IndexableDataProvider] registered by default.
      *
      * @param settings [SearchEngine] settings.
@@ -217,17 +218,27 @@ public object MapboxSearchSdk {
     }
 
     /**
-     * Internal function that must not be used by external customers. WIll be removed in the next Search SDK updates.
-     * TODO https://github.com/mapbox/mapbox-search-android-internal/issues/799
+     * Experimental API, can be changed or removed in the next SDK releases.
+     *
+     * Creates a new instance of the [SearchEngine].
+     * A new instance doesn't have any [IndexableDataProvider] registered by default.
+     *
+     * @param settings [SearchEngine] settings.
+     * @param apiType The type of the API used by the Search Engines.
+     * Note that [ApiType.GEOCODING] is the only available publicly.
+     * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+     *
+     * @return a new instance instance of [SearchEngine].
+     * @see createSearchEngineWithBuiltInDataProviders
      */
     @JvmStatic
-    public fun internalCreateAutofillSearchEngine(settings: SearchEngineSettings): SearchEngine {
-        return createSearchEngine(ApiType.AUTOFILL, settings)
+    public fun createSearchEngine(apiType: ApiType, settings: SearchEngineSettings): SearchEngine {
+        return internalCreateSearchEngine(apiType, settings)
     }
 
     /**
-     * Creates a new instance of the [SearchEngine] with
-     * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider]
+     * Creates a new instance of the [SearchEngine] with a default [ApiType] and default data providers (
+     * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
      * registered by default.
      *
      * @param settings [SearchEngine] settings.
@@ -244,24 +255,41 @@ public object MapboxSearchSdk {
         executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
         callback: CompletionCallback<Unit> = StubCompletionCallback()
     ): SearchEngine {
-        return createSearchEngineWithBuiltInDataProviders(getDefaultApiType(), settings, null, executor, callback)
+        return createSearchEngineWithBuiltInDataProviders(getDefaultApiType(), settings, executor, callback)
     }
 
-    @JvmSynthetic
-    internal fun createSearchEngineWithBuiltInDataProviders(
+    /**
+     * Experimental API, can be changed or removed in the next SDK releases.
+     *
+     * Creates a new instance of the [SearchEngine] with default data providers (
+     * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
+     * registered by default.
+     *
+     * @param settings [SearchEngine] settings.
+     * @param apiType The type of the API used by the Search Engines. By default [ApiType.GEOCODING] will be used.
+     * Note that [ApiType.GEOCODING] is the only available publicly.
+     * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Callback to handle result.
+     *
+     * @return a new instance of [SearchEngine].
+     * @see createSearchEngine
+     */
+    @JvmOverloads
+    @JvmStatic
+    public fun createSearchEngineWithBuiltInDataProviders(
         apiType: ApiType,
         settings: SearchEngineSettings,
-        analyticsService: AnalyticsService? = null,
         executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
         callback: CompletionCallback<Unit> = StubCompletionCallback()
     ): SearchEngine {
         val coreEngine = createCoreEngineByApiType(apiType, settings)
 
-        val searchEngine = createSearchEngine(
+        val searchEngine = internalCreateSearchEngine(
             apiType,
             settings,
             coreEngine,
-            analyticsService ?: createAnalyticsService(settings, coreEngine)
+            createAnalyticsService(settings, coreEngine)
         )
 
         val compoundCallback = CompoundCompletionCallback(2, executor, callback)
@@ -276,7 +304,7 @@ public object MapboxSearchSdk {
     }
 
     @JvmSynthetic
-    internal fun createSearchEngine(
+    internal fun internalCreateSearchEngine(
         apiType: ApiType,
         settings: SearchEngineSettings,
         coreEngine: CoreSearchEngineInterface = createCoreEngineByApiType(apiType, settings),
@@ -366,6 +394,7 @@ public object MapboxSearchSdk {
 
     private fun getDefaultApiType(): ApiType {
         return if (System.getProperty("com.mapbox.mapboxsearch.enableSBS")?.toBoolean() == true) {
+            logw("\"com.mapbox.mapboxsearch.enableSBS\" flag is DEPRECATED. Specify ApiType explicitly")
             ApiType.SBS
         } else {
             ApiType.GEOCODING

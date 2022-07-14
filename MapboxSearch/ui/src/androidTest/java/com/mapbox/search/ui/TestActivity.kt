@@ -26,6 +26,7 @@ import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
+import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
@@ -67,8 +68,6 @@ public class TestActivity : AppCompatActivity() {
 
         locationEngine = FixedPointLocationEngine(Point.fromLngLat(-122.084000, 37.421998))
 
-        System.setProperty("com.mapbox.mapboxsearch.enableSBS", true.toString())
-
         // Ensure distance formatting uses miles (not meters).
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val localeList = LocaleList(Locale.US, Locale.ENGLISH)
@@ -89,7 +88,8 @@ public class TestActivity : AppCompatActivity() {
                     offlineSearchEngineSettings = OfflineSearchEngineSettings(
                         accessToken = BuildConfig.MAPBOX_API_TOKEN,
                         locationEngine = locationEngine,
-                    )
+                    ),
+                    apiType = ApiType.SBS,
                 )
             )
             isVisible = false
