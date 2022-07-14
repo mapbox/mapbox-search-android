@@ -73,10 +73,13 @@ package com.mapbox.search.ui.view {
   }
 
   public static final class SearchResultsView.Configuration {
+    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings, com.mapbox.search.ApiType apiType = ApiType.GEOCODING);
     ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
+    method public com.mapbox.search.ApiType getApiType();
     method public com.mapbox.search.ui.view.CommonSearchViewConfiguration getCommonConfiguration();
     method public com.mapbox.search.OfflineSearchEngineSettings getOfflineSearchEngineSettings();
     method public com.mapbox.search.SearchEngineSettings getSearchEngineSettings();
+    property public final com.mapbox.search.ApiType apiType;
     property public final com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration;
     property public final com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings;
     property public final com.mapbox.search.SearchEngineSettings searchEngineSettings;

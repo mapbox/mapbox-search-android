@@ -42,6 +42,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
+import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
@@ -127,11 +128,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
+            val apiType = if (BuildConfig.ENABLE_SBS) {
+                ApiType.SBS
+            } else {
+                ApiType.GEOCODING
+            }
+
             initialize(
                 SearchResultsView.Configuration(
                     commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
                     searchEngineSettings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
-                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
+                    apiType = apiType,
                 )
             )
             isVisible = false

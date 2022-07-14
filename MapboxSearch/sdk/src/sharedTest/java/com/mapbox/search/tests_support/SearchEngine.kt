@@ -6,7 +6,6 @@ import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SelectOptions
-import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchSuggestion
@@ -54,11 +53,10 @@ internal fun <R : IndexableRecord> SearchEngine.unregisterDataProviderBlocking(
 internal fun MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
     apiType: ApiType,
     settings: SearchEngineSettings,
-    analyticsService: AnalyticsService? = null,
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
 ): SearchEngine {
     val callback = BlockingCompletionCallback<Unit>()
-    val searchEngine = createSearchEngineWithBuiltInDataProviders(apiType, settings, analyticsService, executor, callback)
+    val searchEngine = createSearchEngineWithBuiltInDataProviders(apiType, settings, executor, callback)
     val result = callback.getResultBlocking()
     require(result.isResult)
     return searchEngine

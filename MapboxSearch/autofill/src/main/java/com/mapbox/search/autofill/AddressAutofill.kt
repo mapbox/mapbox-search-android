@@ -1,6 +1,7 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchEngineSettings
 
@@ -48,7 +49,7 @@ public interface AddressAutofill {
         public fun create(accessToken: String): AddressAutofill {
             val settings = SearchEngineSettings(accessToken)
             return AddressAutofillImpl(
-                MapboxSearchSdk.internalCreateAutofillSearchEngine(settings)
+                MapboxSearchSdk.createSearchEngine(ApiType.AUTOFILL, settings)
             )
         }
     }

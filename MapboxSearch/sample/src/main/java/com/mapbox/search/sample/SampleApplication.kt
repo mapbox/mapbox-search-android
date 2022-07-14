@@ -17,7 +17,6 @@ open class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        System.setProperty("com.mapbox.mapboxsearch.enableSBS", BuildConfig.ENABLE_SBS.toString())
         enableDebugHttpLogs()
         enableStrictMode()
         LeakCanaryConfiguration.apply()
