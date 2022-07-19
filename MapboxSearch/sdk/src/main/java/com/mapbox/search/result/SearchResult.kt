@@ -48,7 +48,8 @@ public sealed interface SearchResult : Parcelable {
     public val routablePoints: List<RoutablePoint>?
 
     /**
-     * Result categories.
+     * Poi categories. Always empty for non-POI search results.
+     * @see types
      */
     public val categories: List<String>
 
