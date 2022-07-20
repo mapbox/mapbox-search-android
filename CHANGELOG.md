@@ -1,5 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.35-SNAPSHOT
+
+### Mapbox dependencies
+- Search Native SDK `0.57.0`
+- Common SDK `22.1.0-beta.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-beta.34
 
 ### Breaking changes
@@ -8,6 +17,7 @@
 
 ### New features
 - [CORE] `MapboxSearchSdk.createSearchEngine(ApiType, SearchEngineSettings)`, and `MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(ApiType, SearchEngineSettings)` functions are available that allow to choose API Type. Note that `ApiType.GEOCODING` is the only API Type available publicly.
+- [UI] `SearchResultsView.Configuration` accepts a new optional argument `apiType` used for the `SearchEngine` initialization.
 
 ### Mapbox dependencies
 - Search Native SDK `0.57.0`

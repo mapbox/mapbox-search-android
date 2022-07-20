@@ -46,7 +46,8 @@ public sealed interface SearchSuggestion : Parcelable {
     public val distanceMeters: Double?
 
     /**
-     * Search suggestion categories.
+     * Poi categories. Always empty for non-POI suggestions.
+     * @see type
      */
     public val categories: List<String>
 
