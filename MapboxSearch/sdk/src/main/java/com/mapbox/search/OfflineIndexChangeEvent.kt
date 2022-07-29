@@ -1,7 +1,7 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreOfflineIndexChangeEvent
-import com.mapbox.search.core.CoreOfflineIndexChangeEventType
+import com.mapbox.search.base.core.CoreOfflineIndexChangeEvent
+import com.mapbox.search.base.core.CoreOfflineIndexChangeEventType
 
 /**
  * Type that holds information about changes in the offline search index.

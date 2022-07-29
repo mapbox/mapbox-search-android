@@ -1,7 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.search.Reserved.Flags.SBS
-import com.mapbox.search.core.CoreQueryType
+import com.mapbox.search.base.core.CoreQueryType
 
 /**
  * Values to filter results to include only a subset (one or more) of the available feature types.
@@ -70,6 +70,7 @@ public enum class QueryType {
     CATEGORY,
 }
 
+@JvmSynthetic
 internal fun QueryType.mapToCore(): CoreQueryType {
     return when (this) {
         QueryType.COUNTRY -> CoreQueryType.COUNTRY
@@ -86,6 +87,7 @@ internal fun QueryType.mapToCore(): CoreQueryType {
     }
 }
 
+@JvmSynthetic
 internal fun CoreQueryType.mapToPlatform(): QueryType {
     return when (this) {
         CoreQueryType.COUNTRY -> QueryType.COUNTRY
@@ -102,10 +104,12 @@ internal fun CoreQueryType.mapToPlatform(): QueryType {
     }
 }
 
+@JvmSynthetic
 internal fun List<QueryType>?.mapToCoreTypes(): List<CoreQueryType>? {
     return this?.map { it.mapToCore() }
 }
 
+@JvmSynthetic
 internal fun List<CoreQueryType>?.mapToPlatformTypes(): List<QueryType>? {
     return this?.map { it.mapToPlatform() }
 }

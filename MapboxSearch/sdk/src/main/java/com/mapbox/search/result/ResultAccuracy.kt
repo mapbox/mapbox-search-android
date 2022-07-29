@@ -1,8 +1,8 @@
 package com.mapbox.search.result
 
 import android.os.Parcelable
-import com.mapbox.search.common.failDebug
-import com.mapbox.search.core.CoreResultAccuracy
+import com.mapbox.search.base.core.CoreResultAccuracy
+import com.mapbox.search.base.failDebug
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -56,6 +56,7 @@ public abstract class ResultAccuracy : Parcelable {
     public object Street : ResultAccuracy()
 }
 
+@JvmSynthetic
 internal fun ResultAccuracy.mapToCore(): CoreResultAccuracy? {
     return when (this) {
         is ResultAccuracy.Point -> CoreResultAccuracy.POINT
@@ -74,6 +75,7 @@ internal fun ResultAccuracy.mapToCore(): CoreResultAccuracy? {
     }
 }
 
+@JvmSynthetic
 internal fun CoreResultAccuracy.mapToPlatform(): ResultAccuracy {
     return when (this) {
         CoreResultAccuracy.POINT -> ResultAccuracy.Point

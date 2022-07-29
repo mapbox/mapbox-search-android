@@ -1,19 +1,22 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
-import com.mapbox.search.core.CoreSearchCallback
-import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreSearchCallback
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.common.SearchCancellationException
+import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.concurrent.MainThreadWorker
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.record.DataProviderResolver
-import com.mapbox.search.record.HistoryService
-import com.mapbox.search.result.SearchRequestContext
-import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.TestThreadExecutorService
@@ -24,10 +27,7 @@ import com.mapbox.search.tests_support.createTestCoreSearchResponseHttpError
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestCoreSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.utils.concurrent.MainThreadWorker
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.test.dsl.TestCase
-import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -48,8 +48,6 @@ import java.util.concurrent.ExecutorService
 internal class OfflineSearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
-    private lateinit var dataProviderResolver: DataProviderResolver
-    private lateinit var historyService: HistoryService
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executorService: ExecutorService
     private lateinit var mainThreadWorker: MainThreadWorker
@@ -62,7 +60,6 @@ internal class OfflineSearchEngineTest {
 
     @BeforeEach
     fun setUp() {
-        historyService = mockk(relaxed = true)
         executorService = spyk(TestThreadExecutorService())
         mainThreadWorker = spyk(TestMainThreadWorker())
         executor = spyk(TestExecutor())
@@ -75,13 +72,10 @@ internal class OfflineSearchEngineTest {
 
         coreEngine = mockk(relaxed = true)
 
-        dataProviderResolver = mockk()
-        every { dataProviderResolver.getRecordsLayer(any()) } returns null
-
-        searchResultFactory = spyk(SearchResultFactory(dataProviderResolver))
+        searchResultFactory = spyk(SearchResultFactory(mockk()))
 
         requestContextProvider = mockk()
-        every { requestContextProvider.provide(ApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
+        every { requestContextProvider.provide(CoreApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
 
         createSearchEngine()
         mockDefaultSearchEngineFunctions()
@@ -121,17 +115,6 @@ internal class OfflineSearchEngineTest {
         every { coreEngine.searchOffline(any(), any(), any(), capture(searchOfflineSlotCallback)) } answers {
             searchOfflineSlotCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
         }
-
-        mockHistoryService()
-    }
-
-    private fun mockHistoryService(): CapturingSlot<CompletionCallback<Boolean>> {
-        val historyServiceCompletionCallbackSlot = slot<CompletionCallback<Boolean>>()
-        every { historyService.addToHistoryIfNeeded(any(), any(), capture(historyServiceCompletionCallbackSlot)) } answers {
-            historyServiceCompletionCallbackSlot.captured.onComplete(true)
-            CompletedAsyncOperationTask
-        }
-        return historyServiceCompletionCallbackSlot
     }
 
     @TestFactory
@@ -146,13 +129,13 @@ internal class OfflineSearchEngineTest {
 
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.reverseGeocoding(
+                val task = searchEngine.reverseGeocoding(
                     options = OfflineReverseGeoOptions(center = TEST_POINT),
                     executor = executor,
                     callback = callback,
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to a callback", true, searchRequestTask.callbackDelegate == null)
+                Then("Task is executed", true, task.isDone)
 
                 VerifyOnce("Callbacks called inside executor") {
                     executor.execute(any())
@@ -167,7 +150,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToBase(),
                             isReproducible = false,
                         )
                     )
@@ -214,15 +197,15 @@ internal class OfflineSearchEngineTest {
 
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.searchAddressesNearby(
+                val task = searchEngine.searchAddressesNearby(
                     street = testStreet,
                     proximity = TEST_POINT,
                     radiusMeters = testRadius,
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to a callback", true, searchRequestTask.callbackDelegate == null)
+                Then("Task is executed", true, task.isDone)
 
                 VerifyOnce("Callbacks called inside executor") {
                     executor.execute(any())
@@ -237,7 +220,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToBase(),
                             isReproducible = false,
                         )
                     )
@@ -271,15 +254,15 @@ internal class OfflineSearchEngineTest {
 
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.searchAddressesNearby(
+                val task = searchEngine.searchAddressesNearby(
                     street = testStreet,
                     proximity = TEST_POINT,
                     radiusMeters = testRadius,
                     executor = executor,
                     callback = callback,
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to a callback", true, searchRequestTask.callbackDelegate == null)
+                Then("Task is executed", true, task.isDone)
 
                 VerifyOnce("Callbacks called inside executor") {
                     executor.execute(any())
@@ -311,15 +294,15 @@ internal class OfflineSearchEngineTest {
                 val errorSlot = slot<Exception>()
                 every { callback.onError(capture(errorSlot)) } returns Unit
 
-                val searchRequestTask = searchEngine.searchAddressesNearby(
+                val task = searchEngine.searchAddressesNearby(
                     street = testStreet,
                     proximity = TEST_POINT,
                     radiusMeters = testRadius,
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to a callback", true, searchRequestTask.callbackDelegate == null)
+                Then("Task is executed", true, task.isDone)
 
                 VerifyOnce("Callbacks called inside executor") {
                     executor.execute(any())
@@ -378,14 +361,14 @@ internal class OfflineSearchEngineTest {
             When("Initial search called") {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.search(
+                val task = searchEngine.search(
                     query = TEST_QUERY,
                     options = OfflineSearchOptions(),
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
+                Then("Task is executed", true, task.isDone)
 
                 VerifyOnce("Callbacks called inside executor") {
                     executor.execute(any())
@@ -405,7 +388,7 @@ internal class OfflineSearchEngineTest {
                         listOf(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             requestOptions = TEST_REQUEST_OPTIONS,
-                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            coreSearchResponse = TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE.mapToBase(),
                             isReproducible = false,
                         )
                     )
@@ -452,15 +435,9 @@ internal class OfflineSearchEngineTest {
             When("Search request cancelled by the Search SDK") {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val task = (searchEngine.search(TEST_QUERY, OfflineSearchOptions(), callback) as? SearchRequestTaskImpl<*>)
+                val task = searchEngine.search(TEST_QUERY, OfflineSearchOptions(), callback)
 
-                Then("Task is not executed", false, task?.isDone)
-                Then("Task is cancelled", true, task?.isCancelled)
-                Then(
-                    "Task released reference to original callback",
-                    true,
-                    task?.callbackDelegate == null
-                )
+                Then("Task is cancelled", true, task.isCancelled)
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
@@ -474,7 +451,7 @@ internal class OfflineSearchEngineTest {
         const val TEST_QUERY = "Minsk"
 
         const val TEST_RESPONSE_UUID = "test response uuid"
-        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(ApiType.SBS, responseUuid = TEST_RESPONSE_UUID)
+        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SBS, responseUuid = TEST_RESPONSE_UUID)
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
@@ -500,7 +477,7 @@ internal class OfflineSearchEngineTest {
 
         val TEST_SEARCH_RESULT = ServerSearchResultImpl(
             types = listOf(SearchResultType.ADDRESS),
-            originalSearchResult = TEST_RETRIEVED_CORE_SEARCH_RESULT.mapToPlatform(),
+            rawSearchResult = TEST_RETRIEVED_CORE_SEARCH_RESULT.mapToBase(),
             requestOptions = TEST_REQUEST_OPTIONS
         )
 

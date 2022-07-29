@@ -2,20 +2,19 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -277,14 +276,5 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
         const val TEST_QUERY = "Starbucks"
         const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
-        val TEST_ORIGINAL_SEARCH_RESULT = createTestOriginalSearchResult(
-            action = SearchResultSuggestAction(
-                endpoint = "test-endpoint-1",
-                path = "test-path-1",
-                query = "test-query-1",
-                body = null,
-                multiRetrievable = true
-            )
-        )
     }
 }

@@ -16,10 +16,10 @@ import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.catchThrowable
@@ -103,7 +103,7 @@ internal class AnalyticsServiceImplTest {
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    originalSearchResult = searchSuggestion.originalSearchResult,
+                    baseRawSearchResult = searchSuggestion.rawSearchResult,
                     requestOptions = searchSuggestion.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -140,7 +140,7 @@ internal class AnalyticsServiceImplTest {
 
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    originalSearchResult = searchSuggestion.originalSearchResult,
+                    baseRawSearchResult = searchSuggestion.rawSearchResult,
                     requestOptions = searchSuggestion.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -178,7 +178,7 @@ internal class AnalyticsServiceImplTest {
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    originalSearchResult = searchResult.originalSearchResult,
+                    baseRawSearchResult = searchResult.rawSearchResult,
                     requestOptions = searchResult.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -214,7 +214,7 @@ internal class AnalyticsServiceImplTest {
 
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    originalSearchResult = searchResult.originalSearchResult,
+                    baseRawSearchResult = searchResult.rawSearchResult,
                     requestOptions = searchResult.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -349,7 +349,7 @@ internal class AnalyticsServiceImplTest {
 
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    originalSearchResult = any(),
+                    baseRawSearchResult = any(),
                     requestOptions = any(),
                     searchResponse = any(),
                     currentLocation = null,
@@ -410,7 +410,7 @@ internal class AnalyticsServiceImplTest {
         val TEST_FEEDBACK_EVENT = FeedbackEvent("Missing routable point", "Fix, please!")
         val TEST_RESPONSE_INFO = ResponseInfo(
             requestOptions = createTestRequestOptions(),
-            coreSearchResponse = createTestCoreSearchResponseSuccess().mapToPlatform(),
+            coreSearchResponse = createTestCoreSearchResponseSuccess().mapToBase(),
             isReproducible = true,
         )
         val TEST_MISSING_RESULT_FEEDBACK_EVENT = MissingResultFeedbackEvent(

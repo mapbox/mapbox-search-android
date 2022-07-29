@@ -2,6 +2,7 @@ package com.mapbox.search.utils.extension
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.TestFactory

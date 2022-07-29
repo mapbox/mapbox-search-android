@@ -59,6 +59,10 @@ try:
         license_url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
         licenseFile.write("URL: [%s](%s)  \n" % (project, url) + "License: [%s](%s)" % (license, license_url))
 
+        licenseFile.write("\n\n#### Search Base module\n")
+        generateLicense(licenseFile, "base")
+        licenseFile.write("\n\n#### Search SDK-Common module\n")
+        generateLicense(licenseFile, "sdk-common")
         licenseFile.write("\n\n#### Search Core module\n")
         generateLicense(licenseFile, "sdk")
         licenseFile.write("\n\n#### Search UI module\n")

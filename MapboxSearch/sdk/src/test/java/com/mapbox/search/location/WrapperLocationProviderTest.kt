@@ -3,8 +3,8 @@ package com.mapbox.search.location
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ViewportProvider
-import com.mapbox.search.core.CoreLocationProvider
-import com.mapbox.search.utils.extension.mapToPlatform
+import com.mapbox.search.base.core.CoreLocationProvider
+import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

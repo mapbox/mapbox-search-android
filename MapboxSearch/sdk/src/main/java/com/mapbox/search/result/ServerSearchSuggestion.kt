@@ -1,32 +1,34 @@
 package com.mapbox.search.result
 
 import com.mapbox.search.RequestOptions
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.base.result.isValidMultiType
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class ServerSearchSuggestion(
-    override val originalSearchResult: OriginalSearchResult,
-    override val requestOptions: RequestOptions,
-    private val isFromOffline: Boolean = false
-) : BaseSearchSuggestion(originalSearchResult) {
+    override val rawSearchResult: BaseRawSearchResult,
+    override val requestOptions: RequestOptions
+) : AbstractSearchSuggestion(rawSearchResult) {
 
     init {
-        check(isFromOffline || originalSearchResult.action != null)
-        check(originalSearchResult.type != OriginalResultType.CATEGORY || originalSearchResult.categoryCanonicalName != null)
+        check(rawSearchResult.action != null)
+        check(rawSearchResult.type != BaseRawResultType.CATEGORY || rawSearchResult.categoryCanonicalName != null)
     }
 
     @IgnoredOnParcel
     override val type: SearchSuggestionType = when {
-        originalSearchResult.types.isValidMultiType() && originalSearchResult.types.all { it.isSearchResultType } -> {
-            val searchResultTypes = originalSearchResult.types.map { it.tryMapToSearchResultType()!! }
+        rawSearchResult.types.isValidMultiType() && rawSearchResult.types.all { it.isSearchResultType } -> {
+            val searchResultTypes = rawSearchResult.types.mapNotNull { it.tryMapToSearchResultType()?.mapToPlatform() }
             SearchSuggestionType.SearchResultSuggestion(searchResultTypes)
         }
-        originalSearchResult.type == OriginalResultType.CATEGORY -> {
-            SearchSuggestionType.Category(requireNotNull(originalSearchResult.categoryCanonicalName))
+        rawSearchResult.type == BaseRawResultType.CATEGORY -> {
+            SearchSuggestionType.Category(requireNotNull(rawSearchResult.categoryCanonicalName))
         }
-        originalSearchResult.type == OriginalResultType.QUERY -> SearchSuggestionType.Query
-        else -> error("Illegal original search result type: ${originalSearchResult.type}")
+        rawSearchResult.type == BaseRawResultType.QUERY -> SearchSuggestionType.Query
+        else -> error("Illegal raw search result type: ${rawSearchResult.type}")
     }
 
     override fun toString(): String {

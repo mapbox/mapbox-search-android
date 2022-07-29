@@ -1,6 +1,6 @@
 package com.mapbox.search.metadata
 
-import com.mapbox.search.core.CoreOpenPeriod
+import com.mapbox.search.base.core.CoreOpenPeriod
 
 /**
  * Time interval, when POI is available.

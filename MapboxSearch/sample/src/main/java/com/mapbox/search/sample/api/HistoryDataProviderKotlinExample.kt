@@ -3,16 +3,16 @@ package com.mapbox.search.sample.api
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk.serviceProvider
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.HistoryRecord
 
 class HistoryDataProviderKotlinExample : AppCompatActivity() {
 
     private val historyDataProvider = serviceProvider.historyDataProvider()
 
-    private lateinit var task: AsyncOperationTask
+    private lateinit var task: com.mapbox.search.common.AsyncOperationTask
 
     private val callback: CompletionCallback<List<HistoryRecord>> = object : CompletionCallback<List<HistoryRecord>> {
         override fun onComplete(result: List<HistoryRecord>) {

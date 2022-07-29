@@ -33,6 +33,9 @@ git checkout "$BRANCH_NAME"
 #
 # Copy API reference
 #
+mkdir -p "${TMPDIR}/sdk-common"
+cp -r "${INITIAL_PATH}/MapboxSearch/sdk-common/build/dokka" "${TMPDIR}/sdk-common/${VERSION}"
+
 mkdir -p "${TMPDIR}/core"
 cp -r "${INITIAL_PATH}/MapboxSearch/sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
 

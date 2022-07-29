@@ -1,7 +1,7 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.common.printableName
+import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.metadata.OpenHours
 
 internal enum class OpenModeDAO {

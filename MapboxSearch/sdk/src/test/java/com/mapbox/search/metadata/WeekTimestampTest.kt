@@ -1,7 +1,9 @@
 package com.mapbox.search.metadata
 
 import com.mapbox.search.BuildConfig
-import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
@@ -49,12 +51,14 @@ internal class WeekTimestampTest {
         @BeforeAll
         @JvmStatic
         fun setUpAll() {
+            resetLogImpl()
             mockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
 
         @AfterAll
         @JvmStatic
         fun tearDownAll() {
+            reinitializeLogImpl()
             unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
     }

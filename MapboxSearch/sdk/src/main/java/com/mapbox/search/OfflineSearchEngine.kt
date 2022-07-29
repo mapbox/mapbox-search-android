@@ -3,7 +3,7 @@ package com.mapbox.search
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
 /**
@@ -126,7 +126,7 @@ public interface OfflineSearchEngine {
     /**
      * Performs forward geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param query Search query.
      * @param options Search options.
@@ -146,7 +146,7 @@ public interface OfflineSearchEngine {
     /**
      * Performs forward geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param query Search query.
      * @param options Search options.
@@ -169,7 +169,7 @@ public interface OfflineSearchEngine {
     /**
      * Performs reverse geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param options Reverse geocoding options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
@@ -185,7 +185,7 @@ public interface OfflineSearchEngine {
     /**
      * Performs reverse geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param options Reverse geocoding options.
      * @param callback Search result callback, delivers results on the main thread.
@@ -203,7 +203,7 @@ public interface OfflineSearchEngine {
     /**
      * Searches for addresses nearby (around [proximity] point), matched with specified [street] name.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param street Street name to match.
      * @param proximity Coordinate to search in its vicinity.
@@ -223,7 +223,7 @@ public interface OfflineSearchEngine {
     /**
      * Searches for addresses nearby (around [proximity] point), matched with specified [street] name.
      * Each new search request cancels the previous one if it is still in progress.
-     * In this case [SearchCallback.onError] will be called with [SearchCancellationException].
+     * In this case [SearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
      *
      * @param street Street name to match.
      * @param proximity Coordinate to search in its vicinity.

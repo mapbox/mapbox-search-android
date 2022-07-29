@@ -4,7 +4,13 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
+import com.mapbox.search.base.result.BaseSearchResult
+import com.mapbox.search.base.result.BaseServerSearchResultImpl
+import com.mapbox.search.mapToBase
+import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.record.mapToBase
 
 /**
  * Resolved search object with populated fields.
@@ -125,4 +131,47 @@ public sealed interface IndexableRecordSearchResult : SearchResult {
      * [IndexableRecord] on which search result based.
      */
     public val record: IndexableRecord
+}
+
+@JvmSynthetic
+internal fun BaseSearchResult.mapToPlatform(): SearchResult {
+    return when (val resultType = baseType) {
+        is BaseSearchResult.Type.ServerResult -> {
+            ServerSearchResultImpl(
+                types = types.map { it.mapToPlatform() },
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToPlatform(),
+            )
+        }
+        is BaseSearchResult.Type.IndexableRecordSearchResult -> {
+            check(resultType.record.sdkResolvedRecord is IndexableRecord)
+
+            IndexableRecordSearchResultImpl(
+                record = resultType.record.sdkResolvedRecord as IndexableRecord,
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToPlatform(),
+            )
+        }
+    }
+}
+
+@JvmSynthetic
+internal fun SearchResult.mapToBase(): BaseSearchResult {
+    return when (this) {
+        is ServerSearchResultImpl -> {
+            BaseServerSearchResultImpl(
+                types = types.map { it.mapToBase() },
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToBase()
+            )
+        }
+        is IndexableRecordSearchResultImpl -> {
+            BaseIndexableRecordSearchResultImpl(
+                record = record.mapToBase(),
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToBase(),
+            )
+        }
+        else -> error("Unknown search result type: $this")
+    }
 }

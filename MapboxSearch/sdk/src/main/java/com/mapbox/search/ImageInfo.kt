@@ -2,7 +2,7 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import androidx.annotation.Px
-import com.mapbox.search.core.CoreImageInfo
+import com.mapbox.search.base.core.CoreImageInfo
 import kotlinx.parcelize.Parcelize
 
 /**

@@ -2,8 +2,8 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.tests_support.createTestCoreSearchOptions
-import com.mapbox.search.utils.extension.mapToCore
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before

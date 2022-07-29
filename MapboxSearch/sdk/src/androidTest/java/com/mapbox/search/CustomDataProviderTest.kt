@@ -1,32 +1,33 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.utils.KeyboardLocaleProvider
+import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.CustomRecord
 import com.mapbox.search.tests_support.record.StubRecordsStorage
 import com.mapbox.search.tests_support.record.TestDataProvider
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getBlocking
-import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.utils.orientation.ScreenOrientation
-import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -107,10 +108,10 @@ internal class CustomDataProviderTest : BaseTest() {
 
         val expectedSuggestion = IndexableRecordSearchSuggestion(
             record = secondCustomRecord,
-            originalSearchResult = createTestOriginalSearchResult(
+            rawSearchResult = createTestBaseRawSearchResult(
                 id = secondCustomRecord.id,
                 layerId = customDataProvider.dataProviderName,
-                types = listOf(OriginalResultType.USER_RECORD),
+                types = listOf(BaseRawResultType.USER_RECORD),
                 names = listOf(secondCustomRecord.name),
                 center = secondCustomRecord.coordinate,
                 addresses = listOf(SearchAddress()),
@@ -289,7 +290,7 @@ internal class CustomDataProviderTest : BaseTest() {
             originRewritten = false,
             sessionID = TEST_UUID,
             requestContext = SearchRequestContext(
-                apiType = ApiType.SBS,
+                apiType = CoreApiType.SBS,
                 keyboardLocale = TEST_KEYBOARD_LOCALE,
                 screenOrientation = TEST_ORIENTATION,
                 responseUuid = ""

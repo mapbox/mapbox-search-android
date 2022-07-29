@@ -1,6 +1,8 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.DataProviderEngineRegistrationService
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableDataProvider
@@ -188,7 +190,7 @@ internal class IndexableDataProvidersRegistryTest {
                 )
 
                 Then("Registry returns completed task") {
-                    assertSame(CompletedAsyncOperationTask, task)
+                    assertSame(AsyncOperationTaskImpl.COMPLETED, task)
                 }
             }
         }
@@ -229,7 +231,7 @@ internal class IndexableDataProvidersRegistryTest {
                 }
 
                 Then("Registry returns completed task") {
-                    assertSame(CompletedAsyncOperationTask, task)
+                    assertSame(AsyncOperationTaskImpl.COMPLETED, task)
                 }
             }
         }
@@ -385,7 +387,7 @@ internal class IndexableDataProvidersRegistryTest {
                 }
 
                 Then("Registry returns completed task") {
-                    assertSame(CompletedAsyncOperationTask, task)
+                    assertSame(AsyncOperationTaskImpl.COMPLETED, task)
                 }
             }
         }

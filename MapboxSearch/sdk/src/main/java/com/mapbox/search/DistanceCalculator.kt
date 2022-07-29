@@ -1,8 +1,8 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreDistanceCalculator
-import com.mapbox.search.core.CoreDistanceCalculatorInterface
+import com.mapbox.search.base.core.CoreDistanceCalculator
+import com.mapbox.search.base.core.CoreDistanceCalculatorInterface
 
 /**
  * Distance calculator for WGS84 (Earth as spheroid).

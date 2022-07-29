@@ -5,6 +5,7 @@ import com.mapbox.search.BaseTest
 import com.mapbox.search.ImageInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.OpenPeriod
 import com.mapbox.search.metadata.ParkingData
@@ -12,11 +13,10 @@ import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.HistoryRecordsSerializer
-import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -71,9 +71,9 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
 
     private companion object {
 
-        val TEST_ORIGINAL_SEARCH_RESULT = createTestOriginalSearchResult(
+        val TEST_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "test id",
-            types = listOf(OriginalResultType.PLACE),
+            types = listOf(BaseRawResultType.PLACE),
             names = listOf("test name"),
             languages = listOf("default"),
             addresses = listOf(SearchAddress(country = "Belarus")),
@@ -83,8 +83,8 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
         )
 
         val TEST_RECORD = HistoryRecord(
-            id = TEST_ORIGINAL_SEARCH_RESULT.id,
-            name = TEST_ORIGINAL_SEARCH_RESULT.names.first(),
+            id = TEST_BASE_RAW_SEARCH_RESULT.id,
+            name = TEST_BASE_RAW_SEARCH_RESULT.names.first(),
             coordinate = Point.fromLngLat(.0, .1),
             descriptionText = "Belarus, Minsk",
             address = SearchAddress(country = "Belarus"),
@@ -96,16 +96,16 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             metadata = null,
         )
 
-        val TEST_EMPTY_ORIGINAL_SEARCH_RESULT = createTestOriginalSearchResult(
+        val TEST_EMPTY_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "empty_correct_record_id",
-            types = listOf(OriginalResultType.POI),
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Empty correct record"),
             languages = listOf("default"),
         )
 
         val TEST_EMPTY_RECORD = HistoryRecord(
-            id = TEST_EMPTY_ORIGINAL_SEARCH_RESULT.id,
-            name = TEST_EMPTY_ORIGINAL_SEARCH_RESULT.names.first(),
+            id = TEST_EMPTY_BASE_RAW_SEARCH_RESULT.id,
+            name = TEST_EMPTY_BASE_RAW_SEARCH_RESULT.names.first(),
             coordinate = null,
             descriptionText = null,
             address = null,

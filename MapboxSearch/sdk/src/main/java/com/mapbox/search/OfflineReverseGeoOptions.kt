@@ -2,7 +2,7 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreReverseGeoOptions
+import com.mapbox.search.base.core.CoreReverseGeoOptions
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -46,6 +46,7 @@ public class OfflineReverseGeoOptions public constructor(
     }
 }
 
+@JvmSynthetic
 internal fun OfflineReverseGeoOptions.mapToCore(): CoreReverseGeoOptions = CoreReverseGeoOptions(
     center,
     null,

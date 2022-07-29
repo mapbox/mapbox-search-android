@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
-import com.mapbox.search.AsyncOperationTask;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.FavoritesDataProvider;

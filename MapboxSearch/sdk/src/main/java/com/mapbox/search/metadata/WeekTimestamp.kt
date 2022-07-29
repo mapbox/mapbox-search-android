@@ -1,6 +1,6 @@
 package com.mapbox.search.metadata
 
-import com.mapbox.search.common.assertDebug
+import com.mapbox.search.base.assertDebug
 
 /**
  * Specific time in a week span in Local Timezone.

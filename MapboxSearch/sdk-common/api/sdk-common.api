@@ -1,0 +1,60 @@
+public abstract interface class com/mapbox/search/common/AsyncOperationTask {
+	public abstract fun cancel ()V
+	public abstract fun isCancelled ()Z
+	public abstract fun isDone ()Z
+}
+
+public final class com/mapbox/search/common/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/search/common/SearchCancellationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/common/SearchRequestException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;ILjava/lang/Exception;)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Exception;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCause ()Ljava/lang/Exception;
+	public synthetic fun getCause ()Ljava/lang/Throwable;
+	public final fun getCode ()I
+	public fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isClientError ()Z
+	public final fun isServerError ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/search/common/concurrent/MainThreadWorker {
+	public abstract fun cancel (Ljava/lang/Runnable;)V
+	public abstract fun getMainExecutor ()Ljava/util/concurrent/Executor;
+	public abstract fun isMainThread ()Z
+	public abstract fun post (Ljava/lang/Runnable;)V
+	public abstract fun postDelayed (JLjava/util/concurrent/TimeUnit;Ljava/lang/Runnable;)V
+}
+
+public final class com/mapbox/search/common/concurrent/MainThreadWorker$DefaultImpls {
+	public static synthetic fun postDelayed$default (Lcom/mapbox/search/common/concurrent/MainThreadWorker;JLjava/util/concurrent/TimeUnit;Ljava/lang/Runnable;ILjava/lang/Object;)V
+}
+
+public final class com/mapbox/search/common/concurrent/SearchSdkMainThreadWorker : com/mapbox/search/common/concurrent/MainThreadWorker {
+	public static final field INSTANCE Lcom/mapbox/search/common/concurrent/SearchSdkMainThreadWorker;
+	public fun cancel (Ljava/lang/Runnable;)V
+	public final fun getDelegate ()Lcom/mapbox/search/common/concurrent/MainThreadWorker;
+	public fun getMainExecutor ()Ljava/util/concurrent/Executor;
+	public fun isMainThread ()Z
+	public fun post (Ljava/lang/Runnable;)V
+	public fun postDelayed (JLjava/util/concurrent/TimeUnit;Ljava/lang/Runnable;)V
+	public final fun resetDelegate ()V
+	public final fun setDelegate (Lcom/mapbox/search/common/concurrent/MainThreadWorker;)V
+}
+

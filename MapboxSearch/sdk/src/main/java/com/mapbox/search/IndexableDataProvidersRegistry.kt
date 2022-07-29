@@ -1,6 +1,7 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import java.util.concurrent.Executor

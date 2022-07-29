@@ -1,8 +1,9 @@
 package com.mapbox.search
 
 import android.os.Parcelable
-import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.result.OriginalSearchResponse
+import com.mapbox.search.base.BaseResponseInfo
+import com.mapbox.search.base.core.CoreSearchResponse
+import com.mapbox.search.base.result.BaseSearchResponse
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -32,7 +33,7 @@ import kotlinx.parcelize.Parcelize
 public class ResponseInfo internal constructor(
     public val requestOptions: RequestOptions,
     @get:JvmSynthetic
-    internal val coreSearchResponse: OriginalSearchResponse?,
+    internal val coreSearchResponse: BaseSearchResponse?,
     @get:JvmSynthetic
     internal val isReproducible: Boolean,
 ) : Parcelable {
@@ -80,4 +81,13 @@ public class ResponseInfo internal constructor(
                 "isReproducible=$isReproducible" +
                 ")"
     }
+}
+
+@JvmSynthetic
+internal fun BaseResponseInfo.mapToPlatform(): ResponseInfo {
+    return ResponseInfo(
+        requestOptions = requestOptions.mapToPlatform(),
+        coreSearchResponse = coreSearchResponse,
+        isReproducible = isReproducible,
+    )
 }

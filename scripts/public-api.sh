@@ -20,8 +20,10 @@ if [ "$1" = "--check" ]; then
 
   ./gradlew apiCheck
 
+  ./gradlew :sdk-common:checkApi
   ./gradlew :sdk:checkApi
   ./gradlew :ui:checkApi
+  ./gradlew :autofill:checkApi
 
   mkdir -p ./ui/build/temp/
   ./gradlew :ui:generatePublicXml -Pdestination=./ui/build/temp/public.xml
@@ -33,6 +35,7 @@ fi
 if [ "$1" = "--update" ]; then
   ./gradlew apiDump
 
+  ./gradlew :sdk-common:updateApi
   ./gradlew :sdk:updateApi
   ./gradlew :ui:updateApi
   ./gradlew :autofill:updateApi

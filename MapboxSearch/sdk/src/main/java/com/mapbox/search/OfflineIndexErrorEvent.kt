@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreOfflineIndexError
+import com.mapbox.search.base.core.CoreOfflineIndexError
 
 /**
  * Type that holds information about error event in the offline search index.

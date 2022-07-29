@@ -9,15 +9,15 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.common.extension.lastKnownLocationOrNull
-import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.logger.loge
-import com.mapbox.search.common.throwDebug
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.logger.loge
+import com.mapbox.search.base.throwDebug
+import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.BaseSearchResult
-import com.mapbox.search.result.BaseSearchSuggestion
+import com.mapbox.search.result.AbstractSearchResult
+import com.mapbox.search.result.AbstractSearchSuggestion
 import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
@@ -201,10 +201,10 @@ internal class AnalyticsServiceImpl(
             "searchResult of unsupported type (${searchResult.javaClass.simpleName}) was provided. " +
                     "Please, do not use custom types. If it's not the case, contact Search SDK team."
         }
-        require(searchResult is BaseSearchResult) { "Parameter searchResult must provide original response." }
+        require(searchResult is AbstractSearchResult) { "Parameter searchResult must provide original response." }
 
         return feedbackEventsFactory.createSearchFeedbackEvent(
-            originalSearchResult = searchResult.originalSearchResult,
+            baseRawSearchResult = searchResult.rawSearchResult,
             requestOptions = searchResult.requestOptions,
             searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,
@@ -231,10 +231,10 @@ internal class AnalyticsServiceImpl(
             "searchSuggestion of unsupported type (${searchSuggestion.javaClass.simpleName}) was provided. " +
                     "Please, do not use custom types. If it's not the case, contact Search SDK team."
         }
-        require(searchSuggestion is BaseSearchSuggestion) { "Parameter searchSuggestion must provide original response." }
+        require(searchSuggestion is AbstractSearchSuggestion) { "Parameter searchSuggestion must provide original response." }
 
         feedbackEventsFactory.createSearchFeedbackEvent(
-            originalSearchResult = searchSuggestion.originalSearchResult,
+            baseRawSearchResult = searchSuggestion.rawSearchResult,
             requestOptions = searchSuggestion.requestOptions,
             searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,

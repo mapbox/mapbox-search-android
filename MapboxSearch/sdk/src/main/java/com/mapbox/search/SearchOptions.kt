@@ -5,11 +5,11 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
 import com.mapbox.search.RouteOptions.Deviation.SarType
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.common.extension.safeCompareTo
-import com.mapbox.search.core.CoreSearchOptions
-import com.mapbox.search.utils.extension.mapToCore
-import com.mapbox.search.utils.extension.mapToPlatform
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import kotlinx.parcelize.Parcelize
 import java.util.Locale
 
@@ -412,10 +412,12 @@ public class SearchOptions @JvmOverloads public constructor(
     }
 }
 
+@JvmSynthetic
 internal fun defaultSearchOptionsLanguage(): List<Language> {
     return listOf(Language(Locale.getDefault().language))
 }
 
+@JvmSynthetic
 internal fun validateLimit(limit: Int?): Int? {
     if (limit != null && limit <= 0) {
         assertDebug(false) { "Provided limit should be greater than 0 (was found: $limit)." }
@@ -424,6 +426,7 @@ internal fun validateLimit(limit: Int?): Int? {
     return limit
 }
 
+@JvmSynthetic
 internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     proximity,
     origin,
@@ -444,6 +447,7 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )
 
+@JvmSynthetic
 internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     proximity = proximity,
     boundingBox = bbox?.mapToPlatform(),

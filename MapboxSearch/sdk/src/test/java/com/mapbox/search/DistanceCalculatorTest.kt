@@ -1,7 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreDistanceCalculatorInterface
+import com.mapbox.search.base.core.CoreDistanceCalculatorInterface
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

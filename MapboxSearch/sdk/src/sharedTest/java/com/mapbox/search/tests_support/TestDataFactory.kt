@@ -2,25 +2,31 @@ package com.mapbox.search.tests_support
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
-import com.mapbox.search.ApiType
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchResultMetadata
-import com.mapbox.search.core.CoreBoundingBox
-import com.mapbox.search.core.CoreQueryType
-import com.mapbox.search.core.CoreRequestOptions
-import com.mapbox.search.core.CoreResultAccuracy
-import com.mapbox.search.core.CoreResultMetadata
-import com.mapbox.search.core.CoreResultType
-import com.mapbox.search.core.CoreReverseGeoOptions
-import com.mapbox.search.core.CoreReverseMode
-import com.mapbox.search.core.CoreRoutablePoint
-import com.mapbox.search.core.CoreSearchAddress
-import com.mapbox.search.core.CoreSearchOptions
-import com.mapbox.search.core.CoreSearchResponse
-import com.mapbox.search.core.CoreSearchResponseError
-import com.mapbox.search.core.CoreSearchResult
-import com.mapbox.search.core.CoreSuggestAction
+import com.mapbox.search.base.BaseRequestOptions
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreBoundingBox
+import com.mapbox.search.base.core.CoreQueryType
+import com.mapbox.search.base.core.CoreRequestOptions
+import com.mapbox.search.base.core.CoreResultAccuracy
+import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.core.CoreReverseGeoOptions
+import com.mapbox.search.base.core.CoreReverseMode
+import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.CoreSearchResponse
+import com.mapbox.search.base.core.CoreSearchResponseError
+import com.mapbox.search.base.core.CoreSearchResult
+import com.mapbox.search.base.core.CoreSuggestAction
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.result.BaseSuggestAction
+import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.internal.bindgen.ConnectionError
 import com.mapbox.search.internal.bindgen.HttpError
 import com.mapbox.search.internal.bindgen.InternalError
@@ -29,23 +35,21 @@ import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.OriginalResultType
-import com.mapbox.search.result.OriginalSearchResult
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.ServerSearchSuggestion
+import com.mapbox.search.result.mapToBase
+import com.mapbox.search.result.mapToCore
 import java.util.HashMap
 
 @Suppress("LongParameterList")
-internal fun createTestOriginalSearchResult(
+internal fun createTestBaseRawSearchResult(
     id: String = "id_test_search_result",
-    types: List<OriginalResultType> = listOf(OriginalResultType.POI),
+    types: List<BaseRawResultType> = listOf(BaseRawResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     languages: List<String> = listOf("def"),
     addresses: List<SearchAddress>? = null,
@@ -62,24 +66,24 @@ internal fun createTestOriginalSearchResult(
     layerId: String? = null,
     userRecordId: String? = null,
     userRecordPriority: Int = -1,
-    action: SearchResultSuggestAction? = null,
+    action: BaseSuggestAction? = null,
     serverIndex: Int? = 0,
     etaMinutes: Double? = null,
-) = OriginalSearchResult(
+) = BaseRawSearchResult(
     id = id,
     types = types,
     names = names,
     languages = languages,
-    addresses = addresses,
+    addresses = addresses?.map { it.mapToBase() },
     descriptionAddress = descriptionAddress,
     distanceMeters = distanceMeters,
     matchingName = matchingName,
     center = center,
-    accuracy = accuracy,
-    routablePoints = routablePoints,
+    accuracy = accuracy?.mapToCore(),
+    routablePoints = routablePoints?.map { it.mapToCore() },
     categories = categories,
     icon = icon,
-    metadata = metadata,
+    metadata = metadata?.coreMetadata,
     externalIDs = externalIDs,
     layerId = layerId,
     userRecordId = userRecordId,
@@ -97,7 +101,7 @@ internal fun createTestRequestOptions(
     proximityRewritten: Boolean = false,
     originRewritten: Boolean = false,
     sessionID: String = "test-session-id",
-    requestContext: SearchRequestContext = SearchRequestContext(ApiType.SBS),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
 ) = RequestOptions(
     query = query,
     endpoint = endpoint,
@@ -108,11 +112,34 @@ internal fun createTestRequestOptions(
     requestContext = requestContext
 )
 
-internal fun createTestSuggestion(
-    isFromOffline: Boolean = false
-): ServerSearchSuggestion = ServerSearchSuggestion(
-    originalSearchResult = createTestOriginalSearchResult(
-        action = SearchResultSuggestAction(
+internal fun createTestCoreRequestOptions(
+    query: String = "",
+    endpoint: String = "suggest",
+    options: CoreSearchOptions = createTestCoreSearchOptions(),
+    proximityRewritten: Boolean = false,
+    originRewritten: Boolean = false,
+    sessionID: String = "test-session-id",
+) = CoreRequestOptions(
+    query = query,
+    endpoint = endpoint,
+    options = options,
+    proximityRewritten = proximityRewritten,
+    originRewritten = originRewritten,
+    sessionID = sessionID,
+)
+
+@Suppress("LongParameterList")
+internal fun createTestBaseRequestOptions(
+    core: CoreRequestOptions = createTestCoreRequestOptions(),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
+) = BaseRequestOptions(
+    core = core,
+    requestContext = requestContext
+)
+
+internal fun createTestSuggestion(): ServerSearchSuggestion = ServerSearchSuggestion(
+    rawSearchResult = createTestBaseRawSearchResult(
+        action = BaseSuggestAction(
             endpoint = "testEndpoint",
             path = "",
             query = "test",
@@ -121,14 +148,13 @@ internal fun createTestSuggestion(
         ),
         center = Point.fromLngLat(10.0, 11.123456)
     ),
-    requestOptions = createTestRequestOptions(),
-    isFromOffline = isFromOffline
+    requestOptions = createTestRequestOptions()
 )
 
 internal fun createTestSearchResult(): ServerSearchResultImpl = ServerSearchResultImpl(
     types = listOf(SearchResultType.POI),
-    originalSearchResult = createTestOriginalSearchResult(
-        types = listOf(OriginalResultType.POI),
+    rawSearchResult = createTestBaseRawSearchResult(
+        types = listOf(BaseRawResultType.POI),
         center = Point.fromLngLat(10.0, 11.123456)
     ),
     requestOptions = createTestRequestOptions()
@@ -239,6 +265,30 @@ internal fun createCoreSearchAddress(
     country: String? = defaultValue,
 ) = CoreSearchAddress(
     houseNumber, street, neighborhood, locality, postcode, place, district, region, country
+)
+
+@Suppress("LongParameterList")
+internal fun createBaseSearchAddress(
+    defaultValue: String? = null,
+    houseNumber: String? = defaultValue,
+    street: String? = defaultValue,
+    neighborhood: String? = defaultValue,
+    locality: String? = defaultValue,
+    postcode: String? = defaultValue,
+    place: String? = defaultValue,
+    district: String? = defaultValue,
+    region: String? = defaultValue,
+    country: String? = defaultValue,
+) = BaseSearchAddress(
+    houseNumber = houseNumber,
+    street = street,
+    neighborhood = neighborhood,
+    locality = locality,
+    postcode = postcode,
+    place = place,
+    district = district,
+    region = region,
+    country = country
 )
 
 internal fun createTestCoreSearchResponseSuccess(

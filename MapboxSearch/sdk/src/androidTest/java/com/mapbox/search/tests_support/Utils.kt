@@ -1,11 +1,11 @@
 package com.mapbox.search.tests_support
 
 import com.mapbox.search.ResponseInfo
-import com.mapbox.search.result.BaseSearchResult
-import com.mapbox.search.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.result.AbstractSearchResult
+import com.mapbox.search.result.AbstractSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.OriginalSearchResult
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.ServerSearchResultImpl
@@ -20,30 +20,30 @@ internal fun ResponseInfo.fixNonDeterminedFields(fixedSessionID: String): Respon
 }
 
 internal fun SearchSuggestion.fixNonDeterminedFields(userRecordPriority: Int, sessionID: String): SearchSuggestion {
-    this as BaseSearchSuggestion
-    val fixedOriginalSearchResult = originalSearchResult.copy(userRecordPriority = userRecordPriority)
+    this as AbstractSearchSuggestion
+    val fixedRawSearchResult = rawSearchResult.copy(userRecordPriority = userRecordPriority)
     val fixedRequestOptions = requestOptions.copy(sessionID = sessionID)
     return when (this) {
         is ServerSearchSuggestion -> {
-            copy(originalSearchResult = fixedOriginalSearchResult, requestOptions = fixedRequestOptions)
+            copy(rawSearchResult = fixedRawSearchResult, requestOptions = fixedRequestOptions)
         }
         is IndexableRecordSearchSuggestion -> {
-            copy(originalSearchResult = fixedOriginalSearchResult, requestOptions = fixedRequestOptions)
+            copy(rawSearchResult = fixedRawSearchResult, requestOptions = fixedRequestOptions)
         }
         else -> throw IllegalStateException("Unknown type of $javaClass")
     }
 }
 
 internal fun SearchResult.fixNonDeterminedFields(userRecordPriority: Int, sessionID: String): SearchResult {
-    this as BaseSearchResult
-    val fixedOriginalSearchResult = originalSearchResult.copy(userRecordPriority = userRecordPriority)
+    this as AbstractSearchResult
+    val fixedBaseRawSearchResult = rawSearchResult.copy(userRecordPriority = userRecordPriority)
     val fixedRequestOptions = requestOptions.copy(sessionID = sessionID)
     return when (this) {
         is ServerSearchResultImpl -> {
-            copy(originalSearchResult = fixedOriginalSearchResult, requestOptions = fixedRequestOptions)
+            copy(rawSearchResult = fixedBaseRawSearchResult, requestOptions = fixedRequestOptions)
         }
         is IndexableRecordSearchResultImpl -> {
-            copy(originalSearchResult = fixedOriginalSearchResult, requestOptions = fixedRequestOptions)
+            copy(rawSearchResult = fixedBaseRawSearchResult, requestOptions = fixedRequestOptions)
         }
         else -> throw IllegalStateException("Unknown type of $javaClass")
     }
@@ -56,11 +56,11 @@ internal fun compareSearchResultWithServerSearchResult(
     if (expected === serverResult) return true
     if (expected.javaClass != serverResult.javaClass) return false
 
-    expected as BaseSearchResult
-    serverResult as BaseSearchResult
+    expected as AbstractSearchResult
+    serverResult as AbstractSearchResult
 
     val fixedResult = expected.fixNonDeterminedFields(
-        serverResult.originalSearchResult.userRecordPriority,
+        serverResult.rawSearchResult.userRecordPriority,
         serverResult.requestOptions.sessionID
     )
     return fixedResult == serverResult
@@ -73,26 +73,26 @@ internal fun compareSearchResultWithServerSearchResult(
     if (expected === serverResult) return true
     if (expected.javaClass != serverResult.javaClass) return false
 
-    expected as BaseSearchSuggestion
-    serverResult as BaseSearchSuggestion
+    expected as AbstractSearchSuggestion
+    serverResult as AbstractSearchSuggestion
 
     val fixedResult = expected.fixNonDeterminedFields(
-        serverResult.originalSearchResult.userRecordPriority,
+        serverResult.rawSearchResult.userRecordPriority,
         serverResult.requestOptions.sessionID
     )
     return fixedResult == serverResult
 }
 
 internal fun compareSearchResultWithServerSearchResult(
-    expected: OriginalSearchResult,
-    serverResult: OriginalSearchResult
+    expected: BaseRawSearchResult,
+    serverResult: BaseRawSearchResult
 ): Boolean {
     if (expected === serverResult) return true
     if (expected.javaClass != serverResult.javaClass) return false
 
-    val fixedOriginalSearchResult = expected.copy(
+    val fixedBaseRawSearchResult = expected.copy(
         userRecordPriority = serverResult.userRecordPriority
     )
 
-    return fixedOriginalSearchResult == serverResult
+    return fixedBaseRawSearchResult == serverResult
 }

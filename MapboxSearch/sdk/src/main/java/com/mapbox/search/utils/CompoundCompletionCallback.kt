@@ -1,9 +1,8 @@
 package com.mapbox.search.utils
 
-import com.mapbox.search.AsyncOperationTask
-import com.mapbox.search.AsyncOperationTaskImpl
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.plusAssign
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import java.util.concurrent.Executor
 
 internal class CompoundCompletionCallback<T>(
@@ -15,7 +14,7 @@ internal class CompoundCompletionCallback<T>(
     private val completions = mutableListOf<T>()
     private val tasks = mutableListOf<AsyncOperationTask>()
 
-    private val compoundTask = AsyncOperationTaskImpl()
+    private val compoundTask = AsyncOperationTaskImpl<Any>()
 
     fun getCompoundTask(): AsyncOperationTask = compoundTask
 

@@ -17,18 +17,9 @@ internal class SearchRequestTaskTest {
                 Then("Task is not cancelled", false, task.isCancelled)
             }
 
-            When("callbackDelegate set") {
-                task = SearchRequestTaskImpl()
-                val delegate = Runnable {}
-                task.callbackDelegate = delegate
-                Then("Task keeps reference to delegate", true, task.callbackDelegate != null)
-                Then("delegate references equals to initial", delegate, task.callbackDelegate)
-            }
-
             When("SearchRequestTaskImpl marked as executed") {
-                task = SearchRequestTaskImpl()
                 val delegate = Runnable {}
-                task.callbackDelegate = delegate
+                task = SearchRequestTaskImpl(delegate)
 
                 val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
                 task.markExecutedAndRunOnCallback(callbackAction)
@@ -43,9 +34,9 @@ internal class SearchRequestTaskTest {
             }
 
             When("SearchRequestTaskImpl cancelled") {
-                task = SearchRequestTaskImpl()
                 val delegate = Runnable {}
-                task.callbackDelegate = delegate
+                task = SearchRequestTaskImpl(delegate)
+
                 task.cancel()
                 Then("Task is not executed", false, task.isDone)
                 Then("Task is cancelled", true, task.isCancelled)
@@ -53,9 +44,8 @@ internal class SearchRequestTaskTest {
             }
 
             When("Already executed SearchRequestTaskImpl cancelled") {
-                task = SearchRequestTaskImpl()
                 val delegate = Runnable {}
-                task.callbackDelegate = delegate
+                task = SearchRequestTaskImpl(delegate)
 
                 val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
                 task.markExecutedAndRunOnCallback(callbackAction)
@@ -71,9 +61,9 @@ internal class SearchRequestTaskTest {
             }
 
             When("Cancelled SearchRequestTaskImpl executed") {
-                task = SearchRequestTaskImpl()
                 val delegate = Runnable {}
-                task.callbackDelegate = delegate
+                task = SearchRequestTaskImpl(delegate)
+
                 task.cancel()
 
                 val callbackAction = mockk<Runnable.() -> Unit>(relaxed = true)
@@ -86,26 +76,6 @@ internal class SearchRequestTaskTest {
                 Then("Task is not executed", false, task.isDone)
                 Then("Task is still cancelled", true, task.isCancelled)
                 Then("Task releases reference to delegate", true, task.callbackDelegate == null)
-            }
-
-            When("Set delegate to executed SearchRequestTaskImpl") {
-                task = SearchRequestTaskImpl()
-                task.markExecutedAndRunOnCallback { }
-                val delegate = Runnable {}
-                task.callbackDelegate = delegate
-                Then("Task is still executed", true, task.isDone)
-                Then("Task is not cancelled", false, task.isCancelled)
-                Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
-            }
-
-            When("Set delegate to cancelled SearchRequestTaskImpl") {
-                task = SearchRequestTaskImpl()
-                task.cancel()
-                val delegate = Runnable {}
-                task.callbackDelegate = delegate
-                Then("Task is not executed", false, task.isDone)
-                Then("Task is still cancelled", true, task.isCancelled)
-                Then("Task doesn't keep reference to delegate", true, task.callbackDelegate == null)
             }
 
             When("markExecutedAndRunOnCallback() called on non completed task") {

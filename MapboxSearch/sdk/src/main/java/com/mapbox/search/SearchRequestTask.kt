@@ -1,5 +1,7 @@
 package com.mapbox.search
 
+import com.mapbox.search.base.task.CancelableWrapper
+import com.mapbox.search.common.AsyncOperationTask
 import java.util.concurrent.Executor
 import java.util.concurrent.Future
 
@@ -25,13 +27,14 @@ public interface SearchRequestTask {
     public fun cancel()
 }
 
+// TODO FIXME align implementation with AsyncOperationTaskImpl
 internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask {
 
     private val innerTasks: MutableList<SearchRequestTask> = mutableListOf()
 
     var callbackDelegate: T? = null
         @Synchronized
-        set(value) {
+        private set(value) {
             field = if (isCancelled || isDone) {
                 null
             } else {
@@ -105,7 +108,7 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
 
     @Synchronized
     fun markExecutedAndRunOnCallback(action: T.() -> Unit) {
-        if (isCancelled) {
+        if (isCompleted) {
             return
         }
 
@@ -129,15 +132,10 @@ internal class SearchRequestTaskImpl<T>(delegate: T? = null) : SearchRequestTask
     }
 }
 
+@JvmSynthetic
 internal fun <T> SearchRequestTaskImpl<T>.markExecutedAndRunOnCallback(executor: Executor, action: T.() -> Unit) {
     executor.execute {
         markExecutedAndRunOnCallback(action)
-    }
-}
-
-internal fun <T> SearchRequestTaskImpl<T>.markCancelledAndRunOnCallback(executor: Executor, action: T.() -> Unit) {
-    executor.execute {
-        markCancelledAndRunOnCallback(action)
     }
 }
 
@@ -179,10 +177,29 @@ internal class SearchRequestTaskAsyncAdapter(
     }
 }
 
+internal class SearchRequestBaseCancelableWrapperAdapter(
+    private val cancelableWrapper: CancelableWrapper
+) : SearchRequestTask {
+
+    override val isCancelled: Boolean
+        get() = false
+
+    override val isDone: Boolean
+        get() = false
+
+    override fun cancel() {
+        cancelableWrapper.cancel()
+    }
+}
+
 internal operator fun <T> SearchRequestTaskImpl<T>.plusAssign(task: Future<*>) {
     addInnerTask(FutureSearchRequestTask(task))
 }
 
 internal operator fun <T> SearchRequestTaskImpl<T>.plusAssign(task: AsyncOperationTask) {
     addInnerTask(SearchRequestTaskAsyncAdapter(task))
+}
+
+internal operator fun <T> SearchRequestTaskImpl<T>.plusAssign(cancelableWrapper: CancelableWrapper) {
+    addInnerTask(SearchRequestBaseCancelableWrapperAdapter(cancelableWrapper))
 }

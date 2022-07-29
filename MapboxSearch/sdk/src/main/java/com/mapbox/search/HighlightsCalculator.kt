@@ -1,7 +1,7 @@
 package com.mapbox.search
 
-import com.mapbox.search.common.logger.loge
-import com.mapbox.search.core.CoreSearchEngine
+import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.logger.loge
 
 internal interface HighlightsEngine {
     fun getHighlights(name: String, query: String): List<Int>

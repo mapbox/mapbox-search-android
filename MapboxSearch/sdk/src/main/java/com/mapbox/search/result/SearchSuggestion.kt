@@ -3,6 +3,14 @@ package com.mapbox.search.result
 import android.os.Parcelable
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
+import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
+import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.mapToBase
+import com.mapbox.search.mapToPlatform
+import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.record.mapToBase
 
 /**
  * Autocomplete common suggestion type.
@@ -87,4 +95,56 @@ public sealed interface SearchSuggestion : Parcelable {
      * Index in response from server.
      */
     public val serverIndex: Int?
+}
+
+@JvmSynthetic
+internal fun BaseSearchSuggestion.mapToPlatform(): SearchSuggestion {
+    return when (this) {
+        is BaseServerSearchSuggestion -> {
+            ServerSearchSuggestion(
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToPlatform(),
+            )
+        }
+        is BaseIndexableRecordSearchSuggestion -> {
+            check(record.sdkResolvedRecord is IndexableRecord)
+
+            IndexableRecordSearchSuggestion(
+                record = record.sdkResolvedRecord as IndexableRecord,
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToPlatform(),
+            )
+        }
+        is BaseGeocodingCompatSearchSuggestion -> {
+            GeocodingCompatSearchSuggestion(
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToPlatform(),
+            )
+        }
+    }
+}
+
+@JvmSynthetic
+internal fun SearchSuggestion.mapToBase(): BaseSearchSuggestion {
+    return when (this) {
+        is ServerSearchSuggestion -> {
+            BaseServerSearchSuggestion(
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToBase(),
+            )
+        }
+        is IndexableRecordSearchSuggestion -> {
+            BaseIndexableRecordSearchSuggestion(
+                record = record.mapToBase(),
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToBase(),
+            )
+        }
+        is GeocodingCompatSearchSuggestion -> {
+            BaseGeocodingCompatSearchSuggestion(
+                rawSearchResult = rawSearchResult,
+                requestOptions = requestOptions.mapToBase(),
+            )
+        }
+    }
 }

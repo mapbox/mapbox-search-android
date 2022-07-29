@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
-import com.mapbox.search.AsyncOperationTask;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.CompletionCallback;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
@@ -17,6 +17,7 @@ import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
 import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.IndexableDataProvider;
 import com.mapbox.search.record.IndexableDataProviderEngine;
@@ -25,7 +26,6 @@ import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchResultType;
 import com.mapbox.search.result.SearchSuggestion;
 import com.mapbox.search.sample.BuildConfig;
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker;
 
 import java.util.ArrayList;
 import java.util.Arrays;

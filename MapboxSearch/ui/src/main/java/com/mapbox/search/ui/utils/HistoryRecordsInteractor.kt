@@ -1,9 +1,9 @@
 package com.mapbox.search.ui.utils
 
 import androidx.annotation.UiThread
-import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord

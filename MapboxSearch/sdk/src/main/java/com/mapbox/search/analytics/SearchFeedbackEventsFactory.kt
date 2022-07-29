@@ -11,17 +11,18 @@ import com.mapbox.search.analytics.events.AppMetadata
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
 import com.mapbox.search.analytics.events.SearchResultEntry
 import com.mapbox.search.analytics.events.SearchResultsInfo
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.location.calculateMapZoom
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.location.calculateMapZoom
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.base.result.BaseSearchResponse
+import com.mapbox.search.base.result.mapToCore
+import com.mapbox.search.base.utils.FormattedTimeProvider
+import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.OriginalResultType
-import com.mapbox.search.result.OriginalSearchResponse
-import com.mapbox.search.result.OriginalSearchResult
 import com.mapbox.search.result.SearchAddress.FormatStyle
-import com.mapbox.search.result.mapToCore
-import com.mapbox.search.utils.FormattedTimeProvider
-import com.mapbox.search.utils.UUIDProvider
+import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.utils.bitmap.BitmapEncodeOptions
 import com.mapbox.search.utils.bitmap.encodeBase64
 import java.util.TreeMap
@@ -43,7 +44,7 @@ internal class SearchFeedbackEventsFactory(
         callback: CompletionCallback<SearchFeedbackEvent>
     ) {
         createSearchFeedbackEvent(
-            originalSearchResult = null,
+            baseRawSearchResult = null,
             requestOptions = event.responseInfo.requestOptions,
             searchResponse = event.responseInfo.coreSearchResponse,
             currentLocation = currentLocation,
@@ -92,9 +93,9 @@ internal class SearchFeedbackEventsFactory(
     }
 
     fun createSearchFeedbackEvent(
-        originalSearchResult: OriginalSearchResult?,
+        baseRawSearchResult: BaseRawSearchResult?,
         requestOptions: RequestOptions,
-        searchResponse: OriginalSearchResponse?,
+        searchResponse: BaseSearchResponse?,
         currentLocation: Point?,
         isReproducible: Boolean? = null,
         event: FeedbackEvent? = null,
@@ -102,7 +103,7 @@ internal class SearchFeedbackEventsFactory(
         asTemplate: Boolean = false,
         callback: CompletionCallback<SearchFeedbackEvent>
     ) {
-        coreSearchEngine.makeFeedbackEvent(requestOptions.mapToCore(), originalSearchResult?.mapToCore()) {
+        coreSearchEngine.makeFeedbackEvent(requestOptions.mapToCore(), baseRawSearchResult?.mapToCore()) {
             val baseEvent = eventJsonParser.parse(it) as? SearchFeedbackEvent
             if (baseEvent == null) {
                 callback.onError(Exception("Unable to parse event: $it"))
@@ -117,12 +118,12 @@ internal class SearchFeedbackEventsFactory(
                 // IndexableRecordSearchResultImpl and IndexableRecordSearchSuggestion may have
                 // serverIndex == null due to implementation details. Because "resultIndex" is
                 // mandatory, fallback to -1 for null case.
-                resultIndex = originalSearchResult?.serverIndex ?: -1
+                resultIndex = baseRawSearchResult?.serverIndex ?: -1
                 sessionIdentifier = when (isCached) {
                     true -> INDEXABLE_RECORD_SESSION_IDENTIFIER
                     else -> requestOptions.sessionID
                 }
-                selectedItemName = originalSearchResult?.names?.firstOrNull() ?: ""
+                selectedItemName = baseRawSearchResult?.names?.firstOrNull() ?: ""
                 feedbackReason = event?.reason
                 queryString = requestOptions.query
 
@@ -137,9 +138,9 @@ internal class SearchFeedbackEventsFactory(
                 resultId = when (isCached) {
                     true -> null // ID of IndexableRecord may potentially contain PII,
                     // so we don't specify it
-                    else -> originalSearchResult?.id
+                    else -> baseRawSearchResult?.id
                 }
-                resultCoordinates = originalSearchResult?.center?.coordinates()
+                resultCoordinates = baseRawSearchResult?.center?.coordinates()
                 schema = "${SearchFeedbackEvent.EVENT_NAME}-$SEARCH_FEEDBACK_SCHEMA_VERSION"
 
                 // For events, that will be used for template creation,
@@ -177,18 +178,17 @@ internal class SearchFeedbackEventsFactory(
         orientation = requestOptions.requestContext.screenOrientation?.rawValue
     }
 
-    private fun SearchFeedbackEvent.fillSearchResultData(searchResponse: OriginalSearchResponse?, isReproducible: Boolean?) {
-        val results = (searchResponse?.result as? OriginalSearchResponse.Result.Success)?.result
+    private fun SearchFeedbackEvent.fillSearchResultData(searchResponse: BaseSearchResponse?, isReproducible: Boolean?) {
+        val results = (searchResponse?.result as? BaseSearchResponse.Result.Success)?.result
         val resultEntries = results?.map { coreResult ->
             SearchResultEntry(
-                name = when (OriginalResultType.USER_RECORD) {
+                name = when (BaseRawResultType.USER_RECORD) {
                     coreResult.types.firstOrNull() -> "<Local item>"
                     else -> coreResult.names.firstOrNull() ?: ""
                 },
-                address = coreResult.descriptionAddress ?: coreResult.addresses?.getOrNull(0)
-                    ?.formattedAddress(FormatStyle.Full),
+                address = coreResult.descriptionAddress ?: coreResult.addresses?.getOrNull(0)?.mapToPlatform()?.formattedAddress(FormatStyle.Full),
                 coordinates = coreResult.center?.coordinates(),
-                id = when (OriginalResultType.USER_RECORD) {
+                id = when (BaseRawResultType.USER_RECORD) {
                     coreResult.types.firstOrNull() -> "<Local id>"
                     else -> coreResult.id
                 },

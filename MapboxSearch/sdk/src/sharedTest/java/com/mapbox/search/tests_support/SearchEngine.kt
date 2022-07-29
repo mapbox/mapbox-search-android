@@ -6,10 +6,10 @@ import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SelectOptions
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
 internal fun SearchEngine.searchBlocking(

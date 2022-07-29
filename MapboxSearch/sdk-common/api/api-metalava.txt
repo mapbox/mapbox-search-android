@@ -1,0 +1,58 @@
+// Signature format: 3.0
+package com.mapbox.search.common {
+
+  public interface AsyncOperationTask {
+    method public void cancel();
+    method public boolean isCancelled();
+    method public boolean isDone();
+    property public abstract boolean isCancelled;
+    property public abstract boolean isDone;
+  }
+
+  public final class SearchCancellationException extends java.lang.RuntimeException {
+    ctor public SearchCancellationException(String message);
+    property public String message;
+  }
+
+  public final class SearchRequestException extends java.lang.RuntimeException {
+    ctor public SearchRequestException(String message, int code, Exception? cause = null);
+    method public Exception? getCause();
+    method public int getCode();
+    method public boolean isClientError();
+    method public boolean isServerError();
+    property public Exception? cause;
+    property public final int code;
+    property public String message;
+  }
+
+}
+
+package com.mapbox.search.common.concurrent {
+
+  public interface MainThreadWorker {
+    method public void cancel(Runnable runnable);
+    method public java.util.concurrent.Executor getMainExecutor();
+    method public boolean isMainThread();
+    method public void post(Runnable runnable);
+    method public void postDelayed(long delay, java.util.concurrent.TimeUnit unit = java.util.concurrent.TimeUnit.MILLISECONDS, Runnable runnable);
+    property public abstract boolean isMainThread;
+    property public abstract java.util.concurrent.Executor mainExecutor;
+  }
+
+  public final class SearchSdkMainThreadWorker implements com.mapbox.search.common.concurrent.MainThreadWorker {
+    method public void cancel(Runnable runnable);
+    method public com.mapbox.search.common.concurrent.MainThreadWorker getDelegate();
+    method public java.util.concurrent.Executor getMainExecutor();
+    method public boolean isMainThread();
+    method public void post(Runnable runnable);
+    method public void postDelayed(long delay, java.util.concurrent.TimeUnit unit, Runnable runnable);
+    method public void resetDelegate();
+    method public void setDelegate(com.mapbox.search.common.concurrent.MainThreadWorker p);
+    property public final com.mapbox.search.common.concurrent.MainThreadWorker delegate;
+    property public boolean isMainThread;
+    property public java.util.concurrent.Executor mainExecutor;
+    field public static final com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker INSTANCE;
+  }
+
+}
+

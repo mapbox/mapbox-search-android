@@ -1,8 +1,10 @@
 package com.mapbox.search.result
 
 import android.os.Parcelable
-import com.mapbox.search.common.printableName
-import com.mapbox.search.core.CoreSearchAddress
+import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.utils.extension.nullIfEmpty
+import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.COUNTRY
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.DISTRICT
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.HOUSE_NUMBER
@@ -438,11 +440,11 @@ public class SearchAddress @JvmOverloads public constructor(
 
         init {
             @Suppress("LeakingThis")
-            require(this is FormatStyle.Short ||
-                    this is FormatStyle.Medium ||
-                    this is FormatStyle.Long ||
-                    this is FormatStyle.Full ||
-                    this is FormatStyle.Custom) {
+            require(this is Short ||
+                    this is Medium ||
+                    this is Long ||
+                    this is Full ||
+                    this is Custom) {
                 "FormatStyle allows only the following subclasses: " +
                         "[FormatStyle.Short | FormatStyle.Medium | FormatStyle.Long | FormatStyle.Full | FormatStyle.Custom], " +
                         "but ${javaClass.printableName} was found."
@@ -516,6 +518,7 @@ public class SearchAddress @JvmOverloads public constructor(
     }
 }
 
+@JvmSynthetic
 internal fun SearchAddress.mapToCore(): CoreSearchAddress {
     return CoreSearchAddress(
         houseNumber,
@@ -530,18 +533,23 @@ internal fun SearchAddress.mapToCore(): CoreSearchAddress {
     )
 }
 
-/**
- * Note: For some reason native core returns empty string event if actual value is null.
- */
-internal fun String?.nullIfEmpty(): String? {
-    return if (isNullOrEmpty()) {
-        null
-    } else {
-        this
-    }
+@JvmSynthetic
+internal fun SearchAddress.mapToBase(): BaseSearchAddress {
+    return BaseSearchAddress(
+        houseNumber = houseNumber,
+        street = street,
+        neighborhood = neighborhood,
+        locality = locality,
+        postcode = postcode,
+        place = place,
+        district = district,
+        region = region,
+        country = country
+    )
 }
 
-internal fun CoreSearchAddress.mapToPlatform(): SearchAddress {
+@JvmSynthetic
+internal fun BaseSearchAddress.mapToPlatform(): SearchAddress {
     return SearchAddress(
         houseNumber = houseNumber?.nullIfEmpty(),
         street = street?.nullIfEmpty(),

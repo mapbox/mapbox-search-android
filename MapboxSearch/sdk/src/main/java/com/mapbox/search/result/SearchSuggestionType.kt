@@ -1,8 +1,8 @@
 package com.mapbox.search.result
 
 import android.os.Parcelable
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.common.printableName
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import kotlinx.parcelize.Parcelize

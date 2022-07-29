@@ -1,8 +1,8 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreReverseGeoOptions
-import com.mapbox.search.core.CoreReverseMode
+import com.mapbox.search.base.core.CoreReverseGeoOptions
+import com.mapbox.search.base.core.CoreReverseMode
 import com.mapbox.search.tests_support.checkEnumValues
 import com.mapbox.test.dsl.TestCase
 import org.junit.After

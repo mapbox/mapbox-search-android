@@ -1,12 +1,11 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.AsyncOperationTask
-import com.mapbox.search.AsyncOperationTaskImpl
-import com.mapbox.search.CompletedAsyncOperationTask
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.common.failDebug
-import com.mapbox.search.core.CoreSearchEngine
-import com.mapbox.search.core.CoreUserRecordsLayer
+import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.CoreUserRecordsLayer
+import com.mapbox.search.base.failDebug
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -32,8 +31,8 @@ internal class DataProviderEngineRegistrationServiceImpl(
         dataProvider: IndexableDataProvider<R>,
         callback: CompletionCallback<IndexableDataProviderEngineImpl>
     ): AsyncOperationTask {
-        fun createTask(processMetadata: RegistrationProcessMetadata): AsyncOperationTaskImpl {
-            val task = AsyncOperationTaskImpl()
+        fun createTask(processMetadata: RegistrationProcessMetadata): AsyncOperationTaskImpl<Any> {
+            val task = AsyncOperationTaskImpl<Any>()
             task.onCancelCallback = {
                 onRegistrationTaskCancelled(dataProvider.dataProviderName, callback, processMetadata)
             }
@@ -43,7 +42,7 @@ internal class DataProviderEngineRegistrationServiceImpl(
         val layer = processedProvider[dataProvider.dataProviderName]
         if (layer != null) {
             callback.onComplete(layer)
-            return CompletedAsyncOperationTask
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         val metadata = processingProviders[dataProvider.dataProviderName]
@@ -133,11 +132,11 @@ internal class DataProviderEngineRegistrationServiceImpl(
 
     private data class RegistrationProcessMetadata(
         val processTask: AsyncOperationTask,
-        val subscribers: MutableMap<CompletionCallback<IndexableDataProviderEngineImpl>, AsyncOperationTaskImpl> = mutableMapOf(),
+        val subscribers: MutableMap<CompletionCallback<IndexableDataProviderEngineImpl>, AsyncOperationTaskImpl<Any>> = mutableMapOf(),
     ) {
         fun addSubscriber(
             callback: CompletionCallback<IndexableDataProviderEngineImpl>,
-            task: AsyncOperationTaskImpl
+            task: AsyncOperationTaskImpl<Any>
         ) {
             if (subscribers.containsKey(callback)) {
                 return

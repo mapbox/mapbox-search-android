@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreQueryType
+import com.mapbox.search.base.core.CoreQueryType
 import com.mapbox.search.tests_support.checkEnumValues
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory

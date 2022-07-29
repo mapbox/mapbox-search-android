@@ -1,11 +1,12 @@
 package com.mapbox.search
 
 import com.mapbox.search.analytics.AnalyticsService
+import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
 /**

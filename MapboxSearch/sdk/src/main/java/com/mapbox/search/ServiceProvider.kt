@@ -1,8 +1,9 @@
 package com.mapbox.search
 
+import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.record.HistoryService
+import com.mapbox.search.record.HistoryDataProviderImpl
 
 /**
  * This class provides access to search-related services and utility classes.
@@ -36,11 +37,11 @@ public interface ServiceProvider {
 }
 
 internal interface InternalServiceProvider : ServiceProvider {
-    fun historyService(): HistoryService
+    fun historyService(): SearchHistoryService
 }
 
 internal class ServiceProviderImpl(
-    private val historyDataProvider: HistoryService,
+    private val historyDataProvider: HistoryDataProviderImpl,
     private val favoritesDataProvider: FavoritesDataProvider,
 ) : ServiceProvider, InternalServiceProvider {
 
@@ -52,5 +53,5 @@ internal class ServiceProviderImpl(
 
     override fun historyDataProvider(): HistoryDataProvider = historyDataProvider
 
-    override fun historyService(): HistoryService = historyDataProvider
+    override fun historyService(): SearchHistoryService = historyDataProvider
 }

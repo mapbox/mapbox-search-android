@@ -7,9 +7,10 @@ import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
-import com.mapbox.search.utils.TimeProvider
+import com.mapbox.search.base.location.LocationEngineAdapter
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

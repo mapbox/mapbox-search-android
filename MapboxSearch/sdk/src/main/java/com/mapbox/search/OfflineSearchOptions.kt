@@ -2,7 +2,7 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreSearchOptions
+import com.mapbox.search.base.core.CoreSearchOptions
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -135,6 +135,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
     }
 }
 
+@JvmSynthetic
 internal fun OfflineSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     proximity,
     origin,

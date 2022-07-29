@@ -10,6 +10,7 @@ import kotlin.math.roundToInt
  * Helper function to encode Bitmap in Base64 String. Useful for sending screenshots
  * over Events SDK, which doesn't support Bitmap encoding out of the box.
  */
+@JvmSynthetic
 internal fun Bitmap.encodeBase64(encodeOptions: BitmapEncodeOptions): String {
     val (scaledWidth, scaledHeight) = if (width <= height) {
         val scaledWidth: Int = min(width, encodeOptions.minSideSize)

@@ -1,6 +1,6 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.core.CoreUserRecordsLayer
+import com.mapbox.search.base.core.CoreUserRecordsLayer
 
 /**
  * Provides a mechanism for search index changes in core layers.

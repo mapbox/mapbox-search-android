@@ -4,16 +4,19 @@ import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.common.logger.logd
-import com.mapbox.search.core.CoreOfflineIndexObserver
-import com.mapbox.search.core.CoreSearchEngine
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.engine.BaseSearchEngine
-import com.mapbox.search.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreOfflineIndexObserver
+import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.engine.BaseSearchEngine
+import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
-import com.mapbox.search.result.SearchResultFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -71,7 +74,7 @@ internal class OfflineSearchEngineImpl(
     ): SearchRequestTask {
         logd("search($query, $options) called")
 
-        return makeRequest(callback) { request ->
+        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -79,11 +82,12 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )
         }
+        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun reverseGeocoding(
@@ -91,7 +95,7 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: SearchCallback
     ): SearchRequestTask {
-        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
+        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.reverseGeocodingOffline(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -99,11 +103,12 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )
         }
+        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun searchAddressesNearby(
@@ -120,7 +125,7 @@ internal class OfflineSearchEngineImpl(
             return SearchRequestTaskImpl.completed()
         }
 
-        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
+        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.getAddressesOffline(
                 street,
                 proximity,
@@ -130,11 +135,12 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )
         }
+        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun addEngineReadyCallback(executor: Executor, callback: EngineReadyCallback) {

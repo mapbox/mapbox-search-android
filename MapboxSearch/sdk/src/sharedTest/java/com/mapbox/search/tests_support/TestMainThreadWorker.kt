@@ -1,6 +1,6 @@
 package com.mapbox.search.tests_support
 
-import com.mapbox.search.utils.concurrent.MainThreadWorker
+import com.mapbox.search.common.concurrent.MainThreadWorker
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
