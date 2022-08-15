@@ -35,6 +35,7 @@ git checkout "$BRANCH_NAME"
 #
 cp -r "${INITIAL_PATH}/MapboxSearch/sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
 cp -r "${INITIAL_PATH}/MapboxSearch/ui/build/dokka" "${TMPDIR}/ui/${VERSION}"
+cp -r "${INITIAL_PATH}/MapboxSearch/autofill/build/dokka" "${TMPDIR}/autofill/${VERSION}"
 
 git config user.email "release-bot@mapbox.com"
 git config user.name "Release SDK bot"
