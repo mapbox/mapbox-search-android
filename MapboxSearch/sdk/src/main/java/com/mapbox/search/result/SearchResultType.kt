@@ -25,6 +25,11 @@ public enum class SearchResultType {
     POSTCODE,
 
     /**
+     * The block number. Available specifically for Japan.
+     */
+    BLOCK,
+
+    /**
      * Features that are smaller than top-level administrative features but typically larger than cities,
      * in countries that use such an additional layer in postal addressing (for example, prefectures in China).
      */
@@ -72,6 +77,7 @@ internal fun SearchResultType.mapToCore(): CoreResultType {
         SearchResultType.COUNTRY -> CoreResultType.COUNTRY
         SearchResultType.REGION -> CoreResultType.REGION
         SearchResultType.POSTCODE -> CoreResultType.POSTCODE
+        SearchResultType.BLOCK -> CoreResultType.BLOCK
         SearchResultType.PLACE -> CoreResultType.PLACE
         SearchResultType.DISTRICT -> CoreResultType.DISTRICT
         SearchResultType.LOCALITY -> CoreResultType.LOCALITY

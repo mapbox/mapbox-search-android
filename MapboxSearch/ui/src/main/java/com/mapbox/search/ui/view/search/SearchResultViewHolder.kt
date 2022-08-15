@@ -151,7 +151,8 @@ internal class SearchResultViewHolder(
             SearchResultType.LOCALITY,
             SearchResultType.NEIGHBORHOOD,
             SearchResultType.STREET,
-            SearchResultType.POSTCODE -> R.drawable.mapbox_search_sdk_ic_search_result_address
+            SearchResultType.POSTCODE,
+            SearchResultType.BLOCK -> R.drawable.mapbox_search_sdk_ic_search_result_address
             SearchResultType.POI -> pickEntityDrawable(
                 maki, categories, R.drawable.mapbox_search_sdk_ic_mdi_search
             )

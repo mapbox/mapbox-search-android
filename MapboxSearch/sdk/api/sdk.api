@@ -1506,6 +1506,7 @@ public abstract interface class com/mapbox/search/result/SearchResult : android/
 
 public final class com/mapbox/search/result/SearchResultType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/result/SearchResultType;
+	public static final field BLOCK Lcom/mapbox/search/result/SearchResultType;
 	public static final field COUNTRY Lcom/mapbox/search/result/SearchResultType;
 	public static final field DISTRICT Lcom/mapbox/search/result/SearchResultType;
 	public static final field LOCALITY Lcom/mapbox/search/result/SearchResultType;

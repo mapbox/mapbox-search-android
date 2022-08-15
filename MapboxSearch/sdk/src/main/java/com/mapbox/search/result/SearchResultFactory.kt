@@ -99,6 +99,7 @@ internal class SearchResultFactory(private val dataProviderResolver: DataProvide
             OriginalResultType.POI,
             OriginalResultType.STREET,
             OriginalResultType.POSTCODE,
+            OriginalResultType.BLOCK,
             OriginalResultType.QUERY -> {
                 when (apiType) {
                     ApiType.GEOCODING -> {

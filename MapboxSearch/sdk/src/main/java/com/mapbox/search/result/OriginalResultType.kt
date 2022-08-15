@@ -14,6 +14,7 @@ internal enum class OriginalResultType {
     POI,
     STREET,
     POSTCODE,
+    BLOCK,
     CATEGORY,
     QUERY,
     USER_RECORD;
@@ -33,6 +34,7 @@ internal enum class OriginalResultType {
             POI -> SearchResultType.POI
             STREET -> SearchResultType.STREET
             POSTCODE -> SearchResultType.POSTCODE
+            BLOCK -> SearchResultType.BLOCK
             UNKNOWN,
             USER_RECORD,
             CATEGORY,
@@ -56,6 +58,7 @@ internal fun OriginalResultType.mapToCore(): CoreResultType {
         OriginalResultType.USER_RECORD -> CoreResultType.USER_RECORD
         OriginalResultType.STREET -> CoreResultType.STREET
         OriginalResultType.POSTCODE -> CoreResultType.POSTCODE
+        OriginalResultType.BLOCK -> CoreResultType.BLOCK
         OriginalResultType.QUERY -> CoreResultType.QUERY
     }
 }
@@ -75,6 +78,7 @@ internal fun CoreResultType.mapToPlatform(): OriginalResultType {
         CoreResultType.USER_RECORD -> OriginalResultType.USER_RECORD
         CoreResultType.STREET -> OriginalResultType.STREET
         CoreResultType.POSTCODE -> OriginalResultType.POSTCODE
+        CoreResultType.BLOCK -> OriginalResultType.BLOCK
         CoreResultType.QUERY -> OriginalResultType.QUERY
     }
 }

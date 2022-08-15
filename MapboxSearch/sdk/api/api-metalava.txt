@@ -1421,6 +1421,7 @@ package com.mapbox.search.result {
 
   public enum SearchResultType {
     enum_constant public static final com.mapbox.search.result.SearchResultType ADDRESS;
+    enum_constant public static final com.mapbox.search.result.SearchResultType BLOCK;
     enum_constant public static final com.mapbox.search.result.SearchResultType COUNTRY;
     enum_constant public static final com.mapbox.search.result.SearchResultType DISTRICT;
     enum_constant public static final com.mapbox.search.result.SearchResultType LOCALITY;

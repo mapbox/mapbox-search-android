@@ -139,7 +139,7 @@ package com.mapbox.search.ui.view.place {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
-    ctor public SearchPlace(String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
+    ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, com.mapbox.geojson.Point coordinate, Double? distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate);
@@ -149,6 +149,7 @@ package com.mapbox.search.ui.view.place {
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? getFeedback();
+    method public String getId();
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
@@ -161,6 +162,7 @@ package com.mapbox.search.ui.view.place {
     property public final String? descriptionText;
     property public final Double? distanceMeters;
     property public final com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback;
+    property public final String id;
     property public final String? makiIcon;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;

@@ -5,6 +5,9 @@
 ### Breaking changes
 - [UI] Now `SearchPlace` constructor requires additional property `id`. `copy()` function's signature has also been changed.
 
+### New features
+- [CORE] SearchResultType provides a new value - `BLOCK` which represents the block number. Available specifically for Japan.
+
 ### Mapbox dependencies
 - Search Native SDK `0.58.0`
 - Common SDK `23.0.0-beta.1`

@@ -121,6 +121,7 @@ internal object SearchEntityPresentation {
             SearchResultType.NEIGHBORHOOD -> R.string.mapbox_search_sdk_search_result_type_neighborhood
             SearchResultType.STREET -> R.string.mapbox_search_sdk_search_result_type_street
             SearchResultType.POSTCODE -> R.string.mapbox_search_sdk_search_result_type_postcode
+            SearchResultType.BLOCK -> R.string.mapbox_search_sdk_search_result_type_block
         }
     }
 }

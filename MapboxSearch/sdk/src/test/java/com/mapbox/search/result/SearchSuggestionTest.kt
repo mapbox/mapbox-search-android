@@ -125,7 +125,8 @@ internal class SearchSuggestionTest {
                     OriginalResultType.LOCALITY,
                     OriginalResultType.NEIGHBORHOOD,
                     OriginalResultType.STREET,
-                    OriginalResultType.POSTCODE -> {
+                    OriginalResultType.POSTCODE,
+                    OriginalResultType.BLOCK -> {
                         When("Trying ro instantiate ServerSearchSuggestion with original type = $originalType") {
                             val expectedResultType = checkNotNull(originalType.tryMapToSearchResultType()) {
                                 "$originalType must have corresponding ${SearchResultType::class.java.simpleName}"
@@ -302,7 +303,8 @@ internal class SearchSuggestionTest {
                     OriginalResultType.LOCALITY,
                     OriginalResultType.NEIGHBORHOOD,
                     OriginalResultType.STREET,
-                    OriginalResultType.POSTCODE -> {
+                    OriginalResultType.POSTCODE,
+                    OriginalResultType.BLOCK -> {
                         When("Trying ro instantiate GeocodingCompatSearchSuggestion with original type = $originalType") {
                             val expectedResultType = checkNotNull(originalType.tryMapToSearchResultType()) {
                                 "$originalType must have corresponding ${SearchResultType::class.java.simpleName}"
