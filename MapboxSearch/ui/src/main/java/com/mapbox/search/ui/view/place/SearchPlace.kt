@@ -22,6 +22,11 @@ import kotlinx.parcelize.Parcelize
 public class SearchPlace(
 
     /**
+     * Search place id.
+     */
+    public val id: String,
+
+    /**
      * Search place name.
      */
     public val name: String,
@@ -87,6 +92,7 @@ public class SearchPlace(
      */
     @JvmSynthetic
     public fun copy(
+        id: String = this.id,
         name: String = this.name,
         descriptionText: String? = this.descriptionText,
         address: SearchAddress? = this.address,
@@ -101,6 +107,7 @@ public class SearchPlace(
         feedback: IncorrectSearchPlaceFeedback? = this.feedback,
     ): SearchPlace {
         return SearchPlace(
+            id = id,
             name = name,
             descriptionText = descriptionText,
             address = address,
@@ -125,6 +132,7 @@ public class SearchPlace(
 
         other as SearchPlace
 
+        if (id != other.id) return false
         if (name != other.name) return false
         if (descriptionText != other.descriptionText) return false
         if (address != other.address) return false
@@ -145,7 +153,8 @@ public class SearchPlace(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = name.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
         result = 31 * result + (descriptionText?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + resultTypes.hashCode()
@@ -165,6 +174,7 @@ public class SearchPlace(
      */
     override fun toString(): String {
         return "SearchPlace(" +
+                "id='$id', " +
                 "name='$name', " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
@@ -204,6 +214,7 @@ public class SearchPlace(
             distanceMeters: Double? = searchResult.distanceMeters
         ): SearchPlace {
             return SearchPlace(
+                id = searchResult.id,
                 name = searchResult.name,
                 descriptionText = searchResult.descriptionText,
                 address = searchResult.address,
@@ -240,6 +251,7 @@ public class SearchPlace(
                 else -> null
             }
             return SearchPlace(
+                id = record.id,
                 name = record.name,
                 descriptionText = record.descriptionText,
                 address = record.address,
