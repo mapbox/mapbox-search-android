@@ -6,8 +6,8 @@
 - [UI] Now `SearchPlace` constructor requires additional property `id`. `copy()` function's signature has also been changed.
 
 ### Mapbox dependencies
-- Search Native SDK `0.57.0`
-- Common SDK `22.1.0-beta.1`
+- Search Native SDK `0.58.0`
+- Common SDK `23.0.0-beta.1`
 - Kotlin `1.5.31`
 
 
