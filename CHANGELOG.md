@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.35-SNAPSHOT
+## 1.0.0-beta.35
 
 ### Breaking changes
 - [UI] Now `SearchPlace` constructor requires additional property `id`. `copy()` function's signature has also been changed.
