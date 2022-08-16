@@ -54,6 +54,7 @@
     <string name="mapbox_search_sdk_search_result_type_favorite">Favorite</string>
     <string name="mapbox_search_sdk_search_result_type_street">Street</string>
     <string name="mapbox_search_sdk_search_result_type_postcode">Postcode</string>
+    <string name="mapbox_search_sdk_search_result_type_block">Block</string>
 
     <string name="mapbox_search_sdk_place_card_navigate">Navigate</string>
     <string name="mapbox_search_sdk_place_card_share">Share</string>

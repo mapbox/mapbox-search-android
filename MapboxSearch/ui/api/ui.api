@@ -129,9 +129,9 @@ public final class com/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback$
 public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)V
-	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static synthetic fun copy$default (Lcom/mapbox/search/ui/view/place/SearchPlace;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)V
+	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static synthetic fun copy$default (Lcom/mapbox/search/ui/view/place/SearchPlace;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
@@ -143,6 +143,7 @@ public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parc
 	public final fun getDescriptionText ()Ljava/lang/String;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getFeedback ()Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;
+	public final fun getId ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;

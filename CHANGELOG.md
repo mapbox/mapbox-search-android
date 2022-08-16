@@ -1,10 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.35-SNAPSHOT
+## 1.0.0-beta.35
+
+### Breaking changes
+- [UI] Now `SearchPlace` constructor requires additional property `id`. `copy()` function's signature has also been changed.
+
+### New features
+- [CORE] SearchResultType provides a new value - `BLOCK` which represents the block number. Available specifically for Japan.
 
 ### Mapbox dependencies
-- Search Native SDK `0.57.0`
-- Common SDK `22.1.0-beta.1`
+- Search Native SDK `0.58.0`
+- Common SDK `23.0.0-beta.1`
 - Kotlin `1.5.31`
 
 

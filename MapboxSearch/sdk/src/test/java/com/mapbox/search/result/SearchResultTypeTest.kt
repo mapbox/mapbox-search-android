@@ -30,6 +30,7 @@ internal class SearchResultTypeTest {
                         SearchResultType.NEIGHBORHOOD -> CoreResultType.NEIGHBORHOOD
                         SearchResultType.STREET -> CoreResultType.STREET
                         SearchResultType.POSTCODE -> CoreResultType.POSTCODE
+                        SearchResultType.BLOCK -> CoreResultType.BLOCK
                     }
                     Then("Core value should be $expectedCoreType", expectedCoreType, it.mapToCore())
                 }
@@ -39,7 +40,7 @@ internal class SearchResultTypeTest {
 
     private companion object {
         val SEARCH_RESULT_TYPE_VALUES = listOf(
-            "COUNTRY", "REGION", "POSTCODE", "DISTRICT", "PLACE",
+            "COUNTRY", "REGION", "POSTCODE", "BLOCK", "DISTRICT", "PLACE",
             "LOCALITY", "NEIGHBORHOOD", "STREET", "ADDRESS", "POI",
         )
     }

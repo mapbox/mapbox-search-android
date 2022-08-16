@@ -3,8 +3,8 @@ package com.mapbox.search
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Value
+import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
-import com.mapbox.common.EventsServiceOptions
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
@@ -192,7 +192,7 @@ public object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService(EventsServiceOptions(accessToken, userAgent, null))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, userAgent))
 
         return AnalyticsServiceImpl(
             context = application,

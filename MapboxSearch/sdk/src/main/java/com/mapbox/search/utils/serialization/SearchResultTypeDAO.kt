@@ -24,7 +24,9 @@ internal enum class SearchResultTypeDAO : DataAccessObject<SearchResultType> {
     @SerializedName("STREET")
     STREET,
     @SerializedName("POSTCODE")
-    POSTCODE;
+    POSTCODE,
+    @SerializedName("BLOCK")
+    BLOCK;
 
     override val isValid: Boolean
         get() = true
@@ -41,6 +43,7 @@ internal enum class SearchResultTypeDAO : DataAccessObject<SearchResultType> {
             NEIGHBORHOOD -> SearchResultType.NEIGHBORHOOD
             STREET -> SearchResultType.STREET
             POSTCODE -> SearchResultType.POSTCODE
+            BLOCK -> SearchResultType.BLOCK
         }
     }
 
@@ -58,6 +61,7 @@ internal enum class SearchResultTypeDAO : DataAccessObject<SearchResultType> {
                 SearchResultType.NEIGHBORHOOD -> NEIGHBORHOOD
                 SearchResultType.STREET -> STREET
                 SearchResultType.POSTCODE -> POSTCODE
+                SearchResultType.BLOCK -> BLOCK
             }
         }
     }

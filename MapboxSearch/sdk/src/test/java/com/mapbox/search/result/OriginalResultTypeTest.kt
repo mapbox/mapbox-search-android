@@ -92,6 +92,14 @@ internal class OriginalResultTypeTest {
                                 originalType.tryMapToSearchResultType()
                             )
                         }
+                        OriginalResultType.BLOCK -> {
+                            Then("isSearchResultType should be true", true, originalType.isSearchResultType)
+                            Then(
+                                "tryMapToSearchResultType() should return BLOCK",
+                                SearchResultType.BLOCK,
+                                originalType.tryMapToSearchResultType()
+                            )
+                        }
                         OriginalResultType.CATEGORY,
                         OriginalResultType.QUERY,
                         OriginalResultType.USER_RECORD,
