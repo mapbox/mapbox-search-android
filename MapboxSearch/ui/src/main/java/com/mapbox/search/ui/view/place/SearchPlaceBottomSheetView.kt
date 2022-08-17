@@ -29,7 +29,6 @@ import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchSdkFrameLayout
 import com.mapbox.search.ui.view.common.MapboxSdkButtonWithIcon
 import kotlinx.parcelize.Parcelize
-import java.util.UUID
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.annotation.AnnotationRetention.SOURCE
 
@@ -603,7 +602,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
                 record
             } else {
                 FavoriteRecord(
-                    id = UUID.randomUUID().toString(),
+                    id = id,
                     name = name,
                     coordinate = coordinate,
                     descriptionText = descriptionText,

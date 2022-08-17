@@ -33,8 +33,13 @@ git checkout "$BRANCH_NAME"
 #
 # Copy API reference
 #
+mkdir -p "${TMPDIR}/core"
 cp -r "${INITIAL_PATH}/MapboxSearch/sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
+
+mkdir -p "${TMPDIR}/ui"
 cp -r "${INITIAL_PATH}/MapboxSearch/ui/build/dokka" "${TMPDIR}/ui/${VERSION}"
+
+mkdir -p "${TMPDIR}/autofill"
 cp -r "${INITIAL_PATH}/MapboxSearch/autofill/build/dokka" "${TMPDIR}/autofill/${VERSION}"
 
 git config user.email "release-bot@mapbox.com"

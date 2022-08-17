@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.36-SNAPSHOT
+
+### Bug fixes
+- [UI] Now created in the `SearchPlaceBottomSheetView` `FavoriteRecord` will be saved with id from `SearchPlace.id`
+
+### Mapbox dependencies
+- Search Native SDK `0.58.0`
+- Common SDK `23.0.0-beta.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-beta.35
 
 ### Breaking changes
