@@ -10,7 +10,6 @@ import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.FavoriteRecord
@@ -28,8 +27,8 @@ import java.util.concurrent.Executor
 class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var registerProviderTask: com.mapbox.search.common.AsyncOperationTask
-    private var searchRequestTask: SearchRequestTask? = null
+    private lateinit var registerProviderTask: AsyncOperationTask
+    private var searchRequestTask: AsyncOperationTask? = null
 
     private val customDataProvider = InMemoryDataProvider(
         records = listOf(
@@ -149,7 +148,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             dataProviderEngine: IndexableDataProviderEngine,
             executor: Executor,
             callback: CompletionCallback<Unit>
-        ): com.mapbox.search.common.AsyncOperationTask {
+        ): AsyncOperationTask {
             dataProviderEngine.upsertAll(records.values.toList())
             dataProviderEngines.add(dataProviderEngine)
             executor.execute {
@@ -162,7 +161,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             dataProviderEngine: IndexableDataProviderEngine,
             executor: Executor,
             callback: CompletionCallback<Boolean>
-        ): com.mapbox.search.common.AsyncOperationTask {
+        ): AsyncOperationTask {
             val isRemoved = dataProviderEngines.remove(dataProviderEngine)
             if (isRemoved) {
                 dataProviderEngine.clear()
@@ -177,14 +176,14 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             id: String,
             executor: Executor,
             callback: CompletionCallback<in R?>
-        ): com.mapbox.search.common.AsyncOperationTask {
+        ): AsyncOperationTask {
             executor.execute {
                 callback.onComplete(records[id])
             }
             return CompletedAsyncOperationTask
         }
 
-        override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): com.mapbox.search.common.AsyncOperationTask {
+        override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): AsyncOperationTask {
             executor.execute {
                 callback.onComplete(ArrayList(records.values))
             }
@@ -195,14 +194,14 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             id: String,
             executor: Executor,
             callback: CompletionCallback<Boolean>
-        ): com.mapbox.search.common.AsyncOperationTask {
+        ): AsyncOperationTask {
             executor.execute {
                 callback.onComplete(records[id] != null)
             }
             return CompletedAsyncOperationTask
         }
 
-        override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): com.mapbox.search.common.AsyncOperationTask {
+        override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
             dataProviderEngines.forEach {
                 it.upsert(record)
             }
@@ -217,7 +216,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             records: List<R>,
             executor: Executor,
             callback: CompletionCallback<Unit>
-        ): com.mapbox.search.common.AsyncOperationTask {
+        ): AsyncOperationTask {
             dataProviderEngines.forEach {
                 it.upsertAll(records)
             }
@@ -230,7 +229,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             return CompletedAsyncOperationTask
         }
 
-        override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): com.mapbox.search.common.AsyncOperationTask {
+        override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
             dataProviderEngines.forEach {
                 it.remove(id)
             }
@@ -241,7 +240,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             return CompletedAsyncOperationTask
         }
 
-        override fun clear(executor: Executor, callback: CompletionCallback<Unit>): com.mapbox.search.common.AsyncOperationTask {
+        override fun clear(executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
             dataProviderEngines.forEach {
                 it.clear()
             }
@@ -253,7 +252,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
         }
     }
 
-    private object CompletedAsyncOperationTask : com.mapbox.search.common.AsyncOperationTask {
+    private object CompletedAsyncOperationTask : AsyncOperationTask {
 
         override val isDone: Boolean
             get() = true

@@ -483,12 +483,12 @@ package com.mapbox.search {
     method public com.mapbox.search.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener listener);
-    method public com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
-    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.OfflineSearchOptions options, com.mapbox.search.SearchCallback callback);
-    method public com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.OfflineReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.OfflineSearchOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.SearchCallback callback);
     method public void selectTileset(String? dataset, String? version);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
     property public abstract com.mapbox.search.OfflineSearchEngineSettings settings;
@@ -692,17 +692,17 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchEngineSettings getSettings();
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
-    method public com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
-    method public com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
-    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
-    method public default com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
-    method public com.mapbox.search.SearchRequestTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
-    method public com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
-    method public default com.mapbox.search.SearchRequestTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
@@ -834,17 +834,6 @@ package com.mapbox.search {
   }
 
   public final class SearchOptionsKt {
-  }
-
-  public interface SearchRequestTask {
-    method public void cancel();
-    method public boolean isCancelled();
-    method public boolean isDone();
-    property public abstract boolean isCancelled;
-    property public abstract boolean isDone;
-  }
-
-  public final class SearchRequestTaskKt {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {

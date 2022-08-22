@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.AnalyticsService
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
@@ -132,7 +133,7 @@ public interface OfflineSearchEngine {
      * @param options Search options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to handle search result.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      *
      * @see [SearchEngine.search].
      */
@@ -141,7 +142,7 @@ public interface OfflineSearchEngine {
         options: OfflineSearchOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Performs forward geocoding search request.
@@ -151,7 +152,7 @@ public interface OfflineSearchEngine {
      * @param query Search query.
      * @param options Search options.
      * @param callback The callback to handle search result on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      *
      * @see [SearchEngine.search].
      */
@@ -159,7 +160,7 @@ public interface OfflineSearchEngine {
         query: String,
         options: OfflineSearchOptions,
         callback: SearchCallback,
-    ): SearchRequestTask = search(
+    ): AsyncOperationTask = search(
         query = query,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
@@ -174,13 +175,13 @@ public interface OfflineSearchEngine {
      * @param options Reverse geocoding options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Search result callback.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      */
     public fun reverseGeocoding(
         options: OfflineReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Performs reverse geocoding search request.
@@ -189,12 +190,12 @@ public interface OfflineSearchEngine {
      *
      * @param options Reverse geocoding options.
      * @param callback Search result callback, delivers results on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      */
     public fun reverseGeocoding(
         options: OfflineReverseGeoOptions,
         callback: SearchCallback,
-    ): SearchRequestTask = reverseGeocoding(
+    ): AsyncOperationTask = reverseGeocoding(
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
@@ -210,7 +211,7 @@ public interface OfflineSearchEngine {
      * @param radiusMeters Radius (in meters) around [proximity].
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Search result callback.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      */
     public fun searchAddressesNearby(
         street: String,
@@ -218,7 +219,7 @@ public interface OfflineSearchEngine {
         radiusMeters: Double,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Searches for addresses nearby (around [proximity] point), matched with specified [street] name.
@@ -229,14 +230,14 @@ public interface OfflineSearchEngine {
      * @param proximity Coordinate to search in its vicinity.
      * @param radiusMeters Radius (in meters) around [proximity].
      * @param callback Search result callback, delivers results on the main thread.
-     * @return [SearchRequestTask] object which allows to cancel the request.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
      */
     public fun searchAddressesNearby(
         street: String,
         proximity: Point,
         radiusMeters: Double,
         callback: SearchCallback,
-    ): SearchRequestTask = searchAddressesNearby(
+    ): AsyncOperationTask = searchAddressesNearby(
         street = street,
         proximity = proximity,
         radiusMeters = radiusMeters,

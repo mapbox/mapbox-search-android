@@ -10,6 +10,7 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -891,7 +892,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
 
         var countDownLatch = CountDownLatch(1)
-        var task: SearchRequestTask? = null
+        var task: AsyncOperationTask? = null
 
         var searchSuggestions: List<SearchSuggestion> = emptyList()
         task = searchEngine.search(TEST_QUERY, SearchOptions(), object : SearchSuggestionsCallback {
@@ -910,10 +911,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful.json"))
 
         countDownLatch = CountDownLatch(1)
-        var selectionTask: SearchRequestTask? = null
+        var selectionTask: AsyncOperationTask? = null
         selectionTask = searchEngine.select(searchSuggestions.first(), object : SearchSelectionCallback {
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(selectionTask?.isDone == true)
                 countDownLatch.countDown()
             }
 

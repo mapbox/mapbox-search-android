@@ -80,14 +80,14 @@ public interface SearchEngine {
      * @param options Search options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve list of [SearchSuggestion].
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         query: String,
         options: SearchOptions,
         executor: Executor,
         callback: SearchSuggestionsCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * The first step of forward geocoding. Returns a list of [SearchSuggestion] without coordinates.
@@ -95,13 +95,13 @@ public interface SearchEngine {
      * @param query Search query.
      * @param options Search options.
      * @param callback The callback to retrieve list of [SearchSuggestion]. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         query: String,
         options: SearchOptions,
         callback: SearchSuggestionsCallback,
-    ): SearchRequestTask = search(
+    ): AsyncOperationTask = search(
         query = query,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
@@ -113,12 +113,12 @@ public interface SearchEngine {
      *
      * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
         callback: SearchSelectionCallback,
-    ): SearchRequestTask = select(
+    ): AsyncOperationTask = select(
         suggestion = suggestion,
         options = SelectOptions(),
         executor = SearchSdkMainThreadWorker.mainExecutor,
@@ -131,13 +131,13 @@ public interface SearchEngine {
      * @param suggestion Search suggestion to resolve and get the final result with address and coordinates.
      * @param options Options used for controlling internal "select" operation logic.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
         options: SelectOptions,
         callback: SearchSelectionCallback,
-    ): SearchRequestTask = select(
+    ): AsyncOperationTask = select(
         suggestion = suggestion,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
@@ -151,14 +151,14 @@ public interface SearchEngine {
      * @param options Options used for controlling internal "select" operation logic.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun select(
         suggestion: SearchSuggestion,
         options: SelectOptions,
         executor: Executor,
         callback: SearchSelectionCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Function to select multiple suggestions at once.
@@ -173,13 +173,13 @@ public interface SearchEngine {
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun select(
         suggestions: List<SearchSuggestion>,
         executor: Executor,
         callback: SearchMultipleSelectionCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Function to select multiple suggestions at once.
@@ -193,12 +193,12 @@ public interface SearchEngine {
      *
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun select(
         suggestions: List<SearchSuggestion>,
         callback: SearchMultipleSelectionCallback,
-    ): SearchRequestTask = select(
+    ): AsyncOperationTask = select(
         suggestions = suggestions,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
@@ -211,14 +211,14 @@ public interface SearchEngine {
      * @param options Category search options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Search callback to retrieve results.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         categoryName: String,
         options: CategorySearchOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Performs a search request for places based on a category.
@@ -226,13 +226,13 @@ public interface SearchEngine {
      * @param categoryName Name of category to search.
      * @param options Category search options.
      * @param callback Search callback to retrieve results. Events are dispatched on the main thread.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         categoryName: String,
         options: CategorySearchOptions,
         callback: SearchCallback,
-    ): SearchRequestTask = search(
+    ): AsyncOperationTask = search(
         categoryName = categoryName,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
@@ -245,25 +245,25 @@ public interface SearchEngine {
      * @param options Reverse geocoding options.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Search result callback.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         options: ReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask
+    ): AsyncOperationTask
 
     /**
      * Performs reverse geocoding.
      *
      * @param options Reverse geocoding options.
      * @param callback Search result callback, delivers results on the main thread.
-     * @return [SearchRequestTask] object representing pending completion of the request.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
      */
     public fun search(
         options: ReverseGeoOptions,
         callback: SearchCallback,
-    ): SearchRequestTask = search(
+    ): AsyncOperationTask = search(
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,

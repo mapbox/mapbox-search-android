@@ -4,6 +4,7 @@
 
 ### Breaking changes
 - [CORE] `AsyncOperationTask`, `SearchCancellationException`, `SearchRequestException` have been moved to `com.mapbox.search.common` package. `MainThreadWorker`, and `SearchSdkMainThreadWorker` have been moved to `com.mapbox.search.common.concurrent`.
+- [CORE] `SearchRequestTask` has been replaced with `AsyncOperationTask`
 
 ### Bug fixes
 - [UI] Now created in the `SearchPlaceBottomSheetView` `FavoriteRecord` will be saved with id from `SearchPlace.id`

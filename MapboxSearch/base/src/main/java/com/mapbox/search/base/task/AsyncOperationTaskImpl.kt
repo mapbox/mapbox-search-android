@@ -103,11 +103,13 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
 
     @Synchronized
     override fun markExecutedAndRunOnCallback(action: T.() -> Unit) {
-        if (isCancelled) {
+        if (isCompleted) {
             return
         }
 
         isDone = true
+
+        onCancelCallback = null
 
         val delegate = callbackDelegate ?: return
         callbackDelegate = null

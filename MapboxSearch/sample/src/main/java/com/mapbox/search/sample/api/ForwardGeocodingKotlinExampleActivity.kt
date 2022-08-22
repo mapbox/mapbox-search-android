@@ -8,8 +8,8 @@ import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.BuildConfig
@@ -17,7 +17,7 @@ import com.mapbox.search.sample.BuildConfig
 class ForwardGeocodingKotlinExampleActivity : Activity() {
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var searchRequestTask: SearchRequestTask
+    private lateinit var searchRequestTask: AsyncOperationTask
 
     private val searchCallback = object : SearchSelectionCallback {
 

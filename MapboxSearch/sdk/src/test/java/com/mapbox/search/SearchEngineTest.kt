@@ -25,6 +25,7 @@ import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.SearchCancellationException
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
@@ -276,7 +277,7 @@ internal class SearchEngineTest {
             val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
             every { callback.onSuggestions(any(), any()) } throws IllegalStateException()
 
-            var task: SearchRequestTask? = null
+            var task: AsyncOperationTask? = null
             When("Search function called for the first time") {
                 val throwable = catchThrowable<IllegalStateException> {
                     task = searchEngine.search(

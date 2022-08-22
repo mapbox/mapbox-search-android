@@ -15,7 +15,6 @@ import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
-import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker;
 import com.mapbox.search.record.FavoriteRecord;
@@ -43,7 +42,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
     private SearchEngine searchEngine;
     private AsyncOperationTask registerProviderTask;
     @Nullable
-    private SearchRequestTask searchRequestTask = null;
+    private AsyncOperationTask searchRequestTask = null;
 
     private final InMemoryDataProvider<IndexableRecord> customDataProvider = new InMemoryDataProvider<>(
         Arrays.asList(

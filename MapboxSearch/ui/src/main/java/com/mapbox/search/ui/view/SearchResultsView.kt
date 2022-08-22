@@ -21,7 +21,6 @@ import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.base.concurrent.checkMainThread
@@ -65,7 +64,7 @@ public class SearchResultsView @JvmOverloads constructor(
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
 
-    private var currentSearchRequestTask: SearchRequestTask? = null
+    private var currentSearchRequestTask: AsyncOperationTask? = null
 
     private val historyRecordsInteractor = HistoryRecordsInteractor()
     private var historyRecordsListener: HistoryRecordsInteractor.HistoryListener? = null

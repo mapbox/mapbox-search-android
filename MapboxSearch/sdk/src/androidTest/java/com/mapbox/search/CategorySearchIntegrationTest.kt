@@ -9,6 +9,7 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -548,7 +549,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
         val countDownLatch = CountDownLatch(1)
-        var task: SearchRequestTask? = null
+        var task: AsyncOperationTask? = null
 
         task = searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), object : SearchCallback {
             override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {

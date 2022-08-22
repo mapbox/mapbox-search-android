@@ -509,12 +509,12 @@ public abstract interface class com/mapbox/search/OfflineSearchEngine {
 	public abstract fun getSettings ()Lcom/mapbox/search/OfflineSearchEngineSettings;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/OfflineSearchEngine$EngineReadyCallback;)V
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/OfflineSearchEngine$OnIndexChangeListener;)V
-	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun reverseGeocoding (Lcom/mapbox/search/OfflineReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -523,9 +523,9 @@ public final class com/mapbox/search/OfflineSearchEngine$DefaultImpls {
 	public static fun addOnIndexChangeListener (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/OfflineSearchEngine$OnIndexChangeListener;)V
 	public static fun createPlacesTilesetDescriptor (Lcom/mapbox/search/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor (Lcom/mapbox/search/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
-	public static fun reverseGeocoding (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun search (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun searchAddressesNearby (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public static fun reverseGeocoding (Lcom/mapbox/search/OfflineSearchEngine;Lcom/mapbox/search/OfflineReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/OfflineSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun searchAddressesNearby (Lcom/mapbox/search/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public abstract interface class com/mapbox/search/OfflineSearchEngine$EngineReadyCallback {
@@ -745,29 +745,29 @@ public abstract interface class com/mapbox/search/SearchEngine {
 	public abstract fun getSettings ()Lcom/mapbox/search/SearchEngineSettings;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
-	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Ljava/util/List;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public abstract fun select (Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun select (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun select (Ljava/util/List;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun select (Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun unregisterDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun unregisterDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public final class com/mapbox/search/SearchEngine$DefaultImpls {
 	public static fun registerDataProvider (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
-	public static fun search (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun select (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun select (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
-	public static fun select (Lcom/mapbox/search/SearchEngine;Ljava/util/List;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/SearchRequestTask;
+	public static fun search (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun select (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun select (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/SelectOptions;Lcom/mapbox/search/SearchSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun select (Lcom/mapbox/search/SearchEngine;Ljava/util/List;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun unregisterDataProvider (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
@@ -902,12 +902,6 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun types ([Lcom/mapbox/search/QueryType;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/SearchOptions$Builder;
-}
-
-public abstract interface class com/mapbox/search/SearchRequestTask {
-	public abstract fun cancel ()V
-	public abstract fun isCancelled ()Z
-	public abstract fun isDone ()Z
 }
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {

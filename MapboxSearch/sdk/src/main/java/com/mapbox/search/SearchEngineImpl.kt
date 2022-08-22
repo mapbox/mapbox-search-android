@@ -19,6 +19,7 @@ import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -53,11 +54,11 @@ internal class SearchEngineImpl(
         options: SearchOptions,
         executor: Executor,
         callback: SearchSuggestionsCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("search($query, $options) called")
 
         val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSuggestionsCallbackAdapter(callback)
-        val task = makeRequest(baseCallback) { request ->
+        return makeRequest(baseCallback) { request ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             coreEngine.search(
                 query, emptyList(), options.mapToCore(),
@@ -75,14 +76,13 @@ internal class SearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun select(
         suggestions: List<SearchSuggestion>,
         executor: Executor,
         callback: SearchMultipleSelectionCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         require(suggestions.isNotEmpty()) {
             "No suggestions were provided! Please, provide at least 1 suggestion."
         }
@@ -93,7 +93,7 @@ internal class SearchEngineImpl(
                     IllegalArgumentException("All provided suggestions must originate from the same search result!")
                 )
             }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         logd("batch select($suggestions) called")
@@ -103,7 +103,7 @@ internal class SearchEngineImpl(
         val filtered: List<SearchSuggestion> = suggestions.filter { it.isBatchResolveSupported }
         if (filtered.isEmpty()) {
             executor.execute { callback.onResult(filtered, emptyList(), searchResponseInfo) }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         logd("Batch retrieve. ${suggestions.size} requested, ${filtered.size} took for processing")
@@ -142,7 +142,7 @@ internal class SearchEngineImpl(
                 executor.execute {
                     callback.onResult(filtered, result, searchResponseInfo)
                 }
-                SearchRequestTaskImpl.completed()
+                AsyncOperationTaskImpl.COMPLETED
             }
             else -> {
                 val coreSearchResults = toResolve.map {
@@ -174,8 +174,9 @@ internal class SearchEngineImpl(
                     }
                 }
 
-                val baseCallback: BaseSearchMultipleSelectionCallback = BaseSearchMultipleSelectionCallbackAdapter(callback)
-                val task = makeRequest(baseCallback) { searchRequestTask ->
+                val baseCallback: BaseSearchMultipleSelectionCallback =
+                    BaseSearchMultipleSelectionCallbackAdapter(callback)
+                makeRequest(baseCallback) { searchRequestTask ->
                     val requestOptions = toResolve.first().requestOptions
                     val requestContext = requestOptions.requestContext
                     coreEngine.retrieveBucket(
@@ -192,7 +193,6 @@ internal class SearchEngineImpl(
                         )
                     )
                 }
-                SearchRequestTaskAsyncAdapter(task)
             }
         }
     }
@@ -203,7 +203,7 @@ internal class SearchEngineImpl(
         options: SelectOptions,
         executor: Executor,
         callback: SearchSelectionCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("select($suggestion, $options) called")
 
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
@@ -211,8 +211,8 @@ internal class SearchEngineImpl(
         fun completeSearchResultSelection(
             suggestion: AbstractSearchSuggestion,
             resolved: SearchResult
-        ): SearchRequestTask {
-            val searchRequestTask = SearchRequestTaskImpl(callback)
+        ): AsyncOperationTask {
+            val task = AsyncOperationTaskImpl(callback)
 
             coreEngine.onSelected(coreRequestOptions, suggestion.rawSearchResult.mapToCore())
 
@@ -223,29 +223,29 @@ internal class SearchEngineImpl(
             )
 
             if (!options.addResultToHistory) {
-                searchRequestTask.markExecutedAndRunOnCallback(executor) {
+                task.markExecutedAndRunOnCallback(executor) {
                     onResult(suggestion, resolved, responseInfo)
                 }
-                return searchRequestTask
+                return task
             }
 
-            if (!searchRequestTask.isCompleted) {
-                searchRequestTask += historyService.addToHistoryIfNeeded(
+            if (!task.isCompleted) {
+                task += historyService.addToHistoryIfNeeded(
                     searchResult = resolved.mapToBase(),
                     callback = { result ->
                         result.onSuccess {
-                            searchRequestTask.markExecutedAndRunOnCallback(executor) {
+                            task.markExecutedAndRunOnCallback(executor) {
                                 onResult(suggestion, resolved, responseInfo)
                             }
                         }.onFailure { e ->
-                            searchRequestTask.markExecutedAndRunOnCallback(executor) {
+                            task.markExecutedAndRunOnCallback(executor) {
                                 onError((e as? Exception) ?: Exception(e))
                             }
                         }
                     }
                 )
             }
-            return searchRequestTask
+            return task
         }
 
         return when (suggestion) {
@@ -259,7 +259,7 @@ internal class SearchEngineImpl(
             }
             is ServerSearchSuggestion -> {
                 val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSelectionCallbackAdapter(callback)
-                val task = makeRequest(baseCallback) { request ->
+                makeRequest(baseCallback) { request ->
                     val requestContext = suggestion.requestOptions.requestContext
                     coreEngine.retrieve(
                         coreRequestOptions,
@@ -278,7 +278,6 @@ internal class SearchEngineImpl(
                         )
                     )
                 }
-                SearchRequestTaskAsyncAdapter(task)
             }
             is IndexableRecordSearchSuggestion -> {
                 val resolved = IndexableRecordSearchResultImpl(
@@ -296,8 +295,8 @@ internal class SearchEngineImpl(
         options: CategorySearchOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask {
-        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             coreEngine.search(
                 "",
@@ -313,15 +312,14 @@ internal class SearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun search(
         options: ReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
-        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             coreEngine.reverseGeocoding(
                 options.mapToCore(),
@@ -335,7 +333,6 @@ internal class SearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun <R : IndexableRecord> registerDataProvider(

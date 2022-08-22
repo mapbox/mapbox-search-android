@@ -15,6 +15,8 @@ import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
 import java.util.concurrent.Executor
@@ -71,10 +73,10 @@ internal class OfflineSearchEngineImpl(
         options: OfflineSearchOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("search($query, $options) called")
 
-        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -87,15 +89,14 @@ internal class OfflineSearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun reverseGeocoding(
         options: OfflineReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
-        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.reverseGeocodingOffline(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -108,7 +109,6 @@ internal class OfflineSearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun searchAddressesNearby(
@@ -117,15 +117,15 @@ internal class OfflineSearchEngineImpl(
         radiusMeters: Double,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         if (radiusMeters < 0.0) {
             executor.execute {
                 callback.onError(IllegalArgumentException("Negative radius"))
             }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
-        val task = makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.getAddressesOffline(
                 street,
                 proximity,
@@ -140,7 +140,6 @@ internal class OfflineSearchEngineImpl(
                 )
             )
         }
-        return SearchRequestTaskAsyncAdapter(task)
     }
 
     override fun addEngineReadyCallback(executor: Executor, callback: EngineReadyCallback) {
