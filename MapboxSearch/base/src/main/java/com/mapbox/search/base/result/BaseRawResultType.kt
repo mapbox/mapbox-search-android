@@ -2,7 +2,7 @@ package com.mapbox.search.base.result
 
 import com.mapbox.search.base.core.CoreResultType
 
-// TODO merge with BaseRawResultType?
+// TODO merge with BaseSearchResultType?
 enum class BaseRawResultType {
     UNKNOWN,
     COUNTRY,

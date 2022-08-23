@@ -701,8 +701,8 @@ package com.mapbox.search {
     method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
-    method public com.mapbox.search.common.AsyncOperationTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
-    method public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
@@ -744,7 +744,7 @@ package com.mapbox.search {
 
   public interface SearchMultipleSelectionCallback {
     method public void onError(Exception e);
-    method public void onResult(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onResult(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchNavigationOptions implements android.os.Parcelable {
@@ -872,7 +872,7 @@ package com.mapbox.search {
 
   public interface SearchSuggestionsCallback {
     method public void onError(Exception e);
-    method public void onSuggestions(java.util.List<? extends com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onSuggestions(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   @kotlinx.parcelize.Parcelize public final class SelectOptions implements android.os.Parcelable {
@@ -1378,7 +1378,7 @@ package com.mapbox.search.result {
   public final class SearchResultTypeKt {
   }
 
-  public sealed interface SearchSuggestion extends android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize public final class SearchSuggestion implements android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String> getCategories();
     method public String? getDescriptionText();
@@ -1394,21 +1394,21 @@ package com.mapbox.search.result {
     method public Integer? getServerIndex();
     method public com.mapbox.search.result.SearchSuggestionType getType();
     method public boolean isBatchResolveSupported();
-    property public abstract com.mapbox.search.result.SearchAddress? address;
-    property public abstract java.util.List<java.lang.String> categories;
-    property public abstract String? descriptionText;
-    property public abstract Double? distanceMeters;
-    property public abstract Double? etaMinutes;
-    property public abstract java.util.Map<java.lang.String,java.lang.String> externalIDs;
-    property public abstract String id;
-    property public abstract boolean isBatchResolveSupported;
-    property public abstract String? makiIcon;
-    property public abstract String? matchingName;
-    property public abstract com.mapbox.search.SearchResultMetadata? metadata;
-    property public abstract String name;
-    property public abstract com.mapbox.search.RequestOptions requestOptions;
-    property public abstract Integer? serverIndex;
-    property public abstract com.mapbox.search.result.SearchSuggestionType type;
+    property public final com.mapbox.search.result.SearchAddress? address;
+    property public final java.util.List<java.lang.String> categories;
+    property public final String? descriptionText;
+    property public final Double? distanceMeters;
+    property public final Double? etaMinutes;
+    property public final java.util.Map<java.lang.String,java.lang.String> externalIDs;
+    property public final String id;
+    property public final boolean isBatchResolveSupported;
+    property public final String? makiIcon;
+    property public final String? matchingName;
+    property public final com.mapbox.search.SearchResultMetadata? metadata;
+    property public final String name;
+    property public final com.mapbox.search.RequestOptions requestOptions;
+    property public final Integer? serverIndex;
+    property public final com.mapbox.search.result.SearchSuggestionType type;
   }
 
   public final class SearchSuggestionKt {

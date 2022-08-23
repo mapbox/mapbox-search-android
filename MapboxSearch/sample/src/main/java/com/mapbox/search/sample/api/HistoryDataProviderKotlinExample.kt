@@ -12,7 +12,7 @@ class HistoryDataProviderKotlinExample : AppCompatActivity() {
 
     private val historyDataProvider = serviceProvider.historyDataProvider()
 
-    private lateinit var task: com.mapbox.search.common.AsyncOperationTask
+    private lateinit var task: AsyncOperationTask
 
     private val callback: CompletionCallback<List<HistoryRecord>> = object : CompletionCallback<List<HistoryRecord>> {
         override fun onComplete(result: List<HistoryRecord>) {

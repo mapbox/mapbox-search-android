@@ -22,7 +22,6 @@ import java.util.List;
 
 public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
 
-    private SearchEngine searchEngine;
     private AsyncOperationTask searchRequestTask;
 
     private final SearchCallback searchCallback = new SearchCallback() {
@@ -46,7 +45,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        final SearchEngine searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
             new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         );
 

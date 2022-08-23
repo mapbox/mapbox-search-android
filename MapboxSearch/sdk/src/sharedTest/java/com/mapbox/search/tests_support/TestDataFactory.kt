@@ -25,6 +25,8 @@ import com.mapbox.search.base.core.CoreSuggestAction
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.internal.bindgen.ConnectionError
@@ -40,11 +42,10 @@ import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
 import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
-import java.util.HashMap
 
 @Suppress("LongParameterList")
 internal fun createTestBaseRawSearchResult(
@@ -128,7 +129,6 @@ internal fun createTestCoreRequestOptions(
     sessionID = sessionID,
 )
 
-@Suppress("LongParameterList")
 internal fun createTestBaseRequestOptions(
     core: CoreRequestOptions = createTestCoreRequestOptions(),
     requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
@@ -137,19 +137,48 @@ internal fun createTestBaseRequestOptions(
     requestContext = requestContext
 )
 
-internal fun createTestSuggestion(): ServerSearchSuggestion = ServerSearchSuggestion(
-    rawSearchResult = createTestBaseRawSearchResult(
-        action = BaseSuggestAction(
-            endpoint = "testEndpoint",
-            path = "",
-            query = "test",
-            body = null,
-            multiRetrievable = false
-        ),
-        center = Point.fromLngLat(10.0, 11.123456)
+internal fun createTestBaseSuggestAction(
+    endpoint: String = "test-endpoint",
+    path: String = "test-path",
+    query: String? = "test-query",
+    body: ByteArray? = null,
+    multiRetrievable: Boolean = false,
+): BaseSuggestAction {
+    return BaseSuggestAction(
+        endpoint = endpoint,
+        path = path,
+        query = query,
+        body = body,
+        multiRetrievable = multiRetrievable
+    )
+}
+
+internal fun createTestBaseSearchSuggestion(
+    rawSearchResult: BaseRawSearchResult = createTestBaseRawSearchResult(
+        action = createTestBaseSuggestAction()
     ),
-    requestOptions = createTestRequestOptions()
-)
+    requestOptions: BaseRequestOptions = createTestBaseRequestOptions()
+): BaseSearchSuggestion {
+    return BaseServerSearchSuggestion(
+        rawSearchResult = rawSearchResult,
+        requestOptions = requestOptions
+    )
+}
+
+internal fun createTestSearchSuggestion(base: BaseSearchSuggestion = createTestBaseSearchSuggestion()): SearchSuggestion {
+    return SearchSuggestion(base)
+}
+
+internal fun createTestSearchSuggestion(id: String): SearchSuggestion {
+    return SearchSuggestion(
+        createTestBaseSearchSuggestion(
+            createTestBaseRawSearchResult(
+                id = id,
+                action = createTestBaseSuggestAction(),
+            )
+        )
+    )
+}
 
 internal fun createTestSearchResult(): ServerSearchResultImpl = ServerSearchResultImpl(
     types = listOf(SearchResultType.POI),

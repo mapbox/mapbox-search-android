@@ -48,8 +48,4 @@ data class BaseIndexableRecordSearchResultImpl(
 
     override val metadata: CoreResultMetadata?
         get() = record.metadata
-
-    override fun toString(): String {
-        return super.toString()
-    }
 }

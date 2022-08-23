@@ -54,7 +54,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
     private final SearchSelectionCallback searchCallback = new SearchSelectionCallback() {
         @Override
-        public void onSuggestions(@NonNull List<? extends SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
+        public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
             if (suggestions.isEmpty()) {
                 Log.i("SearchApiExample", "No suggestions found");
             } else {

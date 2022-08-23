@@ -26,8 +26,4 @@ data class BaseServerSearchResultImpl(
 
     override val coordinate: Point
         get() = requireNotNull(rawSearchResult.center)
-
-    override fun toString(): String {
-        return super.toString()
-    }
 }

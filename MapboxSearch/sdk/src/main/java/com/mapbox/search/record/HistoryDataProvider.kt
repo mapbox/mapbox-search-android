@@ -10,10 +10,6 @@ import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.base.utils.LocalTimeProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.mapToPlatform
 import java.util.PriorityQueue
 import java.util.concurrent.Executor
@@ -158,12 +154,6 @@ internal class HistoryDataProviderImpl(
     private companion object {
 
         const val DEFAULT_MAX_HISTORY_RECORDS_AMOUNT: Int = 100
-
-        val SearchSuggestion.isHistory: Boolean
-            get() = this is IndexableRecordSearchSuggestion && type.isHistoryRecord
-
-        val SearchResult.isHistory: Boolean
-            get() = this is IndexableRecordSearchResult && record is HistoryRecord
 
         val BaseSearchResult.isHistory: Boolean
             get() = (baseType as? BaseSearchResult.Type.IndexableRecordSearchResult)?.record?.isHistory == true

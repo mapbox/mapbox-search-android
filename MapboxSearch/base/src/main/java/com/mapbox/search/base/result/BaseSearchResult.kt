@@ -68,26 +68,4 @@ abstract class BaseSearchResult(
         data class ServerResult(val coordinate: Point) : Type()
         data class IndexableRecordSearchResult(val record: BaseIndexableRecord) : Type()
     }
-
-    override fun toString(): String {
-        return "BaseSearchResult(" +
-                "id='$id', " +
-                "name='$name', " +
-                "matchingName='$matchingName', " +
-                "address='$address', " +
-                "descriptionText='$descriptionText', " +
-                "routablePoints='$routablePoints', " +
-                "categories='$categories', " +
-                "makiIcon='$makiIcon', " +
-                "coordinate='$coordinate', " +
-                "accuracy='$accuracy', " +
-                "types='$types', " +
-                "etaMinutes='$etaMinutes', " +
-                "metadata='$metadata', " +
-                "externalIDs='$externalIDs`, " +
-                "distanceMeters='$distanceMeters', " +
-                "serverIndex='$serverIndex', " +
-                "requestOptions='$requestOptions'" +
-                ")"
-    }
 }

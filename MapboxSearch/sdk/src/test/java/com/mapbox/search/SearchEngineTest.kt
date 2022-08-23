@@ -16,6 +16,8 @@ import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
+import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
+import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.BaseSearchSuggestion
@@ -32,11 +34,8 @@ import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.mapToBase
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
@@ -465,7 +464,7 @@ internal class SearchEngineTest {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
                 val task = searchEngine.select(
-                    suggestion = TEST_USER_RECORD_SEARCH_SUGGESTION,
+                    suggestion = TEST_USER_RECORD_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback
@@ -483,7 +482,7 @@ internal class SearchEngineTest {
 
                 Verify("Suggestion added to history") {
                     historyService.addToHistoryIfNeeded(
-                        TEST_FAVORITE_RECORD_SEARCH_RESULT.mapToBase(),
+                        TEST_FAVORITE_RECORD_SEARCH_RESULT,
                         any(),
                         historyServiceCompletionCallbackSlot.captured
                     )
@@ -491,8 +490,8 @@ internal class SearchEngineTest {
 
                 Verify("Results passed to callback") {
                     callback.onResult(
-                        TEST_USER_RECORD_SEARCH_SUGGESTION,
-                        TEST_FAVORITE_RECORD_SEARCH_RESULT,
+                        TEST_USER_RECORD_SEARCH_SUGGESTION.mapToPlatform(),
+                        TEST_FAVORITE_RECORD_SEARCH_RESULT.mapToPlatform(),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS.mapToBase().mapToPlatform(),
                             null,
@@ -646,16 +645,16 @@ internal class SearchEngineTest {
             metadata = null
         )
 
-        val TEST_USER_RECORD_SEARCH_SUGGESTION = IndexableRecordSearchSuggestion(
-            TEST_FAVORITE_RECORD,
+        val TEST_USER_RECORD_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
+            TEST_FAVORITE_RECORD.mapToBase(),
             rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase().copy(
                 types = listOf(BaseRawResultType.USER_RECORD)
             ),
-            requestOptions = BASE_TEST_REQUEST_OPTIONS.mapToPlatform()
+            requestOptions = BASE_TEST_REQUEST_OPTIONS
         )
 
-        val TEST_FAVORITE_RECORD_SEARCH_RESULT = IndexableRecordSearchResultImpl(
-            record = TEST_FAVORITE_RECORD,
+        val TEST_FAVORITE_RECORD_SEARCH_RESULT = BaseIndexableRecordSearchResultImpl(
+            record = TEST_FAVORITE_RECORD.mapToBase(),
             rawSearchResult = TEST_USER_RECORD_SEARCH_SUGGESTION.rawSearchResult,
             requestOptions = TEST_USER_RECORD_SEARCH_SUGGESTION.requestOptions
         )

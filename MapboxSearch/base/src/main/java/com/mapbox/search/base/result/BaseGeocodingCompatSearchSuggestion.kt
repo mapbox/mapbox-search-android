@@ -28,8 +28,4 @@ data class BaseGeocodingCompatSearchSuggestion(
 
     override val isBatchResolveSupported: Boolean
         get() = true
-
-    override fun toString(): String {
-        return super.toString()
-    }
 }

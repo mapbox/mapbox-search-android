@@ -17,7 +17,7 @@ class FavoritesDataProviderKotlinExample : AppCompatActivity() {
 
     private val favoritesDataProvider = serviceProvider.favoritesDataProvider()
 
-    private lateinit var task: com.mapbox.search.common.AsyncOperationTask
+    private lateinit var task: AsyncOperationTask
 
     private val retrieveFavoritesCallback: CompletionCallback<List<FavoriteRecord>> =
         object : CompletionCallback<List<FavoriteRecord>> {

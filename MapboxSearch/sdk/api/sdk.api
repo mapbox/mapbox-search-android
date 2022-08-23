@@ -1486,22 +1486,28 @@ public final class com/mapbox/search/result/SearchResultType : java/lang/Enum {
 	public static fun values ()[Lcom/mapbox/search/result/SearchResultType;
 }
 
-public abstract interface class com/mapbox/search/result/SearchSuggestion : android/os/Parcelable {
-	public abstract fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
-	public abstract fun getCategories ()Ljava/util/List;
-	public abstract fun getDescriptionText ()Ljava/lang/String;
-	public abstract fun getDistanceMeters ()Ljava/lang/Double;
-	public abstract fun getEtaMinutes ()Ljava/lang/Double;
-	public abstract fun getExternalIDs ()Ljava/util/Map;
-	public abstract fun getId ()Ljava/lang/String;
-	public abstract fun getMakiIcon ()Ljava/lang/String;
-	public abstract fun getMatchingName ()Ljava/lang/String;
-	public abstract fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
-	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
-	public abstract fun getServerIndex ()Ljava/lang/Integer;
-	public abstract fun getType ()Lcom/mapbox/search/result/SearchSuggestionType;
-	public abstract fun isBatchResolveSupported ()Z
+public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
+	public final fun getCategories ()Ljava/util/List;
+	public final fun getDescriptionText ()Ljava/lang/String;
+	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getEtaMinutes ()Ljava/lang/Double;
+	public final fun getExternalIDs ()Ljava/util/Map;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getMatchingName ()Ljava/lang/String;
+	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
+	public final fun getServerIndex ()Ljava/lang/Integer;
+	public final fun getType ()Lcom/mapbox/search/result/SearchSuggestionType;
+	public fun hashCode ()I
+	public final fun isBatchResolveSupported ()Z
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public abstract class com/mapbox/search/result/SearchSuggestionType : android/os/Parcelable {

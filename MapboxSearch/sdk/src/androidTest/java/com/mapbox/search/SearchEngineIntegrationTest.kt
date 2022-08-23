@@ -4,6 +4,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
@@ -20,7 +21,6 @@ import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
@@ -29,7 +29,9 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
+import com.mapbox.search.result.isIndexableRecordSuggestion
+import com.mapbox.search.result.mapToPlatform
+import com.mapbox.search.result.record
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
@@ -236,7 +238,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             )
         )
 
-        val expectedResult = ServerSearchSuggestion(
+        val expectedResult = BaseServerSearchSuggestion(
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.copy(
                 options = options.copy(proximity = TEST_USER_LOCATION),
@@ -244,8 +246,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
                     responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
                 )
-            )
-        )
+            ).mapToBase()
+        ).mapToPlatform()
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, first))
 
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE, SearchResultType.REGION), suggestions[1].type)
@@ -444,7 +446,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         ), callback)
 
         val suggestions = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions
-        assertEquals(record, (suggestions.first() as IndexableRecordSearchSuggestion).record)
+        assertEquals(record, suggestions.first().record)
     }
 
     @Test
@@ -467,7 +469,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
 
         val suggestions = suggestionsResult.suggestions
-        assertEquals(record, (suggestions.first() as IndexableRecordSearchSuggestion).record)
+        assertEquals(record, suggestions.first().record)
     }
 
     @Test
@@ -490,7 +492,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
 
         val suggestions = suggestionsResult.suggestions
-        assertFalse(suggestions.any { it is IndexableRecordSearchSuggestion })
+        assertFalse(suggestions.any { it.isIndexableRecordSuggestion })
     }
 
     @Test
@@ -674,13 +676,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        val expectedResult = ServerSearchSuggestion(
+        val expectedResult = BaseServerSearchSuggestion(
             recursionSearchResult,
             TEST_REQUEST_OPTIONS.copy(
                 options = options.copy(proximity = TEST_USER_LOCATION),
                 proximityRewritten = true
-            )
-        )
+            ).mapToBase()
+        ).mapToPlatform()
 
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, suggestions.first()))
 
@@ -732,7 +734,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        val expectedSearchSuggestion = ServerSearchSuggestion(
+        val expectedSearchSuggestion = BaseServerSearchSuggestion(
             baseRawCategorySuggestion,
             TEST_REQUEST_OPTIONS.run {
                 copy(
@@ -745,8 +747,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                         responseUuid = "be35d556-9e14-4303-be15-57497c331348"
                     ),
                 )
-            }
-        )
+            }.mapToBase()
+        ).mapToPlatform()
         assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
 
         assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)

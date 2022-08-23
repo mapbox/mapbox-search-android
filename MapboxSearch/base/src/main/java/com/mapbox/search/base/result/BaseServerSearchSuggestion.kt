@@ -27,8 +27,4 @@ data class BaseServerSearchSuggestion(
         rawSearchResult.type == BaseRawResultType.QUERY -> BaseSearchSuggestionType.Query
         else -> error("Illegal raw search result type: ${rawSearchResult.type}")
     }
-
-    override fun toString(): String {
-        return super.toString()
-    }
 }

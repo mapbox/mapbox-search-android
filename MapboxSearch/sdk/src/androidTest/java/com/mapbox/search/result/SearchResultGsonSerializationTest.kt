@@ -2,7 +2,7 @@ package com.mapbox.search.result
 
 import com.google.gson.Gson
 import com.mapbox.search.tests_support.createTestSearchResult
-import com.mapbox.search.tests_support.createTestSuggestion
+import com.mapbox.search.tests_support.createTestSearchSuggestion
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -12,7 +12,7 @@ internal class SearchResultGsonSerializationTest {
 
     @Test
     fun searchSuggestionTest() {
-        testObjectSerialization(createTestSuggestion())
+        testObjectSerialization(createTestSearchSuggestion())
     }
 
     @Test

@@ -29,7 +29,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
     private final SearchSelectionCallback searchCallback = new SearchSelectionCallback() {
 
         @Override
-        public void onSuggestions(@NonNull List<? extends SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
+        public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
             if (suggestions.isEmpty()) {
                 Log.i("SearchApiExample", "No suggestions found");
             } else {
@@ -57,7 +57,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
     private final SearchMultipleSelectionCallback multipleSelection = new SearchMultipleSelectionCallback() {
 
         @Override
-        public void onResult(@NonNull List<? extends SearchSuggestion> suggestions, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onResult(@NonNull List<SearchSuggestion> suggestions, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Batch retrieve results: " + results);
         }
 

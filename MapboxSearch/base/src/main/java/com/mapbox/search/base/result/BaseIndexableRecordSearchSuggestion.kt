@@ -36,8 +36,4 @@ data class BaseIndexableRecordSearchSuggestion(
 
     override val makiIcon: String?
         get() = record.makiIcon
-
-    override fun toString(): String {
-        return "BaseSearchSuggestion(${baseToString()}, record='$record')"
-    }
 }

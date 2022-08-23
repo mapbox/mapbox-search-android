@@ -52,26 +52,4 @@ sealed class BaseSearchSuggestion(
     abstract val type: BaseSearchSuggestionType
 
     abstract val requestOptions: BaseRequestOptions
-
-    protected fun baseToString(): String {
-        return "id='$id', " +
-                "name='$name', " +
-                "matchingName='$matchingName', " +
-                "address='$address', " +
-                "descriptionText='$descriptionText', " +
-                "distanceMeters='$distanceMeters', " +
-                "categories='$categories', " +
-                "makiIcon='$makiIcon', " +
-                "type='$type', " +
-                "etaMinutes='$etaMinutes', " +
-                "metadata='$metadata', " +
-                "externalIDs='$externalIDs`, " +
-                "isBatchResolveSupported='$isBatchResolveSupported', " +
-                "serverIndex='$serverIndex', " +
-                "requestOptions='$requestOptions'"
-    }
-
-    override fun toString(): String {
-        return "BaseSearchSuggestion(${baseToString()})"
-    }
 }

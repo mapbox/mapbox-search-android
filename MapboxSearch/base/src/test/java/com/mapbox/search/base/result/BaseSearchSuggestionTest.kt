@@ -1,19 +1,13 @@
 package com.mapbox.search.base.result
 
-import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.record.BaseIndexableRecord
-import com.mapbox.search.base.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.base.tests_support.TestParcelable
 import com.mapbox.search.base.tests_support.createBaseSearchAddress
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.base.tests_support.createTestBaseRequestOptions
-import com.mapbox.search.base.tests_support.createTestBaseSuggestAction
 import com.mapbox.search.base.tests_support.createTestCoreRequestOptions
 import com.mapbox.search.base.tests_support.withPrefabTestBaseRawSearchResult
-import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
-import com.mapbox.search.common.tests.ReflectionObjectsFactory
-import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestBoundingBox
 import com.mapbox.search.common.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
@@ -341,7 +335,7 @@ internal class BaseSearchSuggestionTest {
     }
 
     @TestFactory
-    fun `Check ServerSearchSuggestion equals-hashCode-toString functions`() = TestCase {
+    fun `Check ServerSearchSuggestion equals-hashCode functions`() = TestCase {
         Given("ServerSearchSuggestion class") {
             When("equals() and hashCode() called") {
                 Then("equals() and hashCode() functions should use every declared property") {
@@ -356,41 +350,11 @@ internal class BaseSearchSuggestionTest {
                         .verify()
                 }
             }
-
-            When("toString() called") {
-                Then("toString() function should include every declared property") {
-                    val baseRawSearchResultObjectCreator = CustomTypeObjectCreatorImpl(
-                        clazz = BaseRawSearchResult::class,
-                        factory = { mode ->
-                            listOf(
-                                createTestBaseRawSearchResult(
-                                    id = "test-result-1",
-                                    types = listOf(BaseRawResultType.POI),
-                                    action = createTestBaseSuggestAction()
-                                ),
-                                createTestBaseRawSearchResult(
-                                    id = "test-result-2",
-                                    types = listOf(BaseRawResultType.ADDRESS),
-                                    action = createTestBaseSuggestAction()
-                                ),
-                            )[mode.ordinal]
-                        }
-                    )
-
-                    ToStringVerifier(
-                        clazz = BaseServerSearchSuggestion::class,
-                        ignoredProperties = listOf("rawSearchResult"),
-                        objectsFactory = ReflectionObjectsFactory(
-                            extraCreators = listOf(baseRawSearchResultObjectCreator) + SdkCustomTypeObjectCreators.ALL_CREATORS,
-                        )
-                    ).verify()
-                }
-            }
         }
     }
 
     @TestFactory
-    fun `Check IndexableRecordSearchSuggestion equals-hashCode-toString functions`() = TestCase {
+    fun `Check IndexableRecordSearchSuggestion equals-hashCode functions`() = TestCase {
         Given("IndexableRecordSearchSuggestion class") {
             When("equals() and hashCode() called") {
                 Then("equals() and hashCode() functions should use every declared property") {
@@ -401,45 +365,6 @@ internal class BaseSearchSuggestionTest {
                         // TODO(#777) EqualsVerifier check fails on overridden from superclass properties
                         .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
                         .verify()
-                }
-            }
-
-            When("toString() called") {
-                Then("toString() function should include every declared property") {
-                    val baseRawSearchResultObjectCreator = CustomTypeObjectCreatorImpl(
-                        clazz = BaseRawSearchResult::class,
-                        factory = { mode ->
-                            listOf(
-                                createTestBaseRawSearchResult(
-                                    id = "test-result-1",
-                                    types = listOf(BaseRawResultType.USER_RECORD),
-                                    layerId = "test-layer-id-1"
-                                ),
-                                createTestBaseRawSearchResult(
-                                    id = "test-result-2",
-                                    types = listOf(BaseRawResultType.USER_RECORD),
-                                    layerId = "test-layer-id-2"
-                                ),
-                            )[mode.ordinal]
-                        }
-                    )
-
-                    val parcelableObjectCreator = CustomTypeObjectCreatorImpl(
-                        clazz = Parcelable::class,
-                        factory = { mode ->
-                            listOf(TestParcelable("1"), TestParcelable("2"))[mode.ordinal]
-                        }
-                    )
-
-                    ToStringVerifier(
-                        clazz = BaseIndexableRecordSearchSuggestion::class,
-                        ignoredProperties = listOf("rawSearchResult"),
-                        objectsFactory = ReflectionObjectsFactory(
-                            extraCreators = listOf(baseRawSearchResultObjectCreator) +
-                                    parcelableObjectCreator +
-                                    SdkCustomTypeObjectCreators.ALL_CREATORS,
-                        ),
-                    ).verify()
                 }
             }
         }

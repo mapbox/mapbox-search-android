@@ -17,15 +17,12 @@ import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.AbstractSearchResult
-import com.mapbox.search.result.AbstractSearchSuggestion
-import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
+import com.mapbox.search.result.isIndexableRecordSuggestion
 import java.util.concurrent.Executor
 
 internal class AnalyticsServiceImpl(
@@ -224,23 +221,14 @@ internal class AnalyticsServiceImpl(
         asTemplate: Boolean = false,
         callback: CompletionCallback<SearchFeedbackEvent>
     ) {
-        assertDebug(searchSuggestion is ServerSearchSuggestion ||
-                    searchSuggestion is IndexableRecordSearchSuggestion ||
-                    searchSuggestion is GeocodingCompatSearchSuggestion
-        ) {
-            "searchSuggestion of unsupported type (${searchSuggestion.javaClass.simpleName}) was provided. " +
-                    "Please, do not use custom types. If it's not the case, contact Search SDK team."
-        }
-        require(searchSuggestion is AbstractSearchSuggestion) { "Parameter searchSuggestion must provide original response." }
-
         feedbackEventsFactory.createSearchFeedbackEvent(
-            baseRawSearchResult = searchSuggestion.rawSearchResult,
+            baseRawSearchResult = searchSuggestion.base.rawSearchResult,
             requestOptions = searchSuggestion.requestOptions,
             searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,
             isReproducible = responseInfo?.isReproducible,
             event = event,
-            isCached = searchSuggestion is IndexableRecordSearchSuggestion,
+            isCached = searchSuggestion.isIndexableRecordSuggestion,
             asTemplate = asTemplate,
             callback = callback,
         )
