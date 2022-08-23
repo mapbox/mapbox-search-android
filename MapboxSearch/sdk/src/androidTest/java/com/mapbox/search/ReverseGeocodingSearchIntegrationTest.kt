@@ -1,7 +1,17 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.utils.KeyboardLocaleProvider
+import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.OpenPeriod
 import com.mapbox.search.metadata.ParkingData
@@ -10,11 +20,9 @@ import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
@@ -23,17 +31,12 @@ import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
-import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.enqueueMultiple
-import com.mapbox.search.utils.orientation.ScreenOrientation
-import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
@@ -143,9 +146,9 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val searchResult = res.results.first()
 
-        val originalSearchResult = createTestOriginalSearchResult(
+        val rawSearchResult = createTestBaseRawSearchResult(
             id = "p4bWdnYBo8NaDG6XjlSq",
-            types = listOf(OriginalResultType.POI),
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Eiffel Tower"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("historic site", "tourist attraction", "monument", "viewpoint"),
@@ -213,7 +216,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val expectedResult = ServerSearchResultImpl(
             listOf(SearchResultType.POI),
-            originalSearchResult,
+            rawSearchResult,
             RequestOptions(
                 query = formatPoints(TEST_POINT),
                 endpoint = "reverse",
@@ -226,7 +229,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 originRewritten = false,
                 sessionID = "",
                 requestContext = SearchRequestContext(
-                    apiType = ApiType.SBS,
+                    apiType = CoreApiType.SBS,
                     keyboardLocale = TEST_KEYBOARD_LOCALE,
                     screenOrientation = TEST_ORIENTATION,
                     responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
@@ -340,11 +343,11 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
 
         val countDownLatch = CountDownLatch(1)
-        var task: SearchRequestTask? = null
+        var task: AsyncOperationTask? = null
 
         task = searchEngine.search(ReverseGeoOptions(center = TEST_POINT), object : SearchCallback {
             override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-                assertTrue((task as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(task?.isDone == true)
                 countDownLatch.countDown()
             }
 

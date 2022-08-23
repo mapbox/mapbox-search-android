@@ -2,26 +2,36 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.BaseSuggestAction
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.utils.KeyboardLocaleProvider
+import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchRequestContext
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
+import com.mapbox.search.result.isIndexableRecordSuggestion
+import com.mapbox.search.result.mapToPlatform
+import com.mapbox.search.result.record
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
@@ -29,21 +39,16 @@ import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.tests_support.searchBlocking
-import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.TimeProvider
 import com.mapbox.search.utils.assertEqualsIgnoreCase
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.enqueueMultiple
-import com.mapbox.search.utils.orientation.ScreenOrientation
-import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
@@ -200,9 +205,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val first = suggestions[0]
 
-        val originalSearchResult = createTestOriginalSearchResult(
+        val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
-            types = listOf(OriginalResultType.REGION),
+            types = listOf(BaseRawResultType.REGION),
             names = listOf("Minsk"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus")),
@@ -211,7 +216,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             distanceMeters = 5000000.0,
             icon = "marker",
             categories = listOf("cafe"),
-            action = SearchResultSuggestAction(
+            action = BaseSuggestAction(
                 endpoint = "retrieve",
                 path = "",
                 query = null,
@@ -233,16 +238,16 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             )
         )
 
-        val expectedResult = ServerSearchSuggestion(
-            originalSearchResult,
+        val expectedResult = BaseServerSearchSuggestion(
+            baseRawSearchResult,
             TEST_REQUEST_OPTIONS.copy(
                 options = options.copy(proximity = TEST_USER_LOCATION),
                 proximityRewritten = true,
                 requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
                     responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
                 )
-            )
-        )
+            ).mapToBase()
+        ).mapToPlatform()
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, first))
 
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE, SearchResultType.REGION), suggestions[1].type)
@@ -441,7 +446,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         ), callback)
 
         val suggestions = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions
-        assertEquals(record, (suggestions.first() as IndexableRecordSearchSuggestion).record)
+        assertEquals(record, suggestions.first().record)
     }
 
     @Test
@@ -464,7 +469,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
 
         val suggestions = suggestionsResult.suggestions
-        assertEquals(record, (suggestions.first() as IndexableRecordSearchSuggestion).record)
+        assertEquals(record, suggestions.first().record)
     }
 
     @Test
@@ -487,7 +492,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
 
         val suggestions = suggestionsResult.suggestions
-        assertFalse(suggestions.any { it is IndexableRecordSearchSuggestion })
+        assertFalse(suggestions.any { it.isIndexableRecordSuggestion })
     }
 
     @Test
@@ -518,9 +523,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val searchResult = selectionResult.result
 
-        val originalSearchResult = createTestOriginalSearchResult(
+        val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "place.11543680732831130",
-            types = listOf(OriginalResultType.PLACE, OriginalResultType.REGION),
+            types = listOf(BaseRawResultType.PLACE, BaseRawResultType.REGION),
             names = listOf("Minsk"),
             descriptionAddress = "Minsk Region, Belarus, Planet Earth",
             languages = listOf("en"),
@@ -577,7 +582,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val expectedResult = ServerSearchResultImpl(
             listOf(SearchResultType.PLACE, SearchResultType.REGION),
-            originalSearchResult,
+            baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
                     options = options.copy(proximity = TEST_USER_LOCATION),
@@ -614,7 +619,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val blockingCompletionCallback = BlockingCompletionCallback<List<HistoryRecord>>()
         historyDataProvider.getAll(blockingCompletionCallback)
 
-        var callbackResult = blockingCompletionCallback.getResultBlocking()
+        val callbackResult = blockingCompletionCallback.getResultBlocking()
         assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
 
         callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
@@ -653,16 +658,16 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals(2, suggestions.size)
 
-        val recursionSearchResult = createTestOriginalSearchResult(
+        val recursionSearchResult = createTestBaseRawSearchResult(
             id = "Y2WAgMLS1KJKAA==.42CAgMy8ktSivMQcAA==.42SAgKDU5NKi4sz8PAA=",
-            types = listOf(OriginalResultType.QUERY),
+            types = listOf(BaseRawResultType.QUERY),
             names = listOf("Did you mean recursion?"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
             descriptionAddress = "Make a new search",
             matchingName = "Did you mean recursion?",
             icon = "marker",
-            action = SearchResultSuggestAction(
+            action = BaseSuggestAction(
                 endpoint = "suggest",
                 path = "Recursion",
                 query = "&proximity=-122.084088,37.422065&language=en&limit=10",
@@ -671,13 +676,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        val expectedResult = ServerSearchSuggestion(
+        val expectedResult = BaseServerSearchSuggestion(
             recursionSearchResult,
             TEST_REQUEST_OPTIONS.copy(
                 options = options.copy(proximity = TEST_USER_LOCATION),
                 proximityRewritten = true
-            )
-        )
+            ).mapToBase()
+        ).mapToPlatform()
 
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, suggestions.first()))
 
@@ -709,9 +714,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertTrue(res is SearchEngineResult.Suggestions)
         val suggestions = (res as SearchEngineResult.Suggestions).suggestions
 
-        val originalCategorySuggestion = createTestOriginalSearchResult(
+        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
             id = "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
-            types = listOf(OriginalResultType.CATEGORY),
+            types = listOf(BaseRawResultType.CATEGORY),
             names = listOf("Cafe"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
@@ -720,7 +725,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             matchingName = "Cafe",
             icon = "restaurant",
             externalIDs = mapOf("federated" to "category.cafe"),
-            action = SearchResultSuggestAction(
+            action = BaseSuggestAction(
                 endpoint = "retrieve",
                 path = "",
                 query = null,
@@ -729,8 +734,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             ),
         )
 
-        val expectedSearchSuggestion = ServerSearchSuggestion(
-            originalCategorySuggestion,
+        val expectedSearchSuggestion = BaseServerSearchSuggestion(
+            baseRawCategorySuggestion,
             TEST_REQUEST_OPTIONS.run {
                 copy(
                     options = options.copy(
@@ -742,8 +747,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                         responseUuid = "be35d556-9e14-4303-be15-57497c331348"
                     ),
                 )
-            }
-        )
+            }.mapToBase()
+        ).mapToPlatform()
         assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
 
         assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)
@@ -760,9 +765,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val selectionResult = callback.getResultBlocking() as SearchEngineResult.CategoryResult
         val categoryResults = selectionResult.results
 
-        val originalCategorySearchResult = createTestOriginalSearchResult(
+        val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "ItFzVnwBAsSWFvXxpsTw",
-            types = listOf(OriginalResultType.POI),
+            types = listOf(BaseRawResultType.POI),
             names = listOf("SimplexiTea"),
             center = Point.fromLngLat(-122.41721, 37.775934),
             accuracy = ResultAccuracy.Point,
@@ -796,7 +801,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val expectedSearchResult = ServerSearchResultImpl(
             listOf(SearchResultType.POI),
-            originalCategorySearchResult,
+            baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
                     options = options.copy(
@@ -889,13 +894,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
 
         var countDownLatch = CountDownLatch(1)
-        var task: SearchRequestTask? = null
+        var task: AsyncOperationTask? = null
 
         var searchSuggestions: List<SearchSuggestion> = emptyList()
         task = searchEngine.search(TEST_QUERY, SearchOptions(), object : SearchSuggestionsCallback {
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
                 searchSuggestions = suggestions
-                assertTrue((task as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(task?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -908,10 +913,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful.json"))
 
         countDownLatch = CountDownLatch(1)
-        var selectionTask: SearchRequestTask? = null
+        var selectionTask: AsyncOperationTask? = null
         selectionTask = searchEngine.select(searchSuggestions.first(), object : SearchSelectionCallback {
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(selectionTask?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -920,7 +925,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             }
 
             override fun onResult(suggestion: SearchSuggestion, result: SearchResult, responseInfo: ResponseInfo) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(selectionTask?.isDone == true)
                 countDownLatch.countDown()
             }
 
@@ -929,7 +934,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
             ) {
-                assertTrue((selectionTask as? SearchRequestTaskImpl<*>)?.isDone == true)
+                assertTrue(selectionTask?.isDone == true)
                 countDownLatch.countDown()
             }
         })
@@ -1038,7 +1043,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             originRewritten = false,
             sessionID = TEST_UUID,
             requestContext = SearchRequestContext(
-                apiType = ApiType.SBS,
+                apiType = CoreApiType.SBS,
                 keyboardLocale = TEST_KEYBOARD_LOCALE,
                 screenOrientation = TEST_ORIENTATION,
                 responseUuid = ""

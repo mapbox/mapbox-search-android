@@ -9,14 +9,14 @@ import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
-import com.mapbox.search.SearchRequestTask
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.BuildConfig
 
 class CategorySearchKotlinExampleActivity : AppCompatActivity() {
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var searchRequestTask: SearchRequestTask
+    private lateinit var searchRequestTask: AsyncOperationTask
 
     private val searchCallback: SearchCallback = object : SearchCallback {
 

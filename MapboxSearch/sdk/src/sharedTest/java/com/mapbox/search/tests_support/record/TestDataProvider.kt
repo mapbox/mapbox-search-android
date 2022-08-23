@@ -1,12 +1,11 @@
 package com.mapbox.search.tests_support.record
 
-import com.mapbox.search.AsyncOperationTask
-import com.mapbox.search.AsyncOperationTaskImpl
 import com.mapbox.search.CompletionCallback
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.record.LocalDataProviderImpl
-import com.mapbox.search.runIfNotCancelled
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import kotlin.Exception
@@ -73,7 +72,7 @@ internal class TestDataProvider<R : IndexableRecord> : LocalDataProviderImpl<R> 
     private fun trySubmitOverrideOperation(executor: Executor, callback: CompletionCallback<*>): AsyncOperationTask? {
         return when (val mode = mode) {
             Mode.Default -> null
-            is Mode.Fail -> AsyncOperationTaskImpl().apply {
+            is Mode.Fail -> AsyncOperationTaskImpl<Any>().apply {
                 executor.execute {
                     runIfNotCancelled {
                         onComplete()

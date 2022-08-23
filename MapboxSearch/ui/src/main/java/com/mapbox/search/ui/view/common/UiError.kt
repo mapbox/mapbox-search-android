@@ -1,6 +1,6 @@
 package com.mapbox.search.ui.view.common
 
-import com.mapbox.search.SearchRequestException
+import com.mapbox.search.common.SearchRequestException
 import java.io.IOException
 import java.lang.Exception
 

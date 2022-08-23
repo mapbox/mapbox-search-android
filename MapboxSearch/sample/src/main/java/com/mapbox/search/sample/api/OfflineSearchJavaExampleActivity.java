@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mapbox.android.core.location.LocationEngineProvider;
 import com.mapbox.common.Cancelable;
 import com.mapbox.common.TileRegionLoadOptions;
 import com.mapbox.common.TileStore;
@@ -23,7 +22,7 @@ import com.mapbox.search.OfflineSearchEngineSettings;
 import com.mapbox.search.OfflineSearchOptions;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchCallback;
-import com.mapbox.search.SearchRequestTask;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.sample.BuildConfig;
 
@@ -35,7 +34,7 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
     private OfflineSearchEngine searchEngine;
     private Cancelable tilesLoadingTask;
     @Nullable
-    private SearchRequestTask searchRequestTask;
+    private AsyncOperationTask searchRequestTask;
 
     private final EngineReadyCallback engineReadyCallback = new EngineReadyCallback() {
         @Override

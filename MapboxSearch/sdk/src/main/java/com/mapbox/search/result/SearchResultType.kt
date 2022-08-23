@@ -1,6 +1,7 @@
 package com.mapbox.search.result
 
-import com.mapbox.search.core.CoreResultType
+import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseSearchResultType
 
 /**
  * Defines type of search result.
@@ -72,6 +73,7 @@ public enum class SearchResultType {
     POI,
 }
 
+@JvmSynthetic
 internal fun SearchResultType.mapToCore(): CoreResultType {
     return when (this) {
         SearchResultType.COUNTRY -> CoreResultType.COUNTRY
@@ -85,5 +87,39 @@ internal fun SearchResultType.mapToCore(): CoreResultType {
         SearchResultType.STREET -> CoreResultType.STREET
         SearchResultType.ADDRESS -> CoreResultType.ADDRESS
         SearchResultType.POI -> CoreResultType.POI
+    }
+}
+
+@JvmSynthetic
+internal fun BaseSearchResultType.mapToPlatform(): SearchResultType {
+    return when (this) {
+        BaseSearchResultType.COUNTRY -> SearchResultType.COUNTRY
+        BaseSearchResultType.REGION -> SearchResultType.REGION
+        BaseSearchResultType.POSTCODE -> SearchResultType.POSTCODE
+        BaseSearchResultType.BLOCK -> SearchResultType.BLOCK
+        BaseSearchResultType.PLACE -> SearchResultType.PLACE
+        BaseSearchResultType.DISTRICT -> SearchResultType.DISTRICT
+        BaseSearchResultType.LOCALITY -> SearchResultType.LOCALITY
+        BaseSearchResultType.NEIGHBORHOOD -> SearchResultType.NEIGHBORHOOD
+        BaseSearchResultType.STREET -> SearchResultType.STREET
+        BaseSearchResultType.ADDRESS -> SearchResultType.ADDRESS
+        BaseSearchResultType.POI -> SearchResultType.POI
+    }
+}
+
+@JvmSynthetic
+internal fun SearchResultType.mapToBase(): BaseSearchResultType {
+    return when (this) {
+        SearchResultType.COUNTRY -> BaseSearchResultType.COUNTRY
+        SearchResultType.REGION -> BaseSearchResultType.REGION
+        SearchResultType.POSTCODE -> BaseSearchResultType.POSTCODE
+        SearchResultType.BLOCK -> BaseSearchResultType.BLOCK
+        SearchResultType.PLACE -> BaseSearchResultType.PLACE
+        SearchResultType.DISTRICT -> BaseSearchResultType.DISTRICT
+        SearchResultType.LOCALITY -> BaseSearchResultType.LOCALITY
+        SearchResultType.NEIGHBORHOOD -> BaseSearchResultType.NEIGHBORHOOD
+        SearchResultType.STREET -> BaseSearchResultType.STREET
+        SearchResultType.ADDRESS -> BaseSearchResultType.ADDRESS
+        SearchResultType.POI -> BaseSearchResultType.POI
     }
 }

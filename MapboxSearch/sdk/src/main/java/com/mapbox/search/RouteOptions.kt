@@ -3,7 +3,7 @@ package com.mapbox.search
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
-import com.mapbox.search.common.printableName
+import com.mapbox.search.base.utils.printableName
 import kotlinx.parcelize.Parcelize
 import java.util.concurrent.TimeUnit
 import kotlin.math.floor

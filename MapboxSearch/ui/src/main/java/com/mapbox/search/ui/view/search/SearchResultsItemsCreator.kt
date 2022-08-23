@@ -3,8 +3,8 @@ package com.mapbox.search.ui.view.search
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.ResponseInfo
-import com.mapbox.search.common.SearchCommonAsyncOperationTask
-import com.mapbox.search.common.extension.lastKnownLocationOrNull
+import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -44,7 +44,7 @@ internal class SearchResultsItemsCreator(
         responseInfo: ResponseInfo,
         searchContext: SearchContext,
         callback: (List<SearchResultAdapterItem>) -> Unit,
-    ): SearchCommonAsyncOperationTask {
+    ): AsyncOperationTask {
         check(results.isNotEmpty())
         return locationEngine.lastKnownLocationOrNull(context) { location ->
             val resultItems = results.map {

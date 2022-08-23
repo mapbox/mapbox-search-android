@@ -13,7 +13,7 @@ import com.mapbox.search.OfflineSearchEngine
 import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
-import com.mapbox.search.SearchRequestTask
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.BuildConfig
 
@@ -21,7 +21,7 @@ class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
 
     private lateinit var searchEngine: OfflineSearchEngine
     private lateinit var tilesLoadingTask: Cancelable
-    private var searchRequestTask: SearchRequestTask? = null
+    private var searchRequestTask: AsyncOperationTask? = null
 
     private val engineReadyCallback = object : OfflineSearchEngine.EngineReadyCallback {
         override fun onEngineReady() {

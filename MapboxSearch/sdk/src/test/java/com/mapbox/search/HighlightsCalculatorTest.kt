@@ -1,7 +1,7 @@
 package com.mapbox.search
 
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

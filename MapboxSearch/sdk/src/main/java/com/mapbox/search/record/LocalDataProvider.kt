@@ -3,12 +3,10 @@ package com.mapbox.search.record
 import android.annotation.SuppressLint
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
-import com.mapbox.search.AsyncOperationTask
-import com.mapbox.search.AsyncOperationTaskImpl
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.plusAssign
-import com.mapbox.search.runIfNotCancelled
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
@@ -212,7 +210,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         return emptyList()
     }
 
-    private fun postOnExecutorIfNeeded(task: AsyncOperationTaskImpl, executor: Executor, action: Runnable) {
+    private fun postOnExecutorIfNeeded(task: AsyncOperationTaskImpl<Any>, executor: Executor, action: Runnable) {
         task.runIfNotCancelled {
             executor.execute {
                 task.runIfNotCancelled {
@@ -228,7 +226,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -270,7 +268,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             val isRemoved = dataProviderEngines.remove(dataProviderEngine)
             if (isRemoved) {
@@ -284,7 +282,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun get(id: String, executor: Executor, callback: CompletionCallback<in R?>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -305,7 +303,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -326,7 +324,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun contains(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -355,7 +353,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -395,7 +393,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {
@@ -436,7 +434,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun clear(executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
                 is DataState.Data -> {

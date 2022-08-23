@@ -11,13 +11,25 @@ import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreEngineOptions
+import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.location.LocationEngineAdapter
+import com.mapbox.search.base.logger.logw
+import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
+import com.mapbox.search.base.utils.FormattedTimeProvider
+import com.mapbox.search.base.utils.FormattedTimeProviderImpl
+import com.mapbox.search.base.utils.KeyboardLocaleProvider
+import com.mapbox.search.base.utils.LocalTimeProvider
+import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.UUIDProvider
+import com.mapbox.search.base.utils.UUIDProviderImpl
+import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
+import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.BuildConfig
-import com.mapbox.search.common.concurrent.CommonMainThreadChecker
-import com.mapbox.search.common.logger.logw
-import com.mapbox.search.core.CoreEngineOptions
-import com.mapbox.search.core.CoreSearchEngine
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.location.LocationEngineAdapter
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
 import com.mapbox.search.record.FavoritesDataProvider
@@ -26,23 +38,11 @@ import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryDataProviderImpl
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
-import com.mapbox.search.result.SearchResultFactory
-import com.mapbox.search.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.utils.CompoundCompletionCallback
-import com.mapbox.search.utils.FormattedTimeProvider
-import com.mapbox.search.utils.FormattedTimeProviderImpl
-import com.mapbox.search.utils.KeyboardLocaleProvider
-import com.mapbox.search.utils.LocalTimeProvider
 import com.mapbox.search.utils.LoggingCompletionCallback
-import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.UUIDProvider
-import com.mapbox.search.utils.UUIDProviderImpl
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.utils.file.InternalFileSystem
 import com.mapbox.search.utils.loader.DataLoader
 import com.mapbox.search.utils.loader.InternalDataLoader
-import com.mapbox.search.utils.orientation.AndroidScreenOrientationProvider
-import com.mapbox.search.utils.orientation.ScreenOrientationProvider
 import java.util.concurrent.Executor
 
 /**
@@ -99,10 +99,6 @@ public object MapboxSearchSdk {
         this.timeProvider = timeProvider
         this.formattedTimeProvider = formattedTimeProvider
         this.uuidProvider = uuidProvider
-
-        CommonMainThreadChecker.isOnMainLooper = {
-            SearchSdkMainThreadWorker.isMainThread
-        }
 
         searchRequestContextProvider = SearchRequestContextProvider(
             keyboardLocaleProvider,

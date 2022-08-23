@@ -1,32 +1,42 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.logger.reinitializeLogImpl
-import com.mapbox.search.common.logger.resetLogImpl
-import com.mapbox.search.core.CoreRequestOptions
-import com.mapbox.search.core.CoreSearchCallback
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.core.CoreSearchOptions
-import com.mapbox.search.core.CoreSearchResult
-import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.internal.bindgen.SearchAddress
-import com.mapbox.search.record.DataProviderResolver
+import com.mapbox.search.base.BaseRequestOptions
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreRequestOptions
+import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.core.CoreSearchCallback
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.CoreSearchResult
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.base.record.BaseIndexableRecord
+import com.mapbox.search.base.record.IndexableRecordResolver
+import com.mapbox.search.base.record.SearchHistoryService
+import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
+import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
+import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseServerSearchResultImpl
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.SearchCancellationException
+import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
-import com.mapbox.search.record.HistoryService
-import com.mapbox.search.record.IndexableDataProvider
-import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.GeocodingCompatSearchSuggestion
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.OriginalResultType
-import com.mapbox.search.result.SearchRequestContext
-import com.mapbox.search.result.SearchResultFactory
+import com.mapbox.search.record.mapToBase
+import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
+import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.TestExecutor
 import com.mapbox.search.tests_support.TestThreadExecutorService
@@ -58,8 +68,8 @@ import java.util.concurrent.Executor
 internal class SearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
-    private lateinit var dataProviderResolver: DataProviderResolver
-    private lateinit var historyService: HistoryService
+    private lateinit var indexableRecordResolver: IndexableRecordResolver
+    private lateinit var historyService: SearchHistoryService
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executor: Executor
     private lateinit var requestContextProvider: SearchRequestContextProvider
@@ -72,21 +82,26 @@ internal class SearchEngineTest {
         coreEngine = mockk(relaxed = true)
         historyService = mockk(relaxed = true)
 
-        dataProviderResolver = mockk()
-        every { dataProviderResolver.getRecordsLayer(any()) } returns null
+        indexableRecordResolver = mockk()
 
-        searchResultFactory = spyk(SearchResultFactory(dataProviderResolver))
+        val slotResolverCallback = slot<(Result<BaseIndexableRecord>) -> Unit>()
+        every { indexableRecordResolver.resolve(any(), any(), any(), capture(slotResolverCallback)) } answers {
+            slotResolverCallback.captured(Result.failure(Exception()))
+            AsyncOperationTaskImpl.COMPLETED
+        }
 
-        val slotSuggestionCallback = slot<(Result<SearchSuggestion>) -> Unit>()
-        every { searchResultFactory.createSearchSuggestionAsync(any(), any(), ApiType.SBS, any(), any(), capture(slotSuggestionCallback)) }.answers {
+        searchResultFactory = spyk(SearchResultFactory(indexableRecordResolver))
+
+        val slotSuggestionCallback = slot<(Result<BaseSearchSuggestion>) -> Unit>()
+        every { searchResultFactory.createSearchSuggestionAsync(any(), any(), CoreApiType.SBS, any(), capture(slotSuggestionCallback)) } answers {
             slotSuggestionCallback.captured(Result.success(TEST_GEOCODING_SEARCH_SUGGESTION))
-            CompletedAsyncOperationTask
+            AsyncOperationTaskImpl.COMPLETED
         }
 
         executor = spyk(TestExecutor())
 
         requestContextProvider = mockk()
-        every { requestContextProvider.provide(ApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
+        every { requestContextProvider.provide(CoreApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
 
         indexableDataProvidersRegistry = mockk()
 
@@ -115,16 +130,14 @@ internal class SearchEngineTest {
             When("Initial search called") {
                 val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.search(
+                val task = searchEngine.search(
                     query = TEST_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
-                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("SearchRequestTask is executed", true, task.isDone)
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -141,12 +154,10 @@ internal class SearchEngineTest {
 
                 Verify("Results passed to callback") {
                     callback.onSuggestions(
-                        listOf(TEST_GEOCODING_SEARCH_SUGGESTION),
+                        listOf(TEST_GEOCODING_SEARCH_SUGGESTION.mapToPlatform()),
                         ResponseInfo(
-                            TEST_REQUEST_OPTIONS.mapToPlatform(
-                                TEST_SEARCH_REQUEST_CONTEXT.copy(responseUuid = TEST_RESPONSE_UUID)
-                            ),
-                            TEST_SUCCESSFUL_CORE_RESPONSE.mapToPlatform(),
+                            TEST_REQUEST_OPTIONS.copy(requestContext = TEST_SEARCH_REQUEST_CONTEXT.copy(responseUuid = TEST_RESPONSE_UUID)),
+                            TEST_SUCCESSFUL_CORE_RESPONSE.mapToBase(),
                             isReproducible = true,
                         )
                     )
@@ -168,16 +179,14 @@ internal class SearchEngineTest {
             When("Initial search called") {
                 val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.search(
+                val task = searchEngine.search(
                     query = TEST_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
-                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("Task is executed", true, task.isDone)
 
                 Verify("CoreSearchEngine.search() called") {
                     coreEngine.search(
@@ -208,7 +217,7 @@ internal class SearchEngineTest {
     fun `Check initial internal error search call`() = TestCase {
         Given("SearchEngine with failing SearchResultFactory") {
             val exception = RuntimeException("Test error")
-            every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any(), any()) } throws exception
+            every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), any()) } throws exception
             val slotSearchCallback = slot<CoreSearchCallback>()
             every {
                 coreEngine.search(any(), any(), any(), capture(slotSearchCallback))
@@ -246,15 +255,9 @@ internal class SearchEngineTest {
             When("Search request cancelled by the Search SDK") {
                 val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
 
-                val task = (searchEngine.search(TEST_QUERY, TEST_SEARCH_OPTIONS, callback) as? SearchRequestTaskImpl<*>)
+                val task = searchEngine.search(TEST_QUERY, TEST_SEARCH_OPTIONS, callback)
 
-                Then("Task is not executed", false, task?.isDone)
-                Then("Task is cancelled", true, task?.isCancelled)
-                Then(
-                    "Task released reference to original callback",
-                    true,
-                    task?.callbackDelegate == null
-                )
+                Then("Task is cancelled", true, task.isCancelled)
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
@@ -273,7 +276,7 @@ internal class SearchEngineTest {
             val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
             every { callback.onSuggestions(any(), any()) } throws IllegalStateException()
 
-            var task: SearchRequestTaskImpl<*>? = null
+            var task: AsyncOperationTask? = null
             When("Search function called for the first time") {
                 val throwable = catchThrowable<IllegalStateException> {
                     task = searchEngine.search(
@@ -281,7 +284,7 @@ internal class SearchEngineTest {
                         options = TEST_SEARCH_OPTIONS,
                         executor = executor,
                         callback = callback
-                    ) as? SearchRequestTaskImpl<*>
+                    )
 
                     slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
                 }
@@ -289,8 +292,6 @@ internal class SearchEngineTest {
                 Then("Task failed with IllegalStateException", true, throwable != null)
 
                 Then("Task is executed", true, task?.isDone)
-                Then("Task is not cancelled", false, task?.isCancelled)
-                Then("Task released reference to original callback", true, task?.callbackDelegate == null)
             }
         }
     }
@@ -302,25 +303,23 @@ internal class SearchEngineTest {
             val slotSearchResult = slot<CoreSearchResult>()
             every { coreEngine.onSelected(capture(slotRequestOptions), capture(slotSearchResult)) } returns Unit
 
-            val historyServiceCompletionCallbackSlot = slot<CompletionCallback<Boolean>>()
+            val historyServiceCompletionCallbackSlot = slot<(Result<Boolean>) -> Unit>()
             every { historyService.addToHistoryIfNeeded(any(), any(), capture(historyServiceCompletionCallbackSlot)) } answers {
-                historyServiceCompletionCallbackSlot.captured.onComplete(true)
-                CompletedAsyncOperationTask
+                historyServiceCompletionCallbackSlot.captured(Result.success(true))
+                AsyncOperationTaskImpl.COMPLETED
             }
 
             When("Suggestion selected") {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.select(
-                    suggestion = TEST_GEOCODING_SEARCH_SUGGESTION,
+                val task = searchEngine.select(
+                    suggestion = TEST_GEOCODING_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
-                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("Task is executed", true, task.isDone)
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -332,17 +331,18 @@ internal class SearchEngineTest {
 
                 Verify("Suggestion added to history") {
                     historyService.addToHistoryIfNeeded(
-                        TEST_SEARCH_RESULT, any(),
+                        TEST_SEARCH_RESULT,
+                        any(),
                         historyServiceCompletionCallbackSlot.captured
                     )
                 }
 
                 Verify("Results passed to callback") {
                     callback.onResult(
-                        TEST_GEOCODING_SEARCH_SUGGESTION,
-                        TEST_SEARCH_RESULT,
+                        TEST_GEOCODING_SEARCH_SUGGESTION.mapToPlatform(),
+                        TEST_SEARCH_RESULT.mapToPlatform(),
                         ResponseInfo(
-                            TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT),
+                            TEST_REQUEST_OPTIONS,
                             null,
                             isReproducible = false,
                         )
@@ -366,45 +366,44 @@ internal class SearchEngineTest {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
             }
 
-            val historyServiceCompletionCallbackSlot = slot<CompletionCallback<Boolean>>()
+            val historyServiceCompletionCallbackSlot = slot<(Result<Boolean>) -> Unit>()
             every { historyService.addToHistoryIfNeeded(any(), any(), capture(historyServiceCompletionCallbackSlot)) } answers {
-                historyServiceCompletionCallbackSlot.captured.onComplete(true)
-                CompletedAsyncOperationTask
+                historyServiceCompletionCallbackSlot.captured(Result.success(true))
+                AsyncOperationTaskImpl.COMPLETED
             }
 
             When("Suggestion selected") {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.select(
-                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION,
+                val task = searchEngine.select(
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback,
-                ) as SearchRequestTaskImpl<*>
+                )
 
                 Verify("CoreSearchEngine.retrieve() Called") {
                     coreEngine.retrieve(any(), any(), any())
                 }
 
-                Then("SearchRequestTask released reference to callback", null, searchRequestTask.callbackDelegate)
-                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
-                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("Task is executed", true, task.isDone)
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
                 }
 
-                val expectedSearchRequestContext = requestContextProvider.provide(ApiType.SBS)
+                val expectedSearchRequestContext = requestContextProvider.provide(CoreApiType.SBS)
                     .copy(responseUuid = TEST_SUCCESSFUL_CORE_RESPONSE.responseUUID)
 
-                val expectedRequestOptions = TEST_SUCCESSFUL_CORE_RESPONSE.request.mapToPlatform(
-                    searchRequestContext = expectedSearchRequestContext
+                val expectedRequestOptions = BaseRequestOptions(
+                    TEST_SUCCESSFUL_CORE_RESPONSE.request,
+                    expectedSearchRequestContext
                 )
 
                 val selectedResult = TEST_SUCCESSFUL_CORE_RESPONSE.results.value?.first()!!
 
                 val expectedResult = searchResultFactory.createSearchResult(
-                    selectedResult.mapToPlatform(),
+                    selectedResult.mapToBase(),
                     expectedRequestOptions
                 )!!
 
@@ -422,11 +421,11 @@ internal class SearchEngineTest {
 
                 Verify("Results passed to callback") {
                     callback.onResult(
-                        TEST_SBS_SERVER_SEARCH_SUGGESTION,
-                        expectedResult,
+                        TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                        expectedResult.mapToPlatform(),
                         ResponseInfo(
-                            TEST_REQUEST_OPTIONS.mapToPlatform(
-                                TEST_SEARCH_REQUEST_CONTEXT.copy(responseUuid = TEST_RESPONSE_UUID)
+                            TEST_REQUEST_OPTIONS.copy(
+                                requestContext = TEST_SEARCH_REQUEST_CONTEXT.copy(responseUuid = TEST_RESPONSE_UUID)
                             ),
                             null,
                             isReproducible = false,
@@ -444,34 +443,34 @@ internal class SearchEngineTest {
             val slotSearchResult = slot<CoreSearchResult>()
             every { coreEngine.onSelected(capture(slotRequestOptions), capture(slotSearchResult)) } returns Unit
 
-            val indexableRecordProviderCompletionCallbackSlot = slot<CompletionCallback<IndexableRecord?>>()
-            val indexableRecordProvider = mockk<IndexableDataProvider<*>>()
-            every { indexableRecordProvider.get(TEST_USER_LAYER_RECORD_ID, capture(indexableRecordProviderCompletionCallbackSlot)) } answers {
-                indexableRecordProviderCompletionCallbackSlot.captured.onComplete(TEST_FAVORITE_RECORD)
-                CompletedAsyncOperationTask
+            val indexableRecordCallbackSlot = slot<(Result<BaseIndexableRecord>) -> Unit>()
+            every { indexableRecordResolver.resolve(
+                FavoritesDataProvider.PROVIDER_NAME,
+                TEST_USER_LAYER_RECORD_ID,
+                any(),
+                capture(indexableRecordCallbackSlot))
+            } answers {
+                indexableRecordCallbackSlot.captured(Result.success(TEST_FAVORITE_RECORD.mapToBase()))
+                AsyncOperationTaskImpl.COMPLETED
             }
 
-            every { dataProviderResolver.getRecordsLayer(FavoritesDataProvider.PROVIDER_NAME) } returns indexableRecordProvider
-
-            val historyServiceCompletionCallbackSlot = slot<CompletionCallback<Boolean>>()
+            val historyServiceCompletionCallbackSlot = slot<(Result<Boolean>) -> Unit>()
             every { historyService.addToHistoryIfNeeded(any(), any(), capture(historyServiceCompletionCallbackSlot)) } answers {
-                historyServiceCompletionCallbackSlot.captured.onComplete(true)
-                CompletedAsyncOperationTask
+                historyServiceCompletionCallbackSlot.captured(Result.success(true))
+                AsyncOperationTaskImpl.COMPLETED
             }
 
             When("Suggestion selected") {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
-                val searchRequestTask = searchEngine.select(
-                    suggestion = TEST_USER_RECORD_SEARCH_SUGGESTION,
+                val task = searchEngine.select(
+                    suggestion = TEST_USER_RECORD_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
-                Then("SearchRequestTask released reference to callback", true, searchRequestTask.callbackDelegate == null)
-                Then("SearchRequestTask is executed", true, searchRequestTask.isDone)
-                Then("SearchRequestTask is not cancelled", false, searchRequestTask.isCancelled)
+                Then("Task is executed", true, task.isDone)
 
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
@@ -491,10 +490,10 @@ internal class SearchEngineTest {
 
                 Verify("Results passed to callback") {
                     callback.onResult(
-                        TEST_USER_RECORD_SEARCH_SUGGESTION,
-                        TEST_FAVORITE_RECORD_SEARCH_RESULT,
+                        TEST_USER_RECORD_SEARCH_SUGGESTION.mapToPlatform(),
+                        TEST_FAVORITE_RECORD_SEARCH_RESULT.mapToPlatform(),
                         ResponseInfo(
-                            TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT),
+                            TEST_REQUEST_OPTIONS.mapToBase().mapToPlatform(),
                             null,
                             isReproducible = false,
                         )
@@ -525,11 +524,11 @@ internal class SearchEngineTest {
                 every { callback.onError(capture(slotCallbackError)) } returns Unit
 
                 searchEngine.select(
-                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION,
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback
-                ) as SearchRequestTaskImpl<*>
+                )
 
                 Then("Exception from SearchResultFactory should be forwarded to callback", slotCallbackError.captured, exception)
             }
@@ -545,21 +544,20 @@ internal class SearchEngineTest {
         const val TEST_DESCRIPTION_TEXT = "Test description text"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
-        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(ApiType.SBS, responseUuid = TEST_RESPONSE_UUID_2)
+        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SBS, responseUuid = TEST_RESPONSE_UUID_2)
 
         val TEST_REQUEST_OPTIONS = createTestRequestOptions(
             query = TEST_QUERY,
-            options = SearchOptions(
-                proximity = TEST_USER_LOCATION
-            ),
-        ).mapToCore()
+            options = SearchOptions(proximity = TEST_USER_LOCATION),
+            requestContext = TEST_SEARCH_REQUEST_CONTEXT
+        )
 
         val TEST_CORE_SEARCH_RESULT = createTestCoreSearchResult(
             id = "test result id",
-            types = listOf(ResultType.ADDRESS),
+            types = listOf(CoreResultType.ADDRESS),
             names = listOf("Result name"),
             languages = listOf("Default"),
-            addresses = listOf(TEST_SEARCH_ADDRESS),
+            addresses = listOf(TEST_SEARCH_ADDRESS.mapToCore()),
             distanceMeters = 123.0,
             center = Point.fromLngLat(20.0, 30.0),
             categories = emptyList(),
@@ -568,10 +566,10 @@ internal class SearchEngineTest {
 
         val TEST_CORE_SEARCH_SUGGESTION = createTestCoreSearchResult(
             id = "test result id",
-            types = listOf(ResultType.ADDRESS),
+            types = listOf(CoreResultType.ADDRESS),
             names = listOf("Result name"),
             languages = listOf("Default"),
-            addresses = listOf(TEST_SEARCH_ADDRESS),
+            addresses = listOf(TEST_SEARCH_ADDRESS.mapToCore()),
             distanceMeters = 123.0,
             center = Point.fromLngLat(20.0, 30.0),
             categories = emptyList(),
@@ -579,7 +577,7 @@ internal class SearchEngineTest {
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
-            TEST_REQUEST_OPTIONS,
+            TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
             TEST_RESPONSE_UUID
         )
@@ -591,37 +589,42 @@ internal class SearchEngineTest {
         val TEST_ERROR_CORE_RESPONSE = createTestCoreSearchResponseHttpError(
             TEST_ERROR_CORE_RESPONSE_HTTP_CODE,
             TEST_ERROR_CORE_RESPONSE_MESSAGE,
-            TEST_REQUEST_OPTIONS,
+            TEST_REQUEST_OPTIONS.mapToCore(),
             TEST_RESPONSE_UUID
         )
 
-        val TEST_SEARCH_RESULT = ServerSearchResultImpl(
-            listOf(SearchResultType.ADDRESS),
-            TEST_CORE_SEARCH_RESULT.mapToPlatform(),
-            TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT)
+        val TEST_SEARCH_RESULT = BaseServerSearchResultImpl(
+            listOf(BaseSearchResultType.ADDRESS),
+            TEST_CORE_SEARCH_RESULT.mapToBase(),
+            TEST_REQUEST_OPTIONS.mapToBase()
         )
 
-        val TEST_GEOCODING_SEARCH_SUGGESTION = GeocodingCompatSearchSuggestion(
-            TEST_CORE_SEARCH_SUGGESTION.mapToPlatform(),
-            TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT)
+        val TEST_GEOCODING_SEARCH_SUGGESTION = BaseGeocodingCompatSearchSuggestion(
+            TEST_CORE_SEARCH_SUGGESTION.mapToBase(),
+            TEST_REQUEST_OPTIONS.mapToBase()
         )
 
-        val TEST_SBS_SERVER_SEARCH_SUGGESTION = ServerSearchSuggestion(
-            TEST_CORE_SEARCH_SUGGESTION.mapToPlatform().copy(
-                types = listOf(OriginalResultType.POI),
-                action = createTestCoreSuggestAction().mapToPlatform()
+        val BASE_TEST_REQUEST_OPTIONS = BaseRequestOptions(
+            TEST_REQUEST_OPTIONS.mapToCore(),
+            TEST_SEARCH_REQUEST_CONTEXT
+        )
+
+        val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
+            TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
+                types = listOf(BaseRawResultType.POI),
+                action = createTestCoreSuggestAction().mapToBase()
             ),
-            TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT)
+            BASE_TEST_REQUEST_OPTIONS
         )
 
         const val TEST_USER_LAYER_RECORD_ID = "test user layer record id"
 
         val TEST_USER_RECORD_SEARCH_RESULT = createTestCoreSearchResult(
             id = TEST_USER_LAYER_RECORD_ID,
-            types = listOf(ResultType.ADDRESS),
+            types = listOf(CoreResultType.ADDRESS),
             names = listOf("Result name"),
             languages = listOf("Default"),
-            addresses = listOf(TEST_SEARCH_ADDRESS),
+            addresses = listOf(TEST_SEARCH_ADDRESS.mapToCore()),
             distanceMeters = 123.0,
             center = Point.fromLngLat(20.0, 30.0),
             categories = emptyList(),
@@ -634,7 +637,7 @@ internal class SearchEngineTest {
             name = "Test favorite",
             coordinate = TEST_USER_LOCATION,
             descriptionText = TEST_DESCRIPTION_TEXT,
-            address = TEST_SEARCH_ADDRESS.mapToPlatform(),
+            address = TEST_SEARCH_ADDRESS,
             type = SearchResultType.ADDRESS,
             makiIcon = null,
             categories = emptyList(),
@@ -642,17 +645,17 @@ internal class SearchEngineTest {
             metadata = null
         )
 
-        val TEST_USER_RECORD_SEARCH_SUGGESTION = IndexableRecordSearchSuggestion(
-            TEST_FAVORITE_RECORD,
-            originalSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToPlatform().copy(
-                types = listOf(OriginalResultType.USER_RECORD)
+        val TEST_USER_RECORD_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
+            TEST_FAVORITE_RECORD.mapToBase(),
+            rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase().copy(
+                types = listOf(BaseRawResultType.USER_RECORD)
             ),
-            requestOptions = TEST_REQUEST_OPTIONS.mapToPlatform(TEST_SEARCH_REQUEST_CONTEXT)
+            requestOptions = BASE_TEST_REQUEST_OPTIONS
         )
 
-        val TEST_FAVORITE_RECORD_SEARCH_RESULT = IndexableRecordSearchResultImpl(
-            record = TEST_FAVORITE_RECORD,
-            originalSearchResult = TEST_USER_RECORD_SEARCH_SUGGESTION.originalSearchResult,
+        val TEST_FAVORITE_RECORD_SEARCH_RESULT = BaseIndexableRecordSearchResultImpl(
+            record = TEST_FAVORITE_RECORD.mapToBase(),
+            rawSearchResult = TEST_USER_RECORD_SEARCH_SUGGESTION.rawSearchResult,
             requestOptions = TEST_USER_RECORD_SEARCH_SUGGESTION.requestOptions
         )
 

@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.search.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.OpenPeriod
 import com.mapbox.search.metadata.ParkingData

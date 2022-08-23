@@ -13,7 +13,7 @@ import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchCallback;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
-import com.mapbox.search.SearchRequestTask;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.sample.BuildConfig;
 
@@ -21,8 +21,7 @@ import java.util.List;
 
 public class CategorySearchJavaExampleActivity extends AppCompatActivity {
 
-    private SearchEngine searchEngine;
-    private SearchRequestTask searchRequestTask;
+    private AsyncOperationTask searchRequestTask;
 
     private final SearchCallback searchCallback = new SearchCallback() {
 
@@ -45,7 +44,7 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        final SearchEngine searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
             new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         );
 

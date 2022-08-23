@@ -1,9 +1,9 @@
 package com.mapbox.search.metadata
 
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.common.printableName
-import com.mapbox.search.core.CoreOpenHours
-import com.mapbox.search.core.CoreOpenMode
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreOpenHours
+import com.mapbox.search.base.core.CoreOpenMode
+import com.mapbox.search.base.utils.printableName
 
 /**
  * Availability information for the POI.

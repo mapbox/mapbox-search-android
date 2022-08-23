@@ -1,7 +1,7 @@
 package com.mapbox.search
 
 import android.os.Parcelable
-import com.mapbox.search.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.ParkingData
 import com.mapbox.search.metadata.mapToCore

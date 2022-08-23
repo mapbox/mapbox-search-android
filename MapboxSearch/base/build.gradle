@@ -1,0 +1,102 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.mapbox.android.sdk.versions'
+    id 'de.mannodermaus.android-junit5'
+    id 'com.getkeepsafe.dexcount'
+}
+
+apply plugin: 'org.jetbrains.dokka'
+
+apply from: "../gradle/ktlint.gradle"
+apply from: "../gradle/versions.gradle"
+apply from: "../gradle/dexcount.gradle"
+apply from: "../gradle/publish.gradle"
+apply from: "../gradle/license.gradle"
+
+android {
+    compileSdkVersion compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-base.txt"
+        }
+        release {
+            minifyEnabled false
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-base.txt"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    lintOptions {
+        disable 'ParcelCreator', 'ContentDescription'
+        abortOnError true
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+        }
+    }
+
+    sourceSets {
+        String sharedTestDir = "src/sharedTest/java"
+        test {
+            java.srcDirs += sharedTestDir
+        }
+        androidTest {
+            java.srcDirs += sharedTestDir
+        }
+    }
+}
+
+dependencies {
+    api project(path: ':sdk-common')
+    api "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+
+    implementation "com.mapbox.common:common:$common_sdk_version"
+    api "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
+
+    implementation "com.mapbox.base:annotations:$mapbox_base_version"
+
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
+
+    ktlint "com.pinterest:ktlint:$ktlint_version"
+
+    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+    testImplementation project(":common-tests")
+
+    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation project(":common-tests")
+}

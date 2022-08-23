@@ -1,20 +1,55 @@
 package com.mapbox.search
 
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.record.BaseIndexableRecord
+import com.mapbox.search.base.record.IndexableRecordResolver
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.extension.addValue
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.DataProviderEngineRegistrationService
-import com.mapbox.search.record.DataProviderResolver
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngineImpl
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.utils.extension.addValue
+import com.mapbox.search.record.mapToBase
 import java.util.concurrent.Executor
 
 internal class IndexableDataProvidersRegistryImpl(
     private val dataProviderEngineRegistrationService: DataProviderEngineRegistrationService
-) : IndexableDataProvidersRegistry, DataProviderResolver {
+) : IndexableDataProvidersRegistry, IndexableRecordResolver {
 
     private val registry = Registry()
+
+    @Synchronized
+    override fun resolve(
+        dataProviderName: String,
+        userRecordId: String,
+        executor: Executor,
+        callback: (Result<BaseIndexableRecord>) -> Unit
+    ): AsyncOperationTask {
+        val dataProvider = registry.dataProviderContext(dataProviderName)?.provider
+        if (dataProvider == null) {
+            executor.execute {
+                callback(Result.failure(Exception("Unable to find data provider with name: $dataProvider")))
+            }
+            return AsyncOperationTaskImpl.COMPLETED
+        }
+
+        return dataProvider.get(userRecordId, executor, object : CompletionCallback<IndexableRecord?> {
+            override fun onComplete(result: IndexableRecord?) {
+                val callbackResult = if (result == null) {
+                    Result.failure(Exception("No record with id `$userRecordId` in `$dataProviderName` data provider"))
+                } else {
+                    Result.success(result.mapToBase())
+                }
+                callback(callbackResult)
+            }
+
+            override fun onError(e: Exception) {
+                callback(Result.failure(e))
+            }
+        })
+    }
 
     override fun <R : IndexableRecord> preregister(
         dataProvider: IndexableDataProvider<R>,
@@ -24,10 +59,10 @@ internal class IndexableDataProvidersRegistryImpl(
         val dataProviderContext = registry.dataProviderContext(dataProvider.dataProviderName)
         if (dataProviderContext != null) {
             executor.execute { callback.onComplete(Unit) }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += dataProviderEngineRegistrationService.register(
             dataProvider,
             object : CompletionCallback<IndexableDataProviderEngineImpl> {
@@ -78,7 +113,7 @@ internal class IndexableDataProvidersRegistryImpl(
                     )
                 )
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         val dataProviderContext = registry.dataProviderContext(dataProvider.dataProviderName)
@@ -86,10 +121,10 @@ internal class IndexableDataProvidersRegistryImpl(
             registry.register(dataProvider, searchEngine)
             searchEngine.addUserLayer(dataProviderContext.engine.coreLayer)
             executor.execute { callback.onComplete(Unit) }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task += dataProviderEngineRegistrationService.register(
             dataProvider,
             object : CompletionCallback<IndexableDataProviderEngineImpl> {
@@ -142,16 +177,16 @@ internal class IndexableDataProvidersRegistryImpl(
                     )
                 )
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         val context = registry.dataProviderContext(dataProvider.dataProviderName)
         assertDebug(context != null) {
             "Null context for registered data provider. Data provider: ${dataProvider.dataProviderName}"
         }
-        context ?: return CompletedAsyncOperationTask
+        context ?: return AsyncOperationTaskImpl.COMPLETED
 
-        val task = AsyncOperationTaskImpl()
+        val task = AsyncOperationTaskImpl<Any>()
         task.runIfNotCancelled {
             runSynchronized {
                 registry.unregister(dataProvider, searchEngine)
@@ -163,11 +198,6 @@ internal class IndexableDataProvidersRegistryImpl(
             }
         }
         return task
-    }
-
-    @Synchronized
-    override fun getRecordsLayer(name: String): IndexableDataProvider<*>? {
-        return registry.dataProviderContext(name)?.provider
     }
 
     @Synchronized

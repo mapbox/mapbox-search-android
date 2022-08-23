@@ -63,11 +63,13 @@ commands:
           name: Verify codebase
           command: |
             cd MapboxSearch
+            ./gradlew :base:lint
             ./gradlew :sdk:lint
             ./gradlew :ui:lint
             ./gradlew :sdk-common:lint
             ./gradlew :autofill:lint
             ./gradlew :sample:lint
+            ./gradlew :base:ktlint
             ./gradlew :sdk:ktlint
             ./gradlew :ui:ktlint
             ./gradlew :sdk-common:ktlint
@@ -124,6 +126,7 @@ commands:
           name: Codebase unit tests
           command: |
             cd MapboxSearch
+            ./gradlew :base:testDebugUnitTest -Pcoverage
             ./gradlew :sdk:testDebugUnitTest -Pcoverage
             ./gradlew :ui:testDebugUnitTest -Pcoverage
             ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
@@ -247,6 +250,10 @@ jobs:
           module_target: "sdk"
       - store-results:
           module_target: "ui"
+      - store-results:
+          module_target: "base"
+      - store-results:
+          module_target: "sdk-common"
       - run:
           name: Calculate coverage
           command: cd MapboxSearch && ./gradlew :sdk:testDebugUnitTestCoverage

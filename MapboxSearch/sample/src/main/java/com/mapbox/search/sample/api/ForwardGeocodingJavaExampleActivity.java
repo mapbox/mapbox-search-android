@@ -12,8 +12,8 @@ import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
-import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchSuggestion;
 import com.mapbox.search.sample.BuildConfig;
@@ -23,12 +23,12 @@ import java.util.List;
 public class ForwardGeocodingJavaExampleActivity extends AppCompatActivity {
 
     private SearchEngine searchEngine;
-    private SearchRequestTask searchRequestTask;
+    private AsyncOperationTask searchRequestTask;
 
     private final SearchSelectionCallback searchCallback = new SearchSelectionCallback() {
 
         @Override
-        public void onSuggestions(@NonNull List<? extends SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
+        public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
             if (suggestions.isEmpty()) {
                 Log.i("SearchApiExample", "No suggestions found");
             } else {

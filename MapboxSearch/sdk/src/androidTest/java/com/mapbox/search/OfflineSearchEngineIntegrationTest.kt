@@ -11,17 +11,19 @@ import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreObserver
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.tests.BuildConfig
-import com.mapbox.search.result.BaseSearchResult
-import com.mapbox.search.result.OriginalResultType
+import com.mapbox.search.result.AbstractSearchResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.tests_support.BlockingOnIndexChangeListener
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback.SearchEngineResult
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.getAllTileRegionsBlocking
 import com.mapbox.search.tests_support.loadTileRegionBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
@@ -29,8 +31,6 @@ import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.removeTileRegionBlocking
 import com.mapbox.search.tests_support.reverseGeocodingBlocking
 import com.mapbox.search.tests_support.searchBlocking
-import com.mapbox.search.utils.TimeProvider
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -319,9 +319,9 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         assertEquals(9, results.size)
 
         val result = results.first()
-        val originalSearchResult = (result as BaseSearchResult).originalSearchResult
-        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, originalSearchResult))
+        val rawSearchResult = (result as AbstractSearchResult).rawSearchResult
+        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id)
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, rawSearchResult))
 
         val historyRecords = historyDataProvider.getAllBlocking(callbacksExecutor)
 
@@ -355,9 +355,9 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertEquals(1, results.size)
 
-        val originalSearchResult = (results.first() as BaseSearchResult).originalSearchResult
-        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id)
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, originalSearchResult))
+        val rawSearchResult = (results.first() as AbstractSearchResult).rawSearchResult
+        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id)
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, rawSearchResult))
     }
 
     @Test
@@ -393,12 +393,12 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertTrue(results.isNotEmpty())
 
-        val originalSearchResult = (results.first() as BaseSearchResult).originalSearchResult
-        val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = originalSearchResult.id, distanceMeters = null)
+        val rawSearchResult = (results.first() as AbstractSearchResult).rawSearchResult
+        val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id, distanceMeters = null)
         assertTrue(
             compareSearchResultWithServerSearchResult(
                 expectedResult,
-                (results.first() as BaseSearchResult).originalSearchResult
+                (results.first() as AbstractSearchResult).rawSearchResult
             )
         )
     }
@@ -529,9 +529,9 @@ internal class OfflineSearchEngineIntegrationTest : BaseTest() {
 
         private const val CURRENT_TIME_MILLIS = 123L
 
-        private val TEST_SEARCH_RESULT_MAPBOX = createTestOriginalSearchResult(
+        private val TEST_SEARCH_RESULT_MAPBOX = createTestBaseRawSearchResult(
             id = "<will be dynamically changed>",
-            types = listOf(OriginalResultType.ADDRESS),
+            types = listOf(BaseRawResultType.ADDRESS),
             names = listOf("2011 15th Street Northwest"),
             languages = listOf("def"),
             addresses = listOf(

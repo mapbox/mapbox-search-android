@@ -1,19 +1,22 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
     id 'de.mannodermaus.android-junit5'
+    id 'com.mapbox.android.sdk.versions'
     id 'com.getkeepsafe.dexcount'
 }
-
-apply plugin: 'org.jetbrains.dokka'
 
 apply from: "../gradle/ktlint.gradle"
 apply from: "../gradle/versions.gradle"
 apply from: "../gradle/pitest.gradle"
 apply from: "../gradle/jacoco.gradle"
 apply from: "../gradle/dexcount.gradle"
+apply from: "../gradle/dokka.gradle"
 apply from: "../gradle/publish.gradle"
 apply from: "../gradle/license.gradle"
+apply from: "../gradle/track-public-apis.gradle"
 
 android {
     compileSdkVersion compile_sdk_version
@@ -47,6 +50,17 @@ android {
     kotlinOptions {
         allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+        /**
+         * Migrate to Groovy syntax when the issue https://youtrack.jetbrains.com/issue/KT-37652 is resolved
+         *
+         *     kotlin {
+         *         explicitApi()
+         *     }
+         */
+        freeCompilerArgs += [
+                '-Xexplicit-api=strict',
+        ]
     }
 
     lintOptions {
@@ -74,10 +88,6 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
-
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
-    implementation "com.mapbox.common:common:$common_sdk_version"
-    implementation "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 

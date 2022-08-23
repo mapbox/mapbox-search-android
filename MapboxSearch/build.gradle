@@ -45,7 +45,7 @@ plugins {
 }
 
 apiValidation {
-    ignoredProjects += ["sample", "custom-detekt-rules", "common-tests", "sdk-common"]
+    ignoredProjects += ["sample", "custom-detekt-rules", "common-tests", "base"]
 }
 
 def sdkRegistryToken = project.properties['SDK_REGISTRY_TOKEN'] ?: System.getenv('SDK_REGISTRY_TOKEN')

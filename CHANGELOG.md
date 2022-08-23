@@ -2,6 +2,11 @@
 
 ## 1.0.0-beta.36-SNAPSHOT
 
+### Breaking changes
+- [CORE] `AsyncOperationTask`, `SearchCancellationException`, `SearchRequestException` have been moved to `com.mapbox.search.common` package. `MainThreadWorker`, and `SearchSdkMainThreadWorker` have been moved to `com.mapbox.search.common.concurrent`.
+- [CORE] `SearchRequestTask` has been replaced with `AsyncOperationTask`
+- [CORE] `SearchSuggestion` is a class now. Functions signature of `SearchSuggestionsCallback`, `SearchSelectionCallback`, `SearchMultipleSelectionCallback` have been changed for Java users.
+
 ### Bug fixes
 - [UI] Now created in the `SearchPlaceBottomSheetView` `FavoriteRecord` will be saved with id from `SearchPlace.id`
 

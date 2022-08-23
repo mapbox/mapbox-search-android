@@ -21,13 +21,12 @@ import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchRequestTask
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
-import com.mapbox.search.common.SearchCommonAsyncOperationTask
-import com.mapbox.search.common.concurrent.checkMainThread
-import com.mapbox.search.common.logger.logd
-import com.mapbox.search.common.throwDebug
+import com.mapbox.search.base.concurrent.checkMainThread
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.throwDebug
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
@@ -65,7 +64,7 @@ public class SearchResultsView @JvmOverloads constructor(
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
 
-    private var currentSearchRequestTask: SearchRequestTask? = null
+    private var currentSearchRequestTask: AsyncOperationTask? = null
 
     private val historyRecordsInteractor = HistoryRecordsInteractor()
     private var historyRecordsListener: HistoryRecordsInteractor.HistoryListener? = null
@@ -100,7 +99,7 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private lateinit var searchAdapter: SearchViewResultsAdapter
     private lateinit var itemsCreator: SearchResultsItemsCreator
-    private var asyncItemsCreatorTask: SearchCommonAsyncOperationTask? = null
+    private var asyncItemsCreatorTask: AsyncOperationTask? = null
 
     private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {

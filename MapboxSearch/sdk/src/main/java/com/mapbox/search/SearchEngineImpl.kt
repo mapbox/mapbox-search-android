@@ -1,26 +1,40 @@
 package com.mapbox.search
 
+import com.mapbox.search.adapter.BaseSearchCallbackAdapter
+import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
+import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
+import com.mapbox.search.adapter.BaseSearchSuggestionsCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.common.logger.logd
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.engine.BaseSearchEngine
-import com.mapbox.search.engine.OneStepRequestCallbackWrapper
-import com.mapbox.search.engine.TwoStepsBatchRequestCallbackWrapper
-import com.mapbox.search.engine.TwoStepsRequestCallbackWrapper
-import com.mapbox.search.record.HistoryService
+import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
+import com.mapbox.search.base.BaseSearchSuggestionsCallback
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.engine.BaseSearchEngine
+import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.engine.TwoStepsBatchRequestCallbackWrapper
+import com.mapbox.search.base.engine.TwoStepsRequestCallbackWrapper
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.record.SearchHistoryService
+import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
+import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
+import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
+import com.mapbox.search.base.result.BaseSearchResult
+import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseServerSearchResultImpl
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.result.mapToCore
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.BaseSearchSuggestion
-import com.mapbox.search.result.GeocodingCompatSearchSuggestion
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultFactory
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
-import com.mapbox.search.result.mapToCore
+import com.mapbox.search.result.mapToBase
+import com.mapbox.search.result.mapToPlatform
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -30,7 +44,7 @@ internal class SearchEngineImpl(
     override val settings: SearchEngineSettings,
     override val analyticsService: AnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
-    private val historyService: HistoryService,
+    private val historyService: SearchHistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
@@ -42,14 +56,16 @@ internal class SearchEngineImpl(
         options: SearchOptions,
         executor: Executor,
         callback: SearchSuggestionsCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("search($query, $options) called")
 
-        return makeRequest(callback) { request ->
-            val requestContext = requestContextProvider.provide(apiType)
-            coreEngine.search(query, emptyList(), options.mapToCore(),
+        val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSuggestionsCallbackAdapter(callback)
+        return makeRequest(baseCallback) { request ->
+            val requestContext = requestContextProvider.provide(apiType.mapToCore())
+            coreEngine.search(
+                query, emptyList(), options.mapToCore(),
                 TwoStepsRequestCallbackWrapper(
-                    apiType = apiType,
+                    apiType = apiType.mapToCore(),
                     coreEngine = coreEngine,
                     historyService = historyService,
                     searchResultFactory = searchResultFactory,
@@ -58,8 +74,7 @@ internal class SearchEngineImpl(
                     searchRequestTask = request,
                     searchRequestContext = requestContext,
                     suggestion = null,
-                    selectOptions = null,
-                    isOfflineSearch = false,
+                    addResultToHistory = false,
                 )
             )
         }
@@ -69,7 +84,7 @@ internal class SearchEngineImpl(
         suggestions: List<SearchSuggestion>,
         executor: Executor,
         callback: SearchMultipleSelectionCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         require(suggestions.isNotEmpty()) {
             "No suggestions were provided! Please, provide at least 1 suggestion."
         }
@@ -80,7 +95,7 @@ internal class SearchEngineImpl(
                     IllegalArgumentException("All provided suggestions must originate from the same search result!")
                 )
             }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         logd("batch select($suggestions) called")
@@ -90,53 +105,53 @@ internal class SearchEngineImpl(
         val filtered: List<SearchSuggestion> = suggestions.filter { it.isBatchResolveSupported }
         if (filtered.isEmpty()) {
             executor.execute { callback.onResult(filtered, emptyList(), searchResponseInfo) }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
         logd("Batch retrieve. ${suggestions.size} requested, ${filtered.size} took for processing")
 
-        val alreadyResolved = HashMap<Int, SearchResult>(filtered.size)
-        val toResolve = ArrayList<SearchSuggestion>(filtered.size)
+        val alreadyResolved = HashMap<Int, BaseSearchResult>(filtered.size)
+        val toResolve = ArrayList<BaseSearchSuggestion>(filtered.size)
 
         filtered.forEachIndexed { index, suggestion ->
-            when (suggestion) {
-                is GeocodingCompatSearchSuggestion -> {
-                    val result = ServerSearchResultImpl(
-                        listOf(suggestion.searchResultType),
-                        suggestion.originalSearchResult,
-                        suggestion.requestOptions
+            when (val base = suggestion.base) {
+                is BaseGeocodingCompatSearchSuggestion -> {
+                    val result = BaseServerSearchResultImpl(
+                        listOf(base.searchResultType),
+                        base.rawSearchResult,
+                        base.requestOptions
                     )
                     alreadyResolved[index] = result
                 }
-                is IndexableRecordSearchSuggestion -> {
-                    val resolved = IndexableRecordSearchResultImpl(
-                        suggestion.record,
-                        suggestion.originalSearchResult,
-                        suggestion.requestOptions
+                is BaseIndexableRecordSearchSuggestion -> {
+                    val resolved = BaseIndexableRecordSearchResultImpl(
+                        base.record,
+                        base.rawSearchResult,
+                        base.requestOptions
                     )
 
                     alreadyResolved[index] = resolved
                 }
-                is ServerSearchSuggestion -> {
-                    toResolve.add(suggestion)
+                is BaseServerSearchSuggestion -> {
+                    toResolve.add(base)
                 }
             }
         }
 
         return when (alreadyResolved.size) {
             filtered.size -> {
-                val result = filtered.indices.mapNotNull { alreadyResolved[it] }
+                val result = filtered.indices.mapNotNull { alreadyResolved[it]?.mapToPlatform() }
                 executor.execute {
                     callback.onResult(filtered, result, searchResponseInfo)
                 }
-                SearchRequestTaskImpl.completed()
+                AsyncOperationTaskImpl.COMPLETED
             }
             else -> {
                 val coreSearchResults = toResolve.map {
-                    (it as BaseSearchSuggestion).originalSearchResult.mapToCore()
+                    it.rawSearchResult.mapToCore()
                 }
 
-                val resultingFunction: (List<SearchResult>) -> List<SearchResult> = { remoteResults ->
+                val resultingFunction: (List<BaseSearchResult>) -> List<BaseSearchResult> = { remoteResults ->
                     assertDebug(remoteResults.size == toResolve.size) {
                         "Not all items have been resolved. " +
                                 "To resolve: ${toResolve.map { it.id to it.type }}, " +
@@ -146,7 +161,7 @@ internal class SearchEngineImpl(
                         alreadyResolved.values + remoteResults
                     } else {
                         val finalSize = alreadyResolved.size + remoteResults.size
-                        val result = ArrayList<SearchResult>(finalSize)
+                        val result = ArrayList<BaseSearchResult>(finalSize)
 
                         var remoteResultsIndex = 0
                         (0 until finalSize).map { index ->
@@ -161,14 +176,15 @@ internal class SearchEngineImpl(
                     }
                 }
 
-                makeRequest(callback) { searchRequestTask ->
+                val baseCallback: BaseSearchMultipleSelectionCallback = BaseSearchMultipleSelectionCallbackAdapter(callback)
+                makeRequest(baseCallback) { searchRequestTask ->
                     val requestOptions = toResolve.first().requestOptions
                     val requestContext = requestOptions.requestContext
                     coreEngine.retrieveBucket(
-                        requestOptions.mapToCore(),
+                        requestOptions.core,
                         coreSearchResults,
                         TwoStepsBatchRequestCallbackWrapper(
-                            suggestions = filtered,
+                            suggestions = filtered.map { it.base },
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
@@ -188,18 +204,18 @@ internal class SearchEngineImpl(
         options: SelectOptions,
         executor: Executor,
         callback: SearchSelectionCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("select($suggestion, $options) called")
 
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
 
         fun completeSearchResultSelection(
-            suggestion: BaseSearchSuggestion,
+            suggestion: SearchSuggestion,
             resolved: SearchResult
-        ): SearchRequestTask {
-            val searchRequestTask = SearchRequestTaskImpl(callback)
+        ): AsyncOperationTask {
+            val task = AsyncOperationTaskImpl(callback)
 
-            coreEngine.onSelected(coreRequestOptions, suggestion.originalSearchResult.mapToCore())
+            coreEngine.onSelected(coreRequestOptions, suggestion.base.rawSearchResult.mapToCore())
 
             val responseInfo = ResponseInfo(
                 requestOptions = suggestion.requestOptions,
@@ -208,72 +224,69 @@ internal class SearchEngineImpl(
             )
 
             if (!options.addResultToHistory) {
-                searchRequestTask.markExecutedAndRunOnCallback(executor) {
+                task.markExecutedAndRunOnCallback(executor) {
                     onResult(suggestion, resolved, responseInfo)
                 }
-                return searchRequestTask
+                return task
             }
 
-            if (!searchRequestTask.isCompleted) {
-                searchRequestTask += historyService.addToHistoryIfNeeded(
-                    searchResult = resolved,
-                    callback = object : CompletionCallback<Boolean> {
-                        override fun onComplete(result: Boolean) {
-                            searchRequestTask.markExecutedAndRunOnCallback(executor) {
+            if (!task.isCompleted) {
+                task += historyService.addToHistoryIfNeeded(
+                    searchResult = resolved.mapToBase(),
+                    callback = { result ->
+                        result.onSuccess {
+                            task.markExecutedAndRunOnCallback(executor) {
                                 onResult(suggestion, resolved, responseInfo)
                             }
-                        }
-
-                        override fun onError(e: Exception) {
-                            searchRequestTask.markExecutedAndRunOnCallback(executor) {
-                                onError(e)
+                        }.onFailure { e ->
+                            task.markExecutedAndRunOnCallback(executor) {
+                                onError((e as? Exception) ?: Exception(e))
                             }
                         }
                     }
                 )
             }
-            return searchRequestTask
+            return task
         }
 
-        return when (suggestion) {
-            is GeocodingCompatSearchSuggestion -> {
+        return when (val base = suggestion.base) {
+            is BaseGeocodingCompatSearchSuggestion -> {
                 val searchResult = ServerSearchResultImpl(
-                    listOf(suggestion.searchResultType),
-                    suggestion.originalSearchResult,
+                    listOf(base.searchResultType.mapToPlatform()),
+                    base.rawSearchResult,
                     suggestion.requestOptions
                 )
                 completeSearchResultSelection(suggestion, searchResult)
             }
-            is ServerSearchSuggestion -> makeRequest<SearchSuggestionsCallback>(callback) { request ->
-                val requestContext = suggestion.requestOptions.requestContext
-                coreEngine.retrieve(
-                    coreRequestOptions,
-                    suggestion.originalSearchResult.mapToCore(),
-                    TwoStepsRequestCallbackWrapper(
-                        apiType = apiType,
-                        coreEngine = coreEngine,
-                        historyService = historyService,
-                        searchResultFactory = searchResultFactory,
-                        callbackExecutor = executor,
-                        workerExecutor = engineExecutorService,
-                        searchRequestTask = request,
-                        searchRequestContext = requestContext,
-                        suggestion = suggestion,
-                        selectOptions = options,
-                        isOfflineSearch = false,
+            is BaseServerSearchSuggestion -> {
+                val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSelectionCallbackAdapter(callback)
+                makeRequest(baseCallback) { request ->
+                    val requestContext = suggestion.requestOptions.requestContext
+                    coreEngine.retrieve(
+                        coreRequestOptions,
+                        base.rawSearchResult.mapToCore(),
+                        TwoStepsRequestCallbackWrapper(
+                            apiType = apiType.mapToCore(),
+                            coreEngine = coreEngine,
+                            historyService = historyService,
+                            searchResultFactory = searchResultFactory,
+                            callbackExecutor = executor,
+                            workerExecutor = engineExecutorService,
+                            searchRequestTask = request,
+                            searchRequestContext = requestContext,
+                            suggestion = suggestion.base,
+                            addResultToHistory = options.addResultToHistory,
+                        )
                     )
-                )
+                }
             }
-            is IndexableRecordSearchSuggestion -> {
+            is BaseIndexableRecordSearchSuggestion -> {
                 val resolved = IndexableRecordSearchResultImpl(
-                    suggestion.record,
-                    suggestion.originalSearchResult,
+                    base.record.sdkResolvedRecord as IndexableRecord,
+                    base.rawSearchResult,
                     suggestion.requestOptions
                 )
                 completeSearchResultSelection(suggestion, resolved)
-            }
-            is BaseSearchSuggestion -> {
-                error("Unprocessed suggestion: $suggestion")
             }
         }
     }
@@ -283,9 +296,9 @@ internal class SearchEngineImpl(
         options: CategorySearchOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): SearchRequestTask {
-        return makeRequest(callback) { request ->
-            val requestContext = requestContextProvider.provide(apiType)
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+            val requestContext = requestContextProvider.provide(apiType.mapToCore())
             coreEngine.search(
                 "",
                 listOf(categoryName),
@@ -306,9 +319,9 @@ internal class SearchEngineImpl(
         options: ReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
-        return makeRequest(callback) { request ->
-            val requestContext = requestContextProvider.provide(apiType)
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+            val requestContext = requestContextProvider.provide(apiType.mapToCore())
             coreEngine.reverseGeocoding(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchResultMetadata
-import com.mapbox.search.common.extension.safeCompareTo
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord

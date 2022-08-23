@@ -66,7 +66,8 @@ android {
 
 dependencies {
     api project(path: ':sdk')
-    implementation project(path: ':sdk-common')
+    implementation project(path: ':base')
+    api project(path: ':sdk-common')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"

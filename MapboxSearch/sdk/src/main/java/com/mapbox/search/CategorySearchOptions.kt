@@ -4,10 +4,9 @@ import android.os.Parcelable
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
-import com.mapbox.search.common.extension.safeCompareTo
-import com.mapbox.search.core.CoreSearchOptions
-import com.mapbox.search.utils.extension.mapToCore
-import com.mapbox.search.utils.extension.mapToPlatform
+import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -388,6 +387,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
     }
 }
 
+@JvmSynthetic
 internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = CoreSearchOptions(
     proximity,
     origin,
@@ -406,29 +406,4 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = Core
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
     unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
-)
-
-@JvmSynthetic
-internal fun CoreSearchOptions.mapToPlatformCategory(): CategorySearchOptions = CategorySearchOptions(
-    proximity = proximity,
-    boundingBox = bbox?.mapToPlatform(),
-    countries = countries?.map { Country(it) },
-    fuzzyMatch = @Suppress("DEPRECATION") fuzzyMatch,
-    languages = language?.map { Language(it) },
-    limit = limit,
-    requestDebounce = requestDebounce,
-    origin = origin,
-    navigationProfile = navProfile?.let { SearchNavigationProfile(it) },
-    routeOptions = if (route != null && timeDeviation != null) {
-        RouteOptions(
-            route = route!!,
-            deviation = RouteOptions.Deviation.Time.fromMinutes(
-                minutes = timeDeviation!!,
-                sarType = sarType?.let(RouteOptions.Deviation::SarType),
-            ),
-        )
-    } else null,
-    unsafeParameters = addonAPI,
-    ignoreIndexableRecords = ignoreUR,
-    indexableRecordsDistanceThresholdMeters = urDistanceThreshold,
 )

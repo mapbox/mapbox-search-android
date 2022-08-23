@@ -1,7 +1,7 @@
 package com.mapbox.search.metadata
 
-import com.mapbox.search.common.assertDebug
-import com.mapbox.search.core.CoreParkingData
+import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreParkingData
 
 /**
  * Parking information for the POI.

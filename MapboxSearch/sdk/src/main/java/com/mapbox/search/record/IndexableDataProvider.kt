@@ -1,8 +1,8 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.AsyncOperationTask
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
 /**

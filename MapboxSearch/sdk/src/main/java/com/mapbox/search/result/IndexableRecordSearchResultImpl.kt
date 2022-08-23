@@ -3,15 +3,16 @@ package com.mapbox.search.result
 import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class IndexableRecordSearchResultImpl(
     override val record: IndexableRecord,
-    override val originalSearchResult: OriginalSearchResult,
+    override val rawSearchResult: BaseRawSearchResult,
     override val requestOptions: RequestOptions
-) : BaseSearchResult(originalSearchResult), IndexableRecordSearchResult {
+) : AbstractSearchResult(rawSearchResult), IndexableRecordSearchResult {
 
     override val id: String
         get() = record.id
@@ -23,10 +24,10 @@ internal data class IndexableRecordSearchResultImpl(
         get() = record.descriptionText
 
     override val address: SearchAddress?
-        get() = record.address ?: originalSearchResult.addresses?.get(0)
+        get() = record.address ?: rawSearchResult.addresses?.get(0)?.mapToPlatform()
 
     override val coordinate: Point?
-        get() = record.coordinate ?: originalSearchResult.center
+        get() = record.coordinate ?: rawSearchResult.center
 
     override val routablePoints: List<RoutablePoint>?
         get() = record.routablePoints

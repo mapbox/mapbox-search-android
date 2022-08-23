@@ -3,10 +3,12 @@ package com.mapbox.search.record
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.SearchResultMetadata
-import com.mapbox.search.core.CoreUserRecord
+import com.mapbox.search.base.core.CoreUserRecord
+import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
 
 /**
@@ -91,3 +93,21 @@ internal fun IndexableRecord.mapToCore() = CoreUserRecord(
     indexTokens,
     type.mapToCore(), // TODO(search-sdk/#526): consider multiple types for IndexableRecord
 )
+
+@JvmSynthetic
+internal fun IndexableRecord.mapToBase(): BaseIndexableRecord {
+    return BaseIndexableRecord(
+        id = id,
+        name = name,
+        descriptionText = descriptionText,
+        address = address?.mapToBase(),
+        routablePoints = routablePoints?.map { it.mapToCore() },
+        categories = categories,
+        makiIcon = makiIcon,
+        coordinate = coordinate,
+        type = type.mapToBase(),
+        metadata = metadata?.coreMetadata,
+        indexTokens = indexTokens,
+        sdkResolvedRecord = this
+    )
+}

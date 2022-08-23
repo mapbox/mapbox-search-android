@@ -2,15 +2,15 @@ package com.mapbox.search.tests_support
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.RouteOptions
+import com.mapbox.search.base.core.CoreSearchResponse
+import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
-import com.mapbox.search.core.CoreSearchResponse
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.OriginalSearchResult
 import java.io.IOException
 import java.net.URI
 import java.util.concurrent.TimeUnit
@@ -57,10 +57,10 @@ internal object SdkCustomTypeObjectCreators {
         )[mode.ordinal]
     }
 
-    internal val ORIGINAL_SEARCH_RESULT_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(OriginalSearchResult::class) { mode ->
+    internal val BASE_RAW_SEARCH_RESULT_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(BaseRawSearchResult::class) { mode ->
         listOf(
-            createTestOriginalSearchResult(id = "test-result-1"),
-            createTestOriginalSearchResult(id = "test-result-2"),
+            createTestBaseRawSearchResult(id = "test-result-1"),
+            createTestBaseRawSearchResult(id = "test-result-2"),
         )[mode.ordinal]
     }
 
@@ -87,7 +87,7 @@ internal object SdkCustomTypeObjectCreators {
         WEEK_TIMESTAMP_OBJECT_CREATOR,
         OPEN_HOURS_OBJECT_CREATOR,
         CORE_SEARCH_RESPONSE_CREATOR,
-        ORIGINAL_SEARCH_RESULT_OBJECT_CREATOR,
+        BASE_RAW_SEARCH_RESULT_OBJECT_CREATOR,
         INDEXABLE_RECORD_OBJECT_CREATOR,
         URI_OBJECT_CREATOR,
         EXCEPTION_CREATOR,

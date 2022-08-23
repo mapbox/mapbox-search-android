@@ -2,7 +2,7 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreRoutablePoint
 import kotlinx.parcelize.Parcelize
 
 /**

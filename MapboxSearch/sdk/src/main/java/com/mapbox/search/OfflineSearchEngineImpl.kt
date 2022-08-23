@@ -4,16 +4,21 @@ import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.common.logger.logd
-import com.mapbox.search.core.CoreOfflineIndexObserver
-import com.mapbox.search.core.CoreSearchEngine
-import com.mapbox.search.core.CoreSearchEngineInterface
-import com.mapbox.search.engine.BaseSearchEngine
-import com.mapbox.search.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreOfflineIndexObserver
+import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.engine.BaseSearchEngine
+import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
-import com.mapbox.search.result.SearchResultFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -68,10 +73,10 @@ internal class OfflineSearchEngineImpl(
         options: OfflineSearchOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         logd("search($query, $options) called")
 
-        return makeRequest(callback) { request ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -79,7 +84,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )
@@ -90,8 +95,8 @@ internal class OfflineSearchEngineImpl(
         options: OfflineReverseGeoOptions,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
-        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
+    ): AsyncOperationTask {
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.reverseGeocodingOffline(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
@@ -99,7 +104,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )
@@ -112,15 +117,15 @@ internal class OfflineSearchEngineImpl(
         radiusMeters: Double,
         executor: Executor,
         callback: SearchCallback
-    ): SearchRequestTask {
+    ): AsyncOperationTask {
         if (radiusMeters < 0.0) {
             executor.execute {
                 callback.onError(IllegalArgumentException("Negative radius"))
             }
-            return SearchRequestTaskImpl.completed()
+            return AsyncOperationTaskImpl.COMPLETED
         }
 
-        return makeRequest(callback) { request: SearchRequestTaskImpl<SearchCallback> ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
             coreEngine.getAddressesOffline(
                 street,
                 proximity,
@@ -130,7 +135,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(ApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
                     isOffline = true,
                 )
             )

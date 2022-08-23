@@ -3,7 +3,6 @@ package com.mapbox.search.analytics.events
 import android.graphics.Bitmap
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.ApiType
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.Country
 import com.mapbox.search.EtaType
@@ -18,33 +17,38 @@ import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
-import com.mapbox.search.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.location.calculateMapZoom
+import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
+import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.BaseSuggestAction
+import com.mapbox.search.base.result.SearchRequestContext
+import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.base.result.mapToCore
+import com.mapbox.search.base.utils.FormattedTimeProvider
+import com.mapbox.search.base.utils.UUIDProvider
+import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
-import com.mapbox.search.location.calculateMapZoom
+import com.mapbox.search.mapToBase
+import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.GeocodingCompatSearchSuggestion
+import com.mapbox.search.record.mapToBase
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.IndexableRecordSearchSuggestion
-import com.mapbox.search.result.OriginalResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchRequestContext
-import com.mapbox.search.result.SearchResultSuggestAction
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.ServerSearchSuggestion
-import com.mapbox.search.result.mapToCore
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
-import com.mapbox.search.tests_support.createTestOriginalSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
-import com.mapbox.search.utils.FormattedTimeProvider
-import com.mapbox.search.utils.UUIDProvider
-import com.mapbox.search.utils.orientation.ScreenOrientation
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -114,11 +118,11 @@ internal class SearchFeedbackEventsFactoryTest {
                     val isCached = searchResult is IndexableRecordSearchResult
 
                     feedbackEventsFactory.createSearchFeedbackEvent(
-                        searchResult.originalSearchResult,
+                        searchResult.rawSearchResult,
                         searchResult.requestOptions,
                         createTestCoreSearchResponseSuccess(
                             results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                        ).mapToPlatform(),
+                        ).mapToBase(),
                         TEST_USER_LOCATION,
                         isReproducible = true,
                         event = FeedbackEvent(
@@ -153,14 +157,14 @@ internal class SearchFeedbackEventsFactoryTest {
                                 types = searchResult.requestOptions.options.types?.map { it.name }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
-                                selectedItemName = searchResult.originalSearchResult.names.first()
+                                selectedItemName = searchResult.rawSearchResult.names.first()
                                 keyboardLocale = TEST_LOCALE.language
                                 mapZoom = calculateMapZoom(TEST_VIEWPORT)
                                 mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
                                 mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
                                 resultId = when (isCached) {
                                     true -> null
-                                    false -> searchResult.originalSearchResult.id
+                                    false -> searchResult.rawSearchResult.id
                                 }
                                 sessionIdentifier = when (isCached) {
                                     true -> NOT_AVAILABLE_SESSION_ID
@@ -195,11 +199,11 @@ internal class SearchFeedbackEventsFactoryTest {
                 val overriddenFeedbackId = "overridden-feedback-id"
 
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    TEST_SERVER_SEARCH_RESULT.originalSearchResult,
+                    TEST_SERVER_SEARCH_RESULT.rawSearchResult,
                     TEST_SERVER_SEARCH_RESULT.requestOptions,
                     createTestCoreSearchResponseSuccess(
                         results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                    ).mapToPlatform(),
+                    ).mapToBase(),
                     TEST_USER_LOCATION,
                     isReproducible = true,
                     event = FeedbackEvent(
@@ -243,11 +247,11 @@ internal class SearchFeedbackEventsFactoryTest {
                 ).forEach { searchSuggestion ->
                     val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
 
-                    val isCached = searchSuggestion is IndexableRecordSearchSuggestion
+                    val isCached = searchSuggestion is BaseIndexableRecordSearchSuggestion
 
                     feedbackEventsFactory.createSearchFeedbackEvent(
-                        searchSuggestion.originalSearchResult,
-                        searchSuggestion.requestOptions,
+                        searchSuggestion.rawSearchResult,
+                        searchSuggestion.requestOptions.mapToPlatform(),
                         null,
                         TEST_USER_LOCATION,
                         isReproducible = true,
@@ -264,32 +268,32 @@ internal class SearchFeedbackEventsFactoryTest {
                         assertEqualsJsonify(
                             expectedValue = SearchFeedbackEvent().apply {
                                 event = SearchFeedbackEvent.EVENT_NAME
-                                cached = searchSuggestion is IndexableRecordSearchSuggestion
+                                cached = isCached
                                 created = TEST_EVENT_CREATION_DATE
                                 latitude = TEST_USER_LOCATION.latitude()
                                 longitude = TEST_USER_LOCATION.longitude()
                                 resultIndex = searchSuggestion.serverIndex
                                 orientation = TEST_REQUEST_OPTIONS.requestContext.screenOrientation?.rawValue
                                 userAgent = TEST_USER_AGENT
-                                queryString = searchSuggestion.requestOptions.query
-                                language = searchSuggestion.requestOptions.options.languages?.map { it.code }
-                                boundingBox = searchSuggestion.requestOptions.options.boundingBox?.coordinates()
-                                proximity = searchSuggestion.requestOptions.options.proximity?.coordinates()
-                                country = searchSuggestion.requestOptions.options.countries?.map { it.code }
+                                queryString = searchSuggestion.requestOptions.core.query
+                                language = searchSuggestion.requestOptions.core.options.language
+                                boundingBox = searchSuggestion.requestOptions.core.options.bbox?.mapToPlatform()?.coordinates()
+                                proximity = searchSuggestion.requestOptions.core.options.proximity?.coordinates()
+                                country = searchSuggestion.requestOptions.core.options.countries
                                 endpoint = TEST_ENDPOINT
-                                fuzzyMatch = searchSuggestion.requestOptions.options.fuzzyMatch
-                                limit = searchSuggestion.requestOptions.options.limit
-                                types = searchSuggestion.requestOptions.options.types?.map { it.name }
+                                fuzzyMatch = searchSuggestion.requestOptions.core.options.fuzzyMatch
+                                limit = searchSuggestion.requestOptions.core.options.limit
+                                types = searchSuggestion.requestOptions.core.options.types?.map { it.name }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
-                                selectedItemName = searchSuggestion.originalSearchResult.names.first()
+                                selectedItemName = searchSuggestion.rawSearchResult.names.first()
                                 mapZoom = calculateMapZoom(TEST_VIEWPORT)
                                 mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
                                 mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
                                 keyboardLocale = TEST_LOCALE.language
                                 resultId = when (isCached) {
                                     true -> null
-                                    false -> searchSuggestion.originalSearchResult.id
+                                    false -> searchSuggestion.rawSearchResult.id
                                 }
                                 sessionIdentifier = when (isCached) {
                                     true -> NOT_AVAILABLE_SESSION_ID
@@ -301,7 +305,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = searchSuggestion.originalSearchResult.center?.coordinates()
+                                resultCoordinates = searchSuggestion.rawSearchResult.center?.coordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = null
                                 searchResultsJson = null
@@ -319,8 +323,8 @@ internal class SearchFeedbackEventsFactoryTest {
                 val overriddenFeedbackId = "overridden-feedback-id"
 
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    TEST_SERVER_SEARCH_SUGGESTION.originalSearchResult,
-                    TEST_SERVER_SEARCH_SUGGESTION.requestOptions,
+                    TEST_SERVER_SEARCH_SUGGESTION.rawSearchResult,
+                    TEST_SERVER_SEARCH_SUGGESTION.requestOptions.mapToPlatform(),
                     null,
                     TEST_USER_LOCATION,
                     isReproducible = true,
@@ -498,7 +502,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             requestOptions = TEST_REQUEST_OPTIONS,
                             coreSearchResponse = createTestCoreSearchResponseSuccess(
                                 results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                            ).mapToPlatform(),
+                            ).mapToBase(),
                             isReproducible = true,
                         ),
                         "Please, add Paris to search results!",
@@ -568,7 +572,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             requestOptions = TEST_REQUEST_OPTIONS,
                             coreSearchResponse = createTestCoreSearchResponseSuccess(
                                 results = listOf(TEST_SEARCH_RESULT.mapToCore())
-                            ).mapToPlatform(),
+                            ).mapToBase(),
                             isReproducible = true,
                         ),
                         "Please, add Paris to search results!",
@@ -634,16 +638,16 @@ internal class SearchFeedbackEventsFactoryTest {
             endpoint = "suggest",
             options = TEST_SEARCH_OPTIONS,
             requestContext = SearchRequestContext(
-                apiType = ApiType.SBS,
+                apiType = CoreApiType.SBS,
                 keyboardLocale = TEST_LOCALE,
                 screenOrientation = ScreenOrientation.PORTRAIT,
                 responseUuid = TEST_RESPONSE_UUID
             )
         )
 
-        val TEST_SEARCH_RESULT = createTestOriginalSearchResult(
+        val TEST_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA==",
-            types = listOf(OriginalResultType.POI),
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Tour Eiffel"),
             languages = listOf("fr"),
             addresses = listOf(SearchAddress()),
@@ -652,7 +656,7 @@ internal class SearchFeedbackEventsFactoryTest {
             center = Point.fromLngLat(2.294423282146454, 48.85825817805569),
             categories = listOf("site historique", "attraction touristique", "monument", "point de vue"),
             icon = "marker",
-            action = SearchResultSuggestAction(
+            action = BaseSuggestAction(
                 "retrieve",
                 "ApIRHSCw9FLmeKhRFdha2Sy8oVmp0-B_Ko22am7vqmh_mcvnj3rskkkBhjrnEczEtxkl7eidXKaRuvSTx8jtc0tYoyZ6QUXiJ4uW5wK7gm5waUK2B0ERxYjwhDVM6l2V_w9ydWevuMT1NEyqa3LVWGJYJwo3Gxq3NY_gq06crd1x-oWFyPM3nevna4qzgZMheenaRJqdCUAM8K0oFhbNKBoPrHNQm1PO1dmE6UneRKouDtmlgM2Hd0-PQPLd9SYbIel2CO_6-XtG2paaLZe0iN4BYug4DcS7MANbEe2AL3Zsy59t6JSVGnWO1QlZMb8Ir8IrPo7d15t1Y5GJYhmgdP1bTI6Z1B03PZZ9AFcVzO8SH3_SQvdxGRbS1aCfcRIxPfkDqtwiYj1j4OHjKZ1rVRFcoQK_W6_cMQ_Jy1qu-CF-eFatBRIRIboDkzPFAL7ja1HSbKDUpMKJN6fZhNsfYkByWzFq1v4YaZNuAC6OmGoNh5_WEO0qUPyEt6PQDVtko27ma97cBgN7AUQxdzFCkRd3ftDF9AFbRAYQvVuI8AZ2CFI3gHODW3UEZzP2hZsBCxUg1y3l763vPE17ioGimZ2LuVjn_7FeT8IbQRHtsJMOhE8reMN25AS9tWEcjOt3uX2ffDga7r79NSeDyN-zRfZuMDZ290lDCOx7XfBXj6Y8EJWVTqQN261uxq6EdREhgT0-HnVLe3Q1R2Ce3A6qca53j7mY0dNNiBK78qiNLl8lsvqYJbeLJZpAX2893SJv15Ufh0Xkv-TYhzURuJNmIie-LdvQCJBtylnOwrnIyo9NH3oZKskC21YE6NRk9KNEpxR4uEqWMrQ3gfM3DMtZFcIw2PYp_Mp0VF0tWpKBg4ej22FNVgMNrO5dn91w_mqulANRwDTrmjXGLUxFE0Fe4S5Z5gHKHMiB6AW23GIePCpprEN2Kwlj0S6bCskorc27mcC8w2sgEHVYUVVMSJM9GGVrkqxmCxcTdiVVrLz8LwdK3I6y2v5i7foONg_IjTbZj9AYnXY2LDqol97AYP0ne4BbgUPtx7PGDfRP9-rbYkSN9BpnnhBZvoQy7JznixmlcpTBhmHjTAJl85u1rGPy-0t5EjA8ToQb_tYaMx5n9CFWMbW10ZoqYHEt-GugTZa_osZ9KJHQLWw-k1jpmQBpkEY0mJszdPC7XGNM7w7Gwgk757zpEyfKT4jCunpUK6MTT6mniRDGBnXRb1AL2U7FNEJCVXL5_Q==",
                 "",
@@ -664,19 +668,19 @@ internal class SearchFeedbackEventsFactoryTest {
 
         val TEST_SERVER_SEARCH_RESULT = ServerSearchResultImpl(
             types = listOf(SearchResultType.ADDRESS),
-            originalSearchResult = TEST_SEARCH_RESULT,
+            rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
         val TEST_LOCAL_SEARCH_RESULT = IndexableRecordSearchResultImpl(
             record = StubIndexableRecord(),
-            originalSearchResult = TEST_SEARCH_RESULT,
+            rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
-        val TEST_SERVER_SEARCH_SUGGESTION = ServerSearchSuggestion(
-            originalSearchResult = TEST_SEARCH_RESULT,
-            requestOptions = TEST_REQUEST_OPTIONS
+        val TEST_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
+            rawSearchResult = TEST_SEARCH_RESULT,
+            requestOptions = TEST_REQUEST_OPTIONS.mapToBase()
         )
 
         val TEST_FAVORITE_RECORD = FavoriteRecord(
@@ -695,17 +699,17 @@ internal class SearchFeedbackEventsFactoryTest {
             metadata = null
         )
 
-        val TEST_LOCAL_SEARCH_SUGGESTION = IndexableRecordSearchSuggestion(
-            record = TEST_FAVORITE_RECORD,
-            originalSearchResult = TEST_SEARCH_RESULT.copy(
-                types = listOf(OriginalResultType.USER_RECORD), layerId = "testLayerId"
+        val TEST_LOCAL_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
+            record = TEST_FAVORITE_RECORD.mapToBase(),
+            rawSearchResult = TEST_SEARCH_RESULT.copy(
+                types = listOf(BaseRawResultType.USER_RECORD), layerId = "testLayerId"
             ),
-            requestOptions = TEST_REQUEST_OPTIONS
+            requestOptions = TEST_REQUEST_OPTIONS.mapToBase()
         )
 
-        val TEST_GEOCODING_COMPAT_SEARCH_SUGGESTION = GeocodingCompatSearchSuggestion(
-            originalSearchResult = TEST_SEARCH_RESULT.copy(action = null),
-            requestOptions = TEST_REQUEST_OPTIONS
+        val TEST_GEOCODING_COMPAT_SEARCH_SUGGESTION = BaseGeocodingCompatSearchSuggestion(
+            rawSearchResult = TEST_SEARCH_RESULT.copy(action = null),
+            requestOptions = TEST_REQUEST_OPTIONS.mapToBase()
         )
 
         val TEST_HISTORY_RECORD = HistoryRecord(

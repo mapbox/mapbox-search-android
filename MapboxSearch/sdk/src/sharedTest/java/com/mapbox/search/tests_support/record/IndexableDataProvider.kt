@@ -1,12 +1,14 @@
 package com.mapbox.search.tests_support.record
 
-import com.mapbox.search.record.HistoryService
+import com.mapbox.search.base.record.SearchHistoryService
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.mapToBase
 import com.mapbox.search.tests_support.BlockingCompletionCallback
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
 
 internal fun <T : IndexableRecord> IndexableDataProvider<T>.registerIndexableDataProviderEngineBlocking(
@@ -92,11 +94,13 @@ internal fun <T : IndexableRecord> IndexableDataProvider<T>.getSizeBlocking(
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor
 ): Int = getAllBlocking(executor).size
 
-internal fun HistoryService.addToHistoryIfNeededBlocking(
+internal fun SearchHistoryService.addToHistoryIfNeededBlocking(
     searchResult: SearchResult,
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor
 ) {
-    val callback = BlockingCompletionCallback<Boolean>()
-    addToHistoryIfNeeded(searchResult, executor, callback)
-    callback.getResultBlocking()
+    val countDownLatch = CountDownLatch(1)
+    addToHistoryIfNeeded(searchResult.mapToBase(), executor) {
+        countDownLatch.countDown()
+    }
+    countDownLatch.await()
 }

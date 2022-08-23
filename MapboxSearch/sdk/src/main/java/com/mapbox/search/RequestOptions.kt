@@ -1,8 +1,9 @@
 package com.mapbox.search
 
 import android.os.Parcelable
-import com.mapbox.search.core.CoreRequestOptions
-import com.mapbox.search.result.SearchRequestContext
+import com.mapbox.search.base.BaseRequestOptions
+import com.mapbox.search.base.core.CoreRequestOptions
+import com.mapbox.search.base.result.SearchRequestContext
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -108,16 +109,7 @@ public class RequestOptions internal constructor(
     }
 }
 
-internal fun CoreRequestOptions.mapToPlatform(searchRequestContext: SearchRequestContext) = RequestOptions(
-    query = query,
-    options = options.mapToPlatform(),
-    proximityRewritten = proximityRewritten,
-    originRewritten = originRewritten,
-    endpoint = endpoint,
-    sessionID = sessionID,
-    requestContext = searchRequestContext,
-)
-
+@JvmSynthetic
 internal fun RequestOptions.mapToCore() = CoreRequestOptions(
     query,
     endpoint,
@@ -126,3 +118,31 @@ internal fun RequestOptions.mapToCore() = CoreRequestOptions(
     originRewritten,
     sessionID,
 )
+
+@JvmSynthetic
+internal fun RequestOptions.mapToBase(): BaseRequestOptions {
+    return BaseRequestOptions(
+        core = CoreRequestOptions(
+            query = query,
+            endpoint = endpoint,
+            options = options.mapToCore(),
+            proximityRewritten = proximityRewritten,
+            originRewritten = originRewritten,
+            sessionID = sessionID,
+        ),
+        requestContext = requestContext
+    )
+}
+
+@JvmSynthetic
+internal fun BaseRequestOptions.mapToPlatform(): RequestOptions {
+    return RequestOptions(
+        query = core.query,
+        endpoint = core.endpoint,
+        options = core.options.mapToPlatform(),
+        proximityRewritten = core.proximityRewritten,
+        originRewritten = core.originRewritten,
+        sessionID = core.sessionID,
+        requestContext = requestContext
+    )
+}

@@ -1,5 +1,6 @@
 package com.mapbox.search.utils.extension
 
+import com.mapbox.search.base.utils.extension.addValue
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 

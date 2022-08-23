@@ -8,15 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
-import com.mapbox.search.AsyncOperationTask;
+import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.CompletionCallback;
 import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
-import com.mapbox.search.SearchRequestTask;
 import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.IndexableDataProvider;
 import com.mapbox.search.record.IndexableDataProviderEngine;
@@ -25,7 +25,6 @@ import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchResultType;
 import com.mapbox.search.result.SearchSuggestion;
 import com.mapbox.search.sample.BuildConfig;
-import com.mapbox.search.utils.concurrent.SearchSdkMainThreadWorker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
     private SearchEngine searchEngine;
     private AsyncOperationTask registerProviderTask;
     @Nullable
-    private SearchRequestTask searchRequestTask = null;
+    private AsyncOperationTask searchRequestTask = null;
 
     private final InMemoryDataProvider<IndexableRecord> customDataProvider = new InMemoryDataProvider<>(
         Arrays.asList(
@@ -55,7 +54,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
 
     private final SearchSelectionCallback searchCallback = new SearchSelectionCallback() {
         @Override
-        public void onSuggestions(@NonNull List<? extends SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
+        public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
             if (suggestions.isEmpty()) {
                 Log.i("SearchApiExample", "No suggestions found");
             } else {
