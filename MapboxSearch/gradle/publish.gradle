@@ -55,11 +55,12 @@ task androidJavadocsJar(type: Jar, dependsOn: dokkaHtml) {
 }
 
 def sdkNameMap = [:]
+sdkNameMap["sdk-common"] = "search-sdk-common"
+sdkNameMap["base"] = "search-base-sdk"
 sdkNameMap["sdk"] = "search-sdk"
 sdkNameMap["ui"] = "search-ui-sdk"
-sdkNameMap["sdk-common"] = "search-sdk-common"
+sdkNameMap["offline"] = "search-offline-sdk"
 sdkNameMap["autofill"] = "search-autofill-sdk"
-sdkNameMap["base"] = "search-base-sdk"
 
 registry {
     sdkName = sdkNameMap[project.name]
