@@ -1,6 +1,6 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.tests_support.TestThreadExecutorService
+import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

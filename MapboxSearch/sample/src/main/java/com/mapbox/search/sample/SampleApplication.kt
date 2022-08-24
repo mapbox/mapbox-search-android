@@ -79,7 +79,7 @@ open class SampleApplication : Application() {
             detectFileUriExposure()
 
             // Fails because of an issue in the Common SDK.
-            //detectLeakedClosableObjects()
+            // detectLeakedClosableObjects()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 detectContentUriWithoutPermission()

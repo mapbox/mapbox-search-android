@@ -4,6 +4,8 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
+import java.io.IOException
+import java.net.URI
 
 object CommonSdkTypeObjectCreators {
 
@@ -21,8 +23,21 @@ object CommonSdkTypeObjectCreators {
         )[mode.ordinal]
     }
 
+    internal val URI_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(URI::class) { mode ->
+        listOf(
+            URI.create("https://api.mapbox.com"),
+            URI.create("https://api-offline-search-staging.tilestream.net")
+        )[mode.ordinal]
+    }
+
+    internal val EXCEPTION_CREATOR = CustomTypeObjectCreatorImpl(Exception::class) { mode ->
+        listOf(Exception(), IOException())[mode.ordinal]
+    }
+
     val ALL_CREATORS = listOf<CustomTypeObjectCreator>(
         POINT_OBJECT_CREATOR,
         BOUNDING_BOX_OBJECT_CREATOR,
+        URI_OBJECT_CREATOR,
+        EXCEPTION_CREATOR
     )
 }

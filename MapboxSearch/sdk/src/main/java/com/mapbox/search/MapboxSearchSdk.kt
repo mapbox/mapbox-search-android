@@ -2,11 +2,8 @@ package com.mapbox.search
 
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.bindgen.Value
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
-import com.mapbox.common.TileDataDomain
-import com.mapbox.common.TileStoreOptions
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.AnalyticsServiceImpl
@@ -16,6 +13,7 @@ import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.location.LocationEngineAdapter
+import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.logger.logw
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
@@ -26,11 +24,11 @@ import com.mapbox.search.base.utils.LocalTimeProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.base.utils.UUIDProviderImpl
+import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
-import com.mapbox.search.common.BuildConfig
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.location.WrapperLocationProvider
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
@@ -50,12 +48,6 @@ import java.util.concurrent.Executor
  */
 @Suppress("LargeClass")
 public object MapboxSearchSdk {
-
-    private val userAgent = if (BuildConfig.DEBUG) {
-        "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
-    } else {
-        "search-sdk-android/${BuildConfig.VERSION_NAME}"
-    }
 
     private var isInitialized = false
 
@@ -149,17 +141,6 @@ public object MapboxSearchSdk {
     }
 
     private fun createAnalyticsService(
-        settings: OfflineSearchEngineSettings,
-        coreSearchEngine: CoreSearchEngineInterface,
-    ) = createAnalyticsService(
-        application = application,
-        accessToken = settings.accessToken,
-        coreSearchEngine = coreSearchEngine,
-        locationEngine = settings.locationEngine,
-        viewportProvider = settings.viewportProvider
-    )
-
-    private fun createAnalyticsService(
         settings: SearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
     ) = createAnalyticsService(
@@ -180,7 +161,7 @@ public object MapboxSearchSdk {
         val eventJsonParser = AnalyticsEventJsonParser()
 
         val searchFeedbackEventsFactory = SearchFeedbackEventsFactory(
-            providedUserAgent = userAgent,
+            providedUserAgent = UserAgentProvider.userAgent,
             viewportProvider = viewportProvider,
             uuidProvider = uuidProvider,
             coreSearchEngine = coreSearchEngine,
@@ -188,7 +169,7 @@ public object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, userAgent))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, UserAgentProvider.userAgent))
 
         return AnalyticsServiceImpl(
             context = application,
@@ -320,54 +301,6 @@ public object MapboxSearchSdk {
         )
     }
 
-    /**
-     * Creates a new instance of [OfflineSearchEngine].
-     *
-     * @param settings [OfflineSearchEngine] settings.
-     *
-     * @return a new instance of [OfflineSearchEngine].
-     */
-    @JvmStatic
-    public fun createOfflineSearchEngine(settings: OfflineSearchEngineSettings): OfflineSearchEngine {
-        checkInitialized()
-
-        with(settings) {
-            tileStore.setOption(
-                TileStoreOptions.MAPBOX_APIURL,
-                TileDataDomain.SEARCH,
-                Value.valueOf(tilesBaseUri.toString())
-            )
-
-            tileStore.setOption(
-                TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-                TileDataDomain.SEARCH,
-                Value.valueOf(accessToken)
-            )
-        }
-
-        val coreEngine = CoreSearchEngine(
-            CoreEngineOptions(
-                settings.accessToken,
-                SearchEngineSettings.DEFAULT_ENDPOINT_GEOCODING,
-                ApiType.SBS.mapToCore(),
-                userAgent,
-                null
-            ),
-            WrapperLocationProvider(
-                LocationEngineAdapter(application, settings.locationEngine),
-                settings.viewportProvider
-            ),
-        )
-
-        return OfflineSearchEngineImpl(
-            analyticsService = createAnalyticsService(settings, coreEngine),
-            settings = settings,
-            coreEngine = coreEngine,
-            requestContextProvider = searchRequestContextProvider,
-            searchResultFactory = searchResultFactory,
-        )
-    }
-
     private fun createCoreEngineByApiType(
         apiType: ApiType,
         settings: SearchEngineSettings
@@ -380,11 +313,10 @@ public object MapboxSearchSdk {
 
         return CoreSearchEngine(
             // TODO allow customer to customize events url
-            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), userAgent, null),
-            WrapperLocationProvider(
-                LocationEngineAdapter(application, settings.locationEngine),
-                settings.viewportProvider
-            ),
+            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
+            WrapperLocationProvider(LocationEngineAdapter(application, settings.locationEngine)) {
+                settings.viewportProvider?.getViewport()?.mapToCore()
+            }
         )
     }
 

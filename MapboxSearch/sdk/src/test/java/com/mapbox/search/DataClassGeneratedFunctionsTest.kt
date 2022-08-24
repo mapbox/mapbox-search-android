@@ -71,14 +71,11 @@ internal class DataClassGeneratedFunctionsTest {
             FeedbackEvent::class,
             MissingResultFeedbackEvent::class,
             SelectOptions::class,
-            OfflineIndexChangeEvent::class,
-            OfflineIndexErrorEvent::class,
             // enums
             QueryType::class,
             ApiType::class,
             SearchResultType::class,
             WeekDay::class,
-            OfflineIndexChangeEvent.EventType::class,
             // data classes
             OpenPeriod::class,
             WeekTimestamp::class,

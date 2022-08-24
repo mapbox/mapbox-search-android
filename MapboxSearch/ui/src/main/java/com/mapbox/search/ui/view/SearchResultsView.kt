@@ -13,9 +13,6 @@ import com.mapbox.common.ReachabilityInterface
 import com.mapbox.search.ApiType
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchEngine
-import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.OfflineSearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
@@ -27,6 +24,12 @@ import com.mapbox.search.base.concurrent.checkMainThread
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchCallback
+import com.mapbox.search.offline.OfflineSearchEngine
+import com.mapbox.search.offline.OfflineSearchEngineSettings
+import com.mapbox.search.offline.OfflineSearchOptions
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
@@ -138,13 +141,14 @@ public class SearchResultsView @JvmOverloads constructor(
         }
     }
 
-    private val offlineSearchCallback = object : SearchCallback {
+    private val offlineSearchCallback = object : OfflineSearchCallback {
 
-        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
-            if (searchQuery.isNotEmpty()) {
-                showResults(results, responseInfo, SearchContext.OFFLINE)
-                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
-            }
+        override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
+            // TODO FIXME
+//            if (searchQuery.isNotEmpty()) {
+//                showResults(results, responseInfo, SearchContext.OFFLINE)
+//                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
+//            }
         }
 
         override fun onError(e: Exception) {
@@ -222,7 +226,7 @@ public class SearchResultsView @JvmOverloads constructor(
             configuration.searchEngineSettings
         )
 
-        offlineSearchEngine = MapboxSearchSdk.createOfflineSearchEngine(configuration.offlineSearchEngineSettings)
+        offlineSearchEngine = OfflineSearchEngine.create(configuration.offlineSearchEngineSettings)
 
         historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
 

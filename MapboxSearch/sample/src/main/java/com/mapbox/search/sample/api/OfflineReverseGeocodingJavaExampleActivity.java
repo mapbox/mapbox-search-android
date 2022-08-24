@@ -12,15 +12,13 @@ import com.mapbox.common.TileRegionLoadOptions;
 import com.mapbox.common.TileStore;
 import com.mapbox.common.TilesetDescriptor;
 import com.mapbox.geojson.Point;
-import com.mapbox.search.MapboxSearchSdk;
-import com.mapbox.search.OfflineReverseGeoOptions;
-import com.mapbox.search.OfflineSearchEngine;
-import com.mapbox.search.OfflineSearchEngine.EngineReadyCallback;
-import com.mapbox.search.OfflineSearchEngineSettings;
-import com.mapbox.search.ResponseInfo;
-import com.mapbox.search.SearchCallback;
 import com.mapbox.search.common.AsyncOperationTask;
-import com.mapbox.search.result.SearchResult;
+import com.mapbox.search.offline.OfflineResponseInfo;
+import com.mapbox.search.offline.OfflineReverseGeoOptions;
+import com.mapbox.search.offline.OfflineSearchCallback;
+import com.mapbox.search.offline.OfflineSearchEngine;
+import com.mapbox.search.offline.OfflineSearchEngineSettings;
+import com.mapbox.search.offline.OfflineSearchResult;
 import com.mapbox.search.sample.BuildConfig;
 
 import java.util.Collections;
@@ -33,22 +31,13 @@ public class OfflineReverseGeocodingJavaExampleActivity extends AppCompatActivit
     @Nullable
     private AsyncOperationTask searchRequestTask;
 
-    private final EngineReadyCallback engineReadyCallback = new EngineReadyCallback() {
-        @Override
-        public void onEngineReady() {
-            Log.i("SearchApiExample", "Engine is ready");
-        }
+    private final OfflineSearchEngine.EngineReadyCallback engineReadyCallback =
+        () -> Log.i("SearchApiExample", "Engine is ready");
+
+    private final OfflineSearchCallback searchCallback = new OfflineSearchCallback() {
 
         @Override
-        public void onError(@NonNull Exception e) {
-            Log.i("SearchApiExample", "Error during engine initialization", e);
-        }
-    };
-
-    private final SearchCallback searchCallback = new SearchCallback() {
-
-        @Override
-        public void onResults(@NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onResults(@NonNull List<OfflineSearchResult> results, @NonNull OfflineResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Results: " + results);
         }
 
@@ -64,7 +53,7 @@ public class OfflineReverseGeocodingJavaExampleActivity extends AppCompatActivit
 
         final TileStore tileStore = TileStore.create();
 
-        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+        searchEngine = OfflineSearchEngine.create(
             new OfflineSearchEngineSettings(
                 BuildConfig.MAPBOX_API_TOKEN,
                 tileStore

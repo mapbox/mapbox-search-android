@@ -7,17 +7,16 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineIndexChangeEvent
-import com.mapbox.search.OfflineIndexChangeEvent.EventType
-import com.mapbox.search.OfflineIndexErrorEvent
-import com.mapbox.search.OfflineSearchEngine
-import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.OfflineSearchOptions
-import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchCallback
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.result.SearchResult
+import com.mapbox.search.offline.OfflineIndexChangeEvent
+import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
+import com.mapbox.search.offline.OfflineIndexErrorEvent
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchCallback
+import com.mapbox.search.offline.OfflineSearchEngine
+import com.mapbox.search.offline.OfflineSearchEngineSettings
+import com.mapbox.search.offline.OfflineSearchOptions
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.BuildConfig
 
 class OfflineSearchKotlinExampleActivity : Activity() {
@@ -30,15 +29,11 @@ class OfflineSearchKotlinExampleActivity : Activity() {
         override fun onEngineReady() {
             Log.i("SearchApiExample", "Engine is ready")
         }
-
-        override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Error during engine initialization", e)
-        }
     }
 
-    private val searchCallback = object : SearchCallback {
+    private val searchCallback = object : OfflineSearchCallback {
 
-        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+        override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
             Log.i("SearchApiExample", "Search results: $results")
         }
 
@@ -52,7 +47,7 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         val tileStore = TileStore.create()
 
-        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+        searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
                 accessToken = BuildConfig.MAPBOX_API_TOKEN,
                 tileStore = tileStore

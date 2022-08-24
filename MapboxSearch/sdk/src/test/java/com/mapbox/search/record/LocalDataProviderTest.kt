@@ -2,11 +2,11 @@
 package com.mapbox.search.record
 
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.TestExecutor
+import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingCompletionCallback.CompletionCallbackResult
 import com.mapbox.search.tests_support.TestDataProviderEngine
-import com.mapbox.search.tests_support.TestExecutor
-import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.record.getAllBlocking

@@ -28,7 +28,6 @@ import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.tests.BuildConfig

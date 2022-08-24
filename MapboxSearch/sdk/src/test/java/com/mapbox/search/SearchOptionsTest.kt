@@ -3,7 +3,6 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
-import com.mapbox.search.tests_support.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before
@@ -148,7 +147,7 @@ internal class SearchOptionsTest {
             When("Build new SearchOptions with all values set") {
                 val actualOptions = SearchOptions().mapToCore()
 
-                val expectedOptions = createTestCoreSearchOptions(
+                val expectedOptions = com.mapbox.search.common.createTestCoreSearchOptions(
                     language = listOf(TEST_LOCALE.language)
                 )
 
@@ -181,7 +180,7 @@ internal class SearchOptionsTest {
 
                 val actualOptions = originalOptions.mapToCore()
 
-                val expectedOptions = createTestCoreSearchOptions(
+                val expectedOptions = com.mapbox.search.common.createTestCoreSearchOptions(
                     proximity = TEST_POINT,
                     origin = TEST_ORIGIN_POINT,
                     navProfile = TEST_NAV_OPTIONS.navigationProfile.rawName,
@@ -198,7 +197,7 @@ internal class SearchOptionsTest {
                     route = TEST_ROUTE_OPTIONS.route,
                     sarType = "isochrone",
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
-                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
+                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS)
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)

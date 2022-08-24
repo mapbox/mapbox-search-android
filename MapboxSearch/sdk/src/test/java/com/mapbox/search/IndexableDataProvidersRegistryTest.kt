@@ -3,12 +3,12 @@ package com.mapbox.search
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.TestExecutor
+import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.record.DataProviderEngineRegistrationService
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngineImpl
-import com.mapbox.search.tests_support.TestExecutor
-import com.mapbox.search.tests_support.TestThreadExecutorService
 import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.TestDataProvider
 import com.mapbox.test.dsl.TestCase

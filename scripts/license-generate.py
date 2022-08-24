@@ -67,6 +67,8 @@ try:
         generateLicense(licenseFile, "sdk")
         licenseFile.write("\n\n#### Search UI module\n")
         generateLicense(licenseFile, "ui")
+        licenseFile.write("\n\n#### Search Offline module\n")
+        generateLicense(licenseFile, "offline")
         licenseFile.write("\n\n#### Search Autofill module\n")
         generateLicense(licenseFile, "autofill")
 

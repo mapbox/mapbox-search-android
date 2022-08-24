@@ -5,14 +5,13 @@ import com.mapbox.search.RouteOptions
 import com.mapbox.search.base.core.CoreSearchResponse
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
+import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.IndexableRecord
-import java.io.IOException
-import java.net.URI
 import java.util.concurrent.TimeUnit
 
 internal object SdkCustomTypeObjectCreators {
@@ -71,17 +70,6 @@ internal object SdkCustomTypeObjectCreators {
         )[mode.ordinal]
     }
 
-    internal val URI_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(URI::class) { mode ->
-        listOf(
-            URI.create("https://api.mapbox.com"),
-            URI.create("https://api-offline-search-staging.tilestream.net")
-        )[mode.ordinal]
-    }
-
-    internal val EXCEPTION_CREATOR = CustomTypeObjectCreatorImpl(Exception::class) { mode ->
-        listOf(Exception(), IOException())[mode.ordinal]
-    }
-
     internal val ALL_CREATORS = listOf<CustomTypeObjectCreator>(
         ROUTE_OPTIONS_OBJECT_CREATOR,
         WEEK_TIMESTAMP_OBJECT_CREATOR,
@@ -89,7 +77,5 @@ internal object SdkCustomTypeObjectCreators {
         CORE_SEARCH_RESPONSE_CREATOR,
         BASE_RAW_SEARCH_RESULT_OBJECT_CREATOR,
         INDEXABLE_RECORD_OBJECT_CREATOR,
-        URI_OBJECT_CREATOR,
-        EXCEPTION_CREATOR,
     ) + CommonSdkTypeObjectCreators.ALL_CREATORS
 }

@@ -3,7 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
-import com.mapbox.search.tests_support.createTestCoreSearchOptions
+import com.mapbox.search.common.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before
@@ -179,18 +179,20 @@ internal class CategorySearchOptionsTest {
                     proximity = TEST_POINT,
                     origin = TEST_ORIGIN_POINT,
                     navProfile = TEST_NAV_PROFILE.rawName,
+                    etaType = null,
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
                     countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
                     fuzzyMatch = true,
                     language = listOf(Language.ENGLISH, Language("by")).map { it.code },
                     limit = 100,
+                    types = null,
                     ignoreUR = true,
                     urDistanceThreshold = 10.0,
                     requestDebounce = 300,
                     route = TEST_ROUTE_OPTIONS.route,
                     sarType = "isochrone",
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
-                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
+                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS)
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)

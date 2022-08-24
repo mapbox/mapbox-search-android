@@ -7,8 +7,8 @@ import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.tests_support.createBaseSearchAddress
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.base.tests_support.createTestBaseRequestOptions
-import com.mapbox.search.base.tests_support.createTestCoreRequestOptions
 import com.mapbox.search.common.TestConstants
+import com.mapbox.search.common.createTestCoreRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockk
 import io.mockk.mockkStatic

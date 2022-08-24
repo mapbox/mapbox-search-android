@@ -9,6 +9,7 @@ pushd MapboxSearch/
 ./gradlew :base:ktlintFormat
 ./gradlew :sdk:ktlintFormat
 ./gradlew :ui:ktlintFormat
+./gradlew :offline:ktlintFormat
 ./gradlew :sdk-common:ktlintFormat
 ./gradlew :autofill:ktlintFormat
 ./gradlew :sample:ktlintFormat
@@ -16,6 +17,7 @@ pushd MapboxSearch/
 ./gradlew :base:lint
 ./gradlew :sdk:lint
 ./gradlew :ui:lint
+./gradlew :offline:lint
 ./gradlew :sdk-common:lint
 ./gradlew :autofill:lint
 ./gradlew :sample:lint
@@ -29,6 +31,7 @@ pushd MapboxSearch/
 ./gradlew :base:testReleaseUnitTest
 ./gradlew :sdk:testReleaseUnitTest
 ./gradlew :ui:testReleaseUnitTest
+./gradlew :offline:testReleaseUnitTest
 ./gradlew :sdk-common:testReleaseUnitTest
 ./gradlew :autofill:testReleaseUnitTest
 
