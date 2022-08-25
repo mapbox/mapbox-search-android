@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class OfflineResponseInfo internal constructor(
     public val requestOptions: OfflineRequestOptions,
-): Parcelable {
+) : Parcelable {
 
     /**
      * @suppress

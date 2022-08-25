@@ -46,6 +46,7 @@ internal class SearchResultViewHolder(
         when (item) {
             is SearchResultAdapterItem.Result.Suggestion -> bindSuggestion(item)
             is SearchResultAdapterItem.Result.Resolved -> bindResult(item)
+            is SearchResultAdapterItem.Result.Offline -> bindResult(item)
         }
     }
 
@@ -131,6 +132,32 @@ internal class SearchResultViewHolder(
 
         itemView.setOnClickListener {
             listener.onResultItemClicked(item.searchContext, result, responseInfo)
+        }
+    }
+
+    private fun bindResult(item: SearchResultAdapterItem.Result.Offline) {
+        val result = item.searchResult
+        val responseInfo = item.responseInfo
+        val distanceMeters = item.distanceMeters
+
+        nameView.text = formattedResultName(result.name, item.responseInfo.requestOptions.query)
+
+        val description = SearchEntityPresentation.getAddressOrResultType(context, result)
+        addressView.setTextAndHideIfBlank(description)
+
+        distanceView.setTextAndHideIfBlank(distanceMeters?.let {
+            distanceFormatter.format(it, unitType)
+        })
+
+        val itemDrawable = context.getDrawableCompat(R.drawable.mapbox_search_sdk_ic_search_result_address)
+            ?.setTintCompat(context.resolveAttrOrThrow(R.attr.mapboxSearchSdkIconTintColor))
+
+        iconView.setImageDrawable(itemDrawable)
+
+        populateView.isVisible = false
+
+        itemView.setOnClickListener {
+            listener.onOfflineResultItemClicked(result, responseInfo)
         }
     }
 

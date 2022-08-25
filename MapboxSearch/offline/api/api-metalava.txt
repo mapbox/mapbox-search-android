@@ -37,6 +37,23 @@ package com.mapbox.search.offline {
   public final class OfflineIndexErrorEventKt {
   }
 
+  @kotlinx.parcelize.Parcelize public final class OfflineRequestOptions implements android.os.Parcelable {
+    method public boolean getOriginRewritten();
+    method public boolean getProximityRewritten();
+    method public String getQuery();
+    property public final boolean originRewritten;
+    property public final boolean proximityRewritten;
+    property public final String query;
+  }
+
+  public final class OfflineRequestOptionsKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineResponseInfo implements android.os.Parcelable {
+    method public com.mapbox.search.offline.OfflineRequestOptions getRequestOptions();
+    property public final com.mapbox.search.offline.OfflineRequestOptions requestOptions;
+  }
+
   @kotlinx.parcelize.Parcelize public final class OfflineReverseGeoOptions implements android.os.Parcelable {
     ctor public OfflineReverseGeoOptions(com.mapbox.geojson.Point center);
     method public com.mapbox.geojson.Point getCenter();
@@ -72,7 +89,7 @@ package com.mapbox.search.offline {
 
   public interface OfflineSearchCallback {
     method public void onError(Exception e);
-    method public void onResults(java.util.List<com.mapbox.search.offline.OfflineSearchResult> results);
+    method public void onResults(java.util.List<com.mapbox.search.offline.OfflineSearchResult> results, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
   }
 
   public interface OfflineSearchEngine {

@@ -37,6 +37,7 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
 import com.mapbox.search.ui.utils.OffsetItemDecoration
+import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.common.UiError
 import com.mapbox.search.ui.view.search.SearchContext
@@ -144,11 +145,10 @@ public class SearchResultsView @JvmOverloads constructor(
     private val offlineSearchCallback = object : OfflineSearchCallback {
 
         override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-            // TODO FIXME
-//            if (searchQuery.isNotEmpty()) {
-//                showResults(results, responseInfo, SearchContext.OFFLINE)
-//                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
-//            }
+            if (searchQuery.isNotEmpty()) {
+                showResults(results, responseInfo)
+                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
+            }
         }
 
         override fun onError(e: Exception) {
@@ -179,7 +179,7 @@ public class SearchResultsView @JvmOverloads constructor(
             responseInfo: ResponseInfo
         ) {
             when (searchContext) {
-                SearchContext.CATEGORY, SearchContext.OFFLINE -> {
+                SearchContext.CATEGORY -> {
                     addToHistoryIfNeeded(searchResult)
                 }
                 SearchContext.REGULAR -> {
@@ -187,6 +187,14 @@ public class SearchResultsView @JvmOverloads constructor(
                 }
             }
             searchResultListeners.forEach { it.onSearchResult(searchResult, responseInfo) }
+        }
+
+        override fun onOfflineResultItemClicked(
+            searchResult: OfflineSearchResult,
+            responseInfo: OfflineResponseInfo
+        ) {
+            addToHistoryIfNeeded(searchResult)
+            searchResultListeners.forEach { it.onOfflineSearchResult(searchResult, responseInfo) }
         }
 
         override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
@@ -273,20 +281,44 @@ public class SearchResultsView @JvmOverloads constructor(
         val isHistory = searchResult is IndexableRecordSearchResult && searchResult.record is HistoryRecord
         if (isHistory) return
 
+        HistoryRecord(
+            id = searchResult.id,
+            name = searchResult.name,
+            descriptionText = searchResult.descriptionText,
+            address = searchResult.address,
+            routablePoints = searchResult.routablePoints,
+            categories = searchResult.categories,
+            makiIcon = searchResult.makiIcon,
+            coordinate = searchResult.coordinate,
+            type = searchResult.types.first(),
+            metadata = searchResult.metadata,
+            timestamp = System.currentTimeMillis(),
+        ).also {
+            addToHistoryIfNeeded(it)
+        }
+    }
+
+    private fun addToHistoryIfNeeded(searchResult: OfflineSearchResult) {
+        HistoryRecord(
+            id = searchResult.id,
+            name = searchResult.name,
+            descriptionText = searchResult.descriptionText,
+            address = searchResult.address?.mapToSdkSearchResultType(),
+            routablePoints = searchResult.routablePoints,
+            categories = null,
+            makiIcon = null,
+            coordinate = searchResult.coordinate,
+            type = searchResult.type.mapToSdkSearchResultType(),
+            metadata = null,
+            timestamp = System.currentTimeMillis(),
+        ).also {
+            addToHistoryIfNeeded(it)
+        }
+    }
+
+    private fun addToHistoryIfNeeded(historyRecord: HistoryRecord) {
         historyDataProvider.upsert(
-            HistoryRecord(
-                id = searchResult.id,
-                name = searchResult.name,
-                descriptionText = searchResult.descriptionText,
-                address = searchResult.address,
-                routablePoints = searchResult.routablePoints,
-                categories = searchResult.categories,
-                makiIcon = searchResult.makiIcon,
-                coordinate = searchResult.coordinate,
-                type = searchResult.types.first(),
-                metadata = searchResult.metadata,
-                timestamp = System.currentTimeMillis(),
-            ),
+            historyRecord,
             object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {
                     logd("Search result added to history")
@@ -430,6 +462,20 @@ public class SearchResultsView @JvmOverloads constructor(
                 results = results,
                 responseInfo = responseInfo,
                 searchContext = searchContext,
+            ) { items ->
+                moveToState(ViewState.Results(items))
+            }
+        }
+    }
+
+    private fun showResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
+        if (results.isEmpty()) {
+            moveToState(ViewState.EmptySearchResults(itemsCreator.createForOfflineEmptySearchResults()))
+        } else {
+            asyncItemsCreatorTask?.cancel()
+            asyncItemsCreatorTask = itemsCreator.createForOfflineSearchResults(
+                results = results,
+                responseInfo = responseInfo,
             ) { items ->
                 moveToState(ViewState.Results(items))
             }
@@ -590,15 +636,22 @@ public class SearchResultsView @JvmOverloads constructor(
         public fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo)
 
         /**
-         * Called when offline search results shown,
-         * i.e. when [SearchCallback.onResults] callback called.
+         * Called when offline search result is clicked.
          *
-         * @param results List of [SearchResult].
+         * @param searchResult Search result.
+         * @param responseInfo Search response and request information.
+         */
+        public fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo)
+
+        /**
+         * Called when offline search results shown, i.e. when [OfflineSearchCallback.onResults] callback called.
+         *
+         * @param results List of [OfflineSearchResult].
          * @param responseInfo Search response and request information.
          *
          * @see SearchCallback.onResults
          */
-        public fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo)
+        public fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo)
 
         /**
          * Called if an error occurred during the search request,

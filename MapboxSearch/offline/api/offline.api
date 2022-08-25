@@ -34,6 +34,28 @@ public final class com/mapbox/search/offline/OfflineIndexErrorEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/mapbox/search/offline/OfflineRequestOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOriginRewritten ()Z
+	public final fun getProximityRewritten ()Z
+	public final fun getQuery ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineResponseInfo : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRequestOptions ()Lcom/mapbox/search/offline/OfflineRequestOptions;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
 public final class com/mapbox/search/offline/OfflineReverseGeoOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;)V
@@ -57,6 +79,7 @@ public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/P
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountry ()Ljava/lang/String;
 	public final fun getDistrict ()Ljava/lang/String;
 	public final fun getHouseNumber ()Ljava/lang/String;
@@ -66,12 +89,14 @@ public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/P
 	public final fun getPostcode ()Ljava/lang/String;
 	public final fun getRegion ()Ljava/lang/String;
 	public final fun getStreet ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public abstract interface class com/mapbox/search/offline/OfflineSearchCallback {
 	public abstract fun onError (Ljava/lang/Exception;)V
-	public abstract fun onResults (Ljava/util/List;)V
+	public abstract fun onResults (Ljava/util/List;Lcom/mapbox/search/offline/OfflineResponseInfo;)V
 }
 
 public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {

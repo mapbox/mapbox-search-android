@@ -31,6 +31,9 @@ import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.tests.BuildConfig
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchEngineSettings
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -116,7 +119,12 @@ public class TestActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+                closeSearchView()
+                searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
+            }
+
+            override fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
                 closeSearchView()
             }
 

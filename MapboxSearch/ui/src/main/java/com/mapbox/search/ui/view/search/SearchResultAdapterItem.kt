@@ -1,6 +1,8 @@
 package com.mapbox.search.ui.view.search
 
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -34,6 +36,12 @@ internal sealed class SearchResultAdapterItem {
             val responseInfo: ResponseInfo,
             val distanceMeters: Double?,
             val searchContext: SearchContext,
+        ) : Result()
+
+        data class Offline(
+            val searchResult: OfflineSearchResult,
+            val responseInfo: OfflineResponseInfo,
+            val distanceMeters: Double?,
         ) : Result()
     }
 }

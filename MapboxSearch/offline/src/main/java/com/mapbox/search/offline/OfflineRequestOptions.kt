@@ -1,7 +1,6 @@
 package com.mapbox.search.offline
 
 import android.os.Parcelable
-import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreRequestOptions
 import kotlinx.parcelize.Parcelize
 

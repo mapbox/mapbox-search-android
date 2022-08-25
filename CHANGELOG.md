@@ -6,7 +6,11 @@
 - [CORE] `AsyncOperationTask`, `SearchCancellationException`, `SearchRequestException`, `RoutablePoint` have been moved to `com.mapbox.search.common` package. `MainThreadWorker`, and `SearchSdkMainThreadWorker` have been moved to `com.mapbox.search.common.concurrent`.
 - [CORE] `SearchRequestTask` has been replaced with `AsyncOperationTask`
 - [CORE] `SearchSuggestion` is a class now. Functions signature of `SearchSuggestionsCallback`, `SearchSelectionCallback`, `SearchMultipleSelectionCallback` have been changed for Java users.
-- [CORE] Offline functionality has been moved to a separate dependency which can be resolved via `com.mapbox.search:offline:$version`. At the moment Offline SDK version is the same as the main Search SDK version. `OfflineSearchEngine` instance can be retrieved via `OfflineSearchEngine.create(OfflineSearchEngineSettings)`.
+- [CORE, UI] Offline functionality has been moved to a separate dependency which can be resolved via `com.mapbox.search:offline:$version`. Package name for offline functionality is `com.mapbox.search.offline`. At the moment Offline SDK version is the same as the main Search SDK version. `OfflineSearchEngine` instance can be retrieved via `OfflineSearchEngine.create(OfflineSearchEngineSettings)`.
+- [UI] `SearchResultsView.SearchListener.onOfflineSearchResults()` signature has been changed to `onOfflineSearchResults(List<OfflineSearchResult>m OfflineResponseInfo)`. Also, a new function `SearchResultsView.SearchListener.onOfflineSearchResult()` has been added.
+
+### New features
+- [UI] A new function `SearchPlace.createFromOfflineSearchResult()` is available.
 
 ### Bug fixes
 - [UI] Now created in the `SearchPlaceBottomSheetView` `FavoriteRecord` will be saved with id from `SearchPlace.id`

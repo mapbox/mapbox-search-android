@@ -2,6 +2,7 @@ package com.mapbox.search.ui.utils
 
 import android.content.Context
 import androidx.annotation.StringRes
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
@@ -11,6 +12,7 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
+import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.view.category.Category
 import com.mapbox.search.ui.view.place.SearchPlace
 import java.util.Locale
@@ -35,6 +37,16 @@ internal object SearchEntityPresentation {
             !addressText.isNullOrBlank() -> addressText
             searchResult is IndexableRecordSearchResult -> getResultTypeName(context, searchResult.types, searchResult.record)
             else -> getResultTypeName(context, searchResult.types)
+        }
+    }
+
+    fun getAddressOrResultType(context: Context, searchResult: OfflineSearchResult): String {
+        val descriptionText = searchResult.descriptionText
+        val addressText = searchResult.address?.mapToSdkSearchResultType()?.formattedAddress()
+        return when {
+            !descriptionText.isNullOrBlank() -> descriptionText
+            !addressText.isNullOrBlank() -> addressText
+            else -> getResultTypeName(context, listOf(searchResult.type.mapToSdkSearchResultType()))
         }
     }
 
