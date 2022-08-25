@@ -1194,18 +1194,6 @@ public final class com/mapbox/search/result/ResultAccuracy$Street : com/mapbox/s
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/result/RoutablePoint : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getName ()Ljava/lang/String;
-	public final fun getPoint ()Lcom/mapbox/geojson/Point;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
 public final class com/mapbox/search/result/SearchAddress : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field SEPARATOR Ljava/lang/String;

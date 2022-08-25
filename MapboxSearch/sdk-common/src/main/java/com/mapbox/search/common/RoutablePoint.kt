@@ -1,8 +1,7 @@
-package com.mapbox.search.result
+package com.mapbox.search.common
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreRoutablePoint
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -56,15 +55,3 @@ public class RoutablePoint(
                 ")"
     }
 }
-
-@JvmSynthetic
-internal fun CoreRoutablePoint.mapToPlatform() = RoutablePoint(
-    point = point,
-    name = name,
-)
-
-@JvmSynthetic
-internal fun RoutablePoint.mapToCore() = CoreRoutablePoint(
-    point,
-    name,
-)

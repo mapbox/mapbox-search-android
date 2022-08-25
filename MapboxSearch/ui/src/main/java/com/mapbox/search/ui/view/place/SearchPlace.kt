@@ -5,11 +5,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType

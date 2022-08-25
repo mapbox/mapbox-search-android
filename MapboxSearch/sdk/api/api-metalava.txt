@@ -895,7 +895,7 @@ package com.mapbox.search.metadata {
 package com.mapbox.search.record {
 
   @kotlinx.parcelize.Parcelize public final class FavoriteRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
-    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
+    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
@@ -905,7 +905,7 @@ package com.mapbox.search.record {
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
-    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
     property public java.util.List<java.lang.String>? categories;
@@ -916,7 +916,7 @@ package com.mapbox.search.record {
     property public String? makiIcon;
     property public com.mapbox.search.SearchResultMetadata? metadata;
     property public String name;
-    property public java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public com.mapbox.search.result.SearchResultType type;
   }
 
@@ -931,7 +931,7 @@ package com.mapbox.search.record {
   }
 
   @kotlinx.parcelize.Parcelize public final class HistoryRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
-    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point? coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
+    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point? coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point? getCoordinate();
@@ -941,7 +941,7 @@ package com.mapbox.search.record {
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
-    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public long getTimestamp();
     method public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
@@ -953,7 +953,7 @@ package com.mapbox.search.record {
     property public String? makiIcon;
     property public com.mapbox.search.SearchResultMetadata? metadata;
     property public String name;
-    property public java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final long timestamp;
     property public com.mapbox.search.result.SearchResultType type;
   }
@@ -1001,7 +1001,7 @@ package com.mapbox.search.record {
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
-    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.result.SearchResultType getType();
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String>? categories;
@@ -1012,7 +1012,7 @@ package com.mapbox.search.record {
     property public abstract String? makiIcon;
     property public abstract com.mapbox.search.SearchResultMetadata? metadata;
     property public abstract String name;
-    property public abstract java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public abstract java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public abstract com.mapbox.search.result.SearchResultType type;
   }
 
@@ -1079,17 +1079,6 @@ package com.mapbox.search.result {
   }
 
   public final class ResultAccuracyKt {
-  }
-
-  @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
-    ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
-    method public String getName();
-    method public com.mapbox.geojson.Point getPoint();
-    property public final String name;
-    property public final com.mapbox.geojson.Point point;
-  }
-
-  public final class RoutablePointKt {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchAddress implements android.os.Parcelable {
@@ -1197,7 +1186,7 @@ package com.mapbox.search.result {
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
-    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
     property public abstract com.mapbox.search.result.ResultAccuracy? accuracy;
@@ -1214,7 +1203,7 @@ package com.mapbox.search.result {
     property public abstract com.mapbox.search.SearchResultMetadata? metadata;
     property public abstract String name;
     property public abstract com.mapbox.search.RequestOptions requestOptions;
-    property public abstract java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public abstract java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public abstract Integer? serverIndex;
     property public abstract java.util.List<com.mapbox.search.result.SearchResultType> types;
   }

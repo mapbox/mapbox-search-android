@@ -2,6 +2,8 @@ package com.mapbox.search.result
 
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.common.RoutablePoint
 import java.util.Collections
 
 internal abstract class AbstractSearchResult(

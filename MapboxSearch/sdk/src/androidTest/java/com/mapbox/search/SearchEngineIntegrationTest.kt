@@ -13,6 +13,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.metadata.OpenHours
@@ -22,7 +23,6 @@ import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.ResultAccuracy
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType

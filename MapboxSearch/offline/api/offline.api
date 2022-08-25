@@ -188,6 +188,7 @@ public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Pa
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getType ()Lcom/mapbox/search/offline/OfflineSearchResultType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

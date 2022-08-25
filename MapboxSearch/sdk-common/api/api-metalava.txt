@@ -9,6 +9,14 @@ package com.mapbox.search.common {
     property public abstract boolean isDone;
   }
 
+  @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
+    ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
+    method public String getName();
+    method public com.mapbox.geojson.Point getPoint();
+    property public final String name;
+    property public final com.mapbox.geojson.Point point;
+  }
+
   public final class SearchCancellationException extends java.lang.RuntimeException {
     ctor public SearchCancellationException(String message);
     property public String message;

@@ -5,7 +5,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.core.CoreUserRecord
 import com.mapbox.search.base.record.BaseIndexableRecord
-import com.mapbox.search.result.RoutablePoint
+import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.mapToBase
@@ -42,7 +43,6 @@ public interface IndexableRecord : Parcelable {
 
     /**
      * List of points near [coordinate], that represents entries to associated building.
-     * @see [RoutablePoint]
      * @see [com.mapbox.search.result.SearchResult.routablePoints].
      */
     public val routablePoints: List<RoutablePoint>?

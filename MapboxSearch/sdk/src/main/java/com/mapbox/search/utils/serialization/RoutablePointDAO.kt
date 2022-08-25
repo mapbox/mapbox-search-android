@@ -2,7 +2,7 @@ package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
 import com.mapbox.geojson.Point
-import com.mapbox.search.result.RoutablePoint
+import com.mapbox.search.common.RoutablePoint
 
 internal data class RoutablePointDAO(
     @SerializedName("point") val point: Point? = null,

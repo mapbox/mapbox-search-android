@@ -5,13 +5,14 @@ import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.result.IndexableRecordSearchResultImpl
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToPlatform

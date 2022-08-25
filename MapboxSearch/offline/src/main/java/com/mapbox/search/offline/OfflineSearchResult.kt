@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.common.RoutablePoint
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -52,6 +54,12 @@ public class OfflineSearchResult internal constructor(
         get() = requireNotNull(rawSearchResult.center)
 
     /**
+     * List of points near [coordinate], that represents entries to associated building.
+     */
+    public val routablePoints: List<RoutablePoint>?
+        get() = rawSearchResult.routablePoints?.map { it.mapToPlatform() }
+
+    /**
      * Search result type.
      */
     public val type: OfflineSearchResultType
@@ -94,6 +102,7 @@ public class OfflineSearchResult internal constructor(
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
                 "coordinate=$coordinate, " +
+                "routablePoints=$routablePoints, " +
                 "type=$type, " +
                 "distanceMeters=$distanceMeters" +
                 ")"

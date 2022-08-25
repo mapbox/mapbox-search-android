@@ -7,6 +7,7 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.mapToBase
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
@@ -49,7 +50,6 @@ public sealed interface SearchResult : Parcelable {
 
     /**
      * List of points near [coordinate], that represents entries to associated building.
-     * @see [RoutablePoint]
      */
     public val routablePoints: List<RoutablePoint>?
 

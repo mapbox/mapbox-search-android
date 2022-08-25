@@ -6,6 +6,7 @@ import com.mapbox.search.ImageInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
 import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.metadata.OpenPeriod
 import com.mapbox.search.metadata.ParkingData
@@ -13,7 +14,6 @@ import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.HistoryRecordsSerializer
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
