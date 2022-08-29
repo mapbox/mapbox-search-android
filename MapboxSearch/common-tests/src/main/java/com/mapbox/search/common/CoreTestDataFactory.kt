@@ -278,3 +278,10 @@ fun createTestCoreRequestOptions(
     originRewritten,
     sessionID,
 )
+
+fun createTestCoreRoutablePoint(
+    point: Point = Point.fromLngLat(10.0, 20.0),
+    name: String = "test-routable-point",
+) = RoutablePoint(
+    point, name
+)

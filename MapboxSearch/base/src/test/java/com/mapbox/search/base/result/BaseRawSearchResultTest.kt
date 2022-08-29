@@ -9,8 +9,8 @@ import com.mapbox.search.base.core.CoreSearchResult
 import com.mapbox.search.base.core.CoreSuggestAction
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.search.base.tests_support.catchThrowable
 import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.catchThrowable
 import com.mapbox.search.common.createCoreSearchAddress
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.test.dsl.TestCase

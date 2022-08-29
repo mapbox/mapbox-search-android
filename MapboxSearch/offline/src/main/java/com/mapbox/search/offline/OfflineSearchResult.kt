@@ -2,10 +2,11 @@ package com.mapbox.search.offline
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.RoutablePoint
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,14 +14,26 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 public class OfflineSearchResult internal constructor(
-    @JvmSynthetic internal val rawSearchResult: BaseRawSearchResult
+    internal val rawSearchResult: BaseRawSearchResult
 ) : Parcelable {
 
+    @IgnoredOnParcel
+    private val offlineType: OfflineSearchResultType
+
     init {
-        assertDebug(rawSearchResult.center != null) {
+        check(rawSearchResult.center != null) {
             "Server search result must have a coordinate"
         }
-        assertDebug(rawSearchResult.types.isNotEmpty()) { "Provided types should not be empty!" }
+
+        val type = rawSearchResult.types.mapNotNull { it.tryMapToOfflineSdkType() }.firstOrNull()
+        offlineType = if (type == null) {
+            failDebug {
+                "Unsupported in offline SDK result types: $rawSearchResult.types. Fallback to ${OfflineSearchResultType.PLACE}"
+            }
+            OfflineSearchResultType.PLACE
+        } else {
+            type
+        }
     }
 
     /**
@@ -63,7 +76,7 @@ public class OfflineSearchResult internal constructor(
      * Search result type.
      */
     public val type: OfflineSearchResultType
-        get() = requireNotNull(rawSearchResult.types.first().tryMapToSearchResultType()?.mapToOfflineSdkType())
+        get() = offlineType
 
     /**
      * Distance in meters from search result's [coordinate] to the origin point specified in [OfflineSearchOptions.origin].

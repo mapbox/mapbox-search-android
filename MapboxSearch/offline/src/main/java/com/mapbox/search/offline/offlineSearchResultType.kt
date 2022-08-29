@@ -1,7 +1,6 @@
 package com.mapbox.search.offline
 
-import com.mapbox.search.base.failDebug
-import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.base.result.BaseRawResultType
 
 /**
  * Defines type of offline search result.
@@ -27,16 +26,11 @@ public enum class OfflineSearchResultType {
 }
 
 @JvmSynthetic
-internal fun BaseSearchResultType.mapToOfflineSdkType(): OfflineSearchResultType {
+internal fun BaseRawResultType.tryMapToOfflineSdkType(): OfflineSearchResultType? {
     return when (this) {
-        BaseSearchResultType.PLACE -> OfflineSearchResultType.PLACE
-        BaseSearchResultType.STREET -> OfflineSearchResultType.STREET
-        BaseSearchResultType.ADDRESS -> OfflineSearchResultType.ADDRESS
-        else -> {
-            failDebug {
-                "Unprocessed in offline result type: $this"
-            }
-            OfflineSearchResultType.PLACE
-        }
+        BaseRawResultType.PLACE -> OfflineSearchResultType.PLACE
+        BaseRawResultType.STREET -> OfflineSearchResultType.STREET
+        BaseRawResultType.ADDRESS -> OfflineSearchResultType.ADDRESS
+        else -> null
     }
 }

@@ -33,6 +33,7 @@ import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.TestThreadExecutorService
+import com.mapbox.search.common.catchThrowable
 import com.mapbox.search.common.createTestCoreSearchResponseCancelled
 import com.mapbox.search.common.createTestCoreSearchResponseHttpError
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
@@ -45,7 +46,6 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
-import com.mapbox.search.tests_support.catchThrowable
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every

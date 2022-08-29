@@ -3,7 +3,6 @@ package com.mapbox.search.offline
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.createTestCoreSearchOptions
-import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestPoint
@@ -18,42 +17,21 @@ internal class OfflineSearchOptionsTest {
     )
 
     @TestFactory
-    fun `Check OfflineSearchOptions equals() and hashCode()`() = TestCase {
+    fun `Check OfflineSearchOptions equals(), hashCode(), and toString()`() = TestCase {
         Given("${OfflineSearchOptions::class.java.simpleName} class") {
-            When("Call equals() and hashCode()") {
+            When("equals(), hashCode(), toString() called") {
                 Then("equals() and hashCode() should be implemented correctly") {
                     EqualsVerifier.forClass(OfflineSearchOptions::class.java)
                         .withPrefabTestPoint()
                         .verify()
-                }
-            }
-        }
-    }
 
-    @TestFactory
-    fun `Check OfflineSearchOptions copy()`() = TestCase {
-        Given("${OfflineSearchOptions::class.java.simpleName} class") {
-            When("Call copy()") {
-                Then("copy() function should be implemented correctly") {
-                    CopyVerifier(
-                        clazz = OfflineSearchOptions::class,
-                        objectsFactory = reflectionObjectFactory
-                    ).verify()
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check OfflineSearchOptions toString()`() = TestCase {
-        Given("${OfflineSearchOptions::class.java.simpleName} class") {
-            When("Call toString()") {
-                Then("toString() function should be implemented correctly") {
-                    ToStringVerifier(
-                        clazz = OfflineSearchOptions::class,
-                        objectsFactory = reflectionObjectFactory,
-                        includeAllProperties = false
-                    ).verify()
+                    Then("toString() function should be implemented correctly") {
+                        ToStringVerifier(
+                            clazz = OfflineSearchOptions::class,
+                            objectsFactory = reflectionObjectFactory,
+                            includeAllProperties = false
+                        ).verify()
+                    }
                 }
             }
         }

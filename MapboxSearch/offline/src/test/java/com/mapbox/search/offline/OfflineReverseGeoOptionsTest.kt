@@ -17,23 +17,16 @@ internal class OfflineReverseGeoOptionsTest {
     )
 
     @TestFactory
-    fun `Check OfflineReverseGeoOptions equals() and hashCode()`() = TestCase {
+    fun `Check OfflineReverseGeoOptions equals(), hashCode(), and toString() methods`() = TestCase {
         Given("${OfflineReverseGeoOptions::class.java.simpleName} class") {
-            When("Call equals() and hashCode()") {
+            When("equals(), hashCode(), toString() called") {
                 Then("equals() and hashCode() should be implemented correctly") {
                     EqualsVerifier.forClass(OfflineReverseGeoOptions::class.java)
                         .withPrefabTestPoint()
                         .verify()
                 }
-            }
-        }
-    }
 
-    @TestFactory
-    fun `Check OfflineReverseGeoOptions toString()`() = TestCase {
-        Given("${OfflineReverseGeoOptions::class.java.simpleName} class") {
-            When("Call toString()") {
-                Then("toString() function should be implemented correctly") {
+                Then("toString() function should use every declared property") {
                     ToStringVerifier(
                         clazz = OfflineReverseGeoOptions::class,
                         objectsFactory = reflectionObjectFactory,

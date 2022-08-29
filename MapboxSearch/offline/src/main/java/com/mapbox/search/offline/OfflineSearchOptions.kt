@@ -34,22 +34,6 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
     }
 
     /**
-     * Creates new [OfflineSearchOptions] from current instance.
-     */
-    @JvmSynthetic
-    public fun copy(
-        proximity: Point? = this.proximity,
-        limit: Int? = this.limit,
-        origin: Point? = this.origin,
-    ): OfflineSearchOptions {
-        return OfflineSearchOptions(
-            proximity = proximity,
-            limit = limit,
-            origin = origin,
-        )
-    }
-
-    /**
      * Creates new [OfflineSearchOptions.Builder] from current [OfflineSearchOptions] instance.
      */
     public fun toBuilder(): Builder {

@@ -9,52 +9,52 @@ import kotlinx.parcelize.Parcelize
  * Represents address of the search result.
  */
 @Parcelize
-public class OfflineSearchAddress @JvmOverloads internal constructor(
+public class OfflineSearchAddress internal constructor(
 
     /**
      * Address house number.
      */
-    public val houseNumber: String? = null,
+    public val houseNumber: String?,
 
     /**
      * Address street.
      */
-    public val street: String? = null,
+    public val street: String?,
 
     /**
      * Address neighborhood.
      */
-    public val neighborhood: String? = null,
+    public val neighborhood: String?,
 
     /**
      * Address locality.
      */
-    public val locality: String? = null,
+    public val locality: String?,
 
     /**
      * Address postcode.
      */
-    public val postcode: String? = null,
+    public val postcode: String?,
 
     /**
      * Address place.
      */
-    public val place: String? = null,
+    public val place: String?,
 
     /**
      * Address district.
      */
-    public val district: String? = null,
+    public val district: String?,
 
     /**
      * Address region.
      */
-    public val region: String? = null,
+    public val region: String?,
 
     /**
      * Address country.
      */
-    public val country: String? = null
+    public val country: String?
 ) : Parcelable {
 
     /**

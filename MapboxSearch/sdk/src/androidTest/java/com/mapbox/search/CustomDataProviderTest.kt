@@ -11,6 +11,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
@@ -25,7 +26,6 @@ import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEng
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.CustomRecord
 import com.mapbox.search.tests_support.record.StubRecordsStorage
 import com.mapbox.search.tests_support.record.TestDataProvider

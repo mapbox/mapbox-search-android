@@ -3,7 +3,6 @@ package com.mapbox.search.offline
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
-import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -16,9 +15,9 @@ import java.net.URI
 internal class OfflineSearchEngineSettingsTest {
 
     @TestFactory
-    fun `Test generated equals(), hashCode(), copy(), and toString() methods`() = TestCase {
+    fun `Test equals(), hashCode(), and toString() methods`() = TestCase {
         Given("OfflineSearchEngineSettings class") {
-            When("equals(), hashCode(), copy(), and toString() called") {
+            When("equals(), hashCode(), and toString() called") {
                 Then("equals() and hashCode() functions should use every declared property") {
                     EqualsVerifier.forClass(OfflineSearchEngineSettings::class.java).verify()
                 }
@@ -28,13 +27,6 @@ internal class OfflineSearchEngineSettingsTest {
                         clazz = OfflineSearchEngineSettings::class,
                         objectsFactory = REFLECTION_OBJECT_FACTORY,
                         includeAllProperties = false
-                    ).verify()
-                }
-
-                Then("copy() function should use every declared property") {
-                    CopyVerifier(
-                        clazz = OfflineSearchEngineSettings::class,
-                        objectsFactory = REFLECTION_OBJECT_FACTORY,
                     ).verify()
                 }
             }

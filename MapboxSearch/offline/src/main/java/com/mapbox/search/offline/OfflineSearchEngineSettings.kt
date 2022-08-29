@@ -46,22 +46,6 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 ) {
 
     /**
-     * Creates a copy of this object with overridden parameters.
-     */
-    @JvmSynthetic
-    public fun copy(
-        accessToken: String = this.accessToken,
-        tileStore: TileStore = this.tileStore,
-        tilesBaseUri: URI = this.tilesBaseUri,
-        locationEngine: LocationEngine = this.locationEngine,
-    ): OfflineSearchEngineSettings = OfflineSearchEngineSettings(
-        accessToken = accessToken,
-        tileStore = tileStore,
-        tilesBaseUri = tilesBaseUri,
-        locationEngine = locationEngine,
-    )
-
-    /**
      * Creates a new [OfflineSearchEngineSettings.Builder] from this instance.
      */
     public fun toBuilder(): Builder = Builder(this)
