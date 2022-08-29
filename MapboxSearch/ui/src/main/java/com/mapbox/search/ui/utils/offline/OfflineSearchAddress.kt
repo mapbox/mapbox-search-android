@@ -10,9 +10,9 @@ internal fun OfflineSearchAddress.mapToSdkSearchResultType(): SearchAddress {
         street = street,
         neighborhood = neighborhood,
         locality = locality,
-        postcode = postcode,
+        postcode = null,
         place = place,
-        district = district,
+        district = null,
         region = region,
         country = country
     )

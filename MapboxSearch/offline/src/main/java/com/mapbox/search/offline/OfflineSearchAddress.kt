@@ -32,19 +32,9 @@ public class OfflineSearchAddress internal constructor(
     public val locality: String?,
 
     /**
-     * Address postcode.
-     */
-    public val postcode: String?,
-
-    /**
      * Address place.
      */
     public val place: String?,
-
-    /**
-     * Address district.
-     */
-    public val district: String?,
 
     /**
      * Address region.
@@ -70,9 +60,7 @@ public class OfflineSearchAddress internal constructor(
         if (street != other.street) return false
         if (neighborhood != other.neighborhood) return false
         if (locality != other.locality) return false
-        if (postcode != other.postcode) return false
         if (place != other.place) return false
-        if (district != other.district) return false
         if (region != other.region) return false
         if (country != other.country) return false
 
@@ -87,9 +75,7 @@ public class OfflineSearchAddress internal constructor(
         result = 31 * result + (street?.hashCode() ?: 0)
         result = 31 * result + (neighborhood?.hashCode() ?: 0)
         result = 31 * result + (locality?.hashCode() ?: 0)
-        result = 31 * result + (postcode?.hashCode() ?: 0)
         result = 31 * result + (place?.hashCode() ?: 0)
-        result = 31 * result + (district?.hashCode() ?: 0)
         result = 31 * result + (region?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
         return result
@@ -104,9 +90,7 @@ public class OfflineSearchAddress internal constructor(
                 "street=$street, " +
                 "neighborhood=$neighborhood, " +
                 "locality=$locality, " +
-                "postcode=$postcode, " +
                 "place=$place, " +
-                "district=$district, " +
                 "region=$region, " +
                 "country=$country" +
                 ")"
@@ -120,9 +104,7 @@ internal fun BaseSearchAddress.mapToOfflineSdkType(): OfflineSearchAddress {
         street = street?.nullIfEmpty(),
         neighborhood = neighborhood?.nullIfEmpty(),
         locality = locality?.nullIfEmpty(),
-        postcode = postcode?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
-        district = district?.nullIfEmpty(),
         region = region?.nullIfEmpty(),
         country = country?.nullIfEmpty()
     )

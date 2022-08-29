@@ -72,12 +72,10 @@ public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/P
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountry ()Ljava/lang/String;
-	public final fun getDistrict ()Ljava/lang/String;
 	public final fun getHouseNumber ()Ljava/lang/String;
 	public final fun getLocality ()Ljava/lang/String;
 	public final fun getNeighborhood ()Ljava/lang/String;
 	public final fun getPlace ()Ljava/lang/String;
-	public final fun getPostcode ()Ljava/lang/String;
 	public final fun getRegion ()Ljava/lang/String;
 	public final fun getStreet ()Ljava/lang/String;
 	public fun hashCode ()I
