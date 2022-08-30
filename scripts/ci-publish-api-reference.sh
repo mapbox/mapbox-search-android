@@ -42,6 +42,9 @@ cp -r "${INITIAL_PATH}/MapboxSearch/sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
 mkdir -p "${TMPDIR}/ui"
 cp -r "${INITIAL_PATH}/MapboxSearch/ui/build/dokka" "${TMPDIR}/ui/${VERSION}"
 
+mkdir -p "${TMPDIR}/offline"
+cp -r "${INITIAL_PATH}/MapboxSearch/offline/build/dokka" "${TMPDIR}/offline/${VERSION}"
+
 mkdir -p "${TMPDIR}/autofill"
 cp -r "${INITIAL_PATH}/MapboxSearch/autofill/build/dokka" "${TMPDIR}/autofill/${VERSION}"
 

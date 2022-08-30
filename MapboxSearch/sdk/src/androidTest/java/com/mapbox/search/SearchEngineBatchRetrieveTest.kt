@@ -4,6 +4,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.IndexableRecordSearchResult
@@ -12,7 +13,6 @@ import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.equalsTo
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
 import okhttp3.mockwebserver.MockResponse

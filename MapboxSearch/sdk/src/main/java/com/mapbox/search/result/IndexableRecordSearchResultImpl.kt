@@ -4,6 +4,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.result.BaseRawSearchResult
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.Parcelize
 

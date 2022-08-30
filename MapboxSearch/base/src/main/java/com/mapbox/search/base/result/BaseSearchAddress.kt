@@ -10,15 +10,15 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class BaseSearchAddress(
-    val houseNumber: String? = null,
-    val street: String? = null,
-    val neighborhood: String? = null,
-    val locality: String? = null,
-    val postcode: String? = null,
-    val place: String? = null,
-    val district: String? = null,
-    val region: String? = null,
-    val country: String? = null
+    val houseNumber: String?,
+    val street: String?,
+    val neighborhood: String?,
+    val locality: String?,
+    val postcode: String?,
+    val place: String?,
+    val district: String?,
+    val region: String?,
+    val country: String?
 ) : Parcelable
 
 @JvmSynthetic

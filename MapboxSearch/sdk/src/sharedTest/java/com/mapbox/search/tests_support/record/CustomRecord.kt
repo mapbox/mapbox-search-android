@@ -2,8 +2,8 @@ package com.mapbox.search.tests_support.record
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import kotlinx.parcelize.Parcelize

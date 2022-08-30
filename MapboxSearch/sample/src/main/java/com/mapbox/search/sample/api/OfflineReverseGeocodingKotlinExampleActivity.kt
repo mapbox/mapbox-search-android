@@ -7,14 +7,13 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.OfflineReverseGeoOptions
-import com.mapbox.search.OfflineSearchEngine
-import com.mapbox.search.OfflineSearchEngineSettings
-import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchCallback
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.result.SearchResult
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineReverseGeoOptions
+import com.mapbox.search.offline.OfflineSearchCallback
+import com.mapbox.search.offline.OfflineSearchEngine
+import com.mapbox.search.offline.OfflineSearchEngineSettings
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.BuildConfig
 
 class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
@@ -27,15 +26,11 @@ class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
         override fun onEngineReady() {
             Log.i("SearchApiExample", "Engine is ready")
         }
-
-        override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Error during engine initialization", e)
-        }
     }
 
-    private val searchCallback = object : SearchCallback {
+    private val searchCallback = object : OfflineSearchCallback {
 
-        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+        override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
             Log.i("SearchApiExample", "Results: $results")
         }
 
@@ -49,7 +44,7 @@ class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
 
         val tileStore = TileStore.create()
 
-        searchEngine = MapboxSearchSdk.createOfflineSearchEngine(
+        searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
                 accessToken = BuildConfig.MAPBOX_API_TOKEN,
                 tileStore = tileStore

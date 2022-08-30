@@ -1,0 +1,215 @@
+public final class com/mapbox/search/offline/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/search/offline/OfflineIndexChangeEvent {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDataset ()Ljava/lang/String;
+	public final fun getRegionId ()Ljava/lang/String;
+	public final fun getType ()Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/offline/OfflineIndexChangeEvent$EventType : java/lang/Enum {
+	public static final field ADD Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+	public static final field REMOVE Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+	public static final field UPDATE Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+	public static fun values ()[Lcom/mapbox/search/offline/OfflineIndexChangeEvent$EventType;
+}
+
+public final class com/mapbox/search/offline/OfflineIndexErrorEvent {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDataset ()Ljava/lang/String;
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getRegionId ()Ljava/lang/String;
+	public final fun getTile ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/offline/OfflineRequestOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOriginRewritten ()Z
+	public final fun getProximityRewritten ()Z
+	public final fun getQuery ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineResponseInfo : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRequestOptions ()Lcom/mapbox/search/offline/OfflineRequestOptions;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineReverseGeoOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lcom/mapbox/geojson/Point;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCenter ()Lcom/mapbox/geojson/Point;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getHouseNumber ()Ljava/lang/String;
+	public final fun getLocality ()Ljava/lang/String;
+	public final fun getNeighborhood ()Ljava/lang/String;
+	public final fun getPlace ()Ljava/lang/String;
+	public final fun getRegion ()Ljava/lang/String;
+	public final fun getStreet ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public abstract interface class com/mapbox/search/offline/OfflineSearchCallback {
+	public abstract fun onError (Ljava/lang/Exception;)V
+	public abstract fun onResults (Ljava/util/List;Lcom/mapbox/search/offline/OfflineResponseInfo;)V
+}
+
+public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
+	public static final field Companion Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;
+	public abstract fun addEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
+	public abstract fun addEngineReadyCallback (Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
+	public abstract fun addOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public abstract fun addOnIndexChangeListener (Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public static fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
+	public abstract fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public abstract fun getSettings ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
+	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
+	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public abstract fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchEngine$Companion {
+	public final fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
+}
+
+public final class com/mapbox/search/offline/OfflineSearchEngine$DefaultImpls {
+	public static fun addEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
+	public static fun addOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public static fun createPlacesTilesetDescriptor (Lcom/mapbox/search/offline/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createTilesetDescriptor (Lcom/mapbox/search/offline/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun searchAddressesNearby (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+}
+
+public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback {
+	public abstract fun onEngineReady ()V
+}
+
+public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener {
+	public abstract fun onError (Lcom/mapbox/search/offline/OfflineIndexErrorEvent;)V
+	public abstract fun onIndexChange (Lcom/mapbox/search/offline/OfflineIndexChangeEvent;)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchEngineSettings {
+	public static final field DEFAULT_DATASET Ljava/lang/String;
+	public static final field DEFAULT_VERSION Ljava/lang/String;
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;)V
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccessToken ()Ljava/lang/String;
+	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
+	public final fun getTileStore ()Lcom/mapbox/common/TileStore;
+	public final fun getTilesBaseUri ()Ljava/net/URI;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/offline/OfflineSearchEngineSettings$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
+	public final fun getAccessToken ()Ljava/lang/String;
+	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
+	public final fun setAccessToken (Ljava/lang/String;)V
+	public final fun tileStore (Lcom/mapbox/common/TileStore;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
+	public final fun tilesBaseUri (Ljava/net/URI;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
+}
+
+public final class com/mapbox/search/offline/OfflineSearchOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/Integer;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
+	public final fun getProximity ()Lcom/mapbox/geojson/Point;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/search/offline/OfflineSearchOptions;
+	public final fun limit (I)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
+	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
+	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
+}
+
+public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lcom/mapbox/search/offline/OfflineSearchAddress;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getDescriptionText ()Ljava/lang/String;
+	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRoutablePoints ()Ljava/util/List;
+	public final fun getType ()Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchResultType : java/lang/Enum {
+	public static final field ADDRESS Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public static final field PLACE Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public static final field STREET Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public static fun values ()[Lcom/mapbox/search/offline/OfflineSearchResultType;
+}
+

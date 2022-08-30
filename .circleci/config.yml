@@ -66,12 +66,14 @@ commands:
             ./gradlew :base:lint
             ./gradlew :sdk:lint
             ./gradlew :ui:lint
+            ./gradlew :offline:lint
             ./gradlew :sdk-common:lint
             ./gradlew :autofill:lint
             ./gradlew :sample:lint
             ./gradlew :base:ktlint
             ./gradlew :sdk:ktlint
             ./gradlew :ui:ktlint
+            ./gradlew :offline:ktlint
             ./gradlew :sdk-common:ktlint
             ./gradlew :autofill:ktlint
             ./gradlew :sample:ktlint
@@ -129,6 +131,7 @@ commands:
             ./gradlew :base:testDebugUnitTest -Pcoverage
             ./gradlew :sdk:testDebugUnitTest -Pcoverage
             ./gradlew :ui:testDebugUnitTest -Pcoverage
+            ./gradlew :offline:testDebugUnitTest -Pcoverage
             ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
             ./gradlew :autofill:testDebugUnitTest -Pcoverage
 
@@ -177,6 +180,21 @@ commands:
             ./gradlew :sdk:assembleDebugAndroidTest -Pcoverage
             gcloud firebase test android run \
             	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test sdk/build/outputs/apk/androidTest/debug/mapbox-search-android-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
+  run-firebase-offline-sdk-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for Offline SDK module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :offline:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test offline/build/outputs/apk/androidTest/debug/offline-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
             	--timeout 900s \
@@ -247,13 +265,17 @@ jobs:
       - read-workspace
       - codebase-unit-tests
       - store-results:
+          module_target: "sdk-common"
+      - store-results:
+          module_target: "base"
+      - store-results:
           module_target: "sdk"
       - store-results:
           module_target: "ui"
       - store-results:
-          module_target: "base"
+          module_target: "offline"
       - store-results:
-          module_target: "sdk-common"
+          module_target: "autofill"
       - run:
           name: Calculate coverage
           command: cd MapboxSearch && ./gradlew :sdk:testDebugUnitTestCoverage
@@ -272,6 +294,7 @@ jobs:
       - clean-build
       - assemble-sample-debug
       - run-firebase-sdk-instrumentation
+      - run-firebase-offline-sdk-instrumentation
 
   ui-instrumentation-tests:
     executor: default-executor

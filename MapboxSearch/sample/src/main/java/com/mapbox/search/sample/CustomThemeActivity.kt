@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
-import com.mapbox.search.OfflineSearchEngineSettings
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchEngineSettings
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -56,7 +58,11 @@ class CustomThemeActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onOfflineSearchResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+                Toast.makeText(applicationContext, "Offline search result: $searchResult", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
                 Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
             }
 

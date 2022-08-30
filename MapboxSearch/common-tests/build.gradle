@@ -36,6 +36,8 @@ android {
 dependencies {
     api "nl.jqno.equalsverifier:equalsverifier:$equals_verifier_version"
 
+    api "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+
     implementation "com.mapbox.common:common:$common_sdk_version"
     implementation "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

@@ -89,6 +89,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
 
+    api "com.mapbox.common:common:$common_sdk_version"
+
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
     testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"

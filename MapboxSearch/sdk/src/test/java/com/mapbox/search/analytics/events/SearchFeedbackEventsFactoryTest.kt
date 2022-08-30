@@ -32,6 +32,7 @@ import com.mapbox.search.base.utils.FormattedTimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.mapToBase
 import com.mapbox.search.mapToPlatform
@@ -47,7 +48,6 @@ import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
-import com.mapbox.search.tests_support.createTestCoreSearchResponseSuccess
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every

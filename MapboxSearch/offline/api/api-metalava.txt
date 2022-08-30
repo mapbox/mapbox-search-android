@@ -1,0 +1,205 @@
+// Signature format: 3.0
+package com.mapbox.search.offline {
+
+  public final class OfflineIndexChangeEvent {
+    method public String getDataset();
+    method public String getRegionId();
+    method public com.mapbox.search.offline.OfflineIndexChangeEvent.EventType getType();
+    method public String getVersion();
+    property public final String dataset;
+    property public final String regionId;
+    property public final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType type;
+    property public final String version;
+  }
+
+  public enum OfflineIndexChangeEvent.EventType {
+    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType ADD;
+    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType REMOVE;
+    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType UPDATE;
+  }
+
+  public final class OfflineIndexChangeEventKt {
+  }
+
+  public final class OfflineIndexErrorEvent {
+    method public String getDataset();
+    method public String getMessage();
+    method public String getRegionId();
+    method public String getTile();
+    method public String getVersion();
+    property public final String dataset;
+    property public final String message;
+    property public final String regionId;
+    property public final String tile;
+    property public final String version;
+  }
+
+  public final class OfflineIndexErrorEventKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineRequestOptions implements android.os.Parcelable {
+    method public boolean getOriginRewritten();
+    method public boolean getProximityRewritten();
+    method public String getQuery();
+    property public final boolean originRewritten;
+    property public final boolean proximityRewritten;
+    property public final String query;
+  }
+
+  public final class OfflineRequestOptionsKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineResponseInfo implements android.os.Parcelable {
+    method public com.mapbox.search.offline.OfflineRequestOptions getRequestOptions();
+    property public final com.mapbox.search.offline.OfflineRequestOptions requestOptions;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineReverseGeoOptions implements android.os.Parcelable {
+    ctor public OfflineReverseGeoOptions(com.mapbox.geojson.Point center);
+    method public com.mapbox.geojson.Point getCenter();
+    property public final com.mapbox.geojson.Point center;
+  }
+
+  public final class OfflineReverseGeoOptionsKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineSearchAddress implements android.os.Parcelable {
+    method public String? getCountry();
+    method public String? getHouseNumber();
+    method public String? getLocality();
+    method public String? getNeighborhood();
+    method public String? getPlace();
+    method public String? getRegion();
+    method public String? getStreet();
+    property public final String? country;
+    property public final String? houseNumber;
+    property public final String? locality;
+    property public final String? neighborhood;
+    property public final String? place;
+    property public final String? region;
+    property public final String? street;
+  }
+
+  public final class OfflineSearchAddressKt {
+  }
+
+  public interface OfflineSearchCallback {
+    method public void onError(Exception e);
+    method public void onResults(java.util.List<com.mapbox.search.offline.OfflineSearchResult> results, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
+  }
+
+  public interface OfflineSearchEngine {
+    method public void addEngineReadyCallback(java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
+    method public default void addEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
+    method public void addOnIndexChangeListener(java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public default void addOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public default static com.mapbox.search.offline.OfflineSearchEngine create(com.mapbox.search.offline.OfflineSearchEngineSettings settings);
+    method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset, String version);
+    method public default com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset, String version);
+    method public default com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
+    method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
+    method public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.offline.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.offline.OfflineReverseGeoOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.offline.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.offline.OfflineSearchOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method public void selectTileset(String? dataset, String? version);
+    property public abstract com.mapbox.search.offline.OfflineSearchEngineSettings settings;
+  }
+
+  public static interface OfflineSearchEngine.EngineReadyCallback {
+    method public void onEngineReady();
+  }
+
+  public static interface OfflineSearchEngine.OnIndexChangeListener {
+    method public void onError(com.mapbox.search.offline.OfflineIndexErrorEvent event);
+    method public void onIndexChange(com.mapbox.search.offline.OfflineIndexChangeEvent event);
+  }
+
+  public final class OfflineSearchEngineSettings {
+    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
+    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore());
+    ctor public OfflineSearchEngineSettings(String accessToken);
+    method public String getAccessToken();
+    method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
+    method public com.mapbox.common.TileStore getTileStore();
+    method public java.net.URI getTilesBaseUri();
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder toBuilder();
+    property public final String accessToken;
+    property public final com.mapbox.android.core.location.LocationEngine locationEngine;
+    property public final com.mapbox.common.TileStore tileStore;
+    property public final java.net.URI tilesBaseUri;
+    field public static final String DEFAULT_DATASET = "test-dataset";
+    field public static final String DEFAULT_VERSION = "";
+  }
+
+  public static final class OfflineSearchEngineSettings.Builder {
+    ctor public OfflineSearchEngineSettings.Builder(String accessToken);
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings build();
+    method public String getAccessToken();
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
+    method public void setAccessToken(String p);
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder tileStore(com.mapbox.common.TileStore tileStore);
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
+    property public final String accessToken;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public Integer? getLimit();
+    method public com.mapbox.geojson.Point? getOrigin();
+    method public com.mapbox.geojson.Point? getProximity();
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder toBuilder();
+    property public final Integer? limit;
+    property public final com.mapbox.geojson.Point? origin;
+    property public final com.mapbox.geojson.Point? proximity;
+  }
+
+  public static final class OfflineSearchOptions.Builder {
+    ctor public OfflineSearchOptions.Builder();
+    method public com.mapbox.search.offline.OfflineSearchOptions build();
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder limit(int limit);
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
+  }
+
+  public final class OfflineSearchOptionsKt {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OfflineSearchResult implements android.os.Parcelable {
+    method public com.mapbox.search.offline.OfflineSearchAddress? getAddress();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public String? getDescriptionText();
+    method public Double? getDistanceMeters();
+    method public String getId();
+    method public String getName();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
+    method public com.mapbox.search.offline.OfflineSearchResultType getType();
+    property public final com.mapbox.search.offline.OfflineSearchAddress? address;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final String? descriptionText;
+    property public final Double? distanceMeters;
+    property public final String id;
+    property public final String name;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+    property public final com.mapbox.search.offline.OfflineSearchResultType type;
+  }
+
+  public enum OfflineSearchResultType {
+    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType ADDRESS;
+    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType PLACE;
+    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType STREET;
+  }
+
+  public final class OfflineSearchResultTypeKt {
+  }
+
+}
+

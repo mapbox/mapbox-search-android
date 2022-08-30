@@ -5,9 +5,9 @@ import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.tests_support.createBaseSearchAddress
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.base.tests_support.createTestBaseRequestOptions
-import com.mapbox.search.base.tests_support.createTestCoreRequestOptions
 import com.mapbox.search.base.tests_support.withPrefabTestBaseRawSearchResult
 import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.createTestCoreRequestOptions
 import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.common.withPrefabTestBoundingBox
 import com.mapbox.search.common.withPrefabTestPoint

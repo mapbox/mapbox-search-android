@@ -34,6 +34,16 @@ package com.mapbox.search.ui.utils.extenstion {
 
 }
 
+package com.mapbox.search.ui.utils.offline {
+
+  public final class OfflineSearchAddressKt {
+  }
+
+  public final class OfflineSearchResultTypeKt {
+  }
+
+}
+
 package com.mapbox.search.ui.view {
 
   @kotlinx.parcelize.Parcelize public final class CommonSearchViewConfiguration implements android.os.Parcelable {
@@ -73,15 +83,15 @@ package com.mapbox.search.ui.view {
   }
 
   public static final class SearchResultsView.Configuration {
-    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings, com.mapbox.search.ApiType apiType = ApiType.GEOCODING);
-    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings);
+    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.offline.OfflineSearchEngineSettings offlineSearchEngineSettings, com.mapbox.search.ApiType apiType = ApiType.GEOCODING);
+    ctor public SearchResultsView.Configuration(com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration, com.mapbox.search.SearchEngineSettings searchEngineSettings, com.mapbox.search.offline.OfflineSearchEngineSettings offlineSearchEngineSettings);
     method public com.mapbox.search.ApiType getApiType();
     method public com.mapbox.search.ui.view.CommonSearchViewConfiguration getCommonConfiguration();
-    method public com.mapbox.search.OfflineSearchEngineSettings getOfflineSearchEngineSettings();
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings getOfflineSearchEngineSettings();
     method public com.mapbox.search.SearchEngineSettings getSearchEngineSettings();
     property public final com.mapbox.search.ApiType apiType;
     property public final com.mapbox.search.ui.view.CommonSearchViewConfiguration commonConfiguration;
-    property public final com.mapbox.search.OfflineSearchEngineSettings offlineSearchEngineSettings;
+    property public final com.mapbox.search.offline.OfflineSearchEngineSettings offlineSearchEngineSettings;
     property public final com.mapbox.search.SearchEngineSettings searchEngineSettings;
   }
 
@@ -94,7 +104,8 @@ package com.mapbox.search.ui.view {
     method public void onError(Exception e);
     method public void onFeedbackClicked(com.mapbox.search.ResponseInfo responseInfo);
     method public void onHistoryItemClicked(com.mapbox.search.record.HistoryRecord historyRecord);
-    method public void onOfflineSearchResults(java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
+    method public void onOfflineSearchResults(java.util.List<com.mapbox.search.offline.OfflineSearchResult> results, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
     method public void onPopulateQueryClicked(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.ResponseInfo responseInfo);
     method public void onSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
     method public void onSuggestions(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
@@ -139,8 +150,10 @@ package com.mapbox.search.ui.view.place {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
-    ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
+    ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, com.mapbox.geojson.Point coordinate, Double? distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate);
     method public com.mapbox.search.result.SearchAddress? getAddress();
@@ -155,7 +168,7 @@ package com.mapbox.search.ui.view.place {
     method public String getName();
     method public com.mapbox.search.record.IndexableRecord? getRecord();
     method public java.util.List<com.mapbox.search.result.SearchResultType> getResultTypes();
-    method public java.util.List<com.mapbox.search.result.RoutablePoint>? getRoutablePoints();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     property public final com.mapbox.search.result.SearchAddress? address;
     property public final java.util.List<java.lang.String>? categories;
     property public final com.mapbox.geojson.Point coordinate;
@@ -168,7 +181,7 @@ package com.mapbox.search.ui.view.place {
     property public final String name;
     property public final com.mapbox.search.record.IndexableRecord? record;
     property public final java.util.List<com.mapbox.search.result.SearchResultType> resultTypes;
-    property public final java.util.List<com.mapbox.search.result.RoutablePoint>? routablePoints;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
   }
 
   public final class SearchPlaceBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {

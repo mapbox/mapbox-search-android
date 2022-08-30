@@ -5,14 +5,16 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -196,7 +198,7 @@ public class SearchPlace(
     public companion object {
 
         /**
-         * Creates search place from search result and geojson point.
+         * Creates a new search place instance from search result and geojson point.
          *
          * @param searchResult Search result as base data for place creation.
          * @param responseInfo Search response and request information.
@@ -231,7 +233,38 @@ public class SearchPlace(
         }
 
         /**
-         * Creates search place from [IndexableRecord] and geojson point.
+         * Creates a new search place instance from offline search result.
+         *
+         * @param searchResult Search result as base data for place creation.
+         * @param distanceMeters Distance in meters to the given search place.
+         *
+         * @return Search place instance
+         */
+        @JvmStatic
+        @JvmOverloads
+        public fun createFromOfflineSearchResult(
+            searchResult: OfflineSearchResult,
+            distanceMeters: Double? = searchResult.distanceMeters
+        ): SearchPlace {
+            return SearchPlace(
+                id = searchResult.id,
+                name = searchResult.name,
+                descriptionText = searchResult.descriptionText,
+                address = searchResult.address?.mapToSdkSearchResultType(),
+                resultTypes = listOf(searchResult.type.mapToSdkSearchResultType()),
+                record = null,
+                coordinate = searchResult.coordinate,
+                routablePoints = searchResult.routablePoints,
+                categories = null,
+                makiIcon = null,
+                metadata = null,
+                distanceMeters = distanceMeters,
+                feedback = null,
+            )
+        }
+
+        /**
+         * Creates a new search place instance from [IndexableRecord] and geojson point.
          *
          * @param record A record describing geo place.
          * @param coordinate Geojson point with place coordinates.

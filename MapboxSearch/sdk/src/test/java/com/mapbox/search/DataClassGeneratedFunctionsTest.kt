@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -14,7 +15,6 @@ import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.RoutablePoint
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestionType
@@ -71,14 +71,11 @@ internal class DataClassGeneratedFunctionsTest {
             FeedbackEvent::class,
             MissingResultFeedbackEvent::class,
             SelectOptions::class,
-            OfflineIndexChangeEvent::class,
-            OfflineIndexErrorEvent::class,
             // enums
             QueryType::class,
             ApiType::class,
             SearchResultType::class,
             WeekDay::class,
-            OfflineIndexChangeEvent.EventType::class,
             // data classes
             OpenPeriod::class,
             WeekTimestamp::class,

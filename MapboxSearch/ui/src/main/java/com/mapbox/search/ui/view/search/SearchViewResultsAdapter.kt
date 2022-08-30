@@ -3,6 +3,8 @@ package com.mapbox.search.ui.view.search
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -30,6 +32,10 @@ internal class SearchViewResultsAdapter(
             responseInfo: ResponseInfo
         ) {
             searchResultsListener?.onResultItemClicked(searchContext, searchResult, responseInfo)
+        }
+
+        override fun onOfflineResultItemClicked(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+            searchResultsListener?.onOfflineResultItemClicked(searchResult, responseInfo)
         }
 
         override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
@@ -64,6 +70,9 @@ internal class SearchViewResultsAdapter(
                     "Search result: ${item.resolved.id}, " +
                             "distance: ${item.distanceMeters}, " +
                             "searchContext: ${item.searchContext}"
+                is SearchResultAdapterItem.Result.Offline ->
+                    "Offline search result: ${item.searchResult.id}, " +
+                            "distance: ${item.distanceMeters}"
             }
             is SearchResultAdapterItem.MissingResultFeedback -> "Missing result feedback: ${item.responseInfo}"
         }
@@ -144,6 +153,8 @@ internal class SearchViewResultsAdapter(
         fun onSuggestionItemClicked(searchSuggestion: SearchSuggestion)
 
         fun onResultItemClicked(searchContext: SearchContext, searchResult: SearchResult, responseInfo: ResponseInfo)
+
+        fun onOfflineResultItemClicked(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo)
 
         fun onHistoryItemClicked(historyRecord: HistoryRecord)
 

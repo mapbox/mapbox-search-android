@@ -1,11 +1,11 @@
 package com.mapbox.search.base.result
 
-import com.mapbox.search.base.tests_support.createTestCoreSearchResponseCancelled
-import com.mapbox.search.base.tests_support.createTestCoreSearchResponseConnectionError
-import com.mapbox.search.base.tests_support.createTestCoreSearchResponseHttpError
-import com.mapbox.search.base.tests_support.createTestCoreSearchResponseInternalError
-import com.mapbox.search.base.tests_support.createTestCoreSearchResponseSuccess
-import com.mapbox.search.base.tests_support.createTestCoreSearchResult
+import com.mapbox.search.common.createTestCoreSearchResponseCancelled
+import com.mapbox.search.common.createTestCoreSearchResponseConnectionError
+import com.mapbox.search.common.createTestCoreSearchResponseHttpError
+import com.mapbox.search.common.createTestCoreSearchResponseInternalError
+import com.mapbox.search.common.createTestCoreSearchResponseSuccess
+import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 

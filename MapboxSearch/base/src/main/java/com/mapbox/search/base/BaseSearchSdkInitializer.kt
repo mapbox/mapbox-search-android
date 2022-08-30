@@ -8,6 +8,7 @@ import com.mapbox.common.core.module.CommonSingletonModuleProvider
 class BaseSearchSdkInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
+        appContext = context.applicationContext
         CommonSingletonModuleProvider.loaderInstance.load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
     }
 
@@ -15,7 +16,9 @@ class BaseSearchSdkInitializer : Initializer<Unit> {
         return listOf(MapboxSDKCommonInitializer::class.java)
     }
 
-    private companion object {
+    companion object {
         private const val SEARCH_SDK_NATIVE_LIBRARY_NAME = "SearchCore"
+
+        lateinit var appContext: Context
     }
 }

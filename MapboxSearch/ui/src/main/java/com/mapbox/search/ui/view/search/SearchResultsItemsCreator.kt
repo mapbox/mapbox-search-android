@@ -5,6 +5,8 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
@@ -62,9 +64,32 @@ internal class SearchResultsItemsCreator(
         }
     }
 
+    fun createForOfflineSearchResults(
+        results: List<OfflineSearchResult>,
+        responseInfo: OfflineResponseInfo,
+        callback: (List<SearchResultAdapterItem>) -> Unit,
+    ): AsyncOperationTask {
+        check(results.isNotEmpty())
+        return locationEngine.lastKnownLocationOrNull(context) { location ->
+            val resultItems = results.map {
+                val distance = it.distanceMeters ?: location?.distanceTo(it.coordinate)
+                SearchResultAdapterItem.Result.Offline(
+                    searchResult = it,
+                    responseInfo = responseInfo,
+                    distanceMeters = distance,
+                )
+            }
+            callback(resultItems)
+        }
+    }
+
     fun createForEmptySearchResults(responseInfo: ResponseInfo): List<SearchResultAdapterItem> = listOf(
         SearchResultAdapterItem.EmptySearchResults,
         SearchResultAdapterItem.MissingResultFeedback(responseInfo),
+    )
+
+    fun createForOfflineEmptySearchResults(): List<SearchResultAdapterItem> = listOf(
+        SearchResultAdapterItem.EmptySearchResults,
     )
 
     fun createForLoading(): List<SearchResultAdapterItem> = listOf(SearchResultAdapterItem.Loading)
