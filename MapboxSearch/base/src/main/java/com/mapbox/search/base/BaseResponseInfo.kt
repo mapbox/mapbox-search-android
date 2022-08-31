@@ -5,7 +5,7 @@ import com.mapbox.search.base.result.BaseSearchResponse
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class BaseResponseInfo internal constructor(
+data class BaseResponseInfo(
     val requestOptions: BaseRequestOptions,
     val coreSearchResponse: BaseSearchResponse?,
     val isReproducible: Boolean,

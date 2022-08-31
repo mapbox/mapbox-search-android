@@ -87,10 +87,3 @@ package com.mapbox.search.autofill {
 
 }
 
-package com.mapbox.search.autofill.ktx {
-
-  public final class SearchEngineKtxKt {
-  }
-
-}
-

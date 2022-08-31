@@ -1,11 +1,11 @@
 package com.mapbox.search.autofill
 
+import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestBoundingBox
 import com.mapbox.search.common.withPrefabTestPoint
-import com.mapbox.search.result.SearchAddress
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +18,7 @@ internal class AddressComponentsTest {
     fun `Check AddressComponents properties`() = TestCase {
         Given("${AddressComponents::class.java.simpleName} class") {
             When("All AddressComponents properties accessed") {
-                val searchAddress = SearchAddress(
+                val searchAddress = BaseSearchAddress(
                     houseNumber = "5",
                     street = "Rue De Marseille",
                     neighborhood = "Porte-Saint-Martin",
@@ -93,7 +93,7 @@ internal class AddressComponentsTest {
     fun `Check AddressComponents fromCoreSdkAddress() function`() = TestCase {
         Given("${AddressComponents::class.java.simpleName} class") {
             When("fromCoreSdkAddress() called with non empty SearchAddress") {
-                val searchAddress = SearchAddress(country = "France")
+                val searchAddress = BaseSearchAddress(country = "France")
 
                 Then(
                     "fromCoreSdkAddress() should return non null",
@@ -103,7 +103,7 @@ internal class AddressComponentsTest {
             }
 
             When("fromCoreSdkAddress() called with empty SearchAddress") {
-                val emptySearchAddress = SearchAddress()
+                val emptySearchAddress = BaseSearchAddress()
 
                 Then(
                     "fromCoreSdkAddress() should return null",
@@ -117,11 +117,12 @@ internal class AddressComponentsTest {
     @TestFactory
     fun `Check AddressComponents formattedAddress() function`() = TestCase {
         Given("${AddressComponents::class.java.simpleName} class") {
-            When("SearchAddress.formattedAddress() returns non null") {
+            When("formattedAddress() called") {
                 val formattedAddress = "Rue de Marseille, Paris, France"
 
-                val searchAddress = mockk<SearchAddress>(relaxed = true)
-                every { searchAddress.formattedAddress(any()) } returns formattedAddress
+                val searchAddress = mockk<BaseSearchAddress>(relaxed = true)
+                every { searchAddress.street } returns "Rue de Marseille"
+                every { searchAddress.place } returns "Paris"
                 every { searchAddress.country } returns "France"
 
                 val addressComponents = requireNotNull(AddressComponents.fromCoreSdkAddress(searchAddress))
@@ -129,19 +130,6 @@ internal class AddressComponentsTest {
                 Then(
                     "formattedAddress() should return $formattedAddress",
                     formattedAddress,
-                    addressComponents.formattedAddress()
-                )
-            }
-
-            When("SearchAddress.formattedAddress() returns null") {
-                val searchAddress = mockk<SearchAddress>(relaxed = true)
-                every { searchAddress.formattedAddress(any()) } returns null
-                every { searchAddress.country } returns "France"
-
-                val addressComponents = requireNotNull(AddressComponents.fromCoreSdkAddress(searchAddress))
-                Then(
-                    "formattedAddress() should return toString()",
-                    addressComponents.toString(),
                     addressComponents.formattedAddress()
                 )
             }

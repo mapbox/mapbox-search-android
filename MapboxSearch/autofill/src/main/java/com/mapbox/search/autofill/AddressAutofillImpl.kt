@@ -1,38 +1,32 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.ReverseGeoOptions
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.SearchOptions
-import com.mapbox.search.SelectOptions
-import com.mapbox.search.autofill.ktx.SearchMultipleSelectionResponse
-import com.mapbox.search.autofill.ktx.SearchResultsResponse
-import com.mapbox.search.autofill.ktx.SearchSelectionResponse
-import com.mapbox.search.autofill.ktx.SearchSuggestionsResponse
-import com.mapbox.search.autofill.ktx.search
-import com.mapbox.search.autofill.ktx.select
-import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.SearchSuggestionType
+import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.result.BaseSearchResult
+import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseSearchSuggestionType
+import com.mapbox.search.internal.bindgen.LonLatBBox
+import com.mapbox.search.internal.bindgen.QueryType
+import com.mapbox.search.internal.bindgen.ReverseGeoOptions
+import com.mapbox.search.internal.bindgen.ReverseMode
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import java.util.HashMap
 
 /**
  * Temporary implementation of the [AddressAutofill] based on the two-step search.
  */
-internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : AddressAutofill {
+internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngine) : AddressAutofill {
 
     override suspend fun suggestions(point: Point, options: AddressAutofillOptions): AddressAutofillResponse {
-        val response = searchEngine.search(
-            options = ReverseGeoOptions(
-                center = point,
-                countries = options.countries?.map { it.toCoreSdkType() },
-                languages = options.language?.let { listOf(it.toCoreSdkType()) },
-            )
+        val coreOptions = createCoreReverseGeoOptions(
+            point = point,
+            countries = options.countries?.map { it.code },
+            language = options.language?.let { listOf(it.code) },
         )
 
-        return when (response) {
+        return when (val response = searchEngine.search(coreOptions)) {
             is SearchResultsResponse.Results -> AddressAutofillResponse.Suggestions(
                 response.results.toAddressAutofillSuggestions()
             )
@@ -43,10 +37,10 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
     override suspend fun suggestions(query: Query, options: AddressAutofillOptions): AddressAutofillResponse {
         val response = searchEngine.search(
             query = query.query,
-            options = SearchOptions(
-                countries = options.countries?.map { it.toCoreSdkType() },
-                languages = options.language?.let { listOf(it.toCoreSdkType()) },
-                ignoreIndexableRecords = true,
+            options = createCoreSearchOptions(
+                countries = options.countries?.map { it.code },
+                language = options.language?.let { listOf(it.code) },
+                ignoreUR = true,
             )
         )
 
@@ -56,7 +50,7 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
         }
     }
 
-    private suspend fun forwardGeocoding(suggestions: List<SearchSuggestion>): AddressAutofillResponse {
+    private suspend fun forwardGeocoding(suggestions: List<BaseSearchSuggestion>): AddressAutofillResponse {
         return when {
             suggestions.isEmpty() -> {
                 AddressAutofillResponse.Suggestions(emptyList())
@@ -76,10 +70,10 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
                     val deferred: List<Deferred<SearchSelectionResponse>> = suggestions
                         // Filtering in order to avoid infinite recursion
                         // because of some specific suggestions like "Did you mean recursion?"
-                        .filter { it.type !is SearchSuggestionType.Query }
+                        .filter { it.type !is BaseSearchSuggestionType.Query }
                         .map { suggestion ->
                             async {
-                                searchEngine.select(suggestion, SelectOptions(addResultToHistory = false))
+                                searchEngine.select(suggestion)
                             }
                         }
 
@@ -128,9 +122,9 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
 
     private companion object {
 
-        fun List<SearchResult>.toAddressAutofillSuggestions() = mapNotNull { it.toAddressAutofillSuggestion() }
+        fun List<BaseSearchResult>.toAddressAutofillSuggestions() = mapNotNull { it.toAddressAutofillSuggestion() }
 
-        fun SearchResult.toAddressAutofillSuggestion(): AddressAutofillSuggestion? {
+        fun BaseSearchResult.toAddressAutofillSuggestion(): AddressAutofillSuggestion? {
             // Filtering incomplete results
             val autofillAddress = AddressComponents.fromCoreSdkAddress(address) ?: return null
             val formattedAddress = descriptionText ?: autofillAddress.formattedAddress()
@@ -142,5 +136,59 @@ internal class AddressAutofillImpl(private val searchEngine: SearchEngine) : Add
                 coordinate = validCoordinate,
             )
         }
+
+        fun createCoreSearchOptions(
+            proximity: Point? = null,
+            origin: Point? = null,
+            navProfile: String? = null,
+            etaType: String? = null,
+            bbox: LonLatBBox? = null,
+            countries: List<String>? = null,
+            fuzzyMatch: Boolean? = null,
+            language: List<String>? = null,
+            limit: Int? = null,
+            types: List<QueryType>? = null,
+            ignoreUR: Boolean = false,
+            urDistanceThreshold: Double? = null,
+            requestDebounce: Int? = null,
+            route: List<Point>? = null,
+            sarType: String? = null,
+            timeDeviation: Double? = null,
+            addonAPI: Map<String, String>? = null,
+        ): CoreSearchOptions = CoreSearchOptions(
+            proximity,
+            origin,
+            navProfile,
+            etaType,
+            bbox,
+            countries,
+            fuzzyMatch,
+            language,
+            limit,
+            types,
+            ignoreUR,
+            urDistanceThreshold,
+            requestDebounce,
+            route,
+            sarType,
+            timeDeviation,
+            addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+        )
+
+        fun createCoreReverseGeoOptions(
+            point: Point,
+            reverseMode: ReverseMode? = null,
+            countries: List<String>? = null,
+            language: List<String>? = null,
+            limit: Int? = null,
+            types: List<QueryType>? = null,
+        ): ReverseGeoOptions = ReverseGeoOptions(
+            point,
+            reverseMode,
+            countries,
+            language,
+            limit,
+            types,
+        )
     }
 }

@@ -1,14 +1,14 @@
 package com.mapbox.search.autofill
 
 import android.os.Parcelable
-import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.base.result.BaseSearchAddress
 import kotlinx.parcelize.Parcelize
 
 /**
  * Search result address. It's guaranteed that at least one address component is not empty.
  */
 @Parcelize
-public class AddressComponents private constructor(private val coreSdkAddress: SearchAddress) : Parcelable {
+public class AddressComponents private constructor(private val coreSdkAddress: BaseSearchAddress) : Parcelable {
 
     init {
         check(!coreSdkAddress.isEmpty)
@@ -70,7 +70,17 @@ public class AddressComponents private constructor(private val coreSdkAddress: S
 
     @JvmSynthetic
     internal fun formattedAddress(): String {
-        return coreSdkAddress.formattedAddress(SearchAddress.FormatStyle.Full) ?: toString()
+        return listOf(
+            houseNumber,
+            street,
+            neighborhood,
+            locality,
+            postcode,
+            place,
+            district,
+            region,
+            country,
+        ).filter { !it.isNullOrEmpty() }.joinToString()
     }
 
     /**
@@ -114,13 +124,13 @@ public class AddressComponents private constructor(private val coreSdkAddress: S
     internal companion object {
 
         @JvmSynthetic
-        fun fromCoreSdkAddress(address: SearchAddress?): AddressComponents? = if (address == null || address.isEmpty) {
+        fun fromCoreSdkAddress(address: BaseSearchAddress?): AddressComponents? = if (address == null || address.isEmpty) {
             null
         } else {
             AddressComponents(address)
         }
 
-        private val SearchAddress.isEmpty: Boolean
+        private val BaseSearchAddress.isEmpty: Boolean
             get() {
                 return listOf(
                     houseNumber,

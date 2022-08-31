@@ -1,12 +1,12 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestBoundingBox
 import com.mapbox.search.common.withPrefabTestPoint
-import com.mapbox.search.result.SearchAddress
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi
@@ -65,7 +65,7 @@ internal class AddressAutofillResponseTest {
                     AddressAutofillSuggestion(
                         formattedAddress = "test address",
                         coordinate = Point.fromLngLat(10.0, 20.0),
-                        address = AddressComponents.fromCoreSdkAddress(SearchAddress(country = "test"))!!
+                        address = AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "test"))!!
                     )
                 )
             )
