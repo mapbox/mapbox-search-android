@@ -16,7 +16,7 @@ import java.util.concurrent.Executor
  * - [category search](https://docs.mapbox.com/android/search/overview/#single-box-search)(search for places by category name)
  * - [reverse geocoding](https://docs.mapbox.com/android/search/guides/#reverse-geocoding)(search for places by geographic coordinate)
  *
- * Unlike [OfflineSearchEngine], [SearchEngine] API requires an online connection to execute the requests.
+ * [SearchEngine] API requires an online connection to execute the requests.
  *
  * ## Instantiating
  *
@@ -51,7 +51,6 @@ import java.util.concurrent.Executor
  * If invalid parameters are provided, [RuntimeException] is thrown immediately.
  * Any other error will be propagated to [SearchSuggestionsCallback.onError].
  *
- * @see OfflineSearchEngine
  * @see MapboxSearchSdk.createSearchEngine
  */
 public interface SearchEngine {

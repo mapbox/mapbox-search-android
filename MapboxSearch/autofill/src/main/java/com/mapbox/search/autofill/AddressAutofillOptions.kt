@@ -67,9 +67,6 @@ public class AddressAutofillOptions @JvmOverloads public constructor(
     @Parcelize
     public class Country(public val code: String) : Parcelable {
 
-        @JvmSynthetic
-        internal fun toCoreSdkType() = com.mapbox.search.Country(code)
-
         /**
          * @suppress
          */
@@ -105,9 +102,6 @@ public class AddressAutofillOptions @JvmOverloads public constructor(
      */
     @Parcelize
     public class Language(public val code: String) : Parcelable {
-
-        @JvmSynthetic
-        internal fun toCoreSdkType() = com.mapbox.search.Language(code)
 
         /**
          * @suppress

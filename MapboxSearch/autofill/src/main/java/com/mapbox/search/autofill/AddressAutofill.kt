@@ -1,9 +1,6 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.ApiType
-import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.SearchEngineSettings
 
 /**
  * Main entrypoint to the Mapbox Autofill API. Performs forward or reverse geocoding requests to fetch addresses.
@@ -47,10 +44,7 @@ public interface AddressAutofill {
          * @return a new instance instance of [AddressAutofill].
          */
         public fun create(accessToken: String): AddressAutofill {
-            val settings = SearchEngineSettings(accessToken)
-            return AddressAutofillImpl(
-                MapboxSearchSdk.createSearchEngine(ApiType.AUTOFILL, settings)
-            )
+            return AddressAutofillImpl(AutofillSearchEngine.create(accessToken))
         }
     }
 }
