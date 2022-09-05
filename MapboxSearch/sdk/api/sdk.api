@@ -848,6 +848,8 @@ public abstract interface annotation class com/mapbox/search/analytics/FeedbackE
 	public static final field INCORRECT_ADDRESS Ljava/lang/String;
 	public static final field INCORRECT_LOCATION Ljava/lang/String;
 	public static final field INCORRECT_NAME Ljava/lang/String;
+	public static final field INCORRECT_PHONE_NUMBER Ljava/lang/String;
+	public static final field INCORRECT_RESULT_RANK Ljava/lang/String;
 	public static final field OTHER Ljava/lang/String;
 }
 
@@ -855,6 +857,8 @@ public final class com/mapbox/search/analytics/FeedbackEvent$FeedbackReason$Comp
 	public static final field INCORRECT_ADDRESS Ljava/lang/String;
 	public static final field INCORRECT_LOCATION Ljava/lang/String;
 	public static final field INCORRECT_NAME Ljava/lang/String;
+	public static final field INCORRECT_PHONE_NUMBER Ljava/lang/String;
+	public static final field INCORRECT_RESULT_RANK Ljava/lang/String;
 	public static final field OTHER Ljava/lang/String;
 }
 

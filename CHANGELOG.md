@@ -10,6 +10,7 @@
 - [UI] `SearchResultsView.SearchListener.onOfflineSearchResults()` signature has been changed to `onOfflineSearchResults(List<OfflineSearchResult>m OfflineResponseInfo)`. Also, a new function `SearchResultsView.SearchListener.onOfflineSearchResult()` has been added.
 
 ### New features
+- [CORE] `FeedbackEvent.FeedbackReason` now has few more reasons that can be used in the feedback: `INCORRECT_PHONE_NUMBER`, and `INCORRECT_RESULT_RANK`.
 - [UI] A new function `SearchPlace.createFromOfflineSearchResult()` is available.
 
 ### Bug fixes
