@@ -5,6 +5,8 @@ import androidx.annotation.StringDef
 import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.INCORRECT_ADDRESS
 import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.INCORRECT_LOCATION
 import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.INCORRECT_NAME
+import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.INCORRECT_PHONE_NUMBER
+import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.INCORRECT_RESULT_RANK
 import com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.Companion.OTHER
 
 /**
@@ -113,6 +115,8 @@ public class FeedbackEvent @JvmOverloads public constructor(
         INCORRECT_NAME,
         INCORRECT_ADDRESS,
         INCORRECT_LOCATION,
+        INCORRECT_PHONE_NUMBER,
+        INCORRECT_RESULT_RANK,
         OTHER,
     )
     public annotation class FeedbackReason {
@@ -136,6 +140,16 @@ public class FeedbackEvent @JvmOverloads public constructor(
              * Feedback reason for incorrect search result location.
              */
             public const val INCORRECT_LOCATION: String = "incorrect_location"
+
+            /**
+             * Feedback reason for incorrect POI phone number.
+             */
+            public const val INCORRECT_PHONE_NUMBER: String = "incorrect_phone_number"
+
+            /**
+             * Feedback reason for a case where a user thinks that search result is expected to be ranked higher on the list.
+             */
+            public const val INCORRECT_RESULT_RANK: String = "incorrect_result_rank"
 
             /**
              * Feedback reason for other problems related to search results.

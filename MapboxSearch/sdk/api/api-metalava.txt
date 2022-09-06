@@ -785,10 +785,12 @@ package com.mapbox.search.analytics {
     property public final String? text;
   }
 
-  @StringDef({com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_NAME, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_ADDRESS, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_LOCATION, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.OTHER}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface FeedbackEvent.FeedbackReason {
+  @StringDef({com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_NAME, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_ADDRESS, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_LOCATION, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_PHONE_NUMBER, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.INCORRECT_RESULT_RANK, com.mapbox.search.analytics.FeedbackEvent.FeedbackReason.OTHER}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface FeedbackEvent.FeedbackReason {
     field public static final String INCORRECT_ADDRESS = "incorrect_address";
     field public static final String INCORRECT_LOCATION = "incorrect_location";
     field public static final String INCORRECT_NAME = "incorrect_name";
+    field public static final String INCORRECT_PHONE_NUMBER = "incorrect_phone_number";
+    field public static final String INCORRECT_RESULT_RANK = "incorrect_result_rank";
     field public static final String OTHER = "other_result_issue";
   }
 
