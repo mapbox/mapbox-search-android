@@ -1,7 +1,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mapbox.search.ui"
+    package="com.mapbox.search.ui.test"
     >
 
     <uses-permission
@@ -19,7 +19,7 @@
         >
 
         <activity
-            android:name=".TestActivity"
+            android:name="com.mapbox.search.ui.TestActivity"
             android:exported="true"
             >
 
