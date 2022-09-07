@@ -1,5 +1,5 @@
 ext {
-    gradle_plugin = '7.0.4'
+    gradle_plugin = '7.2.2'
     kotlin_version = '1.5.31'
     kotlin_coroutines_version = '1.5.2'
 

@@ -57,9 +57,9 @@ android {
         ]
     }
 
-    lintOptions {
-        disable 'ParcelCreator', 'ContentDescription'
+    lint {
         abortOnError true
+        disable 'ParcelCreator', 'ContentDescription'
     }
 }
 

@@ -61,11 +61,6 @@ android {
         ]
     }
 
-    lintOptions {
-        disable 'ParcelCreator'
-        abortOnError true
-    }
-
     testOptions {
         unitTests {
             returnDefaultValues = true
@@ -80,6 +75,11 @@ android {
         androidTest {
             java.srcDirs += sharedTestDir
         }
+    }
+
+    lint {
+        abortOnError true
+        disable 'ParcelCreator'
     }
 }
 
