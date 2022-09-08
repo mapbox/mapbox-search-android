@@ -1,0 +1,39 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.mapbox.search.common.concurrent////PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/index.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker///PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/index.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker/cancel/#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/cancel.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker/isMainThread/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/is-main-thread.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker/mainExecutor/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/main-executor.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker/post/#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/post.html
+$dokka.location:com.mapbox.search.common.concurrent/MainThreadWorker/postDelayed/#kotlin.Long#java.util.concurrent.TimeUnit#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-main-thread-worker/post-delayed.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker///PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/index.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/cancel/#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/cancel.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/delegate/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/delegate.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/isMainThread/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/is-main-thread.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/mainExecutor/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/main-executor.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/post/#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/post.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/postDelayed/#kotlin.Long#java.util.concurrent.TimeUnit#java.lang.Runnable/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/post-delayed.html
+$dokka.location:com.mapbox.search.common.concurrent/SearchSdkMainThreadWorker/resetDelegate/#/PointingToDeclaration/sdk-common/com.mapbox.search.common.concurrent/-search-sdk-main-thread-worker/reset-delegate.html
+$dokka.location:com.mapbox.search.common////PointingToDeclaration/sdk-common/com.mapbox.search.common/index.html
+$dokka.location:com.mapbox.search.common/AsyncOperationTask///PointingToDeclaration/sdk-common/com.mapbox.search.common/-async-operation-task/index.html
+$dokka.location:com.mapbox.search.common/AsyncOperationTask/cancel/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-async-operation-task/cancel.html
+$dokka.location:com.mapbox.search.common/AsyncOperationTask/isCancelled/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-async-operation-task/is-cancelled.html
+$dokka.location:com.mapbox.search.common/AsyncOperationTask/isDone/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-async-operation-task/is-done.html
+$dokka.location:com.mapbox.search.common/RoutablePoint///PointingToDeclaration/sdk-common/com.mapbox.search.common/-routable-point/index.html
+$dokka.location:com.mapbox.search.common/RoutablePoint/RoutablePoint/#com.mapbox.geojson.Point#kotlin.String/PointingToDeclaration/sdk-common/com.mapbox.search.common/-routable-point/-routable-point.html
+$dokka.location:com.mapbox.search.common/RoutablePoint/name/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-routable-point/name.html
+$dokka.location:com.mapbox.search.common/RoutablePoint/point/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-routable-point/point.html
+$dokka.location:com.mapbox.search.common/SearchCancellationException///PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-cancellation-exception/index.html
+$dokka.location:com.mapbox.search.common/SearchCancellationException/SearchCancellationException/#kotlin.String/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-cancellation-exception/-search-cancellation-exception.html
+$dokka.location:com.mapbox.search.common/SearchCancellationException/message/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-cancellation-exception/message.html
+$dokka.location:com.mapbox.search.common/SearchRequestException///PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/index.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/SearchRequestException/#kotlin.String#kotlin.Int#java.lang.Exception?/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/-search-request-exception.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/cause/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/cause.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/code/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/code.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/isClientError/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/is-client-error.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/isServerError/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/is-server-error.html
+$dokka.location:com.mapbox.search.common/SearchRequestException/message/#/PointingToDeclaration/sdk-common/com.mapbox.search.common/-search-request-exception/message.html
+com.mapbox.search.common
+com.mapbox.search.common.concurrent
+
