@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.36-SNAPSHOT
+## 1.0.0-beta.36
 
 ### Breaking changes
 - [CORE] `AsyncOperationTask`, `SearchCancellationException`, `SearchRequestException`, `RoutablePoint` have been moved to `com.mapbox.search.common` package. `MainThreadWorker`, and `SearchSdkMainThreadWorker` have been moved to `com.mapbox.search.common.concurrent`.
@@ -17,8 +17,8 @@
 - [UI] Now created in the `SearchPlaceBottomSheetView` `FavoriteRecord` will be saved with id from `SearchPlace.id`
 
 ### Mapbox dependencies
-- Search Native SDK `0.58.0`
-- Common SDK `23.0.0-beta.1`
+- Search Native SDK `0.59.0`
+- Common SDK `23.0.0`
 - Kotlin `1.5.31`
 
 
