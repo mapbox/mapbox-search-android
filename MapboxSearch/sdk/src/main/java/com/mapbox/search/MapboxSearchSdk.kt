@@ -10,6 +10,7 @@ import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
+import com.mapbox.search.base.core.CoreLocationProvider
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.location.LocationEngineAdapter
@@ -311,12 +312,20 @@ public object MapboxSearchSdk {
             ApiType.AUTOFILL -> null
         }
 
-        return CoreSearchEngine(
-            // TODO allow customer to customize events url
-            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
+        // Workaround for sync location provider in test environment.
+        // Needed while https://github.com/mapbox/mapbox-search-sdk/issues/671 not fixed
+        val coreLocationProvider = if (settings.locationEngine is CoreLocationProvider) {
+            settings.locationEngine
+        } else {
             WrapperLocationProvider(LocationEngineAdapter(application, settings.locationEngine)) {
                 settings.viewportProvider?.getViewport()?.mapToCore()
             }
+        }
+
+        return CoreSearchEngine(
+            // TODO allow customer to customize events url
+            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
+            coreLocationProvider
         )
     }
 

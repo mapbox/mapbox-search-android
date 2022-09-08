@@ -24,6 +24,7 @@
         <activity
             android:name="com.mapbox.search.sample.MainActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustNothing"
             >
 
             <intent-filter>
@@ -35,6 +36,7 @@
         <activity
             android:name=".CustomThemeActivity"
             android:theme="@style/CustomTheme"
+            android:windowSoftInputMode="adjustNothing"
             />
 
         <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />

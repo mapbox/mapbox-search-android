@@ -12,9 +12,11 @@ import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -78,6 +80,7 @@ import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import java.util.concurrent.CopyOnWriteArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -92,13 +95,47 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
-    private var markerCoordinates = mutableListOf<Point>()
+
+    private val mapMarkersManager = MapMarkersManager()
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            when {
+                !searchPlaceView.isHidden() -> {
+                    mapMarkersManager.clearMarkers()
+                    searchPlaceView.hide()
+                }
+                mapMarkersManager.markerCoordinates.isNotEmpty() -> {
+                    mapMarkersManager.clearMarkers()
+                }
+                else -> {
+                    if (BuildConfig.DEBUG) {
+                        error("This OnBackPressedCallback should not be enabled")
+                    }
+                    Log.i("SearchApiExample", "This OnBackPressedCallback should not be enabled")
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
         locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
+
+        mapMarkersManager.addOnChangeListener { markers ->
+            mapboxMap.getStyle()?.getSourceAs<GeoJsonSource>(SEARCH_PIN_SOURCE_ID)?.featureCollection(
+                FeatureCollection.fromFeatures(
+                    markers.map { Feature.fromGeometry(it) }
+                )
+            )
+            updateOnBackPressedCallbackEnabled()
+        }
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
@@ -108,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     +geoJsonSource(SEARCH_PIN_SOURCE_ID) {
                         featureCollection(
                             FeatureCollection.fromFeatures(
-                                markerCoordinates.map {
+                                mapMarkersManager.markerCoordinates.map {
                                     Feature.fromGeometry(it)
                                 }
                             )
@@ -219,7 +256,7 @@ class MainActivity : AppCompatActivity() {
         searchPlaceView.initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
 
         searchPlaceView.addOnCloseClickListener {
-            clearMarkers()
+            mapMarkersManager.clearMarkers()
             searchPlaceView.hide()
         }
 
@@ -235,6 +272,10 @@ class MainActivity : AppCompatActivity() {
             // Not implemented
         }
 
+        searchPlaceView.addOnBottomSheetStateChangedListener { _, _ ->
+            updateOnBackPressedCallbackEnabled()
+        }
+
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(
                 this,
@@ -244,19 +285,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        when {
-            !searchPlaceView.isHidden() -> {
-                clearMarkers()
-                searchPlaceView.hide()
-            }
-            markerCoordinates.isNotEmpty() -> {
-                clearMarkers()
-            }
-            else -> {
-                super.onBackPressed()
-            }
-        }
+    private fun updateOnBackPressedCallbackEnabled() {
+        onBackPressedCallback.isEnabled = !searchPlaceView.isHidden() || mapMarkersManager.markerCoordinates.isNotEmpty()
     }
 
     private fun closeSearchView() {
@@ -269,13 +299,13 @@ class MainActivity : AppCompatActivity() {
 
         val searchActionView = menu.findItem(R.id.action_search)
         searchActionView.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 searchPlaceView.hide()
                 searchResultsView.isVisible = true
                 return true
             }
 
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 searchResultsView.isVisible = false
                 return true
             }
@@ -434,7 +464,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMarkers(coordinates: List<Point>) {
         if (coordinates.isEmpty()) {
-            clearMarkers()
+            mapMarkersManager.clearMarkers()
             return
         } else if (coordinates.size == 1) {
             showMarker(coordinates.first())
@@ -446,7 +476,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         if (cameraOptions.center == null) {
-            clearMarkers()
+            mapMarkersManager.clearMarkers()
             return
         }
 
@@ -463,26 +493,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMarkers(cameraOptions: CameraOptions, coordinates: List<Point>) {
-        markerCoordinates.clear()
-        markerCoordinates.addAll(coordinates)
-        updateMarkersOnMap()
-
+        mapMarkersManager.setMarkers(coordinates)
         mapboxMap.setCamera(cameraOptions)
     }
 
-    private fun clearMarkers() {
-        markerCoordinates.clear()
-        updateMarkersOnMap()
-    }
+    private class MapMarkersManager {
 
-    private fun updateMarkersOnMap() {
-        mapboxMap.getStyle()?.getSourceAs<GeoJsonSource>(SEARCH_PIN_SOURCE_ID)?.featureCollection(
-            FeatureCollection.fromFeatures(
-                markerCoordinates.map {
-                    Feature.fromGeometry(it)
-                }
-            )
-        )
+        private val changeListeners = CopyOnWriteArrayList<OnChangeListener>()
+        private val _markerCoordinates = mutableListOf<Point>()
+
+        val markerCoordinates: List<Point>
+            get() = _markerCoordinates
+
+        fun clearMarkers() {
+            if (_markerCoordinates.isNotEmpty()) {
+                _markerCoordinates.clear()
+                changeListeners.forEach { it.onMarkersChanged(_markerCoordinates) }
+            }
+        }
+
+        fun setMarkers(coordinates: List<Point>) {
+            if (coordinates != _markerCoordinates) {
+                _markerCoordinates.clear()
+                _markerCoordinates.addAll(coordinates)
+                changeListeners.forEach { it.onMarkersChanged(_markerCoordinates) }
+            }
+        }
+
+        fun addOnChangeListener(listener: OnChangeListener) {
+            changeListeners.add(listener)
+        }
+
+        fun interface OnChangeListener {
+            fun onMarkersChanged(points: List<Point>)
+        }
     }
 
     private companion object {

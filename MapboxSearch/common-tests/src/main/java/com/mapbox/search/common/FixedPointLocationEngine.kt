@@ -8,11 +8,25 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.internal.bindgen.LocationProvider
+import com.mapbox.search.internal.bindgen.LonLatBBox
 
-class FixedPointLocationEngine(val location: Location) : LocationEngine {
+class FixedPointLocationEngine(
+    private val location: Location,
+    private val viewPort: BoundingBox? = null,
+) : LocationEngine, LocationProvider {
 
-    constructor(point: Point) : this(point.toLocation())
+    constructor(point: Point, viewPort: BoundingBox? = null) : this(point.toLocation(), viewPort)
+
+    override fun getLocation(): Point? {
+        return Point.fromLngLat(location.longitude, location.latitude)
+    }
+
+    override fun getViewport(): LonLatBBox? {
+        return viewPort?.toLonLatBBox()
+    }
 
     override fun getLastLocation(locationEngineCallback: LocationEngineCallback<LocationEngineResult>) {
         locationEngineCallback.onSuccess(LocationEngineResult.create(location))
@@ -47,11 +61,14 @@ class FixedPointLocationEngine(val location: Location) : LocationEngine {
     }
 
     private companion object {
+
         fun Point.toLocation(): Location {
             val location = Location("")
             location.latitude = latitude()
             location.longitude = longitude()
             return location
         }
+
+        fun BoundingBox.toLonLatBBox(): LonLatBBox = LonLatBBox(southwest(), northeast())
     }
 }
