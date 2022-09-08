@@ -14,6 +14,7 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -57,10 +58,21 @@ public class TestActivity : AppCompatActivity() {
     private lateinit var searchResultsView: SearchResultsView
     private lateinit var searchPlaceView: SearchPlaceBottomSheetView
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            when {
+                !searchPlaceView.isHidden() -> searchPlaceView.hide()
+                else -> error("This OnBackPressedCallback should not be enabled")
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_test)
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         toolbar = findViewById(R.id.toolbar)
         toolbar.apply {
@@ -164,19 +176,16 @@ public class TestActivity : AppCompatActivity() {
             searchPlaceView.hide()
         }
 
+        searchPlaceView.addOnBottomSheetStateChangedListener { _, _ ->
+            onBackPressedCallback.isEnabled = !searchPlaceView.isHidden()
+        }
+
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                 PERMISSIONS_REQUEST_LOCATION
             )
-        }
-    }
-
-    override fun onBackPressed() {
-        when {
-            !searchPlaceView.isHidden() -> searchPlaceView.hide()
-            else -> super.onBackPressed()
         }
     }
 
