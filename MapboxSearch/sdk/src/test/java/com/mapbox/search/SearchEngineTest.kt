@@ -125,6 +125,7 @@ internal class SearchEngineTest {
 
             every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -174,6 +175,7 @@ internal class SearchEngineTest {
 
             every { coreEngine.search(any(), any(), capture(slotSearchOptions), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -223,6 +225,7 @@ internal class SearchEngineTest {
                 coreEngine.search(any(), any(), any(), capture(slotSearchCallback))
             } answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -250,6 +253,7 @@ internal class SearchEngineTest {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.search(eq(TEST_QUERY), any(), any(), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
+                TEST_REQUEST_ID
             }
 
             When("Search request cancelled by the Search SDK") {
@@ -271,7 +275,7 @@ internal class SearchEngineTest {
         Given("SearchEngine with mocked dependencies") {
             val slotSearchCallback = slot<CoreSearchCallback>()
 
-            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) } returns Unit
+            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) } returns TEST_REQUEST_ID
 
             val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
             every { callback.onSuggestions(any(), any()) } throws IllegalStateException()
@@ -364,6 +368,7 @@ internal class SearchEngineTest {
                 coreEngine.retrieve(any(), any(), capture(slotRetrieveSearchCallback))
             } answers {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             val historyServiceCompletionCallbackSlot = slot<(Result<Boolean>) -> Unit>()
@@ -516,6 +521,7 @@ internal class SearchEngineTest {
                 coreEngine.retrieve(any(), any(), capture(slotRetrieveSearchCallback))
             } answers {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Suggestion selected") {
@@ -536,6 +542,8 @@ internal class SearchEngineTest {
     }
 
     private companion object {
+
+        const val TEST_REQUEST_ID = 1L
 
         const val TEST_QUERY = "Minsk"
         val TEST_SEARCH_OPTIONS = SearchOptions()

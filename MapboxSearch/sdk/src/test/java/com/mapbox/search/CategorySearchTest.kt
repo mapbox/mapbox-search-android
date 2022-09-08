@@ -83,6 +83,7 @@ internal class CategorySearchTest {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -132,6 +133,7 @@ internal class CategorySearchTest {
 
             every { coreEngine.search(any(), any(), capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -186,6 +188,7 @@ internal class CategorySearchTest {
                 every { spyResponse.results } throws exception
                 every { spyResponse.request } throws exception
                 slotSearchCallback.captured.run(spyResponse)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -219,6 +222,7 @@ internal class CategorySearchTest {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORIES_QUERY)), any(), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
+                TEST_REQUEST_ID
             }
 
             When("Search request cancelled by the Search SDK") {
@@ -236,6 +240,8 @@ internal class CategorySearchTest {
     }
 
     private companion object {
+
+        const val TEST_REQUEST_ID = 1L
 
         const val TEST_CATEGORIES_QUERY = "cafe"
 
