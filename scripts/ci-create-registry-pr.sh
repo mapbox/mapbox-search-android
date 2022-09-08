@@ -32,14 +32,22 @@ git checkout -b "${BRANCH_NAME}"
 # Copy config files
 #
 
-# Config for search-sdk-common is Android-specific, iOS doesn't have it
+# Android-specific configs, iOS doesn't have them
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-sdk-common-android.yaml" "${TMPDIR}/config/search-sdk-common/${VERSION}.yaml"
-# For iOS, both SDK and UI SDK artifacts are described in a `search-sdk` config
-cp "$INITIAL_PATH/sdk-registry-config-templates/search-ui-sdk-android.yaml" "${TMPDIR}/config/search-ui-sdk/${VERSION}.yaml"
+
+mkdir -p "${TMPDIR}/config/search-base-sdk"
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-base-android.yaml" "${TMPDIR}/config/search-base-sdk/${VERSION}.yaml"
+
+mkdir -p "${TMPDIR}/config/search-offline-sdk"
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-offline-android.yaml" "${TMPDIR}/config/search-offline-sdk/${VERSION}.yaml"
 
 mkdir -p "${TMPDIR}/config/search-autofill-sdk"
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-autofill-android.yaml" "${TMPDIR}/config/search-autofill-sdk/${VERSION}.yaml"
 
+# For iOS, both SDK and UI SDK artifacts are described in a `search-sdk` config
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-ui-sdk-android.yaml" "${TMPDIR}/config/search-ui-sdk/${VERSION}.yaml"
+
+# search-sdk config is shared across Android and iOS, we should keep in mind that there can already be config for iOS
 if grep -q ios "${TMPDIR}/config/search-sdk/${VERSION}.yaml"; then
   cp "$INITIAL_PATH/sdk-registry-config-templates/search-sdk-android-ios.yaml" "${TMPDIR}/config/search-sdk/${VERSION}.yaml"
 else
