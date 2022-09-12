@@ -121,6 +121,10 @@ internal class CategorySearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -169,6 +173,10 @@ internal class CategorySearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -208,12 +216,16 @@ internal class CategorySearchTest {
                     slotCallbackError.captured,
                     exception
                 )
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
 
     @TestFactory
-    fun `Check search call cancellation`() = TestCase {
+    fun `Check search call cancellation initiated by SDK`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
             every { searchResultFactory.createSearchResult(any(), any()) } returns TEST_SEARCH_RESULT
 
@@ -234,6 +246,37 @@ internal class CategorySearchTest {
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
+                }
+
+                VerifyNo("Core cancel() is not called") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search call cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORIES_QUERY)), any(), any()) } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Search request cancelled by user") {
+                val callback = mockk<SearchCallback>(relaxed = true)
+
+                val task = searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, callback)
+                task.cancel()
+
+                Then("Task is marked as cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onResults(any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
                 }
             }
         }

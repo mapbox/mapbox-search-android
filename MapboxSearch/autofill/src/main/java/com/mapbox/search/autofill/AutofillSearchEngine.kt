@@ -108,9 +108,9 @@ internal class AutofillSearchEngine(
     ): AsyncOperationTask {
         return when (suggestion) {
             is BaseServerSearchSuggestion -> {
-                makeRequest(callback as BaseSearchSuggestionsCallback) { request ->
+                makeRequest(callback as BaseSearchSuggestionsCallback) { task ->
                     val requestContext = suggestion.requestOptions.requestContext
-                    coreEngine.retrieve(
+                    val requestId = coreEngine.retrieve(
                         suggestion.requestOptions.core,
                         suggestion.rawSearchResult.mapToCore(),
                         TwoStepsRequestCallbackWrapper(
@@ -120,12 +120,15 @@ internal class AutofillSearchEngine(
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
-                            searchRequestTask = request,
+                            searchRequestTask = task,
                             searchRequestContext = requestContext,
                             suggestion = suggestion,
                             addResultToHistory = false,
                         )
                     )
+                    task.addOnCancelledCallback {
+                        coreEngine.cancel(requestId)
+                    }
                 }
             }
             is BaseGeocodingCompatSearchSuggestion,
@@ -222,10 +225,10 @@ internal class AutofillSearchEngine(
             remoteResults
         }
 
-        return makeRequest(callback) { searchRequestTask ->
+        return makeRequest(callback) { task ->
             val requestOptions = filtered.first().requestOptions
             val requestContext = requestOptions.requestContext
-            coreEngine.retrieveBucket(
+            val requestId = coreEngine.retrieveBucket(
                 requestOptions.core,
                 coreSearchResults,
                 TwoStepsBatchRequestCallbackWrapper(
@@ -233,11 +236,14 @@ internal class AutofillSearchEngine(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = searchRequestTask,
+                    searchRequestTask = task,
                     resultingFunction = resultingFunction,
                     searchRequestContext = requestContext,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 

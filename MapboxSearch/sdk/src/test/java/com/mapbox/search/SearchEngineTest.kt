@@ -211,6 +211,10 @@ internal class SearchEngineTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -241,12 +245,16 @@ internal class SearchEngineTest {
                 )
 
                 Then("Exception from SearchResultFactory should be forwarded to callback", slotCallbackError.captured, exception)
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
 
     @TestFactory
-    fun `Check search call cancellation`() = TestCase {
+    fun `Check search call cancellation initiated by SDK`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
             val cancellationReason = "Request cancelled"
 
@@ -265,6 +273,83 @@ internal class SearchEngineTest {
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search call cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every { coreEngine.search(eq(TEST_QUERY), any(), any(), any()) } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Search request cancelled by user") {
+                val callback = mockk<SearchSuggestionsCallback>(relaxed = true)
+
+                val task = searchEngine.search(TEST_QUERY, TEST_SEARCH_OPTIONS, callback)
+                task.cancel()
+
+                Then("Task is marked as cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onSuggestions(any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check multiple search calls cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val testQuery1 = "test-query-1"
+            val testRequestId1 = 1L
+            every { coreEngine.search(eq(testQuery1), any(), any(), any()) } answers {
+                testRequestId1
+            }
+
+            val testQuery2 = "test-query-2"
+            val testRequestId2 = 2L
+            every { coreEngine.search(eq(testQuery2), any(), any(), any()) } answers {
+                testRequestId2
+            }
+
+            When("2 search requests made and second one is cancelled by user") {
+                val callback1 = mockk<SearchSuggestionsCallback>(relaxed = true)
+                val task1 = searchEngine.search(testQuery1, TEST_SEARCH_OPTIONS, callback1)
+
+                val callback2 = mockk<SearchSuggestionsCallback>(relaxed = true)
+                val task2 = searchEngine.search(testQuery2, TEST_SEARCH_OPTIONS, callback2)
+
+                task2.cancel()
+
+                Then("Task 1 is still active", false, task1.isCancelled || task1.isDone)
+                Then("Task 2 is marked as cancelled", true, task2.isCancelled)
+
+                VerifyNo("Callbacks are not called") {
+                    callback1.onSuggestions(any(), any())
+                    callback1.onError(any())
+
+                    callback2.onSuggestions(any(), any())
+                    callback2.onError(any())
+                }
+
+                VerifyNo("Core cancel() is not called with first request id") {
+                    coreEngine.cancel(testRequestId1)
+                }
+
+                VerifyOnce("Core cancel() is called with second request id") {
+                    coreEngine.cancel(testRequestId2)
                 }
             }
         }
@@ -296,6 +381,10 @@ internal class SearchEngineTest {
                 Then("Task failed with IllegalStateException", true, throwable != null)
 
                 Then("Task is executed", true, task?.isDone)
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -351,6 +440,10 @@ internal class SearchEngineTest {
                             isReproducible = false,
                         )
                     )
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
                 }
             }
         }
@@ -437,6 +530,10 @@ internal class SearchEngineTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -504,6 +601,10 @@ internal class SearchEngineTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -537,6 +638,80 @@ internal class SearchEngineTest {
                 )
 
                 Then("Exception from SearchResultFactory should be forwarded to callback", slotCallbackError.captured, exception)
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search selection cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every {
+                coreEngine.retrieve(any(), any(), any())
+            } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Selection task cancelled by user") {
+                val callback = mockk<SearchSelectionCallback>(relaxed = true)
+
+                val task = searchEngine.select(
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    options = SelectOptions(),
+                    executor = executor,
+                    callback = callback,
+                )
+
+                task.cancel()
+
+                Then("Task is marked as cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onSuggestions(any(), any())
+                    callback.onResult(any(), any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search multiple-suggestions selection cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every {
+                coreEngine.retrieveBucket(any(), any(), any())
+            } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Selection task cancelled by user") {
+                val callback = mockk<SearchMultipleSelectionCallback>(relaxed = true)
+
+                val task = searchEngine.select(
+                    suggestions = listOf(TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform()),
+                    executor = executor,
+                    callback = callback,
+                )
+
+                task.cancel()
+
+                Then("Task is marked as cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onResult(any(), any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
+                }
             }
         }
     }
@@ -620,7 +795,7 @@ internal class SearchEngineTest {
         val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
                 types = listOf(BaseRawResultType.POI),
-                action = createTestCoreSuggestAction().mapToBase()
+                action = createTestCoreSuggestAction(multiRetrievable = true).mapToBase()
             ),
             BASE_TEST_REQUEST_OPTIONS
         )
