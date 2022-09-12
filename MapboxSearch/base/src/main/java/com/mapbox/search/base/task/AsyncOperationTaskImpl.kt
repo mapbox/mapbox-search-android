@@ -1,8 +1,16 @@
 package com.mapbox.search.base.task
 
+import androidx.annotation.VisibleForTesting
+
 class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTask<T> {
 
     private val cancelableList: MutableList<CancelableWrapper> = mutableListOf()
+    private val onCancelledCallbacks: MutableList<OnCancelledCallback> = mutableListOf()
+
+    @VisibleForTesting
+    val hasOnCancelledCallbacks: Boolean
+        @Synchronized
+        get() = onCancelledCallbacks.isNotEmpty()
 
     override var callbackDelegate: T? = null
         @Synchronized
@@ -17,17 +25,6 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
 
     override var callbackActionExecuted: Boolean = false
         @Synchronized private set
-        @Synchronized get
-
-    var onCancelCallback: (() -> Unit)? = null
-        @Synchronized
-        set(value) {
-            field = if (isDone || isCancelled) {
-                null
-            } else {
-                value
-            }
-        }
         @Synchronized get
 
     override var isDone: Boolean = false
@@ -65,7 +62,7 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
         cancelableList.clear()
 
         isDone = true
-        onCancelCallback = null
+        onCancelledCallbacks.clear()
 
         callbackDelegate = null
     }
@@ -78,8 +75,8 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
 
         cancelableList.forEach { it.cancel() }
         cancelableList.clear()
-        onCancelCallback?.invoke()
-        onCancelCallback = null
+        onCancelledCallbacks.forEach { it.onCancelled() }
+        onCancelledCallbacks.clear()
         isCancelled = true
 
         callbackDelegate = null
@@ -109,12 +106,24 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
 
         isDone = true
 
-        onCancelCallback = null
+        onCancelledCallbacks.clear()
 
         val delegate = callbackDelegate ?: return
         callbackDelegate = null
         callbackActionExecuted = true
         action(delegate)
+    }
+
+    @Synchronized
+    fun addOnCancelledCallback(callback: OnCancelledCallback) {
+        if (isCompleted) {
+            return
+        }
+        onCancelledCallbacks.add(callback)
+    }
+
+    fun interface OnCancelledCallback {
+        fun onCancelled()
     }
 
     companion object {

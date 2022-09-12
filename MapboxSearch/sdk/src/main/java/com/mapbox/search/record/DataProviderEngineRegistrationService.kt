@@ -33,7 +33,7 @@ internal class DataProviderEngineRegistrationServiceImpl(
     ): AsyncOperationTask {
         fun createTask(processMetadata: RegistrationProcessMetadata): AsyncOperationTaskImpl<Any> {
             val task = AsyncOperationTaskImpl<Any>()
-            task.onCancelCallback = {
+            task.addOnCancelledCallback {
                 onRegistrationTaskCancelled(dataProvider.dataProviderName, callback, processMetadata)
             }
             return task

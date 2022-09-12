@@ -36,7 +36,7 @@ fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) 
             }
         }
     }
-    task.onCancelCallback = {
+    task.addOnCancelledCallback {
         removeLocationUpdates(locationCallback)
     }
     getLastLocation(locationCallback)

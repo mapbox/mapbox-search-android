@@ -58,9 +58,9 @@ internal class AutofillSearchEngine(
         executor: Executor,
         callback: BaseSearchSuggestionsCallback,
     ): AsyncOperationTask {
-        return makeRequest(callback) { request ->
+        return makeRequest(callback) { task ->
             val requestContext = requestContextProvider.provide(ApiType.AUTOFILL)
-            coreEngine.search(
+            val requestId = coreEngine.search(
                 query, emptyList(), options,
                 TwoStepsRequestCallbackWrapper(
                     apiType = ApiType.AUTOFILL,
@@ -69,12 +69,15 @@ internal class AutofillSearchEngine(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     suggestion = null,
                     addResultToHistory = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 
