@@ -58,9 +58,9 @@ internal class AutofillSearchEngine(
         executor: Executor,
         callback: BaseSearchSuggestionsCallback,
     ): AsyncOperationTask {
-        return makeRequest(callback) { request ->
+        return makeRequest(callback) { task ->
             val requestContext = requestContextProvider.provide(ApiType.AUTOFILL)
-            coreEngine.search(
+            val requestId = coreEngine.search(
                 query, emptyList(), options,
                 TwoStepsRequestCallbackWrapper(
                     apiType = ApiType.AUTOFILL,
@@ -69,12 +69,15 @@ internal class AutofillSearchEngine(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     suggestion = null,
                     addResultToHistory = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 
@@ -105,9 +108,9 @@ internal class AutofillSearchEngine(
     ): AsyncOperationTask {
         return when (suggestion) {
             is BaseServerSearchSuggestion -> {
-                makeRequest(callback as BaseSearchSuggestionsCallback) { request ->
+                makeRequest(callback as BaseSearchSuggestionsCallback) { task ->
                     val requestContext = suggestion.requestOptions.requestContext
-                    coreEngine.retrieve(
+                    val requestId = coreEngine.retrieve(
                         suggestion.requestOptions.core,
                         suggestion.rawSearchResult.mapToCore(),
                         TwoStepsRequestCallbackWrapper(
@@ -117,12 +120,15 @@ internal class AutofillSearchEngine(
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
-                            searchRequestTask = request,
+                            searchRequestTask = task,
                             searchRequestContext = requestContext,
                             suggestion = suggestion,
                             addResultToHistory = false,
                         )
                     )
+                    task.addOnCancelledCallback {
+                        coreEngine.cancel(requestId)
+                    }
                 }
             }
             is BaseGeocodingCompatSearchSuggestion,
@@ -219,10 +225,10 @@ internal class AutofillSearchEngine(
             remoteResults
         }
 
-        return makeRequest(callback) { searchRequestTask ->
+        return makeRequest(callback) { task ->
             val requestOptions = filtered.first().requestOptions
             val requestContext = requestOptions.requestContext
-            coreEngine.retrieveBucket(
+            val requestId = coreEngine.retrieveBucket(
                 requestOptions.core,
                 coreSearchResults,
                 TwoStepsBatchRequestCallbackWrapper(
@@ -230,11 +236,14 @@ internal class AutofillSearchEngine(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = searchRequestTask,
+                    searchRequestTask = task,
                     resultingFunction = resultingFunction,
                     searchRequestContext = requestContext,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 

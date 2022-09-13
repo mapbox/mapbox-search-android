@@ -60,9 +60,9 @@ internal class SearchEngineImpl(
         logd("search($query, $options) called")
 
         val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSuggestionsCallbackAdapter(callback)
-        return makeRequest(baseCallback) { request ->
+        return makeRequest(baseCallback) { task ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
-            coreEngine.search(
+            val requestId = coreEngine.search(
                 query, emptyList(), options.mapToCore(),
                 TwoStepsRequestCallbackWrapper(
                     apiType = apiType.mapToCore(),
@@ -71,12 +71,15 @@ internal class SearchEngineImpl(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     suggestion = null,
                     addResultToHistory = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 
@@ -177,10 +180,10 @@ internal class SearchEngineImpl(
                 }
 
                 val baseCallback: BaseSearchMultipleSelectionCallback = BaseSearchMultipleSelectionCallbackAdapter(callback)
-                makeRequest(baseCallback) { searchRequestTask ->
+                makeRequest(baseCallback) { task ->
                     val requestOptions = toResolve.first().requestOptions
                     val requestContext = requestOptions.requestContext
-                    coreEngine.retrieveBucket(
+                    val requestId = coreEngine.retrieveBucket(
                         requestOptions.core,
                         coreSearchResults,
                         TwoStepsBatchRequestCallbackWrapper(
@@ -188,11 +191,14 @@ internal class SearchEngineImpl(
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
-                            searchRequestTask = searchRequestTask,
+                            searchRequestTask = task,
                             resultingFunction = resultingFunction,
                             searchRequestContext = requestContext,
                         )
                     )
+                    task.addOnCancelledCallback {
+                        coreEngine.cancel(requestId)
+                    }
                 }
             }
         }
@@ -260,9 +266,9 @@ internal class SearchEngineImpl(
             }
             is BaseServerSearchSuggestion -> {
                 val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSelectionCallbackAdapter(callback)
-                makeRequest(baseCallback) { request ->
+                makeRequest(baseCallback) { task ->
                     val requestContext = suggestion.requestOptions.requestContext
-                    coreEngine.retrieve(
+                    val requestId = coreEngine.retrieve(
                         coreRequestOptions,
                         base.rawSearchResult.mapToCore(),
                         TwoStepsRequestCallbackWrapper(
@@ -272,12 +278,15 @@ internal class SearchEngineImpl(
                             searchResultFactory = searchResultFactory,
                             callbackExecutor = executor,
                             workerExecutor = engineExecutorService,
-                            searchRequestTask = request,
+                            searchRequestTask = task,
                             searchRequestContext = requestContext,
                             suggestion = suggestion.base,
                             addResultToHistory = options.addResultToHistory,
                         )
                     )
+                    task.addOnCancelledCallback {
+                        coreEngine.cancel(requestId)
+                    }
                 }
             }
             is BaseIndexableRecordSearchSuggestion -> {
@@ -297,9 +306,9 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback,
     ): AsyncOperationTask {
-        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
-            coreEngine.search(
+            val requestId = coreEngine.search(
                 "",
                 listOf(categoryName),
                 options.mapToCoreCategory(),
@@ -307,11 +316,14 @@ internal class SearchEngineImpl(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     isOffline = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 

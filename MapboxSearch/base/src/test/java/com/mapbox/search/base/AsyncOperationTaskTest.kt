@@ -20,8 +20,8 @@ internal class AsyncOperationTaskTest {
             }
 
             When("Call CompletedAsyncOperationTask cancel()") {
-                val callback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = callback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.cancel()
 
@@ -29,8 +29,8 @@ internal class AsyncOperationTaskTest {
                 Then("Task is not cancelled", false, task.isCancelled)
                 Then("Callback delegate is null", null, task.callbackDelegate)
 
-                VerifyNo("cancel() not on a wrapped object") {
-                    callback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
             }
         }
@@ -48,45 +48,45 @@ internal class AsyncOperationTaskTest {
                 Then("Task is not done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
             }
 
             When("Object with delegate and onCancelCallback is in initial state") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task is not done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is set", delegate, task.callbackDelegate)
-                Then("onCancelCallback delegate is set", onCancelCallback, task.onCancelCallback)
+                Then("Task has onCancelCallbacks", true, task.hasOnCancelledCallbacks)
             }
 
             When("onComplete() called") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.onComplete()
 
                 Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task is done", true, task.isDone)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                VerifyNo("OnCancelled callback is not called") {
-                    onCancelCallback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
             }
 
             When("markExecutedAndRunOnCallback() called") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 val action: Any.() -> Unit = mockk(relaxed = true)
                 task.markExecutedAndRunOnCallback(action)
@@ -95,14 +95,14 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", true, task.isDone)
                 Then("callbackActionExecuted is true", true, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyOnce("Action called") {
                     action(delegate)
                 }
 
-                VerifyNo("OnCancelled callback is not called") {
-                    onCancelCallback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
             }
 
@@ -117,7 +117,7 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", true, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyNo("Action is not called") {
                     action(any())
@@ -135,7 +135,7 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyNo("Action is not called") {
                     action(any())
@@ -145,8 +145,8 @@ internal class AsyncOperationTaskTest {
             When("onComplete() called on a cancelled object") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.cancel()
 
@@ -156,18 +156,18 @@ internal class AsyncOperationTaskTest {
                 Then("Task is not done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                VerifyOnce("Callback called once") {
-                    onCancelCallback()
+                VerifyOnce("OnCancelledCallback called once") {
+                    onCancelCallback.onCancelled()
                 }
             }
 
             When("onComplete() called more than once") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.onComplete()
                 task.onComplete()
@@ -176,10 +176,10 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", true, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                VerifyNo("onCancelCallback is not called") {
-                    onCancelCallback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
             }
 
@@ -189,8 +189,8 @@ internal class AsyncOperationTaskTest {
                 val wrappedTask = mockk<Future<*>>(relaxed = true)
                 task += wrappedTask
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.cancel()
 
@@ -198,18 +198,18 @@ internal class AsyncOperationTaskTest {
                     wrappedTask.cancel(true)
                 }
 
-                VerifyOnce("onCancelCallback called") {
-                    onCancelCallback()
+                VerifyOnce("OnCancelledCallback called once") {
+                    onCancelCallback.onCancelled()
                 }
 
                 Then("Task is cancelled", true, task.isCancelled)
                 Then("Task is not done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("OnCancel callback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                task.onCancelCallback = onCancelCallback
-                Then("onCancelCallback can't be set on a cancelled object", null, task.onCancelCallback)
+                task.addOnCancelledCallback(onCancelCallback)
+                Then("OnCancelledCallback can't be added to a cancelled object", false, task.hasOnCancelledCallbacks)
 
                 task.callbackDelegate = delegate
                 Then("Callback delegate can't be set on a cancelled object", null, task.callbackDelegate)
@@ -218,8 +218,8 @@ internal class AsyncOperationTaskTest {
             When("markCancelledAndRunOnCallback() called") {
                 val task = AsyncOperationTaskImpl<Any>(delegate)
 
-                val onCancelCallback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = onCancelCallback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 val action: Any.() -> Unit = mockk(relaxed = true)
                 task.markCancelledAndRunOnCallback(action)
@@ -228,14 +228,14 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", false, task.isDone)
                 Then("callbackActionExecuted is true", true, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyOnce("Action called") {
                     action(delegate)
                 }
 
-                VerifyOnce("onCancelCallback callback once") {
-                    onCancelCallback()
+                VerifyOnce("OnCancelledCallback callback once") {
+                    onCancelCallback.onCancelled()
                 }
             }
 
@@ -250,7 +250,7 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", true, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyNo("Action is not called") {
                     action(any())
@@ -268,7 +268,7 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", false, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("onCancelCallback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
                 VerifyNo("Action is not called") {
                     action(any())
@@ -278,8 +278,8 @@ internal class AsyncOperationTaskTest {
             When("cancel() called on a completed task") {
                 val task = AsyncOperationTaskImpl<Any>()
 
-                val callback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = callback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 val wrappedTask = mockk<Future<*>>(relaxed = true)
                 task += wrappedTask
@@ -291,10 +291,10 @@ internal class AsyncOperationTaskTest {
                 Then("Task is done", true, task.isDone)
                 Then("callbackActionExecuted is false", false, task.callbackActionExecuted)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("OnCancel callback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                VerifyNo("Callback is not called") {
-                    callback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
 
                 VerifyNo("cancel() is not called on a wrapped task") {
@@ -305,8 +305,8 @@ internal class AsyncOperationTaskTest {
             When("Inner task added to a canceled task") {
                 val task = AsyncOperationTaskImpl<Any>()
 
-                val callback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = callback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.cancel()
 
@@ -316,10 +316,10 @@ internal class AsyncOperationTaskTest {
                 Then("Task is cancelled", true, task.isCancelled)
                 Then("Task is not done", false, task.isDone)
                 Then("Callback delegate is null", null, task.callbackDelegate)
-                Then("OnCancel callback is null", null, task.onCancelCallback)
+                Then("onCancelCallbacks are empty", false, task.hasOnCancelledCallbacks)
 
-                VerifyOnce("Callback called once") {
-                    callback()
+                VerifyOnce("OnCancelledCallback called once") {
+                    onCancelCallback.onCancelled()
                 }
 
                 Verify("Inner task cancelled") {
@@ -330,8 +330,8 @@ internal class AsyncOperationTaskTest {
             When("Inner task added to a completed task") {
                 val task = AsyncOperationTaskImpl<Any>()
 
-                val callback = mockk<() -> Unit>(relaxed = true)
-                task.onCancelCallback = callback
+                val onCancelCallback = mockk<AsyncOperationTaskImpl.OnCancelledCallback>(relaxed = true)
+                task.addOnCancelledCallback(onCancelCallback)
 
                 task.onComplete()
 
@@ -341,8 +341,8 @@ internal class AsyncOperationTaskTest {
                 Then("Task is not cancelled", false, task.isCancelled)
                 Then("Task is done", true, task.isDone)
 
-                VerifyNo("On cancel callback not called") {
-                    callback()
+                VerifyNo("OnCancelledCallback is not called") {
+                    onCancelCallback.onCancelled()
                 }
 
                 VerifyNo("Inner task not cancelled") {
