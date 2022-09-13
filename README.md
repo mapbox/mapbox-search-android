@@ -40,22 +40,26 @@ The Search SDK is pre-configured for autocomplete, local search biasing, and inc
 - Easy-to-use pre-tuned search options to integrate search into your app quickly.
   - Local search for a specific address or POI
 - Pre-configured and customizable category search for popular categories like cafes, ATMs, hotels, and gas stations.
+- Offline search (private beta)
+- Address Autofill
 - On-device user search history
 - On-device favorites
 - Import/export customer data with your own protocols
 - Provide you own persistent providers for customer data like History or Favorites
 
+Visit [Search SDK documentation page](https://docs.mapbox.com/android/search/overview/) for more information.
+
 
 ## Setup environment
 Below are listed the versions on which everything is going to work fine. Other versions might work as well but wasn't tested yet.
 - Android Studio
-- Java 8 (Java 11 and latest might not work)
+- Java 11
 
 
 ## Configure credentials
 Before installing the SDK, you will need to gather two pieces of sensitive information from your Mapbox account. If you don't have a Mapbox account: [sign up](https://account.mapbox.com/auth/signup/) and navigate to your [Account page](https://account.mapbox.com/). You'll need:
 1. A public access token: From your [account's tokens page](https://account.mapbox.com/access-tokens/), you can either copy your default public token or click the Create a token button to create a new public token.
-2. A secret access token with the `Downloads:Read` scope. Additionally, this token needs to have enabled API accounts feature flag of `mobile_build_source`. This flag can be enabled by admins on mapbox.com, ping #mobile or #android if you don't have those access rights.
+2. A secret access token with the `Downloads:Read` scope.
 
 Export your public token as an environment variable `MAPBOX_ACCESS_TOKEN` and your secret access token as an environment variable `SDK_REGISTRY_TOKEN`. Alternatively, you can provide those credentials as project properties.
 
@@ -177,7 +181,7 @@ You can find report at `MapboxSearch/sdk/build/reports`.
 
 
 ## Offline integration tests
-To run offline integration tests, please, make sure your `MAPBOX_ACCESS_TOKEN` has `offline_search` feature flag enabled.
+To run offline integration tests, please, make sure your `MAPBOX_ACCESS_TOKEN` has `offline_search` feature flag enabled. As for now, offline functionality (including offline tests) is in a private beta and available to selected customers only.
 
 ## Complex checks run
 To run all checks and unit tests locally, execute `local_checks.sh` script:
