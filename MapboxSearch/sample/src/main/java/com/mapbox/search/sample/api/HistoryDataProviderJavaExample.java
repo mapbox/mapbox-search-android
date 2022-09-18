@@ -7,8 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapbox.search.ServiceProvider;
 import com.mapbox.search.common.AsyncOperationTask;
-import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.record.HistoryDataProvider;
 import com.mapbox.search.record.HistoryRecord;
 import com.mapbox.search.CompletionCallback;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HistoryDataProviderJavaExample extends AppCompatActivity {
 
-    private final HistoryDataProvider historyDataProvider = MapboxSearchSdk.getServiceProvider().historyDataProvider();
+    private final HistoryDataProvider historyDataProvider = ServiceProvider.getInstance().historyDataProvider();
 
     private AsyncOperationTask task = null;
 

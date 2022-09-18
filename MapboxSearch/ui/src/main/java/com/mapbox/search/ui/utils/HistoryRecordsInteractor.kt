@@ -2,7 +2,7 @@ package com.mapbox.search.ui.utils
 
 import androidx.annotation.UiThread
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryDataProvider
@@ -12,10 +12,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 @UiThread
 internal class HistoryRecordsInteractor(
-    private val historyDataProvider: HistoryDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider(),
+    private val historyDataProvider: HistoryDataProvider = ServiceProvider.INSTANCE.historyDataProvider(),
     private val historyFavoritesDataProvider: CompoundIndexableDataProvider<HistoryRecord, FavoriteRecord> = CompoundIndexableDataProvider(
-        MapboxSearchSdk.serviceProvider.historyDataProvider(),
-        MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+        ServiceProvider.INSTANCE.historyDataProvider(),
+        ServiceProvider.INSTANCE.favoritesDataProvider()
     )
 ) {
 

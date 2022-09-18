@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.MapboxSearchSdk.serviceProvider
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener
@@ -15,7 +15,7 @@ import java.util.UUID
 
 class FavoritesDataProviderKotlinExample : AppCompatActivity() {
 
-    private val favoritesDataProvider = serviceProvider.favoritesDataProvider()
+    private val favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
 
     private lateinit var task: AsyncOperationTask
 

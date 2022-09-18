@@ -45,9 +45,9 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import com.mapbox.search.ApiType
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
@@ -84,7 +84,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private val serviceProvider = MapboxSearchSdk.serviceProvider
+    private val serviceProvider = ServiceProvider.INSTANCE
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
@@ -229,7 +229,13 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 val coordinate = historyRecord.coordinate
                 if (coordinate != null) {
-                    searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, coordinate, distanceMeters = null))
+                    searchPlaceView.open(
+                        SearchPlace.createFromIndexableRecord(
+                            historyRecord,
+                            coordinate,
+                            distanceMeters = null
+                        )
+                    )
 
                     userDistanceTo(coordinate) { distance ->
                         distance?.let {
@@ -286,7 +292,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateOnBackPressedCallbackEnabled() {
-        onBackPressedCallback.isEnabled = !searchPlaceView.isHidden() || mapMarkersManager.markerCoordinates.isNotEmpty()
+        onBackPressedCallback.isEnabled =
+            !searchPlaceView.isHidden() || mapMarkersManager.markerCoordinates.isNotEmpty()
     }
 
     private fun closeSearchView() {

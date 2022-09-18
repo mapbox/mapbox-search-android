@@ -1,21 +1,12 @@
 package com.mapbox.search
 
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.base.core.CoreEngineOptions
-import com.mapbox.search.base.core.CoreLocationProvider
-import com.mapbox.search.base.core.CoreSearchEngine
-import com.mapbox.search.base.core.CoreSearchEngineInterface
-import com.mapbox.search.base.location.LocationEngineAdapter
-import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.utils.UserAgentProvider
-import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.utils.CompoundCompletionCallback
 import java.util.concurrent.Executor
 
 /**

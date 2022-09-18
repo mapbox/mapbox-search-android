@@ -28,9 +28,9 @@ import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -49,7 +49,7 @@ import java.util.Locale
 
 public class TestActivity : AppCompatActivity() {
 
-    private val serviceProvider = MapboxSearchSdk.serviceProvider
+    private val serviceProvider = ServiceProvider.INSTANCE
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
@@ -148,7 +148,13 @@ public class TestActivity : AppCompatActivity() {
                 closeSearchView()
                 val coordinate = historyRecord.coordinate
                 if (coordinate != null) {
-                    searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, coordinate, distanceMeters = null))
+                    searchPlaceView.open(
+                        SearchPlace.createFromIndexableRecord(
+                            historyRecord,
+                            coordinate,
+                            distanceMeters = null
+                        )
+                    )
 
                     userDistanceTo(coordinate) { distance ->
                         distance?.let {
@@ -283,7 +289,10 @@ public class TestActivity : AppCompatActivity() {
             }
         }
 
-        override fun requestLocationUpdates(locationEngineRequest: LocationEngineRequest, pendingIntent: PendingIntent?) {
+        override fun requestLocationUpdates(
+            locationEngineRequest: LocationEngineRequest,
+            pendingIntent: PendingIntent?
+        ) {
             throw NotImplementedError()
         }
 

@@ -1,8 +1,8 @@
 package com.mapbox.search.tests_support
 
 import com.mapbox.search.ApiType
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchEngine
+import com.mapbox.search.SearchEngine.Companion.createSearchEngineWithBuiltInDataProviders
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SelectOptions
@@ -50,7 +50,7 @@ internal fun <R : IndexableRecord> SearchEngine.unregisterDataProviderBlocking(
     return callback.getResultBlocking()
 }
 
-internal fun MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+internal fun createSearchEngineWithBuiltInDataProvidersBlocking(
     apiType: ApiType,
     settings: SearchEngineSettings,
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor,

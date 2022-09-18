@@ -6,7 +6,6 @@ import android.util.Log
 import com.mapbox.search.ApiType
 import com.mapbox.search.Country
 import com.mapbox.search.Language
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -57,7 +56,7 @@ class JapanSearchKotlinExampleActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             ApiType.SBS,
             SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )

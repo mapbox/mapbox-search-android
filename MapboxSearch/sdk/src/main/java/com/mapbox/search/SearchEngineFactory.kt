@@ -42,10 +42,18 @@ internal class SearchEngineFactory {
 
         val compoundCallback = CompoundCompletionCallback(2, executor, callback)
         compoundCallback.addInnerTask(
-            searchEngine.registerDataProvider(MapboxSearchSdk.serviceProvider.historyDataProvider(), executor, compoundCallback)
+            searchEngine.registerDataProvider(
+                ServiceProvider.INSTANCE.historyDataProvider(),
+                executor,
+                compoundCallback
+            )
         )
         compoundCallback.addInnerTask(
-            searchEngine.registerDataProvider(MapboxSearchSdk.serviceProvider.favoritesDataProvider(), executor, compoundCallback)
+            searchEngine.registerDataProvider(
+                ServiceProvider.INSTANCE.favoritesDataProvider(),
+                executor,
+                compoundCallback
+            )
         )
 
         return searchEngine
@@ -62,7 +70,7 @@ internal class SearchEngineFactory {
             settings,
             analyticsService,
             coreEngine,
-            MapboxSearchSdk.internalServiceProvider.historyService(),
+            ServiceProvider.INTERNAL_INSTANCE.historyService(),
             MapboxSearchSdk.searchRequestContextProvider,
             MapboxSearchSdk.searchResultFactory,
             indexableDataProvidersRegistry = MapboxSearchSdk.indexableDataProvidersRegistry

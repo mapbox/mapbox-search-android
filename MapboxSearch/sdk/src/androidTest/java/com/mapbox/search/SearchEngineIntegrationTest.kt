@@ -104,15 +104,15 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
         )
 
-        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
 
-        favoritesDataProvider = MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+        favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
         favoritesDataProvider.clearBlocking(callbacksExecutor)
     }
 
@@ -1001,7 +1001,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMetadataForGeocodingAPI() {
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
 

@@ -5,16 +5,10 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
-import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.base.SearchRequestContextProvider
-import com.mapbox.search.base.core.CoreEngineOptions
-import com.mapbox.search.base.core.CoreLocationProvider
-import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
-import com.mapbox.search.base.location.LocationEngineAdapter
-import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.FormattedTimeProvider
@@ -25,7 +19,6 @@ import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.base.utils.UUIDProviderImpl
 import com.mapbox.search.base.utils.UserAgentProvider
-import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -34,51 +27,25 @@ import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryDataProviderImpl
-import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.RecordsFileStorage
-import com.mapbox.search.utils.CompoundCompletionCallback
 import com.mapbox.search.utils.LoggingCompletionCallback
 import com.mapbox.search.utils.file.InternalFileSystem
 import com.mapbox.search.utils.loader.DataLoader
 import com.mapbox.search.utils.loader.InternalDataLoader
-import java.util.concurrent.Executor
 
-/**
- * The entry point to initialize Search SDK.
- */
-@Suppress("LargeClass")
-public object MapboxSearchSdk {
+internal object MapboxSearchSdk {
 
-    private var isInitialized = false
-
-    internal lateinit var searchRequestContextProvider: SearchRequestContextProvider
-    internal lateinit var searchResultFactory: SearchResultFactory
+    lateinit var searchRequestContextProvider: SearchRequestContextProvider
+    lateinit var searchResultFactory: SearchResultFactory
     private lateinit var timeProvider: TimeProvider
     private lateinit var formattedTimeProvider: FormattedTimeProvider
     private lateinit var uuidProvider: UUIDProvider
 
-    internal lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
+    lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
 
-    @JvmSynthetic
-    internal lateinit var application: Application
+    lateinit var application: Application
 
-    @JvmSynthetic
-    internal lateinit var internalServiceProvider: InternalServiceProvider
-
-    /**
-     * [ServiceProvider] instance.
-     *
-     * @throws IllegalStateException if [MapboxSearchSdk] is not initialized.
-     */
-    @JvmStatic
-    public val serviceProvider: ServiceProvider
-        get() {
-            checkInitialized()
-            return internalServiceProvider
-        }
-
-    @JvmSynthetic
-    internal fun initializeInternal(
+    fun initializeInternal(
         application: Application,
         timeProvider: TimeProvider = LocalTimeProvider(),
         formattedTimeProvider: FormattedTimeProvider = FormattedTimeProviderImpl(timeProvider),
@@ -110,7 +77,7 @@ public object MapboxSearchSdk {
             recordsStorage = RecordsFileStorage.Favorite(dataLoader),
         )
 
-        internalServiceProvider = ServiceProviderImpl(
+        ServiceProvider.INTERNAL_INSTANCE = ServiceProviderImpl(
             historyDataProvider = historyDataProvider,
             favoritesDataProvider = favoritesDataProvider,
         )
@@ -120,8 +87,6 @@ public object MapboxSearchSdk {
         preregisterDefaultDataProviders(
             historyDataProvider, favoritesDataProvider
         )
-
-        isInitialized = true
     }
 
     private fun preregisterDefaultDataProviders(
@@ -140,7 +105,7 @@ public object MapboxSearchSdk {
         )
     }
 
-    internal fun createAnalyticsService(
+    fun createAnalyticsService(
         settings: SearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
     ) = createAnalyticsService(
@@ -178,11 +143,5 @@ public object MapboxSearchSdk {
             feedbackEventsFactory = searchFeedbackEventsFactory,
             locationEngine = locationEngine,
         )
-    }
-
-    private fun checkInitialized() {
-        check(isInitialized) {
-            "Initialize MapboxSearchSdk first"
-        }
     }
 }

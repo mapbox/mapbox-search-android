@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.view.isVisible
-import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
@@ -30,7 +30,7 @@ internal class SearchResultViewHolder(
     private val listener: SearchViewResultsAdapter.SearchListener
 ) : BaseViewHolder<SearchResultAdapterItem.Result>(parent, R.layout.mapbox_search_sdk_result_item_layout) {
 
-    private val highlightsCalculator = MapboxSearchSdk.serviceProvider.highlightsCalculator()
+    private val highlightsCalculator = ServiceProvider.INSTANCE.highlightsCalculator()
 
     private val nameView: TextView = findViewById(R.id.search_result_name)
     private val addressView: TextView = findViewById(R.id.search_result_address)
