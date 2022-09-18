@@ -176,7 +176,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = searchResult.coordinate?.coordinates()
+                                resultCoordinates = searchResult.coordinate.coordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = AppMetadata(
                                     name = null,
@@ -452,7 +452,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = TEST_HISTORY_RECORD.coordinate?.coordinates()
+                            resultCoordinates = TEST_HISTORY_RECORD.coordinate.coordinates()
                             requestParamsJson = null
                             appMetadata = null
                             schema = SEARCH_FEEDBACK_SCHEMA_VERSION
@@ -673,7 +673,7 @@ internal class SearchFeedbackEventsFactoryTest {
         )
 
         val TEST_LOCAL_SEARCH_RESULT = IndexableRecordSearchResultImpl(
-            record = StubIndexableRecord(),
+            record = StubIndexableRecord(coordinate = requireNotNull(TEST_SEARCH_RESULT.center)),
             rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )

@@ -128,7 +128,7 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
             // Filtering incomplete results
             val autofillAddress = AddressComponents.fromCoreSdkAddress(address) ?: return null
             val formattedAddress = descriptionText ?: autofillAddress.formattedAddress()
-            val validCoordinate = coordinate ?: return null
+            val validCoordinate = coordinate
 
             return AddressAutofillSuggestion(
                 formattedAddress = formattedAddress,

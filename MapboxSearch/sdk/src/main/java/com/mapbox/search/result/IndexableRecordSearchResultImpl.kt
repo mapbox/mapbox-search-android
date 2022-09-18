@@ -27,8 +27,8 @@ internal data class IndexableRecordSearchResultImpl(
     override val address: SearchAddress?
         get() = record.address ?: rawSearchResult.addresses?.get(0)?.mapToPlatform()
 
-    override val coordinate: Point?
-        get() = record.coordinate ?: rawSearchResult.center
+    override val coordinate: Point
+        get() = record.coordinate
 
     override val routablePoints: List<RoutablePoint>?
         get() = record.routablePoints

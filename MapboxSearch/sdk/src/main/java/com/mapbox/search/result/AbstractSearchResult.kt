@@ -23,7 +23,6 @@ internal abstract class AbstractSearchResult(
     override val descriptionText: String?
         get() = rawSearchResult.descriptionAddress
 
-    // TODO allow user to access all the data in all the languages
     override val address: SearchAddress?
         get() = rawSearchResult.addresses?.get(0)?.mapToPlatform()
 

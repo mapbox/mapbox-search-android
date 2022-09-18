@@ -8,6 +8,8 @@
 - [CORE] `MapboxSearcSdk.createSearchEngine()`, and `MapboxSearcSdk.createSearchEngineWithBuiltInDataProviders()` functions has been moved to `SearchEngine.createSearchEngine()`, and `SearchEngine.createSearchEngineWithBuiltInDataProviders()`.
 - [CORE] `MapboxSearcSdk.serviceProvider` property has been removed, call `ServiceProvider.INSTANCE` instead.
 - [CORE] `MapboxSearcSdk` class is not publicly available anymore.
+- [CORE] `IndexableRecord.coordinate` is a non-null property now. Accordingly, `HistoryRecord.coordinate` is also a non-null property. This also makes `SearchResult.coordinate` a non-null property.
+- [UI] `SearchPlace` factory functions `createFromSearchResult()`, `createFromIndexableRecord()` no longer accept `coordinate: Point` arguments. Instead, coordinate will be taken from provided `SearchResult`, and `IndexableRecord` objects.
 
 ### Mapbox dependencies
 - Search Native SDK `0.59.0`

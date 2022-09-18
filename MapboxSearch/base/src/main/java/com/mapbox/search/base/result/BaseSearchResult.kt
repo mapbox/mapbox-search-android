@@ -58,7 +58,7 @@ abstract class BaseSearchResult(
 
     abstract val requestOptions: BaseRequestOptions
 
-    abstract val coordinate: Point?
+    abstract val coordinate: Point
 
     abstract val types: List<BaseSearchResultType>
 

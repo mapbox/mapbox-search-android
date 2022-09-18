@@ -13,7 +13,7 @@ import java.util.UUID
 internal data class CustomRecord(
     override val id: String,
     override val name: String,
-    override val coordinate: Point?,
+    override val coordinate: Point,
     override val type: SearchResultType,
     val provider: Provider,
     override val descriptionText: String? = null,
@@ -33,7 +33,7 @@ internal data class CustomRecord(
     internal companion object {
 
         @JvmStatic
-        fun create(name: String, coordinate: Point?, provider: Provider): CustomRecord {
+        fun create(name: String, coordinate: Point, provider: Provider): CustomRecord {
             return CustomRecord(
                 id = UUID.randomUUID().toString(),
                 name = name,

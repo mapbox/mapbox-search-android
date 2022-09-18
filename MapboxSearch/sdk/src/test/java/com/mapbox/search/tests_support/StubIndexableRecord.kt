@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 internal data class StubIndexableRecord(
     override val id: String = "STUB",
     override val name: String = "STUB",
-    override val coordinate: Point? = null,
+    override val coordinate: Point = Point.fromLngLat(10.0, 20.0),
     override val descriptionText: String? = null,
     override val address: SearchAddress? = null,
     override val type: SearchResultType = SearchResultType.POI,

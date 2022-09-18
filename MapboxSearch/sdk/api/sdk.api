@@ -1413,6 +1413,5 @@ public final class com/mapbox/search/result/SearchSuggestionType$SearchResultSug
 }
 
 public abstract interface class com/mapbox/search/result/ServerSearchResult : com/mapbox/search/result/SearchResult {
-	public abstract fun getCoordinate ()Lcom/mapbox/geojson/Point;
 }
 

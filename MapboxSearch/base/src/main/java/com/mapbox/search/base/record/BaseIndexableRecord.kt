@@ -17,7 +17,7 @@ data class BaseIndexableRecord(
     val routablePoints: List<CoreRoutablePoint>?,
     val categories: List<String>?,
     val makiIcon: String?,
-    val coordinate: Point?,
+    val coordinate: Point,
     val type: BaseSearchResultType,
     val metadata: CoreResultMetadata?,
     val indexTokens: List<String>,

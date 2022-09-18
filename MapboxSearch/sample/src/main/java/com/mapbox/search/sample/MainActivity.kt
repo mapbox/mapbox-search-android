@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity() {
                 responseInfo: ResponseInfo
             ) {
                 closeSearchView()
-                showMarkers(results.mapNotNull { it.coordinate })
+                showMarkers(results.map { it.coordinate })
             }
 
             override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
@@ -203,11 +203,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
-                val coordinate = searchResult.coordinate
-                if (coordinate != null) {
-                    searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo, coordinate))
-                    showMarker(coordinate)
-                }
+                searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
+                showMarker(searchResult.coordinate)
             }
 
             override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
@@ -227,24 +224,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
                 closeSearchView()
-                val coordinate = historyRecord.coordinate
-                if (coordinate != null) {
-                    searchPlaceView.open(
-                        SearchPlace.createFromIndexableRecord(
-                            historyRecord,
-                            coordinate,
-                            distanceMeters = null
-                        )
-                    )
+                searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                    userDistanceTo(coordinate) { distance ->
-                        distance?.let {
-                            searchPlaceView.updateDistance(distance)
-                        }
+                userDistanceTo(historyRecord.coordinate) { distance ->
+                    distance?.let {
+                        searchPlaceView.updateDistance(distance)
                     }
-
-                    showMarker(coordinate)
                 }
+
+                showMarker(historyRecord.coordinate)
             }
 
             override fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {

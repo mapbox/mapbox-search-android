@@ -182,7 +182,7 @@ internal fun createTestFavoriteRecord(
 internal fun createTestHistoryRecord(
     id: String = "test_history_record_id",
     name: String = "Test history record",
-    coordinate: Point? = Point.fromLngLat(10.0, 20.0),
+    coordinate: Point = Point.fromLngLat(10.0, 20.0),
     descriptionText: String? = null,
     address: SearchAddress? = SearchAddress(),
     timestamp: Long = 123L,

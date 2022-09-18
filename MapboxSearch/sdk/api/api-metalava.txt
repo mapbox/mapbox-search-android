@@ -928,10 +928,10 @@ package com.mapbox.search.record {
   }
 
   @kotlinx.parcelize.Parcelize public final class HistoryRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
-    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point? coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
+    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
-    method public com.mapbox.geojson.Point? getCoordinate();
+    method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
     method public String getId();
     method public java.util.List<java.lang.String> getIndexTokens();
@@ -943,7 +943,7 @@ package com.mapbox.search.record {
     method public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
     property public java.util.List<java.lang.String>? categories;
-    property public com.mapbox.geojson.Point? coordinate;
+    property public com.mapbox.geojson.Point coordinate;
     property public String? descriptionText;
     property public String id;
     property public java.util.List<java.lang.String> indexTokens;
@@ -991,7 +991,7 @@ package com.mapbox.search.record {
   public interface IndexableRecord extends android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
-    method public com.mapbox.geojson.Point? getCoordinate();
+    method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
     method public String getId();
     method public java.util.List<java.lang.String> getIndexTokens();
@@ -1002,7 +1002,7 @@ package com.mapbox.search.record {
     method public com.mapbox.search.result.SearchResultType getType();
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String>? categories;
-    property public abstract com.mapbox.geojson.Point? coordinate;
+    property public abstract com.mapbox.geojson.Point coordinate;
     property public abstract String? descriptionText;
     property public abstract String id;
     property public abstract java.util.List<java.lang.String> indexTokens;
@@ -1172,7 +1172,7 @@ package com.mapbox.search.result {
     method public com.mapbox.search.result.ResultAccuracy? getAccuracy();
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
-    method public com.mapbox.geojson.Point? getCoordinate();
+    method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
@@ -1189,7 +1189,7 @@ package com.mapbox.search.result {
     property public abstract com.mapbox.search.result.ResultAccuracy? accuracy;
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String>? categories;
-    property public abstract com.mapbox.geojson.Point? coordinate;
+    property public abstract com.mapbox.geojson.Point coordinate;
     property public abstract String? descriptionText;
     property public abstract Double? distanceMeters;
     property public abstract Double? etaMinutes;
@@ -1291,7 +1291,6 @@ package com.mapbox.search.result {
   }
 
   public sealed interface ServerSearchResult extends com.mapbox.search.result.SearchResult {
-    property public abstract com.mapbox.geojson.Point coordinate;
   }
 
 }

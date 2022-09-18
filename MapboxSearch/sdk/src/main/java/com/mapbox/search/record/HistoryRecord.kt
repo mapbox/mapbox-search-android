@@ -21,7 +21,7 @@ public class HistoryRecord(
     override val routablePoints: List<RoutablePoint>?,
     override val categories: List<String>?,
     override val makiIcon: String?,
-    override val coordinate: Point?,
+    override val coordinate: Point,
     override val type: SearchResultType,
     override val metadata: SearchResultMetadata?,
 
@@ -47,7 +47,7 @@ public class HistoryRecord(
         routablePoints: List<RoutablePoint>? = this.routablePoints,
         categories: List<String>? = this.categories,
         makiIcon: String? = this.makiIcon,
-        coordinate: Point? = this.coordinate,
+        coordinate: Point = this.coordinate,
         type: SearchResultType = this.type,
         metadata: SearchResultMetadata? = this.metadata,
         timestamp: Long = this.timestamp,
@@ -102,7 +102,7 @@ public class HistoryRecord(
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
         result = 31 * result + (categories?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
-        result = 31 * result + (coordinate?.hashCode() ?: 0)
+        result = 31 * result + coordinate.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + (metadata?.hashCode() ?: 0)
         result = 31 * result + timestamp.hashCode()

@@ -125,10 +125,7 @@ public class TestActivity : AppCompatActivity() {
 
             override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
-                val coordinate = searchResult.coordinate
-                if (coordinate != null) {
-                    searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo, coordinate))
-                }
+                searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
             }
 
             override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
@@ -146,20 +143,11 @@ public class TestActivity : AppCompatActivity() {
 
             override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
                 closeSearchView()
-                val coordinate = historyRecord.coordinate
-                if (coordinate != null) {
-                    searchPlaceView.open(
-                        SearchPlace.createFromIndexableRecord(
-                            historyRecord,
-                            coordinate,
-                            distanceMeters = null
-                        )
-                    )
+                searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                    userDistanceTo(coordinate) { distance ->
-                        distance?.let {
-                            searchPlaceView.updateDistance(distance)
-                        }
+                userDistanceTo(historyRecord.coordinate) { distance ->
+                    distance?.let {
+                        searchPlaceView.updateDistance(distance)
                     }
                 }
             }

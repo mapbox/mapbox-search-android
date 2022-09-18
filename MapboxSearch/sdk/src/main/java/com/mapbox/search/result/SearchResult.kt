@@ -67,7 +67,7 @@ public sealed interface SearchResult : Parcelable {
     /**
      * Result coordinates.
      */
-    public val coordinate: Point?
+    public val coordinate: Point
 
     /**
      * A point accuracy metric for the returned address.
@@ -114,13 +114,7 @@ public sealed interface SearchResult : Parcelable {
 /**
  * Resolved search object with populated fields and mandatory coordinates field.
 */
-public sealed interface ServerSearchResult : SearchResult {
-
-    /**
-     * Result coordinates.
-     */
-    override val coordinate: Point
-}
+public sealed interface ServerSearchResult : SearchResult
 
 /**
  * Resolved search object based on some [IndexableRecord]. As an example, search result is one of user's FavoriteRecord.
@@ -172,6 +166,5 @@ internal fun SearchResult.mapToBase(): BaseSearchResult {
                 requestOptions = requestOptions.mapToBase(),
             )
         }
-        else -> error("Unknown search result type: $this")
     }
 }
