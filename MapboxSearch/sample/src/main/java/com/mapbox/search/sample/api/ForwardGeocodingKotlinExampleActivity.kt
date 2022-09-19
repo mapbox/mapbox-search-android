@@ -3,7 +3,6 @@ package com.mapbox.search.sample.api
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -54,7 +53,7 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )
 

@@ -63,7 +63,7 @@ public interface IndexableRecord : Parcelable {
      * Record coordinate.
      * @see [com.mapbox.search.result.SearchResult.coordinate].
      */
-    public val coordinate: Point?
+    public val coordinate: Point
 
     /**
      * Type of the search result represented by the record.

@@ -32,8 +32,8 @@ abstract class BaseSearchResult(
     open val routablePoints: List<CoreRoutablePoint>?
         get() = rawSearchResult.routablePoints
 
-    open val categories: List<String>
-        get() = rawSearchResult.categories ?: emptyList()
+    open val categories: List<String>?
+        get() = rawSearchResult.categories
 
     open val makiIcon: String?
         get() = rawSearchResult.icon
@@ -58,11 +58,14 @@ abstract class BaseSearchResult(
 
     abstract val requestOptions: BaseRequestOptions
 
-    abstract val coordinate: Point?
+    abstract val coordinate: Point
 
     abstract val types: List<BaseSearchResultType>
 
     abstract val baseType: Type
+
+    val indexableRecord: BaseIndexableRecord?
+        get() = (baseType as? Type.IndexableRecordSearchResult)?.record
 
     sealed class Type {
         data class ServerResult(val coordinate: Point) : Type()

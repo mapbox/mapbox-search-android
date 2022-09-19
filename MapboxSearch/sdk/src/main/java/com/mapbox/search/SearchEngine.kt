@@ -20,7 +20,7 @@ import java.util.concurrent.Executor
  *
  * ## Instantiating
  *
- * Call [MapboxSearchSdk.createSearchEngine] to get instance of a [SearchEngine].
+ * Call [SearchEngine.createSearchEngine] to get instance of a [SearchEngine].
  *
  * ## Forward geocoding algorithm
  *
@@ -51,7 +51,7 @@ import java.util.concurrent.Executor
  * If invalid parameters are provided, [RuntimeException] is thrown immediately.
  * Any other error will be propagated to [SearchSuggestionsCallback.onError].
  *
- * @see MapboxSearchSdk.createSearchEngine
+ * @see SearchEngine.createSearchEngine
  */
 public interface SearchEngine {
 
@@ -327,4 +327,93 @@ public interface SearchEngine {
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
     )
+
+    /**
+     * @suppress
+     */
+    public companion object {
+
+        /**
+         * Creates a new instance of the [SearchEngine] with a default [ApiType].
+         * A new instance doesn't have any [IndexableDataProvider] registered by default.
+         *
+         * @param settings [SearchEngine] settings.
+         *
+         * @return a new instance instance of [SearchEngine].
+         * @see createSearchEngineWithBuiltInDataProviders
+         */
+        @JvmStatic
+        public fun createSearchEngine(settings: SearchEngineSettings): SearchEngine {
+            return createSearchEngine(ApiType.GEOCODING, settings)
+        }
+
+        /**
+         * Experimental API, can be changed or removed in the next SDK releases.
+         *
+         * Creates a new instance of the [SearchEngine].
+         * A new instance doesn't have any [IndexableDataProvider] registered by default.
+         *
+         * @param settings [SearchEngine] settings.
+         * @param apiType The type of the API used by the Search Engines.
+         * Note that [ApiType.GEOCODING] is the only available publicly.
+         * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+         *
+         * @return a new instance instance of [SearchEngine].
+         * @see createSearchEngineWithBuiltInDataProviders
+         */
+        @JvmStatic
+        public fun createSearchEngine(apiType: ApiType, settings: SearchEngineSettings): SearchEngine {
+            return SearchEngineFactory().createSearchEngine(apiType, settings)
+        }
+
+        /**
+         * Creates a new instance of the [SearchEngine] with a default [ApiType] and default data providers (
+         * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
+         * registered by default.
+         *
+         * @param settings [SearchEngine] settings.
+         * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+         * @param callback Callback to handle result.
+         *
+         * @return a new instance of [SearchEngine].
+         * @see createSearchEngine
+         */
+        @JvmOverloads
+        @JvmStatic
+        public fun createSearchEngineWithBuiltInDataProviders(
+            settings: SearchEngineSettings,
+            executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+            callback: CompletionCallback<Unit> = StubCompletionCallback()
+        ): SearchEngine {
+            return createSearchEngineWithBuiltInDataProviders(ApiType.GEOCODING, settings, executor, callback)
+        }
+
+        /**
+         * Experimental API, can be changed or removed in the next SDK releases.
+         *
+         * Creates a new instance of the [SearchEngine] with default data providers (
+         * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
+         * registered by default.
+         *
+         * @param settings [SearchEngine] settings.
+         * @param apiType The type of the API used by the Search Engines. By default [ApiType.GEOCODING] will be used.
+         * Note that [ApiType.GEOCODING] is the only available publicly.
+         * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+         * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+         * @param callback Callback to handle result.
+         *
+         * @return a new instance of [SearchEngine].
+         * @see createSearchEngine
+         */
+        @JvmOverloads
+        @JvmStatic
+        public fun createSearchEngineWithBuiltInDataProviders(
+            apiType: ApiType,
+            settings: SearchEngineSettings,
+            executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+            callback: CompletionCallback<Unit> = StubCompletionCallback()
+        ): SearchEngine {
+            return SearchEngineFactory().createSearchEngineWithBuiltInDataProviders(apiType, settings, executor, callback)
+        }
+    }
 }

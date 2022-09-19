@@ -56,8 +56,8 @@ internal class BaseSearchSuggestionTest {
                 }
 
                 Then("Suggestion categories should be derived from Search result") {
-                    assertEquals(BASE_RAW_SEARCH_RESULT_1.categories ?: emptyList<String>(), suggestion1.categories)
-                    assertEquals(BASE_RAW_SEARCH_RESULT_2.categories ?: emptyList<String>(), suggestion2.categories)
+                    assertEquals(BASE_RAW_SEARCH_RESULT_1.categories, suggestion1.categories)
+                    assertEquals(BASE_RAW_SEARCH_RESULT_2.categories, suggestion2.categories)
                 }
 
                 Then("Suggestion makiIcon should be derived from Search result") {

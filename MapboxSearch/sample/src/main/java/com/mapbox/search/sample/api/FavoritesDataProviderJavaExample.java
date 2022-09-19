@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
+import com.mapbox.search.ServiceProvider;
 import com.mapbox.search.common.AsyncOperationTask;
-import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.FavoritesDataProvider;
 import com.mapbox.search.CompletionCallback;
@@ -24,7 +24,7 @@ import kotlin.Unit;
 
 public class FavoritesDataProviderJavaExample extends AppCompatActivity {
 
-    private final FavoritesDataProvider favoritesDataProvider = MapboxSearchSdk.getServiceProvider().favoritesDataProvider();
+    private final FavoritesDataProvider favoritesDataProvider = ServiceProvider.getInstance().favoritesDataProvider();
 
     private AsyncOperationTask task = null;
 

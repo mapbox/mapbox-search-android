@@ -2,6 +2,18 @@
 
 ## 1.0.0-beta.37-SNAPSHOT
 
+### Breaking changes
+- [CORE] `SearchSuggestion.categories`, and `SearchResult.categories` are nullable properties now. These properties are null for non-POI search results.
+- [CORE] `ApiType.AUTOFILL` has been removed. Use `Autofill` SDK instead.
+- [CORE] `MapboxSearcSdk.createSearchEngine()`, and `MapboxSearcSdk.createSearchEngineWithBuiltInDataProviders()` functions have been moved to `SearchEngine.createSearchEngine()`, and `SearchEngine.createSearchEngineWithBuiltInDataProviders()`.
+- [CORE] `MapboxSearcSdk.serviceProvider` property has been removed, call `ServiceProvider.INSTANCE` instead.
+- [CORE] `MapboxSearchSdk` class is not publicly available anymore.
+- [CORE] `IndexableRecord.coordinate` is a non-null property now. Accordingly, `HistoryRecord.coordinate` is also a non-null property. This also makes `SearchResult.coordinate` a non-null property.
+- [CORE] `SearchResult` is a class now. Functions signature of `SearchCallback`, `SearchSelectionCallback`, `SearchMultipleSelectionCallback` have been changed for Java users.
+- [CORE] Subtypes `ServerSearchResult`, `IndexableRecordSearchResult` have been removed. Call `SearchResult.IndexableRecord` to check if a `SearchResult` is based on a `IndexableRecord` and access the record.
+- [UI] Function signature of `SearchResultsView.SearchListener` have been changed for Java users.
+- [UI] `SearchPlace` factory functions `createFromSearchResult()`, `createFromIndexableRecord()` no longer accept `coordinate: Point` arguments. Instead, coordinate will be taken from provided `SearchResult`, and `IndexableRecord` objects.
+
 ### Mapbox dependencies
 - Search Native SDK `0.59.0`
 - Common SDK `23.0.0`

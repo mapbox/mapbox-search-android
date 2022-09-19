@@ -100,7 +100,7 @@ package com.mapbox.search.ui.view {
   }
 
   public static interface SearchResultsView.SearchListener {
-    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
     method public void onError(Exception e);
     method public void onFeedbackClicked(com.mapbox.search.ResponseInfo responseInfo);
     method public void onHistoryItemClicked(com.mapbox.search.record.HistoryRecord historyRecord);
@@ -151,11 +151,11 @@ package com.mapbox.search.ui.view.place {
 
   @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
     ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
-    method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, com.mapbox.geojson.Point coordinate, Double? distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
-    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate, Double? distanceMeters = searchResult.distanceMeters);
-    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.geojson.Point coordinate);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, Double? distanceMeters = com.mapbox.search.result.SearchResult.distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();

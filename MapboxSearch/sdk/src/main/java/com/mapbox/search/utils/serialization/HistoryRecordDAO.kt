@@ -19,7 +19,7 @@ internal data class HistoryRecordDAO(
 ) : DataAccessObject<HistoryRecord> {
 
     override val isValid: Boolean
-        get() = id != null && name != null && timestamp != null &&
+        get() = id != null && name != null && coordinate != null && timestamp != null &&
                 address?.isValid != false && searchResultType?.isValid == true &&
                 routablePoints?.all { it.isValid } != false && metadata?.isValid != false
 
@@ -32,7 +32,7 @@ internal data class HistoryRecordDAO(
             routablePoints = routablePoints?.map { it.createData() },
             categories = categories,
             makiIcon = makiIcon,
-            coordinate = coordinate,
+            coordinate = coordinate!!,
             type = searchResultType!!.createData(),
             metadata = metadata?.createData(),
             timestamp = timestamp!!,

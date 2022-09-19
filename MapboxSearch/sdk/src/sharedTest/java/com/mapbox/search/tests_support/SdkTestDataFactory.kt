@@ -7,24 +7,28 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRequestOptions
+import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.createTestCoreRequestOptions
+import com.mapbox.search.mapToBase
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.record.mapToBase
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
 
@@ -130,11 +134,7 @@ internal fun createTestBaseSearchSuggestion(
     )
 }
 
-internal fun createTestSearchSuggestion(base: BaseSearchSuggestion = createTestBaseSearchSuggestion()): SearchSuggestion {
-    return SearchSuggestion(base)
-}
-
-internal fun createTestSearchSuggestion(id: String): SearchSuggestion {
+internal fun createTestSearchSuggestion(id: String = "id_test_search_result"): SearchSuggestion {
     return SearchSuggestion(
         createTestBaseSearchSuggestion(
             createTestBaseRawSearchResult(
@@ -145,11 +145,15 @@ internal fun createTestSearchSuggestion(id: String): SearchSuggestion {
     )
 }
 
-internal fun createTestSearchResult(): ServerSearchResultImpl = ServerSearchResultImpl(
+internal fun createTestSearchResult(
+    id: String = "id_test_search_result",
+    center: Point = Point.fromLngLat(10.0, 11.123456)
+): SearchResult = createTestServerSearchResult(
     types = listOf(SearchResultType.POI),
     rawSearchResult = createTestBaseRawSearchResult(
+        id = id,
         types = listOf(BaseRawResultType.POI),
-        center = Point.fromLngLat(10.0, 11.123456)
+        center = center
     ),
     requestOptions = createTestRequestOptions()
 )
@@ -182,14 +186,14 @@ internal fun createTestFavoriteRecord(
 internal fun createTestHistoryRecord(
     id: String = "test_history_record_id",
     name: String = "Test history record",
-    coordinate: Point? = Point.fromLngLat(10.0, 20.0),
+    coordinate: Point = Point.fromLngLat(10.0, 20.0),
     descriptionText: String? = null,
     address: SearchAddress? = SearchAddress(),
     timestamp: Long = 123L,
     searchResultType: SearchResultType = SearchResultType.POI,
     routablePoints: List<RoutablePoint>? = null,
     metadata: SearchResultMetadata? = null,
-    categories: List<String> = emptyList(),
+    categories: List<String>? = null,
     makiIcon: String? = null
 ) = HistoryRecord(
     id = id,
@@ -268,3 +272,31 @@ internal fun createBaseSearchAddress(
     region = region,
     country = country
 )
+
+@JvmSynthetic
+internal fun createTestServerSearchResult(
+    types: List<SearchResultType>,
+    rawSearchResult: BaseRawSearchResult,
+    requestOptions: RequestOptions
+): SearchResult {
+    val base = BaseServerSearchResultImpl(
+        types = types.map { it.mapToBase() },
+        rawSearchResult = rawSearchResult,
+        requestOptions = requestOptions.mapToBase()
+    )
+    return SearchResult(base)
+}
+
+@JvmSynthetic
+internal fun createTestIndexableRecordSearchResult(
+    record: IndexableRecord,
+    rawSearchResult: BaseRawSearchResult,
+    requestOptions: RequestOptions
+): SearchResult {
+    val base = BaseIndexableRecordSearchResultImpl(
+        record = record.mapToBase(),
+        rawSearchResult = rawSearchResult,
+        requestOptions = requestOptions.mapToBase()
+    )
+    return SearchResult(base)
+}

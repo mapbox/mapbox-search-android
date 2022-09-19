@@ -7,7 +7,7 @@ import com.mapbox.search.base.BaseSearchSdkInitializer
 
 internal class MapboxSearchSdkInitializer : Initializer<MapboxSearchSdk> {
     override fun create(context: Context): MapboxSearchSdk {
-        MapboxSearchSdk.initializeInternal(context.applicationContext as Application)
+        MapboxSearchSdk.initialize(context.applicationContext as Application)
         return MapboxSearchSdk
     }
 

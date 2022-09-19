@@ -6,7 +6,6 @@ import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
@@ -35,7 +34,7 @@ internal object SearchEntityPresentation {
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            searchResult is IndexableRecordSearchResult -> getResultTypeName(context, searchResult.types, searchResult.record)
+            searchResult.indexableRecord != null -> getResultTypeName(context, searchResult.types, searchResult.indexableRecord)
             else -> getResultTypeName(context, searchResult.types)
         }
     }

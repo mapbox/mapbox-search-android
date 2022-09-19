@@ -22,14 +22,12 @@ import com.mapbox.search.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.isIndexableRecordSuggestion
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.result.record
@@ -42,6 +40,7 @@ import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
@@ -90,7 +89,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(
+        MapboxSearchSdk.initialize(
             application = targetApplication,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
@@ -104,15 +103,15 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
         )
 
-        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
 
-        favoritesDataProvider = MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+        favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
         favoritesDataProvider.clearBlocking(callbacksExecutor)
     }
 
@@ -343,11 +342,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         selectionResult as SearchEngineResult.Result
 
         val searchResult = selectionResult.result
-        assertTrue(searchResult is IndexableRecordSearchResult)
-        searchResult as IndexableRecordSearchResult
-
         val historyRecord = records.first()
-        assertEquals(historyRecord, searchResult.record)
+        assertEquals(historyRecord, searchResult.indexableRecord)
 
         assertEquals(historyRecord.id, searchResult.id)
         assertEquals(historyRecord.name, searchResult.name)
@@ -580,7 +576,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             externalIDs = mapOf("carmen" to "place.11543680732831130")
         )
 
-        val expectedResult = ServerSearchResultImpl(
+        val expectedResult = createTestServerSearchResult(
             listOf(SearchResultType.PLACE, SearchResultType.REGION),
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
@@ -799,7 +795,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             distanceMeters = 1.2674344310855685E7,
         )
 
-        val expectedSearchResult = ServerSearchResultImpl(
+        val expectedSearchResult = createTestServerSearchResult(
             listOf(SearchResultType.POI),
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
@@ -1001,7 +997,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMetadataForGeocodingAPI() {
-        searchEngine = MapboxSearchSdk.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
 

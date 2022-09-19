@@ -1,5 +1,4 @@
 public final class com/mapbox/search/ApiType : java/lang/Enum {
-	public static final field AUTOFILL Lcom/mapbox/search/ApiType;
 	public static final field GEOCODING Lcom/mapbox/search/ApiType;
 	public static final field SBS Lcom/mapbox/search/ApiType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/ApiType;
@@ -438,21 +437,6 @@ public final class com/mapbox/search/Language : android/os/Parcelable {
 public final class com/mapbox/search/Language$Companion {
 }
 
-public final class com/mapbox/search/MapboxSearchSdk {
-	public static final field INSTANCE Lcom/mapbox/search/MapboxSearchSdk;
-	public static final fun createSearchEngine (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngine (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
-	public static final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
-	public static synthetic fun createSearchEngineWithBuiltInDataProviders$default (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
-	public static synthetic fun createSearchEngineWithBuiltInDataProviders$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
-	public static final fun getServiceProvider ()Lcom/mapbox/search/ServiceProvider;
-}
-
 public final class com/mapbox/search/QueryType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/QueryType;
 	public static final field CATEGORY Lcom/mapbox/search/QueryType;
@@ -594,6 +578,15 @@ public abstract interface class com/mapbox/search/SearchCallback {
 }
 
 public abstract interface class com/mapbox/search/SearchEngine {
+	public static final field Companion Lcom/mapbox/search/SearchEngine$Companion;
+	public static fun createSearchEngine (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngine (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
+	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
 	public abstract fun getAnalyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun getApiType ()Lcom/mapbox/search/ApiType;
 	public abstract fun getSettings ()Lcom/mapbox/search/SearchEngineSettings;
@@ -612,6 +605,19 @@ public abstract interface class com/mapbox/search/SearchEngine {
 	public abstract fun select (Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchMultipleSelectionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun unregisterDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun unregisterDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+}
+
+public final class com/mapbox/search/SearchEngine$Companion {
+	public final fun createSearchEngine (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngine (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
+	public final fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
+	public static synthetic fun createSearchEngineWithBuiltInDataProviders$default (Lcom/mapbox/search/SearchEngine$Companion;Lcom/mapbox/search/ApiType;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
+	public static synthetic fun createSearchEngineWithBuiltInDataProviders$default (Lcom/mapbox/search/SearchEngine$Companion;Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngine;
 }
 
 public final class com/mapbox/search/SearchEngine$DefaultImpls {
@@ -804,10 +810,16 @@ public final class com/mapbox/search/SelectOptions : android/os/Parcelable {
 }
 
 public abstract interface class com/mapbox/search/ServiceProvider {
+	public static final field Companion Lcom/mapbox/search/ServiceProvider$Companion;
 	public abstract fun distanceCalculator (D)Lcom/mapbox/search/DistanceCalculator;
 	public abstract fun favoritesDataProvider ()Lcom/mapbox/search/record/FavoritesDataProvider;
+	public static fun getInstance ()Lcom/mapbox/search/ServiceProvider;
 	public abstract fun highlightsCalculator ()Lcom/mapbox/search/HighlightsCalculator;
 	public abstract fun historyDataProvider ()Lcom/mapbox/search/record/HistoryDataProvider;
+}
+
+public final class com/mapbox/search/ServiceProvider$Companion {
+	public final fun getInstance ()Lcom/mapbox/search/ServiceProvider;
 }
 
 public abstract interface class com/mapbox/search/ViewportProvider {
@@ -1141,10 +1153,6 @@ public abstract interface class com/mapbox/search/record/LocalDataProvider$OnDat
 	public abstract fun onEngineRegistrationError (Ljava/lang/Exception;)V
 }
 
-public abstract interface class com/mapbox/search/result/IndexableRecordSearchResult : com/mapbox/search/result/SearchResult {
-	public abstract fun getRecord ()Lcom/mapbox/search/record/IndexableRecord;
-}
-
 public abstract class com/mapbox/search/result/ResultAccuracy : android/os/Parcelable {
 	public fun <init> ()V
 }
@@ -1296,24 +1304,31 @@ public final class com/mapbox/search/result/SearchAddress$FormatStyle$Short : co
 	public static final field INSTANCE Lcom/mapbox/search/result/SearchAddress$FormatStyle$Short;
 }
 
-public abstract interface class com/mapbox/search/result/SearchResult : android/os/Parcelable {
-	public abstract fun getAccuracy ()Lcom/mapbox/search/result/ResultAccuracy;
-	public abstract fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
-	public abstract fun getCategories ()Ljava/util/List;
-	public abstract fun getCoordinate ()Lcom/mapbox/geojson/Point;
-	public abstract fun getDescriptionText ()Ljava/lang/String;
-	public abstract fun getDistanceMeters ()Ljava/lang/Double;
-	public abstract fun getEtaMinutes ()Ljava/lang/Double;
-	public abstract fun getExternalIDs ()Ljava/util/Map;
-	public abstract fun getId ()Ljava/lang/String;
-	public abstract fun getMakiIcon ()Ljava/lang/String;
-	public abstract fun getMatchingName ()Ljava/lang/String;
-	public abstract fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
-	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
-	public abstract fun getRoutablePoints ()Ljava/util/List;
-	public abstract fun getServerIndex ()Ljava/lang/Integer;
-	public abstract fun getTypes ()Ljava/util/List;
+public final class com/mapbox/search/result/SearchResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccuracy ()Lcom/mapbox/search/result/ResultAccuracy;
+	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
+	public final fun getCategories ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getDescriptionText ()Ljava/lang/String;
+	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getEtaMinutes ()Ljava/lang/Double;
+	public final fun getExternalIDs ()Ljava/util/Map;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIndexableRecord ()Lcom/mapbox/search/record/IndexableRecord;
+	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getMatchingName ()Ljava/lang/String;
+	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
+	public final fun getRoutablePoints ()Ljava/util/List;
+	public final fun getServerIndex ()Ljava/lang/Integer;
+	public final fun getTypes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public final class com/mapbox/search/result/SearchResultType : java/lang/Enum {
@@ -1398,9 +1413,5 @@ public final class com/mapbox/search/result/SearchSuggestionType$SearchResultSug
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public abstract interface class com/mapbox/search/result/ServerSearchResult : com/mapbox/search/result/SearchResult {
-	public abstract fun getCoordinate ()Lcom/mapbox/geojson/Point;
 }
 

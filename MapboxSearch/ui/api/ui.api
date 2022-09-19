@@ -133,11 +133,11 @@ public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parc
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)V
 	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static synthetic fun copy$default (Lcom/mapbox/search/ui/view/place/SearchPlace;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/search/SearchResultMetadata;Ljava/lang/Double;Lcom/mapbox/search/ui/view/place/IncorrectSearchPlaceFeedback;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
@@ -159,13 +159,13 @@ public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parc
 }
 
 public final class com/mapbox/search/ui/view/place/SearchPlace$Companion {
-	public final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static synthetic fun createFromOfflineSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
-	public static synthetic fun createFromSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/geojson/Point;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static synthetic fun createFromSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 }
 
 public final class com/mapbox/search/ui/view/place/SearchPlaceBottomSheetView : com/mapbox/search/ui/view/SearchSdkFrameLayout, androidx/coordinatorlayout/widget/CoordinatorLayout$AttachedBehavior {

@@ -68,7 +68,7 @@ public class SearchSuggestion internal constructor(
      * @see type
      */
     @IgnoredOnParcel
-    public val categories: List<String> = base.categories
+    public val categories: List<String>? = base.categories
 
     /**
      * Experimental field, can be changed or removed in the next SDK releases.

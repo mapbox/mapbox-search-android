@@ -20,11 +20,6 @@ public enum class ApiType {
      */
     @Reserved(Flags.SBS)
     SBS,
-
-    /**
-     * Autofill API.
-     */
-    AUTOFILL,
 }
 
 @JvmSynthetic
@@ -32,6 +27,5 @@ internal fun ApiType.mapToCore(): CoreApiType {
     return when (this) {
         ApiType.GEOCODING -> CoreApiType.GEOCODING
         ApiType.SBS -> CoreApiType.SBS
-        ApiType.AUTOFILL -> CoreApiType.AUTOFILL
     }
 }

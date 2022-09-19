@@ -9,19 +9,14 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
-import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.logger.loge
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.AbstractSearchResult
-import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.result.isIndexableRecordSuggestion
 import java.util.concurrent.Executor
 
@@ -192,22 +187,14 @@ internal class AnalyticsServiceImpl(
         asTemplate: Boolean = false,
         callback: CompletionCallback<SearchFeedbackEvent>
     ) {
-        assertDebug(searchResult is ServerSearchResultImpl ||
-                    searchResult is IndexableRecordSearchResultImpl
-        ) {
-            "searchResult of unsupported type (${searchResult.javaClass.simpleName}) was provided. " +
-                    "Please, do not use custom types. If it's not the case, contact Search SDK team."
-        }
-        require(searchResult is AbstractSearchResult) { "Parameter searchResult must provide original response." }
-
         return feedbackEventsFactory.createSearchFeedbackEvent(
-            baseRawSearchResult = searchResult.rawSearchResult,
+            baseRawSearchResult = searchResult.base.rawSearchResult,
             requestOptions = searchResult.requestOptions,
             searchResponse = responseInfo?.coreSearchResponse,
             currentLocation = currentLocation,
             isReproducible = responseInfo?.isReproducible,
             event = event,
-            isCached = searchResult is IndexableRecordSearchResult,
+            isCached = searchResult.indexableRecord != null,
             asTemplate = asTemplate,
             callback = callback,
         )

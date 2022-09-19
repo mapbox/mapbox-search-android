@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapbox.search.ApiType;
 import com.mapbox.search.Country;
 import com.mapbox.search.Language;
-import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
@@ -46,7 +45,7 @@ public class JapanSearchJavaExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Category search results: " + results);
         }
 
@@ -60,7 +59,7 @@ public class JapanSearchJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             ApiType.SBS,
             new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         );

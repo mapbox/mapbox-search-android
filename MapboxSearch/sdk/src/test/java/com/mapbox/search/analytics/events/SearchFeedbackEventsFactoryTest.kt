@@ -39,16 +39,15 @@ import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.mapToBase
-import com.mapbox.search.result.IndexableRecordSearchResult
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
+import com.mapbox.search.tests_support.createTestIndexableRecordSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -115,10 +114,10 @@ internal class SearchFeedbackEventsFactoryTest {
                 listOf(TEST_SERVER_SEARCH_RESULT, TEST_LOCAL_SEARCH_RESULT).forEach { searchResult ->
                     val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
 
-                    val isCached = searchResult is IndexableRecordSearchResult
+                    val isCached = searchResult.indexableRecord != null
 
                     feedbackEventsFactory.createSearchFeedbackEvent(
-                        searchResult.rawSearchResult,
+                        searchResult.base.rawSearchResult,
                         searchResult.requestOptions,
                         createTestCoreSearchResponseSuccess(
                             results = listOf(TEST_SEARCH_RESULT.mapToCore())
@@ -135,11 +134,11 @@ internal class SearchFeedbackEventsFactoryTest {
                         callback = callback
                     )
 
-                    Then("Feedback event for ${searchResult.javaClass.simpleName} contains all values") {
+                    Then("Feedback event for ${searchResult.base.javaClass.simpleName} contains all values") {
                         assertEqualsJsonify(
                             expectedValue = SearchFeedbackEvent().apply {
                                 event = SearchFeedbackEvent.EVENT_NAME
-                                cached = searchResult is IndexableRecordSearchResult
+                                cached = searchResult.indexableRecord != null
                                 created = TEST_EVENT_CREATION_DATE
                                 latitude = TEST_USER_LOCATION.latitude()
                                 longitude = TEST_USER_LOCATION.longitude()
@@ -157,14 +156,14 @@ internal class SearchFeedbackEventsFactoryTest {
                                 types = searchResult.requestOptions.options.types?.map { it.name }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
-                                selectedItemName = searchResult.rawSearchResult.names.first()
+                                selectedItemName = searchResult.base.rawSearchResult.names.first()
                                 keyboardLocale = TEST_LOCALE.language
                                 mapZoom = calculateMapZoom(TEST_VIEWPORT)
                                 mapCenterLatitude = TEST_VIEWPORT.centerLatitude()
                                 mapCenterLongitude = TEST_VIEWPORT.centerLongitude()
                                 resultId = when (isCached) {
                                     true -> null
-                                    false -> searchResult.rawSearchResult.id
+                                    false -> searchResult.id
                                 }
                                 sessionIdentifier = when (isCached) {
                                     true -> NOT_AVAILABLE_SESSION_ID
@@ -176,7 +175,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = searchResult.coordinate?.coordinates()
+                                resultCoordinates = searchResult.coordinate.coordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = AppMetadata(
                                     name = null,
@@ -199,7 +198,7 @@ internal class SearchFeedbackEventsFactoryTest {
                 val overriddenFeedbackId = "overridden-feedback-id"
 
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    TEST_SERVER_SEARCH_RESULT.rawSearchResult,
+                    TEST_SERVER_SEARCH_RESULT.base.rawSearchResult,
                     TEST_SERVER_SEARCH_RESULT.requestOptions,
                     createTestCoreSearchResponseSuccess(
                         results = listOf(TEST_SEARCH_RESULT.mapToCore())
@@ -452,7 +451,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = TEST_HISTORY_RECORD.coordinate?.coordinates()
+                            resultCoordinates = TEST_HISTORY_RECORD.coordinate.coordinates()
                             requestParamsJson = null
                             appMetadata = null
                             schema = SEARCH_FEEDBACK_SCHEMA_VERSION
@@ -666,14 +665,14 @@ internal class SearchFeedbackEventsFactoryTest {
             serverIndex = 99,
         )
 
-        val TEST_SERVER_SEARCH_RESULT = ServerSearchResultImpl(
+        val TEST_SERVER_SEARCH_RESULT = createTestServerSearchResult(
             types = listOf(SearchResultType.ADDRESS),
             rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )
 
-        val TEST_LOCAL_SEARCH_RESULT = IndexableRecordSearchResultImpl(
-            record = StubIndexableRecord(),
+        val TEST_LOCAL_SEARCH_RESULT = createTestIndexableRecordSearchResult(
+            record = StubIndexableRecord(coordinate = requireNotNull(TEST_SEARCH_RESULT.center)),
             rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )

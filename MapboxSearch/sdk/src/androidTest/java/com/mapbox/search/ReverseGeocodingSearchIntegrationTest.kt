@@ -20,18 +20,17 @@ import com.mapbox.search.metadata.WeekDay
 import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
@@ -74,7 +73,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(
+        MapboxSearchSdk.initialize(
             application = targetApplication,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
@@ -87,15 +86,15 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
         )
 
-        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
 
-        favoritesDataProvider = MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+        favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
         favoritesDataProvider.clearBlocking(callbacksExecutor)
     }
 
@@ -214,7 +213,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             )
         )
 
-        val expectedResult = ServerSearchResultImpl(
+        val expectedResult = createTestServerSearchResult(
             listOf(SearchResultType.POI),
             rawSearchResult,
             RequestOptions(
@@ -261,7 +260,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val firstRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, firstRun.results.size)
-        assertFalse(firstRun.results.any { it is IndexableRecordSearchResult })
+        assertFalse(firstRun.results.any { it.indexableRecord != null })
         assertNotNull(firstRun.responseInfo.coreSearchResponse)
 
         val searchResult = firstRun.results.first()
@@ -278,7 +277,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
 
         val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertFalse(secondRun.results.any { it is IndexableRecordSearchResult })
+        assertFalse(secondRun.results.any { it.indexableRecord != null })
         assertEquals(firstRun.results.size, secondRun.results.size)
         firstRun.results.indices.forEach { index ->
             assertTrue(

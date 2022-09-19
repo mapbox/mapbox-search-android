@@ -11,7 +11,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
@@ -45,7 +45,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : SearchSdkFrameLayout(wrapWithSearchTheme(outerContext), attrs, defStyleAttr, defStyleRes), CoordinatorLayout.AttachedBehavior {
 
-    private val favoritesDataProvider = MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+    private val favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
     private var addFavoriteTask: AsyncOperationTask? = null
 
     private val behavior = SearchBottomSheetBehavior<View>().apply {
@@ -257,12 +257,12 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     }
 
     private fun updateDistanceUi(distanceMeters: Double?) {
-        if (distanceMeters != null) {
-            val distanceString = distanceFormatter.format(distanceMeters, commonSearchViewConfiguration.distanceUnitType)
-            distanceText.setTextAndHideIfBlank(distanceString)
+        val text = if (distanceMeters != null) {
+            distanceFormatter.format(distanceMeters, commonSearchViewConfiguration.distanceUnitType)
         } else {
-            distanceText.setTextAndHideIfBlank(null)
+            null
         }
+        distanceText.setTextAndHideIfBlank(text)
     }
 
     private fun populateFavoriteButtonInfo(

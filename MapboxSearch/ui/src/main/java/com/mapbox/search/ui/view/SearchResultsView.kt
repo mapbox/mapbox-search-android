@@ -12,7 +12,6 @@ import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
 import com.mapbox.search.ApiType
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
@@ -20,6 +19,7 @@ import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.concurrent.checkMainThread
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
@@ -32,7 +32,6 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
@@ -229,14 +228,14 @@ public class SearchResultsView @JvmOverloads constructor(
         super.setLayoutManager(LinearLayoutManager(context))
         super.setAdapter(searchAdapter)
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             configuration.apiType,
             configuration.searchEngineSettings
         )
 
         offlineSearchEngine = OfflineSearchEngine.create(configuration.offlineSearchEngineSettings)
 
-        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
 
         itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
 
@@ -278,8 +277,7 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun addToHistoryIfNeeded(searchResult: SearchResult) {
-        val isHistory = searchResult is IndexableRecordSearchResult && searchResult.record is HistoryRecord
-        if (isHistory) return
+        if (searchResult.indexableRecord is HistoryRecord) return
 
         HistoryRecord(
             id = searchResult.id,

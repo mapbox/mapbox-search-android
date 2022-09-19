@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchCallback
@@ -37,7 +36,7 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )
 

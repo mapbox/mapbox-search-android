@@ -7,7 +7,6 @@ import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
@@ -39,7 +38,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(targetApplication)
+        MapboxSearchSdk.initialize(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
             accessToken = TEST_ACCESS_TOKEN,
@@ -47,15 +46,15 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
         )
 
-        historyDataProvider = MapboxSearchSdk.serviceProvider.historyDataProvider()
+        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking(callbacksExecutor)
 
-        favoritesDataProvider = MapboxSearchSdk.serviceProvider.favoritesDataProvider()
+        favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
         favoritesDataProvider.clearBlocking(callbacksExecutor)
     }
 
@@ -186,7 +185,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
         assertEquals(records.size, resolved.size)
         resolved.forEachIndexed { index, resolvedResult ->
-            assertEquals(records[index], (resolvedResult as IndexableRecordSearchResult).record)
+            assertEquals(records[index], resolvedResult.indexableRecord)
         }
         assertNull(responseInfo.coreSearchResponse)
     }

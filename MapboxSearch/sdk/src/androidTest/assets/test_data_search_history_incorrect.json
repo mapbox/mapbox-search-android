@@ -4,7 +4,8 @@
       "id": "empty_correct_record_id",
       "name": "Empty correct record",
       "timestamp": 123,
-      "searchResultType": "POI"
+      "searchResultType": "POI",
+      "coordinate":[10.0,20.0]
     },
     {
       "id": "record_with_incorrect_result_type",

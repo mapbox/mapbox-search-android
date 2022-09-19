@@ -10,7 +10,7 @@ import androidx.test.rule.GrantPermissionRule
 import com.adevinta.android.barista.rule.cleardata.ClearFilesRule
 import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.mapbox.geojson.Point
-import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.ServiceProvider
 import com.mapbox.search.ui.extensions.enqueue
 import com.mapbox.search.ui.tools.BlockingCompletionCallback
 import com.mapbox.search.ui.tools.MockWebServerRule
@@ -60,11 +60,11 @@ internal abstract class MockServerSearchActivityTest {
         // we need to reset its state before each test run.
 
         val callback = BlockingCompletionCallback<Unit>()
-        MapboxSearchSdk.serviceProvider.historyDataProvider().clear(callback)
+        ServiceProvider.INSTANCE.historyDataProvider().clear(callback)
         callback.getResultBlocking()
 
         callback.reset()
-        MapboxSearchSdk.serviceProvider.favoritesDataProvider().clear(callback)
+        ServiceProvider.INSTANCE.favoritesDataProvider().clear(callback)
         callback.getResultBlocking()
     }
 

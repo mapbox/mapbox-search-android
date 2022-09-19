@@ -106,7 +106,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
         val TEST_EMPTY_RECORD = HistoryRecord(
             id = TEST_EMPTY_BASE_RAW_SEARCH_RESULT.id,
             name = TEST_EMPTY_BASE_RAW_SEARCH_RESULT.names.first(),
-            coordinate = null,
+            coordinate = Point.fromLngLat(10.0, 20.0),
             descriptionText = null,
             address = null,
             timestamp = 123L,

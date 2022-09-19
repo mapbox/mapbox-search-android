@@ -10,7 +10,6 @@ import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
@@ -202,7 +201,6 @@ public class SearchPlace(
          *
          * @param searchResult Search result as base data for place creation.
          * @param responseInfo Search response and request information.
-         * @param coordinate Geojson point with place coordinates.
          * @param distanceMeters Distance in meters to the given search place.
          *
          * @return Search place instance
@@ -212,7 +210,6 @@ public class SearchPlace(
         public fun createFromSearchResult(
             searchResult: SearchResult,
             responseInfo: ResponseInfo,
-            coordinate: Point,
             distanceMeters: Double? = searchResult.distanceMeters
         ): SearchPlace {
             return SearchPlace(
@@ -221,8 +218,8 @@ public class SearchPlace(
                 descriptionText = searchResult.descriptionText,
                 address = searchResult.address,
                 resultTypes = searchResult.types,
-                record = (searchResult as? IndexableRecordSearchResult)?.record,
-                coordinate = coordinate,
+                record = searchResult.indexableRecord,
+                coordinate = searchResult.coordinate,
                 routablePoints = searchResult.routablePoints,
                 categories = searchResult.categories,
                 makiIcon = searchResult.makiIcon,
@@ -267,7 +264,6 @@ public class SearchPlace(
          * Creates a new search place instance from [IndexableRecord] and geojson point.
          *
          * @param record A record describing geo place.
-         * @param coordinate Geojson point with place coordinates.
          * @param distanceMeters Distance in meters to the given search place.
          *
          * @return Search place instance
@@ -275,7 +271,6 @@ public class SearchPlace(
         @JvmStatic
         public fun createFromIndexableRecord(
             record: IndexableRecord,
-            coordinate: Point,
             distanceMeters: Double?
         ): SearchPlace {
             val feedback = when (record) {
@@ -290,7 +285,7 @@ public class SearchPlace(
                 address = record.address,
                 resultTypes = listOf(record.type),
                 record = record,
-                coordinate = coordinate,
+                coordinate = record.coordinate,
                 routablePoints = record.routablePoints,
                 categories = record.categories,
                 makiIcon = record.makiIcon,

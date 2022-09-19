@@ -87,7 +87,7 @@ internal class SearchFeedbackEventsFactory(
             if (event.sessionId != null) {
                 appMetadata = AppMetadata(sessionId = event.sessionId)
             }
-            resultCoordinates = record.coordinate?.coordinates()
+            resultCoordinates = record.coordinate.coordinates()
             schema = "${SearchFeedbackEvent.EVENT_NAME}-$SEARCH_FEEDBACK_SCHEMA_VERSION"
         }
     }

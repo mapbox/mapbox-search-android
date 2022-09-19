@@ -50,9 +50,7 @@ internal class SearchResultsItemsCreator(
         check(results.isNotEmpty())
         return locationEngine.lastKnownLocationOrNull(context) { location ->
             val resultItems = results.map {
-                val distance = it.distanceMeters ?: it.coordinate?.let { coordinate ->
-                    location?.distanceTo(coordinate)
-                }
+                val distance = it.distanceMeters ?: location?.distanceTo(it.coordinate)
                 SearchResultAdapterItem.Result.Resolved(
                     resolved = it,
                     responseInfo = responseInfo,

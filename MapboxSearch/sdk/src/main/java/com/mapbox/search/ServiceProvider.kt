@@ -34,6 +34,23 @@ public interface ServiceProvider {
      * @return [HistoryDataProvider] instance.
      */
     public fun historyDataProvider(): HistoryDataProvider
+
+    /**
+     * @suppress
+     */
+    public companion object {
+
+        @JvmSynthetic
+        internal lateinit var INTERNAL_INSTANCE: InternalServiceProvider
+
+        /**
+         * Shared [ServiceProvider] instance.
+         */
+        @JvmStatic
+        @get:JvmName("getInstance")
+        public val INSTANCE: ServiceProvider
+            get() = INTERNAL_INSTANCE
+    }
 }
 
 internal interface InternalServiceProvider : ServiceProvider {

@@ -50,7 +50,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
         mockServer = MockWebServer()
         mockServer.start(TEST_WEB_SERVER_PORT)
 
-        MapboxSearchSdk.initializeInternal(
+        MapboxSearchSdk.initialize(
             application = targetApplication,
             formattedTimeProvider = formattedTimeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
@@ -64,7 +64,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProvidersBlocking(
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
             apiType = ApiType.SBS,
             settings = searchEngineSettings,
         )

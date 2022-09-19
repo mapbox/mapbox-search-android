@@ -30,8 +30,8 @@ data class BaseIndexableRecordSearchResultImpl(
     override val address: BaseSearchAddress?
         get() = record.address ?: rawSearchResult.addresses?.get(0)
 
-    override val coordinate: Point?
-        get() = record.coordinate ?: rawSearchResult.center
+    override val coordinate: Point
+        get() = record.coordinate
 
     override val routablePoints: List<CoreRoutablePoint>?
         get() = record.routablePoints
@@ -40,7 +40,7 @@ data class BaseIndexableRecordSearchResultImpl(
     override val types: List<BaseSearchResultType>
         get() = listOf(record.type)
 
-    override val categories: List<String>
+    override val categories: List<String>?
         get() = record.categories ?: super.categories
 
     override val makiIcon: String?

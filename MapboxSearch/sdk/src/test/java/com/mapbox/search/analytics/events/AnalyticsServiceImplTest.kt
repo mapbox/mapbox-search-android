@@ -23,11 +23,12 @@ import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.catchThrowable
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
+import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.tests_support.BlockingCompletionCallback
+import com.mapbox.search.tests_support.createTestBaseSearchSuggestion
 import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.tests_support.createTestSearchResult
-import com.mapbox.search.tests_support.createTestSearchSuggestion
 import com.mapbox.test.dsl.TestCase
 import io.mockk.Called
 import io.mockk.every
@@ -98,7 +99,7 @@ internal class AnalyticsServiceImplTest {
     @TestFactory
     fun `Send feedback for SearchSuggestion with valid data`() = TestCase {
         Given("AnalyticsService with mocked dependencies") {
-            val searchSuggestion = createTestSearchSuggestion()
+            val searchSuggestion = SearchSuggestion(createTestBaseSearchSuggestion())
 
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
             every {
@@ -117,7 +118,11 @@ internal class AnalyticsServiceImplTest {
             }
 
             When("Sending feedback for search suggestion with valid data") {
-                analyticsServiceImpl.sendFeedback(searchSuggestion, TEST_RESPONSE_INFO, TEST_FEEDBACK_EVENT)
+                analyticsServiceImpl.sendFeedback(
+                    searchSuggestion,
+                    TEST_RESPONSE_INFO,
+                    TEST_FEEDBACK_EVENT
+                )
 
                 VerifyOnce("Event serialized") {
                     eventsJsonParser.serialize(validMockedFeedbackEvent)
@@ -133,7 +138,7 @@ internal class AnalyticsServiceImplTest {
     @TestFactory
     fun `Send feedback for SearchSuggestion with invalid data`() = TestCase {
         Given("AnalyticsService with mocked dependencies") {
-            val searchSuggestion = createTestSearchSuggestion()
+            val searchSuggestion = SearchSuggestion(createTestBaseSearchSuggestion())
             val mockedFeedbackEvent = mockk<SearchFeedbackEvent>()
 
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
@@ -156,7 +161,11 @@ internal class AnalyticsServiceImplTest {
             When("Sending feedback for search suggestion with invalid data") {
                 every { mockedFeedbackEvent.isValid } returns false
                 val caughtException = catchThrowable<IllegalStateException> {
-                    analyticsServiceImpl.sendFeedback(searchSuggestion, TEST_RESPONSE_INFO, TEST_FEEDBACK_EVENT)
+                    analyticsServiceImpl.sendFeedback(
+                        searchSuggestion,
+                        TEST_RESPONSE_INFO,
+                        TEST_FEEDBACK_EVENT
+                    )
                 }
 
                 Verify("Events service wasn't called") { eventsService wasNot Called }
@@ -178,7 +187,7 @@ internal class AnalyticsServiceImplTest {
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    baseRawSearchResult = searchResult.rawSearchResult,
+                    baseRawSearchResult = searchResult.base.rawSearchResult,
                     requestOptions = searchResult.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -214,7 +223,7 @@ internal class AnalyticsServiceImplTest {
 
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
-                    baseRawSearchResult = searchResult.rawSearchResult,
+                    baseRawSearchResult = searchResult.base.rawSearchResult,
                     requestOptions = searchResult.requestOptions,
                     searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
                     currentLocation = TEST_LOCATION,
@@ -385,12 +394,21 @@ internal class AnalyticsServiceImplTest {
             When("Creating raw event for SearchSuggestion") {
                 val callback = BlockingCompletionCallback<String>()
 
-                val searchSuggestion = createTestSearchSuggestion()
+                val searchSuggestion = SearchSuggestion(createTestBaseSearchSuggestion())
 
                 @Suppress("DEPRECATION")
-                analyticsServiceImpl.createRawFeedbackEvent(searchSuggestion, TEST_RESPONSE_INFO, callbackExecutor, callback)
+                analyticsServiceImpl.createRawFeedbackEvent(
+                    searchSuggestion,
+                    TEST_RESPONSE_INFO,
+                    callbackExecutor,
+                    callback
+                )
 
-                Then("Raw event was successfully created", callback.getResultBlocking().requireResult(), TEST_RAW_EVENT)
+                Then(
+                    "Raw event was successfully created",
+                    callback.getResultBlocking().requireResult(),
+                    TEST_RAW_EVENT
+                )
 
                 Verify("Callback called inside executor", exactly = 2) {
                     callbackExecutor.execute(any())

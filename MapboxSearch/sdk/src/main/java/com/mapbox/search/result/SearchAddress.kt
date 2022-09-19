@@ -86,7 +86,6 @@ public class SearchAddress @JvmOverloads public constructor(
             .filter { it.isNotEmpty() }
 
         return when {
-            // TODO should we return an empty string in this case?
             fields.isEmpty() -> null
             components.first() == HOUSE_NUMBER -> {
                 if (components.size == 1) {

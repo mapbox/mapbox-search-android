@@ -39,7 +39,6 @@ class TwoStepsRequestCallbackWrapper(
     private val addResultToHistory: Boolean,
 ) : CoreSearchCallback {
 
-    // TODO check if onSelected called when needed
     override fun run(response: CoreSearchResponse) {
         workerExecutor.execute {
             if (searchRequestTask.isCompleted) {

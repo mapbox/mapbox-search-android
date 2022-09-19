@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
-import com.mapbox.search.MapboxSearchSdk;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.ReverseGeoOptions;
 import com.mapbox.search.SearchCallback;
@@ -27,7 +26,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
     private final SearchCallback searchCallback = new SearchCallback() {
 
         @Override
-        public void onResults(@NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onResults(@NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             if (results.isEmpty()) {
                 Log.i("SearchApiExample", "No reverse geocoding results");
             } else {
@@ -45,7 +44,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final SearchEngine searchEngine = MapboxSearchSdk.createSearchEngineWithBuiltInDataProviders(
+        final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         );
 
