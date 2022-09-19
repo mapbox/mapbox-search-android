@@ -40,7 +40,7 @@ data class BaseIndexableRecordSearchResultImpl(
     override val types: List<BaseSearchResultType>
         get() = listOf(record.type)
 
-    override val categories: List<String>
+    override val categories: List<String>?
         get() = record.categories ?: super.categories
 
     override val makiIcon: String?

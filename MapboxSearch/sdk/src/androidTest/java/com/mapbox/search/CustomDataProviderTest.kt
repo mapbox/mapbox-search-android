@@ -158,7 +158,7 @@ internal class CustomDataProviderTest : BaseTest() {
                 descriptionText = secondCustomRecord.descriptionText,
                 address = secondCustomRecord.address ?: SearchAddress(),
                 routablePoints = secondCustomRecord.routablePoints,
-                categories = secondCustomRecord.categories ?: emptyList(),
+                categories = secondCustomRecord.categories,
                 makiIcon = secondCustomRecord.makiIcon,
                 coordinate = secondCustomRecord.coordinate,
                 type = secondCustomRecord.type,

@@ -32,11 +32,6 @@ public class HistoryRecord(
     public val timestamp: Long
 ) : IndexableRecord, Parcelable {
 
-    // Fow now only resolved search result can be added to the search history.
-    @get:JvmSynthetic
-    internal val historyType: HistoryType
-        get() = HistoryType.RESULT
-
     override val indexTokens: List<String>
         get() = listOfNotNull(address?.place, address?.street, address?.houseNumber)
 
@@ -131,11 +126,5 @@ public class HistoryRecord(
                 "metadata=$metadata, " +
                 "timestamp=$timestamp" +
                 ")"
-    }
-
-    internal enum class HistoryType {
-        RESULT,
-        QUERY,
-        CATEGORY
     }
 }

@@ -3,6 +3,7 @@ package com.mapbox.search.utils.serialization
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.logger.logw
 
 internal abstract class RecordsSerializer<DATA, DAO : DataAccessObject<DATA>, RECORDS : RecordsSerializer.RecordsData<DAO>> {
 
@@ -29,9 +30,14 @@ internal abstract class RecordsSerializer<DATA, DAO : DataAccessObject<DATA>, RE
             throw IllegalStateException("Unsupported data version ${recordsData.version}")
         }
 
-        // TODO print skipped elements to log?
         return recordsData.records.asSequence()
-            .filter { !skipIncorrectEntries || it.isValid }
+            .filter {
+                val isValid = !skipIncorrectEntries || it.isValid
+                if (!isValid) {
+                    logw("$it is not valid. Skipping it")
+                }
+                isValid
+            }
             .map { it.createData() }
             .toList()
     }

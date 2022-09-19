@@ -30,8 +30,8 @@ internal abstract class AbstractSearchResult(
     override val routablePoints: List<RoutablePoint>?
         get() = rawSearchResult.routablePoints?.map { it.mapToPlatform() }
 
-    override val categories: List<String>
-        get() = rawSearchResult.categories ?: emptyList()
+    override val categories: List<String>?
+        get() = rawSearchResult.categories
 
     override val makiIcon: String?
         get() = rawSearchResult.icon

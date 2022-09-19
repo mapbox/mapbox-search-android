@@ -57,7 +57,7 @@ public sealed interface SearchResult : Parcelable {
      * Poi categories. Always empty for non-POI search results.
      * @see types
      */
-    public val categories: List<String>
+    public val categories: List<String>?
 
     /**
      * [Maki](https://github.com/mapbox/maki/) icon name for search result.

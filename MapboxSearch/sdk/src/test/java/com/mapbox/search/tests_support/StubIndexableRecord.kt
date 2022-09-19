@@ -18,7 +18,7 @@ internal data class StubIndexableRecord(
     override val type: SearchResultType = SearchResultType.POI,
     override val indexTokens: List<String> = emptyList(),
     override val routablePoints: List<RoutablePoint>? = emptyList(),
-    override val categories: List<String> = emptyList(),
+    override val categories: List<String>? = null,
     override val makiIcon: String? = null,
     override val metadata: SearchResultMetadata? = null
 ) : IndexableRecord

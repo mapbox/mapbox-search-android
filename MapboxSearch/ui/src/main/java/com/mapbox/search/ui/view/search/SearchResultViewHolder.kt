@@ -164,7 +164,7 @@ internal class SearchResultViewHolder(
     @DrawableRes
     private fun getDrawableForSearchResult(
         maki: String?,
-        categories: List<String>,
+        categories: List<String>?,
         types: List<SearchResultType>
     ): Int {
         // We expect to have either combination of ADDRESS, COUNTRY, ..., POSTCODE
@@ -196,14 +196,14 @@ internal class SearchResultViewHolder(
     }
 
     @DrawableRes
-    private fun pickEntityDrawable(makiIcon: String?, categories: List<String>, @DrawableRes fallback: Int): Int {
+    private fun pickEntityDrawable(makiIcon: String?, categories: List<String>?, @DrawableRes fallback: Int): Int {
         val maki = MakiToDrawableIdMapper.getDrawableIdByMaki(makiIcon)
         return if (maki != null) {
             maki
         } else {
-            categories.asSequence()
-                .mapNotNull { Category.findByCanonicalName(it)?.presentation }
-                .firstOrNull()
+            categories?.asSequence()
+                ?.mapNotNull { Category.findByCanonicalName(it)?.presentation }
+                ?.firstOrNull()
                 ?.icon ?: fallback
         }
     }

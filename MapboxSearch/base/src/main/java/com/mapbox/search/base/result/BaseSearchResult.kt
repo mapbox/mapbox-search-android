@@ -32,8 +32,8 @@ abstract class BaseSearchResult(
     open val routablePoints: List<CoreRoutablePoint>?
         get() = rawSearchResult.routablePoints
 
-    open val categories: List<String>
-        get() = rawSearchResult.categories ?: emptyList()
+    open val categories: List<String>?
+        get() = rawSearchResult.categories
 
     open val makiIcon: String?
         get() = rawSearchResult.icon

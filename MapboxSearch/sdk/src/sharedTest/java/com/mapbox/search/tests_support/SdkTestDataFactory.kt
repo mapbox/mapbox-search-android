@@ -189,7 +189,7 @@ internal fun createTestHistoryRecord(
     searchResultType: SearchResultType = SearchResultType.POI,
     routablePoints: List<RoutablePoint>? = null,
     metadata: SearchResultMetadata? = null,
-    categories: List<String> = emptyList(),
+    categories: List<String>? = null,
     makiIcon: String? = null
 ) = HistoryRecord(
     id = id,

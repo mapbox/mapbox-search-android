@@ -2,6 +2,11 @@
 
 ## 1.0.0-beta.37-SNAPSHOT
 
+### Breaking changes
+- [CORE] `SearchSuggestion.categories`, and `SearchResult.categories` are nullable properties now. These properties are null for non-POI search results.
+- [CORE] `ApiType.AUTOFILL` has been removed. Use `Autofill` SDK instead.
+- [CORE] `MapboxSearcSdk.createSearchEngine()`, and `MapboxSearcSdk.createSearchEngineWithBuiltInDataProviders()` functions has been moved to `SearchEngine.createSearchEngine()`, and `SearchEngine.createSearchEngineWithBuiltInDataProviders()`.
+
 ### Mapbox dependencies
 - Search Native SDK `0.59.0`
 - Common SDK `23.0.0`
