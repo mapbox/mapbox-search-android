@@ -19,13 +19,10 @@ import com.mapbox.search.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.AbstractSearchResult
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.ServerSearchResultImpl
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
@@ -34,6 +31,7 @@ import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
@@ -80,7 +78,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(
+        MapboxSearchSdk.initialize(
             application = targetApplication,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
@@ -244,7 +242,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             ),
         )
 
-        val expected = ServerSearchResultImpl(
+        val expected = createTestServerSearchResult(
             listOf(SearchResultType.POI),
             baseRawSearchResult,
             RequestOptions(
@@ -307,7 +305,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val results = callback.getResultBlocking().requireResults()
         assertEquals(records.size, results.size)
-        assertTrue(results.all { it is IndexableRecordSearchResult })
+        assertTrue(results.all { it.indexableRecord != null })
     }
 
     @Test
@@ -319,7 +317,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val firstRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, firstRun.results.size)
-        assertFalse(firstRun.results.any { it is IndexableRecordSearchResult })
+        assertFalse(firstRun.results.any { it.indexableRecord != null })
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
         assertNotNull(firstRun.responseInfo.coreSearchResponse)
 
@@ -335,15 +333,16 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, secondRun.results.size)
 
-        val firstResult = secondRun.results.first() as AbstractSearchResult
+        val firstResult = secondRun.results.first()
+
         /**
          * Despite the changed ID, core should match and merge server result with local indexable record result
          */
-        assertTrue(secondRun.results[0] is IndexableRecordSearchResult)
-        assertNotEquals(firstRun.results[0].id, firstResult.rawSearchResult.id)
+        assertTrue(secondRun.results[0].indexableRecord != null)
+        assertNotEquals(firstRun.results[0].id, firstResult.base.rawSearchResult.id)
         assertNotEquals(
-            firstResult.rawSearchResult.id,
-            firstResult.rawSearchResult.userRecordId
+            firstResult.base.rawSearchResult.id,
+            firstResult.base.rawSearchResult.userRecordId
         )
 
         val blockingCompletionCallback = BlockingCompletionCallback<IndexableRecord?>()
@@ -353,7 +352,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
         callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
 
-        assertEquals(callbackResult.result, (secondRun.results[0] as IndexableRecordSearchResult).record)
+        assertEquals(callbackResult.result, secondRun.results[0].indexableRecord)
 
         assertNotNull(secondRun.responseInfo.coreSearchResponse)
 
@@ -370,7 +369,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val firstRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, firstRun.results.size)
-        assertFalse(firstRun.results.any { it is IndexableRecordSearchResult })
+        assertFalse(firstRun.results.any { it.indexableRecord != null })
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
         assertNotNull(firstRun.responseInfo.coreSearchResponse)
 
@@ -385,7 +384,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, secondRun.results.size)
-        assertFalse(secondRun.results.any { it is IndexableRecordSearchResult })
+        assertFalse(secondRun.results.any { it.indexableRecord != null })
         assertNotNull(secondRun.responseInfo.coreSearchResponse)
     }
 
@@ -414,7 +413,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertEquals(record, (results.first() as IndexableRecordSearchResult).record)
+        assertEquals(record, results.first().indexableRecord)
     }
 
     @Test
@@ -445,7 +444,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertEquals(record, (results.first() as IndexableRecordSearchResult).record)
+        assertEquals(record, results.first().indexableRecord)
     }
 
     @Test
@@ -476,7 +475,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertFalse(results.any { it is IndexableRecordSearchResult })
+        assertFalse(results.any { it.indexableRecord != null })
     }
 
     @Test

@@ -43,7 +43,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
         }
 
         @Override
-        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Category search results: " + results);
         }
 
@@ -56,7 +56,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
     private final SearchMultipleSelectionCallback multipleSelection = new SearchMultipleSelectionCallback() {
 
         @Override
-        public void onResult(@NonNull List<SearchSuggestion> suggestions, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onResult(@NonNull List<SearchSuggestion> suggestions, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Batch retrieve results: " + results);
         }
 

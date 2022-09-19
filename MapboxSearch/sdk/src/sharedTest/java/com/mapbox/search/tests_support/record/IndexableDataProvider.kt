@@ -6,7 +6,6 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.mapToBase
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
@@ -99,7 +98,7 @@ internal fun SearchHistoryService.addToHistoryIfNeededBlocking(
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor
 ) {
     val countDownLatch = CountDownLatch(1)
-    addToHistoryIfNeeded(searchResult.mapToBase(), executor) {
+    addToHistoryIfNeeded(searchResult.base, executor) {
         countDownLatch.countDown()
     }
     countDownLatch.await()

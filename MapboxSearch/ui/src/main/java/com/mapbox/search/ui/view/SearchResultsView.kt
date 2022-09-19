@@ -32,7 +32,6 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
@@ -278,8 +277,7 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     private fun addToHistoryIfNeeded(searchResult: SearchResult) {
-        val isHistory = searchResult is IndexableRecordSearchResult && searchResult.record is HistoryRecord
-        if (isHistory) return
+        if (searchResult.indexableRecord is HistoryRecord) return
 
         HistoryRecord(
             id = searchResult.id,

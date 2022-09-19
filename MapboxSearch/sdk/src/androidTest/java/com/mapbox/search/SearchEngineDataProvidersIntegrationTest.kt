@@ -39,7 +39,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
-        MapboxSearchSdk.initializeInternal(targetApplication)
+        MapboxSearchSdk.initialize(targetApplication)
 
         historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking()

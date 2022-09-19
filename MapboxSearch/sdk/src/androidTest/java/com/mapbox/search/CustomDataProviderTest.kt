@@ -16,7 +16,6 @@ import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.mapToBase
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.isIndexableRecordSuggestion
 import com.mapbox.search.result.mapToPlatform
@@ -57,7 +56,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
         mockServer = MockWebServer()
 
-        MapboxSearchSdk.initializeInternal(
+        MapboxSearchSdk.initialize(
             application = targetApplication,
             timeProvider = timeProvider,
             keyboardLocaleProvider = keyboardLocaleProvider,
@@ -144,10 +143,7 @@ internal class CustomDataProviderTest : BaseTest() {
         assertTrue(searchResult is SearchEngineResult.Result)
         val result = (searchResult as SearchEngineResult.Result).result
 
-        assertTrue(result is IndexableRecordSearchResult)
-        result as IndexableRecordSearchResult
-
-        assertEquals(secondCustomRecord, result.record)
+        assertEquals(secondCustomRecord, result.indexableRecord)
 
         val historyFromCustomRecord = historyDataProvider.getBlocking(secondCustomRecord.id, callbacksExecutor)
 

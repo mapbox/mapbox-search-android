@@ -29,12 +29,8 @@ import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.mapToBase
-import com.mapbox.search.result.mapToPlatform
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -143,7 +139,9 @@ internal class SearchEngineImpl(
 
         return when (alreadyResolved.size) {
             filtered.size -> {
-                val result = filtered.indices.mapNotNull { alreadyResolved[it]?.mapToPlatform() }
+                val result = filtered.indices.mapNotNull { index ->
+                    alreadyResolved[index]?.let { SearchResult(it) }
+                }
                 executor.execute {
                     callback.onResult(filtered, result, searchResponseInfo)
                 }
@@ -238,7 +236,7 @@ internal class SearchEngineImpl(
 
             if (!task.isCompleted) {
                 task += historyService.addToHistoryIfNeeded(
-                    searchResult = resolved.mapToBase(),
+                    searchResult = resolved.base,
                     callback = { result ->
                         result.onSuccess {
                             task.markExecutedAndRunOnCallback(executor) {
@@ -257,12 +255,12 @@ internal class SearchEngineImpl(
 
         return when (val base = suggestion.base) {
             is BaseGeocodingCompatSearchSuggestion -> {
-                val searchResult = ServerSearchResultImpl(
-                    listOf(base.searchResultType.mapToPlatform()),
-                    base.rawSearchResult,
-                    suggestion.requestOptions
+                val baseSearchResult = BaseServerSearchResultImpl(
+                    types = listOf(base.searchResultType),
+                    rawSearchResult = base.rawSearchResult,
+                    requestOptions = suggestion.requestOptions.mapToBase()
                 )
-                completeSearchResultSelection(suggestion, searchResult)
+                completeSearchResultSelection(suggestion, SearchResult(baseSearchResult))
             }
             is BaseServerSearchSuggestion -> {
                 val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSelectionCallbackAdapter(callback)
@@ -290,12 +288,12 @@ internal class SearchEngineImpl(
                 }
             }
             is BaseIndexableRecordSearchSuggestion -> {
-                val resolved = IndexableRecordSearchResultImpl(
-                    base.record.sdkResolvedRecord as IndexableRecord,
-                    base.rawSearchResult,
-                    suggestion.requestOptions
+                val baseSearchResult = BaseIndexableRecordSearchResultImpl(
+                    record = base.record,
+                    rawSearchResult = base.rawSearchResult,
+                    requestOptions = suggestion.requestOptions.mapToBase()
                 )
-                completeSearchResultSelection(suggestion, resolved)
+                completeSearchResultSelection(suggestion, SearchResult(baseSearchResult))
             }
         }
     }

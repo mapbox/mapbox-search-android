@@ -64,6 +64,9 @@ abstract class BaseSearchResult(
 
     abstract val baseType: Type
 
+    val indexableRecord: BaseIndexableRecord?
+        get() = (baseType as? Type.IndexableRecordSearchResult)?.record
+
     sealed class Type {
         data class ServerResult(val coordinate: Point) : Type()
         data class IndexableRecordSearchResult(val record: BaseIndexableRecord) : Type()

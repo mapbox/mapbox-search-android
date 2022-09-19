@@ -24,7 +24,7 @@ import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
-import com.mapbox.search.result.mapToPlatform
+import com.mapbox.search.result.SearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
@@ -113,7 +113,7 @@ internal class CategorySearchTest {
 
                 Verify("Results passed to callback") {
                     callback.onResults(
-                        listOf(TEST_SEARCH_RESULT.mapToPlatform()),
+                        listOf(SearchResult(TEST_SEARCH_RESULT)),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS,
                             TEST_SUCCESSFUL_CORE_RESPONSE.mapToBase(),

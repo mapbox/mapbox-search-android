@@ -530,7 +530,7 @@ package com.mapbox.search {
 
   public interface SearchCallback {
     method public void onError(Exception e);
-    method public void onResults(java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onResults(java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   public interface SearchEngine {
@@ -599,7 +599,7 @@ package com.mapbox.search {
 
   public interface SearchMultipleSelectionCallback {
     method public void onError(Exception e);
-    method public void onResult(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onResult(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchNavigationOptions implements android.os.Parcelable {
@@ -721,7 +721,7 @@ package com.mapbox.search {
   }
 
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
-    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<? extends com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
     method public void onResult(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
   }
 
@@ -1038,11 +1038,6 @@ package com.mapbox.search.record {
 
 package com.mapbox.search.result {
 
-  public sealed interface IndexableRecordSearchResult extends com.mapbox.search.result.SearchResult {
-    method public com.mapbox.search.record.IndexableRecord getRecord();
-    property public abstract com.mapbox.search.record.IndexableRecord record;
-  }
-
   public abstract class ResultAccuracy implements android.os.Parcelable {
     ctor public ResultAccuracy();
   }
@@ -1168,7 +1163,7 @@ package com.mapbox.search.result {
   public final class SearchAddressKt {
   }
 
-  public sealed interface SearchResult extends android.os.Parcelable {
+  @kotlinx.parcelize.Parcelize public final class SearchResult implements android.os.Parcelable {
     method public com.mapbox.search.result.ResultAccuracy? getAccuracy();
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
@@ -1178,6 +1173,7 @@ package com.mapbox.search.result {
     method public Double? getEtaMinutes();
     method public java.util.Map<java.lang.String,java.lang.String> getExternalIDs();
     method public String getId();
+    method public com.mapbox.search.record.IndexableRecord? getIndexableRecord();
     method public String? getMakiIcon();
     method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
@@ -1186,26 +1182,24 @@ package com.mapbox.search.result {
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
-    property public abstract com.mapbox.search.result.ResultAccuracy? accuracy;
-    property public abstract com.mapbox.search.result.SearchAddress? address;
-    property public abstract java.util.List<java.lang.String>? categories;
-    property public abstract com.mapbox.geojson.Point coordinate;
-    property public abstract String? descriptionText;
-    property public abstract Double? distanceMeters;
-    property public abstract Double? etaMinutes;
-    property public abstract java.util.Map<java.lang.String,java.lang.String> externalIDs;
-    property public abstract String id;
-    property public abstract String? makiIcon;
-    property public abstract String? matchingName;
-    property public abstract com.mapbox.search.SearchResultMetadata? metadata;
-    property public abstract String name;
-    property public abstract com.mapbox.search.RequestOptions requestOptions;
-    property public abstract java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
-    property public abstract Integer? serverIndex;
-    property public abstract java.util.List<com.mapbox.search.result.SearchResultType> types;
-  }
-
-  public final class SearchResultKt {
+    property public final com.mapbox.search.result.ResultAccuracy? accuracy;
+    property public final com.mapbox.search.result.SearchAddress? address;
+    property public final java.util.List<java.lang.String>? categories;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final String? descriptionText;
+    property public final Double? distanceMeters;
+    property public final Double? etaMinutes;
+    property public final java.util.Map<java.lang.String,java.lang.String> externalIDs;
+    property public final String id;
+    property public final com.mapbox.search.record.IndexableRecord? indexableRecord;
+    property public final String? makiIcon;
+    property public final String? matchingName;
+    property public final com.mapbox.search.SearchResultMetadata? metadata;
+    property public final String name;
+    property public final com.mapbox.search.RequestOptions requestOptions;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+    property public final Integer? serverIndex;
+    property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
   }
 
   public enum SearchResultType {
@@ -1288,9 +1282,6 @@ package com.mapbox.search.result {
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.SearchResultSuggestion extends com.mapbox.search.result.SearchSuggestionType {
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
     property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
-  }
-
-  public sealed interface ServerSearchResult extends com.mapbox.search.result.SearchResult {
   }
 
 }

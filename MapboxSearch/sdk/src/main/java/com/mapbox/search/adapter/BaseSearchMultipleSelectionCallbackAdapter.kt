@@ -6,6 +6,7 @@ import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.mapToPlatform
+import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.mapToPlatform
 
 internal class BaseSearchMultipleSelectionCallbackAdapter(
@@ -19,7 +20,7 @@ internal class BaseSearchMultipleSelectionCallbackAdapter(
     ) {
         callback.onResult(
             suggestions.map { it.mapToPlatform() },
-            results.map { it.mapToPlatform() },
+            results.map { SearchResult(it) },
             responseInfo.mapToPlatform()
         )
     }

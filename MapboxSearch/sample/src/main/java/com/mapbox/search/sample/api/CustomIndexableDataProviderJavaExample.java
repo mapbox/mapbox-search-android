@@ -68,7 +68,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         }
 
         @Override
-        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<? extends SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Category search results: " + results);
         }
 

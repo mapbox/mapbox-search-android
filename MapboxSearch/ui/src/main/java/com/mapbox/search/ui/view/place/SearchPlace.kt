@@ -10,7 +10,6 @@ import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.IndexableRecordSearchResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
@@ -219,7 +218,7 @@ public class SearchPlace(
                 descriptionText = searchResult.descriptionText,
                 address = searchResult.address,
                 resultTypes = searchResult.types,
-                record = (searchResult as? IndexableRecordSearchResult)?.record,
+                record = searchResult.indexableRecord,
                 coordinate = searchResult.coordinate,
                 routablePoints = searchResult.routablePoints,
                 categories = searchResult.categories,

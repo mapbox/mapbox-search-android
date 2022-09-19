@@ -43,6 +43,7 @@ import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.mapToBase
 import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
@@ -433,7 +434,7 @@ internal class SearchEngineTest {
                 Verify("Results passed to callback") {
                     callback.onResult(
                         TEST_GEOCODING_SEARCH_SUGGESTION.mapToPlatform(),
-                        TEST_SEARCH_RESULT.mapToPlatform(),
+                        SearchResult(TEST_SEARCH_RESULT),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS,
                             null,
@@ -520,7 +521,7 @@ internal class SearchEngineTest {
                 Verify("Results passed to callback") {
                     callback.onResult(
                         TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
-                        expectedResult.mapToPlatform(),
+                        SearchResult(expectedResult),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS.copy(
                                 requestContext = TEST_SEARCH_REQUEST_CONTEXT.copy(responseUuid = TEST_RESPONSE_UUID)
@@ -593,7 +594,7 @@ internal class SearchEngineTest {
                 Verify("Results passed to callback") {
                     callback.onResult(
                         TEST_USER_RECORD_SEARCH_SUGGESTION.mapToPlatform(),
-                        TEST_FAVORITE_RECORD_SEARCH_RESULT.mapToPlatform(),
+                        SearchResult(TEST_FAVORITE_RECORD_SEARCH_RESULT),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS.mapToBase().mapToPlatform(),
                             null,

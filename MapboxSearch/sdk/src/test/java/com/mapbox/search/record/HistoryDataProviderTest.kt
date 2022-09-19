@@ -12,16 +12,15 @@ import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.result.IndexableRecordSearchResultImpl
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.ServerSearchResultImpl
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.TestDataProviderEngine
 import com.mapbox.search.tests_support.TestMainThreadWorker
 import com.mapbox.search.tests_support.assertEqualsJsonify
 import com.mapbox.search.tests_support.createTestHistoryRecord
+import com.mapbox.search.tests_support.createTestIndexableRecordSearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.addToHistoryIfNeededBlocking
 import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.record.getBlocking
@@ -399,7 +398,7 @@ internal class HistoryDataProviderTest {
                     name = TEST_FAVORITE_RECORD_SEARCH_RESULT.name,
                     coordinate = TEST_FAVORITE_RECORD_SEARCH_RESULT.coordinate,
                     descriptionText = TEST_FAVORITE_RECORD_SEARCH_RESULT.descriptionText,
-                    address = TEST_FAVORITE_RECORD_SEARCH_RESULT.rawSearchResult.addresses?.get(0)?.mapToPlatform(),
+                    address = TEST_FAVORITE_RECORD_SEARCH_RESULT.address,
                     timestamp = TEST_LOCAL_TIME_MILLIS,
                     type = TEST_FAVORITE_RECORD_SEARCH_RESULT.types.first(),
                     routablePoints = TEST_FAVORITE_RECORD_SEARCH_RESULT.routablePoints,
@@ -449,7 +448,7 @@ internal class HistoryDataProviderTest {
                     name = TEST_SERVER_SEARCH_RESULT.name,
                     coordinate = TEST_SERVER_SEARCH_RESULT.coordinate,
                     descriptionText = TEST_SERVER_SEARCH_RESULT.descriptionText,
-                    address = TEST_SERVER_SEARCH_RESULT.rawSearchResult.addresses?.get(0)?.mapToPlatform(),
+                    address = TEST_SERVER_SEARCH_RESULT.address,
                     timestamp = TEST_LOCAL_TIME_MILLIS,
                     type = TEST_SERVER_SEARCH_RESULT.types.first(),
                     routablePoints = TEST_SERVER_SEARCH_RESULT.routablePoints,
@@ -570,19 +569,19 @@ internal class HistoryDataProviderTest {
             metadata = null
         )
 
-        val TEST_HISTORY_SEARCH_RESULT = IndexableRecordSearchResultImpl(
+        val TEST_HISTORY_SEARCH_RESULT = createTestIndexableRecordSearchResult(
             record = TEST_HISTORY_RECORD_1,
             rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase(),
             requestOptions = createTestRequestOptions("Test query")
         )
 
-        val TEST_FAVORITE_RECORD_SEARCH_RESULT = IndexableRecordSearchResultImpl(
+        val TEST_FAVORITE_RECORD_SEARCH_RESULT = createTestIndexableRecordSearchResult(
             record = TEST_FAVORITE_RECORD,
             rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase(),
             requestOptions = createTestRequestOptions("Test query")
         )
 
-        val TEST_SERVER_SEARCH_RESULT = ServerSearchResultImpl(
+        val TEST_SERVER_SEARCH_RESULT = createTestServerSearchResult(
             types = listOf(SearchResultType.POI),
             rawSearchResult = TEST_POI_SEARCH_RESULT.mapToBase(),
             requestOptions = createTestRequestOptions("Test query")

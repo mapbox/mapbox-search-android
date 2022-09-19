@@ -45,7 +45,7 @@ internal object MapboxSearchSdk {
 
     lateinit var application: Application
 
-    fun initializeInternal(
+    fun initialize(
         application: Application,
         timeProvider: TimeProvider = LocalTimeProvider(),
         formattedTimeProvider: FormattedTimeProvider = FormattedTimeProviderImpl(timeProvider),

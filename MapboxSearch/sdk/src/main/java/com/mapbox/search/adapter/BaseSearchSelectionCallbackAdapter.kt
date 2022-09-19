@@ -6,6 +6,7 @@ import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.mapToPlatform
+import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.mapToPlatform
 
 internal class BaseSearchSelectionCallbackAdapter(
@@ -17,7 +18,11 @@ internal class BaseSearchSelectionCallbackAdapter(
         result: BaseSearchResult,
         responseInfo: BaseResponseInfo
     ) {
-        callback.onResult(suggestion.mapToPlatform(), result.mapToPlatform(), responseInfo.mapToPlatform())
+        callback.onResult(
+            suggestion.mapToPlatform(),
+            SearchResult(result),
+            responseInfo.mapToPlatform()
+        )
     }
 
     override fun onCategoryResult(
@@ -27,7 +32,7 @@ internal class BaseSearchSelectionCallbackAdapter(
     ) {
         callback.onCategoryResult(
             suggestion.mapToPlatform(),
-            results.map { it.mapToPlatform() },
+            results.map { SearchResult(it) },
             responseInfo.mapToPlatform()
         )
     }

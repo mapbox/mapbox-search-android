@@ -4,80 +4,94 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
-import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseSearchResult
-import com.mapbox.search.base.result.BaseServerSearchResultImpl
+import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.mapToBase
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.record.mapToBase
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 /**
  * Resolved search object with populated fields.
  */
-public sealed interface SearchResult : Parcelable {
+@Parcelize
+public class SearchResult internal constructor(
+    internal val base: BaseSearchResult
+) : Parcelable {
 
     /**
      * Search request options.
      */
-    public val requestOptions: RequestOptions
+    @IgnoredOnParcel
+    public val requestOptions: RequestOptions = base.requestOptions.mapToPlatform()
 
     /**
      * Result unique identifier.
      */
-    public val id: String
+    @IgnoredOnParcel
+    public val id: String = base.id
 
     /**
      * Result name.
      */
-    public val name: String
+    @IgnoredOnParcel
+    public val name: String = base.name
 
     /**
      * The feature name, as matched by the search algorithm.
      */
-    public val matchingName: String?
+    @IgnoredOnParcel
+    public val matchingName: String? = base.matchingName
 
     /**
      * Additional description for the search result.
      */
-    public val descriptionText: String?
+    @IgnoredOnParcel
+    public val descriptionText: String? = base.descriptionText
 
     /**
      * Result address.
      */
-    public val address: SearchAddress?
+    @IgnoredOnParcel
+    public val address: SearchAddress? = base.address?.mapToPlatform()
 
     /**
      * List of points near [coordinate], that represents entries to associated building.
      */
-    public val routablePoints: List<RoutablePoint>?
+    @IgnoredOnParcel
+    public val routablePoints: List<RoutablePoint>? = base.routablePoints?.map { it.mapToPlatform() }
 
     /**
      * Poi categories. Always empty for non-POI search results.
      * @see types
      */
-    public val categories: List<String>?
+    @IgnoredOnParcel
+    public val categories: List<String>? = base.categories
 
     /**
      * [Maki](https://github.com/mapbox/maki/) icon name for search result.
      */
-    public val makiIcon: String?
+    @IgnoredOnParcel
+    public val makiIcon: String? = base.makiIcon
 
     /**
      * Result coordinates.
      */
-    public val coordinate: Point
+    @IgnoredOnParcel
+    public val coordinate: Point = base.coordinate
 
     /**
      * A point accuracy metric for the returned address.
      */
-    public val accuracy: ResultAccuracy?
+    @IgnoredOnParcel
+    public val accuracy: ResultAccuracy? = base.accuracy?.mapToPlatform()
 
     /**
      * Non-empty list of resolved [SearchResult] types.
      */
-    public val types: List<SearchResultType>
+    @IgnoredOnParcel
+    public val types: List<SearchResultType> = base.types.map { it.mapToPlatform() }
 
     /**
      * Estimated time of arrival (in minutes) based on the specified in the [com.mapbox.search.SearchOptions] origin point and navigation profile.
@@ -86,85 +100,87 @@ public sealed interface SearchResult : Parcelable {
      *
      * You can always calculate ETA on your own using user's location and result's [coordinate].
      */
-    public val etaMinutes: Double?
+    @IgnoredOnParcel
+    public val etaMinutes: Double? = base.etaMinutes
 
     /**
      * Search result metadata containing geo place's detailed information if available.
      */
-    public val metadata: SearchResultMetadata?
+    @IgnoredOnParcel
+    public val metadata: SearchResultMetadata? = base.metadata?.let { SearchResultMetadata(it) }
 
     /**
      * Experimental API, can be changed or removed in the next SDK releases.
      * Map of external ids. Returned Map instance is unmodifiable.
      */
-    public val externalIDs: Map<String, String>
+    @IgnoredOnParcel
+    public val externalIDs: Map<String, String> = base.externalIDs
 
     /**
      * Distance in meters from result to requested origin (for forward geocoding and category search) or provided point (for reverse geocoding).
      * For provided point always returns non-null distance.
      */
-    public val distanceMeters: Double?
+    @IgnoredOnParcel
+    public val distanceMeters: Double? = base.distanceMeters
 
     /**
      * Index in response from server.
      */
-    public val serverIndex: Int?
-}
-
-/**
- * Resolved search object with populated fields and mandatory coordinates field.
-*/
-public sealed interface ServerSearchResult : SearchResult
-
-/**
- * Resolved search object based on some [IndexableRecord]. As an example, search result is one of user's FavoriteRecord.
- */
-public sealed interface IndexableRecordSearchResult : SearchResult {
+    @IgnoredOnParcel
+    public val serverIndex: Int? = base.serverIndex
 
     /**
-     * [IndexableRecord] on which search result based.
+     * Returns [IndexableRecord] if this [SearchResult] is based on
+     * item from [com.mapbox.search.record.IndexableDataProvider], null otherwise.
      */
-    public val record: IndexableRecord
-}
+    @IgnoredOnParcel
+    public val indexableRecord: IndexableRecord? =
+        base.indexableRecord?.sdkResolvedRecord as? IndexableRecord
 
-@JvmSynthetic
-internal fun BaseSearchResult.mapToPlatform(): SearchResult {
-    return when (val resultType = baseType) {
-        is BaseSearchResult.Type.ServerResult -> {
-            ServerSearchResultImpl(
-                types = types.map { it.mapToPlatform() },
-                rawSearchResult = rawSearchResult,
-                requestOptions = requestOptions.mapToPlatform(),
-            )
-        }
-        is BaseSearchResult.Type.IndexableRecordSearchResult -> {
-            check(resultType.record.sdkResolvedRecord is IndexableRecord)
+    /**
+     * @suppress
+     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-            IndexableRecordSearchResultImpl(
-                record = resultType.record.sdkResolvedRecord as IndexableRecord,
-                rawSearchResult = rawSearchResult,
-                requestOptions = requestOptions.mapToPlatform(),
-            )
-        }
+        other as SearchResult
+
+        if (base != other.base) return false
+
+        return true
     }
-}
 
-@JvmSynthetic
-internal fun SearchResult.mapToBase(): BaseSearchResult {
-    return when (this) {
-        is ServerSearchResultImpl -> {
-            BaseServerSearchResultImpl(
-                types = types.map { it.mapToBase() },
-                rawSearchResult = rawSearchResult,
-                requestOptions = requestOptions.mapToBase()
-            )
-        }
-        is IndexableRecordSearchResultImpl -> {
-            BaseIndexableRecordSearchResultImpl(
-                record = record.mapToBase(),
-                rawSearchResult = rawSearchResult,
-                requestOptions = requestOptions.mapToBase(),
-            )
-        }
+    /**
+     * @suppress
+     */
+    override fun hashCode(): Int {
+        return base.hashCode()
+    }
+
+    /**
+     * @suppress
+     */
+    override fun toString(): String {
+        return "SearchResult(" +
+                "requestOptions=$requestOptions, " +
+                "id='$id', " +
+                "name='$name', " +
+                "matchingName=$matchingName, " +
+                "descriptionText=$descriptionText, " +
+                "address=$address, " +
+                "routablePoints=$routablePoints, " +
+                "categories=$categories, " +
+                "makiIcon=$makiIcon, " +
+                "coordinate=$coordinate, " +
+                "accuracy=$accuracy, " +
+                "types=$types, " +
+                "etaMinutes=$etaMinutes, " +
+                "metadata=$metadata, " +
+                "externalIDs=$externalIDs, " +
+                "distanceMeters=$distanceMeters, " +
+                "serverIndex=$serverIndex, " +
+                "indexableRecord=$indexableRecord" +
+                ")"
     }
 }

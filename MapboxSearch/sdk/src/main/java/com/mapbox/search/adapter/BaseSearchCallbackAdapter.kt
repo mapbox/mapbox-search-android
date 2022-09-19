@@ -5,11 +5,11 @@ import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.mapToPlatform
-import com.mapbox.search.result.mapToPlatform
+import com.mapbox.search.result.SearchResult
 
 internal class BaseSearchCallbackAdapter(private val callback: SearchCallback) : BaseSearchCallback {
     override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
-        callback.onResults(results.map { it.mapToPlatform() }, responseInfo.mapToPlatform())
+        callback.onResults(results.map { SearchResult(it) }, responseInfo.mapToPlatform())
     }
 
     override fun onError(e: Exception) {
