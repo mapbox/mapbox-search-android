@@ -56,19 +56,16 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         searchEngine.addEngineReadyCallback(engineReadyCallback)
 
-        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
-        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+        val tileRegionId = "Washington DC"
+        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
 
         val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
             .geometry(dcLocation)
             .acceptExpired(true)
             .build()
-
-        Log.i("SearchApiExample", "Loading tiles...")
-
-        val tileRegionId = "Washington DC"
 
         searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
             override fun onIndexChange(event: OfflineIndexChangeEvent) {
@@ -88,17 +85,18 @@ class OfflineSearchKotlinExampleActivity : Activity() {
             }
         })
 
+        Log.i("SearchApiExample", "Loading tiles...")
+
         tilesLoadingTask = tileStore.loadTileRegion(
             tileRegionId,
             tileRegionLoadOptions,
             { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
             { result ->
-                val printableResult = if (result.isValue) {
-                    result.value
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
                 } else {
-                    result.error
+                    Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
                 }
-                Log.i("SearchApiExample", "$tileRegionId loading result: $printableResult")
             }
         )
     }

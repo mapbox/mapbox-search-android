@@ -95,7 +95,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val listener = BlockingOnIndexChangeListener(1)
         searchEngine.addOnIndexChangeListener(listener)
 
-        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -136,7 +136,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val listener = BlockingOnIndexChangeListener(1)
         searchEngine.addOnIndexChangeListener(listener)
 
-        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -209,7 +209,7 @@ internal class OfflineSearchEngineIntegrationTest {
 
     @Test
     fun testDataLoading() {
-        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
