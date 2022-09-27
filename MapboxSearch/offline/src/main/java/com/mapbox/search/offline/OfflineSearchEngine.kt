@@ -90,42 +90,6 @@ public interface OfflineSearchEngine {
     public fun selectTileset(dataset: String?, version: String?)
 
     /**
-     * Creates TilesetDescriptor for offline search index data using the specified dataset and version.
-     * Downloaded data will include addresses and places.
-     *
-     * @param dataset Tiles dataset.
-     * @param version Tiles version, chosen automatically if empty.
-     */
-    public fun createTilesetDescriptor(dataset: String, version: String): TilesetDescriptor
-
-    /**
-     * Creates TilesetDescriptor for offline search index data using default dataset and version.
-     * Downloaded data will include addresses and places.
-     */
-    public fun createTilesetDescriptor(): TilesetDescriptor = createTilesetDescriptor(
-        dataset = OfflineSearchEngineSettings.DEFAULT_DATASET,
-        version = OfflineSearchEngineSettings.DEFAULT_VERSION,
-    )
-
-    /**
-     * Creates TilesetDescriptor for offline search using the specified dataset and version.
-     * Downloaded data will include only places.
-     *
-     * @param dataset Tiles dataset.
-     * @param version Tiles version, chosen automatically if empty.
-     */
-    public fun createPlacesTilesetDescriptor(dataset: String, version: String): TilesetDescriptor
-
-    /**
-     * Creates TilesetDescriptor for offline search using the specified dataset and version.
-     * Downloaded data will include only places.
-     */
-    public fun createPlacesTilesetDescriptor(): TilesetDescriptor = createPlacesTilesetDescriptor(
-        dataset = OfflineSearchEngineSettings.DEFAULT_DATASET,
-        version = OfflineSearchEngineSettings.DEFAULT_VERSION,
-    )
-
-    /**
      * Performs forward geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
      * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
@@ -349,6 +313,38 @@ public interface OfflineSearchEngine {
                 requestContextProvider = requestContextProvider,
                 searchResultFactory = searchResultFactory,
             )
+        }
+
+        /**
+         * Creates TilesetDescriptor for offline search index data using the specified dataset and version.
+         * Downloaded data will include addresses and places.
+         *
+         * @param dataset Tiles dataset.
+         * @param version Tiles version, chosen automatically if empty.
+         */
+        @JvmStatic
+        @JvmOverloads
+        public fun createTilesetDescriptor(
+            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
+            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+        ): TilesetDescriptor {
+            return CoreSearchEngine.createTilesetDescriptor(dataset, version)
+        }
+
+        /**
+         * Creates TilesetDescriptor for offline search using the specified dataset and version.
+         * Downloaded data will include only places.
+         *
+         * @param dataset Tiles dataset.
+         * @param version Tiles version, chosen automatically if empty.
+         */
+        @JvmStatic
+        @JvmOverloads
+        public fun createPlacesTilesetDescriptor(
+            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
+            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+        ): TilesetDescriptor {
+            return CoreSearchEngine.createPlacesTilesetDescriptor(dataset, version)
         }
     }
 }

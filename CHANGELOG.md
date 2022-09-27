@@ -3,6 +3,7 @@
 ## 1.0.0-beta.37-SNAPSHOT
 
 ### Breaking changes
+- [OFFLINE] `OfflineSearchEngine`'s functions `createTilesetDescriptor()` and `createPlacesTilesetDescriptor()` are static now.
 - [CORE] `SearchSuggestion.categories`, and `SearchResult.categories` are nullable properties now. These properties are null for non-POI search results.
 - [CORE] `ApiType.AUTOFILL` has been removed. Use `Autofill` SDK instead.
 - [CORE] `MapboxSearcSdk.createSearchEngine()`, and `MapboxSearcSdk.createSearchEngineWithBuiltInDataProviders()` functions have been moved to `SearchEngine.createSearchEngine()`, and `SearchEngine.createSearchEngineWithBuiltInDataProviders()`.

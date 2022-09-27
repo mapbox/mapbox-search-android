@@ -8,6 +8,9 @@ import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.offline.OfflineIndexChangeEvent
+import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
+import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineReverseGeoOptions
 import com.mapbox.search.offline.OfflineSearchCallback
@@ -53,9 +56,10 @@ class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
 
         searchEngine.addEngineReadyCallback(engineReadyCallback)
 
-        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
-        val descriptors = listOf(searchEngine.createTilesetDescriptor())
+        val tileRegionId = "Washington DC"
+        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
 
         val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -63,21 +67,34 @@ class OfflineReverseGeocodingKotlinExampleActivity : Activity() {
             .acceptExpired(true)
             .build()
 
-        Log.i("SearchApiExample", "Loading tiles...")
+        searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
+            override fun onIndexChange(event: OfflineIndexChangeEvent) {
+                if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
+                    Log.i("SearchApiExample", "$tileRegionId was successfully added or updated")
 
-        tilesLoadingTask = tileStore.loadTileRegion(
-            "Washington DC",
-            tileRegionLoadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
-            { region ->
-                if (region.isValue) {
-                    Log.i("SearchApiExample", "Tiles successfully loaded")
                     searchRequestTask = searchEngine.reverseGeocoding(
                         OfflineReverseGeoOptions(center = dcLocation),
                         searchCallback
                     )
+                }
+            }
+
+            override fun onError(event: OfflineIndexErrorEvent) {
+                Log.i("SearchApiExample", "Offline index error: $event")
+            }
+        })
+
+        Log.i("SearchApiExample", "Loading tiles...")
+
+        tilesLoadingTask = tileStore.loadTileRegion(
+            tileRegionId,
+            tileRegionLoadOptions,
+            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
                 } else {
-                    Log.i("SearchApiExample", "Tiles loading error: ${region.error}")
+                    Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
                 }
             }
         )

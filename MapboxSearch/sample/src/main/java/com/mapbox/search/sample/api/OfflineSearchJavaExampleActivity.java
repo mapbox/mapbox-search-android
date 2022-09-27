@@ -65,9 +65,10 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
 
         searchEngine.addEngineReadyCallback(engineReadyCallback);
 
-        final Point dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516);
+        final List<TilesetDescriptor> descriptors = Collections.singletonList(OfflineSearchEngine.createTilesetDescriptor());
 
-        final List<TilesetDescriptor> descriptors = Collections.singletonList(searchEngine.createTilesetDescriptor());
+        final String tileRegionId = "Washington DC";
+        final Point dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516);
 
         final TileRegionLoadOptions tileRegionLoadOptions = new TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -75,14 +76,10 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
             .acceptExpired(true)
             .build();
 
-        Log.i("SearchApiExample", "Loading tiles...");
-
-        final String tileRegionId = "Washington DC";
-
         searchEngine.addOnIndexChangeListener(new OfflineSearchEngine.OnIndexChangeListener() {
             @Override
             public void onIndexChange(@NonNull OfflineIndexChangeEvent event) {
-                if (event.getRegionId().equals(tileRegionId) && (event.getType() == EventType.ADD || event.getType() == EventType.UPDATE)) {
+                if (tileRegionId.equals(event.getRegionId()) && (event.getType() == EventType.ADD || event.getType() == EventType.UPDATE)) {
                     Log.i("SearchApiExample", tileRegionId + " was successfully added or updated");
 
                     searchRequestTask = searchEngine.search(
@@ -99,18 +96,18 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
             }
         });
 
+        Log.i("SearchApiExample", "Loading tiles...");
+
         tilesLoadingTask = tileStore.loadTileRegion(
             tileRegionId,
             tileRegionLoadOptions,
             progress -> Log.i("SearchApiExample", "Loading progress: " + progress),
             result -> {
-                final Object printableResult;
                 if (result.isValue()) {
-                    printableResult = result.getValue();
+                    Log.i("SearchApiExample", "Tiles successfully loaded: " + result.getValue());
                 } else {
-                    printableResult = result.getError();
+                    Log.i("SearchApiExample", "Tiles loading error: " + result.getError());
                 }
-                Log.i("SearchApiExample", tileRegionId + " loading result: " + printableResult);
             }
         );
     }

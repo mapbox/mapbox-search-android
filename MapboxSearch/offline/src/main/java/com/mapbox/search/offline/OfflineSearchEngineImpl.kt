@@ -1,11 +1,9 @@
 package com.mapbox.search.offline
 
-import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreOfflineIndexObserver
-import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
@@ -55,14 +53,6 @@ internal class OfflineSearchEngineImpl(
 
     override fun selectTileset(dataset: String?, version: String?) {
         coreEngine.selectTileset(dataset, version)
-    }
-
-    override fun createPlacesTilesetDescriptor(dataset: String, version: String): TilesetDescriptor {
-        return CoreSearchEngine.createPlacesTilesetDescriptor(dataset, version)
-    }
-
-    override fun createTilesetDescriptor(dataset: String, version: String): TilesetDescriptor {
-        return CoreSearchEngine.createTilesetDescriptor(dataset, version)
     }
 
     override fun search(

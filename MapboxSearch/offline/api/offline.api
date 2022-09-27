@@ -95,10 +95,12 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun addOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
 	public abstract fun addOnIndexChangeListener (Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
 	public static fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
-	public abstract fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
-	public abstract fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public abstract fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
-	public abstract fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun getSettings ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
@@ -113,13 +115,19 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 
 public final class com/mapbox/search/offline/OfflineSearchEngine$Companion {
 	public final fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
+	public final fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static synthetic fun createPlacesTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
+	public static synthetic fun createTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
 }
 
 public final class com/mapbox/search/offline/OfflineSearchEngine$DefaultImpls {
 	public static fun addEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
 	public static fun addOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
-	public static fun createPlacesTilesetDescriptor (Lcom/mapbox/search/offline/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
-	public static fun createTilesetDescriptor (Lcom/mapbox/search/offline/OfflineSearchEngine;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun searchAddressesNearby (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
