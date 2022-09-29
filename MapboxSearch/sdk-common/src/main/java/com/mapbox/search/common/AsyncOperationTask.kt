@@ -30,7 +30,7 @@ public interface AsyncOperationTask {
          */
         @JvmStatic
         @get:JvmName("getCompleted")
-        public val COMPLETED : AsyncOperationTask = object : AsyncOperationTask {
+        public val COMPLETED: AsyncOperationTask = object : AsyncOperationTask {
             override val isDone: Boolean
                 get() = true
 
