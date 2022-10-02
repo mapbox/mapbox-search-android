@@ -130,7 +130,7 @@ class AsyncOperationTaskImpl<T>(delegate: T? = null) : ExtendedAsyncOperationTas
 
         val COMPLETED = completed<Any>()
 
-        fun <T> completed(): AsyncOperationTaskImpl<T> {
+        private fun <T> completed(): AsyncOperationTaskImpl<T> {
             return AsyncOperationTaskImpl<T>().apply {
                 onComplete()
             }

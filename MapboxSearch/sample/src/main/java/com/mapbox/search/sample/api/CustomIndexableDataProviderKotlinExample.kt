@@ -153,7 +153,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(Unit)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun unregisterIndexableDataProviderEngine(
@@ -168,7 +168,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(isRemoved)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override operator fun get(
@@ -179,14 +179,14 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(records[id])
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): AsyncOperationTask {
             executor.execute {
                 callback.onComplete(ArrayList(records.values))
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun contains(
@@ -197,7 +197,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(records[id] != null)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
@@ -208,7 +208,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(Unit)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun upsertAll(
@@ -225,7 +225,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(Unit)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
@@ -236,7 +236,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(isRemoved)
             }
-            return CompletedAsyncOperationTask
+            return AsyncOperationTask.COMPLETED
         }
 
         override fun clear(executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
@@ -247,20 +247,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             executor.execute {
                 callback.onComplete(Unit)
             }
-            return CompletedAsyncOperationTask
-        }
-    }
-
-    private object CompletedAsyncOperationTask : AsyncOperationTask {
-
-        override val isDone: Boolean
-            get() = true
-
-        override val isCancelled: Boolean
-            get() = false
-
-        override fun cancel() {
-            // Do nothing
+            return AsyncOperationTask.COMPLETED
         }
     }
 }

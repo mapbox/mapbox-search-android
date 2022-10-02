@@ -185,7 +185,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             dataProviderEngine.upsertAll(records.values());
             dataProviderEngines.add(dataProviderEngine);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -209,7 +209,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
                 dataProviderEngine.clear();
             }
             executor.execute(() -> callback.onComplete(isRemoved));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -229,7 +229,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull CompletionCallback<? super R> callback
         ) {
             executor.execute(() -> callback.onComplete(records.get(id)));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -242,7 +242,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         @Override
         public AsyncOperationTask getAll(@NonNull Executor executor, @NonNull CompletionCallback<List<R>> callback) {
             executor.execute(() -> callback.onComplete(new ArrayList<>(records.values())));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -259,7 +259,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             @NonNull CompletionCallback<Boolean> callback
         ) {
             executor.execute(() -> callback.onComplete(records.get(id) != null));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -280,7 +280,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             }
             records.put(record.getId(), record);
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -303,7 +303,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
                 this.records.put(record.getId(), record);
             }
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -324,7 +324,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             }
             boolean isRemoved = records.remove(id) != null;
             executor.execute(() -> callback.onComplete(isRemoved));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
@@ -341,37 +341,13 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             }
             records.clear();
             executor.execute(() -> callback.onComplete(Unit.INSTANCE));
-            return CompletedAsyncOperationTask.getInstance();
+            return AsyncOperationTask.getCompleted();
         }
 
         @NonNull
         @Override
         public AsyncOperationTask clear(@NonNull CompletionCallback<Unit> callback) {
             return clear(mainThreadExecutor, callback);
-        }
-    }
-
-    private static class CompletedAsyncOperationTask implements AsyncOperationTask {
-
-        private static final CompletedAsyncOperationTask INSTANCE = new CompletedAsyncOperationTask();
-
-        public static CompletedAsyncOperationTask getInstance() {
-            return INSTANCE;
-        }
-
-        @Override
-        public boolean isDone() {
-            return true;
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-
-        @Override
-        public void cancel() {
-            // Do nothing
         }
     }
 }

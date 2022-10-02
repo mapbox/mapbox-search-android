@@ -24,6 +24,9 @@
 - [UI] Function signature of `SearchResultsView.SearchListener` have been changed for Java users.
 - [UI] `SearchPlace` factory functions `createFromSearchResult()`, `createFromIndexableRecord()` no longer accept `coordinate: Point` arguments. Instead, coordinate will be taken from provided `SearchResult`, and `IndexableRecord` objects.
 
+### New features
+- [Search SDK COMMON] `AsyncOperationTask` provides `AsyncOperationTask.COMPLETED` field which represents completed task.
+
 ### Mapbox dependencies
 - Search Native SDK `0.60.0`
 - Common SDK `23.1.0-beta.1`
