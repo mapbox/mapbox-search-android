@@ -184,7 +184,6 @@ public class SearchResultsView @JvmOverloads constructor(
 
     /**
      * Options used for [SearchResultsView] configuration.
-     * // TODO FIXME do we need this?
      */
     public class Configuration public constructor(
 

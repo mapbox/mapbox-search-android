@@ -1,7 +1,13 @@
 public abstract interface class com/mapbox/search/common/AsyncOperationTask {
+	public static final field Companion Lcom/mapbox/search/common/AsyncOperationTask$Companion;
 	public abstract fun cancel ()V
+	public static fun getCompleted ()Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun isCancelled ()Z
 	public abstract fun isDone ()Z
+}
+
+public final class com/mapbox/search/common/AsyncOperationTask$Companion {
+	public final fun getCompleted ()Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public final class com/mapbox/search/common/BuildConfig {

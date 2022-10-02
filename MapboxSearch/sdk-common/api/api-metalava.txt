@@ -3,6 +3,7 @@ package com.mapbox.search.common {
 
   public interface AsyncOperationTask {
     method public void cancel();
+    method public default static com.mapbox.search.common.AsyncOperationTask getCompleted();
     method public boolean isCancelled();
     method public boolean isDone();
     property public abstract boolean isCancelled;

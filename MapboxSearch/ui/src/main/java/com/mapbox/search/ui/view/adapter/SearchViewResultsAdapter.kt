@@ -94,6 +94,9 @@ internal class SearchViewResultsAdapter(
                 holder as MissingResultFeedbackViewHolder
                 holder.bind(item)
             }
+            else -> {
+                throw IllegalStateException("Unknown item $item")
+            }
         }
     }
 
