@@ -122,6 +122,10 @@ internal class ReverseGeocodingSearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -164,6 +168,10 @@ internal class ReverseGeocodingSearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -197,6 +205,10 @@ internal class ReverseGeocodingSearchTest {
                 )
 
                 Then("Exception from core response should be forwarded to callback", slotCallbackError.captured, exception)
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -221,6 +233,38 @@ internal class ReverseGeocodingSearchTest {
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search call cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.reverseGeocoding(eq(TEST_SEARCH_OPTIONS.mapToCore()), capture(slotSearchCallback)) } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Search request cancelled by the Search SDK") {
+                val callback = mockk<SearchCallback>(relaxed = true)
+
+                val task = searchEngine.search(TEST_SEARCH_OPTIONS, callback)
+                task.cancel()
+
+                Then("Task is cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onResults(any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
                 }
             }
         }

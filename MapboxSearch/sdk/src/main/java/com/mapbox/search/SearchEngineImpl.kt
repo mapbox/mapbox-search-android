@@ -330,19 +330,22 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback
     ): AsyncOperationTask {
-        return makeRequest(BaseSearchCallbackAdapter(callback)) { request ->
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
-            coreEngine.reverseGeocoding(
+            val requestId = coreEngine.reverseGeocoding(
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     isOffline = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 

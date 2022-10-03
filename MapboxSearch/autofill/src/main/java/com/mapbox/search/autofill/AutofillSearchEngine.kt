@@ -279,19 +279,22 @@ internal class AutofillSearchEngine(
         executor: Executor,
         callback: BaseSearchCallback,
     ): AsyncOperationTask {
-        return makeRequest(callback) { request ->
+        return makeRequest(callback) { task ->
             val requestContext = requestContextProvider.provide(CoreApiType.AUTOFILL)
-            coreEngine.reverseGeocoding(
+            val requestId = coreEngine.reverseGeocoding(
                 options,
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
-                    searchRequestTask = request,
+                    searchRequestTask = task,
                     searchRequestContext = requestContext,
                     isOffline = false,
                 )
             )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
         }
     }
 
