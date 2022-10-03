@@ -103,7 +103,7 @@ public class TestActivity : AppCompatActivity() {
             isVisible = false
         }
 
-        val searchEngine = SearchEngine.Companion.createSearchEngineWithBuiltInDataProviders(
+        val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(
                 accessToken = BuildConfig.MAPBOX_API_TOKEN,

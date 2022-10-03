@@ -42,7 +42,7 @@ class CustomThemeActivity : AppCompatActivity() {
             isVisible = false
         }
 
-        val searchEngine = SearchEngine.Companion.createSearchEngineWithBuiltInDataProviders(
+        val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             settings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )
 

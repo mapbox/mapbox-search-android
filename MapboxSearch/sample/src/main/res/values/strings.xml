@@ -1,5 +1,6 @@
 <resources>
 
+    <string name="action_address_autofill_ui_example">Open address autofill UI example</string>
     <string name="action_address_autofill_example">Open address autofill example</string>
     <string name="action_open_custom_theme_example">Open custom theme example</string>
     <string name="action_open_forward_geocoding_kt_example">Open forward geocoding Kotlin example</string>
@@ -26,4 +27,10 @@
     <string name="simple_ui_toolbar_title">Mapbox search</string>
 
     <string name="query_hint">Where to?</string>
+
+    <string name="address_autofill_query_hint">Where to deliver?</string>
+    <string name="address_autofill_address_state_hint">State</string>
+    <string name="address_autofill_address_zip_hint">Zip Code</string>
+    <string name="address_autofill_address_city_hint">City</string>
+    <string name="address_autofill_address_apt_hint">Apt., suite, etc. (optional)</string>
 </resources>

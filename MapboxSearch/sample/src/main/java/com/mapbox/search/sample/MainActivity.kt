@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             isVisible = false
         }
 
-        val searchEngine = SearchEngine.Companion.createSearchEngineWithBuiltInDataProviders(
+        val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = apiType,
             settings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
         )
@@ -341,6 +341,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.open_address_autofill_ui_example -> {
+                startActivity(Intent(this, AddressAutofillUiActivity::class.java))
+                true
+            }
             R.id.open_address_autofill_example -> {
                 startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
                 true
