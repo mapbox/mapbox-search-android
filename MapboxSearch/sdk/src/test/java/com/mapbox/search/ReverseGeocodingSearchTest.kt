@@ -90,6 +90,7 @@ internal class ReverseGeocodingSearchTest {
 
             every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -133,6 +134,7 @@ internal class ReverseGeocodingSearchTest {
 
             every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -180,6 +182,7 @@ internal class ReverseGeocodingSearchTest {
                 every { spyResponse.results } throws exception
                 every { spyResponse.request } throws exception
                 slotSearchCallback.captured.run(spyResponse)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -206,6 +209,7 @@ internal class ReverseGeocodingSearchTest {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.reverseGeocoding(eq(TEST_SEARCH_OPTIONS.mapToCore()), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
+                TEST_REQUEST_ID
             }
 
             When("Search request cancelled by the Search SDK") {
@@ -223,6 +227,8 @@ internal class ReverseGeocodingSearchTest {
     }
 
     private companion object {
+
+        const val TEST_REQUEST_ID = 1L
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_OPTIONS = ReverseGeoOptions(center = TEST_POINT)

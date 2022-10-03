@@ -422,7 +422,7 @@ internal class AnalyticsServiceImplTest {
         const val TEST_RAW_EVENT = "{\"event\":\"search.feedback\"}"
 
         const val TEST_SERIALIZED_FEEDBACK_EVENT_RAW = "{\"event\":\"search.feedback\"}"
-        val TEST_SERIALIZED_FEEDBACK_EVENT = Event(requireNotNull(Value.fromJson(TEST_SERIALIZED_FEEDBACK_EVENT_RAW).value))
+        val TEST_SERIALIZED_FEEDBACK_EVENT = Event(requireNotNull(Value.fromJson(TEST_SERIALIZED_FEEDBACK_EVENT_RAW).value), null)
 
         val TEST_LOCATION: Point = Point.fromLngLat(10.0, 20.0)
         val TEST_FEEDBACK_EVENT = FeedbackEvent("Missing routable point", "Fix, please!")
