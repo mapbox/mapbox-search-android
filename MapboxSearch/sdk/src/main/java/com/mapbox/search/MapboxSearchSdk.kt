@@ -134,7 +134,7 @@ internal object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, UserAgentProvider.userAgent))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, UserAgentProvider.userAgent, null))
 
         return AnalyticsServiceImpl(
             context = application,

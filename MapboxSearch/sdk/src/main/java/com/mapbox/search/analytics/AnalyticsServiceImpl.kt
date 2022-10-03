@@ -224,7 +224,7 @@ internal class AnalyticsServiceImpl(
     private fun sendEventJson(eventJson: String) {
         val eventValue = Value.fromJson(eventJson)
         if (eventValue.isValue) {
-            val event = Event(eventValue.value!!)
+            val event = Event(eventValue.value!!, null)
             eventsService.sendEvent(event) { error ->
                 if (error != null) {
                     loge("Unable to send event: $error")

@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.37-SNAPSHOT
+## 1.0.0-beta.37
 
 ### Breaking changes
 - [OFFLINE] `OfflineSearchEngine`'s functions `createTilesetDescriptor()` and `createPlacesTilesetDescriptor()` are static now.
@@ -16,8 +16,8 @@
 - [UI] `SearchPlace` factory functions `createFromSearchResult()`, `createFromIndexableRecord()` no longer accept `coordinate: Point` arguments. Instead, coordinate will be taken from provided `SearchResult`, and `IndexableRecord` objects.
 
 ### Mapbox dependencies
-- Search Native SDK `0.59.0`
-- Common SDK `23.0.0`
+- Search Native SDK `0.60.0`
+- Common SDK `23.1.0-beta.1`
 - Kotlin `1.5.31`
 
 

@@ -90,6 +90,7 @@ internal class ReverseGeocodingSearchTest {
 
             every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -121,6 +122,10 @@ internal class ReverseGeocodingSearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -133,6 +138,7 @@ internal class ReverseGeocodingSearchTest {
 
             every { coreEngine.reverseGeocoding(capture(slotSearchOptions), capture(slotSearchCallback)) }.answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -162,6 +168,10 @@ internal class ReverseGeocodingSearchTest {
                         )
                     )
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -180,6 +190,7 @@ internal class ReverseGeocodingSearchTest {
                 every { spyResponse.results } throws exception
                 every { spyResponse.request } throws exception
                 slotSearchCallback.captured.run(spyResponse)
+                TEST_REQUEST_ID
             }
 
             When("Initial search called") {
@@ -194,6 +205,10 @@ internal class ReverseGeocodingSearchTest {
                 )
 
                 Then("Exception from core response should be forwarded to callback", slotCallbackError.captured, exception)
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
             }
         }
     }
@@ -206,6 +221,7 @@ internal class ReverseGeocodingSearchTest {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.reverseGeocoding(eq(TEST_SEARCH_OPTIONS.mapToCore()), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
+                TEST_REQUEST_ID
             }
 
             When("Search request cancelled by the Search SDK") {
@@ -218,11 +234,45 @@ internal class ReverseGeocodingSearchTest {
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
                 }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check search call cancellation initiated by user`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.reverseGeocoding(eq(TEST_SEARCH_OPTIONS.mapToCore()), capture(slotSearchCallback)) } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Search request cancelled by the Search SDK") {
+                val callback = mockk<SearchCallback>(relaxed = true)
+
+                val task = searchEngine.search(TEST_SEARCH_OPTIONS, callback)
+                task.cancel()
+
+                Then("Task is cancelled", true, task.isCancelled)
+
+                VerifyNo("Callback is not called") {
+                    callback.onResults(any(), any())
+                    callback.onError(any())
+                }
+
+                VerifyOnce("Core cancel() is called with correct request id") {
+                    coreEngine.cancel(TEST_REQUEST_ID)
+                }
             }
         }
     }
 
     private companion object {
+
+        const val TEST_REQUEST_ID = 1L
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_OPTIONS = ReverseGeoOptions(center = TEST_POINT)
