@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/mapbox_search_sdk_list_item_icon_horizontal_margin"
         android:layout_marginEnd="@dimen/mapbox_search_sdk_dimen_4x"
+        android:ellipsize="end"
         android:maxLines="1"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/search_result_address"

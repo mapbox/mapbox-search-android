@@ -2,6 +2,13 @@
 
 ## 1.0.0-beta.38-SNAPSHOT
 
+### Breaking changes
+- [UI] `SearchResultsView` became a generic view that can work with any `SearchEngine` or `Use case`. Its API has been changed. Use `SearchEngineUiAdapter` to adapt search engines for the view. See [MainActivity](https://github.com/mapbox/mapbox-search-android/blob/main/MapboxSearch/sample/src/main/java/com/mapbox/search/sample/MainActivity.kt) for usage sample.
+
+### New features
+- [UI] Now UI module provides `AddressAutofillUiAdapter` that helps to display `AddressAutofill` suggestions on the `SearchResultsView`.
+- [Search SDK COMMON] `AsyncOperationTask` provides `AsyncOperationTask.COMPLETED` field which represents completed task.
+
 ### Mapbox dependencies
 - Search Native SDK `0.60.0`
 - Common SDK `23.1.0-beta.1`

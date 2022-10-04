@@ -29,15 +29,18 @@ import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
 import com.mapbox.search.ui.test.R
 import com.mapbox.search.ui.tools.MockWebServerRule
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
@@ -56,6 +59,7 @@ public class TestActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
 
     private lateinit var searchResultsView: SearchResultsView
+    private lateinit var searchEngineUiAdapter: SearchEngineUiAdapter
     private lateinit var searchPlaceView: SearchPlaceBottomSheetView
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
@@ -93,25 +97,42 @@ public class TestActivity : AppCompatActivity() {
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
                 SearchResultsView.Configuration(
-                    commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
-                    searchEngineSettings = SearchEngineSettings(
-                        accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                        locationEngine = locationEngine,
-                        singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
-                    ),
-                    offlineSearchEngineSettings = OfflineSearchEngineSettings(
-                        accessToken = BuildConfig.MAPBOX_API_TOKEN,
-                        locationEngine = locationEngine,
-                    ),
-                    apiType = ApiType.SBS,
+                    CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL)
                 )
             )
             isVisible = false
         }
 
-        searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+        val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            apiType = ApiType.SBS,
+            settings = SearchEngineSettings(
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                locationEngine = locationEngine,
+                singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
+            )
+        )
 
-            override fun onCategoryResult(
+        val offlineSearchEngine = OfflineSearchEngine.create(
+            OfflineSearchEngineSettings(
+                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                locationEngine = locationEngine,
+            )
+        )
+
+        searchEngineUiAdapter = SearchEngineUiAdapter(
+            view = searchResultsView,
+            searchEngine = searchEngine,
+            offlineSearchEngine = offlineSearchEngine,
+            locationEngine = locationEngine,
+        )
+
+        searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
+
+            override fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                // Nothing to do
+            }
+
+            override fun onCategoryResultsShown(
                 suggestion: SearchSuggestion,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
@@ -119,29 +140,29 @@ public class TestActivity : AppCompatActivity() {
                 closeSearchView()
             }
 
-            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                // Nothing to do
+            override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
+                closeSearchView()
             }
 
-            override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
+            override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
+                return false
+            }
+
+            override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
             }
 
-            override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+            override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
-            }
-
-            override fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                closeSearchView()
             }
 
             override fun onError(e: Exception) {
                 Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
+            override fun onHistoryItemClick(historyRecord: HistoryRecord) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
@@ -152,13 +173,13 @@ public class TestActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
+            override fun onPopulateQueryClick(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
                 if (::searchView.isInitialized) {
                     searchView.setQuery(suggestion.name, true)
                 }
             }
 
-            override fun onFeedbackClicked(responseInfo: ResponseInfo) {
+            override fun onFeedbackItemClick(responseInfo: ResponseInfo) {
                 // Not implemented
             }
         })
@@ -213,7 +234,7 @@ public class TestActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchResultsView.search(newText)
+                searchEngineUiAdapter.search(newText)
                 return false
             }
         })

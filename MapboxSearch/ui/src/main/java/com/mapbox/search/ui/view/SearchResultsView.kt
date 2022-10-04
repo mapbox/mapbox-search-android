@@ -2,49 +2,15 @@ package com.mapbox.search.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.annotation.UiThread
-import androidx.core.view.postDelayed
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.mapbox.common.ReachabilityFactory
-import com.mapbox.common.ReachabilityInterface
-import com.mapbox.search.ApiType
-import com.mapbox.search.CompletionCallback
-import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchCallback
-import com.mapbox.search.SearchEngine
-import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchSelectionCallback
-import com.mapbox.search.SearchSuggestionsCallback
-import com.mapbox.search.ServiceProvider
-import com.mapbox.search.base.concurrent.checkMainThread
-import com.mapbox.search.base.logger.logd
-import com.mapbox.search.base.throwDebug
-import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.offline.OfflineResponseInfo
-import com.mapbox.search.offline.OfflineSearchCallback
-import com.mapbox.search.offline.OfflineSearchEngine
-import com.mapbox.search.offline.OfflineSearchEngineSettings
-import com.mapbox.search.offline.OfflineSearchOptions
-import com.mapbox.search.offline.OfflineSearchResult
-import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.ui.utils.HistoryRecordsInteractor
 import com.mapbox.search.ui.utils.OffsetItemDecoration
-import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
-import com.mapbox.search.ui.view.common.UiError
-import com.mapbox.search.ui.view.search.SearchContext
-import com.mapbox.search.ui.view.search.SearchHistoryViewHolder
-import com.mapbox.search.ui.view.search.SearchResultAdapterItem
-import com.mapbox.search.ui.view.search.SearchResultViewHolder
-import com.mapbox.search.ui.view.search.SearchResultsItemsCreator
-import com.mapbox.search.ui.view.search.SearchViewResultsAdapter
+import com.mapbox.search.ui.view.adapter.SearchHistoryViewHolder
+import com.mapbox.search.ui.view.adapter.SearchResultViewHolder
+import com.mapbox.search.ui.view.adapter.SearchViewResultsAdapter
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -59,20 +25,6 @@ public class SearchResultsView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : RecyclerView(wrapWithSearchTheme(outerContext), attrs, defStyleAttr) {
 
-    // TODO decouple View from Model
-    private lateinit var searchEngine: SearchEngine
-    private lateinit var offlineSearchEngine: OfflineSearchEngine
-    private lateinit var historyDataProvider: HistoryDataProvider
-
-    private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
-    private var networkReachabilityListenerId: Long = -1
-
-    private var currentSearchRequestTask: AsyncOperationTask? = null
-
-    private val historyRecordsInteractor = HistoryRecordsInteractor()
-    private var historyRecordsListener: HistoryRecordsInteractor.HistoryListener? = null
-    private var historyDelayedLoadingStateChangeTask: Runnable? = null
-
     /**
      * [SearchOptions] that will be used for search requests.
      */
@@ -80,132 +32,36 @@ public class SearchResultsView @JvmOverloads constructor(
 
     private var isInitialized = false
 
-    /**
-     * Search mode of this view, if mode is [SearchMode.ONLINE] [SearchEngine] will be used, [OfflineSearchEngine] otherwise.
-     */
-    public var searchMode: SearchMode = SearchMode.ONLINE
-        set(value) {
-            field = value
-            isOnlineSearch = value.isOnlineSearch(reachabilityInterface)
-        }
-
-    private var isOnlineSearch: Boolean = searchMode.isOnlineSearch(reachabilityInterface)
-        set(value) {
-            if (value == field) {
-                return
-            }
-            field = value
-
-            logd("isOnlineSearch changed: $value")
-            retrySearchRequest()
-        }
-
     private lateinit var searchAdapter: SearchViewResultsAdapter
-    private lateinit var itemsCreator: SearchResultsItemsCreator
-    private var asyncItemsCreatorTask: AsyncOperationTask? = null
 
-    private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
-        override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-            if (searchQuery.isNotEmpty()) {
-                showSuggestions(suggestions, responseInfo)
-                searchResultListeners.forEach { it.onSuggestions(suggestions, responseInfo) }
-            }
+    private val actionListeners = CopyOnWriteArrayList<ActionListener>()
+
+    /**
+     * Returns adapter items that are currently shown in this [RecyclerView]
+     */
+    public val adapterItems: List<SearchResultAdapterItem>
+        get() = searchAdapter.items
+
+    private val adapterListener = object : SearchViewResultsAdapter.Listener {
+
+        override fun onHistoryItemClick(item: SearchResultAdapterItem.History) {
+            actionListeners.forEach { it.onHistoryItemClick(item) }
         }
 
-        override fun onResult(
-            suggestion: SearchSuggestion,
-            result: SearchResult,
-            responseInfo: ResponseInfo
-        ) {
-            if (searchQuery.isNotEmpty()) {
-                searchResultListeners.forEach { it.onSearchResult(result, responseInfo) }
-            }
+        override fun onResultItemClick(item: SearchResultAdapterItem.Result) {
+            actionListeners.forEach { it.onResultItemClick(item) }
         }
 
-        override fun onCategoryResult(
-            suggestion: SearchSuggestion,
-            results: List<SearchResult>,
-            responseInfo: ResponseInfo
-        ) {
-            if (searchQuery.isNotEmpty()) {
-                showResults(results, responseInfo, SearchContext.CATEGORY)
-                searchResultListeners.forEach { it.onCategoryResult(suggestion, results, responseInfo) }
-            }
+        override fun onPopulateQueryClick(item: SearchResultAdapterItem.Result) {
+            actionListeners.forEach { it.onPopulateQueryClick(item) }
         }
 
-        override fun onError(e: Exception) {
-            if (searchQuery.isNotEmpty()) {
-                showError(UiError.fromException(e))
-                searchResultListeners.forEach { it.onError(e) }
-            }
-        }
-    }
-
-    private val offlineSearchCallback = object : OfflineSearchCallback {
-
-        override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-            if (searchQuery.isNotEmpty()) {
-                showResults(results, responseInfo)
-                searchResultListeners.forEach { it.onOfflineSearchResults(results, responseInfo) }
-            }
+        override fun onMissingResultFeedbackClick(item: SearchResultAdapterItem.MissingResultFeedback) {
+            actionListeners.forEach { it.onMissingResultFeedbackClick(item) }
         }
 
-        override fun onError(e: Exception) {
-            if (searchQuery.isNotEmpty()) {
-                showError(UiError.fromException(e))
-                searchResultListeners.forEach { it.onError(e) }
-            }
-        }
-    }
-
-    private var searchResultsShown = false
-    private var searchQuery: String = ""
-
-    private val searchResultListeners = CopyOnWriteArrayList<SearchListener>()
-    private val onSuggestionClickListeners = CopyOnWriteArrayList<OnSuggestionClickListener>()
-
-    private val innerSearchResultsCallback = object : SearchViewResultsAdapter.SearchListener {
-        override fun onSuggestionItemClicked(searchSuggestion: SearchSuggestion) {
-            val processed = onSuggestionClickListeners.any { it.onSuggestionClick(searchSuggestion) }
-            if (!processed) {
-                onSuggestionSelected(searchSuggestion)
-            }
-        }
-
-        override fun onResultItemClicked(
-            searchContext: SearchContext,
-            searchResult: SearchResult,
-            responseInfo: ResponseInfo
-        ) {
-            when (searchContext) {
-                SearchContext.CATEGORY -> {
-                    addToHistoryIfNeeded(searchResult)
-                }
-                SearchContext.REGULAR -> {
-                    // Do nothing
-                }
-            }
-            searchResultListeners.forEach { it.onSearchResult(searchResult, responseInfo) }
-        }
-
-        override fun onOfflineResultItemClicked(
-            searchResult: OfflineSearchResult,
-            responseInfo: OfflineResponseInfo
-        ) {
-            addToHistoryIfNeeded(searchResult)
-            searchResultListeners.forEach { it.onOfflineSearchResult(searchResult, responseInfo) }
-        }
-
-        override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
-            searchResultListeners.forEach { it.onHistoryItemClicked(historyRecord) }
-        }
-
-        override fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
-            searchResultListeners.forEach { it.onPopulateQueryClicked(suggestion, responseInfo) }
-        }
-
-        override fun onFeedbackClicked(responseInfo: ResponseInfo) {
-            searchResultListeners.forEach { it.onFeedbackClicked(responseInfo) }
+        override fun onErrorItemClick(item: SearchResultAdapterItem.Error) {
+            actionListeners.forEach { it.onErrorItemClick(item) }
         }
     }
 
@@ -228,27 +84,9 @@ public class SearchResultsView @JvmOverloads constructor(
         super.setLayoutManager(LinearLayoutManager(context))
         super.setAdapter(searchAdapter)
 
-        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            configuration.apiType,
-            configuration.searchEngineSettings
-        )
-
-        offlineSearchEngine = OfflineSearchEngine.create(configuration.offlineSearchEngineSettings)
-
-        historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
-
-        itemsCreator = SearchResultsItemsCreator(context, searchEngine.settings.locationEngine)
-
-        searchAdapter.searchResultsListener = innerSearchResultsCallback
+        searchAdapter.listener = adapterListener
 
         (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-
-        val helper = ItemTouchHelper(
-            HistoryItemSwipeCallback(
-                ItemTouchHelper.LEFT, searchAdapter, ::onHistoryRecordRemoved
-            )
-        )
-        helper.attachToRecyclerView(this)
 
         addItemDecoration(
             OffsetItemDecoration(
@@ -262,270 +100,17 @@ public class SearchResultsView @JvmOverloads constructor(
                 }
             )
         )
-
-        searchAdapter.onRetryClickListener = {
-            retrySearchRequest()
-        }
-
-        moveToInitialState()
     }
 
-    private fun checkInitialized() {
+    /**
+     * Sets [items] as [RecyclerView.Adapter]'s content.
+     * @throws IllegalStateException if [initialize] has not been called before earlier.
+     */
+    public fun setAdapterItems(items: List<SearchResultAdapterItem>) {
         check(isInitialized) {
             "Initialize this view first"
         }
-    }
-
-    private fun addToHistoryIfNeeded(searchResult: SearchResult) {
-        if (searchResult.indexableRecord is HistoryRecord) return
-
-        HistoryRecord(
-            id = searchResult.id,
-            name = searchResult.name,
-            descriptionText = searchResult.descriptionText,
-            address = searchResult.address,
-            routablePoints = searchResult.routablePoints,
-            categories = searchResult.categories,
-            makiIcon = searchResult.makiIcon,
-            coordinate = searchResult.coordinate,
-            type = searchResult.types.first(),
-            metadata = searchResult.metadata,
-            timestamp = System.currentTimeMillis(),
-        ).also {
-            addToHistoryIfNeeded(it)
-        }
-    }
-
-    private fun addToHistoryIfNeeded(searchResult: OfflineSearchResult) {
-        HistoryRecord(
-            id = searchResult.id,
-            name = searchResult.name,
-            descriptionText = searchResult.descriptionText,
-            address = searchResult.address?.mapToSdkSearchResultType(),
-            routablePoints = searchResult.routablePoints,
-            categories = null,
-            makiIcon = null,
-            coordinate = searchResult.coordinate,
-            type = searchResult.type.mapToSdkSearchResultType(),
-            metadata = null,
-            timestamp = System.currentTimeMillis(),
-        ).also {
-            addToHistoryIfNeeded(it)
-        }
-    }
-
-    private fun addToHistoryIfNeeded(historyRecord: HistoryRecord) {
-        historyDataProvider.upsert(
-            historyRecord,
-            object : CompletionCallback<Unit> {
-                override fun onComplete(result: Unit) {
-                    logd("Search result added to history")
-                }
-
-                override fun onError(e: Exception) {
-                    logd("Unable to add SearchResult to history: ${e.message}")
-                }
-            }
-        )
-    }
-
-    /**
-     * @suppress
-     */
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        networkReachabilityListenerId = reachabilityInterface.addListener {
-            isOnlineSearch = searchMode.isOnlineSearch(reachabilityInterface)
-        }
-
-        if (currentSearchRequestTask?.isCancelled == true) {
-            retrySearchRequest()
-        }
-    }
-
-    /**
-     * @suppress
-     */
-    override fun onDetachedFromWindow() {
-        cancelHistoryLoading()
-
-        currentSearchRequestTask?.cancel()
-
-        reachabilityInterface.removeListener(networkReachabilityListenerId)
-
-        super.onDetachedFromWindow()
-    }
-
-    private fun moveToInitialState() {
-        loadHistory()
-    }
-
-    private fun retrySearchRequest() {
-        search(searchQuery)
-    }
-
-    private fun onHistoryRecordRemoved(adapterPosition: Int, record: HistoryRecord) {
-        val newItems = searchAdapter.items.toMutableList().apply {
-            removeAt(adapterPosition)
-        }
-        moveToState(ViewState.History(newItems))
-
-        historyRecordsInteractor.remove(record)
-    }
-
-    private fun moveToState(state: ViewState) {
-        checkInitialized()
-
-        asyncItemsCreatorTask?.cancel()
-
-        when (state) {
-            is ViewState.Results,
-            is ViewState.EmptySearchResults,
-            is ViewState.Suggestions -> {
-                cancelHistoryLoading()
-            }
-            is ViewState.History -> {
-                cancelCurrentNetworkRequest()
-            }
-            is ViewState.Loading,
-            is ViewState.Error -> {
-                // Nothing to do here
-            }
-        }
-
-        searchResultsShown = state is ViewState.Suggestions || state is ViewState.Results
-        searchAdapter.items = state.items
-    }
-
-    /**
-     * Performs forward geocoding.
-     * Should be called on the main thread.
-     * @param query text to search.
-     * @param options options for search request.
-     *
-     * @throws [IllegalStateException] if [SearchResultsView.initialize] has not been called.
-     * @throws [IllegalStateException] if this method is called outside of the main thread.
-     */
-    @JvmOverloads
-    @UiThread
-    public fun search(query: String, options: SearchOptions = defaultSearchOptions) {
-        checkInitialized()
-        checkMainThread()
-
-        searchQuery = query
-        if (query.isEmpty()) {
-            loadHistory()
-        } else {
-            if (!searchResultsShown) {
-                showLoading()
-            }
-            cancelHistoryLoading()
-            cancelCurrentNetworkRequest()
-
-            currentSearchRequestTask = when (isOnlineSearch) {
-                true -> searchEngine.search(query, options, searchCallback)
-                false -> offlineSearchEngine.search(query, options.mapToOfflineOptions(), offlineSearchCallback)
-            }
-        }
-    }
-
-    private fun onSuggestionSelected(searchSuggestion: SearchSuggestion) {
-        cancelCurrentNetworkRequest()
-        currentSearchRequestTask = searchEngine.select(searchSuggestion, searchCallback)
-    }
-
-    private fun showLoading() {
-        moveToState(ViewState.Loading(itemsCreator.createForLoading()))
-    }
-
-    private fun showError(uiError: UiError) {
-        moveToState(ViewState.Error(itemsCreator.createForError(uiError)))
-    }
-
-    private fun showSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-        if (suggestions.isEmpty()) {
-            moveToState(ViewState.EmptySearchResults(itemsCreator.createForEmptySearchResults(responseInfo)))
-        } else {
-            moveToState(ViewState.Suggestions(itemsCreator.createForSearchSuggestions(suggestions, responseInfo)))
-        }
-    }
-
-    private fun showResults(results: List<SearchResult>, responseInfo: ResponseInfo, searchContext: SearchContext) {
-        if (results.isEmpty()) {
-            moveToState(ViewState.EmptySearchResults(itemsCreator.createForEmptySearchResults(responseInfo)))
-        } else {
-            asyncItemsCreatorTask?.cancel()
-            asyncItemsCreatorTask = itemsCreator.createForSearchResults(
-                results = results,
-                responseInfo = responseInfo,
-                searchContext = searchContext,
-            ) { items ->
-                moveToState(ViewState.Results(items))
-            }
-        }
-    }
-
-    private fun showResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-        if (results.isEmpty()) {
-            moveToState(ViewState.EmptySearchResults(itemsCreator.createForOfflineEmptySearchResults()))
-        } else {
-            asyncItemsCreatorTask?.cancel()
-            asyncItemsCreatorTask = itemsCreator.createForOfflineSearchResults(
-                results = results,
-                responseInfo = responseInfo,
-            ) { items ->
-                moveToState(ViewState.Results(items))
-            }
-        }
-    }
-
-    private fun loadHistory() {
-        if (historyRecordsListener != null) {
-            return
-        }
-
-        var isLoadingCompleted = false
-
-        val listener = object : HistoryRecordsInteractor.HistoryListener {
-            override fun onHistoryItems(items: List<Pair<HistoryRecord, Boolean>>) {
-                isLoadingCompleted = true
-                moveToState(
-                    ViewState.History(itemsCreator.createForHistory(items.sortedByDescending { it.first.timestamp }))
-                )
-            }
-
-            override fun onError(e: Exception) {
-                isLoadingCompleted = true
-                showError(UiError.UnknownError)
-                throwDebug(e) {
-                    "Unable to load history records: ${e.message}"
-                }
-            }
-        }
-
-        historyRecordsListener = listener
-        historyRecordsInteractor.subscribeToChanges(listener)
-
-        historyDelayedLoadingStateChangeTask = postDelayed(300) {
-            if (!isLoadingCompleted) {
-                showLoading()
-            }
-        }
-    }
-
-    private fun cancelCurrentNetworkRequest() {
-        currentSearchRequestTask?.cancel()
-    }
-
-    private fun cancelHistoryLoading() {
-        historyDelayedLoadingStateChangeTask?.let {
-            removeCallbacks(it)
-        }
-        historyRecordsListener?.let {
-            historyRecordsInteractor.unsubscribe(it)
-            historyRecordsListener = null
-        }
+        searchAdapter.items = items
     }
 
     /**
@@ -543,12 +128,12 @@ public class SearchResultsView @JvmOverloads constructor(
     }
 
     /**
-     * Adds a listener to be notified of search events.
+     * Adds a listener to be notified of view actions.
      *
-     * @param listener The listener to notify when a search event happened.
+     * @param listener The listener to notify when a view action happened.
      */
-    public fun addSearchListener(listener: SearchListener) {
-        searchResultListeners.add(listener)
+    public fun addActionListener(listener: ActionListener) {
+        actionListeners.add(listener)
     }
 
     /**
@@ -556,210 +141,55 @@ public class SearchResultsView @JvmOverloads constructor(
      *
      * @param listener The listener to remove.
      */
-    public fun removeSearchListener(listener: SearchListener) {
-        searchResultListeners.remove(listener)
+    public fun removeActionListener(listener: ActionListener) {
+        actionListeners.remove(listener)
     }
 
     /**
-     * Adds a listener to be notified of suggestion clicks.
-     *
-     * @param listener The listener to notify when a suggestion clicked.
+     * Search results view action listener.
      */
-    public fun addOnSuggestionClickListener(listener: OnSuggestionClickListener) {
-        onSuggestionClickListeners.add(listener)
-    }
-
-    /**
-     * Removes a previously added listener.
-     *
-     * @param listener The listener to remove.
-     */
-    public fun removeOnSuggestionClickListener(listener: OnSuggestionClickListener) {
-        onSuggestionClickListeners.remove(listener)
-    }
-
-    /**
-     * Interface for a listener to be invoked when a suggestion is clicked.
-     */
-    public fun interface OnSuggestionClickListener {
-
-        /**
-         * Called when a suggestion is clicked. This allows listeners to get a chance to process click on their own.
-         * [SearchResultsView] will not process the click if this function returns true.
-         * If multiple listeners are registered and any of them has processed the click, all the remaining listeners will not be invoked.
-         *
-         * @param searchSuggestion The clicked SearchSuggestion object.
-         * @return True if the listener has processed the click, false otherwise.
-         */
-        public fun onSuggestionClick(searchSuggestion: SearchSuggestion): Boolean
-    }
-
-    /**
-     * Search results view listener.
-     */
-    public interface SearchListener {
-
-        /**
-         * Called when the suggestions list is received,
-         * i.e. when [SearchSuggestionsCallback.onSuggestions] callback called.
-         *
-         * @param suggestions List of [SearchSuggestion] as result of the first step of forward geocoding.
-         * @param responseInfo Search response and request information.
-         *
-         * @see SearchSuggestionsCallback.onSuggestions
-         */
-        public fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo)
-
-        /**
-         * Called when a category suggestion has been resolved,
-         * i.e. when [SearchSelectionCallback.onCategoryResult] callback called.
-         *
-         * @param suggestion The category suggestion from which the [results] were resolved.
-         * @param results Search results matched by category search.
-         * @param responseInfo Search response and request information.
-         *
-         * @see SearchSelectionCallback.onCategoryResult
-         */
-        public fun onCategoryResult(suggestion: SearchSuggestion, results: List<SearchResult>, responseInfo: ResponseInfo)
-
-        /**
-         * Called when search result is received,
-         * i.e. when [SearchSelectionCallback.onResult] callback called.
-         *
-         * @param searchResult Search result.
-         * @param responseInfo Search response and request information.
-         *
-         * @see SearchSelectionCallback.onResult
-         */
-        public fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo)
-
-        /**
-         * Called when offline search result is clicked.
-         *
-         * @param searchResult Search result.
-         * @param responseInfo Search response and request information.
-         */
-        public fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo)
-
-        /**
-         * Called when offline search results shown, i.e. when [OfflineSearchCallback.onResults] callback called.
-         *
-         * @param results List of [OfflineSearchResult].
-         * @param responseInfo Search response and request information.
-         *
-         * @see SearchCallback.onResults
-         */
-        public fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo)
-
-        /**
-         * Called if an error occurred during the search request,
-         * i.e. when [SearchSuggestionsCallback.onError] callback called.
-         *
-         * @param e Exception, occurred during the request.
-         *
-         * @see SearchSuggestionsCallback.onError
-         */
-        public fun onError(e: Exception)
+    public interface ActionListener {
 
         /**
          * Called when the history item is clicked.
-         * @param historyRecord History item, that selected by user.
+         * @param item The clicked [SearchResultAdapterItem.History] item.
          */
-        public fun onHistoryItemClicked(historyRecord: HistoryRecord)
+        public fun onHistoryItemClick(item: SearchResultAdapterItem.History)
 
         /**
-         * Called when search suggestion's "Populate query" button is clicked.
-         * @param suggestion Received search suggestion.
-         * @param responseInfo Search response and request information.
+         * Called when [RecyclerView.Adapter]'s [SearchResultAdapterItem.Result] item is clicked.
+         * @param item The clicked [SearchResultAdapterItem.Result] item.
          */
-        public fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo)
+        public fun onResultItemClick(item: SearchResultAdapterItem.Result)
 
         /**
-         * Called when "Missing result" button is clicked.
-         * @param responseInfo Search response and request information.
+         * Called when [SearchResultAdapterItem.Result]'s "Populate query" button is clicked.
+         * Note that this function can be called only if [SearchResultAdapterItem.Result.isPopulateQueryVisible] true.
+         * @param item The clicked [SearchResultAdapterItem.Result] item.
          */
-        public fun onFeedbackClicked(responseInfo: ResponseInfo)
-    }
+        public fun onPopulateQueryClick(item: SearchResultAdapterItem.Result)
 
-    private sealed class ViewState {
+        /**
+         * Called when the "Missing result" button is clicked.
+         * @param item The clicked [SearchResultAdapterItem.MissingResultFeedback] item.
+         */
+        public fun onMissingResultFeedbackClick(item: SearchResultAdapterItem.MissingResultFeedback)
 
-        abstract val items: List<SearchResultAdapterItem>
-
-        data class History(override val items: List<SearchResultAdapterItem>) : ViewState()
-        data class Suggestions(override val items: List<SearchResultAdapterItem>) : ViewState()
-        data class Results(override val items: List<SearchResultAdapterItem>) : ViewState()
-        data class EmptySearchResults(override val items: List<SearchResultAdapterItem>) : ViewState()
-        data class Loading(override val items: List<SearchResultAdapterItem>) : ViewState()
-        data class Error(override val items: List<SearchResultAdapterItem>) : ViewState()
-    }
-
-    private class HistoryItemSwipeCallback(
-        swipeDirs: Int,
-        private val adapter: SearchViewResultsAdapter,
-        private val onItemSwiped: (Int, HistoryRecord) -> Unit,
-    ) : ItemTouchHelper.SimpleCallback(0, swipeDirs) {
-
-        private fun extractHistoryItemOrNull(position: Int): SearchResultAdapterItem.History? {
-            if (position < adapter.itemCount) {
-                return adapter.items[position] as? SearchResultAdapterItem.History
-            }
-            return null
-        }
-
-        override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
-            return if (extractHistoryItemOrNull(viewHolder.bindingAdapterPosition) == null) {
-                0
-            } else {
-                super.getSwipeDirs(recyclerView, viewHolder)
-            }
-        }
-
-        override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean = false
-
-        override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-            val position = viewHolder.bindingAdapterPosition
-            val historyItem = extractHistoryItemOrNull(position)
-            if (historyItem != null) {
-                onItemSwiped(position, historyItem.record)
-            }
-        }
+        /**
+         * Called when [RecyclerView.Adapter]'s [SearchResultAdapterItem.Error] item (i.e. `Retry` button) is clicked.
+         * @param item The clicked [SearchResultAdapterItem.Error] item.
+         */
+        public fun onErrorItemClick(item: SearchResultAdapterItem.Error)
     }
 
     /**
      * Options used for [SearchResultsView] configuration.
      */
-    public class Configuration @JvmOverloads public constructor(
+    public class Configuration public constructor(
+
         /**
          * Common configuration options used for Search SDK views.
          */
         public val commonConfiguration: CommonSearchViewConfiguration,
-
-        /**
-         * Settings used for [SearchEngine] configuration.
-         */
-        public val searchEngineSettings: SearchEngineSettings,
-
-        /**
-         * Settings used for [OfflineSearchEngine] configuration.
-         */
-        public val offlineSearchEngineSettings: OfflineSearchEngineSettings,
-
-        /**
-         * Experimental API, can be changed or removed in the next SDK releases.
-         *
-         * The type of the API used by the Search Engines.
-         * Note that [ApiType.GEOCODING] (default) is the only available publicly.
-         * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
-         */
-        public val apiType: ApiType = ApiType.GEOCODING,
     )
-
-    private companion object {
-
-        fun SearchOptions.mapToOfflineOptions(): OfflineSearchOptions = OfflineSearchOptions(
-            proximity = proximity,
-            origin = origin,
-            limit = limit,
-        )
-    }
 }

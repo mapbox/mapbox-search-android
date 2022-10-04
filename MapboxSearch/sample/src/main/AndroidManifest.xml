@@ -39,6 +39,8 @@
             android:windowSoftInputMode="adjustNothing"
             />
 
+        <activity android:name=".AddressAutofillUiActivity" />
+
         <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />
         <activity android:name=".api.CustomIndexableDataProviderJavaExample" />
         <activity android:name=".api.ForwardGeocodingKotlinExampleActivity" />

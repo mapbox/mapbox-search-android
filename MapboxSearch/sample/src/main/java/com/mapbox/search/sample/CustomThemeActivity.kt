@@ -9,13 +9,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
@@ -23,6 +26,7 @@ import com.mapbox.search.ui.view.SearchResultsView
 class CustomThemeActivity : AppCompatActivity() {
 
     private lateinit var searchResultsView: SearchResultsView
+    private lateinit var searchEngineUiAdapter: SearchEngineUiAdapter
     private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,17 +36,33 @@ class CustomThemeActivity : AppCompatActivity() {
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
                 SearchResultsView.Configuration(
-                    commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL),
-                    searchEngineSettings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN),
-                    offlineSearchEngineSettings = OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+                    CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL)
                 )
             )
             isVisible = false
         }
 
-        searchResultsView.addSearchListener(object : SearchResultsView.SearchListener {
+        val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            settings = SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+        )
 
-            override fun onCategoryResult(
+        val offlineSearchEngine = OfflineSearchEngine.create(
+            OfflineSearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+        )
+
+        searchEngineUiAdapter = SearchEngineUiAdapter(
+            view = searchResultsView,
+            searchEngine = searchEngine,
+            offlineSearchEngine = offlineSearchEngine,
+        )
+
+        searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
+
+            override fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
+                Toast.makeText(applicationContext, "Search suggestions shown", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCategoryResultsShown(
                 suggestion: SearchSuggestion,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
@@ -50,39 +70,39 @@ class CustomThemeActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Category search results shown", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                Toast.makeText(applicationContext, "Search suggestions shown", Toast.LENGTH_SHORT).show()
+            override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
+                Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onSearchResult(searchResult: SearchResult, responseInfo: ResponseInfo) {
+            override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
+                return false
+            }
+
+            override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onOfflineSearchResult(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+            override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
                 Toast.makeText(applicationContext, "Offline search result: $searchResult", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onOfflineSearchResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(e: Exception) {
                 Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onHistoryItemClicked(historyRecord: HistoryRecord) {
+            override fun onHistoryItemClick(historyRecord: HistoryRecord) {
                 if (::searchView.isInitialized) {
                     searchView.setQuery(historyRecord.name, true)
                 }
             }
 
-            override fun onPopulateQueryClicked(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
+            override fun onPopulateQueryClick(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
                 if (::searchView.isInitialized) {
                     searchView.setQuery(suggestion.name, true)
                 }
             }
 
-            override fun onFeedbackClicked(responseInfo: ResponseInfo) {
+            override fun onFeedbackItemClick(responseInfo: ResponseInfo) {
                 // Not implemented
             }
         })
@@ -117,7 +137,7 @@ class CustomThemeActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchResultsView.search(newText)
+                searchEngineUiAdapter.search(newText)
                 return false
             }
         })

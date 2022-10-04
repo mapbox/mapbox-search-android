@@ -19,4 +19,27 @@ public interface AsyncOperationTask {
      * Attempts to cancel execution of this task.
      */
     public fun cancel()
+
+    /**
+     * @suppress
+     */
+    public companion object {
+
+        /**
+         * Represents completed [AsyncOperationTask]
+         */
+        @JvmStatic
+        @get:JvmName("getCompleted")
+        public val COMPLETED: AsyncOperationTask = object : AsyncOperationTask {
+            override val isDone: Boolean
+                get() = true
+
+            override val isCancelled: Boolean
+                get() = false
+
+            override fun cancel() {
+                // do nothing
+            }
+        }
+    }
 }

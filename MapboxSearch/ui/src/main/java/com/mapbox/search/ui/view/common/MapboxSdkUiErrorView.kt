@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mapbox.search.ui.R
+import com.mapbox.search.ui.view.UiError
 
 internal class MapboxSdkUiErrorView : LinearLayout {
 

@@ -17,8 +17,8 @@ import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.ui.R
+import com.mapbox.search.ui.adapter.engines.SearchEntityPresentation
 import com.mapbox.search.ui.utils.SearchBottomSheetBehavior
-import com.mapbox.search.ui.utils.SearchEntityPresentation
 import com.mapbox.search.ui.utils.extenstion.expand
 import com.mapbox.search.ui.utils.extenstion.hide
 import com.mapbox.search.ui.utils.extenstion.isHidden
@@ -54,6 +54,8 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     }
 
     private val distanceFormatter = DistanceFormatter(context)
+
+    private val searchEntityPresentation = SearchEntityPresentation(context)
 
     private var commonSearchViewConfiguration = CommonSearchViewConfiguration()
     private var isInitialized = false
@@ -223,8 +225,8 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
         latestSearchPlace = searchPlace
 
         name.text = searchPlace.name
-        categoryText.setTextAndHideIfBlank(SearchEntityPresentation.firstCategoryName(context, searchPlace.categories))
-        addressText.text = SearchEntityPresentation.getAddressOrResultType(context, searchPlace)
+        categoryText.setTextAndHideIfBlank(searchEntityPresentation.firstCategoryName(context, searchPlace.categories))
+        addressText.text = searchEntityPresentation.getAddressOrResultType(searchPlace)
         feedbackButtonGroup.isVisible = searchPlace.feedback != null
 
         updateDistanceUi(searchPlace.distanceMeters)
