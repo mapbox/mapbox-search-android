@@ -32,7 +32,7 @@ public interface AddressAutofill {
     ): AddressAutofillResponse
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

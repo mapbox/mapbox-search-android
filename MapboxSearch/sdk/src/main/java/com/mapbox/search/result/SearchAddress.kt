@@ -470,9 +470,8 @@ public class SearchAddress @JvmOverloads public constructor(
         public object Long : FormatStyle()
 
         /**
-         * Full variant of address formatting. All existing address components included into formatted address.
-         *
-         * Includes [houseNumber], [street], [neighborhood], [locality], [place], [district],
+         * Full variant of address formatting. All existing address components included:
+         * [houseNumber], [street], [neighborhood], [locality], [place], [district],
          * [region], [country], [postcode].
          */
         public object Full : FormatStyle()

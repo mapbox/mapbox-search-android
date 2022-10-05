@@ -26,7 +26,7 @@ public interface DistanceCalculator {
     public fun distance(from: Point, to: Point): Double
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

@@ -29,7 +29,7 @@ import kotlin.Comparator
 public interface HistoryDataProvider : LocalDataProvider<HistoryRecord> {
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

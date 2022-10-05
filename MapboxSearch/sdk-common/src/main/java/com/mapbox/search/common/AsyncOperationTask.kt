@@ -21,7 +21,7 @@ public interface AsyncOperationTask {
     public fun cancel()
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

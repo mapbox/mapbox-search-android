@@ -563,7 +563,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     public annotation class BottomSheetState
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

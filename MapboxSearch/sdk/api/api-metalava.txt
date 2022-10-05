@@ -145,6 +145,7 @@ package com.mapbox.search {
     field public static final com.mapbox.search.Country CURACAO;
     field public static final com.mapbox.search.Country CYPRUS;
     field public static final com.mapbox.search.Country CZECHIA;
+    field public static final com.mapbox.search.Country.Companion Companion;
     field public static final com.mapbox.search.Country DENMARK;
     field public static final com.mapbox.search.Country DJIBOUTI;
     field public static final com.mapbox.search.Country DOMINICA;
@@ -335,16 +336,28 @@ package com.mapbox.search {
     field public static final com.mapbox.search.Country ZIMBABWE;
   }
 
+  public static final class Country.Companion {
+  }
+
   public interface DistanceCalculator {
     method public double distance(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
     method public default static double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
+    field public static final com.mapbox.search.DistanceCalculator.Companion Companion;
+  }
+
+  public static final class DistanceCalculator.Companion {
+    method public double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
   }
 
   @kotlinx.parcelize.Parcelize public final class EtaType implements android.os.Parcelable {
     ctor public EtaType(String rawName);
     method public String getRawName();
     property public final String rawName;
+    field public static final com.mapbox.search.EtaType.Companion Companion;
     field public static final com.mapbox.search.EtaType NAVIGATION;
+  }
+
+  public static final class EtaType.Companion {
   }
 
   public interface HighlightsCalculator {
@@ -377,6 +390,7 @@ package com.mapbox.search {
     field public static final com.mapbox.search.Language CHINESE_SIMPLIFIED;
     field public static final com.mapbox.search.Language CHINESE_TRADITIONAL;
     field public static final com.mapbox.search.Language CZECH;
+    field public static final com.mapbox.search.Language.Companion Companion;
     field public static final com.mapbox.search.Language DANISH;
     field public static final com.mapbox.search.Language DUTCH;
     field public static final com.mapbox.search.Language ENGLISH;
@@ -406,6 +420,9 @@ package com.mapbox.search {
     field public static final com.mapbox.search.Language TAGALOG;
     field public static final com.mapbox.search.Language THAI;
     field public static final com.mapbox.search.Language TURKISH;
+  }
+
+  public static final class Language.Companion {
   }
 
   public enum QueryType {
@@ -563,6 +580,18 @@ package com.mapbox.search {
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
     property public abstract com.mapbox.search.ApiType apiType;
     property public abstract com.mapbox.search.SearchEngineSettings settings;
+    field public static final com.mapbox.search.SearchEngine.Companion Companion;
+  }
+
+  public static final class SearchEngine.Companion {
+    method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
+    method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
   }
 
   public final class SearchEngineSettings {
@@ -616,8 +645,12 @@ package com.mapbox.search {
     method public String getRawName();
     property public final String rawName;
     field public static final com.mapbox.search.SearchNavigationProfile CYCLING;
+    field public static final com.mapbox.search.SearchNavigationProfile.Companion Companion;
     field public static final com.mapbox.search.SearchNavigationProfile DRIVING;
     field public static final com.mapbox.search.SearchNavigationProfile WALKING;
+  }
+
+  public static final class SearchNavigationProfile.Companion {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {
@@ -742,6 +775,12 @@ package com.mapbox.search {
     method public default static com.mapbox.search.ServiceProvider getInstance();
     method public com.mapbox.search.HighlightsCalculator highlightsCalculator();
     method public com.mapbox.search.record.HistoryDataProvider historyDataProvider();
+    field public static final com.mapbox.search.ServiceProvider.Companion Companion;
+  }
+
+  public static final class ServiceProvider.Companion {
+    method public com.mapbox.search.ServiceProvider getInstance();
+    property public final com.mapbox.search.ServiceProvider INSTANCE;
   }
 
   public fun interface ViewportProvider {
@@ -918,11 +957,23 @@ package com.mapbox.search.record {
   }
 
   public interface FavoritesDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.FavoriteRecord> {
+    field public static final com.mapbox.search.record.FavoritesDataProvider.Companion Companion;
+    field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.favorite";
+    field public static final int PROVIDER_PRIORITY = 101; // 0x65
+  }
+
+  public static final class FavoritesDataProvider.Companion {
     field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.favorite";
     field public static final int PROVIDER_PRIORITY = 101; // 0x65
   }
 
   public interface HistoryDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.HistoryRecord> {
+    field public static final com.mapbox.search.record.HistoryDataProvider.Companion Companion;
+    field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.history";
+    field public static final int PROVIDER_PRIORITY = 100; // 0x64
+  }
+
+  public static final class HistoryDataProvider.Companion {
     field public static final String PROVIDER_NAME = "com.mapbox.search.localProvider.history";
     field public static final int PROVIDER_PRIORITY = 100; // 0x64
   }

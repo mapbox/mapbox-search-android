@@ -39,7 +39,7 @@ public class EtaType(public val rawName: String) : Parcelable {
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

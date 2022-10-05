@@ -36,7 +36,7 @@ public interface ServiceProvider {
     public fun historyDataProvider(): HistoryDataProvider
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

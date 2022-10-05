@@ -8,6 +8,12 @@ package com.mapbox.search.common {
     method public boolean isDone();
     property public abstract boolean isCancelled;
     property public abstract boolean isDone;
+    field public static final com.mapbox.search.common.AsyncOperationTask.Companion Companion;
+  }
+
+  public static final class AsyncOperationTask.Companion {
+    method public com.mapbox.search.common.AsyncOperationTask getCompleted();
+    property public final com.mapbox.search.common.AsyncOperationTask COMPLETED;
   }
 
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {

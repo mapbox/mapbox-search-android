@@ -4,6 +4,11 @@ package com.mapbox.search.autofill {
   public interface AddressAutofill {
     method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
     method public suspend Object? suggestions(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
+    field public static final com.mapbox.search.autofill.AddressAutofill.Companion Companion;
+  }
+
+  public static final class AddressAutofill.Companion {
+    method public com.mapbox.search.autofill.AddressAutofill create(String accessToken);
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillOptions implements android.os.Parcelable {
@@ -82,7 +87,12 @@ package com.mapbox.search.autofill {
     method public static com.mapbox.search.autofill.Query? create(String query);
     method public String getQuery();
     property public final String query;
+    field public static final com.mapbox.search.autofill.Query.Companion Companion;
     field public static final int MIN_QUERY_LENGTH = 3; // 0x3
+  }
+
+  public static final class Query.Companion {
+    method public com.mapbox.search.autofill.Query? create(String query);
   }
 
 }

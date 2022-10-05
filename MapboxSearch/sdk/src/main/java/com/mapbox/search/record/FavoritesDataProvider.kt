@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService
 public interface FavoritesDataProvider : LocalDataProvider<FavoriteRecord> {
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

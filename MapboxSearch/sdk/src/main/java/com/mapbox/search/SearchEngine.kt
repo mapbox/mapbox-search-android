@@ -329,7 +329,7 @@ public interface SearchEngine {
     )
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 
