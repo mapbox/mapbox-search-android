@@ -451,22 +451,29 @@ public class SearchAddress @JvmOverloads public constructor(
         }
 
         /**
-         * Short variant of formatting.
+         * Short variant of formatting. Includes [houseNumber] and [street].
          */
         public object Short : FormatStyle()
 
         /**
          * A bit longer variant of formatting, than [FormatStyle.Short].
+         *
+         * Includes [houseNumber], [street], [place], [region].
          */
         public object Medium : FormatStyle()
 
         /**
          * Variant of formatting, that includes most of address components.
+         *
+         * Includes [houseNumber], [street], [neighborhood], [locality], [place], [district], [region], [country].
          */
         public object Long : FormatStyle()
 
         /**
          * Full variant of address formatting. All existing address components included into formatted address.
+         *
+         * Includes [houseNumber], [street], [neighborhood], [locality], [place], [district],
+         * [region], [country], [postcode].
          */
         public object Full : FormatStyle()
 
