@@ -40,27 +40,15 @@
         >
 
         <EditText
-            android:id="@+id/address_apartment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="postalAddress"
-            android:hint="@string/address_autofill_address_apt_hint"
-            android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toTopOf="@id/address_city"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <EditText
             android:id="@+id/address_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autofillHints="postalAddress"
             android:hint="@string/address_autofill_address_city_hint"
             android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toTopOf="@id/address_state"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             />
 
         <EditText
@@ -70,9 +58,9 @@
             android:autofillHints="postalAddress"
             android:hint="@string/address_autofill_address_state_hint"
             android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/address_zip"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_city"
             />
 
         <EditText
@@ -82,9 +70,44 @@
             android:autofillHints="postalAddress"
             android:hint="@string/address_autofill_address_zip_hint"
             android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/address_state"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_state"
+            />
+
+        <EditText
+            android:id="@+id/address_apartment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="postalAddress"
+            android:hint="@string/address_autofill_address_apt_hint"
+            android:inputType="textPostalAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_zip"
+            />
+
+        <TextView
+            android:id="@+id/full_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_apartment"
+            tools:visibility="visible"
+            />
+
+        <com.mapbox.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/full_address"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

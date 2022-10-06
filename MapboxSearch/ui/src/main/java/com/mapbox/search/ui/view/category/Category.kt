@@ -120,7 +120,7 @@ internal class Category(
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

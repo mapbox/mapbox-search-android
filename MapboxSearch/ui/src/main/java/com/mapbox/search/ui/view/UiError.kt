@@ -31,7 +31,7 @@ public abstract class UiError {
     public object UnknownError : UiError()
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

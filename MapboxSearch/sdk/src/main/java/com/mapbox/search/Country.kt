@@ -39,7 +39,7 @@ public class Country(public val code: String) : Parcelable {
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     @Suppress("LargeClass")
     public companion object {

@@ -212,10 +212,15 @@ package com.mapbox.search.ui.view {
   public abstract class UiError {
     ctor public UiError();
     method public static final com.mapbox.search.ui.view.UiError createFromException(Exception e);
+    field public static final com.mapbox.search.ui.view.UiError.Companion Companion;
   }
 
   public static final class UiError.ClientError extends com.mapbox.search.ui.view.UiError {
     field public static final com.mapbox.search.ui.view.UiError.ClientError INSTANCE;
+  }
+
+  public static final class UiError.Companion {
+    method public com.mapbox.search.ui.view.UiError createFromException(Exception e);
   }
 
   public static final class UiError.NoInternetConnectionError extends com.mapbox.search.ui.view.UiError {
@@ -291,6 +296,15 @@ package com.mapbox.search.ui.view.place {
     property public final com.mapbox.search.record.IndexableRecord? record;
     property public final java.util.List<com.mapbox.search.result.SearchResultType> resultTypes;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+    field public static final com.mapbox.search.ui.view.place.SearchPlace.Companion Companion;
+  }
+
+  public static final class SearchPlace.Companion {
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, Double? distanceMeters = com.mapbox.search.result.SearchResult.distanceMeters);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   public final class SearchPlaceBottomSheetView extends com.mapbox.search.ui.view.SearchSdkFrameLayout implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
@@ -327,6 +341,7 @@ package com.mapbox.search.ui.view.place {
     property public final boolean isNavigateButtonVisible;
     property public final boolean isShareButtonVisible;
     property @com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.BottomSheetState public final int state;
+    field public static final com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.Companion Companion;
     field public static final int DRAGGING = 3; // 0x3
     field public static final int HIDDEN = 1; // 0x1
     field public static final int OPEN = 2; // 0x2
@@ -334,6 +349,9 @@ package com.mapbox.search.ui.view.place {
   }
 
   @IntDef({com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.HIDDEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OPEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.DRAGGING, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchPlaceBottomSheetView.BottomSheetState {
+  }
+
+  public static final class SearchPlaceBottomSheetView.Companion {
   }
 
   public static fun interface SearchPlaceBottomSheetView.OnBottomSheetStateChangedListener {

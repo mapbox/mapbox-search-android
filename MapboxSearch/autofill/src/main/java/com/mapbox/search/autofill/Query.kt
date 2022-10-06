@@ -46,7 +46,7 @@ public class Query internal constructor(
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

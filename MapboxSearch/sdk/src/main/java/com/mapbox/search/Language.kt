@@ -39,7 +39,7 @@ public class Language(public val code: String) : Parcelable {
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

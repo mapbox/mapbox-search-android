@@ -192,7 +192,7 @@ public class SearchPlace(
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

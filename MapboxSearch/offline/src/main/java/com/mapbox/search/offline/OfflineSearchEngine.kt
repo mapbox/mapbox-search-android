@@ -259,7 +259,7 @@ public interface OfflineSearchEngine {
     public fun removeOnIndexChangeListener(listener: OnIndexChangeListener)
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 
