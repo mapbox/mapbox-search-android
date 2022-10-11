@@ -1,6 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.search.analytics.AnalyticsService
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreLocationProvider
 import com.mapbox.search.base.core.CoreSearchEngine
@@ -91,7 +92,12 @@ internal class SearchEngineFactory {
         val coreLocationProvider = if (settings.locationEngine is CoreLocationProvider) {
             settings.locationEngine
         } else {
-            WrapperLocationProvider(LocationEngineAdapter(MapboxSearchSdk.application, settings.locationEngine)) {
+            WrapperLocationProvider(
+                LocationEngineAdapter(
+                    BaseSearchSdkInitializer.app,
+                    settings.locationEngine
+                )
+            ) {
                 settings.viewportProvider?.getViewport()?.mapToCore()
             }
         }

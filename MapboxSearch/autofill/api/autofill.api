@@ -1,11 +1,15 @@
 public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
+	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofill$Companion {
 	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public static synthetic fun create$default (Lcom/mapbox/search/autofill/AddressAutofill$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/autofill/AddressAutofill;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofillOptions : android/os/Parcelable {

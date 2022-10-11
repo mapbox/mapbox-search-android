@@ -7,6 +7,8 @@
 
 ### New features
 - [UI] Now UI module provides `AddressAutofillUiAdapter` that helps to display `AddressAutofill` suggestions on the `SearchResultsView`.
+- [Autofill] Now customers can provide own implementation of the `LocationEngine`.
+- [Autofill] `AddressAutofill` returns up to 10 suggestions instead of 5.
 - [Search SDK COMMON] `AsyncOperationTask` provides `AsyncOperationTask.COMPLETED` field which represents completed task.
 
 ### Mapbox dependencies

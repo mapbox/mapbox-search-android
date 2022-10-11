@@ -6,7 +6,7 @@ import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.location.defaultLocationEngine
 import java.net.URI
 
 /**
@@ -155,6 +155,5 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         const val DEFAULT_VERSION = ""
 
         private fun defaultTileStore() = TileStore.create()
-        private fun defaultLocationEngine() = LocationEngineProvider.getBestLocationEngine(BaseSearchSdkInitializer.appContext)
     }
 }

@@ -43,7 +43,7 @@ internal object MapboxSearchSdk {
 
     lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
 
-    lateinit var application: Application
+    private lateinit var application: Application
 
     fun initialize(
         application: Application,

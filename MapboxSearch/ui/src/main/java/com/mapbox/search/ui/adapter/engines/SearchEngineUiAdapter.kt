@@ -20,6 +20,7 @@ import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.concurrent.checkMainThread
 import com.mapbox.search.base.failDebug
+import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
@@ -69,7 +70,7 @@ public class SearchEngineUiAdapter(
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    locationEngine: LocationEngine = LocationEngineProvider.getBestLocationEngine(view.context.applicationContext),
+    locationEngine: LocationEngine = defaultLocationEngine(),
 
     /**
      * Search history engine. Selected search results will automatically be added to the provided [HistoryDataProvider].
