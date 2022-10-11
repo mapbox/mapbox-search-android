@@ -1,10 +1,10 @@
 package com.mapbox.search.autofill
 
-import com.mapbox.android.core.location.LocationEngineProvider
+import android.app.Application
+import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
 import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -326,11 +326,11 @@ internal class AutofillSearchEngine(
             Thread(runnable, "SearchEngine executor")
         }
 
-        fun create(accessToken: String): AutofillSearchEngine {
-            val app = BaseSearchSdkInitializer.app
-
-            val defaultLocationProvider = LocationEngineProvider.getBestLocationEngine(app)
-
+        fun create(
+            accessToken: String,
+            app: Application,
+            locationEngine: LocationEngine,
+        ): AutofillSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     accessToken,
@@ -340,7 +340,7 @@ internal class AutofillSearchEngine(
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, defaultLocationProvider),
+                    LocationEngineAdapter(app, locationEngine),
                     null
                 ),
             )

@@ -3,6 +3,7 @@ package com.mapbox.search
 import android.Manifest
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.search.base.location.defaultLocationEngine
 
 /**
  * Settings used for [SearchEngine] configuration.
@@ -173,6 +174,5 @@ public class SearchEngineSettings @JvmOverloads constructor(
 
     internal companion object {
         const val DEFAULT_ENDPOINT_GEOCODING: String = "https://api.mapbox.com"
-        fun defaultLocationEngine() = LocationEngineProvider.getBestLocationEngine(MapboxSearchSdk.application)
     }
 }

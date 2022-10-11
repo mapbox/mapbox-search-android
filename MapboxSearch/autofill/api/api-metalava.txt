@@ -2,12 +2,15 @@
 package com.mapbox.search.autofill {
 
   public interface AddressAutofill {
+    method public default static com.mapbox.search.autofill.AddressAutofill create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    method public default static final com.mapbox.search.autofill.AddressAutofill create(String accessToken);
     method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
     method public suspend Object? suggestions(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
     field public static final com.mapbox.search.autofill.AddressAutofill.Companion Companion;
   }
 
   public static final class AddressAutofill.Companion {
+    method public com.mapbox.search.autofill.AddressAutofill create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
     method public com.mapbox.search.autofill.AddressAutofill create(String accessToken);
   }
 

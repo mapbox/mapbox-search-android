@@ -40,6 +40,7 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
             options = createCoreSearchOptions(
                 countries = options.countries?.map { it.code },
                 language = options.language?.let { listOf(it.code) },
+                limit = 10,
                 ignoreUR = true,
             )
         )

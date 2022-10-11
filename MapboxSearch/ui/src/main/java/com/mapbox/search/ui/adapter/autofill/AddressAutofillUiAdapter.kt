@@ -11,6 +11,7 @@ import com.mapbox.search.autofill.AddressAutofillResponse
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.base.failDebug
+import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
@@ -44,7 +45,7 @@ public class AddressAutofillUiAdapter(
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    locationEngine: LocationEngine = LocationEngineProvider.getBestLocationEngine(view.context.applicationContext),
+    locationEngine: LocationEngine = defaultLocationEngine(),
 ) {
 
     private val itemsCreator = AutofillItemsCreator(view.context, locationEngine)
