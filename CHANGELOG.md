@@ -12,8 +12,8 @@
 - [Search SDK COMMON] `AsyncOperationTask` provides `AsyncOperationTask.COMPLETED` field which represents completed task.
 
 ### Mapbox dependencies
-- Search Native SDK `0.60.0`
-- Common SDK `23.1.0-beta.1`
+- Search Native SDK `0.61.0`
+- Common SDK `23.1.0-rc.1`
 - Kotlin `1.5.31`
 
 
