@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.38-SNAPSHOT
+## 1.0.0-beta.38
 
 ### Breaking changes
 - [UI] `SearchResultsView` became a generic view that can work with any `SearchEngine` or `Use case`. Its API has been changed. Use `SearchEngineUiAdapter` to adapt search engines for the view. See [MainActivity](https://github.com/mapbox/mapbox-search-android/blob/main/MapboxSearch/sample/src/main/java/com/mapbox/search/sample/MainActivity.kt) for usage sample.
