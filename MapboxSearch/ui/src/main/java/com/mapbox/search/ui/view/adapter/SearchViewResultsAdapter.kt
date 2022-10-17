@@ -26,7 +26,7 @@ internal class SearchViewResultsAdapter(
         }
 
         override fun onPopulateQueryClick(item: SearchResultAdapterItem.Result) {
-            listener?.onResultItemClick(item)
+            listener?.onPopulateQueryClick(item)
         }
 
         override fun onMissingResultFeedbackClick(item: SearchResultAdapterItem.MissingResultFeedback) {
