@@ -53,7 +53,7 @@ public class Query internal constructor(
         /**
          * Minimal allowed query length for address autofill.
          */
-        public const val MIN_QUERY_LENGTH: Int = 3
+        public const val MIN_QUERY_LENGTH: Int = 2
 
         /**
          * Creates [Query] instance.

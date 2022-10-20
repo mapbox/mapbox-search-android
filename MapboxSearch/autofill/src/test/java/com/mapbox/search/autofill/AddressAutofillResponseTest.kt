@@ -63,6 +63,7 @@ internal class AddressAutofillResponseTest {
             val blue = AddressAutofillResponse.Suggestions(
                 suggestions = listOf(
                     AddressAutofillSuggestion(
+                        name = "test name",
                         formattedAddress = "test address",
                         coordinate = Point.fromLngLat(10.0, 20.0),
                         address = AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "test"))!!

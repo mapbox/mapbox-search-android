@@ -16,11 +16,12 @@ internal class AddressAutofillSuggestionTest {
     @TestFactory
     fun `Check AddressAutofillSuggestion result() function`() = TestCase {
         Given("${AddressAutofillSuggestion::class.java.simpleName} instance") {
+            val name = "Test name"
             val formattedAddress = "Test formatted address"
             val coordinate = Point.fromLngLat(10.0, 11.0)
             val address = AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "test"))!!
 
-            val suggestion = AddressAutofillSuggestion(formattedAddress, coordinate, address)
+            val suggestion = AddressAutofillSuggestion(name, formattedAddress, coordinate, address)
 
             When("result() function called") {
                 val result = AddressAutofillResult(suggestion, address)

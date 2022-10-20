@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.39-SNAPSHOT
 
+### New features
+- [Autofill] Now `AutofillSuggestion` provides a new property `name`.
+- [Autofill] Minimal allowed query name has been changed from `3` to `2`.
+
 ### Mapbox dependencies
 - Search Native SDK `0.61.0`
 - Common SDK `23.1.0-rc.1`
