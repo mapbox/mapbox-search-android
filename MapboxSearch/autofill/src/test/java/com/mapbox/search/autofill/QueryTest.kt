@@ -11,7 +11,7 @@ internal class QueryTest {
     fun `Check Query's min length`() = TestCase {
         Given("${Query::class.java.simpleName} class") {
             When("MIN_QUERY_LENGTH accessed") {
-                Then("MIN_QUERY_LENGTH should be 3", 3, Query.MIN_QUERY_LENGTH)
+                Then("MIN_QUERY_LENGTH should be 2", 2, Query.MIN_QUERY_LENGTH)
             }
         }
     }
@@ -23,7 +23,7 @@ internal class QueryTest {
                 .map { length -> "a".repeat(length) }
                 .forEach { query ->
                     When("create($query) called") {
-                        val value = if (query.length < 3) {
+                        val value = if (query.length < 2) {
                             null
                         } else {
                             Query(query)

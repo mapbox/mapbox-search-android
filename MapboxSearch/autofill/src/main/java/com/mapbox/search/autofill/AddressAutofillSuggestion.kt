@@ -11,6 +11,11 @@ import kotlinx.parcelize.Parcelize
 public class AddressAutofillSuggestion internal constructor(
 
     /**
+     * Suggestion name.
+     */
+    public val name: String,
+
+    /**
      * Textual representation of the address.
      */
     public val formattedAddress: String,
@@ -43,6 +48,7 @@ public class AddressAutofillSuggestion internal constructor(
 
         other as AddressAutofillSuggestion
 
+        if (name != other.name) return false
         if (formattedAddress != other.formattedAddress) return false
         if (coordinate != other.coordinate) return false
         if (address != other.address) return false
@@ -54,7 +60,8 @@ public class AddressAutofillSuggestion internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = formattedAddress.hashCode()
+        var result = name.hashCode()
+        result = 31 * result + formattedAddress.hashCode()
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + address.hashCode()
         return result
@@ -64,6 +71,10 @@ public class AddressAutofillSuggestion internal constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "AddressAutofillSuggestion(formattedAddress='$formattedAddress', coordinate=$coordinate)"
+        return "AddressAutofillSuggestion(" +
+                "name='$name', " +
+                "formattedAddress='$formattedAddress', " +
+                "coordinate=$coordinate" +
+                ")"
     }
 }
