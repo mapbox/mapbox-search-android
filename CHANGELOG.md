@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.39-SNAPSHOT
+## 1.0.0-beta.39
 
 ### New features
 - [Autofill] Now `AutofillSuggestion` provides a new property `name`.
