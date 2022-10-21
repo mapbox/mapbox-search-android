@@ -7,8 +7,8 @@
 - [Autofill] Minimal allowed query name has been changed from `3` to `2`.
 
 ### Mapbox dependencies
-- Search Native SDK `0.61.0`
-- Common SDK `23.1.0-rc.1`
+- Search Native SDK `0.62.0`
+- Common SDK `23.1.0`
 - Kotlin `1.5.31`
 
 
