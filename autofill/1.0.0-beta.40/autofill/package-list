@@ -1,0 +1,50 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.mapbox.search.autofill////PointingToDeclaration/autofill/com.mapbox.search.autofill/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofill.Companion///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill/-companion/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofill.Companion/create/#kotlin.String#com.mapbox.android.core.location.LocationEngine/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill/-companion/create.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofill///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofill/suggestions/#com.mapbox.geojson.Point#com.mapbox.search.autofill.AddressAutofillOptions/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill/suggestions.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofill/suggestions/#com.mapbox.search.autofill.Query#com.mapbox.search.autofill.AddressAutofillOptions/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill/suggestions.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Country///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-country/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Country/Country/#kotlin.String/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-country/-country.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Country/code/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-country/code.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Language///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-language/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Language/Language/#kotlin.String/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-language/-language.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions.Language/code/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-language/code.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions/AddressAutofillOptions/#kotlin.collections.List[com.mapbox.search.autofill.AddressAutofillOptions.Country]?#com.mapbox.search.autofill.AddressAutofillOptions.Language?/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/-address-autofill-options.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions/countries/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/countries.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillOptions/language/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-options/language.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Error///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-error/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Error/Error/#java.lang.Exception/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-error/-error.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Error/error/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-error/error.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Suggestions///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-suggestions/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Suggestions/Suggestions/#kotlin.collections.List[com.mapbox.search.autofill.AddressAutofillSuggestion]/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-suggestions/-suggestions.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse.Suggestions/suggestions/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/-suggestions/suggestions.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResponse///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-response/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResult///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-result/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResult/address/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-result/address.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillResult/suggestion/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-result/suggestion.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillSuggestion///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-suggestion/index.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillSuggestion/coordinate/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-suggestion/coordinate.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillSuggestion/formattedAddress/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-suggestion/formatted-address.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillSuggestion/name/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-suggestion/name.html
+$dokka.location:com.mapbox.search.autofill/AddressAutofillSuggestion/result/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-autofill-suggestion/result.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents///PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/index.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/country/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/country.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/district/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/district.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/houseNumber/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/house-number.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/locality/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/locality.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/neighborhood/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/neighborhood.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/place/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/place.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/postcode/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/postcode.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/region/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/region.html
+$dokka.location:com.mapbox.search.autofill/AddressComponents/street/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-address-components/street.html
+$dokka.location:com.mapbox.search.autofill/Query.Companion///PointingToDeclaration/autofill/com.mapbox.search.autofill/-query/-companion/index.html
+$dokka.location:com.mapbox.search.autofill/Query.Companion/MIN_QUERY_LENGTH/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-query/-companion/-m-i-n_-q-u-e-r-y_-l-e-n-g-t-h.html
+$dokka.location:com.mapbox.search.autofill/Query.Companion/create/#kotlin.String/PointingToDeclaration/autofill/com.mapbox.search.autofill/-query/-companion/create.html
+$dokka.location:com.mapbox.search.autofill/Query///PointingToDeclaration/autofill/com.mapbox.search.autofill/-query/index.html
+$dokka.location:com.mapbox.search.autofill/Query/query/#/PointingToDeclaration/autofill/com.mapbox.search.autofill/-query/query.html
+com.mapbox.search.autofill
+
