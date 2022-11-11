@@ -1,5 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-beta.40
+
+### Mapbox dependencies
+- Search Native SDK `0.63.0`
+- Common SDK `23.2.0-beta.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-beta.39
 
 ### New features
