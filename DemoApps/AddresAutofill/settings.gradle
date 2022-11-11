@@ -10,6 +10,22 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        def sdkRegistryToken = System.getenv('SDK_REGISTRY_TOKEN')
+        if (sdkRegistryToken == null || sdkRegistryToken.empty) {
+            throw new Exception("SDK Registry token is not specified.")
+        }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
+                password = sdkRegistryToken
+            }
+        }
     }
 }
 rootProject.name = "AddressAutofill"

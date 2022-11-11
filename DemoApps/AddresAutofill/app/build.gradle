@@ -3,11 +3,18 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def mapboxApiToken = System.getenv('MAPBOX_ACCESS_TOKEN')
+if (mapboxApiToken == null) {
+    throw new Exception("API token is not specified.")
+}
+
 android {
     namespace 'com.mapbox.demo.autofill'
     compileSdk 32
 
     defaultConfig {
+        resValue "string", "mapbox_access_token", mapboxApiToken
+
         applicationId "com.mapbox.demo.autofill"
         minSdk 21
         targetSdk 32
@@ -33,6 +40,10 @@ android {
 }
 
 dependencies {
+    implementation "com.mapbox.search:autofill:1.0.0-beta.39"
+    implementation "com.mapbox.maps:android:10.9.0"
+    implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-beta.39"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
