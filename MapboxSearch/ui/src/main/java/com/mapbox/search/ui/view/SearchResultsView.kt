@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.mapbox.search.SearchOptions
 import com.mapbox.search.ui.utils.OffsetItemDecoration
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.adapter.SearchHistoryViewHolder
@@ -24,11 +23,6 @@ public class SearchResultsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : RecyclerView(wrapWithSearchTheme(outerContext), attrs, defStyleAttr) {
-
-    /**
-     * [SearchOptions] that will be used for search requests.
-     */
-    public var defaultSearchOptions: SearchOptions = GlobalViewPreferences.DEFAULT_SEARCH_OPTIONS
 
     private var isInitialized = false
 

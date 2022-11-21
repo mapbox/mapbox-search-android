@@ -176,13 +176,10 @@ package com.mapbox.search.ui.view {
     ctor public SearchResultsView(android.content.Context outerContext);
     method public void addActionListener(com.mapbox.search.ui.view.SearchResultsView.ActionListener listener);
     method public java.util.List<com.mapbox.search.ui.view.SearchResultAdapterItem> getAdapterItems();
-    method public com.mapbox.search.SearchOptions getDefaultSearchOptions();
     method public void initialize(com.mapbox.search.ui.view.SearchResultsView.Configuration configuration);
     method public void removeActionListener(com.mapbox.search.ui.view.SearchResultsView.ActionListener listener);
     method public void setAdapterItems(java.util.List<? extends com.mapbox.search.ui.view.SearchResultAdapterItem> items);
-    method public void setDefaultSearchOptions(com.mapbox.search.SearchOptions p);
     property public final java.util.List<com.mapbox.search.ui.view.SearchResultAdapterItem> adapterItems;
-    property public final com.mapbox.search.SearchOptions defaultSearchOptions;
   }
 
   public static interface SearchResultsView.ActionListener {
