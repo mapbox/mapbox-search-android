@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.41-SNAPSHOT
 
+- [UI] `SearchResultsView.defaultSearchOptions` was not used and was removed from the API.
+- [UI] Fixed a bug in `SearchResultsView` when incorrect search options was used for request retry.
+
 ### Mapbox dependencies
 - Search Native SDK `0.63.0`
 - Common SDK `23.2.0-beta.1`
