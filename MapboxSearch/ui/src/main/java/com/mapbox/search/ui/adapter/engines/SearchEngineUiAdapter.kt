@@ -82,6 +82,7 @@ public class SearchEngineUiAdapter(
 
     private var searchResultsShown = false
     private var searchQuery: String = ""
+    private var latestSearchOptions: SearchOptions = GlobalViewPreferences.DEFAULT_SEARCH_OPTIONS
 
     private val reachabilityInterface: ReachabilityInterface = ReachabilityFactory.reachability(null)
     private var networkReachabilityListenerId: Long = -1
@@ -283,6 +284,8 @@ public class SearchEngineUiAdapter(
         checkMainThread()
 
         searchQuery = query
+        latestSearchOptions = options
+
         if (query.isEmpty()) {
             loadHistory()
         } else {
@@ -419,7 +422,7 @@ public class SearchEngineUiAdapter(
     }
 
     private fun retrySearchRequest() {
-        search(searchQuery)
+        search(searchQuery, latestSearchOptions)
     }
 
     private fun cancelCurrentNetworkRequest() {

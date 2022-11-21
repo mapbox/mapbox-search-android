@@ -141,12 +141,10 @@ public final class com/mapbox/search/ui/view/SearchResultsView : androidx/recycl
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun addActionListener (Lcom/mapbox/search/ui/view/SearchResultsView$ActionListener;)V
 	public final fun getAdapterItems ()Ljava/util/List;
-	public final fun getDefaultSearchOptions ()Lcom/mapbox/search/SearchOptions;
 	public final fun initialize (Lcom/mapbox/search/ui/view/SearchResultsView$Configuration;)V
 	public final fun removeActionListener (Lcom/mapbox/search/ui/view/SearchResultsView$ActionListener;)V
 	public fun setAdapter (Landroidx/recyclerview/widget/RecyclerView$Adapter;)V
 	public final fun setAdapterItems (Ljava/util/List;)V
-	public final fun setDefaultSearchOptions (Lcom/mapbox/search/SearchOptions;)V
 	public fun setLayoutManager (Landroidx/recyclerview/widget/RecyclerView$LayoutManager;)V
 }
 

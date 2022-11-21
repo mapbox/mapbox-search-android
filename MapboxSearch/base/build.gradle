@@ -11,6 +11,7 @@ plugins {
 apply plugin: 'org.jetbrains.dokka'
 
 apply from: "../gradle/ktlint.gradle"
+apply from: "../gradle/jacoco.gradle"
 apply from: "../gradle/versions.gradle"
 apply from: "../gradle/dexcount.gradle"
 apply from: "../gradle/publish.gradle"
