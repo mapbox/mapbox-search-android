@@ -150,7 +150,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 
     internal companion object {
 
-        val DEFAULT_ENDPOINT_URI: URI = URI.create("https://api-offline-search-staging.tilestream.net")
+        val DEFAULT_ENDPOINT_URI: URI = URI.create("https://api.mapbox.com")
         const val DEFAULT_DATASET = "test-dataset"
         const val DEFAULT_VERSION = ""
 
