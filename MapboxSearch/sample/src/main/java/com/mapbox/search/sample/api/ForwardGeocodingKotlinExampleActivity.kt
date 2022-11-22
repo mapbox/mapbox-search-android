@@ -11,7 +11,7 @@ import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.sample.BuildConfig
+import com.mapbox.search.sample.R
 
 class ForwardGeocodingKotlinExampleActivity : Activity() {
 
@@ -54,7 +54,7 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+            SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 
         searchRequestTask = searchEngine.search(

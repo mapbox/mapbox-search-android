@@ -25,7 +25,6 @@ import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -99,7 +98,7 @@ public class TestActivity : AppCompatActivity() {
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                accessToken = getString(R.string.mapbox_access_token),
                 locationEngine = locationEngine,
                 singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             )
@@ -107,7 +106,7 @@ public class TestActivity : AppCompatActivity() {
 
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                accessToken = getString(R.string.mapbox_access_token),
                 locationEngine = locationEngine,
             )
         )

@@ -18,7 +18,7 @@ import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.sample.BuildConfig
+import com.mapbox.search.sample.R
 import java.util.ArrayList
 import java.util.UUID
 import java.util.concurrent.Executor
@@ -73,7 +73,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+            SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")

@@ -8,7 +8,7 @@ import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillResponse
 import com.mapbox.search.autofill.Query
-import com.mapbox.search.sample.BuildConfig
+import com.mapbox.search.sample.R
 
 class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
 
@@ -18,7 +18,7 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         addressAutofill = AddressAutofill.create(
-            accessToken = BuildConfig.MAPBOX_API_TOKEN,
+            accessToken = getString(R.string.mapbox_access_token),
         )
 
         lifecycleScope.launchWhenCreated {

@@ -16,6 +16,7 @@ import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.sample.BuildConfig;
+import com.mapbox.search.sample.R;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+            new SearchEngineSettings(getString(R.string.mapbox_access_token))
         );
 
         final ReverseGeoOptions options = new ReverseGeoOptions.Builder(Point.fromLngLat(2.294434, 48.858349))

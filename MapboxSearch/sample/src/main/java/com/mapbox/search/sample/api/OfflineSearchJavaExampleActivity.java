@@ -23,6 +23,7 @@ import com.mapbox.search.offline.OfflineSearchEngineSettings;
 import com.mapbox.search.offline.OfflineSearchOptions;
 import com.mapbox.search.offline.OfflineSearchResult;
 import com.mapbox.search.sample.BuildConfig;
+import com.mapbox.search.sample.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,10 +58,7 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
         final TileStore tileStore = TileStore.create();
 
         searchEngine = OfflineSearchEngine.create(
-            new OfflineSearchEngineSettings(
-                BuildConfig.MAPBOX_API_TOKEN,
-                tileStore
-            )
+            new OfflineSearchEngineSettings(getString(R.string.mapbox_access_token), tileStore)
         );
 
         searchEngine.addEngineReadyCallback(engineReadyCallback);
