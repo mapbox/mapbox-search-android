@@ -13,14 +13,6 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="SimpleUiTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorAccent">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
-        <item name="colorPrimary">?attr/mapboxSearchSdkPrimaryAccentColor</item>
-        <item name="colorControlNormal">?attr/mapboxSearchSdkPrimaryAccentColor</item>
-        <item name="android:textColorHint">?attr/mapboxSearchSdkPrimaryTextInactiveColor</item>
-        <item name="android:background">?attr/mapboxSearchSdkBackgroundColor</item>
-    </style>
-
     <style name="CustomTheme" parent="AppTheme">
         <item name="mapboxSearchSdkTheme">@style/CustomSearchSdkTheme</item>
     </style>
