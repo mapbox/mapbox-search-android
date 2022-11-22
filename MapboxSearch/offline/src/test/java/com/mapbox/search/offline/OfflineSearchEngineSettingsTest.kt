@@ -39,7 +39,7 @@ internal class OfflineSearchEngineSettingsTest {
             When("Values accessed") {
                 Then(
                     "Default url should be as expected",
-                    URI.create("https://api-offline-search-staging.tilestream.net"),
+                    URI.create("https://api.mapbox.com"),
                     OfflineSearchEngineSettings.DEFAULT_ENDPOINT_URI
                 )
 
