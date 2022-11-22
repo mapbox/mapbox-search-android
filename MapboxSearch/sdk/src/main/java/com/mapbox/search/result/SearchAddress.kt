@@ -87,7 +87,7 @@ public class SearchAddress @JvmOverloads public constructor(
 
         return when {
             fields.isEmpty() -> null
-            components.first() == HOUSE_NUMBER -> {
+            components.first() == HOUSE_NUMBER && !houseNumber.isNullOrEmpty() -> {
                 if (components.size == 1) {
                     fields.first()
                 } else {

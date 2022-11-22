@@ -7,6 +7,61 @@ import org.junit.jupiter.api.TestFactory
 internal class SearchAddressTest {
 
     @TestFactory
+    fun `Check formattedAddress with empty house number`() = TestCase {
+        Given("Address with empty house number") {
+            val address = FULL_SEARCH_ADDRESS.copy(houseNumber = null)
+
+            listOf(
+                SearchAddress.FormatStyle.Short,
+                SearchAddress.FormatStyle.Medium,
+                SearchAddress.FormatStyle.Long,
+                SearchAddress.FormatStyle.Full
+            ).forEach {
+                When("Format Style is $it") {
+                    val expectedFormattedAddress = when (it) {
+                        is SearchAddress.FormatStyle.Short -> {
+                            address.street
+                        }
+                        is SearchAddress.FormatStyle.Medium -> {
+                            listOf(address.street, address.place).joinToString()
+                        }
+                        is SearchAddress.FormatStyle.Long -> {
+                            listOf(
+                                address.street,
+                                address.neighborhood,
+                                address.locality,
+                                address.place,
+                                address.district,
+                                address.region,
+                                address.country
+                            ).joinToString()
+                        }
+                        is SearchAddress.FormatStyle.Full -> {
+                            listOf(
+                                address.street,
+                                address.neighborhood,
+                                address.locality,
+                                address.place,
+                                address.district,
+                                address.region,
+                                address.country,
+                                address.postcode
+                            ).joinToString()
+                        }
+                        else -> error("Undeclared format style: $it")
+                    }
+
+                    Then(
+                        "Formatted address should be: $expectedFormattedAddress",
+                        expectedFormattedAddress,
+                        address.formattedAddress(it)
+                    )
+                }
+            }
+        }
+    }
+
+    @TestFactory
     fun `Check formattedAddress with empty SearchAddress`() = TestCase {
         Given("Empty and null SearchAddresses") {
             listOf(

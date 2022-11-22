@@ -2,6 +2,8 @@
 
 ## 1.0.0-beta.41-SNAPSHOT
 
+### Bug fixes
+- [CORE] Fixed a bug with `SearchAddress` formatting when address house number is empty.
 - [UI] `SearchResultsView.defaultSearchOptions` was not used and was removed from the API.
 - [UI] Fixed a bug in `SearchResultsView` when incorrect search options was used for request retry.
 
