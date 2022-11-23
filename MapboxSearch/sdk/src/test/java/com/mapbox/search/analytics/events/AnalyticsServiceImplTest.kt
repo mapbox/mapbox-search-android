@@ -3,7 +3,6 @@ package com.mapbox.search.analytics.events
 import android.content.Context
 import android.location.Location
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Event
 import com.mapbox.common.EventsServiceInterface
@@ -33,12 +32,9 @@ import com.mapbox.test.dsl.TestCase
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
-import io.mockk.unmockkStatic
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -86,14 +82,6 @@ internal class AnalyticsServiceImplTest {
         every {
             eventsJsonParser.serialize(validMockedFeedbackEvent)
         } returns TEST_SERIALIZED_FEEDBACK_EVENT_RAW
-
-        mockkStatic(PermissionsManager::class)
-        every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
-    }
-
-    @AfterEach
-    fun tearDown() {
-        unmockkStatic(PermissionsManager::class)
     }
 
     @TestFactory

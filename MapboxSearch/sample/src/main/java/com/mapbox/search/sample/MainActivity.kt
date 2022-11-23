@@ -473,7 +473,7 @@ class MainActivity : AppCompatActivity() {
                 callback(location)
             }
 
-            override fun onFailure(p0: Exception) {
+            override fun onFailure(exception: Exception) {
                 callback(null)
             }
         })

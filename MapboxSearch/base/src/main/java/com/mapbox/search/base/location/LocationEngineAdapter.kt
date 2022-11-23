@@ -22,7 +22,10 @@ import com.mapbox.search.internal.bindgen.LonLatBBox
 class LocationEngineAdapter(
     private val app: Application,
     private val locationEngine: LocationEngine,
-    private val timeProvider: TimeProvider = LocalTimeProvider()
+    private val timeProvider: TimeProvider = LocalTimeProvider(),
+    private val locationPermissionChecker: (Application) -> Boolean = {
+        PermissionsManager.areLocationPermissionsGranted(app)
+    }
 ) : CoreLocationProvider {
 
     @Volatile
@@ -36,13 +39,13 @@ class LocationEngineAdapter(
             stopLocationListener()
         }
 
-        override fun onFailure(e: Exception) {
-            loge("Can't access location: ${e.message}")
+        override fun onFailure(exception: Exception) {
+            loge("Can't access location: ${exception.message}")
         }
     }
 
     init {
-        if (!PermissionsManager.areLocationPermissionsGranted(app)) {
+        if (!locationPermissionChecker(app)) {
             logi("Location permission is not granted")
         } else {
             locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
@@ -55,8 +58,8 @@ class LocationEngineAdapter(
                     }
                 }
 
-                override fun onFailure(e: Exception) {
-                    loge("Can't access last location: ${e.message}")
+                override fun onFailure(exception: Exception) {
+                    loge("Can't access last location: ${exception.message}")
                     startLocationListener()
                 }
             })
@@ -80,7 +83,7 @@ class LocationEngineAdapter(
     }
 
     override fun getLocation(): Point? {
-        if (!PermissionsManager.areLocationPermissionsGranted(app)) {
+        if (!locationPermissionChecker(app)) {
             return null
         }
 

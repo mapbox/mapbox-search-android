@@ -1,16 +1,11 @@
 package com.mapbox.search.ui
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.os.LocaleList
-import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -22,16 +17,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineRequest
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.ServiceProvider
+import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.tests.BuildConfig
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -242,7 +235,7 @@ public class TestActivity : AppCompatActivity() {
     }
 
     private fun userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
-        lastKnownLocation { location ->
+        locationEngine.lastKnownLocationOrNull(this) { location: Point? ->
             if (location == null) {
                 callback(null)
             } else {
@@ -250,75 +243,6 @@ public class TestActivity : AppCompatActivity() {
                     .distanceCalculator(latitude = location.latitude())
                     .distance(location, destination)
                 callback(distance)
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun lastKnownLocation(callback: (Point?) -> Unit) {
-        if (!PermissionsManager.areLocationPermissionsGranted(this)) {
-            callback(null)
-        }
-
-        locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
-            override fun onSuccess(result: LocationEngineResult?) {
-                val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                    Point.fromLngLat(location.longitude, location.latitude)
-                }
-                callback(location)
-            }
-
-            override fun onFailure(p0: Exception) {
-                callback(null)
-            }
-        })
-    }
-
-    private class FixedPointLocationEngine(private val location: Location) : LocationEngine {
-
-        constructor(point: Point) : this(point.toLocation())
-
-        override fun getLastLocation(locationEngineCallback: LocationEngineCallback<LocationEngineResult>) {
-            locationEngineCallback.onSuccess(LocationEngineResult.create(location))
-        }
-
-        override fun requestLocationUpdates(
-            locationEngineRequest: LocationEngineRequest,
-            locationEngineCallback: LocationEngineCallback<LocationEngineResult>,
-            looper: Looper?
-        ) {
-            val callbackRunnable = Runnable {
-                locationEngineCallback.onSuccess(LocationEngineResult.create(location))
-            }
-
-            if (looper != null) {
-                Handler(looper).post(callbackRunnable)
-            } else {
-                callbackRunnable.run()
-            }
-        }
-
-        override fun requestLocationUpdates(
-            locationEngineRequest: LocationEngineRequest,
-            pendingIntent: PendingIntent?
-        ) {
-            throw NotImplementedError()
-        }
-
-        override fun removeLocationUpdates(locationEngineCallback: LocationEngineCallback<LocationEngineResult>) {
-            // Do nothing
-        }
-
-        override fun removeLocationUpdates(pendingIntent: PendingIntent?) {
-            // Do nothing
-        }
-
-        private companion object {
-            fun Point.toLocation(): Location {
-                val location = Location("")
-                location.latitude = latitude()
-                location.longitude = longitude()
-                return location
             }
         }
     }

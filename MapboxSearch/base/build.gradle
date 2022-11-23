@@ -78,8 +78,6 @@ dependencies {
     // Explicit dependency for http service implementation, should be declared on the Common SDK side
     implementation "com.mapbox.common:okhttp:$common_sdk_version"
 
-    api "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
-
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
     implementation "androidx.core:core-ktx:$androidx_core_version"

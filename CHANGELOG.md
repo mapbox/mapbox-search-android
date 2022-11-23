@@ -11,11 +11,11 @@
 - [UI] Fixed a bug in `SearchResultsView` when incorrect search options was used for request retry.
 
 ### Mapbox dependencies
-- Search Native SDK `0.63.0`
-- Common SDK `23.2.0-beta.1`
+- Search Native SDK `0.64.0`
+- Common SDK `23.2.0-rc.3`
 - Kotlin `1.5.31`
-
-
+- Removed `mapbox-android-core` dependency, it is now part of Mapbox Common library. 
+NOTE: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs.
 
 ## 1.0.0-beta.40
 

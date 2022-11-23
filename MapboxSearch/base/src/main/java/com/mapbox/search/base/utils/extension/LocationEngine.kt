@@ -6,32 +6,39 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 
 @SuppressLint("MissingPermission")
-fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) -> Unit): AsyncOperationTask {
+fun LocationEngine.lastKnownLocation(context: Context, callback: (Expected<Exception, Point>) -> Unit): AsyncOperationTask {
     if (!PermissionsManager.areLocationPermissionsGranted(context)) {
-        callback(null)
+        callback(ExpectedFactory.createError(Exception("Location permissions are not granted")))
         return AsyncOperationTaskImpl.COMPLETED
     }
 
     val task = AsyncOperationTaskImpl<Any>()
     val locationCallback = object : LocationEngineCallback<LocationEngineResult> {
         override fun onSuccess(result: LocationEngineResult?) {
-            val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
+            val location: Point? = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
                 Point.fromLngLat(location.longitude, location.latitude)
             }
             if (!task.isCancelled) {
-                callback(location)
+                val res: Expected<Exception, Point> = if (location == null) {
+                    ExpectedFactory.createError(Exception("Unknown location"))
+                } else {
+                    ExpectedFactory.createValue(location)
+                }
+                callback(res)
                 task.onComplete()
             }
         }
 
-        override fun onFailure(e: Exception) {
+        override fun onFailure(exception: Exception) {
             if (!task.isCancelled) {
-                callback(null)
+                callback(ExpectedFactory.createError(exception))
                 task.onComplete()
             }
         }
@@ -41,4 +48,12 @@ fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) 
     }
     getLastLocation(locationCallback)
     return task
+}
+
+fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) -> Unit): AsyncOperationTask {
+    return lastKnownLocation(context) { result ->
+        result.onValue(callback).onError {
+            callback(null)
+        }
+    }
 }
