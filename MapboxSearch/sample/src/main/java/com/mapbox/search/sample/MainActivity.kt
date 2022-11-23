@@ -503,6 +503,7 @@ class MainActivity : AppCompatActivity() {
     private fun showMarker(coordinate: Point) {
         val cameraOptions = CameraOptions.Builder()
             .center(coordinate)
+            .padding(EdgeInsets(.0, .0, dpToPx(300).toDouble(), .0))
             .zoom(10.0)
             .build()
 
