@@ -28,17 +28,17 @@ class FixedPointLocationEngine(
         return viewPort?.toLonLatBBox()
     }
 
-    override fun getLastLocation(locationEngineCallback: LocationEngineCallback<LocationEngineResult>) {
-        locationEngineCallback.onSuccess(LocationEngineResult.create(location))
+    override fun getLastLocation(callback: LocationEngineCallback<LocationEngineResult>) {
+        callback.onSuccess(LocationEngineResult.create(location))
     }
 
     override fun requestLocationUpdates(
-        locationEngineRequest: LocationEngineRequest,
-        locationEngineCallback: LocationEngineCallback<LocationEngineResult>,
+        request: LocationEngineRequest,
+        callback: LocationEngineCallback<LocationEngineResult>,
         looper: Looper?
     ) {
         val callbackRunnable = Runnable {
-            locationEngineCallback.onSuccess(LocationEngineResult.create(location))
+            callback.onSuccess(LocationEngineResult.create(location))
         }
 
         if (looper != null) {
@@ -48,11 +48,11 @@ class FixedPointLocationEngine(
         }
     }
 
-    override fun requestLocationUpdates(locationEngineRequest: LocationEngineRequest, pendingIntent: PendingIntent?) {
+    override fun requestLocationUpdates(request: LocationEngineRequest, pendingIntent: PendingIntent?) {
         throw NotImplementedError()
     }
 
-    override fun removeLocationUpdates(locationEngineCallback: LocationEngineCallback<LocationEngineResult>) {
+    override fun removeLocationUpdates(callback: LocationEngineCallback<LocationEngineResult>) {
         // Do nothing
     }
 

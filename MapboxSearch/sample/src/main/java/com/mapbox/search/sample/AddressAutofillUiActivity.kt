@@ -245,7 +245,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
                     callback(location)
                 }
 
-                override fun onFailure(e: Exception) {
+                override fun onFailure(exception: Exception) {
                     callback(null)
                 }
             }

@@ -7,15 +7,12 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.annotation.ColorInt
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.HighlightsCalculator
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.autofill.AddressAutofillSuggestion
+import com.mapbox.search.base.utils.extension.lastKnownLocation
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.extenstion.distanceTo
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
@@ -40,7 +37,7 @@ internal class AutofillItemsCreator(
         }
 
         return suggestions.map { suggestion ->
-            val locationRequest = locationEngine.lastKnownLocationOrNull(context)
+            val locationRequest = locationEngine.lastKnownLocation(context)
             val distance: Double? = locationRequest.value?.distanceTo(suggestion.coordinate)
 
             SearchResultAdapterItem.Result(
@@ -70,38 +67,14 @@ internal class AutofillItemsCreator(
     private companion object {
 
         @SuppressLint("MissingPermission")
-        suspend fun LocationEngine.lastKnownLocationOrNull(context: Context): Expected<Exception, Point?> {
-            if (!PermissionsManager.areLocationPermissionsGranted(context)) {
-                return ExpectedFactory.createError(Exception("Location permissions are not granted"))
-            }
-
+        suspend fun LocationEngine.lastKnownLocation(context: Context): Expected<Exception, Point> {
             return suspendCancellableCoroutine { continuation ->
-                val locationCallback = object : LocationEngineCallback<LocationEngineResult> {
-                    override fun onSuccess(result: LocationEngineResult?) {
-                        val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                            Point.fromLngLat(location.longitude, location.latitude)
-                        }
-
-                        if (location == null) {
-                            continuation.resumeWith(
-                                Result.success(ExpectedFactory.createError(Exception("Unknown location")))
-                            )
-                        } else {
-                            continuation.resumeWith(
-                                Result.success(ExpectedFactory.createValue(location))
-                            )
-                        }
-                    }
-
-                    override fun onFailure(e: Exception) {
-                        continuation.resumeWith(
-                            Result.success(ExpectedFactory.createError(e))
-                        )
-                    }
+                val task = lastKnownLocation(context) {
+                    continuation.resumeWith(Result.success(it))
                 }
-                getLastLocation(locationCallback)
+
                 continuation.invokeOnCancellation {
-                    removeLocationUpdates(locationCallback)
+                    task.cancel()
                 }
             }
         }

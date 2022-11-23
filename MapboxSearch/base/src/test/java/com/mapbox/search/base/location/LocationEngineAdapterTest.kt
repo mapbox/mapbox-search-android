@@ -5,7 +5,6 @@ import android.location.Location
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
@@ -13,11 +12,8 @@ import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import io.mockk.slot
-import io.mockk.unmockkStatic
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
@@ -30,21 +26,17 @@ internal class LocationEngineAdapterTest {
 
     private lateinit var adapter: LocationEngineAdapter
 
+    private lateinit var locationPermissionChecker: (Application) -> Boolean
+
     @BeforeEach
     fun setUp() {
         app = mockk()
         engine = mockk(relaxed = true)
         timeProvider = mockk()
+        locationPermissionChecker = mockk()
+        every { locationPermissionChecker.invoke(any()) } returns true
 
         every { timeProvider.currentTimeMillis() } returns TIME_MILLIS
-
-        mockkStatic(PermissionsManager::class)
-        every { PermissionsManager.areLocationPermissionsGranted(app) } returns true
-    }
-
-    @AfterEach
-    fun tearDown() {
-        unmockkStatic(PermissionsManager::class)
     }
 
     @TestFactory
@@ -55,11 +47,11 @@ internal class LocationEngineAdapterTest {
                 callbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider)
+            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
-                    PermissionsManager.areLocationPermissionsGranted(app)
+                    locationPermissionChecker(app)
                 }
 
                 VerifyOnce("Last known location requested") {
@@ -84,11 +76,11 @@ internal class LocationEngineAdapterTest {
                 locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider)
+            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
-                    PermissionsManager.areLocationPermissionsGranted(app)
+                    locationPermissionChecker(app)
                 }
 
                 VerifyOnce("Last known location requested") {
@@ -121,11 +113,11 @@ internal class LocationEngineAdapterTest {
                 locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider)
+            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
-                    PermissionsManager.areLocationPermissionsGranted(app)
+                    locationPermissionChecker(app)
                 }
 
                 VerifyOnce("Last known location requested") {
