@@ -17,6 +17,7 @@ import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchSuggestion;
 import com.mapbox.search.sample.BuildConfig;
+import com.mapbox.search.sample.R;
 
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(BuildConfig.MAPBOX_API_TOKEN)
+            new SearchEngineSettings(getString(R.string.mapbox_access_token))
         );
 
         final SearchOptions options = new SearchOptions.Builder()

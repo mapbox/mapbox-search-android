@@ -17,7 +17,7 @@ import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
-import com.mapbox.search.sample.BuildConfig
+import com.mapbox.search.sample.R
 
 class OfflineSearchKotlinExampleActivity : Activity() {
 
@@ -49,7 +49,7 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                accessToken = getString(R.string.mapbox_access_token),
                 tileStore = tileStore
             )
         )

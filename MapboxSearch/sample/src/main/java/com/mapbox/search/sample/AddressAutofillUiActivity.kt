@@ -83,7 +83,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
         searchEngineUiAdapter = AddressAutofillUiAdapter(
             view = searchResultsView,
-            addressAutofill = AddressAutofill.create(BuildConfig.MAPBOX_API_TOKEN)
+            addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
         )
 
         LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocationOrNull(this) { point ->

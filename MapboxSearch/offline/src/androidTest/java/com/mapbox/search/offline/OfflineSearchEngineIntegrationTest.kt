@@ -1,6 +1,8 @@
 package com.mapbox.search.offline
 
+import android.app.Application
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.TileRegion
@@ -18,7 +20,7 @@ import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.compareSearchResultWithServerSearchResult
 import com.mapbox.search.common.createCoreSearchAddress
 import com.mapbox.search.common.createTestCoreSearchResult
-import com.mapbox.search.common.tests.BuildConfig
+import com.mapbox.search.offline.test.R
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback.SearchEngineResult
@@ -38,6 +40,9 @@ import org.junit.Test
 
 @Suppress("LargeClass")
 internal class OfflineSearchEngineIntegrationTest {
+
+    private val targetApplication: Application
+        get() = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
 
     private lateinit var searchEngine: OfflineSearchEngine
 
@@ -67,7 +72,7 @@ internal class OfflineSearchEngineIntegrationTest {
     fun setUp() {
         searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                accessToken = BuildConfig.MAPBOX_API_TOKEN,
+                accessToken = targetApplication.getString(R.string.mapbox_access_token),
                 tileStore = tileStore,
                 locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
             )

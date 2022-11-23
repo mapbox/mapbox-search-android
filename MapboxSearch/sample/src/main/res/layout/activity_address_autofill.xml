@@ -113,7 +113,6 @@
 
     <com.mapbox.search.ui.view.SearchResultsView
         android:id="@+id/search_results_view"
-        style="@style/SimpleUiTheme"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
