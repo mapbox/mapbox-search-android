@@ -100,8 +100,6 @@ dependencies {
 
     api "com.mapbox.common:common:$common_sdk_version"
 
-    api "com.mapbox.mapboxsdk:mapbox-android-core:$mapbox_android_core_version"
-
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
