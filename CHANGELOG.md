@@ -2,6 +2,11 @@
 
 ## 1.0.0-beta.41-SNAPSHOT
 
+### Breaking changes
+- [CORE] `SearchAddress.FormatStyle.Custom` has been removed because it can't guarantee correct formatting behavior. `SearchAddress` provides all the address components with the existing public API and customers still can format address according to needed formatting rules.
+
+### Bug fixes
+- [CORE] Fixed a bug with `SearchAddress` formatting when address house number is empty.
 - [UI] `SearchResultsView.defaultSearchOptions` was not used and was removed from the API.
 - [UI] Fixed a bug in `SearchResultsView` when incorrect search options was used for request retry.
 

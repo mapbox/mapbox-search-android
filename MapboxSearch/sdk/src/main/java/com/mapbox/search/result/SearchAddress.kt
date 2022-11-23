@@ -87,7 +87,7 @@ public class SearchAddress @JvmOverloads public constructor(
 
         return when {
             fields.isEmpty() -> null
-            components.first() == HOUSE_NUMBER -> {
+            components.first() == HOUSE_NUMBER && !houseNumber.isNullOrEmpty() -> {
                 if (components.size == 1) {
                     fields.first()
                 } else {
@@ -174,7 +174,6 @@ public class SearchAddress @JvmOverloads public constructor(
                 COUNTRY,
                 POSTCODE
             )
-            is FormatStyle.Custom -> style.components
             else -> error("Unknown FormatStyle subclass: ${style.javaClass.printableName}.")
         }
 
@@ -442,8 +441,7 @@ public class SearchAddress @JvmOverloads public constructor(
             require(this is Short ||
                     this is Medium ||
                     this is Long ||
-                    this is Full ||
-                    this is Custom) {
+                    this is Full) {
                 "FormatStyle allows only the following subclasses: " +
                         "[FormatStyle.Short | FormatStyle.Medium | FormatStyle.Long | FormatStyle.Full | FormatStyle.Custom], " +
                         "but ${javaClass.printableName} was found."
@@ -475,47 +473,6 @@ public class SearchAddress @JvmOverloads public constructor(
          * [region], [country], [postcode].
          */
         public object Full : FormatStyle()
-
-        /**
-         * Custom variant of formatting. User decides, which address components will be included to formatted address string.
-         * @property components Address components, that will be used for string representation of address.
-         */
-        public class Custom(public val components: List<FormatComponent>) : FormatStyle() {
-
-            /**
-             * Custom variant of formatting. User decides, which address components will be included to formatted address string.
-             * @property components Address components, that will be used for string representation of address.
-             */
-            public constructor(vararg components: FormatComponent) : this(components.toList())
-
-            /**
-             * @suppress
-             */
-            override fun equals(other: Any?): Boolean {
-                if (this === other) return true
-                if (javaClass != other?.javaClass) return false
-
-                other as Custom
-
-                if (components != other.components) return false
-
-                return true
-            }
-
-            /**
-             * @suppress
-             */
-            override fun hashCode(): Int {
-                return components.hashCode()
-            }
-
-            /**
-             * @suppress
-             */
-            override fun toString(): String {
-                return "Custom(components=$components)"
-            }
-        }
     }
 
     private companion object {
