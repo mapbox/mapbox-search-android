@@ -4,10 +4,11 @@
 
 ### Breaking changes
 - [CORE] `SearchAddress.FormatStyle.Custom` has been removed because it can't guarantee correct formatting behavior. `SearchAddress` provides all the address components with the existing public API and customers still can format address according to needed formatting rules.
+- [UI] `SearchResultsView.defaultSearchOptions` was not used and was removed from the API.
 
 ### Bug fixes
 - [CORE] Fixed a bug with `SearchAddress` formatting when address house number is empty.
-- [UI] `SearchResultsView.defaultSearchOptions` was not used and was removed from the API.
+- [CORE] Added a proguard rule that prevents DAO classes constructors from being removed.
 - [UI] Fixed a bug in `SearchResultsView` when incorrect search options was used for request retry.
 
 ### Mapbox dependencies
