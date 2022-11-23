@@ -111,19 +111,6 @@ internal class SearchAddressTest {
                 SearchAddress.FormatStyle.Medium to "$HOUSE_NUMBER $STREET, $PLACE",
                 SearchAddress.FormatStyle.Long to "$HOUSE_NUMBER $STREET, $NEIGHBORHOOD, $LOCALITY, $PLACE, $DISTRICT, $REGION, $COUNTRY",
                 SearchAddress.FormatStyle.Full to "$HOUSE_NUMBER $STREET, $NEIGHBORHOOD, $LOCALITY, $PLACE, $DISTRICT, $REGION, $COUNTRY, $POSTCODE",
-
-                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.HOUSE_NUMBER) to HOUSE_NUMBER,
-                SearchAddress.FormatStyle.Custom(SearchAddress.FormatComponent.REGION) to REGION,
-
-                SearchAddress.FormatStyle.Custom(
-                    SearchAddress.FormatComponent.HOUSE_NUMBER,
-                    SearchAddress.FormatComponent.LOCALITY
-                ) to "$HOUSE_NUMBER $LOCALITY",
-
-                SearchAddress.FormatStyle.Custom(
-                    SearchAddress.FormatComponent.PLACE,
-                    SearchAddress.FormatComponent.HOUSE_NUMBER
-                ) to "$PLACE, $HOUSE_NUMBER"
             ).forEach { (style, expectedValue) ->
                 When("Call $style formattedAddress for $address") {
                     val actualValue = address.formattedAddress(style)

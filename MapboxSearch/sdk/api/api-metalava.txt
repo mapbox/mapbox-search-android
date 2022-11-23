@@ -1188,13 +1188,6 @@ package com.mapbox.search.result {
     ctor public SearchAddress.FormatStyle();
   }
 
-  public static final class SearchAddress.FormatStyle.Custom extends com.mapbox.search.result.SearchAddress.FormatStyle {
-    ctor public SearchAddress.FormatStyle.Custom(java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> components);
-    ctor public SearchAddress.FormatStyle.Custom(com.mapbox.search.result.SearchAddress.FormatComponent... components);
-    method public java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> getComponents();
-    property public final java.util.List<com.mapbox.search.result.SearchAddress.FormatComponent> components;
-  }
-
   public static final class SearchAddress.FormatStyle.Full extends com.mapbox.search.result.SearchAddress.FormatStyle {
     field public static final com.mapbox.search.result.SearchAddress.FormatStyle.Full INSTANCE;
   }

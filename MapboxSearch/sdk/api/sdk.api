@@ -1279,15 +1279,6 @@ public abstract class com/mapbox/search/result/SearchAddress$FormatStyle {
 	public fun <init> ()V
 }
 
-public final class com/mapbox/search/result/SearchAddress$FormatStyle$Custom : com/mapbox/search/result/SearchAddress$FormatStyle {
-	public fun <init> (Ljava/util/List;)V
-	public fun <init> ([Lcom/mapbox/search/result/SearchAddress$FormatComponent;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getComponents ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/mapbox/search/result/SearchAddress$FormatStyle$Full : com/mapbox/search/result/SearchAddress$FormatStyle {
 	public static final field INSTANCE Lcom/mapbox/search/result/SearchAddress$FormatStyle$Full;
 }
