@@ -15,7 +15,7 @@ then
   exit 0
 fi
 
-GITHUB_TOKEN=$(./mbx-ci github writer token 2>/dev/null)
+GITHUB_TOKEN=$(./mbx-ci github writer private token 2>/dev/null)
 export GITHUB_TOKEN
 
 BRANCH_NAME="mapbox-search-android/${VERSION}"
