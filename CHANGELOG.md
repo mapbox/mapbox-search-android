@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.41-SNAPSHOT
+## 1.0.0-beta.41
 
 ### Breaking changes
 - [CORE] `SearchAddress.FormatStyle.Custom` has been removed because it can't guarantee correct formatting behavior. `SearchAddress` provides all the address components with the existing public API and customers still can format address according to needed formatting rules.
