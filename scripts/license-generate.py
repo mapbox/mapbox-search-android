@@ -69,6 +69,8 @@ try:
         generateLicense(licenseFile, "offline")
         licenseFile.write("\n\n#### Search Autofill module\n")
         generateLicense(licenseFile, "autofill")
+        licenseFile.write("\n\n#### Search Discover module\n")
+        generateLicense(licenseFile, "discover")
 
     licenseFile.close()
 except IOError as err:

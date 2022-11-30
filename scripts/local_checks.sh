@@ -12,6 +12,7 @@ pushd MapboxSearch/
 ./gradlew :offline:ktlintFormat
 ./gradlew :sdk-common:ktlintFormat
 ./gradlew :autofill:ktlintFormat
+./gradlew :discover:ktlintFormat
 ./gradlew :sample:ktlintFormat
 
 ./gradlew :base:lint
@@ -20,6 +21,7 @@ pushd MapboxSearch/
 ./gradlew :offline:lint
 ./gradlew :sdk-common:lint
 ./gradlew :autofill:lint
+./gradlew :discover:lint
 ./gradlew :sample:lint
 
 ./gradlew detektAll
@@ -34,6 +36,7 @@ pushd MapboxSearch/
 ./gradlew :offline:testReleaseUnitTest
 ./gradlew :sdk-common:testReleaseUnitTest
 ./gradlew :autofill:testReleaseUnitTest
+./gradlew :discover:testReleaseUnitTest
 
 # Check only whether PIT setup doesn't fail.
 # Full PIT test run may be executed locally or via dedicated nightly CI task.
