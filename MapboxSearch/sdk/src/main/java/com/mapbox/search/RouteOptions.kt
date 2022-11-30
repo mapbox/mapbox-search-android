@@ -76,20 +76,12 @@ public class RouteOptions(
      * Note: Supported for Single Box Search API only. Reserved for internal and special use.
      */
     @Reserved(SBS)
-    public abstract class Deviation : Parcelable {
+    public abstract class Deviation internal constructor() : Parcelable {
 
         /**
          * Indicates that the caller intends to perform a higher cost search along a route.
          */
         public abstract val sarType: SarType?
-
-        init {
-            @Suppress("LeakingThis")
-            require(this is Time) {
-                "Deviation allows only the following subclass - Deviation.Time, " +
-                        "but ${javaClass.printableName} was found."
-            }
-        }
 
         /**
          * Type of Search-Along-the-Route algorithm.

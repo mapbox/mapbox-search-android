@@ -76,3 +76,99 @@ public final class com/mapbox/search/common/concurrent/SearchSdkMainThreadWorker
 	public final fun setDelegate (Lcom/mapbox/search/common/concurrent/MainThreadWorker;)V
 }
 
+public abstract class com/mapbox/search/common/metadata/OpenHours : android/os/Parcelable {
+	public fun <init> ()V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$AlwaysOpen : com/mapbox/search/common/metadata/OpenHours {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/common/metadata/OpenHours$AlwaysOpen;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$PermanentlyClosed : com/mapbox/search/common/metadata/OpenHours {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/common/metadata/OpenHours$PermanentlyClosed;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$Scheduled : com/mapbox/search/common/metadata/OpenHours {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/List;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPeriods ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$TemporaryClosed : com/mapbox/search/common/metadata/OpenHours {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/common/metadata/OpenHours$TemporaryClosed;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenPeriod : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lcom/mapbox/search/common/metadata/WeekTimestamp;Lcom/mapbox/search/common/metadata/WeekTimestamp;)V
+	public final fun component1 ()Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public final fun component2 ()Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public final fun copy (Lcom/mapbox/search/common/metadata/WeekTimestamp;Lcom/mapbox/search/common/metadata/WeekTimestamp;)Lcom/mapbox/search/common/metadata/OpenPeriod;
+	public static synthetic fun copy$default (Lcom/mapbox/search/common/metadata/OpenPeriod;Lcom/mapbox/search/common/metadata/WeekTimestamp;Lcom/mapbox/search/common/metadata/WeekTimestamp;ILjava/lang/Object;)Lcom/mapbox/search/common/metadata/OpenPeriod;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClosed ()Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public final fun getOpen ()Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/ParkingData : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (II)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getReservedForDisabilities ()I
+	public final fun getTotalCapacity ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/WeekDay : java/lang/Enum {
+	public static final field FRIDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field MONDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field SATURDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field SUNDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field THURSDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field TUESDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public static final field WEDNESDAY Lcom/mapbox/search/common/metadata/WeekDay;
+	public final fun getInternalRawCode ()B
+	public final fun getIsoCode ()I
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/common/metadata/WeekDay;
+	public static fun values ()[Lcom/mapbox/search/common/metadata/WeekDay;
+}
+
+public final class com/mapbox/search/common/metadata/WeekTimestamp : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lcom/mapbox/search/common/metadata/WeekDay;II)V
+	public final fun component1 ()Lcom/mapbox/search/common/metadata/WeekDay;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (Lcom/mapbox/search/common/metadata/WeekDay;II)Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public static synthetic fun copy$default (Lcom/mapbox/search/common/metadata/WeekTimestamp;Lcom/mapbox/search/common/metadata/WeekDay;IIILjava/lang/Object;)Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDay ()Lcom/mapbox/search/common/metadata/WeekDay;
+	public final fun getHour ()I
+	public final fun getMinute ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+

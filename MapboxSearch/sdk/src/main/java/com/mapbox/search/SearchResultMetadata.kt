@@ -2,10 +2,10 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreResultMetadata
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.ParkingData
-import com.mapbox.search.metadata.mapToCore
-import com.mapbox.search.metadata.mapToPlatform
+import com.mapbox.search.base.mapToCore
+import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.ParkingData
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 

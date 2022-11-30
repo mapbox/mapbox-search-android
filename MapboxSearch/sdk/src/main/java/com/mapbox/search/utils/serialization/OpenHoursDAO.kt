@@ -1,7 +1,7 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.metadata.OpenHours
+import com.mapbox.search.common.metadata.OpenHours
 
 internal class OpenHoursDAO(
     @SerializedName("mode") val mode: OpenModeDAO? = null,

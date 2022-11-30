@@ -1,8 +1,8 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.metadata.OpenPeriod
-import com.mapbox.search.metadata.WeekTimestamp
+import com.mapbox.search.common.metadata.OpenPeriod
+import com.mapbox.search.common.metadata.WeekTimestamp
 
 internal class OpenPeriodDAO(
     @SerializedName("openWeekDay") val openWeekDay: WeekDayDAO? = null,

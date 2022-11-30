@@ -774,9 +774,9 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getCpsJson ()Ljava/lang/String;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getExtraData ()Ljava/util/Map;
-	public final fun getOpenHours ()Lcom/mapbox/search/metadata/OpenHours;
+	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
-	public final fun getParking ()Lcom/mapbox/search/metadata/ParkingData;
+	public final fun getParking ()Lcom/mapbox/search/common/metadata/ParkingData;
 	public final fun getPhone ()Ljava/lang/String;
 	public final fun getPrimaryPhotos ()Ljava/util/List;
 	public final fun getReviewCount ()Ljava/lang/Integer;
@@ -889,80 +889,6 @@ public final class com/mapbox/search/analytics/MissingResultFeedbackEvent {
 	public final fun getScreenshot ()Landroid/graphics/Bitmap;
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class com/mapbox/search/metadata/OpenHours {
-	public fun <init> ()V
-}
-
-public final class com/mapbox/search/metadata/OpenHours$AlwaysOpen : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$AlwaysOpen;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$PermanentlyClosed : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$PermanentlyClosed;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$Scheduled : com/mapbox/search/metadata/OpenHours {
-	public fun <init> (Ljava/util/List;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPeriods ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$TemporaryClosed : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$TemporaryClosed;
-}
-
-public final class com/mapbox/search/metadata/OpenPeriod {
-	public fun <init> (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;)V
-	public final fun component1 ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun component2 ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun copy (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;)Lcom/mapbox/search/metadata/OpenPeriod;
-	public static synthetic fun copy$default (Lcom/mapbox/search/metadata/OpenPeriod;Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;ILjava/lang/Object;)Lcom/mapbox/search/metadata/OpenPeriod;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getClosed ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun getOpen ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/ParkingData {
-	public fun <init> (II)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getReservedForDisabilities ()I
-	public final fun getTotalCapacity ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/WeekDay : java/lang/Enum {
-	public static final field FRIDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field MONDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field SATURDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field SUNDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field THURSDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field TUESDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field WEDNESDAY Lcom/mapbox/search/metadata/WeekDay;
-	public final fun getIsoCode ()I
-	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/metadata/WeekDay;
-	public static fun values ()[Lcom/mapbox/search/metadata/WeekDay;
-}
-
-public final class com/mapbox/search/metadata/WeekTimestamp {
-	public fun <init> (Lcom/mapbox/search/metadata/WeekDay;II)V
-	public final fun component1 ()Lcom/mapbox/search/metadata/WeekDay;
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (Lcom/mapbox/search/metadata/WeekDay;II)Lcom/mapbox/search/metadata/WeekTimestamp;
-	public static synthetic fun copy$default (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekDay;IIILjava/lang/Object;)Lcom/mapbox/search/metadata/WeekTimestamp;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDay ()Lcom/mapbox/search/metadata/WeekDay;
-	public final fun getHour ()I
-	public final fun getMinute ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

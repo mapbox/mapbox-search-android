@@ -1,9 +1,9 @@
 package com.mapbox.search.ui.tests_support
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
-import com.mapbox.search.metadata.OpenHours
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResultType

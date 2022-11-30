@@ -1,7 +1,7 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.metadata.ParkingData
+import com.mapbox.search.common.metadata.ParkingData
 
 internal class ParkingDataDAO(
     @SerializedName("totalCapacity") val totalCapacity: Int? = null,

@@ -2,7 +2,6 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.search.base.assertDebug
-import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import kotlinx.parcelize.Parcelize
@@ -10,20 +9,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * Type of the search suggestion.
  */
-public abstract class SearchSuggestionType : Parcelable {
-
-    init {
-        @Suppress("LeakingThis")
-        require(this is SearchResultSuggestion ||
-                this is Category ||
-                this is Query ||
-                this is IndexableRecordItem
-        ) {
-            "SearchSuggestionType allows only the following subclasses: " +
-                    "[SearchSuggestionType.SearchResultSuggestion | SearchSuggestionType.Category | SearchSuggestionType.Query | SearchSuggestionType.IndexableRecordItem], " +
-                    "but ${javaClass.printableName} was found."
-        }
-    }
+public abstract class SearchSuggestionType internal constructor() : Parcelable {
 
     /**
      * Search suggestion of the [SearchResultSuggestion] type points to the only [SearchResult] that will be returned after selection.

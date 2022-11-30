@@ -1,11 +1,12 @@
-package com.mapbox.search.metadata
+package com.mapbox.search.common.metadata
 
-import com.mapbox.search.base.assertDebug
-import com.mapbox.search.base.core.CoreParkingData
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /**
  * Parking information for the POI.
  */
+@Parcelize
 public class ParkingData(
 
     /**
@@ -17,13 +18,13 @@ public class ParkingData(
      * Number of spots for persons with disabilities.
      */
     public val reservedForDisabilities: Int
-) {
+) : Parcelable {
 
     init {
-        assertDebug(totalCapacity >= 0) {
+        require(totalCapacity >= 0) {
             "Negative `totalCapacity`: $totalCapacity"
         }
-        assertDebug(reservedForDisabilities >= 0) {
+        require(reservedForDisabilities >= 0) {
             "Negative `reservedForDisabilities`: $reservedForDisabilities"
         }
     }
@@ -62,15 +63,3 @@ public class ParkingData(
                 ")"
     }
 }
-
-@JvmSynthetic
-internal fun CoreParkingData.mapToPlatform() = ParkingData(
-    totalCapacity = capacity,
-    reservedForDisabilities = forDisabilities
-)
-
-@JvmSynthetic
-internal fun ParkingData.mapToCore() = CoreParkingData(
-    totalCapacity,
-    reservedForDisabilities
-)

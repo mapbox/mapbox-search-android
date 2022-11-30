@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.44-SNAPSHOT
 
+### Breaking changes
+- [CORE] `OpenHours`, `OpenPeriod`, `WeekDay`, `WeekTimestamp`, `ParkingData` classes have been moved to `com.mapbox.search.common.metadata` package.
+
 ### Mapbox dependencies
 - Search Native SDK `0.66.0`
 - Common SDK `23.2.1`

@@ -16,7 +16,7 @@ internal class DefaultHighlightsEngine : HighlightsEngine {
 /**
  * Used to calculate which parts of exact search result name will be highlighted.
  *
- * To obtain [HighlightsCalculator] instance, please, use [MapboxSearchSdk.serviceProvider].
+ * To obtain [HighlightsCalculator] instance, please, use [com.mapbox.search.ServiceProvider.highlightsCalculator].
  */
 public interface HighlightsCalculator {
     /**

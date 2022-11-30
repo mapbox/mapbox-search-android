@@ -14,8 +14,8 @@ import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.ParkingData
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord

@@ -1,15 +1,16 @@
 package com.mapbox.search
 
 import com.mapbox.search.base.core.CoreResultMetadata
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.OpenPeriod
-import com.mapbox.search.metadata.ParkingData
-import com.mapbox.search.metadata.WeekDay
-import com.mapbox.search.metadata.WeekTimestamp
-import com.mapbox.search.metadata.mapToCore
+import com.mapbox.search.base.mapToCore
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.OpenPeriod
+import com.mapbox.search.common.metadata.ParkingData
+import com.mapbox.search.common.metadata.WeekDay
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.test.dsl.TestCase
 import io.mockk.spyk
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.TestFactory
 
 internal class SearchResultMetadataTest {
@@ -152,25 +153,25 @@ internal class SearchResultMetadataTest {
 
             When("extraData accessed") {
                 Then("Returned data should be as original") {
-                    Assert.assertSame(metadata.extraData, spyMetaMap)
+                    assertSame(metadata.extraData, spyMetaMap)
                 }
             }
 
             When("openHours accessed") {
                 Then("Returned data should be equal to initially provided") {
-                    Assert.assertEquals(testOpenHours, metadata.openHours)
+                    assertEquals(testOpenHours, metadata.openHours)
                 }
             }
 
             When("parking accessed") {
                 Then("Returned data should be equal to initially provided") {
-                    Assert.assertEquals(testParking, metadata.parking)
+                    assertEquals(testParking, metadata.parking)
                 }
             }
 
             When("cpsJson accessed") {
                 Then("Returned data should be as original") {
-                    Assert.assertSame(originalCoreMeta.cpsJson, metadata.cpsJson)
+                    assertSame(originalCoreMeta.cpsJson, metadata.cpsJson)
                 }
             }
 
@@ -206,7 +207,7 @@ internal class SearchResultMetadataTest {
 
             When("Get original core metadata") {
                 Then("Value should be the same") {
-                    Assert.assertSame(spyCoreMeta, metadata.coreMetadata)
+                    assertSame(spyCoreMeta, metadata.coreMetadata)
                 }
             }
         }

@@ -731,9 +731,9 @@ package com.mapbox.search {
     method public String? getCpsJson();
     method public String? getDescription();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
-    method public com.mapbox.search.metadata.OpenHours? getOpenHours();
+    method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
     method public java.util.List<com.mapbox.search.ImageInfo>? getOtherPhotos();
-    method public com.mapbox.search.metadata.ParkingData? getParking();
+    method public com.mapbox.search.common.metadata.ParkingData? getParking();
     method public String? getPhone();
     method public java.util.List<com.mapbox.search.ImageInfo>? getPrimaryPhotos();
     method public Integer? getReviewCount();
@@ -744,9 +744,9 @@ package com.mapbox.search {
     property public final String? cpsJson;
     property public final String? description;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
-    property public final com.mapbox.search.metadata.OpenHours? openHours;
+    property public final com.mapbox.search.common.metadata.OpenHours? openHours;
     property public final java.util.List<com.mapbox.search.ImageInfo>? otherPhotos;
-    property public final com.mapbox.search.metadata.ParkingData? parking;
+    property public final com.mapbox.search.common.metadata.ParkingData? parking;
     property public final String? phone;
     property public final java.util.List<com.mapbox.search.ImageInfo>? primaryPhotos;
     property public final Integer? reviewCount;
@@ -844,86 +844,6 @@ package com.mapbox.search.analytics {
     property public final android.graphics.Bitmap? screenshot;
     property public final String? sessionId;
     property public final String? text;
-  }
-
-}
-
-package com.mapbox.search.metadata {
-
-  public abstract class OpenHours {
-    ctor public OpenHours();
-  }
-
-  public static final class OpenHours.AlwaysOpen extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.AlwaysOpen INSTANCE;
-  }
-
-  public static final class OpenHours.PermanentlyClosed extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.PermanentlyClosed INSTANCE;
-  }
-
-  public static final class OpenHours.Scheduled extends com.mapbox.search.metadata.OpenHours {
-    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.metadata.OpenPeriod> periods);
-    method public java.util.List<com.mapbox.search.metadata.OpenPeriod> getPeriods();
-    property public final java.util.List<com.mapbox.search.metadata.OpenPeriod> periods;
-  }
-
-  public static final class OpenHours.TemporaryClosed extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.TemporaryClosed INSTANCE;
-  }
-
-  public final class OpenHoursKt {
-  }
-
-  public final class OpenPeriod {
-    ctor public OpenPeriod(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
-    method public com.mapbox.search.metadata.WeekTimestamp component1();
-    method public com.mapbox.search.metadata.WeekTimestamp component2();
-    method public com.mapbox.search.metadata.OpenPeriod copy(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
-    method public com.mapbox.search.metadata.WeekTimestamp getClosed();
-    method public com.mapbox.search.metadata.WeekTimestamp getOpen();
-    property public final com.mapbox.search.metadata.WeekTimestamp closed;
-    property public final com.mapbox.search.metadata.WeekTimestamp open;
-  }
-
-  public final class OpenPeriodKt {
-  }
-
-  public final class ParkingData {
-    ctor public ParkingData(int totalCapacity, int reservedForDisabilities);
-    method public int getReservedForDisabilities();
-    method public int getTotalCapacity();
-    property public final int reservedForDisabilities;
-    property public final int totalCapacity;
-  }
-
-  public final class ParkingDataKt {
-  }
-
-  public enum WeekDay {
-    method public final int getIsoCode();
-    property public final int isoCode;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay FRIDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay MONDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay SATURDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay SUNDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay THURSDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay TUESDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay WEDNESDAY;
-  }
-
-  public final class WeekTimestamp {
-    ctor public WeekTimestamp(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
-    method public com.mapbox.search.metadata.WeekDay component1();
-    method public int component2();
-    method public int component3();
-    method public com.mapbox.search.metadata.WeekTimestamp copy(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
-    method public com.mapbox.search.metadata.WeekDay getDay();
-    method public int getHour();
-    method public int getMinute();
-    property public final com.mapbox.search.metadata.WeekDay day;
-    property public final int hour;
-    property public final int minute;
   }
 
 }

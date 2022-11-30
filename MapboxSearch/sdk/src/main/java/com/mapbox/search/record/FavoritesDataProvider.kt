@@ -1,12 +1,11 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.MapboxSearchSdk
 import java.util.concurrent.ExecutorService
 
 /**
  * [LocalDataProvider] typed to store [FavoriteRecord] items.
  *
- * To obtain [FavoritesDataProvider] instance, please, use [MapboxSearchSdk.serviceProvider].
+ * To obtain [FavoritesDataProvider] instance, please, use [com.mapbox.search.ServiceProvider.favoritesDataProvider].
  *
  * @see IndexableDataProvider
  * @see LocalDataProvider

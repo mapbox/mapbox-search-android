@@ -6,11 +6,11 @@ import com.mapbox.search.base.core.CoreSearchResponse
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.WeekDay
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.WeekDay
-import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.IndexableRecord
 import java.util.concurrent.TimeUnit
 
