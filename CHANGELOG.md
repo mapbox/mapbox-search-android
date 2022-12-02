@@ -2,9 +2,12 @@
 
 ## 1.0.0-beta.42-SNAPSHOT
 
+### Bug fixes
+- [AUTOFILL] Fixed a bug in address autofill reverse geocoding.
+
 ### Mapbox dependencies
-- Search Native SDK `0.64.0`
-- Common SDK `23.2.0-rc.3`
+- Search Native SDK `0.65.0`
+- Common SDK `23.2.0`
 - Kotlin `1.5.31`
 
 
