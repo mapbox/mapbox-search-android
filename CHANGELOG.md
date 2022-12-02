@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.42-SNAPSHOT
+## 1.0.0-beta.42
 
 ### Bug fixes
 - [AUTOFILL] Fixed a bug in address autofill reverse geocoding.
