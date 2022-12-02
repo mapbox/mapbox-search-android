@@ -42,10 +42,10 @@ ext {
     pitest_version = '1.6.7'
 
     mapbox_maps_version = '10.10.0-rc.1'
-    common_sdk_version = '23.2.0-rc.3'
+    common_sdk_version = '23.2.0'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '0.64.0'
+    search_native_version = '0.65.0'
 
     detekt_version = '1.19.0'
 
