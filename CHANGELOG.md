@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.43-SNAPSHOT
+## 1.0.0-beta.43
 
 ### Bug fixes
 - [CORE] Search SDK does not longer implicitly set `origin` and `proximity` points in `SearchOptions` and `CategorySearchOptions` for `SBS` Api Type if either `origin` or `proximity` point is provided by a user.
