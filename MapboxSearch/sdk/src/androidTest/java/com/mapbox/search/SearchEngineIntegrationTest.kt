@@ -240,8 +240,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val expectedResult = BaseServerSearchSuggestion(
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.copy(
-                options = options.copy(proximity = TEST_USER_LOCATION),
-                proximityRewritten = true,
+                options = options,
                 requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
                     responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
                 )
@@ -581,8 +580,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
-                    options = options.copy(proximity = TEST_USER_LOCATION),
-                    proximityRewritten = true,
+                    options = options,
                     requestContext = requestContext.copy(
                         responseUuid = "0a197057-edf0-4447-be63-9badcf7c19be"
                     )
@@ -675,8 +673,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val expectedResult = BaseServerSearchSuggestion(
             recursionSearchResult,
             TEST_REQUEST_OPTIONS.copy(
-                options = options.copy(proximity = TEST_USER_LOCATION),
-                proximityRewritten = true
+                options = options,
             ).mapToBase()
         ).mapToPlatform()
 
@@ -735,10 +732,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             TEST_REQUEST_OPTIONS.run {
                 copy(
                     options = options.copy(
-                        proximity = TEST_USER_LOCATION,
                         types = listOf(QueryType.CATEGORY)
                     ),
-                    proximityRewritten = true,
                     requestContext = requestContext.copy(
                         responseUuid = "be35d556-9e14-4303-be15-57497c331348"
                     ),
@@ -801,10 +796,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             TEST_REQUEST_OPTIONS.run {
                 copy(
                     options = options.copy(
-                        proximity = TEST_USER_LOCATION,
                         types = listOf(QueryType.CATEGORY)
                     ),
-                    proximityRewritten = true,
                     requestContext = requestContext.copy(
                         responseUuid = "730bb97b-b30f-4e54-9772-8af2d4e0edf0"
                     ),

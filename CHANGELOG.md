@@ -2,9 +2,12 @@
 
 ## 1.0.0-beta.43-SNAPSHOT
 
+### Bug fixes
+- [CORE] Search SDK does not longer implicitly set `origin` and `proximity` points in `SearchOptions` and `CategorySearchOptions` for `SBS` Api Type if either `origin` or `proximity` point is provided by a user.
+
 ### Mapbox dependencies
-- Search Native SDK `0.65.0`
-- Common SDK `23.2.0`
+- Search Native SDK `0.66.0`
+- Common SDK `23.2.1`
 - Kotlin `1.5.31`
 
 

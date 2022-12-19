@@ -123,10 +123,8 @@ internal class CustomDataProviderTest : BaseTest() {
             requestOptions = TEST_REQUEST_OPTIONS.copy(
                 query = secondCustomRecord.name,
                 options = options.copy(
-                    proximity = TEST_USER_LOCATION,
                     origin = secondCustomRecord.coordinate
                 ),
-                proximityRewritten = true,
                 requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
                     responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
                 )
