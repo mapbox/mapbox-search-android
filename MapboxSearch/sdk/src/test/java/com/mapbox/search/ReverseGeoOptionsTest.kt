@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreReverseMode
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.tests_support.checkEnumValues
 import com.mapbox.test.dsl.TestCase
@@ -87,8 +88,8 @@ internal class ReverseGeoOptionsTest {
     @TestFactory
     fun `Check countries field for ReverseGeoOptions builder`() = TestCase {
         mapOf(
-            Country.BELARUS to arrayListOf("by"),
-            Country.UNITED_STATES to arrayListOf("us")
+            IsoCountry.BELARUS to arrayListOf("by"),
+            IsoCountry.UNITED_STATES to arrayListOf("us")
         ).forEach { (inputValue, expectedValue) ->
 
             Given("ReverseGeoOptions with countries = $inputValue") {
@@ -193,7 +194,7 @@ internal class ReverseGeoOptionsTest {
         Given("ReverseGeoOptions with custom params") {
             @Suppress("DEPRECATION")
             val reverseGeoOptions = ReverseGeoOptions.Builder(center = Point.fromLngLat(2.0, 5.0))
-                .countries(Country.BELARUS)
+                .countries(IsoCountry.BELARUS)
                 .languages(IsoLanguage.ENGLISH)
                 .limit(5)
                 .reverseMode(ReverseMode.DISTANCE)
@@ -244,7 +245,7 @@ internal class ReverseGeoOptionsTest {
             When("Filled ReverseGeoOptions") {
                 @Suppress("DEPRECATION")
                 val reverseGeoOptions = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
-                    .countries(Country.UNITED_KINGDOM, Country.BELARUS)
+                    .countries(IsoCountry.UNITED_KINGDOM, IsoCountry.BELARUS)
                     .languages(IsoLanguage.ENGLISH, IsoLanguage("by"))
                     .limit(10)
                     .reverseMode(ReverseMode.DISTANCE)
@@ -256,7 +257,7 @@ internal class ReverseGeoOptionsTest {
                 val expectedValue = CoreReverseGeoOptions(
                     TEST_COORDINATE,
                     @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
-                    listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
+                    listOf(IsoCountry.UNITED_KINGDOM, IsoCountry.BELARUS).map { it.code },
                     listOf(IsoLanguage.ENGLISH, IsoLanguage("by")).map { it.code },
                     10,
                     listOf(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS).map { it.mapToCore() }
@@ -268,7 +269,7 @@ internal class ReverseGeoOptionsTest {
             When("Filled ReverseGeoOptions using list builder functions") {
                 @Suppress("DEPRECATION")
                 val reverseGeoOptions = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
-                    .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
+                    .countries(listOf(IsoCountry.UNITED_KINGDOM, IsoCountry.BELARUS))
                     .languages(listOf(IsoLanguage.ENGLISH, IsoLanguage("by")))
                     .limit(10)
                     .reverseMode(ReverseMode.DISTANCE)
@@ -280,7 +281,7 @@ internal class ReverseGeoOptionsTest {
                 val expectedValue = CoreReverseGeoOptions(
                     TEST_COORDINATE,
                     @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
-                    listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
+                    listOf(IsoCountry.UNITED_KINGDOM, IsoCountry.BELARUS).map { it.code },
                     listOf(IsoLanguage.ENGLISH, IsoLanguage("by")).map { it.code },
                     10,
                     listOf(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS).map { it.mapToCore() }
@@ -297,7 +298,7 @@ internal class ReverseGeoOptionsTest {
             When("Use toBuilder() function and then build new ReverseGeoOptions") {
                 val options = ReverseGeoOptions(
                     center = Point.fromLngLat(2.0, 5.0),
-                    countries = listOf(Country.BELARUS),
+                    countries = listOf(IsoCountry.BELARUS),
                     languages = listOf(IsoLanguage.ENGLISH),
                     limit = 5,
                     reverseMode = @Suppress("DEPRECATION") ReverseMode.DISTANCE,

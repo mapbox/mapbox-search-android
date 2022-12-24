@@ -10,6 +10,7 @@ import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import kotlinx.parcelize.Parcelize
 import java.util.Locale
@@ -35,7 +36,7 @@ public class SearchOptions @JvmOverloads public constructor(
     /**
      * Limit results to one or more countries.
      */
-    public val countries: List<Country>? = null,
+    public val countries: List<IsoCountry>? = null,
 
     /**
      * Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of Washington, even though the query was misspelled.
@@ -129,7 +130,7 @@ public class SearchOptions @JvmOverloads public constructor(
     public fun copy(
         proximity: Point? = this.proximity,
         boundingBox: BoundingBox? = this.boundingBox,
-        countries: List<Country>? = this.countries,
+        countries: List<IsoCountry>? = this.countries,
         fuzzyMatch: Boolean? = this.fuzzyMatch,
         languages: List<IsoLanguage>? = this.languages,
         limit: Int? = this.limit,
@@ -245,7 +246,7 @@ public class SearchOptions @JvmOverloads public constructor(
 
         private var proximity: Point? = null
         private var boundingBox: BoundingBox? = null
-        private var countries: List<Country>? = null
+        private var countries: List<IsoCountry>? = null
         private var fuzzyMatch: Boolean? = null
         private var languages: List<IsoLanguage>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
@@ -288,12 +289,12 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Limit results to one or more countries.
          */
-        public fun countries(vararg countries: Country): Builder = apply { this.countries = countries.toList() }
+        public fun countries(vararg countries: IsoCountry): Builder = apply { this.countries = countries.toList() }
 
         /**
          * Limit results to one or more countries.
          */
-        public fun countries(countries: List<Country>): Builder = apply { this.countries = countries }
+        public fun countries(countries: List<IsoCountry>): Builder = apply { this.countries = countries }
 
         /**
          * Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of Washington, even though the query was misspelled.
@@ -452,7 +453,7 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
 internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     proximity = proximity,
     boundingBox = bbox?.mapToPlatform(),
-    countries = countries?.map { Country(it) },
+    countries = countries?.map { IsoCountry(it) },
     fuzzyMatch = @Suppress("DEPRECATION") fuzzyMatch,
     languages = language?.map { IsoLanguage(it) },
     limit = validateLimit(limit),

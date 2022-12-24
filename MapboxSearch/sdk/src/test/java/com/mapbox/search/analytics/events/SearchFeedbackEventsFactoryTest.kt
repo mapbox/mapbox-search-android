@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
-import com.mapbox.search.Country
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.EtaType
 import com.mapbox.search.QueryType
 import com.mapbox.search.ResponseInfo
@@ -620,7 +620,7 @@ internal class SearchFeedbackEventsFactoryTest {
                 Point.fromLngLat(-170.0, -80.0),
                 Point.fromLngLat(160.0, 70.0)
             ),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
+            countries = listOf(IsoCountry.FRANCE, IsoCountry.GERMANY),
             fuzzyMatch = true,
             languages = listOf(IsoLanguage.FRENCH, IsoLanguage.GERMAN, IsoLanguage.ENGLISH),
             limit = 6,

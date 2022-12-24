@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * Preferred languages of the search results.
+ * Iso Language Code.
  * @property code language code in ISO 639-1.
  */
 @Parcelize

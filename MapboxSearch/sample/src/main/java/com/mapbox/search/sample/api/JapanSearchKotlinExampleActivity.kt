@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import com.mapbox.search.ApiType
-import com.mapbox.search.Country
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -64,7 +64,7 @@ class JapanSearchKotlinExampleActivity : Activity() {
         searchRequestTask = searchEngine.search(
             "東京",
             SearchOptions(
-                countries = listOf(Country.JAPAN),
+                countries = listOf(IsoCountry.JAPAN),
                 languages = listOf(IsoLanguage.JAPANESE),
             ),
             searchCallback

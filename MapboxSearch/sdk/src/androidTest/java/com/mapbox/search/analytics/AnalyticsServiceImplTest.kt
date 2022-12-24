@@ -4,7 +4,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.BaseTest
-import com.mapbox.search.Country
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.EtaType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.QueryType
@@ -79,7 +79,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
+            countries = listOf(IsoCountry.FRANCE, IsoCountry.GERMANY),
             languages = listOf(IsoLanguage.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
@@ -124,7 +124,7 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
+            countries = listOf(IsoCountry.FRANCE, IsoCountry.GERMANY),
             languages = listOf(IsoLanguage.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),

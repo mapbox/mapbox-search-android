@@ -10,6 +10,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
@@ -105,7 +106,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val options = ReverseGeoOptions(
             center = TEST_POINT,
-            countries = listOf(Country.UNITED_STATES, Country.BELARUS),
+            countries = listOf(IsoCountry.UNITED_STATES, IsoCountry.BELARUS),
             languages = listOf(IsoLanguage.ENGLISH),
             limit = 5,
             types = listOf(QueryType.ADDRESS, QueryType.POI)

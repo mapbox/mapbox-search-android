@@ -13,6 +13,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
@@ -123,7 +124,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val options = SearchOptions(
             proximity = Point.fromLngLat(10.5, 20.123),
             boundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 15.0), Point.fromLngLat(30.0, 50.0)),
-            countries = listOf(Country.UNITED_STATES, Country.BELARUS),
+            countries = listOf(IsoCountry.UNITED_STATES, IsoCountry.BELARUS),
             fuzzyMatch = true,
             languages = listOf(IsoLanguage.ENGLISH),
             limit = 5,
