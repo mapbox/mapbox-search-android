@@ -18,6 +18,59 @@ public final class com/mapbox/search/common/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/search/common/IsoLanguage : android/os/Parcelable {
+	public static final field ALBANIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field ARABIC Lcom/mapbox/search/common/IsoLanguage;
+	public static final field BOSNIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field BULGARIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field CATALAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field CHINESE Lcom/mapbox/search/common/IsoLanguage;
+	public static final field CHINESE_SIMPLIFIED Lcom/mapbox/search/common/IsoLanguage;
+	public static final field CHINESE_TRADITIONAL Lcom/mapbox/search/common/IsoLanguage;
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field CZECH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field Companion Lcom/mapbox/search/common/IsoLanguage$Companion;
+	public static final field DANISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field DUTCH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field ENGLISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field FINNISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field FRENCH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field GEORGIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field GERMAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field HEBREW Lcom/mapbox/search/common/IsoLanguage;
+	public static final field HUNGARIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field ICELANDIC Lcom/mapbox/search/common/IsoLanguage;
+	public static final field INDONESIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field ITALIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field JAPANESE Lcom/mapbox/search/common/IsoLanguage;
+	public static final field KAZAKH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field KOREAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field LATVIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field MONGOLIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field NORWEGIAN_BOKMAL Lcom/mapbox/search/common/IsoLanguage;
+	public static final field POLISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field PORTUGUESE Lcom/mapbox/search/common/IsoLanguage;
+	public static final field ROMANIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field SERBIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field SLOVAK Lcom/mapbox/search/common/IsoLanguage;
+	public static final field SLOVENIAN Lcom/mapbox/search/common/IsoLanguage;
+	public static final field SPANISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field SWEDISH Lcom/mapbox/search/common/IsoLanguage;
+	public static final field TAGALOG Lcom/mapbox/search/common/IsoLanguage;
+	public static final field THAI Lcom/mapbox/search/common/IsoLanguage;
+	public static final field TURKISH Lcom/mapbox/search/common/IsoLanguage;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/IsoLanguage$Companion {
+}
+
 public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V
@@ -77,7 +130,6 @@ public final class com/mapbox/search/common/concurrent/SearchSdkMainThreadWorker
 }
 
 public abstract class com/mapbox/search/common/metadata/OpenHours : android/os/Parcelable {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/common/metadata/OpenHours$AlwaysOpen : com/mapbox/search/common/metadata/OpenHours {

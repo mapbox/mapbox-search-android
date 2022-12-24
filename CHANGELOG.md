@@ -4,6 +4,7 @@
 
 ### Breaking changes
 - [CORE] `OpenHours`, `OpenPeriod`, `WeekDay`, `WeekTimestamp`, `ParkingData` classes have been moved to `com.mapbox.search.common.metadata` package.
+- [CORE] `Language` has been removed to `IsoLanguage` and moved to `com.mapbox.search.common` package.
 
 ### Mapbox dependencies
 - Search Native SDK `0.66.0`

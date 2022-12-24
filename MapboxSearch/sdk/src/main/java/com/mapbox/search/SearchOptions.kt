@@ -10,6 +10,7 @@ import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.IsoLanguage
 import kotlinx.parcelize.Parcelize
 import java.util.Locale
 
@@ -49,7 +50,7 @@ public class SearchOptions @JvmOverloads public constructor(
      *
      * Note: Geocoding API supports a few languages, Single Box Search – only one.
      */
-    public val languages: List<Language>? = defaultSearchOptionsLanguage(),
+    public val languages: List<IsoLanguage>? = defaultSearchOptionsLanguage(),
 
     /**
      * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
@@ -130,7 +131,7 @@ public class SearchOptions @JvmOverloads public constructor(
         boundingBox: BoundingBox? = this.boundingBox,
         countries: List<Country>? = this.countries,
         fuzzyMatch: Boolean? = this.fuzzyMatch,
-        languages: List<Language>? = this.languages,
+        languages: List<IsoLanguage>? = this.languages,
         limit: Int? = this.limit,
         types: List<QueryType>? = this.types,
         requestDebounce: Int? = this.requestDebounce,
@@ -246,7 +247,7 @@ public class SearchOptions @JvmOverloads public constructor(
         private var boundingBox: BoundingBox? = null
         private var countries: List<Country>? = null
         private var fuzzyMatch: Boolean? = null
-        private var languages: List<Language>? = defaultSearchOptionsLanguage()
+        private var languages: List<IsoLanguage>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
         private var types: List<QueryType>? = null
         private var requestDebounce: Int? = null
@@ -307,7 +308,7 @@ public class SearchOptions @JvmOverloads public constructor(
          *
          * Note: Geocoding API supports a few languages, Single Box Search – only one.
          */
-        public fun languages(vararg languages: Language): Builder = apply { this.languages = languages.toList() }
+        public fun languages(vararg languages: IsoLanguage): Builder = apply { this.languages = languages.toList() }
 
         /**
          * Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
@@ -315,7 +316,7 @@ public class SearchOptions @JvmOverloads public constructor(
          *
          * Note: Geocoding API supports a few languages, Single Box Search – only one.
          */
-        public fun languages(languages: List<Language>): Builder = apply { this.languages = languages }
+        public fun languages(languages: List<IsoLanguage>): Builder = apply { this.languages = languages }
 
         /**
          * Specify the maximum number of results to return. The maximum supported is 10.
@@ -413,8 +414,8 @@ public class SearchOptions @JvmOverloads public constructor(
 }
 
 @JvmSynthetic
-internal fun defaultSearchOptionsLanguage(): List<Language> {
-    return listOf(Language(Locale.getDefault().language))
+internal fun defaultSearchOptionsLanguage(): List<IsoLanguage> {
+    return listOf(IsoLanguage(Locale.getDefault().language))
 }
 
 @JvmSynthetic
@@ -453,7 +454,7 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     boundingBox = bbox?.mapToPlatform(),
     countries = countries?.map { Country(it) },
     fuzzyMatch = @Suppress("DEPRECATION") fuzzyMatch,
-    languages = language?.map { Language(it) },
+    languages = language?.map { IsoLanguage(it) },
     limit = validateLimit(limit),
     types = types?.mapToPlatformTypes(),
     requestDebounce = requestDebounce,

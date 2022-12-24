@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
@@ -37,7 +38,7 @@ internal class CategorySearchOptionsTest {
                     boundingBox = null,
                     countries = null,
                     fuzzyMatch = null,
-                    languages = listOf(Language(TEST_LOCALE.language)),
+                    languages = listOf(IsoLanguage(TEST_LOCALE.language)),
                     limit = null,
                     requestDebounce = null,
                     origin = null,
@@ -64,7 +65,7 @@ internal class CategorySearchOptionsTest {
                     .countries(Country.UNITED_KINGDOM, Country.BELARUS)
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(Language.ENGLISH, Language("by"))
+                    .languages(IsoLanguage.ENGLISH, IsoLanguage("by"))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -79,7 +80,7 @@ internal class CategorySearchOptionsTest {
                     boundingBox = TEST_BOUNDING_BOX,
                     countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguage.ENGLISH, IsoLanguage("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,
@@ -106,7 +107,7 @@ internal class CategorySearchOptionsTest {
                     .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguage.ENGLISH, IsoLanguage("by")))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -121,7 +122,7 @@ internal class CategorySearchOptionsTest {
                     boundingBox = TEST_BOUNDING_BOX,
                     countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguage.ENGLISH, IsoLanguage("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,
@@ -163,7 +164,7 @@ internal class CategorySearchOptionsTest {
                     .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguage.ENGLISH, IsoLanguage("by")))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -183,7 +184,7 @@ internal class CategorySearchOptionsTest {
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
                     countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
                     fuzzyMatch = true,
-                    language = listOf(Language.ENGLISH, Language("by")).map { it.code },
+                    language = listOf(IsoLanguage.ENGLISH, IsoLanguage("by")).map { it.code },
                     limit = 100,
                     types = null,
                     ignoreUR = true,
@@ -209,7 +210,7 @@ internal class CategorySearchOptionsTest {
                     boundingBox = TEST_BOUNDING_BOX,
                     countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguage.ENGLISH, IsoLanguage("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,

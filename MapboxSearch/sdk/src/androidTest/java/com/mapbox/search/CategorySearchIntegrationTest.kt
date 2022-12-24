@@ -11,6 +11,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -112,7 +113,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             boundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 15.0), Point.fromLngLat(30.0, 50.0)),
             countries = listOf(Country.UNITED_STATES, Country.BELARUS),
             fuzzyMatch = true,
-            languages = listOf(Language.ENGLISH),
+            languages = listOf(IsoLanguage.ENGLISH),
             limit = 5,
             origin = Point.fromLngLat(50.123, 70.123),
             navigationProfile = SearchNavigationProfile.DRIVING,
@@ -134,7 +135,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             url.queryParameter("bbox")
         )
         assertEquals(options.countries?.joinToString(separator = ",") { it.code }, url.queryParameter("country"))
-        assertEquals(Language.ENGLISH.code, url.queryParameter("language"))
+        assertEquals(IsoLanguage.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
 
         assertEquals(url.queryParameter("origin"), formatPoints(options.origin))

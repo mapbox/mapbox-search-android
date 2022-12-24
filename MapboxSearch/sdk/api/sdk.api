@@ -62,7 +62,7 @@ public final class com/mapbox/search/CategorySearchOptions$Builder {
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/CategorySearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/CategorySearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun navigationProfile (Lcom/mapbox/search/SearchNavigationProfile;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/CategorySearchOptions$Builder;
@@ -384,59 +384,6 @@ public final class com/mapbox/search/ImageInfo : android/os/Parcelable {
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/Language : android/os/Parcelable {
-	public static final field ALBANIAN Lcom/mapbox/search/Language;
-	public static final field ARABIC Lcom/mapbox/search/Language;
-	public static final field BOSNIAN Lcom/mapbox/search/Language;
-	public static final field BULGARIAN Lcom/mapbox/search/Language;
-	public static final field CATALAN Lcom/mapbox/search/Language;
-	public static final field CHINESE Lcom/mapbox/search/Language;
-	public static final field CHINESE_SIMPLIFIED Lcom/mapbox/search/Language;
-	public static final field CHINESE_TRADITIONAL Lcom/mapbox/search/Language;
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field CZECH Lcom/mapbox/search/Language;
-	public static final field Companion Lcom/mapbox/search/Language$Companion;
-	public static final field DANISH Lcom/mapbox/search/Language;
-	public static final field DUTCH Lcom/mapbox/search/Language;
-	public static final field ENGLISH Lcom/mapbox/search/Language;
-	public static final field FINNISH Lcom/mapbox/search/Language;
-	public static final field FRENCH Lcom/mapbox/search/Language;
-	public static final field GEORGIAN Lcom/mapbox/search/Language;
-	public static final field GERMAN Lcom/mapbox/search/Language;
-	public static final field HEBREW Lcom/mapbox/search/Language;
-	public static final field HUNGARIAN Lcom/mapbox/search/Language;
-	public static final field ICELANDIC Lcom/mapbox/search/Language;
-	public static final field INDONESIAN Lcom/mapbox/search/Language;
-	public static final field ITALIAN Lcom/mapbox/search/Language;
-	public static final field JAPANESE Lcom/mapbox/search/Language;
-	public static final field KAZAKH Lcom/mapbox/search/Language;
-	public static final field KOREAN Lcom/mapbox/search/Language;
-	public static final field LATVIAN Lcom/mapbox/search/Language;
-	public static final field MONGOLIAN Lcom/mapbox/search/Language;
-	public static final field NORWEGIAN_BOKMAL Lcom/mapbox/search/Language;
-	public static final field POLISH Lcom/mapbox/search/Language;
-	public static final field PORTUGUESE Lcom/mapbox/search/Language;
-	public static final field ROMANIAN Lcom/mapbox/search/Language;
-	public static final field SERBIAN Lcom/mapbox/search/Language;
-	public static final field SLOVAK Lcom/mapbox/search/Language;
-	public static final field SLOVENIAN Lcom/mapbox/search/Language;
-	public static final field SPANISH Lcom/mapbox/search/Language;
-	public static final field SWEDISH Lcom/mapbox/search/Language;
-	public static final field TAGALOG Lcom/mapbox/search/Language;
-	public static final field THAI Lcom/mapbox/search/Language;
-	public static final field TURKISH Lcom/mapbox/search/Language;
-	public fun <init> (Ljava/lang/String;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/Language$Companion {
-}
-
 public final class com/mapbox/search/QueryType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/QueryType;
 	public static final field CATEGORY Lcom/mapbox/search/QueryType;
@@ -510,7 +457,7 @@ public final class com/mapbox/search/ReverseGeoOptions$Builder {
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun countries ([Lcom/mapbox/search/Country;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun reverseMode (Lcom/mapbox/search/ReverseMode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
@@ -537,7 +484,6 @@ public final class com/mapbox/search/RouteOptions : android/os/Parcelable {
 }
 
 public abstract class com/mapbox/search/RouteOptions$Deviation : android/os/Parcelable {
-	public fun <init> ()V
 	public abstract fun getSarType ()Lcom/mapbox/search/RouteOptions$Deviation$SarType;
 }
 
@@ -752,7 +698,7 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/SearchOptions$Builder;
@@ -1202,7 +1148,6 @@ public final class com/mapbox/search/result/SearchAddress$FormatComponent$Compan
 }
 
 public abstract class com/mapbox/search/result/SearchAddress$FormatStyle {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/result/SearchAddress$FormatStyle$Full : com/mapbox/search/result/SearchAddress$FormatStyle {
@@ -1289,7 +1234,6 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 }
 
 public abstract class com/mapbox/search/result/SearchSuggestionType : android/os/Parcelable {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/result/SearchSuggestionType$Category : com/mapbox/search/result/SearchSuggestionType {

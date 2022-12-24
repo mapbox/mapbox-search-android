@@ -6,7 +6,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.Country
 import com.mapbox.search.EtaType
-import com.mapbox.search.Language
 import com.mapbox.search.QueryType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchNavigationOptions
@@ -32,6 +31,7 @@ import com.mapbox.search.base.utils.FormattedTimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.mapToBase
@@ -622,7 +622,7 @@ internal class SearchFeedbackEventsFactoryTest {
             ),
             countries = listOf(Country.FRANCE, Country.GERMANY),
             fuzzyMatch = true,
-            languages = listOf(Language.FRENCH, Language.GERMAN, Language.ENGLISH),
+            languages = listOf(IsoLanguage.FRENCH, IsoLanguage.GERMAN, IsoLanguage.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             origin = TEST_ORIGIN_LOCATION,

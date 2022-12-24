@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -45,7 +46,7 @@ internal class DataClassGeneratedFunctionsTest {
             ReverseGeoOptions::class,
             ResponseInfo::class,
             RequestOptions::class,
-            Language::class,
+            IsoLanguage::class,
             ImageInfo::class,
             EtaType::class,
             Country::class,

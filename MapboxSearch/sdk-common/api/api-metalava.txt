@@ -16,6 +16,54 @@ package com.mapbox.search.common {
     property public final com.mapbox.search.common.AsyncOperationTask COMPLETED;
   }
 
+  @kotlinx.parcelize.Parcelize public final class IsoLanguage implements android.os.Parcelable {
+    ctor public IsoLanguage(String code);
+    method public String getCode();
+    property public final String code;
+    field public static final com.mapbox.search.common.IsoLanguage ALBANIAN;
+    field public static final com.mapbox.search.common.IsoLanguage ARABIC;
+    field public static final com.mapbox.search.common.IsoLanguage BOSNIAN;
+    field public static final com.mapbox.search.common.IsoLanguage BULGARIAN;
+    field public static final com.mapbox.search.common.IsoLanguage CATALAN;
+    field public static final com.mapbox.search.common.IsoLanguage CHINESE;
+    field public static final com.mapbox.search.common.IsoLanguage CHINESE_SIMPLIFIED;
+    field public static final com.mapbox.search.common.IsoLanguage CHINESE_TRADITIONAL;
+    field public static final com.mapbox.search.common.IsoLanguage CZECH;
+    field public static final com.mapbox.search.common.IsoLanguage.Companion Companion;
+    field public static final com.mapbox.search.common.IsoLanguage DANISH;
+    field public static final com.mapbox.search.common.IsoLanguage DUTCH;
+    field public static final com.mapbox.search.common.IsoLanguage ENGLISH;
+    field public static final com.mapbox.search.common.IsoLanguage FINNISH;
+    field public static final com.mapbox.search.common.IsoLanguage FRENCH;
+    field public static final com.mapbox.search.common.IsoLanguage GEORGIAN;
+    field public static final com.mapbox.search.common.IsoLanguage GERMAN;
+    field public static final com.mapbox.search.common.IsoLanguage HEBREW;
+    field public static final com.mapbox.search.common.IsoLanguage HUNGARIAN;
+    field public static final com.mapbox.search.common.IsoLanguage ICELANDIC;
+    field public static final com.mapbox.search.common.IsoLanguage INDONESIAN;
+    field public static final com.mapbox.search.common.IsoLanguage ITALIAN;
+    field public static final com.mapbox.search.common.IsoLanguage JAPANESE;
+    field public static final com.mapbox.search.common.IsoLanguage KAZAKH;
+    field public static final com.mapbox.search.common.IsoLanguage KOREAN;
+    field public static final com.mapbox.search.common.IsoLanguage LATVIAN;
+    field public static final com.mapbox.search.common.IsoLanguage MONGOLIAN;
+    field public static final com.mapbox.search.common.IsoLanguage NORWEGIAN_BOKMAL;
+    field public static final com.mapbox.search.common.IsoLanguage POLISH;
+    field public static final com.mapbox.search.common.IsoLanguage PORTUGUESE;
+    field public static final com.mapbox.search.common.IsoLanguage ROMANIAN;
+    field public static final com.mapbox.search.common.IsoLanguage SERBIAN;
+    field public static final com.mapbox.search.common.IsoLanguage SLOVAK;
+    field public static final com.mapbox.search.common.IsoLanguage SLOVENIAN;
+    field public static final com.mapbox.search.common.IsoLanguage SPANISH;
+    field public static final com.mapbox.search.common.IsoLanguage SWEDISH;
+    field public static final com.mapbox.search.common.IsoLanguage TAGALOG;
+    field public static final com.mapbox.search.common.IsoLanguage THAI;
+    field public static final com.mapbox.search.common.IsoLanguage TURKISH;
+  }
+
+  public static final class IsoLanguage.Companion {
+  }
+
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
     ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
     method public String getName();
@@ -74,7 +122,6 @@ package com.mapbox.search.common.concurrent {
 package com.mapbox.search.common.metadata {
 
   public abstract class OpenHours implements android.os.Parcelable {
-    ctor public OpenHours();
   }
 
   @kotlinx.parcelize.Parcelize public static final class OpenHours.AlwaysOpen extends com.mapbox.search.common.metadata.OpenHours {

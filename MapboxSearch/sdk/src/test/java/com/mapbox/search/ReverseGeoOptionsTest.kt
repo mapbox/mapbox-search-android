@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreReverseMode
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.tests_support.checkEnumValues
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
@@ -105,8 +106,8 @@ internal class ReverseGeoOptionsTest {
     @TestFactory
     fun `Check languages field for ReverseGeoOptions builder`() = TestCase {
         mapOf(
-            Language.ENGLISH to arrayListOf(Language.ENGLISH.code),
-            Language.FRENCH to arrayListOf(Language.FRENCH.code)
+            IsoLanguage.ENGLISH to arrayListOf(IsoLanguage.ENGLISH.code),
+            IsoLanguage.FRENCH to arrayListOf(IsoLanguage.FRENCH.code)
         ).forEach { (inputValue, expectedValue) ->
 
             Given("ReverseGeoOptions with languages = $inputValue") {
@@ -193,7 +194,7 @@ internal class ReverseGeoOptionsTest {
             @Suppress("DEPRECATION")
             val reverseGeoOptions = ReverseGeoOptions.Builder(center = Point.fromLngLat(2.0, 5.0))
                 .countries(Country.BELARUS)
-                .languages(Language.ENGLISH)
+                .languages(IsoLanguage.ENGLISH)
                 .limit(5)
                 .reverseMode(ReverseMode.DISTANCE)
                 .types(QueryType.COUNTRY)
@@ -244,7 +245,7 @@ internal class ReverseGeoOptionsTest {
                 @Suppress("DEPRECATION")
                 val reverseGeoOptions = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
                     .countries(Country.UNITED_KINGDOM, Country.BELARUS)
-                    .languages(Language.ENGLISH, Language("by"))
+                    .languages(IsoLanguage.ENGLISH, IsoLanguage("by"))
                     .limit(10)
                     .reverseMode(ReverseMode.DISTANCE)
                     .types(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS)
@@ -256,7 +257,7 @@ internal class ReverseGeoOptionsTest {
                     TEST_COORDINATE,
                     @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
                     listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
-                    listOf(Language.ENGLISH, Language("by")).map { it.code },
+                    listOf(IsoLanguage.ENGLISH, IsoLanguage("by")).map { it.code },
                     10,
                     listOf(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS).map { it.mapToCore() }
                 )
@@ -268,7 +269,7 @@ internal class ReverseGeoOptionsTest {
                 @Suppress("DEPRECATION")
                 val reverseGeoOptions = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
                     .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguage.ENGLISH, IsoLanguage("by")))
                     .limit(10)
                     .reverseMode(ReverseMode.DISTANCE)
                     .types(listOf(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS))
@@ -280,7 +281,7 @@ internal class ReverseGeoOptionsTest {
                     TEST_COORDINATE,
                     @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
                     listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
-                    listOf(Language.ENGLISH, Language("by")).map { it.code },
+                    listOf(IsoLanguage.ENGLISH, IsoLanguage("by")).map { it.code },
                     10,
                     listOf(QueryType.DISTRICT, QueryType.COUNTRY, QueryType.ADDRESS).map { it.mapToCore() }
                 )
@@ -297,7 +298,7 @@ internal class ReverseGeoOptionsTest {
                 val options = ReverseGeoOptions(
                     center = Point.fromLngLat(2.0, 5.0),
                     countries = listOf(Country.BELARUS),
-                    languages = listOf(Language.ENGLISH),
+                    languages = listOf(IsoLanguage.ENGLISH),
                     limit = 5,
                     reverseMode = @Suppress("DEPRECATION") ReverseMode.DISTANCE,
                     types = listOf(QueryType.COUNTRY)
