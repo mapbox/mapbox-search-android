@@ -15,24 +15,12 @@ package com.mapbox.search.autofill {
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillOptions implements android.os.Parcelable {
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries = null, com.mapbox.search.autofill.AddressAutofillOptions.Language? language = defaultSearchOptionsLanguage());
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries = null);
-    method public java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? getCountries();
-    method public com.mapbox.search.autofill.AddressAutofillOptions.Language? getLanguage();
-    property public final java.util.List<com.mapbox.search.autofill.AddressAutofillOptions.Country>? countries;
-    property public final com.mapbox.search.autofill.AddressAutofillOptions.Language? language;
-  }
-
-  @kotlinx.parcelize.Parcelize public static final class AddressAutofillOptions.Country implements android.os.Parcelable {
-    ctor public AddressAutofillOptions.Country(String code);
-    method public String getCode();
-    property public final String code;
-  }
-
-  @kotlinx.parcelize.Parcelize public static final class AddressAutofillOptions.Language implements android.os.Parcelable {
-    ctor public AddressAutofillOptions.Language(String code);
-    method public String getCode();
-    property public final String code;
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountry>? countries = null, com.mapbox.search.common.IsoLanguage? language = defaultLocaleLanguage());
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountry>? countries = null);
+    method public java.util.List<com.mapbox.search.common.IsoCountry>? getCountries();
+    method public com.mapbox.search.common.IsoLanguage? getLanguage();
+    property public final java.util.List<com.mapbox.search.common.IsoCountry>? countries;
+    property public final com.mapbox.search.common.IsoLanguage? language;
   }
 
   public abstract sealed class AddressAutofillResponse implements android.os.Parcelable {

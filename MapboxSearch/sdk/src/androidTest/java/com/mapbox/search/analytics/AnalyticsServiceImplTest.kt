@@ -4,7 +4,6 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.BaseTest
-import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.EtaType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.QueryType
@@ -19,6 +18,7 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.tests_support.BlockingCompletionCallback

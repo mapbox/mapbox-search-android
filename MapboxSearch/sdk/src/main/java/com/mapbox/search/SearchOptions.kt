@@ -7,13 +7,13 @@ import com.mapbox.search.Reserved.Flags.SBS
 import com.mapbox.search.RouteOptions.Deviation.SarType
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import kotlinx.parcelize.Parcelize
-import java.util.Locale
 
 /**
  * Search options, used for forward geocoding.
@@ -416,7 +416,7 @@ public class SearchOptions @JvmOverloads public constructor(
 
 @JvmSynthetic
 internal fun defaultSearchOptionsLanguage(): List<IsoLanguage> {
-    return listOf(IsoLanguage(Locale.getDefault().language))
+    return listOf(defaultLocaleLanguage())
 }
 
 @JvmSynthetic

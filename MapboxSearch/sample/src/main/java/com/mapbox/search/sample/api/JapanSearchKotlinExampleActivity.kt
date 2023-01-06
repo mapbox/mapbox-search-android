@@ -4,13 +4,13 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import com.mapbox.search.ApiType
-import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.IsoCountry
 import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion

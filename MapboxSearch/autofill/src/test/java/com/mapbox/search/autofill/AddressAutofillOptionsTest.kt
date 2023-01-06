@@ -1,5 +1,6 @@
 package com.mapbox.search.autofill
 
+import com.mapbox.search.common.IsoLanguage
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -16,7 +17,7 @@ internal class AddressAutofillOptionsTest {
 
                 Then(
                     "AddressAutofillOptions language should be determined by the current locale",
-                    expectedValue = AddressAutofillOptions.Language(Locale.getDefault().language),
+                    expectedValue = IsoLanguage(Locale.getDefault().language),
                     actualValue = options.language
                 )
             }
@@ -32,20 +33,6 @@ internal class AddressAutofillOptionsTest {
                         .verify()
                 }
             }
-
-            When("Call AddressAutofillOptions.Language equals() and hashCode()") {
-                Then("equals() and hashCode() should be implemented correctly") {
-                    EqualsVerifier.forClass(AddressAutofillOptions.Language::class.java)
-                        .verify()
-                }
-            }
-
-            When("Call AddressAutofillOptions.Country equals() and hashCode()") {
-                Then("equals() and hashCode() should be implemented correctly") {
-                    EqualsVerifier.forClass(AddressAutofillOptions.Country::class.java)
-                        .verify()
-                }
-            }
         }
     }
 
@@ -56,24 +43,6 @@ internal class AddressAutofillOptionsTest {
                 Then("toString() function should be implemented correctly") {
                     ToStringVerifier(
                         clazz = AddressAutofillOptions::class,
-                        includeAllProperties = false
-                    ).verify()
-                }
-            }
-
-            When("Call AddressAutofillOptions.Language toString()") {
-                Then("toString() function should be implemented correctly") {
-                    ToStringVerifier(
-                        clazz = AddressAutofillOptions.Language::class,
-                        includeAllProperties = false
-                    ).verify()
-                }
-            }
-
-            When("Call AddressAutofillOptions.Country toString()") {
-                Then("toString() function should be implemented correctly") {
-                    ToStringVerifier(
-                        clazz = AddressAutofillOptions.Country::class,
                         includeAllProperties = false
                     ).verify()
                 }
