@@ -10,8 +10,8 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.IsoCountry
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -106,8 +106,8 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val options = ReverseGeoOptions(
             center = TEST_POINT,
-            countries = listOf(IsoCountry.UNITED_STATES, IsoCountry.BELARUS),
-            languages = listOf(IsoLanguage.ENGLISH),
+            countries = listOf(IsoCountryCode.UNITED_STATES, IsoCountryCode.BELARUS),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 5,
             types = listOf(QueryType.ADDRESS, QueryType.POI)
         )
@@ -121,7 +121,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         val url = request.requestUrl!!
         assertEqualsIgnoreCase("//search/v1/reverse/${formatPoints(TEST_POINT)}", url.encodedPath)
         assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
-        assertEquals(IsoLanguage.ENGLISH.code, url.queryParameter("language"))
+        assertEquals(IsoLanguageCode.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
             options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
@@ -222,7 +222,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 query = formatPoints(TEST_POINT),
                 endpoint = "reverse",
                 options = SearchOptions(
-                    languages = listOf(IsoLanguage(Locale.getDefault().language)),
+                    languages = listOf(IsoLanguageCode(Locale.getDefault().language)),
                     proximity = TEST_POINT,
                     origin = TEST_POINT
                 ),

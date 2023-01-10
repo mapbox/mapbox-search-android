@@ -57,12 +57,12 @@ public final class com/mapbox/search/CategorySearchOptions$Builder {
 	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun build ()Lcom/mapbox/search/CategorySearchOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/CategorySearchOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/common/IsoCountry;)Lcom/mapbox/search/CategorySearchOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun fuzzyMatch (Z)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/CategorySearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/CategorySearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun navigationProfile (Lcom/mapbox/search/SearchNavigationProfile;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/CategorySearchOptions$Builder;
@@ -191,9 +191,9 @@ public final class com/mapbox/search/ReverseGeoOptions$Builder {
 	public fun <init> (Lcom/mapbox/geojson/Point;)V
 	public final fun build ()Lcom/mapbox/search/ReverseGeoOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/common/IsoCountry;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun reverseMode (Lcom/mapbox/search/ReverseMode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
@@ -429,12 +429,12 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun build ()Lcom/mapbox/search/SearchOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/common/IsoCountry;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun fuzzyMatch (Z)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/common/IsoLanguage;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/SearchOptions$Builder;

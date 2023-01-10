@@ -11,8 +11,8 @@ import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
-import com.mapbox.search.common.IsoCountry
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -36,7 +36,7 @@ public class SearchOptions @JvmOverloads public constructor(
     /**
      * Limit results to one or more countries.
      */
-    public val countries: List<IsoCountry>? = null,
+    public val countries: List<IsoCountryCode>? = null,
 
     /**
      * Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of Washington, even though the query was misspelled.
@@ -51,7 +51,7 @@ public class SearchOptions @JvmOverloads public constructor(
      *
      * Note: Geocoding API supports a few languages, Single Box Search – only one.
      */
-    public val languages: List<IsoLanguage>? = defaultSearchOptionsLanguage(),
+    public val languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage(),
 
     /**
      * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
@@ -130,9 +130,9 @@ public class SearchOptions @JvmOverloads public constructor(
     public fun copy(
         proximity: Point? = this.proximity,
         boundingBox: BoundingBox? = this.boundingBox,
-        countries: List<IsoCountry>? = this.countries,
+        countries: List<IsoCountryCode>? = this.countries,
         fuzzyMatch: Boolean? = this.fuzzyMatch,
-        languages: List<IsoLanguage>? = this.languages,
+        languages: List<IsoLanguageCode>? = this.languages,
         limit: Int? = this.limit,
         types: List<QueryType>? = this.types,
         requestDebounce: Int? = this.requestDebounce,
@@ -246,9 +246,9 @@ public class SearchOptions @JvmOverloads public constructor(
 
         private var proximity: Point? = null
         private var boundingBox: BoundingBox? = null
-        private var countries: List<IsoCountry>? = null
+        private var countries: List<IsoCountryCode>? = null
         private var fuzzyMatch: Boolean? = null
-        private var languages: List<IsoLanguage>? = defaultSearchOptionsLanguage()
+        private var languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
         private var types: List<QueryType>? = null
         private var requestDebounce: Int? = null
@@ -289,12 +289,12 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Limit results to one or more countries.
          */
-        public fun countries(vararg countries: IsoCountry): Builder = apply { this.countries = countries.toList() }
+        public fun countries(vararg countries: IsoCountryCode): Builder = apply { this.countries = countries.toList() }
 
         /**
          * Limit results to one or more countries.
          */
-        public fun countries(countries: List<IsoCountry>): Builder = apply { this.countries = countries }
+        public fun countries(countries: List<IsoCountryCode>): Builder = apply { this.countries = countries }
 
         /**
          * Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of Washington, even though the query was misspelled.
@@ -309,7 +309,7 @@ public class SearchOptions @JvmOverloads public constructor(
          *
          * Note: Geocoding API supports a few languages, Single Box Search – only one.
          */
-        public fun languages(vararg languages: IsoLanguage): Builder = apply { this.languages = languages.toList() }
+        public fun languages(vararg languages: IsoLanguageCode): Builder = apply { this.languages = languages.toList() }
 
         /**
          * Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
@@ -317,7 +317,7 @@ public class SearchOptions @JvmOverloads public constructor(
          *
          * Note: Geocoding API supports a few languages, Single Box Search – only one.
          */
-        public fun languages(languages: List<IsoLanguage>): Builder = apply { this.languages = languages }
+        public fun languages(languages: List<IsoLanguageCode>): Builder = apply { this.languages = languages }
 
         /**
          * Specify the maximum number of results to return. The maximum supported is 10.
@@ -415,7 +415,7 @@ public class SearchOptions @JvmOverloads public constructor(
 }
 
 @JvmSynthetic
-internal fun defaultSearchOptionsLanguage(): List<IsoLanguage> {
+internal fun defaultSearchOptionsLanguage(): List<IsoLanguageCode> {
     return listOf(defaultLocaleLanguage())
 }
 
@@ -453,9 +453,9 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
 internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     proximity = proximity,
     boundingBox = bbox?.mapToPlatform(),
-    countries = countries?.map { IsoCountry(it) },
+    countries = countries?.map { IsoCountryCode(it) },
     fuzzyMatch = @Suppress("DEPRECATION") fuzzyMatch,
-    languages = language?.map { IsoLanguage(it) },
+    languages = language?.map { IsoLanguageCode(it) },
     limit = validateLimit(limit),
     types = types?.mapToPlatformTypes(),
     requestDebounce = requestDebounce,

@@ -13,8 +13,8 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.IsoCountry
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -124,9 +124,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val options = SearchOptions(
             proximity = Point.fromLngLat(10.5, 20.123),
             boundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 15.0), Point.fromLngLat(30.0, 50.0)),
-            countries = listOf(IsoCountry.UNITED_STATES, IsoCountry.BELARUS),
+            countries = listOf(IsoCountryCode.UNITED_STATES, IsoCountryCode.BELARUS),
             fuzzyMatch = true,
-            languages = listOf(IsoLanguage.ENGLISH),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 5,
             types = listOf(QueryType.COUNTRY, QueryType.LOCALITY, QueryType.ADDRESS),
             origin = Point.fromLngLat(50.123, 70.123),
@@ -152,7 +152,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             url.queryParameter("bbox")
         )
         assertEquals(options.countries?.joinToString(separator = ",") { it.code }, url.queryParameter("country"))
-        assertEquals(IsoLanguage.ENGLISH.code, url.queryParameter("language"))
+        assertEquals(IsoLanguageCode.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
             options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },

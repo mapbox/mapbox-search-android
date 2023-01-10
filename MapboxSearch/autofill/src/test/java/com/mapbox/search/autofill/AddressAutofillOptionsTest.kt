@@ -1,6 +1,6 @@
 package com.mapbox.search.autofill
 
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -17,7 +17,7 @@ internal class AddressAutofillOptionsTest {
 
                 Then(
                     "AddressAutofillOptions language should be determined by the current locale",
-                    expectedValue = IsoLanguage(Locale.getDefault().language),
+                    expectedValue = IsoLanguageCode(Locale.getDefault().language),
                     actualValue = options.language
                 )
             }

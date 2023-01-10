@@ -18,8 +18,8 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.IsoCountry
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
@@ -79,8 +79,8 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(IsoCountry.FRANCE, IsoCountry.GERMANY),
-            languages = listOf(IsoLanguage.ENGLISH),
+            countries = listOf(IsoCountryCode.FRANCE, IsoCountryCode.GERMANY),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             routeOptions = RouteOptions(
@@ -124,8 +124,8 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(IsoCountry.FRANCE, IsoCountry.GERMANY),
-            languages = listOf(IsoLanguage.ENGLISH),
+            countries = listOf(IsoCountryCode.FRANCE, IsoCountryCode.GERMANY),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             routeOptions = RouteOptions(

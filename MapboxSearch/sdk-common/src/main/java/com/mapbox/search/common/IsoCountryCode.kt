@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
  * @property code country code in ISO 3166 alpha 2.
  */
 @Parcelize
-public class IsoCountry(public val code: String) : Parcelable {
+public class IsoCountryCode(public val code: String) : Parcelable {
 
     /**
      * @suppress
@@ -17,7 +17,7 @@ public class IsoCountry(public val code: String) : Parcelable {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as IsoCountry
+        other as IsoCountryCode
 
         if (code != other.code) return false
 
@@ -48,1494 +48,1494 @@ public class IsoCountry(public val code: String) : Parcelable {
          * Predefined country constant.
          */
         @JvmField
-        public val AFGHANISTAN: IsoCountry = IsoCountry("af")
+        public val AFGHANISTAN: IsoCountryCode = IsoCountryCode("af")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ALAND_ISLANDS: IsoCountry = IsoCountry("ax")
+        public val ALAND_ISLANDS: IsoCountryCode = IsoCountryCode("ax")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ALBANIA: IsoCountry = IsoCountry("al")
+        public val ALBANIA: IsoCountryCode = IsoCountryCode("al")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ALGERIA: IsoCountry = IsoCountry("dz")
+        public val ALGERIA: IsoCountryCode = IsoCountryCode("dz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val AMERICAN_SAMOA: IsoCountry = IsoCountry("as")
+        public val AMERICAN_SAMOA: IsoCountryCode = IsoCountryCode("as")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ANDORRA: IsoCountry = IsoCountry("ad")
+        public val ANDORRA: IsoCountryCode = IsoCountryCode("ad")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ANGOLA: IsoCountry = IsoCountry("ao")
+        public val ANGOLA: IsoCountryCode = IsoCountryCode("ao")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ANGUILLA: IsoCountry = IsoCountry("ai")
+        public val ANGUILLA: IsoCountryCode = IsoCountryCode("ai")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ANTARCTICA: IsoCountry = IsoCountry("aq")
+        public val ANTARCTICA: IsoCountryCode = IsoCountryCode("aq")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ANTIGUA_AND_BARBUDA: IsoCountry = IsoCountry("ag")
+        public val ANTIGUA_AND_BARBUDA: IsoCountryCode = IsoCountryCode("ag")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ARGENTINA: IsoCountry = IsoCountry("ar")
+        public val ARGENTINA: IsoCountryCode = IsoCountryCode("ar")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ARMENIA: IsoCountry = IsoCountry("am")
+        public val ARMENIA: IsoCountryCode = IsoCountryCode("am")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ARUBA: IsoCountry = IsoCountry("aw")
+        public val ARUBA: IsoCountryCode = IsoCountryCode("aw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val AUSTRALIA: IsoCountry = IsoCountry("au")
+        public val AUSTRALIA: IsoCountryCode = IsoCountryCode("au")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val AUSTRIA: IsoCountry = IsoCountry("at")
+        public val AUSTRIA: IsoCountryCode = IsoCountryCode("at")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val AZERBAIJAN: IsoCountry = IsoCountry("az")
+        public val AZERBAIJAN: IsoCountryCode = IsoCountryCode("az")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BAHAMAS: IsoCountry = IsoCountry("bs")
+        public val BAHAMAS: IsoCountryCode = IsoCountryCode("bs")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BAHRAIN: IsoCountry = IsoCountry("bh")
+        public val BAHRAIN: IsoCountryCode = IsoCountryCode("bh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BANGLADESH: IsoCountry = IsoCountry("bd")
+        public val BANGLADESH: IsoCountryCode = IsoCountryCode("bd")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BARBADOS: IsoCountry = IsoCountry("bb")
+        public val BARBADOS: IsoCountryCode = IsoCountryCode("bb")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BELARUS: IsoCountry = IsoCountry("by")
+        public val BELARUS: IsoCountryCode = IsoCountryCode("by")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BELGIUM: IsoCountry = IsoCountry("be")
+        public val BELGIUM: IsoCountryCode = IsoCountryCode("be")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BELIZE: IsoCountry = IsoCountry("bz")
+        public val BELIZE: IsoCountryCode = IsoCountryCode("bz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BENIN: IsoCountry = IsoCountry("bj")
+        public val BENIN: IsoCountryCode = IsoCountryCode("bj")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BERMUDA: IsoCountry = IsoCountry("bm")
+        public val BERMUDA: IsoCountryCode = IsoCountryCode("bm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BHUTAN: IsoCountry = IsoCountry("bt")
+        public val BHUTAN: IsoCountryCode = IsoCountryCode("bt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BOLIVIA: IsoCountry = IsoCountry("bo")
+        public val BOLIVIA: IsoCountryCode = IsoCountryCode("bo")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BOSNIA_AND_HERZEGOVINA: IsoCountry = IsoCountry("ba")
+        public val BOSNIA_AND_HERZEGOVINA: IsoCountryCode = IsoCountryCode("ba")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BOTSWANA: IsoCountry = IsoCountry("bw")
+        public val BOTSWANA: IsoCountryCode = IsoCountryCode("bw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BOUVET_ISLAND: IsoCountry = IsoCountry("bv")
+        public val BOUVET_ISLAND: IsoCountryCode = IsoCountryCode("bv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BRAZIL: IsoCountry = IsoCountry("br")
+        public val BRAZIL: IsoCountryCode = IsoCountryCode("br")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BRITISH_INDIAN_OCEAN_TERRITORY: IsoCountry = IsoCountry("io")
+        public val BRITISH_INDIAN_OCEAN_TERRITORY: IsoCountryCode = IsoCountryCode("io")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BRITISH_VIRGIN_ISLANDS: IsoCountry = IsoCountry("vg")
+        public val BRITISH_VIRGIN_ISLANDS: IsoCountryCode = IsoCountryCode("vg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BRUNEI: IsoCountry = IsoCountry("bn")
+        public val BRUNEI: IsoCountryCode = IsoCountryCode("bn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BULGARIA: IsoCountry = IsoCountry("bg")
+        public val BULGARIA: IsoCountryCode = IsoCountryCode("bg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BURKINA_FASO: IsoCountry = IsoCountry("bf")
+        public val BURKINA_FASO: IsoCountryCode = IsoCountryCode("bf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val BURUNDI: IsoCountry = IsoCountry("bi")
+        public val BURUNDI: IsoCountryCode = IsoCountryCode("bi")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CAMBODIA: IsoCountry = IsoCountry("kh")
+        public val CAMBODIA: IsoCountryCode = IsoCountryCode("kh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CAMEROON: IsoCountry = IsoCountry("cm")
+        public val CAMEROON: IsoCountryCode = IsoCountryCode("cm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CANADA: IsoCountry = IsoCountry("ca")
+        public val CANADA: IsoCountryCode = IsoCountryCode("ca")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CAPE_VERDE: IsoCountry = IsoCountry("cv")
+        public val CAPE_VERDE: IsoCountryCode = IsoCountryCode("cv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CARIBBEAN_NETHERLANDS: IsoCountry = IsoCountry("bq")
+        public val CARIBBEAN_NETHERLANDS: IsoCountryCode = IsoCountryCode("bq")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CAYMAN_ISLANDS: IsoCountry = IsoCountry("ky")
+        public val CAYMAN_ISLANDS: IsoCountryCode = IsoCountryCode("ky")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CENTRAL_AFRICAN_REPUBLIC: IsoCountry = IsoCountry("cf")
+        public val CENTRAL_AFRICAN_REPUBLIC: IsoCountryCode = IsoCountryCode("cf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CHAD: IsoCountry = IsoCountry("td")
+        public val CHAD: IsoCountryCode = IsoCountryCode("td")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CHILE: IsoCountry = IsoCountry("cl")
+        public val CHILE: IsoCountryCode = IsoCountryCode("cl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CHINA: IsoCountry = IsoCountry("cn")
+        public val CHINA: IsoCountryCode = IsoCountryCode("cn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CHRISTMAS_ISLAND: IsoCountry = IsoCountry("cx")
+        public val CHRISTMAS_ISLAND: IsoCountryCode = IsoCountryCode("cx")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COCOS_ISLANDS: IsoCountry = IsoCountry("cc")
+        public val COCOS_ISLANDS: IsoCountryCode = IsoCountryCode("cc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COLOMBIA: IsoCountry = IsoCountry("co")
+        public val COLOMBIA: IsoCountryCode = IsoCountryCode("co")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COMOROS: IsoCountry = IsoCountry("km")
+        public val COMOROS: IsoCountryCode = IsoCountryCode("km")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CONGO_BRAZZAVILLE: IsoCountry = IsoCountry("cg")
+        public val CONGO_BRAZZAVILLE: IsoCountryCode = IsoCountryCode("cg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CONGO_KINSHASA: IsoCountry = IsoCountry("cd")
+        public val CONGO_KINSHASA: IsoCountryCode = IsoCountryCode("cd")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COOK_ISLANDS: IsoCountry = IsoCountry("ck")
+        public val COOK_ISLANDS: IsoCountryCode = IsoCountryCode("ck")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COSTA_RICA: IsoCountry = IsoCountry("cr")
+        public val COSTA_RICA: IsoCountryCode = IsoCountryCode("cr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val COTE_DIVOIRE: IsoCountry = IsoCountry("ci")
+        public val COTE_DIVOIRE: IsoCountryCode = IsoCountryCode("ci")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CROATIA: IsoCountry = IsoCountry("hr")
+        public val CROATIA: IsoCountryCode = IsoCountryCode("hr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CUBA: IsoCountry = IsoCountry("cu")
+        public val CUBA: IsoCountryCode = IsoCountryCode("cu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CURACAO: IsoCountry = IsoCountry("cw")
+        public val CURACAO: IsoCountryCode = IsoCountryCode("cw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CYPRUS: IsoCountry = IsoCountry("cy")
+        public val CYPRUS: IsoCountryCode = IsoCountryCode("cy")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val CZECHIA: IsoCountry = IsoCountry("cz")
+        public val CZECHIA: IsoCountryCode = IsoCountryCode("cz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val DENMARK: IsoCountry = IsoCountry("dk")
+        public val DENMARK: IsoCountryCode = IsoCountryCode("dk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val DJIBOUTI: IsoCountry = IsoCountry("dj")
+        public val DJIBOUTI: IsoCountryCode = IsoCountryCode("dj")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val DOMINICA: IsoCountry = IsoCountry("dm")
+        public val DOMINICA: IsoCountryCode = IsoCountryCode("dm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val DOMINICAN_REPUBLIC: IsoCountry = IsoCountry("do")
+        public val DOMINICAN_REPUBLIC: IsoCountryCode = IsoCountryCode("do")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ECUADOR: IsoCountry = IsoCountry("ec")
+        public val ECUADOR: IsoCountryCode = IsoCountryCode("ec")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val EGYPT: IsoCountry = IsoCountry("eg")
+        public val EGYPT: IsoCountryCode = IsoCountryCode("eg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val EL_SALVADOR: IsoCountry = IsoCountry("sv")
+        public val EL_SALVADOR: IsoCountryCode = IsoCountryCode("sv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val EQUATORIAL_GUINEA: IsoCountry = IsoCountry("gq")
+        public val EQUATORIAL_GUINEA: IsoCountryCode = IsoCountryCode("gq")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ERITREA: IsoCountry = IsoCountry("er")
+        public val ERITREA: IsoCountryCode = IsoCountryCode("er")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ESTONIA: IsoCountry = IsoCountry("ee")
+        public val ESTONIA: IsoCountryCode = IsoCountryCode("ee")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ETHIOPIA: IsoCountry = IsoCountry("et")
+        public val ETHIOPIA: IsoCountryCode = IsoCountryCode("et")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FALKLAND_ISLANDS_: IsoCountry = IsoCountry("fk")
+        public val FALKLAND_ISLANDS_: IsoCountryCode = IsoCountryCode("fk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FAROE_ISLANDS: IsoCountry = IsoCountry("fo")
+        public val FAROE_ISLANDS: IsoCountryCode = IsoCountryCode("fo")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FIJI: IsoCountry = IsoCountry("fj")
+        public val FIJI: IsoCountryCode = IsoCountryCode("fj")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FINLAND: IsoCountry = IsoCountry("fi")
+        public val FINLAND: IsoCountryCode = IsoCountryCode("fi")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FRANCE: IsoCountry = IsoCountry("fr")
+        public val FRANCE: IsoCountryCode = IsoCountryCode("fr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FRENCH_GUIANA: IsoCountry = IsoCountry("gf")
+        public val FRENCH_GUIANA: IsoCountryCode = IsoCountryCode("gf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FRENCH_POLYNESIA: IsoCountry = IsoCountry("pf")
+        public val FRENCH_POLYNESIA: IsoCountryCode = IsoCountryCode("pf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val FRENCH_SOUTHERN_TERRITORIES: IsoCountry = IsoCountry("tf")
+        public val FRENCH_SOUTHERN_TERRITORIES: IsoCountryCode = IsoCountryCode("tf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GABON: IsoCountry = IsoCountry("ga")
+        public val GABON: IsoCountryCode = IsoCountryCode("ga")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GAMBIA: IsoCountry = IsoCountry("gm")
+        public val GAMBIA: IsoCountryCode = IsoCountryCode("gm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GEORGIA: IsoCountry = IsoCountry("ge")
+        public val GEORGIA: IsoCountryCode = IsoCountryCode("ge")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GERMANY: IsoCountry = IsoCountry("de")
+        public val GERMANY: IsoCountryCode = IsoCountryCode("de")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GHANA: IsoCountry = IsoCountry("gh")
+        public val GHANA: IsoCountryCode = IsoCountryCode("gh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GIBRALTAR: IsoCountry = IsoCountry("gi")
+        public val GIBRALTAR: IsoCountryCode = IsoCountryCode("gi")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GREECE: IsoCountry = IsoCountry("gr")
+        public val GREECE: IsoCountryCode = IsoCountryCode("gr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GREENLAND: IsoCountry = IsoCountry("gl")
+        public val GREENLAND: IsoCountryCode = IsoCountryCode("gl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GRENADA: IsoCountry = IsoCountry("gd")
+        public val GRENADA: IsoCountryCode = IsoCountryCode("gd")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUADELOUPE: IsoCountry = IsoCountry("gp")
+        public val GUADELOUPE: IsoCountryCode = IsoCountryCode("gp")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUAM: IsoCountry = IsoCountry("gu")
+        public val GUAM: IsoCountryCode = IsoCountryCode("gu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUATEMALA: IsoCountry = IsoCountry("gt")
+        public val GUATEMALA: IsoCountryCode = IsoCountryCode("gt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUERNSEY: IsoCountry = IsoCountry("gg")
+        public val GUERNSEY: IsoCountryCode = IsoCountryCode("gg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUINEA: IsoCountry = IsoCountry("gn")
+        public val GUINEA: IsoCountryCode = IsoCountryCode("gn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUINEA_BISSAU: IsoCountry = IsoCountry("gw")
+        public val GUINEA_BISSAU: IsoCountryCode = IsoCountryCode("gw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val GUYANA: IsoCountry = IsoCountry("gy")
+        public val GUYANA: IsoCountryCode = IsoCountryCode("gy")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val HAITI: IsoCountry = IsoCountry("ht")
+        public val HAITI: IsoCountryCode = IsoCountryCode("ht")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val HEARD_AND_MCDONALD_ISLANDS: IsoCountry = IsoCountry("hm")
+        public val HEARD_AND_MCDONALD_ISLANDS: IsoCountryCode = IsoCountryCode("hm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val HONDURAS: IsoCountry = IsoCountry("hn")
+        public val HONDURAS: IsoCountryCode = IsoCountryCode("hn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val HONG_KONG: IsoCountry = IsoCountry("hk")
+        public val HONG_KONG: IsoCountryCode = IsoCountryCode("hk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val HUNGARY: IsoCountry = IsoCountry("hu")
+        public val HUNGARY: IsoCountryCode = IsoCountryCode("hu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ICELAND: IsoCountry = IsoCountry("is")
+        public val ICELAND: IsoCountryCode = IsoCountryCode("is")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val INDIA: IsoCountry = IsoCountry("in")
+        public val INDIA: IsoCountryCode = IsoCountryCode("in")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val INDONESIA: IsoCountry = IsoCountry("id")
+        public val INDONESIA: IsoCountryCode = IsoCountryCode("id")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val IRAN: IsoCountry = IsoCountry("ir")
+        public val IRAN: IsoCountryCode = IsoCountryCode("ir")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val IRAQ: IsoCountry = IsoCountry("iq")
+        public val IRAQ: IsoCountryCode = IsoCountryCode("iq")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val IRELAND: IsoCountry = IsoCountry("ie")
+        public val IRELAND: IsoCountryCode = IsoCountryCode("ie")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ISLE_OF_MAN: IsoCountry = IsoCountry("im")
+        public val ISLE_OF_MAN: IsoCountryCode = IsoCountryCode("im")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ISRAEL: IsoCountry = IsoCountry("il")
+        public val ISRAEL: IsoCountryCode = IsoCountryCode("il")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ITALY: IsoCountry = IsoCountry("it")
+        public val ITALY: IsoCountryCode = IsoCountryCode("it")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val JAMAICA: IsoCountry = IsoCountry("jm")
+        public val JAMAICA: IsoCountryCode = IsoCountryCode("jm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val JAPAN: IsoCountry = IsoCountry("jp")
+        public val JAPAN: IsoCountryCode = IsoCountryCode("jp")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val JERSEY: IsoCountry = IsoCountry("je")
+        public val JERSEY: IsoCountryCode = IsoCountryCode("je")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val JORDAN: IsoCountry = IsoCountry("jo")
+        public val JORDAN: IsoCountryCode = IsoCountryCode("jo")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val KAZAKHSTAN: IsoCountry = IsoCountry("kz")
+        public val KAZAKHSTAN: IsoCountryCode = IsoCountryCode("kz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val KENYA: IsoCountry = IsoCountry("ke")
+        public val KENYA: IsoCountryCode = IsoCountryCode("ke")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val KIRIBATI: IsoCountry = IsoCountry("ki")
+        public val KIRIBATI: IsoCountryCode = IsoCountryCode("ki")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val KUWAIT: IsoCountry = IsoCountry("kw")
+        public val KUWAIT: IsoCountryCode = IsoCountryCode("kw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val KYRGYZSTAN: IsoCountry = IsoCountry("kg")
+        public val KYRGYZSTAN: IsoCountryCode = IsoCountryCode("kg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LAOS: IsoCountry = IsoCountry("la")
+        public val LAOS: IsoCountryCode = IsoCountryCode("la")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LATVIA: IsoCountry = IsoCountry("lv")
+        public val LATVIA: IsoCountryCode = IsoCountryCode("lv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LEBANON: IsoCountry = IsoCountry("lb")
+        public val LEBANON: IsoCountryCode = IsoCountryCode("lb")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LESOTHO: IsoCountry = IsoCountry("ls")
+        public val LESOTHO: IsoCountryCode = IsoCountryCode("ls")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LIBERIA: IsoCountry = IsoCountry("lr")
+        public val LIBERIA: IsoCountryCode = IsoCountryCode("lr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LIBYA: IsoCountry = IsoCountry("ly")
+        public val LIBYA: IsoCountryCode = IsoCountryCode("ly")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LIECHTENSTEIN: IsoCountry = IsoCountry("li")
+        public val LIECHTENSTEIN: IsoCountryCode = IsoCountryCode("li")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LITHUANIA: IsoCountry = IsoCountry("lt")
+        public val LITHUANIA: IsoCountryCode = IsoCountryCode("lt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val LUXEMBOURG: IsoCountry = IsoCountry("lu")
+        public val LUXEMBOURG: IsoCountryCode = IsoCountryCode("lu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MACAU: IsoCountry = IsoCountry("mo")
+        public val MACAU: IsoCountryCode = IsoCountryCode("mo")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MACEDONIA: IsoCountry = IsoCountry("mk")
+        public val MACEDONIA: IsoCountryCode = IsoCountryCode("mk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MADAGASCAR: IsoCountry = IsoCountry("mg")
+        public val MADAGASCAR: IsoCountryCode = IsoCountryCode("mg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MALAWI: IsoCountry = IsoCountry("mw")
+        public val MALAWI: IsoCountryCode = IsoCountryCode("mw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MALAYSIA: IsoCountry = IsoCountry("my")
+        public val MALAYSIA: IsoCountryCode = IsoCountryCode("my")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MALDIVES: IsoCountry = IsoCountry("mv")
+        public val MALDIVES: IsoCountryCode = IsoCountryCode("mv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MALI: IsoCountry = IsoCountry("ml")
+        public val MALI: IsoCountryCode = IsoCountryCode("ml")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MALTA: IsoCountry = IsoCountry("mt")
+        public val MALTA: IsoCountryCode = IsoCountryCode("mt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MARSHALL_ISLANDS: IsoCountry = IsoCountry("mh")
+        public val MARSHALL_ISLANDS: IsoCountryCode = IsoCountryCode("mh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MARTINIQUE: IsoCountry = IsoCountry("mq")
+        public val MARTINIQUE: IsoCountryCode = IsoCountryCode("mq")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MAURITANIA: IsoCountry = IsoCountry("mr")
+        public val MAURITANIA: IsoCountryCode = IsoCountryCode("mr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MAURITIUS: IsoCountry = IsoCountry("mu")
+        public val MAURITIUS: IsoCountryCode = IsoCountryCode("mu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MAYOTTE: IsoCountry = IsoCountry("yt")
+        public val MAYOTTE: IsoCountryCode = IsoCountryCode("yt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MEXICO: IsoCountry = IsoCountry("mx")
+        public val MEXICO: IsoCountryCode = IsoCountryCode("mx")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MICRONESIA: IsoCountry = IsoCountry("fm")
+        public val MICRONESIA: IsoCountryCode = IsoCountryCode("fm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MOLDOVA: IsoCountry = IsoCountry("md")
+        public val MOLDOVA: IsoCountryCode = IsoCountryCode("md")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MONACO: IsoCountry = IsoCountry("mc")
+        public val MONACO: IsoCountryCode = IsoCountryCode("mc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MONGOLIA: IsoCountry = IsoCountry("mn")
+        public val MONGOLIA: IsoCountryCode = IsoCountryCode("mn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MONTENEGRO: IsoCountry = IsoCountry("me")
+        public val MONTENEGRO: IsoCountryCode = IsoCountryCode("me")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MONTSERRAT: IsoCountry = IsoCountry("ms")
+        public val MONTSERRAT: IsoCountryCode = IsoCountryCode("ms")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MOROCCO: IsoCountry = IsoCountry("ma")
+        public val MOROCCO: IsoCountryCode = IsoCountryCode("ma")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MOZAMBIQUE: IsoCountry = IsoCountry("mz")
+        public val MOZAMBIQUE: IsoCountryCode = IsoCountryCode("mz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val MYANMAR: IsoCountry = IsoCountry("mm")
+        public val MYANMAR: IsoCountryCode = IsoCountryCode("mm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NAMIBIA: IsoCountry = IsoCountry("na")
+        public val NAMIBIA: IsoCountryCode = IsoCountryCode("na")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NAURU: IsoCountry = IsoCountry("nr")
+        public val NAURU: IsoCountryCode = IsoCountryCode("nr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NEPAL: IsoCountry = IsoCountry("np")
+        public val NEPAL: IsoCountryCode = IsoCountryCode("np")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NETHERLANDS: IsoCountry = IsoCountry("nl")
+        public val NETHERLANDS: IsoCountryCode = IsoCountryCode("nl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NEW_CALEDONIA: IsoCountry = IsoCountry("nc")
+        public val NEW_CALEDONIA: IsoCountryCode = IsoCountryCode("nc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NEW_ZEALAND: IsoCountry = IsoCountry("nz")
+        public val NEW_ZEALAND: IsoCountryCode = IsoCountryCode("nz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NICARAGUA: IsoCountry = IsoCountry("ni")
+        public val NICARAGUA: IsoCountryCode = IsoCountryCode("ni")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NIGER: IsoCountry = IsoCountry("ne")
+        public val NIGER: IsoCountryCode = IsoCountryCode("ne")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NIGERIA: IsoCountry = IsoCountry("ng")
+        public val NIGERIA: IsoCountryCode = IsoCountryCode("ng")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NIUE: IsoCountry = IsoCountry("nu")
+        public val NIUE: IsoCountryCode = IsoCountryCode("nu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NORFOLK_ISLAND: IsoCountry = IsoCountry("nf")
+        public val NORFOLK_ISLAND: IsoCountryCode = IsoCountryCode("nf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NORTHERN_MARIANA_ISLANDS: IsoCountry = IsoCountry("mp")
+        public val NORTHERN_MARIANA_ISLANDS: IsoCountryCode = IsoCountryCode("mp")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NORTH_KOREA: IsoCountry = IsoCountry("kp")
+        public val NORTH_KOREA: IsoCountryCode = IsoCountryCode("kp")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val NORWAY: IsoCountry = IsoCountry("no")
+        public val NORWAY: IsoCountryCode = IsoCountryCode("no")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val OMAN: IsoCountry = IsoCountry("om")
+        public val OMAN: IsoCountryCode = IsoCountryCode("om")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PAKISTAN: IsoCountry = IsoCountry("pk")
+        public val PAKISTAN: IsoCountryCode = IsoCountryCode("pk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PALAU: IsoCountry = IsoCountry("pw")
+        public val PALAU: IsoCountryCode = IsoCountryCode("pw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PALESTINE: IsoCountry = IsoCountry("ps")
+        public val PALESTINE: IsoCountryCode = IsoCountryCode("ps")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PANAMA: IsoCountry = IsoCountry("pa")
+        public val PANAMA: IsoCountryCode = IsoCountryCode("pa")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PAPUA_NEW_GUINEA: IsoCountry = IsoCountry("pg")
+        public val PAPUA_NEW_GUINEA: IsoCountryCode = IsoCountryCode("pg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PARAGUAY: IsoCountry = IsoCountry("py")
+        public val PARAGUAY: IsoCountryCode = IsoCountryCode("py")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PERU: IsoCountry = IsoCountry("pe")
+        public val PERU: IsoCountryCode = IsoCountryCode("pe")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PHILIPPINES: IsoCountry = IsoCountry("ph")
+        public val PHILIPPINES: IsoCountryCode = IsoCountryCode("ph")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PITCAIRN_ISLANDS: IsoCountry = IsoCountry("pn")
+        public val PITCAIRN_ISLANDS: IsoCountryCode = IsoCountryCode("pn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val POLAND: IsoCountry = IsoCountry("pl")
+        public val POLAND: IsoCountryCode = IsoCountryCode("pl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PORTUGAL: IsoCountry = IsoCountry("pt")
+        public val PORTUGAL: IsoCountryCode = IsoCountryCode("pt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val PUERTO_RICO: IsoCountry = IsoCountry("pr")
+        public val PUERTO_RICO: IsoCountryCode = IsoCountryCode("pr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val QATAR: IsoCountry = IsoCountry("qa")
+        public val QATAR: IsoCountryCode = IsoCountryCode("qa")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val REUNION: IsoCountry = IsoCountry("re")
+        public val REUNION: IsoCountryCode = IsoCountryCode("re")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ROMANIA: IsoCountry = IsoCountry("ro")
+        public val ROMANIA: IsoCountryCode = IsoCountryCode("ro")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val RUSSIA: IsoCountry = IsoCountry("ru")
+        public val RUSSIA: IsoCountryCode = IsoCountryCode("ru")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val RWANDA: IsoCountry = IsoCountry("rw")
+        public val RWANDA: IsoCountryCode = IsoCountryCode("rw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SAMOA: IsoCountry = IsoCountry("ws")
+        public val SAMOA: IsoCountryCode = IsoCountryCode("ws")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SAN_MARINO: IsoCountry = IsoCountry("sm")
+        public val SAN_MARINO: IsoCountryCode = IsoCountryCode("sm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SAO_TOME_AND_PRINCIPE: IsoCountry = IsoCountry("st")
+        public val SAO_TOME_AND_PRINCIPE: IsoCountryCode = IsoCountryCode("st")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SAUDI_ARABIA: IsoCountry = IsoCountry("sa")
+        public val SAUDI_ARABIA: IsoCountryCode = IsoCountryCode("sa")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SENEGAL: IsoCountry = IsoCountry("sn")
+        public val SENEGAL: IsoCountryCode = IsoCountryCode("sn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SERBIA: IsoCountry = IsoCountry("rs")
+        public val SERBIA: IsoCountryCode = IsoCountryCode("rs")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SEYCHELLES: IsoCountry = IsoCountry("sc")
+        public val SEYCHELLES: IsoCountryCode = IsoCountryCode("sc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SIERRA_LEONE: IsoCountry = IsoCountry("sl")
+        public val SIERRA_LEONE: IsoCountryCode = IsoCountryCode("sl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SINGAPORE: IsoCountry = IsoCountry("sg")
+        public val SINGAPORE: IsoCountryCode = IsoCountryCode("sg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SINT_MAARTEN: IsoCountry = IsoCountry("sx")
+        public val SINT_MAARTEN: IsoCountryCode = IsoCountryCode("sx")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SLOVAKIA: IsoCountry = IsoCountry("sk")
+        public val SLOVAKIA: IsoCountryCode = IsoCountryCode("sk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SLOVENIA: IsoCountry = IsoCountry("si")
+        public val SLOVENIA: IsoCountryCode = IsoCountryCode("si")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOLOMON_ISLANDS: IsoCountry = IsoCountry("sb")
+        public val SOLOMON_ISLANDS: IsoCountryCode = IsoCountryCode("sb")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOMALIA: IsoCountry = IsoCountry("so")
+        public val SOMALIA: IsoCountryCode = IsoCountryCode("so")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOUTH_AFRICA: IsoCountry = IsoCountry("za")
+        public val SOUTH_AFRICA: IsoCountryCode = IsoCountryCode("za")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS: IsoCountry = IsoCountry("gs")
+        public val SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS: IsoCountryCode = IsoCountryCode("gs")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOUTH_KOREA: IsoCountry = IsoCountry("kr")
+        public val SOUTH_KOREA: IsoCountryCode = IsoCountryCode("kr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SOUTH_SUDAN: IsoCountry = IsoCountry("ss")
+        public val SOUTH_SUDAN: IsoCountryCode = IsoCountryCode("ss")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SPAIN: IsoCountry = IsoCountry("es")
+        public val SPAIN: IsoCountryCode = IsoCountryCode("es")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SRI_LANKA: IsoCountry = IsoCountry("lk")
+        public val SRI_LANKA: IsoCountryCode = IsoCountryCode("lk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_BARTHELEMY: IsoCountry = IsoCountry("bl")
+        public val ST_BARTHELEMY: IsoCountryCode = IsoCountryCode("bl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_HELENA: IsoCountry = IsoCountry("sh")
+        public val ST_HELENA: IsoCountryCode = IsoCountryCode("sh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_KITTS_AND_NEVIS: IsoCountry = IsoCountry("kn")
+        public val ST_KITTS_AND_NEVIS: IsoCountryCode = IsoCountryCode("kn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_LUCIA: IsoCountry = IsoCountry("lc")
+        public val ST_LUCIA: IsoCountryCode = IsoCountryCode("lc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_MARTIN: IsoCountry = IsoCountry("mf")
+        public val ST_MARTIN: IsoCountryCode = IsoCountryCode("mf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_PIERRE_AND_MIQUELON: IsoCountry = IsoCountry("pm")
+        public val ST_PIERRE_AND_MIQUELON: IsoCountryCode = IsoCountryCode("pm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ST_VINCENT_AND_GRENADINES: IsoCountry = IsoCountry("vc")
+        public val ST_VINCENT_AND_GRENADINES: IsoCountryCode = IsoCountryCode("vc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SUDAN: IsoCountry = IsoCountry("sd")
+        public val SUDAN: IsoCountryCode = IsoCountryCode("sd")
 
         /**
          *
          */
         @JvmField
-        public val SURINAME: IsoCountry = IsoCountry("sr")
+        public val SURINAME: IsoCountryCode = IsoCountryCode("sr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SVALBARD_AND_JAN_MAYEN: IsoCountry = IsoCountry("sj")
+        public val SVALBARD_AND_JAN_MAYEN: IsoCountryCode = IsoCountryCode("sj")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SWAZILAND: IsoCountry = IsoCountry("sz")
+        public val SWAZILAND: IsoCountryCode = IsoCountryCode("sz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SWEDEN: IsoCountry = IsoCountry("se")
+        public val SWEDEN: IsoCountryCode = IsoCountryCode("se")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SWITZERLAND: IsoCountry = IsoCountry("ch")
+        public val SWITZERLAND: IsoCountryCode = IsoCountryCode("ch")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val SYRIA: IsoCountry = IsoCountry("sy")
+        public val SYRIA: IsoCountryCode = IsoCountryCode("sy")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TAIWAN: IsoCountry = IsoCountry("tw")
+        public val TAIWAN: IsoCountryCode = IsoCountryCode("tw")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TAJIKISTAN: IsoCountry = IsoCountry("tj")
+        public val TAJIKISTAN: IsoCountryCode = IsoCountryCode("tj")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TANZANIA: IsoCountry = IsoCountry("tz")
+        public val TANZANIA: IsoCountryCode = IsoCountryCode("tz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val THAILAND: IsoCountry = IsoCountry("th")
+        public val THAILAND: IsoCountryCode = IsoCountryCode("th")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TIMOR_LESTE: IsoCountry = IsoCountry("tl")
+        public val TIMOR_LESTE: IsoCountryCode = IsoCountryCode("tl")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TOGO: IsoCountry = IsoCountry("tg")
+        public val TOGO: IsoCountryCode = IsoCountryCode("tg")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TOKELAU: IsoCountry = IsoCountry("tk")
+        public val TOKELAU: IsoCountryCode = IsoCountryCode("tk")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TONGA: IsoCountry = IsoCountry("to")
+        public val TONGA: IsoCountryCode = IsoCountryCode("to")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TRINIDAD_AND_TOBAGO: IsoCountry = IsoCountry("tt")
+        public val TRINIDAD_AND_TOBAGO: IsoCountryCode = IsoCountryCode("tt")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TUNISIA: IsoCountry = IsoCountry("tn")
+        public val TUNISIA: IsoCountryCode = IsoCountryCode("tn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TURKEY: IsoCountry = IsoCountry("tr")
+        public val TURKEY: IsoCountryCode = IsoCountryCode("tr")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TURKMENISTAN: IsoCountry = IsoCountry("tm")
+        public val TURKMENISTAN: IsoCountryCode = IsoCountryCode("tm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TURKS_AND_CAICOS_ISLANDS: IsoCountry = IsoCountry("tc")
+        public val TURKS_AND_CAICOS_ISLANDS: IsoCountryCode = IsoCountryCode("tc")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val TUVALU: IsoCountry = IsoCountry("tv")
+        public val TUVALU: IsoCountryCode = IsoCountryCode("tv")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UGANDA: IsoCountry = IsoCountry("ug")
+        public val UGANDA: IsoCountryCode = IsoCountryCode("ug")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UKRAINE: IsoCountry = IsoCountry("ua")
+        public val UKRAINE: IsoCountryCode = IsoCountryCode("ua")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UNITED_ARAB_EMIRATES: IsoCountry = IsoCountry("ae")
+        public val UNITED_ARAB_EMIRATES: IsoCountryCode = IsoCountryCode("ae")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UNITED_KINGDOM: IsoCountry = IsoCountry("gb")
+        public val UNITED_KINGDOM: IsoCountryCode = IsoCountryCode("gb")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UNITED_STATES: IsoCountry = IsoCountry("us")
+        public val UNITED_STATES: IsoCountryCode = IsoCountryCode("us")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val URUGUAY: IsoCountry = IsoCountry("uy")
+        public val URUGUAY: IsoCountryCode = IsoCountryCode("uy")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val US_OUTLYING_ISLANDS: IsoCountry = IsoCountry("um")
+        public val US_OUTLYING_ISLANDS: IsoCountryCode = IsoCountryCode("um")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val US_VIRGIN_ISLANDS: IsoCountry = IsoCountry("vi")
+        public val US_VIRGIN_ISLANDS: IsoCountryCode = IsoCountryCode("vi")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val UZBEKISTAN: IsoCountry = IsoCountry("uz")
+        public val UZBEKISTAN: IsoCountryCode = IsoCountryCode("uz")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val VANUATU: IsoCountry = IsoCountry("vu")
+        public val VANUATU: IsoCountryCode = IsoCountryCode("vu")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val VATICAN_CITY: IsoCountry = IsoCountry("va")
+        public val VATICAN_CITY: IsoCountryCode = IsoCountryCode("va")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val VENEZUELA: IsoCountry = IsoCountry("ve")
+        public val VENEZUELA: IsoCountryCode = IsoCountryCode("ve")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val VIETNAM: IsoCountry = IsoCountry("vn")
+        public val VIETNAM: IsoCountryCode = IsoCountryCode("vn")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val WALLIS_AND_FUTUNA: IsoCountry = IsoCountry("wf")
+        public val WALLIS_AND_FUTUNA: IsoCountryCode = IsoCountryCode("wf")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val WESTERN_SAHARA: IsoCountry = IsoCountry("eh")
+        public val WESTERN_SAHARA: IsoCountryCode = IsoCountryCode("eh")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val YEMEN: IsoCountry = IsoCountry("ye")
+        public val YEMEN: IsoCountryCode = IsoCountryCode("ye")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ZAMBIA: IsoCountry = IsoCountry("zm")
+        public val ZAMBIA: IsoCountryCode = IsoCountryCode("zm")
 
         /**
          * Predefined country constant.
          */
         @JvmField
-        public val ZIMBABWE: IsoCountry = IsoCountry("zw")
+        public val ZIMBABWE: IsoCountryCode = IsoCountryCode("zw")
     }
 }

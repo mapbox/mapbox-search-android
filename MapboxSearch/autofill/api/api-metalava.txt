@@ -15,12 +15,12 @@ package com.mapbox.search.autofill {
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillOptions implements android.os.Parcelable {
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountry>? countries = null, com.mapbox.search.common.IsoLanguage? language = defaultLocaleLanguage());
-    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountry>? countries = null);
-    method public java.util.List<com.mapbox.search.common.IsoCountry>? getCountries();
-    method public com.mapbox.search.common.IsoLanguage? getLanguage();
-    property public final java.util.List<com.mapbox.search.common.IsoCountry>? countries;
-    property public final com.mapbox.search.common.IsoLanguage? language;
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode? language = defaultLocaleLanguage());
+    ctor public AddressAutofillOptions(java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
+    method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
+    method public com.mapbox.search.common.IsoLanguageCode? getLanguage();
+    property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
+    property public final com.mapbox.search.common.IsoLanguageCode? language;
   }
 
   public abstract sealed class AddressAutofillResponse implements android.os.Parcelable {

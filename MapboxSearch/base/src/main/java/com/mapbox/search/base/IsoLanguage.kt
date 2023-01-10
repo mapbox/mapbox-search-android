@@ -1,8 +1,8 @@
 package com.mapbox.search.base
 
-import com.mapbox.search.common.IsoLanguage
+import com.mapbox.search.common.IsoLanguageCode
 import java.util.Locale
 
-fun defaultLocaleLanguage(): IsoLanguage {
-    return IsoLanguage(Locale.getDefault().language)
+fun defaultLocaleLanguage(): IsoLanguageCode {
+    return IsoLanguageCode(Locale.getDefault().language)
 }

@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.search.ApiType;
-import com.mapbox.search.common.IsoCountry;
-import com.mapbox.search.common.IsoLanguage;
+import com.mapbox.search.common.IsoCountryCode;
+import com.mapbox.search.common.IsoLanguageCode;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
@@ -65,8 +65,8 @@ public class JapanSearchJavaExampleActivity extends AppCompatActivity {
         );
 
         final SearchOptions options = new SearchOptions.Builder()
-            .countries(IsoCountry.JAPAN)
-            .languages(IsoLanguage.JAPANESE)
+            .countries(IsoCountryCode.JAPAN)
+            .languages(IsoLanguageCode.JAPANESE)
             .build();
 
         searchRequestTask = searchEngine.search("東京", options, searchCallback);
