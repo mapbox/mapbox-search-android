@@ -3,6 +3,8 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
@@ -37,7 +39,7 @@ internal class CategorySearchOptionsTest {
                     boundingBox = null,
                     countries = null,
                     fuzzyMatch = null,
-                    languages = listOf(Language(TEST_LOCALE.language)),
+                    languages = listOf(IsoLanguageCode(TEST_LOCALE.language)),
                     limit = null,
                     requestDebounce = null,
                     origin = null,
@@ -61,10 +63,10 @@ internal class CategorySearchOptionsTest {
                 val actualOptions = CategorySearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(Country.UNITED_KINGDOM, Country.BELARUS)
+                    .countries(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS)
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(Language.ENGLISH, Language("by"))
+                    .languages(IsoLanguageCode.ENGLISH, IsoLanguageCode("by"))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -77,9 +79,9 @@ internal class CategorySearchOptionsTest {
                 val expectedOptions = CategorySearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,
@@ -103,10 +105,10 @@ internal class CategorySearchOptionsTest {
                 val actualOptions = CategorySearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
+                    .countries(listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -119,9 +121,9 @@ internal class CategorySearchOptionsTest {
                 val expectedOptions = CategorySearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,
@@ -160,10 +162,10 @@ internal class CategorySearchOptionsTest {
                 val originalOptions = CategorySearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
+                    .countries(listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")))
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .navigationProfile(TEST_NAV_PROFILE)
@@ -181,9 +183,9 @@ internal class CategorySearchOptionsTest {
                     navProfile = TEST_NAV_PROFILE.rawName,
                     etaType = null,
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS).map { it.code },
                     fuzzyMatch = true,
-                    language = listOf(Language.ENGLISH, Language("by")).map { it.code },
+                    language = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")).map { it.code },
                     limit = 100,
                     types = null,
                     ignoreUR = true,
@@ -207,9 +209,9 @@ internal class CategorySearchOptionsTest {
                 val options = CategorySearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     requestDebounce = 300,
                     origin = TEST_ORIGIN_POINT,

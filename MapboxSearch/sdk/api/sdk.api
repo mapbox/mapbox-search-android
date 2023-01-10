@@ -57,12 +57,12 @@ public final class com/mapbox/search/CategorySearchOptions$Builder {
 	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun build ()Lcom/mapbox/search/CategorySearchOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/CategorySearchOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/Country;)Lcom/mapbox/search/CategorySearchOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun fuzzyMatch (Z)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/CategorySearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/CategorySearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun navigationProfile (Lcom/mapbox/search/SearchNavigationProfile;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/CategorySearchOptions$Builder;
@@ -75,270 +75,6 @@ public final class com/mapbox/search/CategorySearchOptions$Builder {
 public abstract interface class com/mapbox/search/CompletionCallback {
 	public abstract fun onComplete (Ljava/lang/Object;)V
 	public abstract fun onError (Ljava/lang/Exception;)V
-}
-
-public final class com/mapbox/search/Country : android/os/Parcelable {
-	public static final field AFGHANISTAN Lcom/mapbox/search/Country;
-	public static final field ALAND_ISLANDS Lcom/mapbox/search/Country;
-	public static final field ALBANIA Lcom/mapbox/search/Country;
-	public static final field ALGERIA Lcom/mapbox/search/Country;
-	public static final field AMERICAN_SAMOA Lcom/mapbox/search/Country;
-	public static final field ANDORRA Lcom/mapbox/search/Country;
-	public static final field ANGOLA Lcom/mapbox/search/Country;
-	public static final field ANGUILLA Lcom/mapbox/search/Country;
-	public static final field ANTARCTICA Lcom/mapbox/search/Country;
-	public static final field ANTIGUA_AND_BARBUDA Lcom/mapbox/search/Country;
-	public static final field ARGENTINA Lcom/mapbox/search/Country;
-	public static final field ARMENIA Lcom/mapbox/search/Country;
-	public static final field ARUBA Lcom/mapbox/search/Country;
-	public static final field AUSTRALIA Lcom/mapbox/search/Country;
-	public static final field AUSTRIA Lcom/mapbox/search/Country;
-	public static final field AZERBAIJAN Lcom/mapbox/search/Country;
-	public static final field BAHAMAS Lcom/mapbox/search/Country;
-	public static final field BAHRAIN Lcom/mapbox/search/Country;
-	public static final field BANGLADESH Lcom/mapbox/search/Country;
-	public static final field BARBADOS Lcom/mapbox/search/Country;
-	public static final field BELARUS Lcom/mapbox/search/Country;
-	public static final field BELGIUM Lcom/mapbox/search/Country;
-	public static final field BELIZE Lcom/mapbox/search/Country;
-	public static final field BENIN Lcom/mapbox/search/Country;
-	public static final field BERMUDA Lcom/mapbox/search/Country;
-	public static final field BHUTAN Lcom/mapbox/search/Country;
-	public static final field BOLIVIA Lcom/mapbox/search/Country;
-	public static final field BOSNIA_AND_HERZEGOVINA Lcom/mapbox/search/Country;
-	public static final field BOTSWANA Lcom/mapbox/search/Country;
-	public static final field BOUVET_ISLAND Lcom/mapbox/search/Country;
-	public static final field BRAZIL Lcom/mapbox/search/Country;
-	public static final field BRITISH_INDIAN_OCEAN_TERRITORY Lcom/mapbox/search/Country;
-	public static final field BRITISH_VIRGIN_ISLANDS Lcom/mapbox/search/Country;
-	public static final field BRUNEI Lcom/mapbox/search/Country;
-	public static final field BULGARIA Lcom/mapbox/search/Country;
-	public static final field BURKINA_FASO Lcom/mapbox/search/Country;
-	public static final field BURUNDI Lcom/mapbox/search/Country;
-	public static final field CAMBODIA Lcom/mapbox/search/Country;
-	public static final field CAMEROON Lcom/mapbox/search/Country;
-	public static final field CANADA Lcom/mapbox/search/Country;
-	public static final field CAPE_VERDE Lcom/mapbox/search/Country;
-	public static final field CARIBBEAN_NETHERLANDS Lcom/mapbox/search/Country;
-	public static final field CAYMAN_ISLANDS Lcom/mapbox/search/Country;
-	public static final field CENTRAL_AFRICAN_REPUBLIC Lcom/mapbox/search/Country;
-	public static final field CHAD Lcom/mapbox/search/Country;
-	public static final field CHILE Lcom/mapbox/search/Country;
-	public static final field CHINA Lcom/mapbox/search/Country;
-	public static final field CHRISTMAS_ISLAND Lcom/mapbox/search/Country;
-	public static final field COCOS_ISLANDS Lcom/mapbox/search/Country;
-	public static final field COLOMBIA Lcom/mapbox/search/Country;
-	public static final field COMOROS Lcom/mapbox/search/Country;
-	public static final field CONGO_BRAZZAVILLE Lcom/mapbox/search/Country;
-	public static final field CONGO_KINSHASA Lcom/mapbox/search/Country;
-	public static final field COOK_ISLANDS Lcom/mapbox/search/Country;
-	public static final field COSTA_RICA Lcom/mapbox/search/Country;
-	public static final field COTE_DIVOIRE Lcom/mapbox/search/Country;
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field CROATIA Lcom/mapbox/search/Country;
-	public static final field CUBA Lcom/mapbox/search/Country;
-	public static final field CURACAO Lcom/mapbox/search/Country;
-	public static final field CYPRUS Lcom/mapbox/search/Country;
-	public static final field CZECHIA Lcom/mapbox/search/Country;
-	public static final field Companion Lcom/mapbox/search/Country$Companion;
-	public static final field DENMARK Lcom/mapbox/search/Country;
-	public static final field DJIBOUTI Lcom/mapbox/search/Country;
-	public static final field DOMINICA Lcom/mapbox/search/Country;
-	public static final field DOMINICAN_REPUBLIC Lcom/mapbox/search/Country;
-	public static final field ECUADOR Lcom/mapbox/search/Country;
-	public static final field EGYPT Lcom/mapbox/search/Country;
-	public static final field EL_SALVADOR Lcom/mapbox/search/Country;
-	public static final field EQUATORIAL_GUINEA Lcom/mapbox/search/Country;
-	public static final field ERITREA Lcom/mapbox/search/Country;
-	public static final field ESTONIA Lcom/mapbox/search/Country;
-	public static final field ETHIOPIA Lcom/mapbox/search/Country;
-	public static final field FALKLAND_ISLANDS_ Lcom/mapbox/search/Country;
-	public static final field FAROE_ISLANDS Lcom/mapbox/search/Country;
-	public static final field FIJI Lcom/mapbox/search/Country;
-	public static final field FINLAND Lcom/mapbox/search/Country;
-	public static final field FRANCE Lcom/mapbox/search/Country;
-	public static final field FRENCH_GUIANA Lcom/mapbox/search/Country;
-	public static final field FRENCH_POLYNESIA Lcom/mapbox/search/Country;
-	public static final field FRENCH_SOUTHERN_TERRITORIES Lcom/mapbox/search/Country;
-	public static final field GABON Lcom/mapbox/search/Country;
-	public static final field GAMBIA Lcom/mapbox/search/Country;
-	public static final field GEORGIA Lcom/mapbox/search/Country;
-	public static final field GERMANY Lcom/mapbox/search/Country;
-	public static final field GHANA Lcom/mapbox/search/Country;
-	public static final field GIBRALTAR Lcom/mapbox/search/Country;
-	public static final field GREECE Lcom/mapbox/search/Country;
-	public static final field GREENLAND Lcom/mapbox/search/Country;
-	public static final field GRENADA Lcom/mapbox/search/Country;
-	public static final field GUADELOUPE Lcom/mapbox/search/Country;
-	public static final field GUAM Lcom/mapbox/search/Country;
-	public static final field GUATEMALA Lcom/mapbox/search/Country;
-	public static final field GUERNSEY Lcom/mapbox/search/Country;
-	public static final field GUINEA Lcom/mapbox/search/Country;
-	public static final field GUINEA_BISSAU Lcom/mapbox/search/Country;
-	public static final field GUYANA Lcom/mapbox/search/Country;
-	public static final field HAITI Lcom/mapbox/search/Country;
-	public static final field HEARD_AND_MCDONALD_ISLANDS Lcom/mapbox/search/Country;
-	public static final field HONDURAS Lcom/mapbox/search/Country;
-	public static final field HONG_KONG Lcom/mapbox/search/Country;
-	public static final field HUNGARY Lcom/mapbox/search/Country;
-	public static final field ICELAND Lcom/mapbox/search/Country;
-	public static final field INDIA Lcom/mapbox/search/Country;
-	public static final field INDONESIA Lcom/mapbox/search/Country;
-	public static final field IRAN Lcom/mapbox/search/Country;
-	public static final field IRAQ Lcom/mapbox/search/Country;
-	public static final field IRELAND Lcom/mapbox/search/Country;
-	public static final field ISLE_OF_MAN Lcom/mapbox/search/Country;
-	public static final field ISRAEL Lcom/mapbox/search/Country;
-	public static final field ITALY Lcom/mapbox/search/Country;
-	public static final field JAMAICA Lcom/mapbox/search/Country;
-	public static final field JAPAN Lcom/mapbox/search/Country;
-	public static final field JERSEY Lcom/mapbox/search/Country;
-	public static final field JORDAN Lcom/mapbox/search/Country;
-	public static final field KAZAKHSTAN Lcom/mapbox/search/Country;
-	public static final field KENYA Lcom/mapbox/search/Country;
-	public static final field KIRIBATI Lcom/mapbox/search/Country;
-	public static final field KUWAIT Lcom/mapbox/search/Country;
-	public static final field KYRGYZSTAN Lcom/mapbox/search/Country;
-	public static final field LAOS Lcom/mapbox/search/Country;
-	public static final field LATVIA Lcom/mapbox/search/Country;
-	public static final field LEBANON Lcom/mapbox/search/Country;
-	public static final field LESOTHO Lcom/mapbox/search/Country;
-	public static final field LIBERIA Lcom/mapbox/search/Country;
-	public static final field LIBYA Lcom/mapbox/search/Country;
-	public static final field LIECHTENSTEIN Lcom/mapbox/search/Country;
-	public static final field LITHUANIA Lcom/mapbox/search/Country;
-	public static final field LUXEMBOURG Lcom/mapbox/search/Country;
-	public static final field MACAU Lcom/mapbox/search/Country;
-	public static final field MACEDONIA Lcom/mapbox/search/Country;
-	public static final field MADAGASCAR Lcom/mapbox/search/Country;
-	public static final field MALAWI Lcom/mapbox/search/Country;
-	public static final field MALAYSIA Lcom/mapbox/search/Country;
-	public static final field MALDIVES Lcom/mapbox/search/Country;
-	public static final field MALI Lcom/mapbox/search/Country;
-	public static final field MALTA Lcom/mapbox/search/Country;
-	public static final field MARSHALL_ISLANDS Lcom/mapbox/search/Country;
-	public static final field MARTINIQUE Lcom/mapbox/search/Country;
-	public static final field MAURITANIA Lcom/mapbox/search/Country;
-	public static final field MAURITIUS Lcom/mapbox/search/Country;
-	public static final field MAYOTTE Lcom/mapbox/search/Country;
-	public static final field MEXICO Lcom/mapbox/search/Country;
-	public static final field MICRONESIA Lcom/mapbox/search/Country;
-	public static final field MOLDOVA Lcom/mapbox/search/Country;
-	public static final field MONACO Lcom/mapbox/search/Country;
-	public static final field MONGOLIA Lcom/mapbox/search/Country;
-	public static final field MONTENEGRO Lcom/mapbox/search/Country;
-	public static final field MONTSERRAT Lcom/mapbox/search/Country;
-	public static final field MOROCCO Lcom/mapbox/search/Country;
-	public static final field MOZAMBIQUE Lcom/mapbox/search/Country;
-	public static final field MYANMAR Lcom/mapbox/search/Country;
-	public static final field NAMIBIA Lcom/mapbox/search/Country;
-	public static final field NAURU Lcom/mapbox/search/Country;
-	public static final field NEPAL Lcom/mapbox/search/Country;
-	public static final field NETHERLANDS Lcom/mapbox/search/Country;
-	public static final field NEW_CALEDONIA Lcom/mapbox/search/Country;
-	public static final field NEW_ZEALAND Lcom/mapbox/search/Country;
-	public static final field NICARAGUA Lcom/mapbox/search/Country;
-	public static final field NIGER Lcom/mapbox/search/Country;
-	public static final field NIGERIA Lcom/mapbox/search/Country;
-	public static final field NIUE Lcom/mapbox/search/Country;
-	public static final field NORFOLK_ISLAND Lcom/mapbox/search/Country;
-	public static final field NORTHERN_MARIANA_ISLANDS Lcom/mapbox/search/Country;
-	public static final field NORTH_KOREA Lcom/mapbox/search/Country;
-	public static final field NORWAY Lcom/mapbox/search/Country;
-	public static final field OMAN Lcom/mapbox/search/Country;
-	public static final field PAKISTAN Lcom/mapbox/search/Country;
-	public static final field PALAU Lcom/mapbox/search/Country;
-	public static final field PALESTINE Lcom/mapbox/search/Country;
-	public static final field PANAMA Lcom/mapbox/search/Country;
-	public static final field PAPUA_NEW_GUINEA Lcom/mapbox/search/Country;
-	public static final field PARAGUAY Lcom/mapbox/search/Country;
-	public static final field PERU Lcom/mapbox/search/Country;
-	public static final field PHILIPPINES Lcom/mapbox/search/Country;
-	public static final field PITCAIRN_ISLANDS Lcom/mapbox/search/Country;
-	public static final field POLAND Lcom/mapbox/search/Country;
-	public static final field PORTUGAL Lcom/mapbox/search/Country;
-	public static final field PUERTO_RICO Lcom/mapbox/search/Country;
-	public static final field QATAR Lcom/mapbox/search/Country;
-	public static final field REUNION Lcom/mapbox/search/Country;
-	public static final field ROMANIA Lcom/mapbox/search/Country;
-	public static final field RUSSIA Lcom/mapbox/search/Country;
-	public static final field RWANDA Lcom/mapbox/search/Country;
-	public static final field SAMOA Lcom/mapbox/search/Country;
-	public static final field SAN_MARINO Lcom/mapbox/search/Country;
-	public static final field SAO_TOME_AND_PRINCIPE Lcom/mapbox/search/Country;
-	public static final field SAUDI_ARABIA Lcom/mapbox/search/Country;
-	public static final field SENEGAL Lcom/mapbox/search/Country;
-	public static final field SERBIA Lcom/mapbox/search/Country;
-	public static final field SEYCHELLES Lcom/mapbox/search/Country;
-	public static final field SIERRA_LEONE Lcom/mapbox/search/Country;
-	public static final field SINGAPORE Lcom/mapbox/search/Country;
-	public static final field SINT_MAARTEN Lcom/mapbox/search/Country;
-	public static final field SLOVAKIA Lcom/mapbox/search/Country;
-	public static final field SLOVENIA Lcom/mapbox/search/Country;
-	public static final field SOLOMON_ISLANDS Lcom/mapbox/search/Country;
-	public static final field SOMALIA Lcom/mapbox/search/Country;
-	public static final field SOUTH_AFRICA Lcom/mapbox/search/Country;
-	public static final field SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS Lcom/mapbox/search/Country;
-	public static final field SOUTH_KOREA Lcom/mapbox/search/Country;
-	public static final field SOUTH_SUDAN Lcom/mapbox/search/Country;
-	public static final field SPAIN Lcom/mapbox/search/Country;
-	public static final field SRI_LANKA Lcom/mapbox/search/Country;
-	public static final field ST_BARTHELEMY Lcom/mapbox/search/Country;
-	public static final field ST_HELENA Lcom/mapbox/search/Country;
-	public static final field ST_KITTS_AND_NEVIS Lcom/mapbox/search/Country;
-	public static final field ST_LUCIA Lcom/mapbox/search/Country;
-	public static final field ST_MARTIN Lcom/mapbox/search/Country;
-	public static final field ST_PIERRE_AND_MIQUELON Lcom/mapbox/search/Country;
-	public static final field ST_VINCENT_AND_GRENADINES Lcom/mapbox/search/Country;
-	public static final field SUDAN Lcom/mapbox/search/Country;
-	public static final field SURINAME Lcom/mapbox/search/Country;
-	public static final field SVALBARD_AND_JAN_MAYEN Lcom/mapbox/search/Country;
-	public static final field SWAZILAND Lcom/mapbox/search/Country;
-	public static final field SWEDEN Lcom/mapbox/search/Country;
-	public static final field SWITZERLAND Lcom/mapbox/search/Country;
-	public static final field SYRIA Lcom/mapbox/search/Country;
-	public static final field TAIWAN Lcom/mapbox/search/Country;
-	public static final field TAJIKISTAN Lcom/mapbox/search/Country;
-	public static final field TANZANIA Lcom/mapbox/search/Country;
-	public static final field THAILAND Lcom/mapbox/search/Country;
-	public static final field TIMOR_LESTE Lcom/mapbox/search/Country;
-	public static final field TOGO Lcom/mapbox/search/Country;
-	public static final field TOKELAU Lcom/mapbox/search/Country;
-	public static final field TONGA Lcom/mapbox/search/Country;
-	public static final field TRINIDAD_AND_TOBAGO Lcom/mapbox/search/Country;
-	public static final field TUNISIA Lcom/mapbox/search/Country;
-	public static final field TURKEY Lcom/mapbox/search/Country;
-	public static final field TURKMENISTAN Lcom/mapbox/search/Country;
-	public static final field TURKS_AND_CAICOS_ISLANDS Lcom/mapbox/search/Country;
-	public static final field TUVALU Lcom/mapbox/search/Country;
-	public static final field UGANDA Lcom/mapbox/search/Country;
-	public static final field UKRAINE Lcom/mapbox/search/Country;
-	public static final field UNITED_ARAB_EMIRATES Lcom/mapbox/search/Country;
-	public static final field UNITED_KINGDOM Lcom/mapbox/search/Country;
-	public static final field UNITED_STATES Lcom/mapbox/search/Country;
-	public static final field URUGUAY Lcom/mapbox/search/Country;
-	public static final field US_OUTLYING_ISLANDS Lcom/mapbox/search/Country;
-	public static final field US_VIRGIN_ISLANDS Lcom/mapbox/search/Country;
-	public static final field UZBEKISTAN Lcom/mapbox/search/Country;
-	public static final field VANUATU Lcom/mapbox/search/Country;
-	public static final field VATICAN_CITY Lcom/mapbox/search/Country;
-	public static final field VENEZUELA Lcom/mapbox/search/Country;
-	public static final field VIETNAM Lcom/mapbox/search/Country;
-	public static final field WALLIS_AND_FUTUNA Lcom/mapbox/search/Country;
-	public static final field WESTERN_SAHARA Lcom/mapbox/search/Country;
-	public static final field YEMEN Lcom/mapbox/search/Country;
-	public static final field ZAMBIA Lcom/mapbox/search/Country;
-	public static final field ZIMBABWE Lcom/mapbox/search/Country;
-	public fun <init> (Ljava/lang/String;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/Country$Companion {
 }
 
 public abstract interface class com/mapbox/search/DistanceCalculator {
@@ -382,59 +118,6 @@ public final class com/mapbox/search/ImageInfo : android/os/Parcelable {
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/Language : android/os/Parcelable {
-	public static final field ALBANIAN Lcom/mapbox/search/Language;
-	public static final field ARABIC Lcom/mapbox/search/Language;
-	public static final field BOSNIAN Lcom/mapbox/search/Language;
-	public static final field BULGARIAN Lcom/mapbox/search/Language;
-	public static final field CATALAN Lcom/mapbox/search/Language;
-	public static final field CHINESE Lcom/mapbox/search/Language;
-	public static final field CHINESE_SIMPLIFIED Lcom/mapbox/search/Language;
-	public static final field CHINESE_TRADITIONAL Lcom/mapbox/search/Language;
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field CZECH Lcom/mapbox/search/Language;
-	public static final field Companion Lcom/mapbox/search/Language$Companion;
-	public static final field DANISH Lcom/mapbox/search/Language;
-	public static final field DUTCH Lcom/mapbox/search/Language;
-	public static final field ENGLISH Lcom/mapbox/search/Language;
-	public static final field FINNISH Lcom/mapbox/search/Language;
-	public static final field FRENCH Lcom/mapbox/search/Language;
-	public static final field GEORGIAN Lcom/mapbox/search/Language;
-	public static final field GERMAN Lcom/mapbox/search/Language;
-	public static final field HEBREW Lcom/mapbox/search/Language;
-	public static final field HUNGARIAN Lcom/mapbox/search/Language;
-	public static final field ICELANDIC Lcom/mapbox/search/Language;
-	public static final field INDONESIAN Lcom/mapbox/search/Language;
-	public static final field ITALIAN Lcom/mapbox/search/Language;
-	public static final field JAPANESE Lcom/mapbox/search/Language;
-	public static final field KAZAKH Lcom/mapbox/search/Language;
-	public static final field KOREAN Lcom/mapbox/search/Language;
-	public static final field LATVIAN Lcom/mapbox/search/Language;
-	public static final field MONGOLIAN Lcom/mapbox/search/Language;
-	public static final field NORWEGIAN_BOKMAL Lcom/mapbox/search/Language;
-	public static final field POLISH Lcom/mapbox/search/Language;
-	public static final field PORTUGUESE Lcom/mapbox/search/Language;
-	public static final field ROMANIAN Lcom/mapbox/search/Language;
-	public static final field SERBIAN Lcom/mapbox/search/Language;
-	public static final field SLOVAK Lcom/mapbox/search/Language;
-	public static final field SLOVENIAN Lcom/mapbox/search/Language;
-	public static final field SPANISH Lcom/mapbox/search/Language;
-	public static final field SWEDISH Lcom/mapbox/search/Language;
-	public static final field TAGALOG Lcom/mapbox/search/Language;
-	public static final field THAI Lcom/mapbox/search/Language;
-	public static final field TURKISH Lcom/mapbox/search/Language;
-	public fun <init> (Ljava/lang/String;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/Language$Companion {
 }
 
 public final class com/mapbox/search/QueryType : java/lang/Enum {
@@ -508,9 +191,9 @@ public final class com/mapbox/search/ReverseGeoOptions$Builder {
 	public fun <init> (Lcom/mapbox/geojson/Point;)V
 	public final fun build ()Lcom/mapbox/search/ReverseGeoOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/Country;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun reverseMode (Lcom/mapbox/search/ReverseMode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
@@ -537,7 +220,6 @@ public final class com/mapbox/search/RouteOptions : android/os/Parcelable {
 }
 
 public abstract class com/mapbox/search/RouteOptions$Deviation : android/os/Parcelable {
-	public fun <init> ()V
 	public abstract fun getSarType ()Lcom/mapbox/search/RouteOptions$Deviation$SarType;
 }
 
@@ -747,12 +429,12 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun build ()Lcom/mapbox/search/SearchOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
-	public final fun countries ([Lcom/mapbox/search/Country;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun fuzzyMatch (Z)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
-	public final fun languages ([Lcom/mapbox/search/Language;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/SearchOptions$Builder;
@@ -774,9 +456,9 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getCpsJson ()Ljava/lang/String;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getExtraData ()Ljava/util/Map;
-	public final fun getOpenHours ()Lcom/mapbox/search/metadata/OpenHours;
+	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
-	public final fun getParking ()Lcom/mapbox/search/metadata/ParkingData;
+	public final fun getParking ()Lcom/mapbox/search/common/metadata/ParkingData;
 	public final fun getPhone ()Ljava/lang/String;
 	public final fun getPrimaryPhotos ()Ljava/util/List;
 	public final fun getReviewCount ()Ljava/lang/Integer;
@@ -889,80 +571,6 @@ public final class com/mapbox/search/analytics/MissingResultFeedbackEvent {
 	public final fun getScreenshot ()Landroid/graphics/Bitmap;
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class com/mapbox/search/metadata/OpenHours {
-	public fun <init> ()V
-}
-
-public final class com/mapbox/search/metadata/OpenHours$AlwaysOpen : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$AlwaysOpen;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$PermanentlyClosed : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$PermanentlyClosed;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$Scheduled : com/mapbox/search/metadata/OpenHours {
-	public fun <init> (Ljava/util/List;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPeriods ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/OpenHours$TemporaryClosed : com/mapbox/search/metadata/OpenHours {
-	public static final field INSTANCE Lcom/mapbox/search/metadata/OpenHours$TemporaryClosed;
-}
-
-public final class com/mapbox/search/metadata/OpenPeriod {
-	public fun <init> (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;)V
-	public final fun component1 ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun component2 ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun copy (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;)Lcom/mapbox/search/metadata/OpenPeriod;
-	public static synthetic fun copy$default (Lcom/mapbox/search/metadata/OpenPeriod;Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekTimestamp;ILjava/lang/Object;)Lcom/mapbox/search/metadata/OpenPeriod;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getClosed ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public final fun getOpen ()Lcom/mapbox/search/metadata/WeekTimestamp;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/ParkingData {
-	public fun <init> (II)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getReservedForDisabilities ()I
-	public final fun getTotalCapacity ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/search/metadata/WeekDay : java/lang/Enum {
-	public static final field FRIDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field MONDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field SATURDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field SUNDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field THURSDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field TUESDAY Lcom/mapbox/search/metadata/WeekDay;
-	public static final field WEDNESDAY Lcom/mapbox/search/metadata/WeekDay;
-	public final fun getIsoCode ()I
-	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/metadata/WeekDay;
-	public static fun values ()[Lcom/mapbox/search/metadata/WeekDay;
-}
-
-public final class com/mapbox/search/metadata/WeekTimestamp {
-	public fun <init> (Lcom/mapbox/search/metadata/WeekDay;II)V
-	public final fun component1 ()Lcom/mapbox/search/metadata/WeekDay;
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (Lcom/mapbox/search/metadata/WeekDay;II)Lcom/mapbox/search/metadata/WeekTimestamp;
-	public static synthetic fun copy$default (Lcom/mapbox/search/metadata/WeekTimestamp;Lcom/mapbox/search/metadata/WeekDay;IIILjava/lang/Object;)Lcom/mapbox/search/metadata/WeekTimestamp;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDay ()Lcom/mapbox/search/metadata/WeekDay;
-	public final fun getHour ()I
-	public final fun getMinute ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -1276,7 +884,6 @@ public final class com/mapbox/search/result/SearchAddress$FormatComponent$Compan
 }
 
 public abstract class com/mapbox/search/result/SearchAddress$FormatStyle {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/result/SearchAddress$FormatStyle$Full : com/mapbox/search/result/SearchAddress$FormatStyle {
@@ -1363,7 +970,6 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 }
 
 public abstract class com/mapbox/search/result/SearchSuggestionType : android/os/Parcelable {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/result/SearchSuggestionType$Category : com/mapbox/search/result/SearchSuggestionType {

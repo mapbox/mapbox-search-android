@@ -1,10 +1,10 @@
-package com.mapbox.search.metadata
+package com.mapbox.search.base
 
-import com.mapbox.search.BuildConfig
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.TestConstants
 import com.mapbox.search.common.catchThrowable
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -25,8 +25,8 @@ internal class WeekTimestampTest {
                         params.toTimestamp()
                     } != null
                     Then(
-                        "Should complete without errors: ${isValid || !BuildConfig.DEBUG}",
-                        isValid || !BuildConfig.DEBUG,
+                        "Should complete without errors: $isValid",
+                        isValid,
                         !failedOnAssertion
                     )
                 }
@@ -35,7 +35,7 @@ internal class WeekTimestampTest {
     }
 
     private fun WeekTimestampParams.toTimestamp(): WeekTimestamp {
-        return WeekTimestamp(WeekDay.fromCore(first), second, third)
+        return WeekTimestamp(weekDayFromCore(first), second, third)
     }
 
     companion object {
@@ -52,14 +52,14 @@ internal class WeekTimestampTest {
         @JvmStatic
         fun setUpAll() {
             resetLogImpl()
-            mockkStatic(ASSERTIONS_KT_CLASS_NAME)
+            mockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
         }
 
         @AfterAll
         @JvmStatic
         fun tearDownAll() {
             reinitializeLogImpl()
-            unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
+            unmockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
         }
     }
 }

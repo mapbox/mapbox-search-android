@@ -1,14 +1,14 @@
-package com.mapbox.search
+package com.mapbox.search.common
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * Preferred languages of the search results.
+ * Iso Language Code.
  * @property code language code in ISO 639-1.
  */
 @Parcelize
-public class Language(public val code: String) : Parcelable {
+public class IsoLanguageCode(public val code: String) : Parcelable {
 
     /**
      * @suppress
@@ -17,7 +17,7 @@ public class Language(public val code: String) : Parcelable {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Language
+        other as IsoLanguageCode
 
         if (code != other.code) return false
 
@@ -47,228 +47,228 @@ public class Language(public val code: String) : Parcelable {
          * Predefined language constant.
          */
         @JvmField
-        public val ALBANIAN: Language = Language("sq")
+        public val ALBANIAN: IsoLanguageCode = IsoLanguageCode("sq")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val ARABIC: Language = Language("ar")
+        public val ARABIC: IsoLanguageCode = IsoLanguageCode("ar")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val BOSNIAN: Language = Language("bs")
+        public val BOSNIAN: IsoLanguageCode = IsoLanguageCode("bs")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val BULGARIAN: Language = Language("bg")
+        public val BULGARIAN: IsoLanguageCode = IsoLanguageCode("bg")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val CATALAN: Language = Language("ca")
+        public val CATALAN: IsoLanguageCode = IsoLanguageCode("ca")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val CHINESE: Language = Language("zh")
+        public val CHINESE: IsoLanguageCode = IsoLanguageCode("zh")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val CHINESE_SIMPLIFIED: Language = Language("zh-Hans")
+        public val CHINESE_SIMPLIFIED: IsoLanguageCode = IsoLanguageCode("zh-Hans")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val CHINESE_TRADITIONAL: Language = Language("zh-Hant")
+        public val CHINESE_TRADITIONAL: IsoLanguageCode = IsoLanguageCode("zh-Hant")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val CZECH: Language = Language("cs")
+        public val CZECH: IsoLanguageCode = IsoLanguageCode("cs")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val DANISH: Language = Language("da")
+        public val DANISH: IsoLanguageCode = IsoLanguageCode("da")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val DUTCH: Language = Language("nl")
+        public val DUTCH: IsoLanguageCode = IsoLanguageCode("nl")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val ENGLISH: Language = Language("en")
+        public val ENGLISH: IsoLanguageCode = IsoLanguageCode("en")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val FINNISH: Language = Language("fi")
+        public val FINNISH: IsoLanguageCode = IsoLanguageCode("fi")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val FRENCH: Language = Language("fr")
+        public val FRENCH: IsoLanguageCode = IsoLanguageCode("fr")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val GEORGIAN: Language = Language("ka")
+        public val GEORGIAN: IsoLanguageCode = IsoLanguageCode("ka")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val GERMAN: Language = Language("de")
+        public val GERMAN: IsoLanguageCode = IsoLanguageCode("de")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val HEBREW: Language = Language("he")
+        public val HEBREW: IsoLanguageCode = IsoLanguageCode("he")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val HUNGARIAN: Language = Language("hu")
+        public val HUNGARIAN: IsoLanguageCode = IsoLanguageCode("hu")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val ICELANDIC: Language = Language("is")
+        public val ICELANDIC: IsoLanguageCode = IsoLanguageCode("is")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val INDONESIAN: Language = Language("id")
+        public val INDONESIAN: IsoLanguageCode = IsoLanguageCode("id")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val ITALIAN: Language = Language("it")
+        public val ITALIAN: IsoLanguageCode = IsoLanguageCode("it")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val JAPANESE: Language = Language("ja")
+        public val JAPANESE: IsoLanguageCode = IsoLanguageCode("ja")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val KAZAKH: Language = Language("kk")
+        public val KAZAKH: IsoLanguageCode = IsoLanguageCode("kk")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val KOREAN: Language = Language("ko")
+        public val KOREAN: IsoLanguageCode = IsoLanguageCode("ko")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val LATVIAN: Language = Language("lv")
+        public val LATVIAN: IsoLanguageCode = IsoLanguageCode("lv")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val MONGOLIAN: Language = Language("mn")
+        public val MONGOLIAN: IsoLanguageCode = IsoLanguageCode("mn")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val NORWEGIAN_BOKMAL: Language = Language("nb")
+        public val NORWEGIAN_BOKMAL: IsoLanguageCode = IsoLanguageCode("nb")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val POLISH: Language = Language("pl")
+        public val POLISH: IsoLanguageCode = IsoLanguageCode("pl")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val PORTUGUESE: Language = Language("pt")
+        public val PORTUGUESE: IsoLanguageCode = IsoLanguageCode("pt")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val ROMANIAN: Language = Language("ro")
+        public val ROMANIAN: IsoLanguageCode = IsoLanguageCode("ro")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val SERBIAN: Language = Language("sr")
+        public val SERBIAN: IsoLanguageCode = IsoLanguageCode("sr")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val SLOVAK: Language = Language("sk")
+        public val SLOVAK: IsoLanguageCode = IsoLanguageCode("sk")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val SLOVENIAN: Language = Language("sl")
+        public val SLOVENIAN: IsoLanguageCode = IsoLanguageCode("sl")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val SPANISH: Language = Language("es")
+        public val SPANISH: IsoLanguageCode = IsoLanguageCode("es")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val SWEDISH: Language = Language("sv")
+        public val SWEDISH: IsoLanguageCode = IsoLanguageCode("sv")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val TAGALOG: Language = Language("tl")
+        public val TAGALOG: IsoLanguageCode = IsoLanguageCode("tl")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val THAI: Language = Language("th")
+        public val THAI: IsoLanguageCode = IsoLanguageCode("th")
 
         /**
          * Predefined language constant.
          */
         @JvmField
-        public val TURKISH: Language = Language("tr")
+        public val TURKISH: IsoLanguageCode = IsoLanguageCode("tr")
     }
 }

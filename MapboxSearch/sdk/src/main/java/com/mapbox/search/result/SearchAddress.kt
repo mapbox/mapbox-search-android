@@ -434,19 +434,7 @@ public class SearchAddress @JvmOverloads public constructor(
     /**
      * Describes how detailed should be formatted address in string representation.
      */
-    public abstract class FormatStyle {
-
-        init {
-            @Suppress("LeakingThis")
-            require(this is Short ||
-                    this is Medium ||
-                    this is Long ||
-                    this is Full) {
-                "FormatStyle allows only the following subclasses: " +
-                        "[FormatStyle.Short | FormatStyle.Medium | FormatStyle.Long | FormatStyle.Full | FormatStyle.Custom], " +
-                        "but ${javaClass.printableName} was found."
-            }
-        }
+    public abstract class FormatStyle internal constructor() {
 
         /**
          * Short variant of formatting. Includes [houseNumber] and [street].

@@ -16,6 +16,313 @@ package com.mapbox.search.common {
     property public final com.mapbox.search.common.AsyncOperationTask COMPLETED;
   }
 
+  @kotlinx.parcelize.Parcelize public final class IsoCountryCode implements android.os.Parcelable {
+    ctor public IsoCountryCode(String code);
+    method public String getCode();
+    property public final String code;
+    field public static final com.mapbox.search.common.IsoCountryCode AFGHANISTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode ALAND_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode ALBANIA;
+    field public static final com.mapbox.search.common.IsoCountryCode ALGERIA;
+    field public static final com.mapbox.search.common.IsoCountryCode AMERICAN_SAMOA;
+    field public static final com.mapbox.search.common.IsoCountryCode ANDORRA;
+    field public static final com.mapbox.search.common.IsoCountryCode ANGOLA;
+    field public static final com.mapbox.search.common.IsoCountryCode ANGUILLA;
+    field public static final com.mapbox.search.common.IsoCountryCode ANTARCTICA;
+    field public static final com.mapbox.search.common.IsoCountryCode ANTIGUA_AND_BARBUDA;
+    field public static final com.mapbox.search.common.IsoCountryCode ARGENTINA;
+    field public static final com.mapbox.search.common.IsoCountryCode ARMENIA;
+    field public static final com.mapbox.search.common.IsoCountryCode ARUBA;
+    field public static final com.mapbox.search.common.IsoCountryCode AUSTRALIA;
+    field public static final com.mapbox.search.common.IsoCountryCode AUSTRIA;
+    field public static final com.mapbox.search.common.IsoCountryCode AZERBAIJAN;
+    field public static final com.mapbox.search.common.IsoCountryCode BAHAMAS;
+    field public static final com.mapbox.search.common.IsoCountryCode BAHRAIN;
+    field public static final com.mapbox.search.common.IsoCountryCode BANGLADESH;
+    field public static final com.mapbox.search.common.IsoCountryCode BARBADOS;
+    field public static final com.mapbox.search.common.IsoCountryCode BELARUS;
+    field public static final com.mapbox.search.common.IsoCountryCode BELGIUM;
+    field public static final com.mapbox.search.common.IsoCountryCode BELIZE;
+    field public static final com.mapbox.search.common.IsoCountryCode BENIN;
+    field public static final com.mapbox.search.common.IsoCountryCode BERMUDA;
+    field public static final com.mapbox.search.common.IsoCountryCode BHUTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode BOLIVIA;
+    field public static final com.mapbox.search.common.IsoCountryCode BOSNIA_AND_HERZEGOVINA;
+    field public static final com.mapbox.search.common.IsoCountryCode BOTSWANA;
+    field public static final com.mapbox.search.common.IsoCountryCode BOUVET_ISLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode BRAZIL;
+    field public static final com.mapbox.search.common.IsoCountryCode BRITISH_INDIAN_OCEAN_TERRITORY;
+    field public static final com.mapbox.search.common.IsoCountryCode BRITISH_VIRGIN_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode BRUNEI;
+    field public static final com.mapbox.search.common.IsoCountryCode BULGARIA;
+    field public static final com.mapbox.search.common.IsoCountryCode BURKINA_FASO;
+    field public static final com.mapbox.search.common.IsoCountryCode BURUNDI;
+    field public static final com.mapbox.search.common.IsoCountryCode CAMBODIA;
+    field public static final com.mapbox.search.common.IsoCountryCode CAMEROON;
+    field public static final com.mapbox.search.common.IsoCountryCode CANADA;
+    field public static final com.mapbox.search.common.IsoCountryCode CAPE_VERDE;
+    field public static final com.mapbox.search.common.IsoCountryCode CARIBBEAN_NETHERLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode CAYMAN_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode CENTRAL_AFRICAN_REPUBLIC;
+    field public static final com.mapbox.search.common.IsoCountryCode CHAD;
+    field public static final com.mapbox.search.common.IsoCountryCode CHILE;
+    field public static final com.mapbox.search.common.IsoCountryCode CHINA;
+    field public static final com.mapbox.search.common.IsoCountryCode CHRISTMAS_ISLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode COCOS_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode COLOMBIA;
+    field public static final com.mapbox.search.common.IsoCountryCode COMOROS;
+    field public static final com.mapbox.search.common.IsoCountryCode CONGO_BRAZZAVILLE;
+    field public static final com.mapbox.search.common.IsoCountryCode CONGO_KINSHASA;
+    field public static final com.mapbox.search.common.IsoCountryCode COOK_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode COSTA_RICA;
+    field public static final com.mapbox.search.common.IsoCountryCode COTE_DIVOIRE;
+    field public static final com.mapbox.search.common.IsoCountryCode CROATIA;
+    field public static final com.mapbox.search.common.IsoCountryCode CUBA;
+    field public static final com.mapbox.search.common.IsoCountryCode CURACAO;
+    field public static final com.mapbox.search.common.IsoCountryCode CYPRUS;
+    field public static final com.mapbox.search.common.IsoCountryCode CZECHIA;
+    field public static final com.mapbox.search.common.IsoCountryCode.Companion Companion;
+    field public static final com.mapbox.search.common.IsoCountryCode DENMARK;
+    field public static final com.mapbox.search.common.IsoCountryCode DJIBOUTI;
+    field public static final com.mapbox.search.common.IsoCountryCode DOMINICA;
+    field public static final com.mapbox.search.common.IsoCountryCode DOMINICAN_REPUBLIC;
+    field public static final com.mapbox.search.common.IsoCountryCode ECUADOR;
+    field public static final com.mapbox.search.common.IsoCountryCode EGYPT;
+    field public static final com.mapbox.search.common.IsoCountryCode EL_SALVADOR;
+    field public static final com.mapbox.search.common.IsoCountryCode EQUATORIAL_GUINEA;
+    field public static final com.mapbox.search.common.IsoCountryCode ERITREA;
+    field public static final com.mapbox.search.common.IsoCountryCode ESTONIA;
+    field public static final com.mapbox.search.common.IsoCountryCode ETHIOPIA;
+    field public static final com.mapbox.search.common.IsoCountryCode FALKLAND_ISLANDS_;
+    field public static final com.mapbox.search.common.IsoCountryCode FAROE_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode FIJI;
+    field public static final com.mapbox.search.common.IsoCountryCode FINLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode FRANCE;
+    field public static final com.mapbox.search.common.IsoCountryCode FRENCH_GUIANA;
+    field public static final com.mapbox.search.common.IsoCountryCode FRENCH_POLYNESIA;
+    field public static final com.mapbox.search.common.IsoCountryCode FRENCH_SOUTHERN_TERRITORIES;
+    field public static final com.mapbox.search.common.IsoCountryCode GABON;
+    field public static final com.mapbox.search.common.IsoCountryCode GAMBIA;
+    field public static final com.mapbox.search.common.IsoCountryCode GEORGIA;
+    field public static final com.mapbox.search.common.IsoCountryCode GERMANY;
+    field public static final com.mapbox.search.common.IsoCountryCode GHANA;
+    field public static final com.mapbox.search.common.IsoCountryCode GIBRALTAR;
+    field public static final com.mapbox.search.common.IsoCountryCode GREECE;
+    field public static final com.mapbox.search.common.IsoCountryCode GREENLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode GRENADA;
+    field public static final com.mapbox.search.common.IsoCountryCode GUADELOUPE;
+    field public static final com.mapbox.search.common.IsoCountryCode GUAM;
+    field public static final com.mapbox.search.common.IsoCountryCode GUATEMALA;
+    field public static final com.mapbox.search.common.IsoCountryCode GUERNSEY;
+    field public static final com.mapbox.search.common.IsoCountryCode GUINEA;
+    field public static final com.mapbox.search.common.IsoCountryCode GUINEA_BISSAU;
+    field public static final com.mapbox.search.common.IsoCountryCode GUYANA;
+    field public static final com.mapbox.search.common.IsoCountryCode HAITI;
+    field public static final com.mapbox.search.common.IsoCountryCode HEARD_AND_MCDONALD_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode HONDURAS;
+    field public static final com.mapbox.search.common.IsoCountryCode HONG_KONG;
+    field public static final com.mapbox.search.common.IsoCountryCode HUNGARY;
+    field public static final com.mapbox.search.common.IsoCountryCode ICELAND;
+    field public static final com.mapbox.search.common.IsoCountryCode INDIA;
+    field public static final com.mapbox.search.common.IsoCountryCode INDONESIA;
+    field public static final com.mapbox.search.common.IsoCountryCode IRAN;
+    field public static final com.mapbox.search.common.IsoCountryCode IRAQ;
+    field public static final com.mapbox.search.common.IsoCountryCode IRELAND;
+    field public static final com.mapbox.search.common.IsoCountryCode ISLE_OF_MAN;
+    field public static final com.mapbox.search.common.IsoCountryCode ISRAEL;
+    field public static final com.mapbox.search.common.IsoCountryCode ITALY;
+    field public static final com.mapbox.search.common.IsoCountryCode JAMAICA;
+    field public static final com.mapbox.search.common.IsoCountryCode JAPAN;
+    field public static final com.mapbox.search.common.IsoCountryCode JERSEY;
+    field public static final com.mapbox.search.common.IsoCountryCode JORDAN;
+    field public static final com.mapbox.search.common.IsoCountryCode KAZAKHSTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode KENYA;
+    field public static final com.mapbox.search.common.IsoCountryCode KIRIBATI;
+    field public static final com.mapbox.search.common.IsoCountryCode KUWAIT;
+    field public static final com.mapbox.search.common.IsoCountryCode KYRGYZSTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode LAOS;
+    field public static final com.mapbox.search.common.IsoCountryCode LATVIA;
+    field public static final com.mapbox.search.common.IsoCountryCode LEBANON;
+    field public static final com.mapbox.search.common.IsoCountryCode LESOTHO;
+    field public static final com.mapbox.search.common.IsoCountryCode LIBERIA;
+    field public static final com.mapbox.search.common.IsoCountryCode LIBYA;
+    field public static final com.mapbox.search.common.IsoCountryCode LIECHTENSTEIN;
+    field public static final com.mapbox.search.common.IsoCountryCode LITHUANIA;
+    field public static final com.mapbox.search.common.IsoCountryCode LUXEMBOURG;
+    field public static final com.mapbox.search.common.IsoCountryCode MACAU;
+    field public static final com.mapbox.search.common.IsoCountryCode MACEDONIA;
+    field public static final com.mapbox.search.common.IsoCountryCode MADAGASCAR;
+    field public static final com.mapbox.search.common.IsoCountryCode MALAWI;
+    field public static final com.mapbox.search.common.IsoCountryCode MALAYSIA;
+    field public static final com.mapbox.search.common.IsoCountryCode MALDIVES;
+    field public static final com.mapbox.search.common.IsoCountryCode MALI;
+    field public static final com.mapbox.search.common.IsoCountryCode MALTA;
+    field public static final com.mapbox.search.common.IsoCountryCode MARSHALL_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode MARTINIQUE;
+    field public static final com.mapbox.search.common.IsoCountryCode MAURITANIA;
+    field public static final com.mapbox.search.common.IsoCountryCode MAURITIUS;
+    field public static final com.mapbox.search.common.IsoCountryCode MAYOTTE;
+    field public static final com.mapbox.search.common.IsoCountryCode MEXICO;
+    field public static final com.mapbox.search.common.IsoCountryCode MICRONESIA;
+    field public static final com.mapbox.search.common.IsoCountryCode MOLDOVA;
+    field public static final com.mapbox.search.common.IsoCountryCode MONACO;
+    field public static final com.mapbox.search.common.IsoCountryCode MONGOLIA;
+    field public static final com.mapbox.search.common.IsoCountryCode MONTENEGRO;
+    field public static final com.mapbox.search.common.IsoCountryCode MONTSERRAT;
+    field public static final com.mapbox.search.common.IsoCountryCode MOROCCO;
+    field public static final com.mapbox.search.common.IsoCountryCode MOZAMBIQUE;
+    field public static final com.mapbox.search.common.IsoCountryCode MYANMAR;
+    field public static final com.mapbox.search.common.IsoCountryCode NAMIBIA;
+    field public static final com.mapbox.search.common.IsoCountryCode NAURU;
+    field public static final com.mapbox.search.common.IsoCountryCode NEPAL;
+    field public static final com.mapbox.search.common.IsoCountryCode NETHERLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode NEW_CALEDONIA;
+    field public static final com.mapbox.search.common.IsoCountryCode NEW_ZEALAND;
+    field public static final com.mapbox.search.common.IsoCountryCode NICARAGUA;
+    field public static final com.mapbox.search.common.IsoCountryCode NIGER;
+    field public static final com.mapbox.search.common.IsoCountryCode NIGERIA;
+    field public static final com.mapbox.search.common.IsoCountryCode NIUE;
+    field public static final com.mapbox.search.common.IsoCountryCode NORFOLK_ISLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode NORTHERN_MARIANA_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode NORTH_KOREA;
+    field public static final com.mapbox.search.common.IsoCountryCode NORWAY;
+    field public static final com.mapbox.search.common.IsoCountryCode OMAN;
+    field public static final com.mapbox.search.common.IsoCountryCode PAKISTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode PALAU;
+    field public static final com.mapbox.search.common.IsoCountryCode PALESTINE;
+    field public static final com.mapbox.search.common.IsoCountryCode PANAMA;
+    field public static final com.mapbox.search.common.IsoCountryCode PAPUA_NEW_GUINEA;
+    field public static final com.mapbox.search.common.IsoCountryCode PARAGUAY;
+    field public static final com.mapbox.search.common.IsoCountryCode PERU;
+    field public static final com.mapbox.search.common.IsoCountryCode PHILIPPINES;
+    field public static final com.mapbox.search.common.IsoCountryCode PITCAIRN_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode POLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode PORTUGAL;
+    field public static final com.mapbox.search.common.IsoCountryCode PUERTO_RICO;
+    field public static final com.mapbox.search.common.IsoCountryCode QATAR;
+    field public static final com.mapbox.search.common.IsoCountryCode REUNION;
+    field public static final com.mapbox.search.common.IsoCountryCode ROMANIA;
+    field public static final com.mapbox.search.common.IsoCountryCode RUSSIA;
+    field public static final com.mapbox.search.common.IsoCountryCode RWANDA;
+    field public static final com.mapbox.search.common.IsoCountryCode SAMOA;
+    field public static final com.mapbox.search.common.IsoCountryCode SAN_MARINO;
+    field public static final com.mapbox.search.common.IsoCountryCode SAO_TOME_AND_PRINCIPE;
+    field public static final com.mapbox.search.common.IsoCountryCode SAUDI_ARABIA;
+    field public static final com.mapbox.search.common.IsoCountryCode SENEGAL;
+    field public static final com.mapbox.search.common.IsoCountryCode SERBIA;
+    field public static final com.mapbox.search.common.IsoCountryCode SEYCHELLES;
+    field public static final com.mapbox.search.common.IsoCountryCode SIERRA_LEONE;
+    field public static final com.mapbox.search.common.IsoCountryCode SINGAPORE;
+    field public static final com.mapbox.search.common.IsoCountryCode SINT_MAARTEN;
+    field public static final com.mapbox.search.common.IsoCountryCode SLOVAKIA;
+    field public static final com.mapbox.search.common.IsoCountryCode SLOVENIA;
+    field public static final com.mapbox.search.common.IsoCountryCode SOLOMON_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode SOMALIA;
+    field public static final com.mapbox.search.common.IsoCountryCode SOUTH_AFRICA;
+    field public static final com.mapbox.search.common.IsoCountryCode SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode SOUTH_KOREA;
+    field public static final com.mapbox.search.common.IsoCountryCode SOUTH_SUDAN;
+    field public static final com.mapbox.search.common.IsoCountryCode SPAIN;
+    field public static final com.mapbox.search.common.IsoCountryCode SRI_LANKA;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_BARTHELEMY;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_HELENA;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_KITTS_AND_NEVIS;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_LUCIA;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_MARTIN;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_PIERRE_AND_MIQUELON;
+    field public static final com.mapbox.search.common.IsoCountryCode ST_VINCENT_AND_GRENADINES;
+    field public static final com.mapbox.search.common.IsoCountryCode SUDAN;
+    field public static final com.mapbox.search.common.IsoCountryCode SURINAME;
+    field public static final com.mapbox.search.common.IsoCountryCode SVALBARD_AND_JAN_MAYEN;
+    field public static final com.mapbox.search.common.IsoCountryCode SWAZILAND;
+    field public static final com.mapbox.search.common.IsoCountryCode SWEDEN;
+    field public static final com.mapbox.search.common.IsoCountryCode SWITZERLAND;
+    field public static final com.mapbox.search.common.IsoCountryCode SYRIA;
+    field public static final com.mapbox.search.common.IsoCountryCode TAIWAN;
+    field public static final com.mapbox.search.common.IsoCountryCode TAJIKISTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode TANZANIA;
+    field public static final com.mapbox.search.common.IsoCountryCode THAILAND;
+    field public static final com.mapbox.search.common.IsoCountryCode TIMOR_LESTE;
+    field public static final com.mapbox.search.common.IsoCountryCode TOGO;
+    field public static final com.mapbox.search.common.IsoCountryCode TOKELAU;
+    field public static final com.mapbox.search.common.IsoCountryCode TONGA;
+    field public static final com.mapbox.search.common.IsoCountryCode TRINIDAD_AND_TOBAGO;
+    field public static final com.mapbox.search.common.IsoCountryCode TUNISIA;
+    field public static final com.mapbox.search.common.IsoCountryCode TURKEY;
+    field public static final com.mapbox.search.common.IsoCountryCode TURKMENISTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode TURKS_AND_CAICOS_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode TUVALU;
+    field public static final com.mapbox.search.common.IsoCountryCode UGANDA;
+    field public static final com.mapbox.search.common.IsoCountryCode UKRAINE;
+    field public static final com.mapbox.search.common.IsoCountryCode UNITED_ARAB_EMIRATES;
+    field public static final com.mapbox.search.common.IsoCountryCode UNITED_KINGDOM;
+    field public static final com.mapbox.search.common.IsoCountryCode UNITED_STATES;
+    field public static final com.mapbox.search.common.IsoCountryCode URUGUAY;
+    field public static final com.mapbox.search.common.IsoCountryCode US_OUTLYING_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode US_VIRGIN_ISLANDS;
+    field public static final com.mapbox.search.common.IsoCountryCode UZBEKISTAN;
+    field public static final com.mapbox.search.common.IsoCountryCode VANUATU;
+    field public static final com.mapbox.search.common.IsoCountryCode VATICAN_CITY;
+    field public static final com.mapbox.search.common.IsoCountryCode VENEZUELA;
+    field public static final com.mapbox.search.common.IsoCountryCode VIETNAM;
+    field public static final com.mapbox.search.common.IsoCountryCode WALLIS_AND_FUTUNA;
+    field public static final com.mapbox.search.common.IsoCountryCode WESTERN_SAHARA;
+    field public static final com.mapbox.search.common.IsoCountryCode YEMEN;
+    field public static final com.mapbox.search.common.IsoCountryCode ZAMBIA;
+    field public static final com.mapbox.search.common.IsoCountryCode ZIMBABWE;
+  }
+
+  public static final class IsoCountryCode.Companion {
+  }
+
+  @kotlinx.parcelize.Parcelize public final class IsoLanguageCode implements android.os.Parcelable {
+    ctor public IsoLanguageCode(String code);
+    method public String getCode();
+    property public final String code;
+    field public static final com.mapbox.search.common.IsoLanguageCode ALBANIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode ARABIC;
+    field public static final com.mapbox.search.common.IsoLanguageCode BOSNIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode BULGARIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode CATALAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode CHINESE;
+    field public static final com.mapbox.search.common.IsoLanguageCode CHINESE_SIMPLIFIED;
+    field public static final com.mapbox.search.common.IsoLanguageCode CHINESE_TRADITIONAL;
+    field public static final com.mapbox.search.common.IsoLanguageCode CZECH;
+    field public static final com.mapbox.search.common.IsoLanguageCode.Companion Companion;
+    field public static final com.mapbox.search.common.IsoLanguageCode DANISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode DUTCH;
+    field public static final com.mapbox.search.common.IsoLanguageCode ENGLISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode FINNISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode FRENCH;
+    field public static final com.mapbox.search.common.IsoLanguageCode GEORGIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode GERMAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode HEBREW;
+    field public static final com.mapbox.search.common.IsoLanguageCode HUNGARIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode ICELANDIC;
+    field public static final com.mapbox.search.common.IsoLanguageCode INDONESIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode ITALIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode JAPANESE;
+    field public static final com.mapbox.search.common.IsoLanguageCode KAZAKH;
+    field public static final com.mapbox.search.common.IsoLanguageCode KOREAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode LATVIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode MONGOLIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode NORWEGIAN_BOKMAL;
+    field public static final com.mapbox.search.common.IsoLanguageCode POLISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode PORTUGUESE;
+    field public static final com.mapbox.search.common.IsoLanguageCode ROMANIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode SERBIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode SLOVAK;
+    field public static final com.mapbox.search.common.IsoLanguageCode SLOVENIAN;
+    field public static final com.mapbox.search.common.IsoLanguageCode SPANISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode SWEDISH;
+    field public static final com.mapbox.search.common.IsoLanguageCode TAGALOG;
+    field public static final com.mapbox.search.common.IsoLanguageCode THAI;
+    field public static final com.mapbox.search.common.IsoLanguageCode TURKISH;
+  }
+
+  public static final class IsoLanguageCode.Companion {
+  }
+
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
     ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
     method public String getName();
@@ -67,6 +374,78 @@ package com.mapbox.search.common.concurrent {
     property public boolean isMainThread;
     property public java.util.concurrent.Executor mainExecutor;
     field public static final com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker INSTANCE;
+  }
+
+}
+
+package com.mapbox.search.common.metadata {
+
+  public abstract class OpenHours implements android.os.Parcelable {
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class OpenHours.AlwaysOpen extends com.mapbox.search.common.metadata.OpenHours {
+    field public static final com.mapbox.search.common.metadata.OpenHours.AlwaysOpen INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class OpenHours.PermanentlyClosed extends com.mapbox.search.common.metadata.OpenHours {
+    field public static final com.mapbox.search.common.metadata.OpenHours.PermanentlyClosed INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class OpenHours.Scheduled extends com.mapbox.search.common.metadata.OpenHours {
+    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.common.metadata.OpenPeriod> periods);
+    method public java.util.List<com.mapbox.search.common.metadata.OpenPeriod> getPeriods();
+    property public final java.util.List<com.mapbox.search.common.metadata.OpenPeriod> periods;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class OpenHours.TemporaryClosed extends com.mapbox.search.common.metadata.OpenHours {
+    field public static final com.mapbox.search.common.metadata.OpenHours.TemporaryClosed INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class OpenPeriod implements android.os.Parcelable {
+    ctor public OpenPeriod(com.mapbox.search.common.metadata.WeekTimestamp open, com.mapbox.search.common.metadata.WeekTimestamp closed);
+    method public com.mapbox.search.common.metadata.WeekTimestamp component1();
+    method public com.mapbox.search.common.metadata.WeekTimestamp component2();
+    method @kotlinx.parcelize.Parcelize public com.mapbox.search.common.metadata.OpenPeriod copy(com.mapbox.search.common.metadata.WeekTimestamp open, com.mapbox.search.common.metadata.WeekTimestamp closed);
+    method public com.mapbox.search.common.metadata.WeekTimestamp getClosed();
+    method public com.mapbox.search.common.metadata.WeekTimestamp getOpen();
+    property public final com.mapbox.search.common.metadata.WeekTimestamp closed;
+    property public final com.mapbox.search.common.metadata.WeekTimestamp open;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class ParkingData implements android.os.Parcelable {
+    ctor public ParkingData(int totalCapacity, int reservedForDisabilities);
+    method public int getReservedForDisabilities();
+    method public int getTotalCapacity();
+    property public final int reservedForDisabilities;
+    property public final int totalCapacity;
+  }
+
+  public enum WeekDay {
+    method public final byte getInternalRawCode();
+    method public final int getIsoCode();
+    property public final byte internalRawCode;
+    property public final int isoCode;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay FRIDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay MONDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay SATURDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay SUNDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay THURSDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay TUESDAY;
+    enum_constant public static final com.mapbox.search.common.metadata.WeekDay WEDNESDAY;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class WeekTimestamp implements android.os.Parcelable {
+    ctor public WeekTimestamp(com.mapbox.search.common.metadata.WeekDay day, int hour, int minute);
+    method public com.mapbox.search.common.metadata.WeekDay component1();
+    method public int component2();
+    method public int component3();
+    method @kotlinx.parcelize.Parcelize public com.mapbox.search.common.metadata.WeekTimestamp copy(com.mapbox.search.common.metadata.WeekDay day, int hour, int minute);
+    method public com.mapbox.search.common.metadata.WeekDay getDay();
+    method public int getHour();
+    method public int getMinute();
+    property public final com.mapbox.search.common.metadata.WeekDay day;
+    property public final int hour;
+    property public final int minute;
   }
 
 }

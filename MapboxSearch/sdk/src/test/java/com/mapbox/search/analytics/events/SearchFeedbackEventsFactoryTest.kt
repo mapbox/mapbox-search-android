@@ -4,9 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
-import com.mapbox.search.Country
 import com.mapbox.search.EtaType
-import com.mapbox.search.Language
 import com.mapbox.search.QueryType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchNavigationOptions
@@ -32,6 +30,8 @@ import com.mapbox.search.base.utils.FormattedTimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.mapToBase
@@ -620,9 +620,9 @@ internal class SearchFeedbackEventsFactoryTest {
                 Point.fromLngLat(-170.0, -80.0),
                 Point.fromLngLat(160.0, 70.0)
             ),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
+            countries = listOf(IsoCountryCode.FRANCE, IsoCountryCode.GERMANY),
             fuzzyMatch = true,
-            languages = listOf(Language.FRENCH, Language.GERMAN, Language.ENGLISH),
+            languages = listOf(IsoLanguageCode.FRENCH, IsoLanguageCode.GERMAN, IsoLanguageCode.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             origin = TEST_ORIGIN_LOCATION,

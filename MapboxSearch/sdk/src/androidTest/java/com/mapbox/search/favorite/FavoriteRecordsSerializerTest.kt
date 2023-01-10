@@ -6,11 +6,11 @@ import com.mapbox.search.ImageInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.OpenPeriod
-import com.mapbox.search.metadata.ParkingData
-import com.mapbox.search.metadata.WeekDay
-import com.mapbox.search.metadata.WeekTimestamp
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.OpenPeriod
+import com.mapbox.search.common.metadata.ParkingData
+import com.mapbox.search.common.metadata.WeekDay
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoriteRecordsSerializer
 import com.mapbox.search.result.SearchAddress

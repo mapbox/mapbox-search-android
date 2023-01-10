@@ -1,8 +1,10 @@
 package com.mapbox.search.autofill
 
 import android.os.Parcelable
+import com.mapbox.search.base.defaultLocaleLanguage
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import kotlinx.parcelize.Parcelize
-import java.util.Locale
 
 /**
  * Options, used for address autofill requests.
@@ -14,7 +16,7 @@ public class AddressAutofillOptions @JvmOverloads public constructor(
     /**
      * Limit results to one or more countries.
      */
-    public val countries: List<Country>? = null,
+    public val countries: List<IsoCountryCode>? = null,
 
     /**
      * Specify the user’s language.
@@ -26,7 +28,7 @@ public class AddressAutofillOptions @JvmOverloads public constructor(
      *
      * If language is not set explicitly, then language from default system locale will be used.
      */
-    public val language: Language? = defaultSearchOptionsLanguage(),
+    public val language: IsoLanguageCode? = defaultLocaleLanguage(),
 ) : Parcelable {
 
     /**
@@ -58,83 +60,5 @@ public class AddressAutofillOptions @JvmOverloads public constructor(
      */
     override fun toString(): String {
         return "AddressAutofillOptions(countries=$countries, language=$language)"
-    }
-
-    /**
-     * Country code to use in options.
-     * @property code country code in ISO 3166 alpha 2.
-     */
-    @Parcelize
-    public class Country(public val code: String) : Parcelable {
-
-        /**
-         * @suppress
-         */
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as Country
-
-            if (code != other.code) return false
-
-            return true
-        }
-
-        /**
-         * @suppress
-         */
-        override fun hashCode(): Int {
-            return code.hashCode()
-        }
-
-        /**
-         * @suppress
-         */
-        override fun toString(): String {
-            return "Country(code='$code')"
-        }
-    }
-
-    /**
-     * Preferred language of the autofill response.
-     * @property code language code in ISO 639-1.
-     */
-    @Parcelize
-    public class Language(public val code: String) : Parcelable {
-
-        /**
-         * @suppress
-         */
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as Language
-
-            if (code != other.code) return false
-
-            return true
-        }
-
-        /**
-         * @suppress
-         */
-        override fun hashCode(): Int {
-            return code.hashCode()
-        }
-
-        /**
-         * @suppress
-         */
-        override fun toString(): String {
-            return "Language(code='$code')"
-        }
-    }
-
-    private companion object {
-        fun defaultSearchOptionsLanguage(): Language {
-            return Language(Locale.getDefault().language)
-        }
     }
 }

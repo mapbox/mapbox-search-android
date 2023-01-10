@@ -3,6 +3,8 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before
@@ -36,7 +38,7 @@ internal class SearchOptionsTest {
                     boundingBox = null,
                     countries = null,
                     fuzzyMatch = null,
-                    languages = listOf(Language(TEST_LOCALE.language)),
+                    languages = listOf(IsoLanguageCode(TEST_LOCALE.language)),
                     limit = null,
                     types = null,
                     requestDebounce = null,
@@ -61,10 +63,10 @@ internal class SearchOptionsTest {
                 val actualOptions = SearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(Country.UNITED_KINGDOM, Country.BELARUS)
+                    .countries(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS)
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(Language.ENGLISH, Language("by"))
+                    .languages(IsoLanguageCode.ENGLISH, IsoLanguageCode("by"))
                     .limit(100)
                     .types(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT)
                     .origin(TEST_ORIGIN_POINT)
@@ -78,9 +80,9 @@ internal class SearchOptionsTest {
                 val expectedOptions = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     types = listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT),
                     requestDebounce = 300,
@@ -105,10 +107,10 @@ internal class SearchOptionsTest {
                 val actualOptions = SearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
+                    .countries(listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")))
                     .limit(100)
                     .types(listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT))
                     .origin(TEST_ORIGIN_POINT)
@@ -122,9 +124,9 @@ internal class SearchOptionsTest {
                 val expectedOptions = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     types = listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT),
                     requestDebounce = 300,
@@ -164,10 +166,10 @@ internal class SearchOptionsTest {
                 val originalOptions = SearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .countries(listOf(Country.UNITED_KINGDOM, Country.BELARUS))
+                    .countries(listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS))
                     .requestDebounce(300)
                     .fuzzyMatch(true)
-                    .languages(listOf(Language.ENGLISH, Language("by")))
+                    .languages(listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")))
                     .limit(100)
                     .types(listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT))
                     .origin(TEST_ORIGIN_POINT)
@@ -186,9 +188,9 @@ internal class SearchOptionsTest {
                     navProfile = TEST_NAV_OPTIONS.navigationProfile.rawName,
                     etaType = TEST_NAV_OPTIONS.etaType?.rawName,
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS).map { it.code },
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS).map { it.code },
                     fuzzyMatch = true,
-                    language = listOf(Language.ENGLISH, Language("by")).map { it.code },
+                    language = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")).map { it.code },
                     limit = 100,
                     types = listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT).map { it.mapToCore() },
                     ignoreUR = true,
@@ -212,9 +214,9 @@ internal class SearchOptionsTest {
                 val options = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    countries = listOf(Country.UNITED_KINGDOM, Country.BELARUS),
+                    countries = listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS),
                     fuzzyMatch = true,
-                    languages = listOf(Language.ENGLISH, Language("by")),
+                    languages = listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")),
                     limit = 100,
                     types = listOf(QueryType.ADDRESS, QueryType.COUNTRY, QueryType.DISTRICT),
                     requestDebounce = 300,

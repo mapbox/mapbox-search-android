@@ -4,9 +4,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.BaseTest
-import com.mapbox.search.Country
 import com.mapbox.search.EtaType
-import com.mapbox.search.Language
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.QueryType
 import com.mapbox.search.RouteOptions
@@ -20,6 +18,8 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
@@ -79,8 +79,8 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
-            languages = listOf(Language.ENGLISH),
+            countries = listOf(IsoCountryCode.FRANCE, IsoCountryCode.GERMANY),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             routeOptions = RouteOptions(
@@ -124,8 +124,8 @@ internal class AnalyticsServiceImplTest : BaseTest() {
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = TEST_NAV_OPTIONS,
             boundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0),
-            countries = listOf(Country.FRANCE, Country.GERMANY),
-            languages = listOf(Language.ENGLISH),
+            countries = listOf(IsoCountryCode.FRANCE, IsoCountryCode.GERMANY),
+            languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 6,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             routeOptions = RouteOptions(

@@ -1,7 +1,6 @@
 package com.mapbox.search.record
 
 import com.mapbox.search.CompletionCallback
-import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.record.SearchHistoryService
@@ -20,7 +19,7 @@ import kotlin.Comparator
 /**
  * [LocalDataProvider] typed to store [HistoryRecord] items.
  *
- * Instance of [HistoryDataProvider] can be retrieved from [MapboxSearchSdk.serviceProvider].
+ * Instance of [HistoryDataProvider] can be retrieved from [com.mapbox.search.ServiceProvider.historyDataProvider].
  *
  * @see IndexableDataProvider
  * @see LocalDataProvider

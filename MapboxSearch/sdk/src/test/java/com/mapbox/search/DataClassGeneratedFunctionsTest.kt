@@ -3,16 +3,18 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.metadata.OpenPeriod
+import com.mapbox.search.common.metadata.ParkingData
+import com.mapbox.search.common.metadata.WeekDay
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.tests.isEnum
-import com.mapbox.search.metadata.OpenHours
-import com.mapbox.search.metadata.OpenPeriod
-import com.mapbox.search.metadata.ParkingData
-import com.mapbox.search.metadata.WeekDay
-import com.mapbox.search.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchAddress
@@ -45,10 +47,10 @@ internal class DataClassGeneratedFunctionsTest {
             ReverseGeoOptions::class,
             ResponseInfo::class,
             RequestOptions::class,
-            Language::class,
+            IsoLanguageCode::class,
             ImageInfo::class,
             EtaType::class,
-            Country::class,
+            IsoCountryCode::class,
             CategorySearchOptions::class,
             RoutablePoint::class,
             SearchAddress::class,

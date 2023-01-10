@@ -10,25 +10,25 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class CategorySearchOptions implements android.os.Parcelable {
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage());
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null);
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
-    method public java.util.List<com.mapbox.search.Country>? getCountries();
+    method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public Boolean? getFuzzyMatch();
     method public boolean getIgnoreIndexableRecords();
     method public Double? getIndexableRecordsDistanceThresholdMeters();
-    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
     method public com.mapbox.search.SearchNavigationProfile? getNavigationProfile();
     method public com.mapbox.geojson.Point? getOrigin();
@@ -38,11 +38,11 @@ package com.mapbox.search {
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.CategorySearchOptions.Builder toBuilder();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
-    property public final java.util.List<com.mapbox.search.Country>? countries;
+    property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final Boolean? fuzzyMatch;
     property public final boolean ignoreIndexableRecords;
     property public final Double? indexableRecordsDistanceThresholdMeters;
-    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
     property public final com.mapbox.search.SearchNavigationProfile? navigationProfile;
     property public final com.mapbox.geojson.Point? origin;
@@ -56,13 +56,13 @@ package com.mapbox.search {
     ctor public CategorySearchOptions.Builder();
     method public com.mapbox.search.CategorySearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.CategorySearchOptions build();
-    method public com.mapbox.search.CategorySearchOptions.Builder countries(com.mapbox.search.Country... countries);
-    method public com.mapbox.search.CategorySearchOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
+    method public com.mapbox.search.CategorySearchOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
+    method public com.mapbox.search.CategorySearchOptions.Builder countries(java.util.List<com.mapbox.search.common.IsoCountryCode> countries);
     method public com.mapbox.search.CategorySearchOptions.Builder fuzzyMatch(boolean fuzzyMatch);
     method public com.mapbox.search.CategorySearchOptions.Builder ignoreIndexableRecords(boolean ignoreIndexableRecords);
     method public com.mapbox.search.CategorySearchOptions.Builder indexableRecordsDistanceThresholdMeters(Double? threshold);
-    method public com.mapbox.search.CategorySearchOptions.Builder languages(com.mapbox.search.Language... languages);
-    method public com.mapbox.search.CategorySearchOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.CategorySearchOptions.Builder languages(com.mapbox.search.common.IsoLanguageCode... languages);
+    method public com.mapbox.search.CategorySearchOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.CategorySearchOptions.Builder limit(int limit);
     method public com.mapbox.search.CategorySearchOptions.Builder navigationProfile(com.mapbox.search.SearchNavigationProfile navigationProfile);
     method public com.mapbox.search.CategorySearchOptions.Builder origin(com.mapbox.geojson.Point origin);
@@ -78,265 +78,6 @@ package com.mapbox.search {
   public interface CompletionCallback<T> {
     method public void onComplete(T? result);
     method public void onError(Exception e);
-  }
-
-  @kotlinx.parcelize.Parcelize public final class Country implements android.os.Parcelable {
-    ctor public Country(String code);
-    method public String getCode();
-    property public final String code;
-    field public static final com.mapbox.search.Country AFGHANISTAN;
-    field public static final com.mapbox.search.Country ALAND_ISLANDS;
-    field public static final com.mapbox.search.Country ALBANIA;
-    field public static final com.mapbox.search.Country ALGERIA;
-    field public static final com.mapbox.search.Country AMERICAN_SAMOA;
-    field public static final com.mapbox.search.Country ANDORRA;
-    field public static final com.mapbox.search.Country ANGOLA;
-    field public static final com.mapbox.search.Country ANGUILLA;
-    field public static final com.mapbox.search.Country ANTARCTICA;
-    field public static final com.mapbox.search.Country ANTIGUA_AND_BARBUDA;
-    field public static final com.mapbox.search.Country ARGENTINA;
-    field public static final com.mapbox.search.Country ARMENIA;
-    field public static final com.mapbox.search.Country ARUBA;
-    field public static final com.mapbox.search.Country AUSTRALIA;
-    field public static final com.mapbox.search.Country AUSTRIA;
-    field public static final com.mapbox.search.Country AZERBAIJAN;
-    field public static final com.mapbox.search.Country BAHAMAS;
-    field public static final com.mapbox.search.Country BAHRAIN;
-    field public static final com.mapbox.search.Country BANGLADESH;
-    field public static final com.mapbox.search.Country BARBADOS;
-    field public static final com.mapbox.search.Country BELARUS;
-    field public static final com.mapbox.search.Country BELGIUM;
-    field public static final com.mapbox.search.Country BELIZE;
-    field public static final com.mapbox.search.Country BENIN;
-    field public static final com.mapbox.search.Country BERMUDA;
-    field public static final com.mapbox.search.Country BHUTAN;
-    field public static final com.mapbox.search.Country BOLIVIA;
-    field public static final com.mapbox.search.Country BOSNIA_AND_HERZEGOVINA;
-    field public static final com.mapbox.search.Country BOTSWANA;
-    field public static final com.mapbox.search.Country BOUVET_ISLAND;
-    field public static final com.mapbox.search.Country BRAZIL;
-    field public static final com.mapbox.search.Country BRITISH_INDIAN_OCEAN_TERRITORY;
-    field public static final com.mapbox.search.Country BRITISH_VIRGIN_ISLANDS;
-    field public static final com.mapbox.search.Country BRUNEI;
-    field public static final com.mapbox.search.Country BULGARIA;
-    field public static final com.mapbox.search.Country BURKINA_FASO;
-    field public static final com.mapbox.search.Country BURUNDI;
-    field public static final com.mapbox.search.Country CAMBODIA;
-    field public static final com.mapbox.search.Country CAMEROON;
-    field public static final com.mapbox.search.Country CANADA;
-    field public static final com.mapbox.search.Country CAPE_VERDE;
-    field public static final com.mapbox.search.Country CARIBBEAN_NETHERLANDS;
-    field public static final com.mapbox.search.Country CAYMAN_ISLANDS;
-    field public static final com.mapbox.search.Country CENTRAL_AFRICAN_REPUBLIC;
-    field public static final com.mapbox.search.Country CHAD;
-    field public static final com.mapbox.search.Country CHILE;
-    field public static final com.mapbox.search.Country CHINA;
-    field public static final com.mapbox.search.Country CHRISTMAS_ISLAND;
-    field public static final com.mapbox.search.Country COCOS_ISLANDS;
-    field public static final com.mapbox.search.Country COLOMBIA;
-    field public static final com.mapbox.search.Country COMOROS;
-    field public static final com.mapbox.search.Country CONGO_BRAZZAVILLE;
-    field public static final com.mapbox.search.Country CONGO_KINSHASA;
-    field public static final com.mapbox.search.Country COOK_ISLANDS;
-    field public static final com.mapbox.search.Country COSTA_RICA;
-    field public static final com.mapbox.search.Country COTE_DIVOIRE;
-    field public static final com.mapbox.search.Country CROATIA;
-    field public static final com.mapbox.search.Country CUBA;
-    field public static final com.mapbox.search.Country CURACAO;
-    field public static final com.mapbox.search.Country CYPRUS;
-    field public static final com.mapbox.search.Country CZECHIA;
-    field public static final com.mapbox.search.Country.Companion Companion;
-    field public static final com.mapbox.search.Country DENMARK;
-    field public static final com.mapbox.search.Country DJIBOUTI;
-    field public static final com.mapbox.search.Country DOMINICA;
-    field public static final com.mapbox.search.Country DOMINICAN_REPUBLIC;
-    field public static final com.mapbox.search.Country ECUADOR;
-    field public static final com.mapbox.search.Country EGYPT;
-    field public static final com.mapbox.search.Country EL_SALVADOR;
-    field public static final com.mapbox.search.Country EQUATORIAL_GUINEA;
-    field public static final com.mapbox.search.Country ERITREA;
-    field public static final com.mapbox.search.Country ESTONIA;
-    field public static final com.mapbox.search.Country ETHIOPIA;
-    field public static final com.mapbox.search.Country FALKLAND_ISLANDS_;
-    field public static final com.mapbox.search.Country FAROE_ISLANDS;
-    field public static final com.mapbox.search.Country FIJI;
-    field public static final com.mapbox.search.Country FINLAND;
-    field public static final com.mapbox.search.Country FRANCE;
-    field public static final com.mapbox.search.Country FRENCH_GUIANA;
-    field public static final com.mapbox.search.Country FRENCH_POLYNESIA;
-    field public static final com.mapbox.search.Country FRENCH_SOUTHERN_TERRITORIES;
-    field public static final com.mapbox.search.Country GABON;
-    field public static final com.mapbox.search.Country GAMBIA;
-    field public static final com.mapbox.search.Country GEORGIA;
-    field public static final com.mapbox.search.Country GERMANY;
-    field public static final com.mapbox.search.Country GHANA;
-    field public static final com.mapbox.search.Country GIBRALTAR;
-    field public static final com.mapbox.search.Country GREECE;
-    field public static final com.mapbox.search.Country GREENLAND;
-    field public static final com.mapbox.search.Country GRENADA;
-    field public static final com.mapbox.search.Country GUADELOUPE;
-    field public static final com.mapbox.search.Country GUAM;
-    field public static final com.mapbox.search.Country GUATEMALA;
-    field public static final com.mapbox.search.Country GUERNSEY;
-    field public static final com.mapbox.search.Country GUINEA;
-    field public static final com.mapbox.search.Country GUINEA_BISSAU;
-    field public static final com.mapbox.search.Country GUYANA;
-    field public static final com.mapbox.search.Country HAITI;
-    field public static final com.mapbox.search.Country HEARD_AND_MCDONALD_ISLANDS;
-    field public static final com.mapbox.search.Country HONDURAS;
-    field public static final com.mapbox.search.Country HONG_KONG;
-    field public static final com.mapbox.search.Country HUNGARY;
-    field public static final com.mapbox.search.Country ICELAND;
-    field public static final com.mapbox.search.Country INDIA;
-    field public static final com.mapbox.search.Country INDONESIA;
-    field public static final com.mapbox.search.Country IRAN;
-    field public static final com.mapbox.search.Country IRAQ;
-    field public static final com.mapbox.search.Country IRELAND;
-    field public static final com.mapbox.search.Country ISLE_OF_MAN;
-    field public static final com.mapbox.search.Country ISRAEL;
-    field public static final com.mapbox.search.Country ITALY;
-    field public static final com.mapbox.search.Country JAMAICA;
-    field public static final com.mapbox.search.Country JAPAN;
-    field public static final com.mapbox.search.Country JERSEY;
-    field public static final com.mapbox.search.Country JORDAN;
-    field public static final com.mapbox.search.Country KAZAKHSTAN;
-    field public static final com.mapbox.search.Country KENYA;
-    field public static final com.mapbox.search.Country KIRIBATI;
-    field public static final com.mapbox.search.Country KUWAIT;
-    field public static final com.mapbox.search.Country KYRGYZSTAN;
-    field public static final com.mapbox.search.Country LAOS;
-    field public static final com.mapbox.search.Country LATVIA;
-    field public static final com.mapbox.search.Country LEBANON;
-    field public static final com.mapbox.search.Country LESOTHO;
-    field public static final com.mapbox.search.Country LIBERIA;
-    field public static final com.mapbox.search.Country LIBYA;
-    field public static final com.mapbox.search.Country LIECHTENSTEIN;
-    field public static final com.mapbox.search.Country LITHUANIA;
-    field public static final com.mapbox.search.Country LUXEMBOURG;
-    field public static final com.mapbox.search.Country MACAU;
-    field public static final com.mapbox.search.Country MACEDONIA;
-    field public static final com.mapbox.search.Country MADAGASCAR;
-    field public static final com.mapbox.search.Country MALAWI;
-    field public static final com.mapbox.search.Country MALAYSIA;
-    field public static final com.mapbox.search.Country MALDIVES;
-    field public static final com.mapbox.search.Country MALI;
-    field public static final com.mapbox.search.Country MALTA;
-    field public static final com.mapbox.search.Country MARSHALL_ISLANDS;
-    field public static final com.mapbox.search.Country MARTINIQUE;
-    field public static final com.mapbox.search.Country MAURITANIA;
-    field public static final com.mapbox.search.Country MAURITIUS;
-    field public static final com.mapbox.search.Country MAYOTTE;
-    field public static final com.mapbox.search.Country MEXICO;
-    field public static final com.mapbox.search.Country MICRONESIA;
-    field public static final com.mapbox.search.Country MOLDOVA;
-    field public static final com.mapbox.search.Country MONACO;
-    field public static final com.mapbox.search.Country MONGOLIA;
-    field public static final com.mapbox.search.Country MONTENEGRO;
-    field public static final com.mapbox.search.Country MONTSERRAT;
-    field public static final com.mapbox.search.Country MOROCCO;
-    field public static final com.mapbox.search.Country MOZAMBIQUE;
-    field public static final com.mapbox.search.Country MYANMAR;
-    field public static final com.mapbox.search.Country NAMIBIA;
-    field public static final com.mapbox.search.Country NAURU;
-    field public static final com.mapbox.search.Country NEPAL;
-    field public static final com.mapbox.search.Country NETHERLANDS;
-    field public static final com.mapbox.search.Country NEW_CALEDONIA;
-    field public static final com.mapbox.search.Country NEW_ZEALAND;
-    field public static final com.mapbox.search.Country NICARAGUA;
-    field public static final com.mapbox.search.Country NIGER;
-    field public static final com.mapbox.search.Country NIGERIA;
-    field public static final com.mapbox.search.Country NIUE;
-    field public static final com.mapbox.search.Country NORFOLK_ISLAND;
-    field public static final com.mapbox.search.Country NORTHERN_MARIANA_ISLANDS;
-    field public static final com.mapbox.search.Country NORTH_KOREA;
-    field public static final com.mapbox.search.Country NORWAY;
-    field public static final com.mapbox.search.Country OMAN;
-    field public static final com.mapbox.search.Country PAKISTAN;
-    field public static final com.mapbox.search.Country PALAU;
-    field public static final com.mapbox.search.Country PALESTINE;
-    field public static final com.mapbox.search.Country PANAMA;
-    field public static final com.mapbox.search.Country PAPUA_NEW_GUINEA;
-    field public static final com.mapbox.search.Country PARAGUAY;
-    field public static final com.mapbox.search.Country PERU;
-    field public static final com.mapbox.search.Country PHILIPPINES;
-    field public static final com.mapbox.search.Country PITCAIRN_ISLANDS;
-    field public static final com.mapbox.search.Country POLAND;
-    field public static final com.mapbox.search.Country PORTUGAL;
-    field public static final com.mapbox.search.Country PUERTO_RICO;
-    field public static final com.mapbox.search.Country QATAR;
-    field public static final com.mapbox.search.Country REUNION;
-    field public static final com.mapbox.search.Country ROMANIA;
-    field public static final com.mapbox.search.Country RUSSIA;
-    field public static final com.mapbox.search.Country RWANDA;
-    field public static final com.mapbox.search.Country SAMOA;
-    field public static final com.mapbox.search.Country SAN_MARINO;
-    field public static final com.mapbox.search.Country SAO_TOME_AND_PRINCIPE;
-    field public static final com.mapbox.search.Country SAUDI_ARABIA;
-    field public static final com.mapbox.search.Country SENEGAL;
-    field public static final com.mapbox.search.Country SERBIA;
-    field public static final com.mapbox.search.Country SEYCHELLES;
-    field public static final com.mapbox.search.Country SIERRA_LEONE;
-    field public static final com.mapbox.search.Country SINGAPORE;
-    field public static final com.mapbox.search.Country SINT_MAARTEN;
-    field public static final com.mapbox.search.Country SLOVAKIA;
-    field public static final com.mapbox.search.Country SLOVENIA;
-    field public static final com.mapbox.search.Country SOLOMON_ISLANDS;
-    field public static final com.mapbox.search.Country SOMALIA;
-    field public static final com.mapbox.search.Country SOUTH_AFRICA;
-    field public static final com.mapbox.search.Country SOUTH_GEORGIA_AND_SOUTH_SANDWICH_ISLANDS;
-    field public static final com.mapbox.search.Country SOUTH_KOREA;
-    field public static final com.mapbox.search.Country SOUTH_SUDAN;
-    field public static final com.mapbox.search.Country SPAIN;
-    field public static final com.mapbox.search.Country SRI_LANKA;
-    field public static final com.mapbox.search.Country ST_BARTHELEMY;
-    field public static final com.mapbox.search.Country ST_HELENA;
-    field public static final com.mapbox.search.Country ST_KITTS_AND_NEVIS;
-    field public static final com.mapbox.search.Country ST_LUCIA;
-    field public static final com.mapbox.search.Country ST_MARTIN;
-    field public static final com.mapbox.search.Country ST_PIERRE_AND_MIQUELON;
-    field public static final com.mapbox.search.Country ST_VINCENT_AND_GRENADINES;
-    field public static final com.mapbox.search.Country SUDAN;
-    field public static final com.mapbox.search.Country SURINAME;
-    field public static final com.mapbox.search.Country SVALBARD_AND_JAN_MAYEN;
-    field public static final com.mapbox.search.Country SWAZILAND;
-    field public static final com.mapbox.search.Country SWEDEN;
-    field public static final com.mapbox.search.Country SWITZERLAND;
-    field public static final com.mapbox.search.Country SYRIA;
-    field public static final com.mapbox.search.Country TAIWAN;
-    field public static final com.mapbox.search.Country TAJIKISTAN;
-    field public static final com.mapbox.search.Country TANZANIA;
-    field public static final com.mapbox.search.Country THAILAND;
-    field public static final com.mapbox.search.Country TIMOR_LESTE;
-    field public static final com.mapbox.search.Country TOGO;
-    field public static final com.mapbox.search.Country TOKELAU;
-    field public static final com.mapbox.search.Country TONGA;
-    field public static final com.mapbox.search.Country TRINIDAD_AND_TOBAGO;
-    field public static final com.mapbox.search.Country TUNISIA;
-    field public static final com.mapbox.search.Country TURKEY;
-    field public static final com.mapbox.search.Country TURKMENISTAN;
-    field public static final com.mapbox.search.Country TURKS_AND_CAICOS_ISLANDS;
-    field public static final com.mapbox.search.Country TUVALU;
-    field public static final com.mapbox.search.Country UGANDA;
-    field public static final com.mapbox.search.Country UKRAINE;
-    field public static final com.mapbox.search.Country UNITED_ARAB_EMIRATES;
-    field public static final com.mapbox.search.Country UNITED_KINGDOM;
-    field public static final com.mapbox.search.Country UNITED_STATES;
-    field public static final com.mapbox.search.Country URUGUAY;
-    field public static final com.mapbox.search.Country US_OUTLYING_ISLANDS;
-    field public static final com.mapbox.search.Country US_VIRGIN_ISLANDS;
-    field public static final com.mapbox.search.Country UZBEKISTAN;
-    field public static final com.mapbox.search.Country VANUATU;
-    field public static final com.mapbox.search.Country VATICAN_CITY;
-    field public static final com.mapbox.search.Country VENEZUELA;
-    field public static final com.mapbox.search.Country VIETNAM;
-    field public static final com.mapbox.search.Country WALLIS_AND_FUTUNA;
-    field public static final com.mapbox.search.Country WESTERN_SAHARA;
-    field public static final com.mapbox.search.Country YEMEN;
-    field public static final com.mapbox.search.Country ZAMBIA;
-    field public static final com.mapbox.search.Country ZIMBABWE;
-  }
-
-  public static final class Country.Companion {
   }
 
   public interface DistanceCalculator {
@@ -375,54 +116,6 @@ package com.mapbox.search {
   }
 
   public final class ImageInfoKt {
-  }
-
-  @kotlinx.parcelize.Parcelize public final class Language implements android.os.Parcelable {
-    ctor public Language(String code);
-    method public String getCode();
-    property public final String code;
-    field public static final com.mapbox.search.Language ALBANIAN;
-    field public static final com.mapbox.search.Language ARABIC;
-    field public static final com.mapbox.search.Language BOSNIAN;
-    field public static final com.mapbox.search.Language BULGARIAN;
-    field public static final com.mapbox.search.Language CATALAN;
-    field public static final com.mapbox.search.Language CHINESE;
-    field public static final com.mapbox.search.Language CHINESE_SIMPLIFIED;
-    field public static final com.mapbox.search.Language CHINESE_TRADITIONAL;
-    field public static final com.mapbox.search.Language CZECH;
-    field public static final com.mapbox.search.Language.Companion Companion;
-    field public static final com.mapbox.search.Language DANISH;
-    field public static final com.mapbox.search.Language DUTCH;
-    field public static final com.mapbox.search.Language ENGLISH;
-    field public static final com.mapbox.search.Language FINNISH;
-    field public static final com.mapbox.search.Language FRENCH;
-    field public static final com.mapbox.search.Language GEORGIAN;
-    field public static final com.mapbox.search.Language GERMAN;
-    field public static final com.mapbox.search.Language HEBREW;
-    field public static final com.mapbox.search.Language HUNGARIAN;
-    field public static final com.mapbox.search.Language ICELANDIC;
-    field public static final com.mapbox.search.Language INDONESIAN;
-    field public static final com.mapbox.search.Language ITALIAN;
-    field public static final com.mapbox.search.Language JAPANESE;
-    field public static final com.mapbox.search.Language KAZAKH;
-    field public static final com.mapbox.search.Language KOREAN;
-    field public static final com.mapbox.search.Language LATVIAN;
-    field public static final com.mapbox.search.Language MONGOLIAN;
-    field public static final com.mapbox.search.Language NORWEGIAN_BOKMAL;
-    field public static final com.mapbox.search.Language POLISH;
-    field public static final com.mapbox.search.Language PORTUGUESE;
-    field public static final com.mapbox.search.Language ROMANIAN;
-    field public static final com.mapbox.search.Language SERBIAN;
-    field public static final com.mapbox.search.Language SLOVAK;
-    field public static final com.mapbox.search.Language SLOVENIAN;
-    field public static final com.mapbox.search.Language SPANISH;
-    field public static final com.mapbox.search.Language SWEDISH;
-    field public static final com.mapbox.search.Language TAGALOG;
-    field public static final com.mapbox.search.Language THAI;
-    field public static final com.mapbox.search.Language TURKISH;
-  }
-
-  public static final class Language.Companion {
   }
 
   public enum QueryType {
@@ -471,22 +164,22 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class ReverseGeoOptions implements android.os.Parcelable {
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null);
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage());
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center);
     method public com.mapbox.geojson.Point getCenter();
-    method public java.util.List<com.mapbox.search.Country>? getCountries();
-    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
+    method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
     method public com.mapbox.search.ReverseMode? getReverseMode();
     method public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public com.mapbox.search.ReverseGeoOptions.Builder toBuilder();
     property public final com.mapbox.geojson.Point center;
-    property public final java.util.List<com.mapbox.search.Country>? countries;
-    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
+    property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
     property public final com.mapbox.search.ReverseMode? reverseMode;
     property public final java.util.List<com.mapbox.search.QueryType>? types;
@@ -495,10 +188,10 @@ package com.mapbox.search {
   public static final class ReverseGeoOptions.Builder {
     ctor public ReverseGeoOptions.Builder(com.mapbox.geojson.Point center);
     method public com.mapbox.search.ReverseGeoOptions build();
-    method public com.mapbox.search.ReverseGeoOptions.Builder countries(com.mapbox.search.Country... countries);
-    method public com.mapbox.search.ReverseGeoOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
-    method public com.mapbox.search.ReverseGeoOptions.Builder languages(com.mapbox.search.Language... languages);
-    method public com.mapbox.search.ReverseGeoOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.ReverseGeoOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
+    method public com.mapbox.search.ReverseGeoOptions.Builder countries(java.util.List<com.mapbox.search.common.IsoCountryCode> countries);
+    method public com.mapbox.search.ReverseGeoOptions.Builder languages(com.mapbox.search.common.IsoLanguageCode... languages);
+    method public com.mapbox.search.ReverseGeoOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.ReverseGeoOptions.Builder limit(int limit);
     method public com.mapbox.search.ReverseGeoOptions.Builder reverseMode(com.mapbox.search.ReverseMode reverseMode);
     method public com.mapbox.search.ReverseGeoOptions.Builder types(com.mapbox.search.QueryType... types);
@@ -522,7 +215,6 @@ package com.mapbox.search {
   }
 
   public abstract static class RouteOptions.Deviation implements android.os.Parcelable {
-    ctor public RouteOptions.Deviation();
     method public abstract com.mapbox.search.RouteOptions.Deviation.SarType? getSarType();
     property public abstract com.mapbox.search.RouteOptions.Deviation.SarType? sarType;
   }
@@ -654,26 +346,26 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.Language>? languages = defaultSearchOptionsLanguage());
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null, Boolean? fuzzyMatch = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.Country>? countries = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage());
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null);
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
-    method public java.util.List<com.mapbox.search.Country>? getCountries();
+    method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public Boolean? getFuzzyMatch();
     method public boolean getIgnoreIndexableRecords();
     method public Double? getIndexableRecordsDistanceThresholdMeters();
-    method public java.util.List<com.mapbox.search.Language>? getLanguages();
+    method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
     method public com.mapbox.search.SearchNavigationOptions? getNavigationOptions();
     method public com.mapbox.geojson.Point? getOrigin();
@@ -684,11 +376,11 @@ package com.mapbox.search {
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.SearchOptions.Builder toBuilder();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
-    property public final java.util.List<com.mapbox.search.Country>? countries;
+    property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final Boolean? fuzzyMatch;
     property public final boolean ignoreIndexableRecords;
     property public final Double? indexableRecordsDistanceThresholdMeters;
-    property public final java.util.List<com.mapbox.search.Language>? languages;
+    property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
     property public final com.mapbox.search.SearchNavigationOptions? navigationOptions;
     property public final com.mapbox.geojson.Point? origin;
@@ -703,13 +395,13 @@ package com.mapbox.search {
     ctor public SearchOptions.Builder();
     method public com.mapbox.search.SearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.SearchOptions build();
-    method public com.mapbox.search.SearchOptions.Builder countries(com.mapbox.search.Country... countries);
-    method public com.mapbox.search.SearchOptions.Builder countries(java.util.List<com.mapbox.search.Country> countries);
+    method public com.mapbox.search.SearchOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
+    method public com.mapbox.search.SearchOptions.Builder countries(java.util.List<com.mapbox.search.common.IsoCountryCode> countries);
     method public com.mapbox.search.SearchOptions.Builder fuzzyMatch(boolean fuzzyMatch);
     method public com.mapbox.search.SearchOptions.Builder ignoreIndexableRecords(boolean ignoreIndexableRecords);
     method public com.mapbox.search.SearchOptions.Builder indexableRecordsDistanceThresholdMeters(Double? threshold);
-    method public com.mapbox.search.SearchOptions.Builder languages(com.mapbox.search.Language... languages);
-    method public com.mapbox.search.SearchOptions.Builder languages(java.util.List<com.mapbox.search.Language> languages);
+    method public com.mapbox.search.SearchOptions.Builder languages(com.mapbox.search.common.IsoLanguageCode... languages);
+    method public com.mapbox.search.SearchOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.SearchOptions.Builder limit(int limit);
     method public com.mapbox.search.SearchOptions.Builder navigationOptions(com.mapbox.search.SearchNavigationOptions navigationOptions);
     method public com.mapbox.search.SearchOptions.Builder origin(com.mapbox.geojson.Point origin);
@@ -731,9 +423,9 @@ package com.mapbox.search {
     method public String? getCpsJson();
     method public String? getDescription();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
-    method public com.mapbox.search.metadata.OpenHours? getOpenHours();
+    method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
     method public java.util.List<com.mapbox.search.ImageInfo>? getOtherPhotos();
-    method public com.mapbox.search.metadata.ParkingData? getParking();
+    method public com.mapbox.search.common.metadata.ParkingData? getParking();
     method public String? getPhone();
     method public java.util.List<com.mapbox.search.ImageInfo>? getPrimaryPhotos();
     method public Integer? getReviewCount();
@@ -744,9 +436,9 @@ package com.mapbox.search {
     property public final String? cpsJson;
     property public final String? description;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
-    property public final com.mapbox.search.metadata.OpenHours? openHours;
+    property public final com.mapbox.search.common.metadata.OpenHours? openHours;
     property public final java.util.List<com.mapbox.search.ImageInfo>? otherPhotos;
-    property public final com.mapbox.search.metadata.ParkingData? parking;
+    property public final com.mapbox.search.common.metadata.ParkingData? parking;
     property public final String? phone;
     property public final java.util.List<com.mapbox.search.ImageInfo>? primaryPhotos;
     property public final Integer? reviewCount;
@@ -844,86 +536,6 @@ package com.mapbox.search.analytics {
     property public final android.graphics.Bitmap? screenshot;
     property public final String? sessionId;
     property public final String? text;
-  }
-
-}
-
-package com.mapbox.search.metadata {
-
-  public abstract class OpenHours {
-    ctor public OpenHours();
-  }
-
-  public static final class OpenHours.AlwaysOpen extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.AlwaysOpen INSTANCE;
-  }
-
-  public static final class OpenHours.PermanentlyClosed extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.PermanentlyClosed INSTANCE;
-  }
-
-  public static final class OpenHours.Scheduled extends com.mapbox.search.metadata.OpenHours {
-    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.metadata.OpenPeriod> periods);
-    method public java.util.List<com.mapbox.search.metadata.OpenPeriod> getPeriods();
-    property public final java.util.List<com.mapbox.search.metadata.OpenPeriod> periods;
-  }
-
-  public static final class OpenHours.TemporaryClosed extends com.mapbox.search.metadata.OpenHours {
-    field public static final com.mapbox.search.metadata.OpenHours.TemporaryClosed INSTANCE;
-  }
-
-  public final class OpenHoursKt {
-  }
-
-  public final class OpenPeriod {
-    ctor public OpenPeriod(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
-    method public com.mapbox.search.metadata.WeekTimestamp component1();
-    method public com.mapbox.search.metadata.WeekTimestamp component2();
-    method public com.mapbox.search.metadata.OpenPeriod copy(com.mapbox.search.metadata.WeekTimestamp open, com.mapbox.search.metadata.WeekTimestamp closed);
-    method public com.mapbox.search.metadata.WeekTimestamp getClosed();
-    method public com.mapbox.search.metadata.WeekTimestamp getOpen();
-    property public final com.mapbox.search.metadata.WeekTimestamp closed;
-    property public final com.mapbox.search.metadata.WeekTimestamp open;
-  }
-
-  public final class OpenPeriodKt {
-  }
-
-  public final class ParkingData {
-    ctor public ParkingData(int totalCapacity, int reservedForDisabilities);
-    method public int getReservedForDisabilities();
-    method public int getTotalCapacity();
-    property public final int reservedForDisabilities;
-    property public final int totalCapacity;
-  }
-
-  public final class ParkingDataKt {
-  }
-
-  public enum WeekDay {
-    method public final int getIsoCode();
-    property public final int isoCode;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay FRIDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay MONDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay SATURDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay SUNDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay THURSDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay TUESDAY;
-    enum_constant public static final com.mapbox.search.metadata.WeekDay WEDNESDAY;
-  }
-
-  public final class WeekTimestamp {
-    ctor public WeekTimestamp(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
-    method public com.mapbox.search.metadata.WeekDay component1();
-    method public int component2();
-    method public int component3();
-    method public com.mapbox.search.metadata.WeekTimestamp copy(com.mapbox.search.metadata.WeekDay day, int hour, int minute);
-    method public com.mapbox.search.metadata.WeekDay getDay();
-    method public int getHour();
-    method public int getMinute();
-    property public final com.mapbox.search.metadata.WeekDay day;
-    property public final int hour;
-    property public final int minute;
   }
 
 }
@@ -1185,7 +797,6 @@ package com.mapbox.search.result {
   }
 
   public abstract static class SearchAddress.FormatStyle {
-    ctor public SearchAddress.FormatStyle();
   }
 
   public static final class SearchAddress.FormatStyle.Full extends com.mapbox.search.result.SearchAddress.FormatStyle {
@@ -1300,7 +911,6 @@ package com.mapbox.search.result {
   }
 
   public abstract class SearchSuggestionType implements android.os.Parcelable {
-    ctor public SearchSuggestionType();
   }
 
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Category extends com.mapbox.search.result.SearchSuggestionType {

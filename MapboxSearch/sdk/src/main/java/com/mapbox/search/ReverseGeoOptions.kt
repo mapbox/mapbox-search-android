@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreReverseMode
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -39,13 +41,13 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
      *
      * Note: Supported for Geocoding API only.
      */
-    public val countries: List<Country>? = null,
+    public val countries: List<IsoCountryCode>? = null,
 
     /**
      * Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
      * If language is not set explicitly, then language from default system locale will be used.
      */
-    public val languages: List<Language>? = defaultSearchOptionsLanguage(),
+    public val languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage(),
 
     /**
      * Specify the maximum number of results to return. The default is 1 and the maximum supported is 5.
@@ -76,8 +78,8 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
     @JvmSynthetic
     public fun copy(
         center: Point = this.center,
-        countries: List<Country>? = this.countries,
-        languages: List<Language>? = this.languages,
+        countries: List<IsoCountryCode>? = this.countries,
+        languages: List<IsoLanguageCode>? = this.languages,
         limit: Int? = this.limit,
         reverseMode: ReverseMode? = this.reverseMode,
         types: List<QueryType>? = this.types,
@@ -151,8 +153,8 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
      */
     public class Builder(private val center: Point) {
 
-        private var countries: List<Country>? = null
-        private var languages: List<Language>? = defaultSearchOptionsLanguage()
+        private var countries: List<IsoCountryCode>? = null
+        private var languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
         private var reverseMode: ReverseMode? = null
         private var types: List<QueryType>? = null
@@ -170,24 +172,24 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
          *
          * Note: Supported for Geocoding API only.
          */
-        public fun countries(vararg countries: Country): Builder = apply { this.countries = countries.toList() }
+        public fun countries(vararg countries: IsoCountryCode): Builder = apply { this.countries = countries.toList() }
 
         /**
          * Limit results to one or more countries.
          *
          * Note: Supported for Geocoding API only.
          */
-        public fun countries(countries: List<Country>): Builder = apply { this.countries = countries }
+        public fun countries(countries: List<IsoCountryCode>): Builder = apply { this.countries = countries }
 
         /**
          * Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
          */
-        public fun languages(vararg languages: Language): Builder = apply { this.languages = languages.toList() }
+        public fun languages(vararg languages: IsoLanguageCode): Builder = apply { this.languages = languages.toList() }
 
         /**
          * Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
          */
-        public fun languages(languages: List<Language>): Builder = apply { this.languages = languages }
+        public fun languages(languages: List<IsoLanguageCode>): Builder = apply { this.languages = languages }
 
         /**
          * Specify the maximum number of results to return. The default is 1 and the maximum supported is 5.

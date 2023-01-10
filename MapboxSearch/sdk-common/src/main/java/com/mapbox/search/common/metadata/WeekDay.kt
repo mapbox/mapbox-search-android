@@ -1,4 +1,4 @@
-package com.mapbox.search.metadata
+package com.mapbox.search.common.metadata
 
 /**
  * Enum, representing each day of the week - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
@@ -13,7 +13,7 @@ public enum class WeekDay(
     /**
      * Internal SDK raw representation for day of the week.
      */
-    internal val rawCode: Byte
+    public val internalRawCode: Byte
 ) {
 
     /**
@@ -50,16 +50,4 @@ public enum class WeekDay(
      * Instance of [WeekDay] for the Sunday. ISO code is 7.
      */
     SUNDAY(7, 6);
-
-    @JvmSynthetic
-    internal fun toCore(): Byte = rawCode
-
-    internal companion object {
-
-        @JvmSynthetic
-        fun fromCore(dayCode: Byte): WeekDay {
-            return values().firstOrNull { it.rawCode == dayCode }
-                ?: throw IllegalArgumentException("Unknown day code (=$dayCode) from Core SDK.")
-        }
-    }
 }

@@ -12,7 +12,7 @@ import com.mapbox.search.base.core.CoreDistanceCalculatorInterface
  *
  * In other cases (distance > 200 km), uses [DistanceCalculator.distanceOnSphere] function.
  *
- * To obtain [DistanceCalculator] instance, please, use [MapboxSearchSdk.serviceProvider].
+ * To obtain [DistanceCalculator] instance, please, use [com.mapbox.search.ServiceProvider.distanceCalculator].
  *
  * @return Distance in meters.
 */
