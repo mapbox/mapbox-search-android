@@ -323,7 +323,7 @@ internal class AutofillSearchEngine(
     companion object {
 
         private val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "SearchEngine executor")
+            Thread(runnable, "AddressAutofill executor")
         }
 
         fun create(

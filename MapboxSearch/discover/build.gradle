@@ -30,6 +30,7 @@ android {
 
     buildTypes {
         debug {
+            testCoverageEnabled project.hasProperty('coverage')
             consumerProguardFiles "${projectDir}/proguard/consumer-proguard-discover.txt"
         }
         release {
@@ -70,4 +71,20 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+
+    testImplementation project(":common-tests")
+
+    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 }

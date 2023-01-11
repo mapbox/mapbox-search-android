@@ -1,18 +1,14 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.createCoreReverseGeoOptions
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
-import com.mapbox.search.internal.bindgen.LonLatBBox
-import com.mapbox.search.internal.bindgen.QueryType
-import com.mapbox.search.internal.bindgen.ReverseGeoOptions
-import com.mapbox.search.internal.bindgen.ReverseMode
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import java.util.HashMap
 
 /**
  * Temporary implementation of the [AddressAutofill] based on the two-step search.
@@ -137,59 +133,5 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
                 coordinate = validCoordinate,
             )
         }
-
-        fun createCoreSearchOptions(
-            proximity: Point? = null,
-            origin: Point? = null,
-            navProfile: String? = null,
-            etaType: String? = null,
-            bbox: LonLatBBox? = null,
-            countries: List<String>? = null,
-            fuzzyMatch: Boolean? = null,
-            language: List<String>? = null,
-            limit: Int? = null,
-            types: List<QueryType>? = null,
-            ignoreUR: Boolean = false,
-            urDistanceThreshold: Double? = null,
-            requestDebounce: Int? = null,
-            route: List<Point>? = null,
-            sarType: String? = null,
-            timeDeviation: Double? = null,
-            addonAPI: Map<String, String>? = null,
-        ): CoreSearchOptions = CoreSearchOptions(
-            proximity,
-            origin,
-            navProfile,
-            etaType,
-            bbox,
-            countries,
-            fuzzyMatch,
-            language,
-            limit,
-            types,
-            ignoreUR,
-            urDistanceThreshold,
-            requestDebounce,
-            route,
-            sarType,
-            timeDeviation,
-            addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
-        )
-
-        fun createCoreReverseGeoOptions(
-            point: Point,
-            reverseMode: ReverseMode? = null,
-            countries: List<String>? = null,
-            language: List<String>? = null,
-            limit: Int? = null,
-            types: List<QueryType>? = null,
-        ): ReverseGeoOptions = ReverseGeoOptions(
-            point,
-            reverseMode,
-            countries,
-            language,
-            limit,
-            types,
-        )
     }
 }
