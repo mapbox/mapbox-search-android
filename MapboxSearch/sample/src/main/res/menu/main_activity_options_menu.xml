@@ -24,6 +24,11 @@
         />
 
     <item
+        android:id="@+id/open_discover_api_example"
+        android:title="@string/action_discover_api_example"
+        />
+
+    <item
         android:id="@+id/open_custom_data_provider_kt_example"
         android:title="@string/action_open_custom_data_provider_kt_example"
         />

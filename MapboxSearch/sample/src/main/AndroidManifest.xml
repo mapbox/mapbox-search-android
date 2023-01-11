@@ -40,6 +40,7 @@
             />
 
         <activity android:name=".AddressAutofillUiActivity" />
+        <activity android:name=".api.DiscoverApiKotlinExampleActivity" />
 
         <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />
         <activity android:name=".api.CustomIndexableDataProviderJavaExample" />
