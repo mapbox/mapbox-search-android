@@ -1,0 +1,146 @@
+{
+  "type":"FeatureCollection",
+  "features":[
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          2.2966029609152523,
+          48.85993304489138
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "place_name":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "id":"6IXWdnYBo8NaDG6XivFv",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"26 Av. de l'Opéra, 75001 Paris, France"
+          },
+          {
+            "layer":"street",
+            "name":"26 Av. de l'Opéra"
+          },
+          {
+            "layer":"postcode",
+            "name":"75001"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Paris"
+          },
+          {
+            "layer":"place",
+            "name":"Paris"
+          },
+          {
+            "layer":"region",
+            "name":"Île-de-France"
+          },
+          {
+            "layer":"country",
+            "name":"France"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "restaurant",
+          "food",
+          "food and drink",
+          "coffee shop",
+          "coffee",
+          "cafe"
+        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9E3MTgyRjQ_M0SzOTRFMjA3Mjk2TDtFRjAA==",
+        "external_ids":{
+          "foursquare":"4740b317f964a520724c1fe3",
+          "tripadvisor":"4113702"
+        },
+        "accuracy": "point",
+        "routable_points":[
+          {
+            "name":"Address",
+            "coordinates":[
+              2.2966029609152523,
+              48.85993304489138
+            ]
+          }
+        ],
+        "metadata":{
+          "iso_3166_1":"fra",
+          "iso_3166_2":"fr"
+        }
+      }
+    },
+    {
+      "type":"Feature",
+      "geometry":{
+        "coordinates":[
+          -122.08305,
+          37.3881
+        ],
+        "type":"Point"
+      },
+      "properties":{
+        "feature_name":"Le Boulanger",
+        "matching_name":"Le Boulanger",
+        "description":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "place_name":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "id":"hmjBdnYBo8NaDG6XR6G3",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"26 Av. de l'Opéra, 75001 Paris, France"
+          },
+          {
+            "layer":"street",
+            "name":"26 Av. de l'Opéra"
+          },
+          {
+            "layer":"postcode",
+            "name":"75001"
+          },
+          {
+            "layer":"neighborhood",
+            "name":"Paris"
+          },
+          {
+            "layer":"place",
+            "name":"Paris"
+          },
+          {
+            "layer":"region",
+            "name":"Île-de-France"
+          },
+          {
+            "layer":"country",
+            "name":"France"
+          }
+        ],
+        "maki":"restaurant",
+        "poi_category":[
+          "food"
+        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyRDwySLZNM0SzOTRFMjA8M0C2Mj41RjAA==",
+        "external_ids":{
+          "safegraph":"sg:b06beba1518a429a83ebbfe51c79394e",
+          "tripadvisor":"922316",
+          "foursquare":"4b11b8c5f964a5201f8323e3"
+        }
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"46:a4b40e46f08bf603328aace583b2e0d6db4eb851",
+  "response_uuid":"544304d0-2007-4354-a599-c522cb150bb0"
+}

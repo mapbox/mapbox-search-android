@@ -4,8 +4,11 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.ConnectionError
 import com.mapbox.search.internal.bindgen.HttpError
+import com.mapbox.search.internal.bindgen.ImageInfo
 import com.mapbox.search.internal.bindgen.InternalError
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import com.mapbox.search.internal.bindgen.OpenHours
+import com.mapbox.search.internal.bindgen.ParkingData
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.RequestCancelled
 import com.mapbox.search.internal.bindgen.RequestOptions
@@ -284,4 +287,20 @@ fun createTestCoreRoutablePoint(
     name: String = "test-routable-point",
 ) = RoutablePoint(
     point, name
+)
+
+fun createTestResultMetadata(
+    reviewCount: Int? = null,
+    phone: String? = null,
+    website: String? = null,
+    avRating: Double? = null,
+    description: String? = null,
+    openHours: OpenHours? = null,
+    primaryPhoto: List<ImageInfo>? = null,
+    otherPhoto: List<ImageInfo>? = null,
+    cpsJson: String? = null,
+    parking: ParkingData? = null,
+    data: HashMap<String, String>
+): ResultMetadata = ResultMetadata(
+    reviewCount, phone, website, avRating, description, openHours, primaryPhoto, otherPhoto, cpsJson, parking, data
 )

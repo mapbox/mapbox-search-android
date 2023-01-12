@@ -2,11 +2,14 @@
 
 ## 1.0.0-beta.44-SNAPSHOT
 
+### New features
+- [Discover API] Discover API preview is available.
+
 ### Breaking changes
 - [CORE] `OpenHours`, `OpenPeriod`, `WeekDay`, `WeekTimestamp`, `ParkingData` classes have been moved to `com.mapbox.search.common.metadata` package.
 - [CORE] `Language` has been renamed to `IsoLanguageCode` and moved to `com.mapbox.search.common` package.
 - [CORE] `Country` has been renamed to `IsoCountryCode` and moved to `com.mapbox.search.common` package.
-- [Autofill] `AddressAutofillOptions.Country` and `AddressAutofillOptions.Language` have been removed and replaced by `IsoCountry` and `IsoLanguage`.
+- [Autofill] `AddressAutofillOptions.Country` and `AddressAutofillOptions.Language` have been removed and replaced by `IsoCountryCode` and `IsoLanguageCode`.
 
 ### Mapbox dependencies
 - Search Native SDK `0.66.0`
