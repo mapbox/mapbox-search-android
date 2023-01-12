@@ -1,0 +1,10 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mapbox.search.discover"
+    >
+
+    <application
+        android:label="Discover API SDK test"
+        android:usesCleartextTraffic="true"
+        />
+</manifest>
