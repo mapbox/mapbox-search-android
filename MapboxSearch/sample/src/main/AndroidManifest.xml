@@ -40,6 +40,9 @@
             />
 
         <activity android:name=".AddressAutofillUiActivity" />
+        <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
+
+        <activity android:name=".DiscoverApiUiActivity" />
         <activity android:name=".api.DiscoverApiKotlinExampleActivity" />
 
         <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />
@@ -60,7 +63,6 @@
         <activity android:name=".api.HistoryDataProviderJavaExample" />
         <activity android:name=".api.FavoritesDataProviderKotlinExample" />
         <activity android:name=".api.FavoritesDataProviderJavaExample" />
-        <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
         <activity android:name=".api.JapanSearchJavaExampleActivity" />
         <activity android:name=".api.JapanSearchKotlinExampleActivity" />
 

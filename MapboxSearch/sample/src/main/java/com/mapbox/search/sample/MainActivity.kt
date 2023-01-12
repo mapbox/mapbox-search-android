@@ -1,12 +1,8 @@
 package com.mapbox.search.sample
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
@@ -21,15 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -48,7 +40,6 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
-import com.mapbox.search.ServiceProvider
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -88,7 +79,6 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private val serviceProvider = ServiceProvider.INSTANCE
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
@@ -245,7 +235,7 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                userDistanceTo(historyRecord.coordinate) { distance ->
+                locationEngine.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
@@ -350,6 +340,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
                 true
             }
+            R.id.open_discover_api_ui_example -> {
+                startActivity(Intent(this, DiscoverApiUiActivity::class.java))
+                true
+            }
             R.id.open_discover_api_example -> {
                 startActivity(Intent(this, DiscoverApiKotlinExampleActivity::class.java))
                 true
@@ -451,39 +445,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
-        lastKnownLocation { location ->
-            if (location == null) {
-                callback(null)
-            } else {
-                val distance = serviceProvider
-                    .distanceCalculator(latitude = location.latitude())
-                    .distance(location, destination)
-                callback(distance)
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun lastKnownLocation(callback: (Point?) -> Unit) {
-        if (!PermissionsManager.areLocationPermissionsGranted(this)) {
-            callback(null)
-        }
-
-        locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
-            override fun onSuccess(result: LocationEngineResult?) {
-                val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                    Point.fromLngLat(location.longitude, location.latitude)
-                }
-                callback(location)
-            }
-
-            override fun onFailure(exception: Exception) {
-                callback(null)
-            }
-        })
-    }
-
     private fun showMarkers(coordinates: List<Point>) {
         if (coordinates.isEmpty()) {
             mapMarkersManager.clearMarkers()
@@ -565,10 +526,6 @@ class MainActivity : AppCompatActivity() {
 
         const val PERMISSIONS_REQUEST_LOCATION = 0
 
-        fun Context.isPermissionGranted(permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-        }
-
         fun createSearchPinDrawable(): ShapeDrawable {
             val size = dpToPx(24)
             val drawable = ShapeDrawable(OvalShape())
@@ -576,10 +533,6 @@ class MainActivity : AppCompatActivity() {
             drawable.intrinsicHeight = size
             DrawableCompat.setTint(drawable, Color.RED)
             return drawable
-        }
-
-        fun dpToPx(dp: Int): Int {
-            return (dp * Resources.getSystem().displayMetrics.density).toInt()
         }
     }
 }
