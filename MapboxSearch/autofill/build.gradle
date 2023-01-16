@@ -75,7 +75,6 @@ dependencies {
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
-    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
