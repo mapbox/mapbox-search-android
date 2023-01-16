@@ -4,6 +4,7 @@
 
 ### New features
 - [Discover API] Discover API preview is available.
+- [Autofill] Now `AddressComponents` provides new properties `AddressComponents.countryIso1` and `AddressComponents.countryIso2`.
 
 ### Breaking changes
 - [CORE] `OpenHours`, `OpenPeriod`, `WeekDay`, `WeekTimestamp`, `ParkingData` classes have been moved to `com.mapbox.search.common.metadata` package.

@@ -1,8 +1,8 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.bindgen.ExpectedFactory.createError
+import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
@@ -119,7 +119,7 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
 
         fun BaseSearchResult.toAddressAutofillSuggestion(): AddressAutofillSuggestion? {
             // Filtering incomplete results
-            val autofillAddress = AddressComponents.fromCoreSdkAddress(address) ?: return null
+            val autofillAddress = AddressComponents.fromCoreSdkAddress(address, metadata) ?: return null
             val validCoordinate = coordinate
 
             return AddressAutofillSuggestion(

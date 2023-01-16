@@ -1,7 +1,10 @@
 package com.mapbox.search.autofill
 
+import com.mapbox.search.base.core.countryIso1
+import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.CommonSdkTypeObjectCreators
+import com.mapbox.search.common.createTestResultMetadata
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestBoundingBox
@@ -30,58 +33,31 @@ internal class AddressComponentsTest {
             country = "France"
         )
 
-        val addressComponents = requireNotNull(AddressComponents.fromCoreSdkAddress(searchAddress))
-
-        assertEquals(
-            searchAddress.houseNumber,
-            addressComponents.houseNumber
+        val coreMetadata = createTestResultMetadata(
+            data = hashMapOf("iso_3166_1" to "fra", "iso_3166_2" to "fr")
         )
 
-        assertEquals(
-            searchAddress.street,
-            addressComponents.street
+        val addressComponents = requireNotNull(
+            AddressComponents.fromCoreSdkAddress(searchAddress, coreMetadata)
         )
 
-        assertEquals(
-            searchAddress.neighborhood,
-            addressComponents.neighborhood
-        )
-
-        assertEquals(
-            searchAddress.locality,
-            addressComponents.locality
-        )
-
-        assertEquals(
-            searchAddress.postcode,
-            addressComponents.postcode
-        )
-
-        assertEquals(
-            searchAddress.place,
-            addressComponents.place
-        )
-
-        assertEquals(
-            searchAddress.district,
-            addressComponents.district
-        )
-
-        assertEquals(
-            searchAddress.region,
-            addressComponents.region
-        )
-
-        assertEquals(
-            searchAddress.country,
-            addressComponents.country
-        )
+        assertEquals(searchAddress.houseNumber, addressComponents.houseNumber)
+        assertEquals(searchAddress.street, addressComponents.street)
+        assertEquals(searchAddress.neighborhood, addressComponents.neighborhood)
+        assertEquals(searchAddress.locality, addressComponents.locality)
+        assertEquals(searchAddress.postcode, addressComponents.postcode)
+        assertEquals(searchAddress.place, addressComponents.place)
+        assertEquals(searchAddress.district, addressComponents.district)
+        assertEquals(searchAddress.region, addressComponents.region)
+        assertEquals(searchAddress.country, addressComponents.country)
+        assertEquals(coreMetadata.countryIso1, addressComponents.countryIso1)
+        assertEquals(coreMetadata.countryIso2, addressComponents.countryIso2)
     }
 
     @Test
     fun `Check AddressComponents fromCoreSdkAddress() function`() {
-        assertNotNull(AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "France")))
-        assertNull(AddressComponents.fromCoreSdkAddress(BaseSearchAddress()))
+        assertNotNull(AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "France"), mockk()))
+        assertNull(AddressComponents.fromCoreSdkAddress(BaseSearchAddress(), mockk()))
     }
 
     @Test
@@ -93,7 +69,7 @@ internal class AddressComponentsTest {
         every { searchAddress.place } returns "Paris"
         every { searchAddress.country } returns "France"
 
-        val addressComponents = requireNotNull(AddressComponents.fromCoreSdkAddress(searchAddress))
+        val addressComponents = requireNotNull(AddressComponents.fromCoreSdkAddress(searchAddress, mockk()))
 
         assertEquals(
             formattedAddress,
@@ -116,7 +92,7 @@ internal class AddressComponentsTest {
             objectsFactory = ReflectionObjectsFactory(
                 extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS
             ),
-            ignoredProperties = listOf("coreSdkAddress"),
+            ignoredProperties = listOf("coreSdkAddress", "coreMetadata"),
         ).verify()
     }
 }

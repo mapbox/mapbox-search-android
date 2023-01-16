@@ -42,6 +42,8 @@ package com.mapbox.search.autofill {
 
   @kotlinx.parcelize.Parcelize public final class AddressComponents implements android.os.Parcelable {
     method public String? getCountry();
+    method public String? getCountryIso1();
+    method public String? getCountryIso2();
     method public String? getDistrict();
     method public String? getHouseNumber();
     method public String? getLocality();
@@ -51,6 +53,8 @@ package com.mapbox.search.autofill {
     method public String? getRegion();
     method public String? getStreet();
     property public final String? country;
+    property public final String? countryIso1;
+    property public final String? countryIso2;
     property public final String? district;
     property public final String? houseNumber;
     property public final String? locality;

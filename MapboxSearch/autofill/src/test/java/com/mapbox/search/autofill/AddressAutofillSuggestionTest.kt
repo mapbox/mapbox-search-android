@@ -7,6 +7,7 @@ import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.withPrefabTestBoundingBox
 import com.mapbox.search.common.withPrefabTestPoint
+import io.mockk.mockk
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -14,8 +15,13 @@ import org.junit.jupiter.api.Test
 internal class AddressAutofillSuggestionTest {
 
     @Test
-    fun `Check AddressAutofillSuggestion result() function`()  {
-        val address = AddressComponents.fromCoreSdkAddress(BaseSearchAddress(country = "test"))!!
+    fun `Check AddressAutofillSuggestion result() function`() {
+        val address = requireNotNull(
+            AddressComponents.fromCoreSdkAddress(
+                BaseSearchAddress(country = "test"),
+                mockk()
+            )
+        )
 
         val suggestion = AddressAutofillSuggestion(
             name = "Test name",

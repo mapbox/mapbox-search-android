@@ -1,6 +1,9 @@
 package com.mapbox.search.autofill
 
 import android.os.Parcelable
+import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.countryIso1
+import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.result.BaseSearchAddress
 import kotlinx.parcelize.Parcelize
 
@@ -8,7 +11,10 @@ import kotlinx.parcelize.Parcelize
  * Search result address. It's guaranteed that at least one address component is not empty.
  */
 @Parcelize
-public class AddressComponents private constructor(private val coreSdkAddress: BaseSearchAddress) : Parcelable {
+public class AddressComponents private constructor(
+    private val coreSdkAddress: BaseSearchAddress,
+    private val coreMetadata: CoreResultMetadata?,
+) : Parcelable {
 
     init {
         check(!coreSdkAddress.isEmpty)
@@ -68,6 +74,18 @@ public class AddressComponents private constructor(private val coreSdkAddress: B
     public val country: String?
         get() = coreSdkAddress.country
 
+    /**
+     * The country code in ISO 3166-1.
+     */
+    public val countryIso1: String?
+        get() = coreMetadata?.countryIso1
+
+    /**
+     * The country code and its country subdivision code in ISO 3166-2.
+     */
+    public val countryIso2: String?
+        get() = coreMetadata?.countryIso2
+
     @JvmSynthetic
     internal fun formattedAddress(): String {
         return listOf(
@@ -93,6 +111,7 @@ public class AddressComponents private constructor(private val coreSdkAddress: B
         other as AddressComponents
 
         if (coreSdkAddress != other.coreSdkAddress) return false
+        if (coreMetadata != other.coreMetadata) return false
 
         return true
     }
@@ -101,7 +120,9 @@ public class AddressComponents private constructor(private val coreSdkAddress: B
      * @suppress
      */
     override fun hashCode(): Int {
-        return coreSdkAddress.hashCode()
+        var result = coreSdkAddress.hashCode()
+        result = 31 * result + (coreMetadata?.hashCode() ?: 0)
+        return result
     }
 
     /**
@@ -117,17 +138,22 @@ public class AddressComponents private constructor(private val coreSdkAddress: B
                 "place=$place, " +
                 "district=$district, " +
                 "region=$region, " +
-                "country=$country" +
+                "country=$country, " +
+                "countryIso1=$countryIso1, " +
+                "countryIso2=$countryIso2" +
                 ")"
     }
 
     internal companion object {
 
         @JvmSynthetic
-        fun fromCoreSdkAddress(address: BaseSearchAddress?): AddressComponents? = if (address == null || address.isEmpty) {
+        fun fromCoreSdkAddress(
+            address: BaseSearchAddress?,
+            metadata: CoreResultMetadata?
+        ): AddressComponents? = if (address == null || address.isEmpty) {
             null
         } else {
-            AddressComponents(address)
+            AddressComponents(address, metadata)
         }
 
         private val BaseSearchAddress.isEmpty: Boolean
