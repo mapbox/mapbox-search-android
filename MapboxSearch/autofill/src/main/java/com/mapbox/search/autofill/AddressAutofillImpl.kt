@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory.createError
 import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.result.BaseSearchResult
@@ -12,6 +13,26 @@ import com.mapbox.search.base.result.BaseSearchSuggestionType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+
+internal sealed class SearchSelectionResponse {
+
+    data class Suggestions(
+        val suggestions: List<BaseSearchSuggestion>,
+        val responseInfo: BaseResponseInfo,
+    ) : SearchSelectionResponse()
+
+    data class Result(
+        val suggestion: BaseSearchSuggestion,
+        val result: BaseSearchResult,
+        val responseInfo: BaseResponseInfo,
+    ) : SearchSelectionResponse()
+
+    data class CategoryResult(
+        val suggestion: BaseSearchSuggestion,
+        val results: List<BaseSearchResult>,
+        val responseInfo: BaseResponseInfo,
+    ) : SearchSelectionResponse()
+}
 
 /**
  * Temporary implementation of the [AddressAutofill] based on the two-step search.
@@ -25,9 +46,8 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
             language = options.language?.let { listOf(it.code) },
         )
 
-        return when (val response = searchEngine.search(coreOptions)) {
-            is SearchResultsResponse.Results -> createValue(response.results.toAddressAutofillSuggestions())
-            is SearchResultsResponse.Error -> createError(response.e)
+        return searchEngine.search(coreOptions).mapValue { (results, _) ->
+            results.toAddressAutofillSuggestions()
         }
     }
 
@@ -42,9 +62,10 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
             )
         )
 
-        return when (response) {
-            is SearchSuggestionsResponse.Suggestions -> forwardGeocoding(response.suggestions)
-            is SearchSuggestionsResponse.Error -> createError(response.e)
+        return if (response.isValue) {
+            forwardGeocoding(requireNotNull(response.value).first)
+        } else {
+            createError(requireNotNull(response.error))
         }
     }
 
@@ -54,14 +75,13 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
                 createValue(emptyList())
             }
             suggestions.all { it.isBatchResolveSupported } -> {
-                when (val selectionResponse = searchEngine.select(suggestions)) {
-                    is SearchMultipleSelectionResponse.Results -> createValue(selectionResponse.results.toAddressAutofillSuggestions())
-                    is SearchMultipleSelectionResponse.Error -> createError(selectionResponse.e)
+                searchEngine.select(suggestions).mapValue { (_, results, _) ->
+                    results.toAddressAutofillSuggestions()
                 }
             }
             else -> {
                 coroutineScope {
-                    val deferred: List<Deferred<SearchSelectionResponse>> = suggestions
+                    val deferred: List<Deferred<Expected<Exception, SearchSelectionResponse>>> = suggestions
                         // Filtering in order to avoid infinite recursion
                         // because of some specific suggestions like "Did you mean recursion?"
                         .filter { it.type !is BaseSearchSuggestionType.Query }
@@ -74,25 +94,26 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
                     val selectionResponses = deferred.map { it.await() }
 
                     val responses: List<Expected<Exception, List<AddressAutofillSuggestion>>> = selectionResponses
-                        .map { selectionResponse ->
-                            when (selectionResponse) {
-                                is SearchSelectionResponse.Suggestions -> {
-                                    forwardGeocoding(selectionResponse.suggestions)
-                                }
-                                is SearchSelectionResponse.Result -> {
-                                    val autofillSuggestion = selectionResponse.result.toAddressAutofillSuggestion()
-                                    if (autofillSuggestion != null) {
-                                        createValue(listOf(autofillSuggestion))
-                                    } else {
-                                        createValue(emptyList())
+                        .map { result ->
+                            if (result.isValue) {
+                                when (val response = requireNotNull(result.value)) {
+                                    is SearchSelectionResponse.Suggestions -> {
+                                        forwardGeocoding(response.suggestions)
+                                    }
+                                    is SearchSelectionResponse.Result -> {
+                                        val autofillSuggestion = response.result.toAddressAutofillSuggestion()
+                                        if (autofillSuggestion != null) {
+                                            createValue(listOf(autofillSuggestion))
+                                        } else {
+                                            createValue(emptyList())
+                                        }
+                                    }
+                                    is SearchSelectionResponse.CategoryResult -> {
+                                        createValue(response.results.toAddressAutofillSuggestions())
                                     }
                                 }
-                                is SearchSelectionResponse.CategoryResult -> {
-                                    createValue(selectionResponse.results.toAddressAutofillSuggestions())
-                                }
-                                is SearchSelectionResponse.Error -> {
-                                    createError(selectionResponse.e)
-                                }
+                            } else {
+                                createError(requireNotNull(result.error))
                             }
                         }
 
