@@ -31,7 +31,6 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
-import com.mapbox.search.autofill.AddressAutofillResponse
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
@@ -172,22 +171,19 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
     private fun findAddress(point: Point) {
         lifecycleScope.launchWhenStarted {
-            when (val response = addressAutofill.suggestions(point, AddressAutofillOptions())) {
-                is AddressAutofillResponse.Suggestions -> {
-                    if (response.suggestions.isEmpty()) {
-                        showToast(R.string.address_autofill_error_pin_correction)
-                    } else {
-                        showAddressAutofillSuggestion(
-                            response.suggestions.first(),
-                            fromReverseGeocoding = true
-                        )
-                    }
-                }
-                is AddressAutofillResponse.Error -> {
-                    val error = response.error
-                    Log.d("Test.", "Test. $error", error)
+            val response = addressAutofill.suggestions(point, AddressAutofillOptions())
+            response.onValue { suggestions ->
+                if (suggestions.isEmpty()) {
                     showToast(R.string.address_autofill_error_pin_correction)
+                } else {
+                    showAddressAutofillSuggestion(
+                        suggestions.first(),
+                        fromReverseGeocoding = true
+                    )
                 }
+            }.onError { error ->
+                Log.d("Test.", "Test. $error", error)
+                showToast(R.string.address_autofill_error_pin_correction)
             }
         }
     }

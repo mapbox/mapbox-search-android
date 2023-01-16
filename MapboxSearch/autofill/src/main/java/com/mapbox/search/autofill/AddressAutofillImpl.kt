@@ -1,5 +1,8 @@
 package com.mapbox.search.autofill
 
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory.createValue
+import com.mapbox.bindgen.ExpectedFactory.createError
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
@@ -15,7 +18,7 @@ import kotlinx.coroutines.coroutineScope
  */
 internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngine) : AddressAutofill {
 
-    override suspend fun suggestions(point: Point, options: AddressAutofillOptions): AddressAutofillResponse {
+    override suspend fun suggestions(point: Point, options: AddressAutofillOptions): Expected<Exception, List<AddressAutofillSuggestion>> {
         val coreOptions = createCoreReverseGeoOptions(
             point = point,
             countries = options.countries?.map { it.code },
@@ -23,14 +26,12 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
         )
 
         return when (val response = searchEngine.search(coreOptions)) {
-            is SearchResultsResponse.Results -> AddressAutofillResponse.Suggestions(
-                response.results.toAddressAutofillSuggestions()
-            )
-            is SearchResultsResponse.Error -> AddressAutofillResponse.Error(response.e)
+            is SearchResultsResponse.Results -> createValue(response.results.toAddressAutofillSuggestions())
+            is SearchResultsResponse.Error -> createError(response.e)
         }
     }
 
-    override suspend fun suggestions(query: Query, options: AddressAutofillOptions): AddressAutofillResponse {
+    override suspend fun suggestions(query: Query, options: AddressAutofillOptions): Expected<Exception, List<AddressAutofillSuggestion>> {
         val response = searchEngine.search(
             query = query.query,
             options = createCoreSearchOptions(
@@ -43,23 +44,19 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
 
         return when (response) {
             is SearchSuggestionsResponse.Suggestions -> forwardGeocoding(response.suggestions)
-            is SearchSuggestionsResponse.Error -> AddressAutofillResponse.Error(response.e)
+            is SearchSuggestionsResponse.Error -> createError(response.e)
         }
     }
 
-    private suspend fun forwardGeocoding(suggestions: List<BaseSearchSuggestion>): AddressAutofillResponse {
+    private suspend fun forwardGeocoding(suggestions: List<BaseSearchSuggestion>): Expected<Exception, List<AddressAutofillSuggestion>> {
         return when {
             suggestions.isEmpty() -> {
-                AddressAutofillResponse.Suggestions(emptyList())
+                createValue(emptyList())
             }
             suggestions.all { it.isBatchResolveSupported } -> {
                 when (val selectionResponse = searchEngine.select(suggestions)) {
-                    is SearchMultipleSelectionResponse.Results -> AddressAutofillResponse.Suggestions(
-                        selectionResponse.results.toAddressAutofillSuggestions()
-                    )
-                    is SearchMultipleSelectionResponse.Error -> AddressAutofillResponse.Error(
-                        selectionResponse.e
-                    )
+                    is SearchMultipleSelectionResponse.Results -> createValue(selectionResponse.results.toAddressAutofillSuggestions())
+                    is SearchMultipleSelectionResponse.Error -> createError(selectionResponse.e)
                 }
             }
             else -> {
@@ -76,7 +73,7 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
 
                     val selectionResponses = deferred.map { it.await() }
 
-                    val responses: List<AddressAutofillResponse> = selectionResponses
+                    val responses: List<Expected<Exception, List<AddressAutofillSuggestion>>> = selectionResponses
                         .map { selectionResponse ->
                             when (selectionResponse) {
                                 is SearchSelectionResponse.Suggestions -> {
@@ -85,31 +82,30 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
                                 is SearchSelectionResponse.Result -> {
                                     val autofillSuggestion = selectionResponse.result.toAddressAutofillSuggestion()
                                     if (autofillSuggestion != null) {
-                                        AddressAutofillResponse.Suggestions(listOf(autofillSuggestion))
+                                        createValue(listOf(autofillSuggestion))
                                     } else {
-                                        AddressAutofillResponse.Suggestions(emptyList())
+                                        createValue(emptyList())
                                     }
                                 }
                                 is SearchSelectionResponse.CategoryResult -> {
-                                    AddressAutofillResponse.Suggestions(selectionResponse.results.toAddressAutofillSuggestions())
+                                    createValue(selectionResponse.results.toAddressAutofillSuggestions())
                                 }
                                 is SearchSelectionResponse.Error -> {
-                                    AddressAutofillResponse.Error(selectionResponse.e)
+                                    createError(selectionResponse.e)
                                 }
                             }
                         }
 
                     // If at least one response completed successfully, return it.
-                    if (responses.isNotEmpty() && responses.all { it is AddressAutofillResponse.Error }) {
+                    if (responses.isNotEmpty() && responses.all { it.isError }) {
                         responses.first()
                     } else {
                         responses.asSequence()
-                            .mapNotNull { it as? AddressAutofillResponse.Suggestions }
-                            .map { it.suggestions }
+                            .mapNotNull { it.value }
                             .flatten()
                             .toList()
                             .let {
-                                AddressAutofillResponse.Suggestions(it)
+                                createValue(it)
                             }
                     }
                 }
