@@ -22,24 +22,34 @@ open class SampleApplication : Application() {
         LeakCanaryConfiguration.apply()
     }
 
-    private fun enableDebugHttpLogs() {
+    private fun enableDebugHttpLogs(onlySearchLogs: Boolean = true) {
         if (!BuildConfig.DEBUG) {
             return
         }
 
+        fun filter(url: String): Boolean {
+            return !onlySearchLogs || SEARCH_ENDPOINTS_URL.any { url.startsWith(it) }
+        }
+
         HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
             override fun onRequest(request: HttpRequest): HttpRequest {
-                Log.i("SearchSdkHttp", "onRequest: $request")
+                if (filter(request.url)) {
+                    Log.i("SearchSdkHttp", "onRequest: $request")
+                }
                 return request
             }
 
             override fun onDownload(download: DownloadOptions): DownloadOptions {
-                Log.i("SearchSdkHttp", "onDownload: $download")
+                if (filter(download.request.url)) {
+                    Log.i("SearchSdkHttp", "onDownload: $download")
+                }
                 return download
             }
 
             override fun onResponse(response: HttpResponse): HttpResponse {
-                Log.i("SearchSdkHttp", "onResponse: $response")
+                if (filter(response.request.url)) {
+                    Log.i("SearchSdkHttp", "onResponse: $response")
+                }
                 return response
             }
         })
@@ -93,5 +103,13 @@ open class SampleApplication : Application() {
             penaltyDeath()
             StrictMode.setVmPolicy(build())
         }
+    }
+
+    private companion object {
+        val SEARCH_ENDPOINTS_URL = listOf(
+            "https://api.mapbox.com/autofill",
+            "https://api.mapbox.com/search",
+            "https://api.mapbox.com/geocoding"
+        )
     }
 }

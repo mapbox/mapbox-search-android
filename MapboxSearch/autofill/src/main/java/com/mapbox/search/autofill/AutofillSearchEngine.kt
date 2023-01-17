@@ -36,9 +36,7 @@ import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
-import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
-import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
@@ -49,9 +47,9 @@ import java.util.concurrent.Executors
 
 internal class AutofillSearchEngine(
     private val coreEngine: CoreSearchEngineInterface,
-    private val historyService: SearchHistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
-    private val searchResultFactory: SearchResultFactory,
+    private val historyService: SearchHistoryService = SearchHistoryService.STUB,
+    private val searchResultFactory: SearchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY),
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR
 ) : BaseSearchEngine() {
 
@@ -342,18 +340,9 @@ internal class AutofillSearchEngine(
                 ),
             )
 
-            val requestContextProvider = SearchRequestContextProvider(
-                AndroidKeyboardLocaleProvider(app),
-                AndroidScreenOrientationProvider(app)
-            )
-
-            val searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
-
             return AutofillSearchEngine(
                 coreEngine = coreEngine,
-                historyService = SearchHistoryService.STUB,
-                requestContextProvider = requestContextProvider,
-                searchResultFactory = searchResultFactory,
+                requestContextProvider = SearchRequestContextProvider(app),
             )
         }
     }
