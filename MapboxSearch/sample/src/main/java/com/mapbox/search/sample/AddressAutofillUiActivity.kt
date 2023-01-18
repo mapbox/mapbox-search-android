@@ -1,29 +1,18 @@
 package com.mapbox.search.sample
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -102,7 +91,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             addressAutofill = addressAutofill
         )
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocationOrNull(this) { point ->
+        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
             point?.let {
                 mapView.getMapboxMap().setCamera(
                     CameraOptions.Builder()
@@ -227,46 +216,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         searchResultsView.hideKeyboard()
     }
 
-    private fun showToast(@StringRes resId: Int) {
-        Toast.makeText(applicationContext, getString(resId), Toast.LENGTH_SHORT).show()
-    }
-
     private companion object {
-
         const val PERMISSIONS_REQUEST_LOCATION = 0
-
-        fun Context.isPermissionGranted(permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(
-                this, permission
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-
-        val Context.inputMethodManager: InputMethodManager
-            get() = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        fun View.hideKeyboard() {
-            context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-        }
-
-        @SuppressLint("MissingPermission")
-        fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) -> Unit) {
-            if (!PermissionsManager.areLocationPermissionsGranted(context)) {
-                callback(null)
-            }
-
-            val locationCallback = object : LocationEngineCallback<LocationEngineResult> {
-                override fun onSuccess(result: LocationEngineResult?) {
-                    val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                        Point.fromLngLat(location.longitude, location.latitude)
-                    }
-                    callback(location)
-                }
-
-                override fun onFailure(exception: Exception) {
-                    callback(null)
-                }
-            }
-            getLastLocation(locationCallback)
-        }
     }
 }

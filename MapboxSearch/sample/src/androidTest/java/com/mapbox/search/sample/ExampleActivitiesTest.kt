@@ -57,7 +57,10 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
         @JvmStatic
         fun testParameters(): Collection<Class<out Activity>> = listOf(
             AddressAutofillKotlinExampleActivity::class.java,
+            AddressAutofillUiActivity::class.java,
+
             DiscoverApiKotlinExampleActivity::class.java,
+            DiscoverApiUiActivity::class.java,
 
             CustomThemeActivity::class.java,
 
