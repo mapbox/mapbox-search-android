@@ -1,46 +1,32 @@
 package com.mapbox.search.common
 
-import com.mapbox.test.dsl.TestCase
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 
 internal class IsoCountryCodeTest {
 
-    @TestFactory
-    fun `Check countries and country code`() = TestCase {
-        ALL_COUNTRIES.forEach { (inputValue, expectedValue) ->
+    @ParameterizedTest
+    @MethodSource("allCountries")
+    fun `Check countries and country code`(entry: Map.Entry<IsoCountryCode, String>) {
+        val (inputValue, expectedValue) = entry
 
-            Given("Country = $inputValue") {
-                When("Get country code") {
-                    val actualValue = inputValue.code
-                    Then("It should be <$expectedValue>") {
-                        Assertions.assertEquals(expectedValue, actualValue)
-                    }
-
-                    Then("Length should be 2") {
-                        Assertions.assertEquals(2, actualValue.length)
-                    }
-                }
-            }
-        }
+        assertEquals(expectedValue, inputValue.code)
+        assertEquals(2, inputValue.code.length)
     }
 
-    @TestFactory
-    fun `Check all country codes should be unique`() = TestCase {
-        Given("Countries from code") {
-            val codeCountries = ALL_COUNTRIES.keys.map { it.code }
-            When("Get list of duplicates") {
-                val duplicates = codeCountries.groupingBy { it }.eachCount().filter { it.value > 1 }
-                Then("It should empty") {
-                    Assertions.assertEquals(emptyMap<String, Int>(), duplicates)
-                }
-            }
-        }
+    @Test
+    fun `Check all country codes should be unique`() {
+        val codeCountries = allCountries().map { it.value }
+        val duplicates = codeCountries.groupingBy { it }.eachCount().filter { it.value > 1 }
+        assertEquals(emptyMap<String, Int>(), duplicates)
     }
 
     private companion object {
 
-        val ALL_COUNTRIES: Map<IsoCountryCode, String> = mapOf(
+        @JvmStatic
+        fun allCountries(): Set<Map.Entry<IsoCountryCode, String>> = mapOf(
             IsoCountryCode.AFGHANISTAN to "af",
             IsoCountryCode.ALAND_ISLANDS to "ax",
             IsoCountryCode.ALBANIA to "al",
@@ -290,6 +276,6 @@ internal class IsoCountryCodeTest {
             IsoCountryCode.YEMEN to "ye",
             IsoCountryCode.ZAMBIA to "zm",
             IsoCountryCode.ZIMBABWE to "zw"
-        )
+        ).entries
     }
 }

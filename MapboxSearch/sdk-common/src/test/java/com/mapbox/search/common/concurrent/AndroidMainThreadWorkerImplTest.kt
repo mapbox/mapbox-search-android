@@ -2,14 +2,15 @@ package com.mapbox.search.common.concurrent
 
 import android.os.Handler
 import android.os.Looper
-import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.Test
 import java.util.concurrent.TimeUnit
 
 internal class AndroidMainThreadWorkerImplTest {
@@ -42,156 +43,132 @@ internal class AndroidMainThreadWorkerImplTest {
         every { Looper.myLooper() } returns mockk(relaxed = true)
     }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl isMainThread on main thread`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("isMainThread called on main thread") {
-                mockMainThread()
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl isMainThread on main thread`() {
+        mockMainThread()
 
-                val isMainThread = mainThreadWorker.isMainThread
+        val isMainThread = mainThreadWorker.isMainThread
 
-                VerifyOnce("Looper.getMainLooper() called") {
-                    Looper.getMainLooper()
-                }
+        verify(exactly = 1) {
+            Looper.getMainLooper()
+        }
 
-                VerifyOnce("Looper.myLooper() called") {
-                    Looper.myLooper()
-                }
+        verify(exactly = 1) {
+            Looper.myLooper()
+        }
 
-                VerifyNo("No interactions with Handler") {
-                    mainHandler.post(any())
-                    mainHandler.postDelayed(any(), any(), any())
-                    mainHandler.removeCallbacksAndMessages(any())
-                }
+        verify(exactly = 0) {
+            mainHandler.post(any())
+            mainHandler.postDelayed(any(), any(), any())
+            mainHandler.removeCallbacksAndMessages(any())
+        }
 
-                Then("isMainThread is true", true, isMainThread)
-            }
+        assertEquals(true, isMainThread)
+    }
+
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl isMainThread outside of main thread`() {
+        mockNonMainThread()
+
+        val isMainThread = mainThreadWorker.isMainThread
+
+        verify(exactly = 1) {
+            Looper.getMainLooper()
+        }
+
+        verify(exactly = 1) {
+            Looper.myLooper()
+        }
+
+        verify(exactly = 0) {
+            mainHandler.post(any())
+            mainHandler.postDelayed(any(), any(), any())
+            mainHandler.removeCallbacksAndMessages(any())
+        }
+
+        assertEquals(false, isMainThread)
+    }
+
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl post() on main thread`() {
+        mockMainThread()
+
+        val runnable = mockk<Runnable>(relaxed = true)
+
+        mainThreadWorker.post(runnable)
+
+        verify(exactly = 1) {
+            runnable.run()
+        }
+
+        verify(exactly = 0) {
+            mainHandler.post(any())
+            mainHandler.postDelayed(any(), any(), any())
+            mainHandler.removeCallbacksAndMessages(any())
         }
     }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl isMainThread outside of main thread`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("isMainThread called outside main thread") {
-                mockNonMainThread()
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl post() outside of main thread`() {
+        mockNonMainThread()
 
-                val isMainThread = mainThreadWorker.isMainThread
+        val runnable = mockk<Runnable>(relaxed = true)
 
-                VerifyOnce("Looper.getMainLooper() called") {
-                    Looper.getMainLooper()
-                }
+        mainThreadWorker.post(runnable)
 
-                VerifyOnce("Looper.myLooper() called") {
-                    Looper.myLooper()
-                }
+        verify(exactly = 0) {
+            runnable.run()
+        }
 
-                VerifyNo("No interactions with Handler") {
-                    mainHandler.post(any())
-                    mainHandler.postDelayed(any(), any(), any())
-                    mainHandler.removeCallbacksAndMessages(any())
-                }
+        verify(exactly = 1) {
+            mainHandler.post(runnable)
+        }
 
-                Then("isMainThread is false", false, isMainThread)
-            }
+        verify(exactly = 0) {
+            mainHandler.postDelayed(any(), any(), any())
+            mainHandler.removeCallbacksAndMessages(any())
         }
     }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl post() on main thread`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("post() called on main thread") {
-                mockMainThread()
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl postDelayed()`() {
+        val delay = 123L
+        val unit = TimeUnit.SECONDS
+        val runnable = mockk<Runnable>(relaxed = true)
 
-                val runnable = mockk<Runnable>(relaxed = true)
+        mainThreadWorker.postDelayed(delay, unit, runnable)
 
-                mainThreadWorker.post(runnable)
+        verify(exactly = 0) {
+            runnable.run()
+        }
 
-                VerifyOnce("Runnable.run() called") {
-                    runnable.run()
-                }
+        verify(exactly = 1) {
+            mainHandler.postDelayed(runnable, unit.toMillis(delay))
+        }
 
-                VerifyNo("No interactions with Handler") {
-                    mainHandler.post(any())
-                    mainHandler.postDelayed(any(), any(), any())
-                    mainHandler.removeCallbacksAndMessages(any())
-                }
-            }
+        verify(exactly = 0) {
+            mainHandler.post(any())
+            mainHandler.removeCallbacksAndMessages(any())
         }
     }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl post() outside of main thread`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("post() called outside of main thread") {
-                mockNonMainThread()
+    @Test
+    fun `Check AndroidMainThreadWorkerImpl cancel()`() {
+        val runnable = mockk<Runnable>(relaxed = true)
 
-                val runnable = mockk<Runnable>(relaxed = true)
+        mainThreadWorker.cancel(runnable)
 
-                mainThreadWorker.post(runnable)
-
-                VerifyNo("Runnable.run() is not called immediately") {
-                    runnable.run()
-                }
-
-                VerifyOnce("Runnable passed to Handler") {
-                    mainHandler.post(runnable)
-                }
-
-                VerifyNo("No other interactions with Handler") {
-                    mainHandler.postDelayed(any(), any(), any())
-                    mainHandler.removeCallbacksAndMessages(any())
-                }
-            }
+        verify(exactly = 0) {
+            runnable.run()
         }
-    }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl postDelayed()`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("postDelayed() called") {
-                val delay = 123L
-                val unit = TimeUnit.SECONDS
-                val runnable = mockk<Runnable>(relaxed = true)
-
-                mainThreadWorker.postDelayed(delay, unit, runnable)
-
-                VerifyNo("Runnable.run() is not called immediately") {
-                    runnable.run()
-                }
-
-                VerifyOnce("Handler.postDelayed() called with correct arguments") {
-                    mainHandler.postDelayed(runnable, unit.toMillis(delay))
-                }
-
-                VerifyNo("No other interactions with Handler") {
-                    mainHandler.post(any())
-                    mainHandler.removeCallbacksAndMessages(any())
-                }
-            }
+        verify(exactly = 1) {
+            mainHandler.removeCallbacks(runnable)
         }
-    }
 
-    @TestFactory
-    fun `Check AndroidMainThreadWorkerImpl cancel()`() = TestCase {
-        Given("AndroidMainThreadWorkerImpl default implementation") {
-            When("cancel() called") {
-                val runnable = mockk<Runnable>(relaxed = true)
-
-                mainThreadWorker.cancel(runnable)
-
-                VerifyNo("Runnable.run() is not called") {
-                    runnable.run()
-                }
-
-                VerifyOnce("Handler.removeCallbacks() called with correct argument") {
-                    mainHandler.removeCallbacks(runnable)
-                }
-
-                VerifyNo("No other interactions with Handler") {
-                    mainHandler.post(any())
-                    mainHandler.postDelayed(any(), any(), any())
-                }
-            }
+        verify(exactly = 0) {
+            mainHandler.post(any())
+            mainHandler.postDelayed(any(), any(), any())
         }
     }
 }
