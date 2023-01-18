@@ -86,6 +86,8 @@ android {
 }
 
 dependencies {
+    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
 

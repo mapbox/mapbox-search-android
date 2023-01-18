@@ -23,7 +23,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.toCameraOptions
-import com.mapbox.search.ServiceProvider
+import com.mapbox.search.common.DistanceCalculator
 
 @SuppressLint("MissingPermission")
 fun LocationEngine.lastKnownLocation(context: Context, callback: (Point?) -> Unit) {
@@ -50,8 +50,7 @@ fun LocationEngine.userDistanceTo(context: Context, destination: Point, callback
         if (location == null) {
             callback(null)
         } else {
-            val distance = ServiceProvider.INSTANCE
-                .distanceCalculator(latitude = location.latitude())
+            val distance = DistanceCalculator.instance(latitude = location.latitude())
                 .distance(location, destination)
             callback(distance)
         }

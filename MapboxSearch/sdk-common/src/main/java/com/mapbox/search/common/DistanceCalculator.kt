@@ -1,8 +1,9 @@
-package com.mapbox.search
+package com.mapbox.search.common
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreDistanceCalculator
-import com.mapbox.search.base.core.CoreDistanceCalculatorInterface
+
+internal typealias CoreDistanceCalculator = com.mapbox.search.internal.bindgen.DistanceCalculator
+internal typealias CoreDistanceCalculatorInterface = com.mapbox.search.internal.bindgen.DistanceCalculatorInterface
 
 /**
  * Distance calculator for WGS84 (Earth as spheroid).
@@ -29,6 +30,18 @@ public interface DistanceCalculator {
      * Companion object.
      */
     public companion object {
+
+        /**
+         * Provides entity to calculate distances between geographical points.
+         * @param latitude the area in which fast distance calculation is performed.
+         * If second point's latitude far from latitude from constructor,
+         * better to use static [DistanceCalculator.distanceOnSphere] to minimize error level.
+         * @return [DistanceCalculator] instance.
+         */
+        @JvmStatic
+        public fun instance(latitude: Double): DistanceCalculator {
+            return DistanceCalculatorImpl(latitude)
+        }
 
         /**
          * This method provides better result precision with minimal error level, than [distance].

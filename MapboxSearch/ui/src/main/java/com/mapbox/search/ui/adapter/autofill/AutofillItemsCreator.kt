@@ -12,9 +12,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.HighlightsCalculator
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.autofill.AddressAutofillSuggestion
+import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocation
 import com.mapbox.search.ui.R
-import com.mapbox.search.ui.utils.extenstion.distanceTo
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.UiError
