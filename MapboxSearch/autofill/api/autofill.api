@@ -27,31 +27,6 @@ public final class com/mapbox/search/autofill/AddressAutofillOptions : android/o
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public abstract class com/mapbox/search/autofill/AddressAutofillResponse : android/os/Parcelable {
-}
-
-public final class com/mapbox/search/autofill/AddressAutofillResponse$Error : com/mapbox/search/autofill/AddressAutofillResponse {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/Exception;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Ljava/lang/Exception;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/search/autofill/AddressAutofillResponse$Suggestions : com/mapbox/search/autofill/AddressAutofillResponse {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/util/List;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSuggestions ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
 public final class com/mapbox/search/autofill/AddressAutofillResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -78,10 +53,12 @@ public final class com/mapbox/search/autofill/AddressAutofillSuggestion : androi
 
 public final class com/mapbox/search/autofill/AddressComponents : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Lcom/mapbox/search/base/result/BaseSearchAddress;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/search/base/result/BaseSearchAddress;Lcom/mapbox/search/internal/bindgen/ResultMetadata;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountry ()Ljava/lang/String;
+	public final fun getCountryIso1 ()Ljava/lang/String;
+	public final fun getCountryIso2 ()Ljava/lang/String;
 	public final fun getDistrict ()Ljava/lang/String;
 	public final fun getHouseNumber ()Ljava/lang/String;
 	public final fun getLocality ()Ljava/lang/String;

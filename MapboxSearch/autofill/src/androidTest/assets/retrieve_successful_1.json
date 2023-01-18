@@ -1,0 +1,93 @@
+{
+  "type":"FeatureCollection",
+  "features":[
+    {
+      "type":"Feature",
+      "properties":{
+        "accuracy":"approximate",
+        "match_code":{
+          "exact_match":false,
+          "house_number":"matched",
+          "street":"unmatched",
+          "postcode":"matched",
+          "place":"matched",
+          "region":"unmatched",
+          "locality":"not_applicable",
+          "country":"inferred",
+          "confidence":"low"
+        },
+        "place_type":[
+          "address"
+        ],
+        "place_name":"740 15th St NW, Washington, District of Columbia 20005, United States",
+        "address_number":"740",
+        "street":"15th St NW",
+        "context":[
+          {
+            "id":"neighborhood.170716396",
+            "text":"Downtown"
+          },
+          {
+            "id":"postcode.60747500",
+            "text":"20005"
+          },
+          {
+            "id":"place.345549036",
+            "wikidata":"Q61",
+            "text":"Washington"
+          },
+          {
+            "id":"region.328940",
+            "short_code":"US-DC",
+            "wikidata":"Q3551781",
+            "text":"District of Columbia"
+          },
+          {
+            "id":"country.8940",
+            "short_code":"us",
+            "wikidata":"Q30",
+            "text":"United States"
+          }
+        ],
+        "id":"address.00200051019994",
+        "external_ids":{
+          "carmen":"address.00200051019994",
+          "federated":"carmen.address.00200051019994"
+        },
+        "feature_name":"740 15th St NW",
+        "matching_name":"740 15th St NW",
+        "description":"Washington, District of Columbia 20005, United States",
+        "metadata":{
+          "iso_3166_2":"US-DC",
+          "iso_3166_1":"us"
+        },
+        "maki":"marker",
+        "neighborhood":"Downtown",
+        "postcode":"20005",
+        "place":"Washington",
+        "region":"District of Columbia",
+        "region_code":"DC",
+        "country":"United States",
+        "country_code":"us",
+        "full_address":"740 15th St NW, Washington, District of Columbia 20005, United States",
+        "address_line1":"740 15th St NW",
+        "address_line2":"",
+        "address_line3":"",
+        "address_level1":"DC",
+        "address_level2":"Washington",
+        "address_level3":"Downtown",
+        "postcode_plus":"1019",
+        "is_deliverable":true,
+        "missing_unit":true
+      },
+      "geometry":{
+        "type":"Point",
+        "coordinates":[
+          -77.03375,
+          38.89936
+        ]
+      }
+    }
+  ],
+  "attribution":"NOTICE: © 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare."
+}

@@ -1,0 +1,271 @@
+{
+  "attribution":"NOTICE: © 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare.",
+  "suggestions":[
+    {
+      "accuracy":"approximate",
+      "match_code":{
+        "exact_match":false,
+        "house_number":"matched",
+        "street":"unmatched",
+        "postcode":"matched",
+        "place":"matched",
+        "region":"unmatched",
+        "locality":"not_applicable",
+        "country":"inferred",
+        "confidence":"low"
+      },
+      "place_type":[
+        "address"
+      ],
+      "place_name":"740 15th St NW, Washington, District of Columbia 20005, United States",
+      "address_number":"740",
+      "street":"15th St NW",
+      "context":[
+        {
+          "id":"neighborhood.170716396",
+          "text":"Downtown"
+        },
+        {
+          "id":"postcode.60747500",
+          "text":"20005"
+        },
+        {
+          "id":"place.345549036",
+          "wikidata":"Q61",
+          "text":"Washington"
+        },
+        {
+          "id":"region.328940",
+          "short_code":"US-DC",
+          "wikidata":"Q3551781",
+          "text":"District of Columbia"
+        },
+        {
+          "id":"country.8940",
+          "short_code":"us",
+          "wikidata":"Q30",
+          "text":"United States"
+        }
+      ],
+      "id":"address.00200051019994",
+      "external_ids":{
+        "carmen":"address.00200051019994",
+        "federated":"carmen.address.00200051019994"
+      },
+      "feature_name":"740 15th St NW",
+      "matching_name":"740 15th St NW",
+      "description":"Washington, District of Columbia 20005, United States",
+      "metadata":{
+        "iso_3166_2":"US-DC",
+        "iso_3166_1":"us"
+      },
+      "maki":"marker",
+      "neighborhood":"Downtown",
+      "postcode":"20005",
+      "place":"Washington",
+      "region":"District of Columbia",
+      "region_code":"DC",
+      "country":"United States",
+      "country_code":"us",
+      "full_address":"740 15th St NW, Washington, District of Columbia 20005, United States",
+      "address_line1":"740 15th St NW",
+      "address_line2":"",
+      "address_line3":"",
+      "address_level1":"DC",
+      "address_level2":"Washington",
+      "address_level3":"Downtown",
+      "action":{
+        "id":"actionId1"
+      }
+    },
+    {
+      "accuracy":"interpolated",
+      "match_code":{
+        "exact_match":false,
+        "house_number":"matched",
+        "street":"unmatched",
+        "postcode":"unmatched",
+        "place":"unmatched",
+        "region":"unmatched",
+        "locality":"not_applicable",
+        "country":"inferred",
+        "confidence":"low"
+      },
+      "place_type":[
+        "address"
+      ],
+      "place_name":"740 15th Street, Donora, Pennsylvania 15033, United States",
+      "address_number":"740",
+      "street":"15th Street",
+      "context":[
+        {
+          "id":"neighborhood.146590956",
+          "text_en":"Crestview",
+          "text":"Crestview"
+        },
+        {
+          "id":"postcode.42389228",
+          "text_en":"15033",
+          "text":"15033"
+        },
+        {
+          "id":"place.88017132",
+          "wikidata":"Q1134745",
+          "text_en":"Donora",
+          "language_en":"en",
+          "text":"Donora",
+          "language":"en"
+        },
+        {
+          "id":"district.24381164",
+          "wikidata":"Q497200",
+          "text_en":"Washington County",
+          "language_en":"en",
+          "text":"Washington County",
+          "language":"en"
+        },
+        {
+          "id":"region.148716",
+          "short_code":"US-PA",
+          "wikidata":"Q1400",
+          "text_en":"Pennsylvania",
+          "language_en":"en",
+          "text":"Pennsylvania",
+          "language":"en"
+        },
+        {
+          "id":"country.8940",
+          "short_code":"us",
+          "wikidata":"Q30",
+          "text_en":"United States",
+          "language_en":"en",
+          "text":"United States",
+          "language":"en"
+        }
+      ],
+      "id":"address.7079862626822352",
+      "external_ids":{
+        "carmen":"address.7079862626822352",
+        "federated":"carmen.address.7079862626822352"
+      },
+      "feature_name":"740 15th Street",
+      "matching_name":"740 15th Street",
+      "description":"Donora, Pennsylvania 15033, United States",
+      "metadata":{
+        "iso_3166_2":"US-PA",
+        "iso_3166_1":"us"
+      },
+      "language":"en",
+      "maki":"marker",
+      "neighborhood":"Crestview",
+      "postcode":"15033",
+      "place":"Donora",
+      "district":"Washington County",
+      "region":"Pennsylvania",
+      "region_code":"PA",
+      "country":"United States",
+      "country_code":"us",
+      "full_address":"740 15th Street, Donora, Pennsylvania 15033, United States",
+      "address_line1":"740 15th Street",
+      "address_line2":"",
+      "address_line3":"",
+      "address_level1":"PA",
+      "address_level2":"Donora",
+      "address_level3":"Crestview",
+      "action":{
+        "id":"actionId2"
+      }
+    },
+    {
+      "accuracy":"interpolated",
+      "match_code":{
+        "exact_match":false,
+        "house_number":"matched",
+        "street":"unmatched",
+        "postcode":"unmatched",
+        "place":"unmatched",
+        "region":"unmatched",
+        "locality":"not_applicable",
+        "country":"inferred",
+        "confidence":"low"
+      },
+      "place_type":[
+        "address"
+      ],
+      "place_name":"740 15th Street, Bessemer, Pennsylvania 16112, United States",
+      "address_number":"740",
+      "street":"15th Street",
+      "context":[
+        {
+          "id":"postcode.47255276",
+          "text_en":"16112",
+          "text":"16112"
+        },
+        {
+          "id":"place.26667244",
+          "text_en":"Bessemer",
+          "language_en":"en",
+          "text":"Bessemer",
+          "language":"en"
+        },
+        {
+          "id":"district.13231852",
+          "wikidata":"Q501256",
+          "text_en":"Lawrence County",
+          "language_en":"en",
+          "text":"Lawrence County",
+          "language":"en"
+        },
+        {
+          "id":"region.148716",
+          "short_code":"US-PA",
+          "wikidata":"Q1400",
+          "text_en":"Pennsylvania",
+          "language_en":"en",
+          "text":"Pennsylvania",
+          "language":"en"
+        },
+        {
+          "id":"country.8940",
+          "short_code":"us",
+          "wikidata":"Q30",
+          "text_en":"United States",
+          "language_en":"en",
+          "text":"United States",
+          "language":"en"
+        }
+      ],
+      "id":"address.3795001008644846",
+      "external_ids":{
+        "carmen":"address.3795001008644846",
+        "federated":"carmen.address.3795001008644846"
+      },
+      "feature_name":"740 15th Street",
+      "matching_name":"740 15th Street",
+      "description":"Bessemer, Pennsylvania 16112, United States",
+      "metadata":{
+        "iso_3166_2":"US-PA",
+        "iso_3166_1":"us"
+      },
+      "language":"en",
+      "maki":"marker",
+      "postcode":"16112",
+      "place":"Bessemer",
+      "district":"Lawrence County",
+      "region":"Pennsylvania",
+      "region_code":"PA",
+      "country":"United States",
+      "country_code":"us",
+      "full_address":"740 15th Street, Bessemer, Pennsylvania 16112, United States",
+      "address_line1":"740 15th Street",
+      "address_line2":"",
+      "address_line3":"",
+      "address_level1":"PA",
+      "address_level2":"Bessemer",
+      "address_level3":"",
+      "action":{
+        "id":"actionId3"
+      }
+    }
+  ]
+}

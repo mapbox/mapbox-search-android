@@ -7,7 +7,6 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
-import com.mapbox.search.autofill.AddressAutofillResponse
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.base.failDebug
@@ -116,20 +115,18 @@ public class AddressAutofillUiAdapter(
                     }
                 }
 
-                when (val response = addressAutofill.suggestions(query, options)) {
-                    is AddressAutofillResponse.Suggestions -> {
-                        withContext(Dispatchers.Main) {
-                            searchResultsShown = true
-                            searchListeners.forEach { it.onSuggestionsShown(response.suggestions) }
-                            view.setAdapterItems(itemsCreator.createForSuggestions(response.suggestions, query.query))
-                        }
-                    }
-                    is AddressAutofillResponse.Error -> {
-                        withContext(Dispatchers.Main) {
-                            searchResultsShown = false
-                            searchListeners.forEach { it.onError(response.error) }
-                            view.setAdapterItems(itemsCreator.createForError(UiError.createFromException(response.error)))
-                        }
+                val response = addressAutofill.suggestions(query, options)
+                withContext(Dispatchers.Main) {
+                    if (response.isValue) {
+                        val suggestions = requireNotNull(response.value)
+                        searchResultsShown = true
+                        searchListeners.forEach { it.onSuggestionsShown(suggestions) }
+                        view.setAdapterItems(itemsCreator.createForSuggestions(suggestions, query.query))
+                    } else {
+                        val error = requireNotNull(response.error)
+                        searchResultsShown = false
+                        searchListeners.forEach { it.onError(error) }
+                        view.setAdapterItems(itemsCreator.createForError(UiError.createFromException(error)))
                     }
                 }
             }

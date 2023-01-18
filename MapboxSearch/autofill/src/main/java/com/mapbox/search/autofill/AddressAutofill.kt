@@ -3,6 +3,7 @@ package com.mapbox.search.autofill
 import android.Manifest
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.location.defaultLocationEngine
@@ -17,24 +18,24 @@ public interface AddressAutofill {
      *
      * @param point Coordinate to resolve.
      * @param options Request options.
-     * @return Result of the search request represented by [AddressAutofillResponse].
+     * @return Result of the search request, one of error or value.
      */
     public suspend fun suggestions(
         point: Point,
         options: AddressAutofillOptions
-    ): AddressAutofillResponse
+    ): Expected<Exception, List<AddressAutofillSuggestion>>
 
     /**
      * Performs forward geocoding request.
      *
      * @param query Search query.
      * @param options Request options.
-     * @return Result of the search request represented by [AddressAutofillResponse].
+     * @return Result of the search request, one of error or value.
      */
     public suspend fun suggestions(
         query: Query,
         options: AddressAutofillOptions
-    ): AddressAutofillResponse
+    ): Expected<Exception, List<AddressAutofillSuggestion>>
 
     /**
      * Companion object.

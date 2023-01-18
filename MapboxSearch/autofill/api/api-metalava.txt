@@ -4,8 +4,8 @@ package com.mapbox.search.autofill {
   public interface AddressAutofill {
     method public default static com.mapbox.search.autofill.AddressAutofill create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
     method public default static final com.mapbox.search.autofill.AddressAutofill create(String accessToken);
-    method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
-    method public suspend Object? suggestions(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.search.autofill.AddressAutofillResponse> p);
+    method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion>>> p);
+    method public suspend Object? suggestions(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion>>> p);
     field public static final com.mapbox.search.autofill.AddressAutofill.Companion Companion;
   }
 
@@ -21,21 +21,6 @@ package com.mapbox.search.autofill {
     method public com.mapbox.search.common.IsoLanguageCode? getLanguage();
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final com.mapbox.search.common.IsoLanguageCode? language;
-  }
-
-  public abstract sealed class AddressAutofillResponse implements android.os.Parcelable {
-  }
-
-  @kotlinx.parcelize.Parcelize public static final class AddressAutofillResponse.Error extends com.mapbox.search.autofill.AddressAutofillResponse {
-    ctor public AddressAutofillResponse.Error(Exception error);
-    method public Exception getError();
-    property public final Exception error;
-  }
-
-  @kotlinx.parcelize.Parcelize public static final class AddressAutofillResponse.Suggestions extends com.mapbox.search.autofill.AddressAutofillResponse {
-    ctor public AddressAutofillResponse.Suggestions(java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion> suggestions);
-    method public java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion> getSuggestions();
-    property public final java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion> suggestions;
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillResult implements android.os.Parcelable {
@@ -57,6 +42,8 @@ package com.mapbox.search.autofill {
 
   @kotlinx.parcelize.Parcelize public final class AddressComponents implements android.os.Parcelable {
     method public String? getCountry();
+    method public String? getCountryIso1();
+    method public String? getCountryIso2();
     method public String? getDistrict();
     method public String? getHouseNumber();
     method public String? getLocality();
@@ -66,6 +53,8 @@ package com.mapbox.search.autofill {
     method public String? getRegion();
     method public String? getStreet();
     property public final String? country;
+    property public final String? countryIso1;
+    property public final String? countryIso2;
     property public final String? district;
     property public final String? houseNumber;
     property public final String? locality;

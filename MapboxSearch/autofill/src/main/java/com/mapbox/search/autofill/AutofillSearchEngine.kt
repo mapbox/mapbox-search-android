@@ -2,6 +2,9 @@ package com.mapbox.search.autofill
 
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory.createError
+import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
 import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
@@ -33,9 +36,7 @@ import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
-import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
-import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
@@ -46,9 +47,9 @@ import java.util.concurrent.Executors
 
 internal class AutofillSearchEngine(
     private val coreEngine: CoreSearchEngineInterface,
-    private val historyService: SearchHistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
-    private val searchResultFactory: SearchResultFactory,
+    private val historyService: SearchHistoryService = SearchHistoryService.STUB,
+    private val searchResultFactory: SearchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY),
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR
 ) : BaseSearchEngine() {
 
@@ -81,17 +82,17 @@ internal class AutofillSearchEngine(
         }
     }
 
-    suspend fun search(query: String, options: CoreSearchOptions): SearchSuggestionsResponse {
+    suspend fun search(query: String, options: CoreSearchOptions): Expected<Exception, Pair<List<BaseSearchSuggestion>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
             val task = search(query, options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchSuggestionsCallback {
                 override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(SearchSuggestionsResponse.Suggestions(suggestions, responseInfo))
+                        Result.success(createValue(suggestions to responseInfo))
                     )
                 }
 
                 override fun onError(e: Exception) {
-                    continuation.resumeWith(Result.success(SearchSuggestionsResponse.Error(e)))
+                    continuation.resumeWith(Result.success(createError(e)))
                 }
             })
 
@@ -143,18 +144,18 @@ internal class AutofillSearchEngine(
         }
     }
 
-    suspend fun select(suggestion: BaseSearchSuggestion): SearchSelectionResponse {
+    suspend fun select(suggestion: BaseSearchSuggestion): Expected<Exception, SearchSelectionResponse> {
         return suspendCancellableCoroutine { continuation ->
             val task = select(suggestion, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchSelectionCallback {
                 override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(SearchSelectionResponse.Suggestions(suggestions, responseInfo))
+                        Result.success(createValue(SearchSelectionResponse.Suggestions(suggestions, responseInfo)))
                     )
                 }
 
                 override fun onResult(suggestion: BaseSearchSuggestion, result: BaseSearchResult, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(SearchSelectionResponse.Result(suggestion, result, responseInfo))
+                        Result.success(createValue(SearchSelectionResponse.Result(suggestion, result, responseInfo)))
                     )
                 }
 
@@ -164,14 +165,12 @@ internal class AutofillSearchEngine(
                     responseInfo: BaseResponseInfo
                 ) {
                     continuation.resumeWith(
-                        Result.success(SearchSelectionResponse.CategoryResult(suggestion, results, responseInfo))
+                        Result.success(createValue(SearchSelectionResponse.CategoryResult(suggestion, results, responseInfo)))
                     )
                 }
 
                 override fun onError(e: Exception) {
-                    continuation.resumeWith(
-                        Result.success(SearchSelectionResponse.Error(e))
-                    )
+                    continuation.resumeWith(Result.success(createError(e)))
                 }
             })
 
@@ -247,7 +246,7 @@ internal class AutofillSearchEngine(
         }
     }
 
-    suspend fun select(suggestions: List<BaseSearchSuggestion>): SearchMultipleSelectionResponse {
+    suspend fun select(suggestions: List<BaseSearchSuggestion>): Expected<Exception, Triple<List<BaseSearchSuggestion>, List<BaseSearchResult>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
             val task = select(suggestions, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchMultipleSelectionCallback {
 
@@ -257,14 +256,12 @@ internal class AutofillSearchEngine(
                     responseInfo: BaseResponseInfo
                 ) {
                     continuation.resumeWith(
-                        Result.success(SearchMultipleSelectionResponse.Results(suggestions, results, responseInfo))
+                        Result.success(createValue(Triple(suggestions, results, responseInfo)))
                     )
                 }
 
                 override fun onError(e: Exception) {
-                    continuation.resumeWith(
-                        Result.success(SearchMultipleSelectionResponse.Error(e))
-                    )
+                    continuation.resumeWith(Result.success(createError(e)))
                 }
             })
 
@@ -298,19 +295,17 @@ internal class AutofillSearchEngine(
         }
     }
 
-    suspend fun search(options: CoreReverseGeoOptions): SearchResultsResponse {
+    suspend fun search(options: CoreReverseGeoOptions): Expected<Exception, Pair<List<BaseSearchResult>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
             val task = search(options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchCallback {
                 override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(SearchResultsResponse.Results(results, responseInfo))
+                        Result.success(createValue(results to responseInfo))
                     )
                 }
 
                 override fun onError(e: Exception) {
-                    continuation.resumeWith(
-                        Result.success(SearchResultsResponse.Error(e))
-                    )
+                    continuation.resumeWith(Result.success(createError(e)))
                 }
             })
 
@@ -345,18 +340,9 @@ internal class AutofillSearchEngine(
                 ),
             )
 
-            val requestContextProvider = SearchRequestContextProvider(
-                AndroidKeyboardLocaleProvider(app),
-                AndroidScreenOrientationProvider(app)
-            )
-
-            val searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
-
             return AutofillSearchEngine(
                 coreEngine = coreEngine,
-                historyService = SearchHistoryService.STUB,
-                requestContextProvider = requestContextProvider,
-                searchResultFactory = searchResultFactory,
+                requestContextProvider = SearchRequestContextProvider(app),
             )
         }
     }
