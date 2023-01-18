@@ -11,12 +11,6 @@ import com.mapbox.search.record.HistoryDataProviderImpl
 public interface ServiceProvider {
 
     /**
-     * Provides entity to calculate highlights ranges in search results.
-     * @return [HighlightsCalculator] instance.
-     */
-    public fun highlightsCalculator(): HighlightsCalculator
-
-    /**
      * Provides entity to work with [com.mapbox.search.record.FavoriteRecord].
      * @return [FavoritesDataProvider] instance.
      */
@@ -54,8 +48,6 @@ internal class ServiceProviderImpl(
     private val historyDataProvider: HistoryDataProviderImpl,
     private val favoritesDataProvider: FavoritesDataProvider,
 ) : ServiceProvider, InternalServiceProvider {
-
-    override fun highlightsCalculator(): HighlightsCalculator = HighlightsCalculatorImpl()
 
     override fun favoritesDataProvider(): FavoritesDataProvider = favoritesDataProvider
 

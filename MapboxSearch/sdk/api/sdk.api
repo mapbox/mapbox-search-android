@@ -77,16 +77,6 @@ public abstract interface class com/mapbox/search/CompletionCallback {
 	public abstract fun onError (Ljava/lang/Exception;)V
 }
 
-public abstract interface class com/mapbox/search/DistanceCalculator {
-	public static final field Companion Lcom/mapbox/search/DistanceCalculator$Companion;
-	public abstract fun distance (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
-	public static fun distanceOnSphere (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
-}
-
-public final class com/mapbox/search/DistanceCalculator$Companion {
-	public final fun distanceOnSphere (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
-}
-
 public final class com/mapbox/search/EtaType : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lcom/mapbox/search/EtaType$Companion;
@@ -101,10 +91,6 @@ public final class com/mapbox/search/EtaType : android/os/Parcelable {
 }
 
 public final class com/mapbox/search/EtaType$Companion {
-}
-
-public abstract interface class com/mapbox/search/HighlightsCalculator {
-	public abstract fun highlights (Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
 }
 
 public final class com/mapbox/search/ImageInfo : android/os/Parcelable {
@@ -493,10 +479,8 @@ public final class com/mapbox/search/SelectOptions : android/os/Parcelable {
 
 public abstract interface class com/mapbox/search/ServiceProvider {
 	public static final field Companion Lcom/mapbox/search/ServiceProvider$Companion;
-	public abstract fun distanceCalculator (D)Lcom/mapbox/search/DistanceCalculator;
 	public abstract fun favoritesDataProvider ()Lcom/mapbox/search/record/FavoritesDataProvider;
 	public static fun getInstance ()Lcom/mapbox/search/ServiceProvider;
-	public abstract fun highlightsCalculator ()Lcom/mapbox/search/HighlightsCalculator;
 	public abstract fun historyDataProvider ()Lcom/mapbox/search/record/HistoryDataProvider;
 }
 

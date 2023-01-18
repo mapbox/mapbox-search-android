@@ -11,6 +11,7 @@
 - [CORE] `Language` has been renamed to `IsoLanguageCode` and moved to `com.mapbox.search.common` package.
 - [CORE] `Country` has been renamed to `IsoCountryCode` and moved to `com.mapbox.search.common` package.
 - [CORE] `DistanceCalculator` has been moved to `com.mapbox.search.common` package. `ServiceProvider.distanceCalculator(latitude: Double)` function is not available anymore, instead use `DistanceCalculator.instance(latitude: Double)`.
+- [CORE] `HighlightsCalculator` has been moved to `com.mapbox.search.common` package. `ServiceProvider.higlightsCalculator()` function is not available anymore, instead use `HighlightsCalculator.INSTANCE`.
 - [Autofill] `AddressAutofillOptions.Country` and `AddressAutofillOptions.Language` have been removed and replaced by `IsoCountryCode` and `IsoLanguageCode`.
 - [Autofill] `AddressAutofillResponse` type has been removed. Now `AddressAutofill` functions return `Expected<Exception, List<AddressAutofillSuggestion>>`.
 

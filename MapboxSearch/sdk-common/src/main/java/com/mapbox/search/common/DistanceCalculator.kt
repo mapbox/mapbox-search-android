@@ -13,9 +13,7 @@ internal typealias CoreDistanceCalculatorInterface = com.mapbox.search.internal.
  *
  * In other cases (distance > 200 km), uses [DistanceCalculator.distanceOnSphere] function.
  *
- * To obtain [DistanceCalculator] instance, please, use [com.mapbox.search.ServiceProvider.distanceCalculator].
- *
- * @return Distance in meters.
+ * Call [DistanceCalculator.instance] to obtain [DistanceCalculator] instance.
 */
 public interface DistanceCalculator {
 

@@ -9,11 +9,10 @@ import androidx.annotation.ColorInt
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
-import com.mapbox.search.HighlightsCalculator
-import com.mapbox.search.ServiceProvider
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocation
+import com.mapbox.search.common.HighlightsCalculator
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
 import com.mapbox.search.ui.view.SearchResultAdapterItem
@@ -25,7 +24,7 @@ internal class AutofillItemsCreator(
     private val locationEngine: LocationEngine,
     @ColorInt
     private val selectionSpanColor: Int = context.resolveAttrOrThrow(R.attr.mapboxSearchSdkPrimaryAccentColor),
-    private val highlightsCalculator: HighlightsCalculator = ServiceProvider.INSTANCE.highlightsCalculator()
+    private val highlightsCalculator: HighlightsCalculator = HighlightsCalculator.INSTANCE
 ) {
 
     suspend fun createForSuggestions(

@@ -290,13 +290,43 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 
 #### Search SDK-Common module
+Mapbox Search Android uses portions of the Activity.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Android App Startup Runtime.  
 URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.1.0](https://developer.android.com/jetpack/androidx/releases/startup#1.1.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the Android AppCompat Library v7.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Android Arch-Common.  
+URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Arch-Runtime.  
+URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Lifecycle LiveData.  
+URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Lifecycle LiveData Core.  
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -308,8 +338,26 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the Android Lifecycle ViewModel.  
+URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Android Lifecycle-Common.  
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Resources Library.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support AnimatedVectorDrawable.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -328,6 +376,54 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Search Android uses portions of the Android Support Library compat.  
 URL: [https://developer.android.com/jetpack/androidx/releases/core#1.6.0](https://developer.android.com/jetpack/androidx/releases/core#1.6.0)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library Cursor Adapter.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library Custom View.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library Drawer Layout.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library fragment.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library Interpolators.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library loader.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support Library View Pager.  
+URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)  
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Android Support VectorDrawable.  
+URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -418,6 +514,12 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 Mapbox Search Android uses portions of the Mapbox Logger.  
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)  
 License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the Mapbox Search Native SDK for Android.  
+URL: [https://github.com/mapbox/mapbox-search-android](https://github.com/mapbox/mapbox-search-android)  
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
 
 ===========================================================================
 

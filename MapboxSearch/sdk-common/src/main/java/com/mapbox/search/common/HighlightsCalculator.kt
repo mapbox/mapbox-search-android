@@ -1,7 +1,32 @@
-package com.mapbox.search
+package com.mapbox.search.common
 
-import com.mapbox.search.base.core.CoreSearchEngine
-import com.mapbox.search.base.logger.loge
+import com.mapbox.search.internal.bindgen.SearchEngine
+
+/**
+ * Used to calculate which parts of exact search result name will be highlighted.
+ *
+ * Call [HighlightsCalculator.INSTANCE] to obtain [HighlightsCalculator].
+ */
+public interface HighlightsCalculator {
+
+    /**
+     * @return list of intervals [start, end) for the string [name] that was matched by search [query].
+     */
+    public fun highlights(name: String, query: String): List<Pair<Int, Int>>
+
+    /**
+     * Companion object.
+     */
+    public companion object {
+
+        /**
+         * Shared [HighlightsCalculator] instance.
+         */
+        @JvmStatic
+        @get:JvmName("getInstance")
+        public val INSTANCE: HighlightsCalculator = HighlightsCalculatorImpl()
+    }
+}
 
 internal interface HighlightsEngine {
     fun getHighlights(name: String, query: String): List<Int>
@@ -9,23 +34,13 @@ internal interface HighlightsEngine {
 
 internal class DefaultHighlightsEngine : HighlightsEngine {
     override fun getHighlights(name: String, query: String): List<Int> {
-        return CoreSearchEngine.getHighlights(name, query)
+        return SearchEngine.getHighlights(name, query)
     }
 }
 
-/**
- * Used to calculate which parts of exact search result name will be highlighted.
- *
- * To obtain [HighlightsCalculator] instance, please, use [com.mapbox.search.ServiceProvider.highlightsCalculator].
- */
-public interface HighlightsCalculator {
-    /**
-     * @return list of intervals [start, end) for the string [name] that was matched by search [query].
-     */
-    public fun highlights(name: String, query: String): List<Pair<Int, Int>>
-}
-
-internal class HighlightsCalculatorImpl(private val highlightsEngine: HighlightsEngine) : HighlightsCalculator {
+internal class HighlightsCalculatorImpl(
+    private val highlightsEngine: HighlightsEngine,
+) : HighlightsCalculator {
 
     constructor() : this(DefaultHighlightsEngine())
 
@@ -38,7 +53,6 @@ internal class HighlightsCalculatorImpl(private val highlightsEngine: Highlights
                 .filter { (start, end) -> start < end && start in 0..name.length && end in 0..name.length }
                 .toList()
         } else {
-            loge("Invalid highlights $nativeHighlights for name = $name and query = $query")
             emptyList()
         }
     }
