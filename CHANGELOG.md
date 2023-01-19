@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.44-SNAPSHOT
+## 1.0.0-beta.44
 
 ### New features
 - [Discover API] Discover API preview is available.
