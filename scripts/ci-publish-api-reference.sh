@@ -48,6 +48,9 @@ cp -r "${INITIAL_PATH}/MapboxSearch/offline/build/dokka" "${TMPDIR}/offline/${VE
 mkdir -p "${TMPDIR}/autofill"
 cp -r "${INITIAL_PATH}/MapboxSearch/autofill/build/dokka" "${TMPDIR}/autofill/${VERSION}"
 
+mkdir -p "${TMPDIR}/discover"
+cp -r "${INITIAL_PATH}/MapboxSearch/discover/build/dokka" "${TMPDIR}/discover/${VERSION}"
+
 git config user.email "release-bot@mapbox.com"
 git config user.name "Release SDK bot"
 

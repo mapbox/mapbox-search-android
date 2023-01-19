@@ -11,19 +11,6 @@ import com.mapbox.search.record.HistoryDataProviderImpl
 public interface ServiceProvider {
 
     /**
-     * Provides entity to calculate distances between geographical points.
-     * @param latitude the area in which fast distance calculation is performed. If second point's latitude far from latitude from constructor, better to use static [DistanceCalculator.distanceOnSphere] to minimize error level.
-     * @return [DistanceCalculator] instance.
-     */
-    public fun distanceCalculator(latitude: Double): DistanceCalculator
-
-    /**
-     * Provides entity to calculate highlights ranges in search results.
-     * @return [HighlightsCalculator] instance.
-     */
-    public fun highlightsCalculator(): HighlightsCalculator
-
-    /**
      * Provides entity to work with [com.mapbox.search.record.FavoriteRecord].
      * @return [FavoritesDataProvider] instance.
      */
@@ -61,10 +48,6 @@ internal class ServiceProviderImpl(
     private val historyDataProvider: HistoryDataProviderImpl,
     private val favoritesDataProvider: FavoritesDataProvider,
 ) : ServiceProvider, InternalServiceProvider {
-
-    override fun distanceCalculator(latitude: Double): DistanceCalculator = DistanceCalculatorImpl(latitude)
-
-    override fun highlightsCalculator(): HighlightsCalculator = HighlightsCalculatorImpl()
 
     override fun favoritesDataProvider(): FavoritesDataProvider = favoritesDataProvider
 

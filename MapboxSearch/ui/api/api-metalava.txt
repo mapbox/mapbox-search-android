@@ -69,9 +69,6 @@ package com.mapbox.search.ui.utils.extenstion {
   public final class LocaleKt {
   }
 
-  public final class PointKt {
-  }
-
   public final class TextViewKt {
   }
 
