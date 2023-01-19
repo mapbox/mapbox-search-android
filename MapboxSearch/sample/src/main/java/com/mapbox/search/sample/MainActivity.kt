@@ -225,11 +225,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchPlaceView.addOnNavigateClickListener { searchPlace ->
-            startActivity(IntentUtils.geoIntent(searchPlace.coordinate))
+            startActivity(geoIntent(searchPlace.coordinate))
         }
 
         searchPlaceView.addOnShareClickListener { searchPlace ->
-            startActivity(IntentUtils.shareIntent(searchPlace))
+            startActivity(shareIntent(searchPlace))
         }
 
         searchPlaceView.addOnFeedbackClickListener { _, _ ->

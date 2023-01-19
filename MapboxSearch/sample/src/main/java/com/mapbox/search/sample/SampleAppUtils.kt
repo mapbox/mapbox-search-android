@@ -2,12 +2,14 @@ package com.mapbox.search.sample
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -24,6 +26,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.toCameraOptions
 import com.mapbox.search.common.DistanceCalculator
+import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.ui.view.place.SearchPlace
 
 @SuppressLint("MissingPermission")
 fun LocationEngine.lastKnownLocation(context: Context, callback: (Point?) -> Unit) {
@@ -101,4 +105,20 @@ fun dpToPx(dp: Int): Int {
 fun MapboxMap.getCameraBoundingBox(): BoundingBox {
     val bounds = coordinateBoundsForCamera(cameraState.toCameraOptions())
     return BoundingBox.fromPoints(bounds.southwest, bounds.northeast)
+}
+
+fun geoIntent(point: Point): Intent {
+    return Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
+}
+
+fun shareIntent(searchPlace: SearchPlace): Intent {
+    val text = "${searchPlace.name}. " +
+            "Address: ${searchPlace.address?.formattedAddress(SearchAddress.FormatStyle.Short) ?: "unknown"}. " +
+            "Geo coordinate: (lat=${searchPlace.coordinate.latitude()}, lon=${searchPlace.coordinate.longitude()})"
+
+    return Intent().apply {
+        action = Intent.ACTION_SEND
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, text)
+    }
 }
