@@ -7,8 +7,7 @@ import android.text.style.ForegroundColorSpan
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.mapbox.search.HighlightsCalculator
-import com.mapbox.search.ServiceProvider
+import com.mapbox.search.common.HighlightsCalculator
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
@@ -29,7 +28,7 @@ internal class SearchEntityPresentation(
     private val context: Context,
     @ColorInt
     private val selectionSpanColor: Int = context.resolveAttrOrThrow(R.attr.mapboxSearchSdkPrimaryAccentColor),
-    private val highlightsCalculator: HighlightsCalculator = ServiceProvider.INSTANCE.highlightsCalculator()
+    private val highlightsCalculator: HighlightsCalculator = HighlightsCalculator.INSTANCE
 ) {
 
     fun getTitle(suggestion: SearchSuggestion): CharSequence {

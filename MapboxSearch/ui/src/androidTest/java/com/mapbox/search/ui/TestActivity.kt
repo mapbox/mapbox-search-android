@@ -24,6 +24,7 @@ import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -238,8 +239,7 @@ public class TestActivity : AppCompatActivity() {
             if (location == null) {
                 callback(null)
             } else {
-                val distance = serviceProvider
-                    .distanceCalculator(latitude = location.latitude())
+                val distance = DistanceCalculator.instance(latitude = location.latitude())
                     .distance(location, destination)
                 callback(distance)
             }

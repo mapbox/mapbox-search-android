@@ -1,23 +1,30 @@
 package com.mapbox.search.common.concurrent
 
 import android.os.Looper
-import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.Test
 import java.util.concurrent.TimeUnit
 
 internal class SearchSdkMainThreadWorkerTest {
+
+    private lateinit var mainThreadDelegate: MainThreadWorker
 
     @BeforeEach
     fun setUp() {
         mockkStatic(Looper::class)
         every { Looper.getMainLooper() } returns mockk(relaxed = true)
         every { Looper.myLooper() } returns mockk(relaxed = true)
+
+        mainThreadDelegate = mockk(relaxed = true)
+        every { mainThreadDelegate.isMainThread } returns true
+        SearchSdkMainThreadWorker.delegate = mainThreadDelegate
     }
 
     @AfterEach
@@ -25,78 +32,66 @@ internal class SearchSdkMainThreadWorkerTest {
         unmockkStatic(Looper::class)
     }
 
-    @TestFactory
-    fun `Check SearchSdkMainThreadWorker delegate`() = TestCase {
-        Given("SearchSdkMainThreadWorker object with mocked delegate") {
-            val delegate = mockk<MainThreadWorker>(relaxed = true)
-            every { delegate.isMainThread } returns true
+    @Test
+    fun `Check SearchSdkMainThreadWorker's isMainThread`() {
+        val value = SearchSdkMainThreadWorker.isMainThread
 
-            SearchSdkMainThreadWorker.delegate = delegate
+        verify(exactly = 1) {
+            mainThreadDelegate.isMainThread
+        }
 
-            When("isMainThread property called") {
-                val value = SearchSdkMainThreadWorker.isMainThread
+        assertEquals(true, value)
+    }
 
-                VerifyOnce("Delegate should be called") {
-                    delegate.isMainThread
-                }
+    @Test
+    fun `Check SearchSdkMainThreadWorker's post()`() {
+        val runnable = mockk<Runnable>(relaxed = true)
+        SearchSdkMainThreadWorker.post(runnable)
 
-                Then("Returned value should be as in delegate", true, value)
-            }
-
-            When("post() called") {
-                val runnable = mockk<Runnable>(relaxed = true)
-                SearchSdkMainThreadWorker.post(runnable)
-
-                VerifyOnce("Delegate's post() called with correct argument") {
-                    delegate.post(runnable)
-                }
-            }
-
-            When("postDelayed() called") {
-                val delay = 123L
-                val unit = TimeUnit.SECONDS
-                val runnable = mockk<Runnable>(relaxed = true)
-
-                SearchSdkMainThreadWorker.postDelayed(delay, unit, runnable)
-
-                VerifyOnce("Delegate's postDelayed() called with correct argument") {
-                    delegate.postDelayed(delay, unit, runnable)
-                }
-            }
-
-            When("cancel() called") {
-                val runnable = mockk<Runnable>(relaxed = true)
-                SearchSdkMainThreadWorker.cancel(runnable)
-
-                VerifyOnce("Delegate's cancel() called with correct argument") {
-                    delegate.cancel(runnable)
-                }
-            }
+        verify(exactly = 1) {
+            mainThreadDelegate.post(runnable)
         }
     }
 
-    @TestFactory
-    fun `Check SearchSdkMainThreadWorker reset delegate`() = TestCase {
-        Given("SearchSdkMainThreadWorker object") {
-            When("External delegate set and then resetDelegate() called") {
-                val delegate = mockk<MainThreadWorker>(relaxed = true)
-                SearchSdkMainThreadWorker.delegate = delegate
-                SearchSdkMainThreadWorker.resetDelegate()
+    @Test
+    fun `Check SearchSdkMainThreadWorker's postDelayed()`() {
+        val delay = 123L
+        val unit = TimeUnit.SECONDS
+        val runnable = mockk<Runnable>(relaxed = true)
 
-                SearchSdkMainThreadWorker.isMainThread
+        SearchSdkMainThreadWorker.postDelayed(delay, unit, runnable)
 
-                VerifyNo("External delegate shouldn't be called") {
-                    delegate.isMainThread
-                }
+        verify(exactly = 1) {
+            mainThreadDelegate.postDelayed(delay, unit, runnable)
+        }
+    }
 
-                Verify("Looper.myLooper() is called") {
-                    Looper.myLooper()
-                }
+    @Test
+    fun `Check SearchSdkMainThreadWorker's cancel()`() {
+        val runnable = mockk<Runnable>(relaxed = true)
+        SearchSdkMainThreadWorker.cancel(runnable)
 
-                Verify("Looper.getMainLooper() is called") {
-                    Looper.getMainLooper()
-                }
-            }
+        verify(exactly = 1) {
+            mainThreadDelegate.cancel(runnable)
+        }
+    }
+
+    @Test
+    fun `Check SearchSdkMainThreadWorker reset delegate`() {
+        SearchSdkMainThreadWorker.resetDelegate()
+
+        SearchSdkMainThreadWorker.isMainThread
+
+        verify(exactly = 0) {
+            mainThreadDelegate.isMainThread
+        }
+
+        verify {
+            Looper.myLooper()
+        }
+
+        verify {
+            Looper.getMainLooper()
         }
     }
 }

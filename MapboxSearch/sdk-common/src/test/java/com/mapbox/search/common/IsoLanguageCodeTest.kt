@@ -1,14 +1,21 @@
 package com.mapbox.search.common
 
-import com.mapbox.test.dsl.TestCase
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 
 internal class IsoLanguageCodeTest {
 
-    @TestFactory
-    fun `Check languages and language code`() = TestCase {
-        mapOf(
+    @ParameterizedTest
+    @MethodSource("allLanguages")
+    fun `Check languages and language code`(entry: Map.Entry<IsoLanguageCode, String>) {
+        assertEquals(entry.value, entry.key.code)
+    }
+
+    private companion object {
+
+        @JvmStatic
+        fun allLanguages(): Set<Map.Entry<IsoLanguageCode, String>> = mapOf(
             IsoLanguageCode.ALBANIAN to "sq",
             IsoLanguageCode.ARABIC to "ar",
             IsoLanguageCode.BOSNIAN to "bs",
@@ -47,16 +54,6 @@ internal class IsoLanguageCodeTest {
             IsoLanguageCode.TAGALOG to "tl",
             IsoLanguageCode.THAI to "th",
             IsoLanguageCode.TURKISH to "tr"
-        ).forEach { (inputValue, expectedValue) ->
-
-            Given("Language = $inputValue") {
-                When("Get language code") {
-                    val actualValue = inputValue.code
-                    Then("It should be <$expectedValue>") {
-                        Assertions.assertEquals(expectedValue, actualValue)
-                    }
-                }
-            }
-        }
+        ).entries
     }
 }

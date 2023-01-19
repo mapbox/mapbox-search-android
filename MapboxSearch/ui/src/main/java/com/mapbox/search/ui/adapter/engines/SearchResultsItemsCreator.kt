@@ -3,6 +3,7 @@ package com.mapbox.search.ui.adapter.engines
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.offline.OfflineResponseInfo
@@ -12,7 +13,6 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
-import com.mapbox.search.ui.utils.extenstion.distanceTo
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.UiError

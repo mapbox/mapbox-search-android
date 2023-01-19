@@ -80,16 +80,6 @@ package com.mapbox.search {
     method public void onError(Exception e);
   }
 
-  public interface DistanceCalculator {
-    method public double distance(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
-    method public default static double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
-    field public static final com.mapbox.search.DistanceCalculator.Companion Companion;
-  }
-
-  public static final class DistanceCalculator.Companion {
-    method public double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
-  }
-
   @kotlinx.parcelize.Parcelize public final class EtaType implements android.os.Parcelable {
     ctor public EtaType(String rawName);
     method public String getRawName();
@@ -99,10 +89,6 @@ package com.mapbox.search {
   }
 
   public static final class EtaType.Companion {
-  }
-
-  public interface HighlightsCalculator {
-    method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> highlights(String name, String query);
   }
 
   @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
@@ -462,10 +448,8 @@ package com.mapbox.search {
   }
 
   public interface ServiceProvider {
-    method public com.mapbox.search.DistanceCalculator distanceCalculator(double latitude);
     method public com.mapbox.search.record.FavoritesDataProvider favoritesDataProvider();
     method public default static com.mapbox.search.ServiceProvider getInstance();
-    method public com.mapbox.search.HighlightsCalculator highlightsCalculator();
     method public com.mapbox.search.record.HistoryDataProvider historyDataProvider();
     field public static final com.mapbox.search.ServiceProvider.Companion Companion;
   }

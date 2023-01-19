@@ -86,6 +86,8 @@ android {
 }
 
 dependencies {
+    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
 
@@ -93,7 +95,6 @@ dependencies {
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
-    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
     testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
@@ -102,5 +103,6 @@ dependencies {
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_5_version"
     testImplementation project(":common-tests")
 }

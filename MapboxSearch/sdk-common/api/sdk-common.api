@@ -18,6 +18,28 @@ public final class com/mapbox/search/common/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class com/mapbox/search/common/DistanceCalculator {
+	public static final field Companion Lcom/mapbox/search/common/DistanceCalculator$Companion;
+	public abstract fun distance (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
+	public static fun distanceOnSphere (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
+	public static fun instance (D)Lcom/mapbox/search/common/DistanceCalculator;
+}
+
+public final class com/mapbox/search/common/DistanceCalculator$Companion {
+	public final fun distanceOnSphere (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
+	public final fun instance (D)Lcom/mapbox/search/common/DistanceCalculator;
+}
+
+public abstract interface class com/mapbox/search/common/HighlightsCalculator {
+	public static final field Companion Lcom/mapbox/search/common/HighlightsCalculator$Companion;
+	public static fun getInstance ()Lcom/mapbox/search/common/HighlightsCalculator;
+	public abstract fun highlights (Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
+}
+
+public final class com/mapbox/search/common/HighlightsCalculator$Companion {
+	public final fun getInstance ()Lcom/mapbox/search/common/HighlightsCalculator;
+}
+
 public final class com/mapbox/search/common/IsoCountryCode : android/os/Parcelable {
 	public static final field AFGHANISTAN Lcom/mapbox/search/common/IsoCountryCode;
 	public static final field ALAND_ISLANDS Lcom/mapbox/search/common/IsoCountryCode;

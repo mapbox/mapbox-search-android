@@ -32,7 +32,7 @@ ext {
     ui_automator_version = '2.2.0'
     espresso_version = '3.0.2'
     espresso_core_version = '3.4.0'
-    junit_5_version = '5.8.2'
+    junit_5_version = '5.9.2'
     mockito_version = '3.0.0'
     mockk_version = '1.12.2'
     kotlin_test_dsl_version = '0.1.5'

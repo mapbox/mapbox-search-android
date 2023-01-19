@@ -19,11 +19,6 @@ internal class ServiceProviderTest {
                 favoritesDataProvider = favoritesDataProvider,
             )
 
-            When("Get highlightsCalculator") {
-                val highlightsCalculator = serviceProvider.highlightsCalculator()
-                Then("Returned value is HighlightsCalculatorImpl", true, highlightsCalculator is HighlightsCalculatorImpl)
-            }
-
             When("Get favoritesDataProvider") {
                 val value = serviceProvider.favoritesDataProvider()
                 Then("Returned value is passed to constructor value", favoritesDataProvider, value)
