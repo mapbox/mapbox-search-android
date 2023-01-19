@@ -1,59 +1,37 @@
 package com.mapbox.demo.searchwithmaps
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
 import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
-import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.image.image
-import com.mapbox.maps.extension.style.layers.generated.symbolLayer
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.extension.style.sources.getSourceAs
-import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
-import com.mapbox.search.ServiceProvider
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
@@ -62,11 +40,9 @@ import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
-import java.util.concurrent.CopyOnWriteArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private val serviceProvider = ServiceProvider.INSTANCE
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
@@ -77,9 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchPlaceView: SearchPlaceBottomSheetView
 
     private lateinit var mapView: MapView
-    private lateinit var mapboxMap: MapboxMap
-
-    private val mapMarkersManager = MapMarkersManager()
+    private lateinit var mapMarkersManager: MapMarkersManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -88,10 +62,14 @@ class MainActivity : AppCompatActivity() {
                     mapMarkersManager.clearMarkers()
                     searchPlaceView.hide()
                 }
-                mapMarkersManager.markerCoordinates.isNotEmpty() -> {
+                mapMarkersManager.hasMarkers -> {
                     mapMarkersManager.clearMarkers()
                 }
                 else -> {
+                    if (BuildConfig.DEBUG) {
+                        error("This OnBackPressedCallback should not be enabled")
+                    }
+                    Log.i("SearchApiExample", "This OnBackPressedCallback should not be enabled")
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
@@ -107,38 +85,14 @@ class MainActivity : AppCompatActivity() {
 
         locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
-        mapMarkersManager.addOnChangeListener { markers ->
-            mapboxMap.getStyle()?.getSourceAs<GeoJsonSource>(SEARCH_PIN_SOURCE_ID)?.featureCollection(
-                FeatureCollection.fromFeatures(
-                    markers.map { Feature.fromGeometry(it) }
-                )
-            )
-            updateOnBackPressedCallbackEnabled()
-        }
-
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
-            this.mapboxMap = mapboxMap
-            mapboxMap.loadStyle(
-                style(styleUri = Style.MAPBOX_STREETS) {
-                    +geoJsonSource(SEARCH_PIN_SOURCE_ID) {
-                        featureCollection(
-                            FeatureCollection.fromFeatures(
-                                mapMarkersManager.markerCoordinates.map {
-                                    Feature.fromGeometry(it)
-                                }
-                            )
-                        )
-                    }
-                    +image(SEARCH_PIN_IMAGE_ID) {
-                        bitmap(createSearchPinDrawable().toBitmap(config = Bitmap.Config.ARGB_8888))
-                    }
-                    +symbolLayer(SEARCH_PIN_LAYER_ID, SEARCH_PIN_SOURCE_ID) {
-                        iconImage(SEARCH_PIN_IMAGE_ID)
-                        iconAllowOverlap(true)
-                    }
-                }
-            )
+            mapboxMap.loadStyleUri(getMapStyleUri())
+        }
+
+        mapMarkersManager = MapMarkersManager(mapView)
+        mapMarkersManager.onMarkersChangeListener = {
+            updateOnBackPressedCallbackEnabled()
         }
 
         toolbar = findViewById(R.id.toolbar)
@@ -181,12 +135,12 @@ class MainActivity : AppCompatActivity() {
                 responseInfo: ResponseInfo
             ) {
                 closeSearchView()
-                showMarkers(results.map { it.coordinate })
+                mapMarkersManager.showMarkers(results.map { it.coordinate })
             }
 
             override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
                 closeSearchView()
-                showMarkers(results.map { it.coordinate })
+                mapMarkersManager.showMarkers(results.map { it.coordinate })
             }
 
             override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
@@ -196,13 +150,13 @@ class MainActivity : AppCompatActivity() {
             override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
-                showMarker(searchResult.coordinate)
+                mapMarkersManager.showMarker(searchResult.coordinate)
             }
 
             override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
-                showMarker(searchResult.coordinate)
+                mapMarkersManager.showMarker(searchResult.coordinate)
             }
 
             override fun onError(e: Exception) {
@@ -213,13 +167,13 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                userDistanceTo(historyRecord.coordinate) { distance ->
+                locationEngine.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
                 }
 
-                showMarker(historyRecord.coordinate)
+                mapMarkersManager.showMarker(historyRecord.coordinate)
             }
 
             override fun onPopulateQueryClick(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
@@ -267,8 +221,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateOnBackPressedCallbackEnabled() {
-        onBackPressedCallback.isEnabled =
-            !searchPlaceView.isHidden() || mapMarkersManager.markerCoordinates.isNotEmpty()
+        onBackPressedCallback.isEnabled = !searchPlaceView.isHidden() || mapMarkersManager.hasMarkers
     }
 
     private fun closeSearchView() {
@@ -308,151 +261,84 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
-        lastKnownLocation { location ->
-            if (location == null) {
-                callback(null)
-            } else {
-                val distance = serviceProvider
-                    .distanceCalculator(latitude = location.latitude())
-                    .distance(location, destination)
-                callback(distance)
-            }
+    private fun getMapStyleUri(): String {
+        return when (val darkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> Style.DARK
+            Configuration.UI_MODE_NIGHT_NO,
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> Style.MAPBOX_STREETS
+            else -> error("Unknown mode: $darkMode")
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private fun lastKnownLocation(callback: (Point?) -> Unit) {
-        if (!PermissionsManager.areLocationPermissionsGranted(this)) {
-            callback(null)
-        }
+    private class MapMarkersManager(mapView: MapView) {
 
-        locationEngine.getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
-            override fun onSuccess(result: LocationEngineResult?) {
-                val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                    Point.fromLngLat(location.longitude, location.latitude)
-                }
-                callback(location)
-            }
+        private val mapboxMap = mapView.getMapboxMap()
+        private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
+        private val markers = mutableMapOf<Long, Point>()
 
-            override fun onFailure(p0: Exception) {
-                callback(null)
-            }
-        })
-    }
+        var onMarkersChangeListener: (() -> Unit)? = null
 
-    private fun showMarkers(coordinates: List<Point>) {
-        if (coordinates.isEmpty()) {
-            mapMarkersManager.clearMarkers()
-            return
-        } else if (coordinates.size == 1) {
-            showMarker(coordinates.first())
-            return
-        }
-
-        val cameraOptions = mapboxMap.cameraForCoordinates(
-            coordinates, markersPaddings, bearing = null, pitch = null
-        )
-
-        if (cameraOptions.center == null) {
-            mapMarkersManager.clearMarkers()
-            return
-        }
-
-        showMarkers(cameraOptions, coordinates)
-    }
-
-    private fun showMarker(coordinate: Point) {
-        val cameraOptions = CameraOptions.Builder()
-            .center(coordinate)
-            .padding(EdgeInsets(.0, .0, dpToPx(300).toDouble(), .0))
-            .zoom(10.0)
-            .build()
-
-        showMarkers(cameraOptions, listOf(coordinate))
-    }
-
-    private fun showMarkers(cameraOptions: CameraOptions, coordinates: List<Point>) {
-        mapMarkersManager.setMarkers(coordinates)
-        mapboxMap.setCamera(cameraOptions)
-    }
-
-    private class MapMarkersManager {
-
-        private val changeListeners = CopyOnWriteArrayList<OnChangeListener>()
-        private val _markerCoordinates = mutableListOf<Point>()
-
-        val markerCoordinates: List<Point>
-            get() = _markerCoordinates
+        val hasMarkers: Boolean
+            get() = markers.isNotEmpty()
 
         fun clearMarkers() {
-            if (_markerCoordinates.isNotEmpty()) {
-                _markerCoordinates.clear()
-                changeListeners.forEach { it.onMarkersChanged(_markerCoordinates) }
+            markers.clear()
+            circleAnnotationManager.deleteAll()
+        }
+
+        fun showMarker(coordinate: Point) {
+            showMarkers(listOf(coordinate))
+        }
+
+        fun showMarkers(coordinates: List<Point>) {
+            clearMarkers()
+            if (coordinates.isEmpty()) {
+                onMarkersChangeListener?.invoke()
+                return
             }
-        }
 
-        fun setMarkers(coordinates: List<Point>) {
-            if (coordinates != _markerCoordinates) {
-                _markerCoordinates.clear()
-                _markerCoordinates.addAll(coordinates)
-                changeListeners.forEach { it.onMarkersChanged(_markerCoordinates) }
+            coordinates.forEach { coordinate ->
+                val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
+                    .withPoint(coordinate)
+                    .withCircleRadius(8.0)
+                    .withCircleColor("#ee4e8b")
+                    .withCircleStrokeWidth(2.0)
+                    .withCircleStrokeColor("#ffffff")
+
+                val annotation = circleAnnotationManager.create(circleAnnotationOptions)
+                markers[annotation.id] = coordinate
             }
-        }
 
-        fun addOnChangeListener(listener: OnChangeListener) {
-            changeListeners.add(listener)
-        }
-
-        fun interface OnChangeListener {
-            fun onMarkersChanged(points: List<Point>)
+            if (coordinates.size == 1) {
+                CameraOptions.Builder()
+                    .center(coordinates.first())
+                    .padding(MARKERS_INSETS_OPEN_CARD)
+                    .zoom(10.0)
+                    .build()
+            } else {
+                mapboxMap.cameraForCoordinates(
+                    coordinates, MARKERS_INSETS, bearing = null, pitch = null
+                )
+            }.also {
+                mapboxMap.setCamera(it)
+            }
+            onMarkersChangeListener?.invoke()
         }
     }
 
     private companion object {
 
-        const val SEARCH_PIN_SOURCE_ID = "search.pin.source.id"
-        const val SEARCH_PIN_IMAGE_ID = "search.pin.image.id"
-        const val SEARCH_PIN_LAYER_ID = "search.pin.layer.id"
+        val MARKERS_EDGE_OFFSET = dpToPx(64).toDouble()
+        val PLACE_CARD_HEIGHT = dpToPx(300).toDouble()
 
-        val markersPaddings: EdgeInsets = dpToPx(64).toDouble()
-            .let { mapPadding ->
-                EdgeInsets(mapPadding, mapPadding, mapPadding, mapPadding)
-            }
+        val MARKERS_INSETS = EdgeInsets(
+            MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET
+        )
+
+        val MARKERS_INSETS_OPEN_CARD = EdgeInsets(
+            MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, PLACE_CARD_HEIGHT, MARKERS_EDGE_OFFSET
+        )
 
         const val PERMISSIONS_REQUEST_LOCATION = 0
-
-        fun Context.isPermissionGranted(permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-        }
-
-        fun createSearchPinDrawable(): ShapeDrawable {
-            val size = dpToPx(24)
-            val drawable = ShapeDrawable(OvalShape())
-            drawable.intrinsicWidth = size
-            drawable.intrinsicHeight = size
-            DrawableCompat.setTint(drawable, Color.RED)
-            return drawable
-        }
-
-        fun dpToPx(dp: Int): Int {
-            return (dp * Resources.getSystem().displayMetrics.density).toInt()
-        }
-
-        fun geoIntent(point: Point): Intent {
-            return Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
-        }
-
-        fun shareIntent(searchPlace: SearchPlace): Intent {
-            val text = "${searchPlace.name}. " +
-                    "Address: ${searchPlace.address?.formattedAddress(SearchAddress.FormatStyle.Short) ?: "unknown"}. " +
-                    "Geo coordinate: (lat=${searchPlace.coordinate.latitude()}, lon=${searchPlace.coordinate.longitude()})"
-
-            return Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, text)
-            }
-        }
     }
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:background="@color/windowBackground"
     >
 
     <EditText
@@ -99,14 +99,49 @@
             tools:visibility="visible"
             />
 
+        <TextView
+            android:id="@+id/pin_correction_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/address_autofill_pin_correction_note"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/full_address"
+            tools:visibility="visible"
+            />
+
         <com.mapbox.maps.MapView
             android:id="@+id/map"
             android:layout_width="0dp"
             android:layout_height="150dp"
-            android:padding="8dp"
+            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/full_address"
+            app:layout_constraintTop_toBottomOf="@+id/pin_correction_note"
+            />
+
+        <ImageView
+            android:id="@+id/map_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/red_marker"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/map_center"
+            app:layout_constraintEnd_toEndOf="@+id/map"
+            app:layout_constraintStart_toStartOf="@+id/map"
+            />
+
+        <Space
+            android:id="@+id/map_center"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/map"
+            app:layout_constraintEnd_toEndOf="@+id/map"
+            app:layout_constraintStart_toStartOf="@+id/map"
+            app:layout_constraintTop_toTopOf="@+id/map"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

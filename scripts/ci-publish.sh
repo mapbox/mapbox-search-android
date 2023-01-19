@@ -12,5 +12,6 @@ pushd MapboxSearch/
 ./gradlew :ui:mapboxSDKRegistryUpload
 ./gradlew :offline:mapboxSDKRegistryUpload
 ./gradlew :autofill:mapboxSDKRegistryUpload
+./gradlew :discover:mapboxSDKRegistryUpload
 
 popd

@@ -6,4 +6,6 @@
     <string name="address_autofill_address_zip_hint">Zip Code</string>
     <string name="address_autofill_address_city_hint">City</string>
     <string name="address_autofill_address_apt_hint">Apt., suite, etc. (optional)</string>
+    <string name="address_autofill_pin_correction_note">Drag map to correct pin position</string>
+    <string name="address_autofill_error_pin_correction">Unable to locate selected coordinate</string>
 </resources>

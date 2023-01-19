@@ -1,41 +1,25 @@
 package com.mapbox.demo.autofill
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
-import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
-import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.search.autofill.AddressAutofill
+import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
@@ -44,6 +28,8 @@ import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var addressAutofill: AddressAutofill
 
     private lateinit var searchResultsView: SearchResultsView
     private lateinit var searchEngineUiAdapter: AddressAutofillUiAdapter
@@ -55,13 +41,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stateEditText: EditText
     private lateinit var zipEditText: EditText
     private lateinit var fullAddress: TextView
+    private lateinit var pinCorrectionNote: TextView
     private lateinit var mapView: MapView
+    private lateinit var mapPin: View
+    private lateinit var mapboxMap: MapboxMap
 
+    private var ignoreNextMapIdleEvent: Boolean = false
     private var ignoreNextQueryTextUpdate: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
 
         queryEditText = findViewById(R.id.query_text)
         apartmentEditText = findViewById(R.id.address_apartment)
@@ -69,9 +61,21 @@ class MainActivity : AppCompatActivity() {
         stateEditText = findViewById(R.id.address_state)
         zipEditText = findViewById(R.id.address_zip)
         fullAddress = findViewById(R.id.full_address)
+        pinCorrectionNote = findViewById(R.id.pin_correction_note)
 
+        mapPin = findViewById(R.id.map_pin)
         mapView = findViewById(R.id.map)
-        mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+        mapboxMap = mapView.getMapboxMap()
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+        mapboxMap.addOnMapIdleListener {
+            if (ignoreNextMapIdleEvent) {
+                ignoreNextMapIdleEvent = false
+                return@addOnMapIdleListener
+            }
+
+            val mapCenter = mapboxMap.cameraState.center
+            findAddress(mapCenter)
+        }
 
         searchResultsView = findViewById(R.id.search_results_view)
 
@@ -83,39 +87,28 @@ class MainActivity : AppCompatActivity() {
 
         searchEngineUiAdapter = AddressAutofillUiAdapter(
             view = searchResultsView,
-            addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
+            addressAutofill = addressAutofill
         )
+
+        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+            point?.let {
+                mapView.getMapboxMap().setCamera(
+                    CameraOptions.Builder()
+                        .center(point)
+                        .zoom(9.0)
+                        .build()
+                )
+                ignoreNextMapIdleEvent = true
+            }
+        }
 
         searchEngineUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
-                val address = suggestion.result().address
-                cityEditText.setText(address.place)
-                stateEditText.setText(address.region)
-                zipEditText.setText(address.postcode)
-
-                fullAddress.isVisible = true
-                fullAddress.text = suggestion.formattedAddress
-
-                mapView.getMapboxMap().setCamera(
-                    CameraOptions.Builder()
-                        .center(suggestion.coordinate)
-                        .zoom(16.0)
-                        .build()
+                showAddressAutofillSuggestion(
+                    suggestion,
+                    fromReverseGeocoding = false,
                 )
-                addAnnotationToMap(suggestion.coordinate)
-
-                ignoreNextQueryTextUpdate = true
-                queryEditText.setText(
-                    listOfNotNull(
-                        address.houseNumber,
-                        address.street
-                    ).joinToString()
-                )
-                queryEditText.clearFocus()
-
-                searchResultsView.isVisible = false
-                searchResultsView.hideKeyboard()
             }
 
             override fun onSuggestionsShown(suggestions: List<AddressAutofillSuggestion>) {
@@ -162,116 +155,64 @@ class MainActivity : AppCompatActivity() {
                 ),
                 PERMISSIONS_REQUEST_LOCATION
             )
-        } else {
-            moveMapCameraToCurrentLocation()
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == PERMISSIONS_REQUEST_LOCATION) {
-            if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
-                moveMapCameraToCurrentLocation()
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-    }
-
-    private fun moveMapCameraToCurrentLocation() {
-        if (!PermissionsManager.areLocationPermissionsGranted(this)) {
-            return
-        }
-
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocationOrNull(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
-                    CameraOptions.Builder()
-                        .center(point)
-                        .zoom(9.0)
-                        .build()
-                )
+    private fun findAddress(point: Point) {
+        lifecycleScope.launchWhenStarted {
+            val response = addressAutofill.suggestions(point, AddressAutofillOptions())
+            response.onValue { suggestions ->
+                if (suggestions.isEmpty()) {
+                    showToast(R.string.address_autofill_error_pin_correction)
+                } else {
+                    showAddressAutofillSuggestion(
+                        suggestions.first(),
+                        fromReverseGeocoding = true
+                    )
+                }
+            }.onError { error ->
+                Log.d("Test.", "Test. $error", error)
+                showToast(R.string.address_autofill_error_pin_correction)
             }
         }
     }
 
-    private fun addAnnotationToMap(coordinate: Point) {
-        convertDrawableToBitmap(this, R.drawable.red_marker)?.let {
-            val annotationApi = mapView.annotations
-            val pointAnnotationManager = annotationApi.createPointAnnotationManager()
-            val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
-                .withPoint(coordinate)
-                .withIconImage(it)
-                .withIconAnchor(IconAnchor.BOTTOM)
+    private fun showAddressAutofillSuggestion(suggestion: AddressAutofillSuggestion, fromReverseGeocoding: Boolean) {
+        val address = suggestion.result().address
+        cityEditText.setText(address.place)
+        stateEditText.setText(address.region)
+        zipEditText.setText(address.postcode)
 
-            pointAnnotationManager.create(pointAnnotationOptions)
+        fullAddress.isVisible = true
+        fullAddress.text = suggestion.formattedAddress
+
+        pinCorrectionNote.isVisible = true
+
+        if (!fromReverseGeocoding) {
+            mapView.getMapboxMap().setCamera(
+                CameraOptions.Builder()
+                    .center(suggestion.coordinate)
+                    .zoom(16.0)
+                    .build()
+            )
+            ignoreNextMapIdleEvent = true
+            mapPin.isVisible = true
         }
+
+        ignoreNextQueryTextUpdate = true
+        queryEditText.setText(
+            listOfNotNull(
+                address.houseNumber,
+                address.street
+            ).joinToString()
+        )
+        queryEditText.clearFocus()
+
+        searchResultsView.isVisible = false
+        searchResultsView.hideKeyboard()
     }
 
     private companion object {
-
         const val PERMISSIONS_REQUEST_LOCATION = 0
-
-        fun Context.isPermissionGranted(permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(
-                this, permission
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-
-        val Context.inputMethodManager: InputMethodManager
-            get() = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        fun View.hideKeyboard() {
-            context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-        }
-
-        fun convertDrawableToBitmap(context: Context, @DrawableRes resourceId: Int): Bitmap? {
-            return AppCompatResources.getDrawable(context, resourceId)?.let {
-                convertDrawableToBitmap(it)
-            }
-        }
-
-        fun convertDrawableToBitmap(sourceDrawable: Drawable): Bitmap? {
-            return if (sourceDrawable is BitmapDrawable) {
-                sourceDrawable.bitmap
-            } else {
-                val constantState = sourceDrawable.constantState ?: return null
-                val drawable = constantState.newDrawable().mutate()
-                val bitmap: Bitmap = Bitmap.createBitmap(
-                    drawable.intrinsicWidth,
-                    drawable.intrinsicHeight,
-                    Bitmap.Config.ARGB_8888
-                )
-
-                val canvas = Canvas(bitmap)
-                drawable.setBounds(0, 0, canvas.width, canvas.height)
-                drawable.draw(canvas)
-                bitmap
-            }
-        }
-
-        @SuppressLint("MissingPermission")
-        fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) -> Unit) {
-            if (!PermissionsManager.areLocationPermissionsGranted(context)) {
-                callback(null)
-            }
-
-            val locationCallback = object : LocationEngineCallback<LocationEngineResult> {
-                override fun onSuccess(result: LocationEngineResult?) {
-                    val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
-                        Point.fromLngLat(location.longitude, location.latitude)
-                    }
-                    callback(location)
-                }
-
-                override fun onFailure(e: Exception) {
-                    callback(null)
-                }
-            }
-            getLastLocation(locationCallback)
-        }
     }
 }
