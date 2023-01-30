@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.45-SNAPSHOT
 
+### Bug fixes
+- [CORE] Fix a crash that could happen during unexpected backend metadata response.
+- [OFFLINE] Update default tiles dataset name.
+
 ### Mapbox dependencies
 - Search Native SDK `0.66.0`
 - Common SDK `23.2.1`
