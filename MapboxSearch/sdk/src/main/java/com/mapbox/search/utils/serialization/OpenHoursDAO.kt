@@ -23,7 +23,11 @@ internal class OpenHoursDAO(
             OpenModeDAO.PERMANENTLY_CLOSED -> OpenHours.PermanentlyClosed
             OpenModeDAO.SCHEDULED -> {
                 val validPeriods = periods?.filter { it.isValid }?.map { it.createData() }
-                OpenHours.Scheduled(periods = validPeriods!!)
+                if (validPeriods.isNullOrEmpty()) {
+                    error("OpenHours.periods must not be empty")
+                } else {
+                    OpenHours.Scheduled(periods = validPeriods)
+                }
             }
         }
     }
