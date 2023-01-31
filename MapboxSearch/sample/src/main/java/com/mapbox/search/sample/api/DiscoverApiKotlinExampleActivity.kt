@@ -12,12 +12,10 @@ import com.mapbox.search.sample.R
 
 class DiscoverApiKotlinExampleActivity : AppCompatActivity() {
 
-    private lateinit var discoverApi: DiscoverApi
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        discoverApi = DiscoverApi.create(
+        val discoverApi = DiscoverApi.create(
             accessToken = getString(R.string.mapbox_access_token),
         )
 
@@ -27,12 +25,12 @@ class DiscoverApiKotlinExampleActivity : AppCompatActivity() {
                 Point.fromLngLat(-77.02584649998599, 38.907104458514695)
             )
 
-            val result = discoverApi.search(
+            val response = discoverApi.search(
                 query = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
                 region = dcRegion
             )
 
-            result.onValue { results ->
+            response.onValue { results ->
                 Log.i("SearchApiExample", "Discover API results: $results")
             }.onError { e ->
                 Log.i("SearchApiExample", "Discover API error", e)

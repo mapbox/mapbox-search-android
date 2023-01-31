@@ -11,11 +11,21 @@ import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 
-public fun CoreOpenHours.mapToPlatform() = when (mode) {
+public fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
     CoreOpenMode.ALWAYS_OPEN -> OpenHours.AlwaysOpen
     CoreOpenMode.TEMPORARILY_CLOSED -> OpenHours.TemporaryClosed
     CoreOpenMode.PERMANENTLY_CLOSED -> OpenHours.PermanentlyClosed
-    CoreOpenMode.SCHEDULED -> OpenHours.Scheduled(periods = periods.map { it.mapToPlatform() })
+    CoreOpenMode.SCHEDULED -> {
+        val periods = periods.map { it.mapToPlatform() }
+        if (periods.isEmpty()) {
+            failDebug {
+                "CoreOpenHours type is SCHEDULED, but periods is empty"
+            }
+            null
+        } else {
+            OpenHours.Scheduled(periods = periods)
+        }
+    }
 }
 
 public fun OpenHours.mapToCore() = when (this) {

@@ -304,7 +304,7 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(searchEngineResult is SearchEngineResult.Results)
 
         val results = searchEngineResult.requireResults()
-        assertEquals(9, results.size)
+        assertEquals(10, results.size)
 
         val result = results.first()
         val rawSearchResult = result.rawSearchResult
@@ -522,7 +522,7 @@ internal class OfflineSearchEngineIntegrationTest {
             ),
             descriptionAddress = "2011 15th Street Northwest, Washington, District of Columbia",
             distanceMeters = 0.0,
-            center = Point.fromLngLat(-77.03401323039313, 38.91793457393481),
+            center = Point.fromLngLat(-77.03402549505554, 38.91792475903431),
             serverIndex = null,
         )
 

@@ -81,7 +81,7 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
                     Log.i("SearchApiExample", tileRegionId + " was successfully added or updated");
 
                     searchRequestTask = searchEngine.search(
-                        "Cafe",
+                        "2011 15th Street Northwest, Washington, District of Columbia",
                         new OfflineSearchOptions(),
                         searchCallback
                     );

@@ -45,7 +45,7 @@ internal class OfflineSearchEngineSettingsTest {
 
                 Then(
                     "Default dataset should be as expected",
-                    "test-dataset",
+                    "mbx-main",
                     OfflineSearchEngineSettings.DEFAULT_DATASET
                 )
 
