@@ -24,6 +24,8 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
@@ -60,6 +62,7 @@ import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
+import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
@@ -111,6 +114,23 @@ class MainActivity : AppCompatActivity() {
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
             mapboxMap.loadStyleUri(getMapStyleUri())
+
+            mapView.location.updateSettings {
+                enabled = true
+            }
+
+            mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
+                override fun onIndicatorPositionChanged(point: Point) {
+                    mapView.getMapboxMap().setCamera(
+                        CameraOptions.Builder()
+                            .center(point)
+                            .zoom(14.0)
+                            .build()
+                    )
+
+                    mapView.location.removeOnIndicatorPositionChangedListener(this)
+                }
+            })
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
@@ -152,6 +172,8 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
+        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
             override fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
@@ -168,8 +190,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                closeSearchView()
-                mapMarkersManager.showMarkers(results.map { it.coordinate })
+                // Nothing to do
             }
 
             override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
@@ -448,7 +469,7 @@ class MainActivity : AppCompatActivity() {
                 CameraOptions.Builder()
                     .center(coordinates.first())
                     .padding(MARKERS_INSETS_OPEN_CARD)
-                    .zoom(10.0)
+                    .zoom(14.0)
                     .build()
             } else {
                 mapboxMap.cameraForCoordinates(

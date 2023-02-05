@@ -107,7 +107,6 @@ package com.mapbox.search.ui.view {
   }
 
   public abstract class SearchResultAdapterItem {
-    ctor public SearchResultAdapterItem();
   }
 
   public static final class SearchResultAdapterItem.EmptyHistory extends com.mapbox.search.ui.view.SearchResultAdapterItem {

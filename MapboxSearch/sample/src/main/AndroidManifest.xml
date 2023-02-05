@@ -35,7 +35,6 @@
 
         <activity
             android:name=".CustomThemeActivity"
-            android:theme="@style/CustomTheme"
             android:windowSoftInputMode="adjustNothing"
             />
 

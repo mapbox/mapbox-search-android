@@ -11,7 +11,6 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/SimpleUiTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
@@ -20,7 +19,6 @@
 
     <com.mapbox.search.ui.view.SearchResultsView
         android:id="@+id/search_results_view"
-        style="@style/SimpleUiTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"

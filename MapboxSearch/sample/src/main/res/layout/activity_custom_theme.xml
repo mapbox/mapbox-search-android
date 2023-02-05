@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/CustomTheme"
+    android:background="#FBFEF7"
     tools:context=".CustomThemeActivity"
     >
 
@@ -11,9 +13,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:elevation="4dp"
-        android:theme="@style/MapboxSearchSdk.Theme.Auto"
+        android:theme="@style/ToolbarCustomTheme"
         />
 
     <com.mapbox.search.ui.view.SearchResultsView
@@ -21,9 +22,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
-        android:background="@color/white"
         android:clipToPadding="false"
         android:paddingTop="22dp"
         android:paddingBottom="22dp"
         />
-</merge>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/search_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        >
+
+        <com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+            android:id="@+id/search_place_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="@dimen/search_card_elevation"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

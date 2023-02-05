@@ -32,7 +32,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
     private lateinit var addressAutofill: AddressAutofill
 
     private lateinit var searchResultsView: SearchResultsView
-    private lateinit var searchEngineUiAdapter: AddressAutofillUiAdapter
+    private lateinit var addressAutofillUiAdapter: AddressAutofillUiAdapter
 
     private lateinit var queryEditText: EditText
 
@@ -85,7 +85,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             )
         )
 
-        searchEngineUiAdapter = AddressAutofillUiAdapter(
+        addressAutofillUiAdapter = AddressAutofillUiAdapter(
             view = searchResultsView,
             addressAutofill = addressAutofill
         )
@@ -102,7 +102,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             }
         }
 
-        searchEngineUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
+        addressAutofillUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
                 showAddressAutofillSuggestion(
@@ -131,7 +131,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
                 val query = Query.create(text.toString())
                 if (query != null) {
                     lifecycleScope.launchWhenStarted {
-                        searchEngineUiAdapter.search(query)
+                        addressAutofillUiAdapter.search(query)
                     }
                 }
                 searchResultsView.isVisible = query != null

@@ -13,12 +13,4 @@
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
-    <style name="SimpleUiTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorAccent">?attr/mapboxSearchSdkPrimaryAccentLightColor</item>
-        <item name="colorPrimary">?attr/mapboxSearchSdkPrimaryAccentColor</item>
-        <item name="colorControlNormal">?attr/mapboxSearchSdkPrimaryAccentColor</item>
-        <item name="android:textColorHint">?attr/mapboxSearchSdkPrimaryTextInactiveColor</item>
-        <item name="android:background">?attr/mapboxSearchSdkBackgroundColor</item>
-    </style>
-
 </resources>

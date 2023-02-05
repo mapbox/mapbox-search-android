@@ -10,8 +10,6 @@
         <attr name="mapboxSearchSdkPrimaryTextInactiveColor" format="color"/>
         <!-- Primary accent color. Used as buttons primary color, search highlight color and primary tint color. -->
         <attr name="mapboxSearchSdkPrimaryAccentColor" format="color"/>
-        <!-- Light version of primary accent color. Used as cursor color. -->
-        <attr name="mapboxSearchSdkPrimaryAccentLightColor" format="color"/>
         <!-- Color of text/icon which drawn on top of the primary color. -->
         <attr name="mapboxSearchSdkOnPrimaryAccentColor" format="color"/>
         <!-- Color of distance text, shown next to search result. -->
@@ -25,12 +23,8 @@
             Used as EditTexts background, category buttons background and divider color.
         -->
         <attr name="mapboxSearchSdkBackgroundSecondaryColor" format="color"/>
-        <!-- Color of the small rectangle at the top of the BottomSheetView. -->
-        <attr name="mapboxSearchSdkTongueColor" format="color"/>
         <!-- Color of the small arrow indicator placed in right top corner of each search result. -->
         <attr name="mapboxSearchSdkPopulateArrowColor" format="color"/>
-        <!-- Color of the clear icon showed im each input EditText. -->
-        <attr name="mapboxSearchSdkInputViewClearIconColor" format="color"/>
         <!--
             (Optional) Color of ProgressBar indicators.
             If not specified, indicators fallback to "mapboxSearchSdkPrimaryAccentColor" color.
@@ -38,9 +32,6 @@
         <attr name="mapboxSearchSdkProgressColor" format="color"/>
         <!-- Color of the error icon. -->
         <attr name="mapboxSearchSdkErrorIconColor" format="color"/>
-
-        <!-- (Optional) Popup dialog theme. Used as an overlay theme for FavoriteActionsDialog. -->
-        <attr name="mapboxSearchSdkPopupDialogThemeOverlay" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="MapboxSearchSdkThemeEntryPoint">
