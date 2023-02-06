@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * Discover API Query type.
+ * Discover Query type.
  */
-public abstract class DiscoverApiQuery internal constructor() : Parcelable {
+public abstract class DiscoverQuery internal constructor() : Parcelable {
 
     /**
      * Raw query canonical name.
@@ -19,7 +19,7 @@ public abstract class DiscoverApiQuery internal constructor() : Parcelable {
     @Parcelize
     public class Category internal constructor(
         override val canonicalName: String,
-    ) : DiscoverApiQuery() {
+    ) : DiscoverQuery() {
 
         /**
          * @suppress
@@ -28,7 +28,7 @@ public abstract class DiscoverApiQuery internal constructor() : Parcelable {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
-            other as DiscoverApiQuery
+            other as DiscoverQuery
 
             if (canonicalName != other.canonicalName) return false
 

@@ -30,7 +30,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-internal class DiscoverApiSearchEngine(
+internal class DiscoverSearchEngine(
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
@@ -93,7 +93,6 @@ internal class DiscoverApiSearchEngine(
 
     companion object {
 
-        // TODO Should we have a separate Api Type for the Discover API?
         private val API_TYPE = ApiType.SBS
 
         private val DEFAULT_EXECUTOR = Executors.newSingleThreadExecutor { runnable ->
@@ -104,7 +103,7 @@ internal class DiscoverApiSearchEngine(
             accessToken: String,
             app: Application,
             locationEngine: LocationEngine,
-        ): DiscoverApiSearchEngine {
+        ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     accessToken, null, API_TYPE, UserAgentProvider.userAgent, null
@@ -120,7 +119,7 @@ internal class DiscoverApiSearchEngine(
 
             val searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
 
-            return DiscoverApiSearchEngine(
+            return DiscoverSearchEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = requestContextProvider,
                 searchResultFactory = searchResultFactory,

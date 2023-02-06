@@ -4,10 +4,10 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * Class representing address of a place returned by the [DiscoverApi].
+ * Class representing address of a place returned by the [Discover].
  */
 @Parcelize
-public class DiscoverApiAddress internal constructor(
+public class DiscoverAddress internal constructor(
 
     /**
      * Address house number.
@@ -72,7 +72,7 @@ public class DiscoverApiAddress internal constructor(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DiscoverApiAddress
+        other as DiscoverAddress
 
         if (houseNumber != other.houseNumber) return false
         if (street != other.street) return false

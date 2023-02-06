@@ -23,15 +23,15 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-internal class DiscoverApiImplTest {
+internal class DiscoverImplTest {
 
-    private lateinit var discoverApi: DiscoverApi
-    private lateinit var engine: DiscoverApiSearchEngine
+    private lateinit var discover: Discover
+    private lateinit var engine: DiscoverSearchEngine
 
     @BeforeEach
     fun setUp() {
         engine = mockk()
-        discoverApi = DiscoverApiImpl(engine)
+        discover = DiscoverImpl(engine)
     }
 
     @Test
@@ -39,7 +39,7 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
+            discover.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
         }
 
         val coreOptions = createCoreSearchOptions(
@@ -61,10 +61,10 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_USER_LOCATION)
+            discover.search(TEST_QUERY, TEST_USER_LOCATION)
         }
 
-        val defaultOptions = DiscoverApiOptions()
+        val defaultOptions = DiscoverOptions()
 
         val coreOptions = createCoreSearchOptions(
             proximity = TEST_USER_LOCATION,
@@ -85,7 +85,7 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_BOUNDING_BOX, TEST_USER_LOCATION, TEST_OPTIONS)
+            discover.search(TEST_QUERY, TEST_BOUNDING_BOX, TEST_USER_LOCATION, TEST_OPTIONS)
         }
 
         val coreOptions = createCoreSearchOptions(
@@ -108,10 +108,10 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(query = TEST_QUERY, region = TEST_BOUNDING_BOX)
+            discover.search(query = TEST_QUERY, region = TEST_BOUNDING_BOX)
         }
 
-        val defaultOptions = DiscoverApiOptions()
+        val defaultOptions = DiscoverOptions()
 
         val coreOptions = createCoreSearchOptions(
             proximity = null,
@@ -133,7 +133,7 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_ROUTE, TEST_DEVIATION, TEST_OPTIONS)
+            discover.search(TEST_QUERY, TEST_ROUTE, TEST_DEVIATION, TEST_OPTIONS)
         }
 
         val coreOptions = createCoreSearchOptions(
@@ -157,10 +157,10 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(Exception())
 
         runBlocking {
-            discoverApi.search(query = TEST_QUERY, route = TEST_ROUTE)
+            discover.search(query = TEST_QUERY, route = TEST_ROUTE)
         }
 
-        val defaultOptions = DiscoverApiOptions()
+        val defaultOptions = DiscoverOptions()
 
         val coreOptions = createCoreSearchOptions(
             limit = defaultOptions.limit,
@@ -179,7 +179,7 @@ internal class DiscoverApiImplTest {
     }
 
     @Test
-    fun `Check successful search response mapping to Discover API format`() {
+    fun `Check successful search response mapping to Discover format`() {
         val coreResults = listOf(
             createTestSearchResult(point(1, 2)),
             createTestSearchResult(point(3, 4))
@@ -188,24 +188,24 @@ internal class DiscoverApiImplTest {
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createValue(coreResults to mockk())
 
         val discoverResult = runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
+            discover.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
         }
 
         assertTrue(discoverResult.isValue)
 
         assertEquals(
-            coreResults.map { DiscoverApiResult.createFromSearchResult(it) },
+            coreResults.map { DiscoverResult.createFromSearchResult(it) },
             discoverResult.value
         )
     }
 
     @Test
-    fun `Check error search response mapping to Discover API format`() {
+    fun `Check error search response mapping to Discover format`() {
         val error = IOException("Test Unknown Host Error")
         coEvery { engine.search(any(), any()) } returns ExpectedFactory.createError(error)
 
         val result = runBlocking {
-            discoverApi.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
+            discover.search(TEST_QUERY, TEST_USER_LOCATION, TEST_OPTIONS)
         }
 
         assertTrue(result.isError)
@@ -216,8 +216,8 @@ internal class DiscoverApiImplTest {
 
         val TEST_USER_LOCATION: Point = point(1, 2)
         val TEST_BOUNDING_BOX: BoundingBox = BoundingBox.fromPoints(point(3, 4), point(5, 6))
-        val TEST_QUERY = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE
-        val TEST_OPTIONS = DiscoverApiOptions(limit = 5, language = IsoLanguageCode.FRENCH)
+        val TEST_QUERY = DiscoverQuery.Category.COFFEE_SHOP_CAFE
+        val TEST_OPTIONS = DiscoverOptions(limit = 5, language = IsoLanguageCode.FRENCH)
         val TEST_ROUTE = listOf(point(1, 2), point(3, 4), point(5, 6))
         val TEST_DEVIATION = RouteDeviationOptions.Time(15, TimeUnit.HOURS, RouteDeviationOptions.SarType("Test SAR type"))
 

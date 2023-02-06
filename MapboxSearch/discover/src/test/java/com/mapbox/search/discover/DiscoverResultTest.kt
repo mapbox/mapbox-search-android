@@ -20,11 +20,11 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class DiscoverApiResultTest {
+internal class DiscoverResultTest {
 
     @Test
     fun `equals() and hashCode() functions are correct`() {
-        EqualsVerifier.forClass(DiscoverApiResult::class.java)
+        EqualsVerifier.forClass(DiscoverResult::class.java)
             .withPrefabTestPoint()
             .verify()
     }
@@ -32,7 +32,7 @@ internal class DiscoverApiResultTest {
     @Test
     fun `toString() function is correct`() {
         ToStringVerifier(
-            clazz = DiscoverApiResult::class,
+            clazz = DiscoverResult::class,
             objectsFactory = ReflectionObjectsFactory(
                 extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS
             ),
@@ -74,7 +74,7 @@ internal class DiscoverApiResultTest {
             mockk(),
         )
 
-        val discoverResult = DiscoverApiResult.createFromSearchResult(baseResult)
+        val discoverResult = DiscoverResult.createFromSearchResult(baseResult)
 
         assertEquals(coreResult.names.first(), discoverResult.name)
         assertEquals(coreResult.center, discoverResult.coordinate)

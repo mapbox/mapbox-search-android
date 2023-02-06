@@ -6,25 +6,25 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class DiscoverApiOptionsTest {
+internal class DiscoverOptionsTest {
 
     @Test
     fun `equals() and hashCode() functions are correct`() {
-        EqualsVerifier.forClass(DiscoverApiOptions::class.java)
+        EqualsVerifier.forClass(DiscoverOptions::class.java)
             .verify()
     }
 
     @Test
     fun `toString() function is correct`() {
         ToStringVerifier(
-            clazz = DiscoverApiOptions::class,
+            clazz = DiscoverOptions::class,
             includeAllProperties = false
         ).verify()
     }
 
     @Test
     fun `Check default parameters`() {
-        val options = DiscoverApiOptions()
+        val options = DiscoverOptions()
         assertEquals(10, options.limit)
         assertEquals(defaultLocaleLanguage(), options.language)
     }

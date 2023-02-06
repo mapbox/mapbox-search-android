@@ -2,8 +2,8 @@
 
     <string name="action_address_autofill_ui_example">Open address autofill UI example</string>
     <string name="action_address_autofill_example">Open address autofill example</string>
-    <string name="action_discover_api_ui_example">Open Discover API UI example</string>
-    <string name="action_discover_api_example">Open Discover API example</string>
+    <string name="action_discover_ui_example">Open Discover UI example</string>
+    <string name="action_discover_example">Open Discover example</string>
     <string name="action_open_custom_theme_example">Open custom theme example</string>
     <string name="action_open_forward_geocoding_kt_example">Open forward geocoding Kotlin example</string>
     <string name="action_open_forward_geocoding_java_example">Open forward geocoding Java example</string>
@@ -38,7 +38,7 @@
     <string name="address_autofill_pin_correction_note">Drag map to correct pin position</string>
     <string name="address_autofill_error_pin_correction">Unable to locate selected coordinate</string>
 
-    <string name="discover_api_search_nearby">Search for cafes nearby</string>
-    <string name="discover_api_search_in_area">Search for cafes in selected area</string>
-    <string name="discover_api_search_error">Error happened during search request</string>
+    <string name="discover_search_nearby">Search for cafes nearby</string>
+    <string name="discover_search_in_area">Search for cafes in selected area</string>
+    <string name="discover_search_error">Error happened during search request</string>
 </resources>

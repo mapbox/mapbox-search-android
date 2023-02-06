@@ -4,7 +4,7 @@
     >
 
     <application
-        android:label="Discover API SDK test"
+        android:label="Discover SDK test"
         android:usesCleartextTraffic="true"
         />
 </manifest>

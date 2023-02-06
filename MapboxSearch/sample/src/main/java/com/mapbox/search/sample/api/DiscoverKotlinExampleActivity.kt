@@ -6,16 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.discover.DiscoverApi
-import com.mapbox.search.discover.DiscoverApiQuery
+import com.mapbox.search.discover.Discover
+import com.mapbox.search.discover.DiscoverQuery
 import com.mapbox.search.sample.R
 
-class DiscoverApiKotlinExampleActivity : AppCompatActivity() {
+class DiscoverKotlinExampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val discoverApi = DiscoverApi.create(
+        val discover = Discover.create(
             accessToken = getString(R.string.mapbox_access_token),
         )
 
@@ -25,15 +25,15 @@ class DiscoverApiKotlinExampleActivity : AppCompatActivity() {
                 Point.fromLngLat(-77.02584649998599, 38.907104458514695)
             )
 
-            val response = discoverApi.search(
-                query = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+            val response = discover.search(
+                query = DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                 region = dcRegion
             )
 
             response.onValue { results ->
-                Log.i("SearchApiExample", "Discover API results: $results")
+                Log.i("SearchApiExample", "Discover results: $results")
             }.onError { e ->
-                Log.i("SearchApiExample", "Discover API error", e)
+                Log.i("SearchApiExample", "Discover error", e)
             }
         }
     }
