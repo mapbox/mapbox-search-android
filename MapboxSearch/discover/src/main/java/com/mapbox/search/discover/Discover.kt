@@ -10,9 +10,9 @@ import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.location.defaultLocationEngine
 
 /**
- * Main entrypoint to the Mapbox Discover API.
+ * Main entrypoint to the Mapbox Discover SDK.
  */
-public interface DiscoverApi {
+public interface Discover {
 
     /**
      * Search for places nearby the specified geographic point.
@@ -23,10 +23,10 @@ public interface DiscoverApi {
      * @return Result of the search request, one of error or value.
      */
     public suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         proximity: Point,
-        options: DiscoverApiOptions = DiscoverApiOptions(),
-    ): Expected<Exception, List<DiscoverApiResult>>
+        options: DiscoverOptions = DiscoverOptions(),
+    ): Expected<Exception, List<DiscoverResult>>
 
     /**
      * Search for places inside the specified bounding box.
@@ -35,16 +35,16 @@ public interface DiscoverApi {
      * @param region Limit results to only those contained within the supplied bounding box.
      * @param proximity Optional geographic point to search nearby.
      * Bias the response to favor results that are closer to this location. If not specified the SDK will try to get
-     * user location from the [LocationEngine] that was provided in the [DiscoverApi.create].
+     * user location from the [LocationEngine] that was provided in the [Discover.create].
      * @param options Search options.
      * @return Result of the search request, one of error or value.
      */
     public suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         region: BoundingBox,
         proximity: Point? = null,
-        options: DiscoverApiOptions = DiscoverApiOptions(),
-    ): Expected<Exception, List<DiscoverApiResult>>
+        options: DiscoverOptions = DiscoverOptions(),
+    ): Expected<Exception, List<DiscoverResult>>
 
     /**
      * Search for places along the road.
@@ -56,11 +56,11 @@ public interface DiscoverApi {
      * @return Result of the search request, one of error or value.
      */
     public suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         route: List<Point>,
         deviation: RouteDeviationOptions = RouteDeviationOptions.DEFAULT_DEVIATION,
-        options: DiscoverApiOptions = DiscoverApiOptions(),
-    ): Expected<Exception, List<DiscoverApiResult>>
+        options: DiscoverOptions = DiscoverOptions(),
+    ): Expected<Exception, List<DiscoverResult>>
 
     /**
      * @suppress
@@ -68,7 +68,7 @@ public interface DiscoverApi {
     public companion object {
 
         /**
-         * Creates a new instance of the [DiscoverApi].
+         * Creates a new instance of the [Discover].
          *
          * @param accessToken [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
          *
@@ -77,20 +77,20 @@ public interface DiscoverApi {
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
-         * @return a new instance instance of [DiscoverApi].
+         * @return a new instance instance of [Discover].
          */
         @JvmStatic
         @JvmOverloads
         public fun create(
             accessToken: String,
             locationEngine: LocationEngine = defaultLocationEngine(),
-        ): DiscoverApi {
-            val engine = DiscoverApiSearchEngine.create(
+        ): Discover {
+            val engine = DiscoverSearchEngine.create(
                 accessToken,
                 BaseSearchSdkInitializer.app,
                 locationEngine
             )
-            return DiscoverApiImpl(engine)
+            return DiscoverImpl(engine)
         }
     }
 }

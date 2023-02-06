@@ -2,6 +2,12 @@
 
 ## 1.0.0-beta.45-SNAPSHOT
 
+### New features
+- [UI] Now `SearchResultsView` will use `mapboxSearchSdkBackgroundColor` as a background color if background is not specified explicitly.
+
+### Breaking changes
+- [Discover] `Discover API` has been renamed to `Discover`. Also, `DiscoverApiAddress`, `DiscoverApiOptions`, `DiscoverApiQuery`, `DiscoverApiResult` have been renamed to `DiscoverAddress`, `DiscoverOptions`, `DiscoverQuery`, `DiscoverResult` respectively.
+
 ### Bug fixes
 - [CORE] Fix a crash that could happen during unexpected backend metadata response.
 - [OFFLINE] Update default tiles dataset name.

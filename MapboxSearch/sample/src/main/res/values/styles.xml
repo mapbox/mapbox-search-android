@@ -9,37 +9,38 @@
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
-    <style name="Toolbar.Theme.Light.LightControls" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/white</item>
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/white</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 
     <style name="CustomTheme" parent="AppTheme">
         <item name="mapboxSearchSdkTheme">@style/CustomSearchSdkTheme</item>
     </style>
 
-    <style name="CustomSearchSdkTheme" parent="">
-        <item name="mapboxSearchSdkPrimaryTextColor">#1C82D3</item>
-        <item name="mapboxSearchSdkPrimaryTextInactiveColor">#466075</item>
-        <item name="mapboxSearchSdkPrimaryAccentColor">#C33364</item>
-        <item name="mapboxSearchSdkPrimaryAccentLightColor">#AE5170</item>
-        <item name="mapboxSearchSdkOnPrimaryAccentColor">#FFEB3B</item>
-        <item name="mapboxSearchSdkDistanceColor">#BA802B</item>
-        <item name="mapboxSearchSdkIconTintColor">#1C82D3</item>
-        <item name="mapboxSearchSdkBackgroundColor">#FFD53D</item>
-        <item name="mapboxSearchSdkBackgroundSecondaryColor">#F6E8C4</item>
-        <item name="mapboxSearchSdkTongueColor">#F1D3B5</item>
-        <item name="mapboxSearchSdkPopulateArrowColor">#D3C9A6</item>
-        <item name="mapboxSearchSdkInputViewClearIconColor">#F4683C</item>
-        <item name="mapboxSearchSdkProgressColor">#C33364</item>
-        <item name="mapboxSearchSdkErrorIconColor">#FF0F0F</item>
-
-        <item name="mapboxSearchSdkPopupDialogThemeOverlay">@style/CustomSearchSdkThemeOverlay</item>
+    <style name="ToolbarCustomTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#4F6530</item>
+        <item name="colorControlActivated">#4F6530</item>
+        <item name="colorControlHighlight">#4F6530</item>
+        <item name="colorPrimary">#4F6530</item>
+        <item name="android:background">#FEFCF7</item>
+        <item name="android:textColorPrimary">#4F6530</item>
+        <item name="android:textColorSecondary">#4F6530</item>
+        <item name="android:textColorHint">#4F6530</item>
     </style>
 
-    <style name="CustomSearchSdkThemeOverlay" parent="">
-        <item name="mapboxSearchSdkPrimaryTextColor">#333333</item>
-        <item name="mapboxSearchSdkIconTintColor">#666666</item>
-        <item name="mapboxSearchSdkBackgroundColor">#FFFFFF</item>
+    <style name="CustomSearchSdkTheme" parent="">
+        <item name="mapboxSearchSdkPrimaryTextColor">#4F6530</item>
+        <item name="mapboxSearchSdkPrimaryTextInactiveColor">#5A713A</item>
+        <item name="mapboxSearchSdkPrimaryAccentColor">#34431F</item>
+        <item name="mapboxSearchSdkOnPrimaryAccentColor">#D3C9A6</item>
+        <item name="mapboxSearchSdkDistanceColor">#A1AE7E</item>
+        <item name="mapboxSearchSdkIconTintColor">#4F6530</item>
+        <item name="mapboxSearchSdkBackgroundColor">#F5F4EC</item>
+        <item name="mapboxSearchSdkBackgroundSecondaryColor">#AFC3AD</item>
+        <item name="mapboxSearchSdkPopulateArrowColor">#D3C9A6</item>
+        <item name="mapboxSearchSdkProgressColor">#4F6530</item>
+        <item name="mapboxSearchSdkErrorIconColor">#4F6530</item>
     </style>
 
 </resources>

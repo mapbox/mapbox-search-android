@@ -21,11 +21,11 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.search.discover.DiscoverApi
-import com.mapbox.search.discover.DiscoverApiAddress
-import com.mapbox.search.discover.DiscoverApiOptions
-import com.mapbox.search.discover.DiscoverApiQuery
-import com.mapbox.search.discover.DiscoverApiResult
+import com.mapbox.search.discover.Discover
+import com.mapbox.search.discover.DiscoverAddress
+import com.mapbox.search.discover.DiscoverOptions
+import com.mapbox.search.discover.DiscoverQuery
+import com.mapbox.search.discover.DiscoverResult
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
@@ -34,9 +34,9 @@ import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import java.util.UUID
 
-class DiscoverApiUiActivity : AppCompatActivity() {
+class DiscoverActivity : AppCompatActivity() {
 
-    private lateinit var discoverApi: DiscoverApi
+    private lateinit var discover: Discover
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var mapView: MapView
@@ -50,9 +50,9 @@ class DiscoverApiUiActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_discover_api)
+        setContentView(R.layout.activity_discover)
 
-        discoverApi = DiscoverApi.create(getString(R.string.mapbox_access_token))
+        discover = Discover.create(getString(R.string.mapbox_access_token))
         locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
         mapView = findViewById(R.id.map_view)
@@ -88,17 +88,17 @@ class DiscoverApiUiActivity : AppCompatActivity() {
                 }
 
                 lifecycleScope.launchWhenStarted {
-                    val response = discoverApi.search(
-                        query = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+                    val response = discover.search(
+                        query = DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                         proximity = location,
-                        options = DiscoverApiOptions(limit = 20)
+                        options = DiscoverOptions(limit = 20)
                     )
 
                     response.onValue { results ->
                         mapMarkersManager.showResults(results)
                     }.onError { e ->
                         Log.d("DiscoverApiExample", "Error happened during search request", e)
-                        showToast(R.string.discover_api_search_error)
+                        showToast(R.string.discover_search_error)
                     }
                 }
             }
@@ -107,17 +107,17 @@ class DiscoverApiUiActivity : AppCompatActivity() {
         searchThisArea = findViewById(R.id.search_this_area)
         searchThisArea.setOnClickListener {
             lifecycleScope.launchWhenStarted {
-                val response = discoverApi.search(
-                    query = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+                val response = discover.search(
+                    query = DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                     region = mapboxMap.getCameraBoundingBox(),
-                    options = DiscoverApiOptions(limit = 20)
+                    options = DiscoverOptions(limit = 20)
                 )
 
                 response.onValue { results ->
                     mapMarkersManager.showResults(results)
                 }.onError { e ->
                     Log.d("DiscoverApiExample", "Error happened during search request", e)
-                    showToast(R.string.discover_api_search_error)
+                    showToast(R.string.discover_search_error)
                 }
             }
         }
@@ -134,7 +134,7 @@ class DiscoverApiUiActivity : AppCompatActivity() {
         mapMarkersManager.onResultClickListener = { result ->
             mapMarkersManager.adjustMarkersForOpenCard()
             searchPlaceView.open(result.toSearchPlace())
-            locationEngine.userDistanceTo(this@DiscoverApiUiActivity, result.coordinate) { distance ->
+            locationEngine.userDistanceTo(this@DiscoverActivity, result.coordinate) { distance ->
                 distance?.let { searchPlaceView.updateDistance(distance) }
             }
         }
@@ -153,12 +153,12 @@ class DiscoverApiUiActivity : AppCompatActivity() {
 
     private class MapMarkersManager(mapView: MapView) {
 
-        private val annotations = mutableMapOf<Long, DiscoverApiResult>()
+        private val annotations = mutableMapOf<Long, DiscoverResult>()
         private val mapboxMap: MapboxMap = mapView.getMapboxMap()
         private val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(null)
         private val pinBitmap = mapView.context.bitmapFromDrawableRes(R.drawable.red_marker)
 
-        var onResultClickListener: ((DiscoverApiResult) -> Unit)? = null
+        var onResultClickListener: ((DiscoverResult) -> Unit)? = null
 
         init {
             pointAnnotationManager.addClickListener {
@@ -190,7 +190,7 @@ class DiscoverApiUiActivity : AppCompatActivity() {
             mapboxMap.setCamera(cameraOptions)
         }
 
-        fun showResults(results: List<DiscoverApiResult>) {
+        fun showResults(results: List<DiscoverResult>) {
             clearMarkers()
             if (results.isEmpty() || pinBitmap == null) {
                 return
@@ -231,7 +231,7 @@ class DiscoverApiUiActivity : AppCompatActivity() {
             MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, PLACE_CARD_HEIGHT, MARKERS_EDGE_OFFSET
         )
 
-        fun DiscoverApiAddress.toSearchAddress(): SearchAddress {
+        fun DiscoverAddress.toSearchAddress(): SearchAddress {
             return SearchAddress(
                 houseNumber = houseNumber,
                 street = street,
@@ -245,7 +245,7 @@ class DiscoverApiUiActivity : AppCompatActivity() {
             )
         }
 
-        fun DiscoverApiResult.toSearchPlace(): SearchPlace {
+        fun DiscoverResult.toSearchPlace(): SearchPlace {
             return SearchPlace(
                 id = name + UUID.randomUUID().toString(),
                 name = name,

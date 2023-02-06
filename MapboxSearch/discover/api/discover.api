@@ -5,28 +5,28 @@ public final class com/mapbox/search/discover/BuildConfig {
 	public fun <init> ()V
 }
 
-public abstract interface class com/mapbox/search/discover/DiscoverApi {
-	public static final field Companion Lcom/mapbox/search/discover/DiscoverApi$Companion;
-	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverApi;
-	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/discover/DiscoverApi;
-	public abstract fun search (Lcom/mapbox/search/discover/DiscoverApiQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun search (Lcom/mapbox/search/discover/DiscoverApiQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun search (Lcom/mapbox/search/discover/DiscoverApiQuery;Ljava/util/List;Lcom/mapbox/search/discover/RouteDeviationOptions;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/mapbox/search/discover/Discover {
+	public static final field Companion Lcom/mapbox/search/discover/Discover$Companion;
+	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/Discover;
+	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/discover/Discover;
+	public abstract fun search (Lcom/mapbox/search/discover/DiscoverQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun search (Lcom/mapbox/search/discover/DiscoverQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun search (Lcom/mapbox/search/discover/DiscoverQuery;Ljava/util/List;Lcom/mapbox/search/discover/RouteDeviationOptions;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/mapbox/search/discover/DiscoverApi$Companion {
-	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverApi;
-	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/discover/DiscoverApi;
-	public static synthetic fun create$default (Lcom/mapbox/search/discover/DiscoverApi$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/discover/DiscoverApi;
+public final class com/mapbox/search/discover/Discover$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/Discover;
+	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/discover/Discover;
+	public static synthetic fun create$default (Lcom/mapbox/search/discover/Discover$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/discover/Discover;
 }
 
-public final class com/mapbox/search/discover/DiscoverApi$DefaultImpls {
-	public static synthetic fun search$default (Lcom/mapbox/search/discover/DiscoverApi;Lcom/mapbox/search/discover/DiscoverApiQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun search$default (Lcom/mapbox/search/discover/DiscoverApi;Lcom/mapbox/search/discover/DiscoverApiQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun search$default (Lcom/mapbox/search/discover/DiscoverApi;Lcom/mapbox/search/discover/DiscoverApiQuery;Ljava/util/List;Lcom/mapbox/search/discover/RouteDeviationOptions;Lcom/mapbox/search/discover/DiscoverApiOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+public final class com/mapbox/search/discover/Discover$DefaultImpls {
+	public static synthetic fun search$default (Lcom/mapbox/search/discover/Discover;Lcom/mapbox/search/discover/DiscoverQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun search$default (Lcom/mapbox/search/discover/Discover;Lcom/mapbox/search/discover/DiscoverQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun search$default (Lcom/mapbox/search/discover/Discover;Lcom/mapbox/search/discover/DiscoverQuery;Ljava/util/List;Lcom/mapbox/search/discover/RouteDeviationOptions;Lcom/mapbox/search/discover/DiscoverOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
-public final class com/mapbox/search/discover/DiscoverApiAddress : android/os/Parcelable {
+public final class com/mapbox/search/discover/DiscoverAddress : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
@@ -46,7 +46,7 @@ public final class com/mapbox/search/discover/DiscoverApiAddress : android/os/Pa
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/discover/DiscoverApiOptions : android/os/Parcelable {
+public final class com/mapbox/search/discover/DiscoverOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
 	public fun <init> (ILcom/mapbox/search/common/IsoLanguageCode;)V
@@ -60,36 +60,36 @@ public final class com/mapbox/search/discover/DiscoverApiOptions : android/os/Pa
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public abstract class com/mapbox/search/discover/DiscoverApiQuery : android/os/Parcelable {
+public abstract class com/mapbox/search/discover/DiscoverQuery : android/os/Parcelable {
 	public abstract fun getCanonicalName ()Ljava/lang/String;
 }
 
-public final class com/mapbox/search/discover/DiscoverApiQuery$Category : com/mapbox/search/discover/DiscoverApiQuery {
-	public static final field ATM Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field AUTO_REPAIR_MECHANIC Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field BARS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field BUS_STATION Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field CLOTHING_STORE Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field COFFEE_SHOP_CAFE Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
+public final class com/mapbox/search/discover/DiscoverQuery$Category : com/mapbox/search/discover/DiscoverQuery {
+	public static final field ATM Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field AUTO_REPAIR_MECHANIC Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field BARS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field BUS_STATION Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field CLOTHING_STORE Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field COFFEE_SHOP_CAFE Lcom/mapbox/search/discover/DiscoverQuery$Category;
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field Companion Lcom/mapbox/search/discover/DiscoverApiQuery$Category$Companion;
-	public static final field EMERGENCY_ROOM Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field EV_CHARGING_STATION Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field GAS_STATION Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field GYM_FITNESS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field HOSPITAL Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field HOTEL Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field MOVIE_THEATERS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field MUSEUMS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field NIGHT_CLUBS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field PARKING Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field PARKS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field PHARMACY Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field RAILWAY_STATION Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field RESTAURANTS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field SHOPPING_MALLS Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final field SUPERMARKET_GROCERY Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
-	public static final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
+	public static final field Companion Lcom/mapbox/search/discover/DiscoverQuery$Category$Companion;
+	public static final field EMERGENCY_ROOM Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field EV_CHARGING_STATION Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field GAS_STATION Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field GYM_FITNESS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field HOSPITAL Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field HOTEL Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field MOVIE_THEATERS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field MUSEUMS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field NIGHT_CLUBS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field PARKING Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field PARKS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field PHARMACY Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field RAILWAY_STATION Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field RESTAURANTS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field SHOPPING_MALLS Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final field SUPERMARKET_GROCERY Lcom/mapbox/search/discover/DiscoverQuery$Category;
+	public static final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverQuery$Category;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getCanonicalName ()Ljava/lang/String;
@@ -98,15 +98,15 @@ public final class com/mapbox/search/discover/DiscoverApiQuery$Category : com/ma
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class com/mapbox/search/discover/DiscoverApiQuery$Category$Companion {
-	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverApiQuery$Category;
+public final class com/mapbox/search/discover/DiscoverQuery$Category$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/discover/DiscoverQuery$Category;
 }
 
-public final class com/mapbox/search/discover/DiscoverApiResult : android/os/Parcelable {
+public final class com/mapbox/search/discover/DiscoverResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAddress ()Lcom/mapbox/search/discover/DiscoverApiAddress;
+	public final fun getAddress ()Lcom/mapbox/search/discover/DiscoverAddress;
 	public final fun getCategories ()Ljava/util/List;
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getMakiIcon ()Ljava/lang/String;

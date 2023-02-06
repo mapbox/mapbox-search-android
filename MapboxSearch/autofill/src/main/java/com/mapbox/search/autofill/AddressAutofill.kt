@@ -9,7 +9,7 @@ import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.location.defaultLocationEngine
 
 /**
- * Main entrypoint to the Mapbox Autofill API. Performs forward or reverse geocoding requests to fetch addresses.
+ * Main entrypoint to the Mapbox Autofill SDK. Performs forward or reverse geocoding requests to fetch addresses.
  */
 public interface AddressAutofill {
 

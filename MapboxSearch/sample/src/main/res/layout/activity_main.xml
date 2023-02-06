@@ -21,9 +21,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:elevation="4dp"
-        android:theme="@style/MapboxSearchSdk.Theme.Auto"
+        android:theme="@style/ToolbarTheme"
         />
 
     <com.mapbox.search.ui.view.SearchResultsView
@@ -31,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
-        android:background="@color/white"
         android:clipToPadding="false"
         android:paddingTop="22dp"
         android:paddingBottom="22dp"

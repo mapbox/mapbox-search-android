@@ -10,7 +10,7 @@ import com.mapbox.search.record.HistoryRecord
  * [com.mapbox.search.ui.view.SearchResultsView] adapter items.
  * @see [com.mapbox.search.ui.view.SearchResultsView.setAdapterItems]
  */
-public abstract class SearchResultAdapterItem {
+public abstract class SearchResultAdapterItem internal constructor() {
 
     /**
      * Item that represents spinning progress view.

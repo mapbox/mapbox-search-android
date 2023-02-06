@@ -1,11 +1,14 @@
 package com.mapbox.search.ui.view
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.OffsetItemDecoration
+import com.mapbox.search.ui.utils.extenstion.resolveAttr
 import com.mapbox.search.ui.utils.wrapWithSearchTheme
 import com.mapbox.search.ui.view.adapter.SearchHistoryViewHolder
 import com.mapbox.search.ui.view.adapter.SearchResultViewHolder
@@ -56,6 +59,14 @@ public class SearchResultsView @JvmOverloads constructor(
 
         override fun onErrorItemClick(item: SearchResultAdapterItem.Error) {
             actionListeners.forEach { it.onErrorItemClick(item) }
+        }
+    }
+
+    init {
+        if (background == null) {
+            context.resolveAttr(R.attr.mapboxSearchSdkBackgroundColor)?.let { color ->
+                background = ColorDrawable(color)
+            }
         }
     }
 

@@ -31,10 +31,10 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
-internal class DiscoverApiIntegrationTest {
+internal class DiscoverIntegrationTest {
 
     private lateinit var mockServer: MockWebServer
-    private lateinit var discoverApi: DiscoverApi
+    private lateinit var discover: Discover
 
     @Before
     fun setUp() {
@@ -46,22 +46,22 @@ internal class DiscoverApiIntegrationTest {
             url = mockServer.url("").toString()
         )
 
-        discoverApi = DiscoverApiImpl(engine)
+        discover = DiscoverImpl(engine)
     }
 
     @Test
     fun testRequestParametersForNearbySearch() {
         mockServer.enqueue(MockResponse().setResponseCode(500))
 
-        val query = DiscoverApiQuery.Category.COFFEE_SHOP_CAFE
+        val query = DiscoverQuery.Category.COFFEE_SHOP_CAFE
         val proximity = Point.fromLngLat(2.2966029609152523, 48.85993304489138)
-        val options = DiscoverApiOptions(
+        val options = DiscoverOptions(
             limit = 7,
             language = IsoLanguageCode.FRENCH
         )
 
         runBlocking {
-            discoverApi.search(query, proximity, options)
+            discover.search(query, proximity, options)
         }
 
         val request = mockServer.takeRequest()
@@ -79,19 +79,19 @@ internal class DiscoverApiIntegrationTest {
     fun testRequestParametersForSearchInRegion() {
         mockServer.enqueue(MockResponse().setResponseCode(500))
 
-        val query = DiscoverApiQuery.Category.ATM
+        val query = DiscoverQuery.Category.ATM
         val proximity = Point.fromLngLat(14.421576441071238, 50.087300021978024)
         val region = BoundingBox.fromPoints(
             Point.fromLngLat(14.414441059376246, 50.08443383305258),
             Point.fromLngLat(14.432670012143467, 50.0930762433351)
         )
-        val options = DiscoverApiOptions(
+        val options = DiscoverOptions(
             limit = 5,
             language = IsoLanguageCode.CZECH
         )
 
         runBlocking {
-            discoverApi.search(query, region, proximity, options)
+            discover.search(query, region, proximity, options)
         }
 
         val request = mockServer.takeRequest()
@@ -113,7 +113,7 @@ internal class DiscoverApiIntegrationTest {
     fun testRequestParametersForSearchAlongTheRoute() {
         mockServer.enqueue(MockResponse().setResponseCode(500))
 
-        val query = DiscoverApiQuery.Category.GAS_STATION
+        val query = DiscoverQuery.Category.GAS_STATION
 
         val route = listOf(
             Point.fromLngLat(13.460232269954309, 52.529542975333825),
@@ -123,13 +123,13 @@ internal class DiscoverApiIntegrationTest {
 
         val deviation = RouteDeviationOptions.Time(15, TimeUnit.MINUTES)
 
-        val options = DiscoverApiOptions(
+        val options = DiscoverOptions(
             limit = 10,
             language = IsoLanguageCode.GERMAN
         )
 
         runBlocking {
-            discoverApi.search(query, route, deviation, options)
+            discover.search(query, route, deviation, options)
         }
 
         val request = mockServer.takeRequest()
@@ -157,8 +157,8 @@ internal class DiscoverApiIntegrationTest {
         mockServer.enqueue(createSuccessfulResponse("successful_response.json"))
 
         val response = runBlocking {
-            discoverApi.search(
-                DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+            discover.search(
+                DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                 Point.fromLngLat(2.2966029609152523, 48.85993304489138)
             )
         }
@@ -183,7 +183,7 @@ internal class DiscoverApiIntegrationTest {
         assertEquals("restaurant", first.makiIcon)
 
         assertEquals(
-            DiscoverApiAddress(
+            DiscoverAddress(
                 houseNumber = "26",
                 street = "26 Av. de l'Opéra",
                 neighborhood = "Paris",
@@ -205,8 +205,8 @@ internal class DiscoverApiIntegrationTest {
         mockServer.enqueue(createSuccessfulResponse("successful_empty_response.json"))
 
         val response = runBlocking {
-            discoverApi.search(
-                DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+            discover.search(
+                DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                 Point.fromLngLat(2.2966029609152523, 48.85993304489138)
             )
         }
@@ -224,8 +224,8 @@ internal class DiscoverApiIntegrationTest {
         mockServer.enqueue(errorResponse)
 
         val response = runBlocking {
-            discoverApi.search(
-                DiscoverApiQuery.Category.COFFEE_SHOP_CAFE,
+            discover.search(
+                DiscoverQuery.Category.COFFEE_SHOP_CAFE,
                 Point.fromLngLat(2.2966029609152523, 48.85993304489138)
             )
         }
@@ -260,7 +260,7 @@ internal class DiscoverApiIntegrationTest {
             app: Application,
             token: String,
             url: String
-        ): DiscoverApiSearchEngine {
+        ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     token,
@@ -274,7 +274,7 @@ internal class DiscoverApiIntegrationTest {
                 ),
             )
 
-            return DiscoverApiSearchEngine(
+            return DiscoverSearchEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
                 searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY),

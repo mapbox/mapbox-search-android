@@ -11,10 +11,10 @@ import com.mapbox.search.common.RoutablePoint
 import kotlinx.parcelize.Parcelize
 
 /**
- * Information about a place returned by the [DiscoverApi].
+ * Information about a place returned by the [Discover].
  */
 @Parcelize
-public class DiscoverApiResult internal constructor(
+public class DiscoverResult internal constructor(
 
     /**
      * Place's name.
@@ -24,7 +24,7 @@ public class DiscoverApiResult internal constructor(
     /**
      * Place's address.
      */
-    public val address: DiscoverApiAddress,
+    public val address: DiscoverAddress,
 
     /**
      * Address geographic point.
@@ -54,7 +54,7 @@ public class DiscoverApiResult internal constructor(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DiscoverApiResult
+        other as DiscoverResult
 
         if (name != other.name) return false
         if (address != other.address) return false
@@ -96,9 +96,9 @@ public class DiscoverApiResult internal constructor(
     internal companion object {
 
         @JvmSynthetic
-        fun createFromSearchResult(result: BaseSearchResult): DiscoverApiResult {
+        fun createFromSearchResult(result: BaseSearchResult): DiscoverResult {
             with(result) {
-                val discoverApiAddress = DiscoverApiAddress(
+                val discoverAddress = DiscoverAddress(
                     houseNumber = address?.houseNumber?.nullIfEmpty(),
                     street = address?.street?.nullIfEmpty(),
                     neighborhood = address?.neighborhood?.nullIfEmpty(),
@@ -112,9 +112,9 @@ public class DiscoverApiResult internal constructor(
                     countryIso2 = metadata?.countryIso2
                 )
 
-                return DiscoverApiResult(
+                return DiscoverResult(
                     name = name,
-                    address = discoverApiAddress,
+                    address = discoverAddress,
                     coordinate = coordinate,
                     routablePoints = routablePoints?.map { it.mapToPlatform() },
                     categories = categories ?: emptyList(),

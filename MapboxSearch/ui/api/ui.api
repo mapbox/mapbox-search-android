@@ -72,7 +72,6 @@ public final class com/mapbox/search/ui/view/SearchMode : java/lang/Enum {
 }
 
 public abstract class com/mapbox/search/ui/view/SearchResultAdapterItem {
-	public fun <init> ()V
 }
 
 public final class com/mapbox/search/ui/view/SearchResultAdapterItem$EmptyHistory : com/mapbox/search/ui/view/SearchResultAdapterItem {

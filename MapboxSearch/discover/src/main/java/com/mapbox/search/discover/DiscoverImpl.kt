@@ -7,13 +7,13 @@ import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 
-internal class DiscoverApiImpl(private val engine: DiscoverApiSearchEngine) : DiscoverApi {
+internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover {
 
     override suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         proximity: Point,
-        options: DiscoverApiOptions
-    ): Expected<Exception, List<DiscoverApiResult>> {
+        options: DiscoverOptions
+    ): Expected<Exception, List<DiscoverResult>> {
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             limit = options.limit,
@@ -23,11 +23,11 @@ internal class DiscoverApiImpl(private val engine: DiscoverApiSearchEngine) : Di
     }
 
     override suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         region: BoundingBox,
         proximity: Point?,
-        options: DiscoverApiOptions
-    ): Expected<Exception, List<DiscoverApiResult>> {
+        options: DiscoverOptions
+    ): Expected<Exception, List<DiscoverResult>> {
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             bbox = region.mapToCore(),
@@ -38,11 +38,11 @@ internal class DiscoverApiImpl(private val engine: DiscoverApiSearchEngine) : Di
     }
 
     override suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         route: List<Point>,
         deviation: RouteDeviationOptions,
-        options: DiscoverApiOptions
-    ): Expected<Exception, List<DiscoverApiResult>> {
+        options: DiscoverOptions
+    ): Expected<Exception, List<DiscoverResult>> {
         val coreOptions = createCoreSearchOptions(
             limit = options.limit,
             language = listOf(options.language.code),
@@ -54,11 +54,11 @@ internal class DiscoverApiImpl(private val engine: DiscoverApiSearchEngine) : Di
     }
 
     private suspend fun search(
-        query: DiscoverApiQuery,
+        query: DiscoverQuery,
         options: CoreSearchOptions
-    ): Expected<Exception, List<DiscoverApiResult>> {
+    ): Expected<Exception, List<DiscoverResult>> {
         return engine.search(query.canonicalName, options).mapValue { value ->
-            value.first.map { DiscoverApiResult.createFromSearchResult(it) }
+            value.first.map { DiscoverResult.createFromSearchResult(it) }
         }
     }
 }

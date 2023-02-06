@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-internal class DiscoverApiSearchEngineTest {
+internal class DiscoverSearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
     private lateinit var requestContextProvider: SearchRequestContextProvider
@@ -37,7 +37,7 @@ internal class DiscoverApiSearchEngineTest {
     private val callbackExecutor: Executor = TestExecutor()
     private val engineExecutorService: ExecutorService = TestThreadExecutorService()
 
-    private lateinit var engine: DiscoverApiSearchEngine
+    private lateinit var engine: DiscoverSearchEngine
 
     @BeforeEach
     fun setUp() {
@@ -48,7 +48,7 @@ internal class DiscoverApiSearchEngineTest {
 
         searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
 
-        engine = DiscoverApiSearchEngine(
+        engine = DiscoverSearchEngine(
             coreEngine,
             requestContextProvider,
             searchResultFactory,

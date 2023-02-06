@@ -6,11 +6,11 @@ import com.mapbox.search.common.IsoLanguageCode
 import kotlinx.parcelize.Parcelize
 
 /**
- * Options, used for the Discover API requests.
- * @see DiscoverApi
+ * Options, used for the Discover SDK requests.
+ * @see Discover
  */
 @Parcelize
-public class DiscoverApiOptions(
+public class DiscoverOptions(
 
     /**
      * Maximum number of results to return.
@@ -38,7 +38,7 @@ public class DiscoverApiOptions(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DiscoverApiOptions
+        other as DiscoverOptions
 
         if (limit != other.limit) return false
         if (language != other.language) return false

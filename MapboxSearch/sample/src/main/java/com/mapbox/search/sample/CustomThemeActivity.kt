@@ -22,16 +22,32 @@ import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
+import com.mapbox.search.ui.view.place.SearchPlace
+import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 
 class CustomThemeActivity : AppCompatActivity() {
 
+    private lateinit var searchPlaceView: SearchPlaceBottomSheetView
     private lateinit var searchResultsView: SearchResultsView
     private lateinit var searchEngineUiAdapter: SearchEngineUiAdapter
     private lateinit var searchView: SearchView
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_theme)
+
+        searchPlaceView = findViewById<SearchPlaceBottomSheetView>(R.id.search_place_view).apply {
+            initialize(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
+            addOnCloseClickListener {
+                hide()
+            }
+        }
+
+        toolbar = findViewById<Toolbar>(R.id.toolbar).apply {
+            title = getString(R.string.simple_ui_toolbar_title)
+            setSupportActionBar(this)
+        }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
@@ -59,7 +75,7 @@ class CustomThemeActivity : AppCompatActivity() {
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
             override fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
-                Toast.makeText(applicationContext, "Search suggestions shown", Toast.LENGTH_SHORT).show()
+                // Nothing to do
             }
 
             override fun onCategoryResultsShown(
@@ -67,11 +83,11 @@ class CustomThemeActivity : AppCompatActivity() {
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
             ) {
-                Toast.makeText(applicationContext, "Category search results shown", Toast.LENGTH_SHORT).show()
+                // Nothing to do
             }
 
             override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                Toast.makeText(applicationContext, "Offline search results shown", Toast.LENGTH_SHORT).show()
+                // Nothing to do
             }
 
             override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
@@ -79,11 +95,13 @@ class CustomThemeActivity : AppCompatActivity() {
             }
 
             override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
-                Toast.makeText(applicationContext, "Search result: $searchResult", Toast.LENGTH_SHORT).show()
+                closeSearchView()
+                searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
             }
 
             override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
-                Toast.makeText(applicationContext, "Offline search result: $searchResult", Toast.LENGTH_SHORT).show()
+                closeSearchView()
+                searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
             }
 
             override fun onError(e: Exception) {
@@ -91,9 +109,8 @@ class CustomThemeActivity : AppCompatActivity() {
             }
 
             override fun onHistoryItemClick(historyRecord: HistoryRecord) {
-                if (::searchView.isInitialized) {
-                    searchView.setQuery(historyRecord.name, true)
-                }
+                closeSearchView()
+                searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
             }
 
             override fun onPopulateQueryClick(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
@@ -106,11 +123,6 @@ class CustomThemeActivity : AppCompatActivity() {
                 // Not implemented
             }
         })
-
-        findViewById<Toolbar>(R.id.toolbar).apply {
-            title = getString(R.string.simple_ui_toolbar_title)
-            setSupportActionBar(this)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +132,7 @@ class CustomThemeActivity : AppCompatActivity() {
         searchActionView.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 searchResultsView.isVisible = true
+                searchPlaceView.hide()
                 return true
             }
 
@@ -142,5 +155,10 @@ class CustomThemeActivity : AppCompatActivity() {
             }
         })
         return true
+    }
+
+    private fun closeSearchView() {
+        toolbar.collapseActionView()
+        searchView.setQuery("", false)
     }
 }
