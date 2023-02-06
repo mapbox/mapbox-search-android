@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.45-SNAPSHOT
+## 1.0.0-beta.45
 
 ### New features
 - [UI] Now `SearchResultsView` will use `mapboxSearchSdkBackgroundColor` as a background color if background is not specified explicitly.
