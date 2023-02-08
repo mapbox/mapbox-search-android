@@ -163,6 +163,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                     street = "avenue anatole france"
                 )
             ),
+            fullAddress = "5 Avenue Anatole France, 75007 Paris, France",
             descriptionAddress = "Eiffel Tower, 5 Avenue Anatole France, 75007 Paris, France",
             matchingName = "Eiffel Tower",
             center = Point.fromLngLat(2.294464, 48.858353),

@@ -56,10 +56,9 @@ internal class SearchEntityPresentation(
             // By design we don't have description text for category
             null
         } else {
-            val descriptionText = suggestion.descriptionText
-            val addressText = suggestion.address?.formattedAddress()
+            val addressText = suggestion.fullAddress ?: suggestion.address?.formattedAddress()
             when {
-                !descriptionText.isNullOrBlank() -> descriptionText
+                !suggestion.descriptionText.isNullOrBlank() -> suggestion.descriptionText
                 !addressText.isNullOrBlank() -> addressText
                 else -> getSearchSuggestionTypeName(context, suggestion.type)
             }
@@ -68,7 +67,7 @@ internal class SearchEntityPresentation(
 
     fun getDescription(searchResult: SearchResult): String {
         val descriptionText = searchResult.descriptionText
-        val addressText = searchResult.address?.formattedAddress()
+        val addressText = searchResult.fullAddress ?: searchResult.address?.formattedAddress()
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText

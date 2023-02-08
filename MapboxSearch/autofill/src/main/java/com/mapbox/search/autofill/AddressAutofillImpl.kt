@@ -145,7 +145,7 @@ internal class AddressAutofillImpl(private val searchEngine: AutofillSearchEngin
 
             return AddressAutofillSuggestion(
                 name = name,
-                formattedAddress = autofillAddress.formattedAddress(),
+                formattedAddress = fullAddress ?: autofillAddress.formattedAddress(),
                 address = autofillAddress,
                 coordinate = validCoordinate,
             )

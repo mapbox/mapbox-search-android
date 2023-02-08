@@ -1,0 +1,59 @@
+{
+  "suggestions":[
+    {
+      "feature_name":"Legerova 15",
+      "matching_name":"Legerova 15",
+      "highlighted_name":"Legerova 15",
+      "description":"12000 Praha, Praha, Česko",
+      "address":"Legerova 15, 12000 Praha, Praha, Česko",
+      "address_number":"15",
+      "result_type":[
+        "address"
+      ],
+      "language":"cs",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"GpKR_R-w8KhKFCZvTmgEiKC7qXWp0B410J1nBK6hjnfMNKlIOJdfL6cByJKpeajrE6WuR0ElLkUXNbEdkMaQ4gc8BkdKOHfR59WqcoKQQ43Q5d2CVgDGZpvj3qvBon2X8yfLvtt2pM6UE6al1-r-KLfghZvS-GSpEieSskTbvX2mS-iLeCOoA2Z0A7ilnq1LG5GkrbMc7R9oVQYa1jdJBmr91dbZnN8KSn18QuE4dOaGN3-h4X268s3J0fdGAFIrnZKLhcmZfJ6RflA7apNWnmxyjRyb-_p7SoW4san_BDNwak__DpmQj_ASEnQ20HydRMnxwg3mwiy2RYkW4wVnk1aw085Uua8DaJLQp18rCJBS0gcs4ori6zIRP_AsrEGTZWRjlR8MEVvXH8R-0W4n9ZV1ln1nLskYS3iw7YPQFvBoisPGTtTw8ywDxjtMIGekk7UhQjrY-lNTfS0-ZCWBQh1sIHVHerNDe0Rke4I06-PRlJ8p4-ou0n7pWbnupsoqIyrWYH33plCFy3_IRBxX4FZOWF0bHw9uvdvkhwzoBaXUIEcoyVYKiAxED1lNEwRBqMVek2UD46rG_w2Zt353UTK0GGIWk1YfbPnzhGcTFP_9mwtlxVdlla9xQem6Lo1lCIBhJw_qp-k6jdTM3AYxWcoi8t7Tv75wmB6VyLphlhaArDeMT2AR1gkFr8Atrn1UiOcy5wlzAMWN4fZR_WSEm8KzIzvARn0jhd71kXzxm-0fBg9xcv19kMWXEAlmv2afpPLEmc6KAZIzpNu0bR0K4Q110B3OGvNy5utXD7DPMY3mODgXskWA1sFNPIW2CSipECgo70C4p4_oiOXDhhy8Ubeib24zu5xqXvJfpE6NSMG9CHb9qfyF-JPyd36c7ZmEi0Rly8imfmD9A9ooZMTHqkxGkHc5p2GwBudb1PIAjJeA44pAnvtHvIg6vz0Cjse97lghqXi6-Fk4Ii8MksXIhzL4pEIuBWUz5sw9BQWA-IG4dDwcPzoqOxcl9LLkXVnP0KzNSVZ0jkGubd7orobjOWN4oD3Ik8yFtzz1YPi2e80-W5CddU809qklyGWkhKCEAHVxRNi-_nawJZTNX_xQ-9wJbh5F8832C5Y9-UqEm6PeKZp_eEDjhCs6Y-OQQPc7WPMNQMhBlsc70w1SN2-6XcRUf3nHfDYpxUNiQExem10d7z3UWzUkudKt3HZkkzPghDTUj3aS_7uUeRi7qW6Hy2O-_C9l3LYuiYFVk9Nt56bF6ks-cDpU0LjzPI8xYKPZSxBytJRJUan5G0IWUTROxUwNH8jPjvg5_PqIiupftMU_xMvDdF4AWSmjzPs_hB4NCDEleCzB_JhS-gjaj3aBHCxU7Xs4v3SybmgIH7u2hJG5oH-TGSn-Eu9CHuu9C4lvh7RS1CdKoL4fI2VYWf4kKqRmPFxqNOZ5SnDK7ZHsymnGNOOocboMMy-S7ibuXNSFMV0z9Fo0qa_d99jllh6NQhWR96Iiq8_O-mjX4Cx-OJyLbbcPebzBZzZkTtDGOvZB7C_DQiCZ81tVWxxX4uLWeyy_dmG20iN-7Dl_1zRc46MIr20oX9U="
+        },
+        "multi_retrievable":false
+      },
+      "maki":"marker",
+      "internal_id":"Y2eAgMSUlKLU4mIA.Y2OAgOTEotzUPAA=.TczBDcIwDAVQZvGZQ0Diwgwc2AC5iZVEpHHlpEgVYgMGYRAGq6P0UN_-s_7_Hfq9wfKcqyxwhf-XypPhCEI-cla5CwZUcLFUibYqaZoSWtp9Jy7Vsmt0OhtjlBJbTLEuvZAp-jCwBGbXBZ0TKkXDjTwJv3DDR57HgaRNXVoTxzYLnxU=",
+      "external_ids":{
+        "federated":"carmen.address.4654790103946162",
+        "carmen":"address.4654790103946162"
+      },
+      "context":[
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"12000"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Praha"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"Praha"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"Česko"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"cz",
+        "iso_3166_2":"CZ-10"
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"53:2b64ce2bc39de2bbca5c30fff79d86e76d29ddeb",
+  "response_uuid":"dc2d143b-dc9b-42ce-a6ae-00ea61254681"
+}

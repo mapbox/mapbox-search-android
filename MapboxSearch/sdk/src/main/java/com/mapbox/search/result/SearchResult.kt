@@ -57,6 +57,12 @@ public class SearchResult internal constructor(
     public val address: SearchAddress? = base.address?.mapToPlatform()
 
     /**
+     * Full formatted address.
+     */
+    @IgnoredOnParcel
+    public val fullAddress: String? = base.fullAddress
+
+    /**
      * List of points near [coordinate], that represents entries to associated building.
      */
     @IgnoredOnParcel
@@ -169,6 +175,7 @@ public class SearchResult internal constructor(
                 "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
+                "fullAddress=$fullAddress, " +
                 "routablePoints=$routablePoints, " +
                 "categories=$categories, " +
                 "makiIcon=$makiIcon, " +

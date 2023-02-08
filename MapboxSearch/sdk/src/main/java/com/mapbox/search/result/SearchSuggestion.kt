@@ -52,6 +52,12 @@ public class SearchSuggestion internal constructor(
     public val address: SearchAddress? = base.address?.mapToPlatform()
 
     /**
+     * Full formatted address.
+     */
+    @IgnoredOnParcel
+    public val fullAddress: String? = base.fullAddress
+
+    /**
      * Request options, that produced this suggestion.
      */
     @IgnoredOnParcel
@@ -142,6 +148,7 @@ public class SearchSuggestion internal constructor(
                 "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
+                "fullAddress=$fullAddress, " +
                 "requestOptions=$requestOptions, " +
                 "distanceMeters=$distanceMeters, " +
                 "categories=$categories, " +

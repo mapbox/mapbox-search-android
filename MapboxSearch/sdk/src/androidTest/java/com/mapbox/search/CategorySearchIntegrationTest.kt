@@ -197,6 +197,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                     street = "castro st"
                 )
             ),
+            fullAddress = "750 Castro St, Mountain View, California 94041, United States of America",
             descriptionAddress = "Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
             matchingName = "Starbucks",
             center = Point.fromLngLat(-122.08295, 37.38755),

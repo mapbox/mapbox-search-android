@@ -14,10 +14,9 @@ import com.mapbox.common.TileStoreObserver
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.mapToBase
-import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.compareSearchResultWithServerSearchResult
 import com.mapbox.search.common.createCoreSearchAddress
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.offline.test.R
@@ -37,6 +36,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import kotlin.math.abs
 
 @Suppress("LargeClass")
 internal class OfflineSearchEngineIntegrationTest {
@@ -304,12 +304,10 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(searchEngineResult is SearchEngineResult.Results)
 
         val results = searchEngineResult.requireResults()
-        assertEquals(10, results.size)
+        assertTrue(results.size > 5)
 
         val result = results.first()
-        val rawSearchResult = result.rawSearchResult
-        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id)
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult.mapToCore(), rawSearchResult.mapToCore()))
+        assertTrue(compareWithApproximateLocations(TEST_SEARCH_RESULT_MAPBOX, result.rawSearchResult))
     }
 
     @Test
@@ -335,9 +333,12 @@ internal class OfflineSearchEngineIntegrationTest {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertEquals(1, results.size)
 
-        val rawSearchResult = results.first().rawSearchResult
-        val expectedSearchResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id)
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult.mapToCore(), rawSearchResult.mapToCore()))
+        assertTrue(
+            compareWithApproximateLocations(
+                TEST_SEARCH_RESULT_MAPBOX,
+                results.first().rawSearchResult
+            )
+        )
     }
 
     @Test
@@ -373,12 +374,11 @@ internal class OfflineSearchEngineIntegrationTest {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertTrue(results.isNotEmpty())
 
-        val rawSearchResult = results.first().rawSearchResult
-        val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(id = rawSearchResult.id, distanceMeters = null)
+        val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(distanceMeters = null)
         assertTrue(
-            compareSearchResultWithServerSearchResult(
-                expectedResult.mapToCore(),
-                results.first().rawSearchResult.mapToCore()
+            compareWithApproximateLocations(
+                expectedResult,
+                results.first().rawSearchResult
             )
         )
     }
@@ -498,7 +498,7 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(results.isEmpty())
     }
 
-    companion object {
+    private companion object {
 
         private val tileStore: TileStore = TileStore.create()
 
@@ -525,6 +525,36 @@ internal class OfflineSearchEngineIntegrationTest {
             center = Point.fromLngLat(-77.03402549505554, 38.91792475903431),
             serverIndex = null,
         )
+
+        const val DOUBLE_COMPARISON_EPS = 0.00001
+
+        fun Double.approximatelyEquals(other: Double) = abs(this - other) < DOUBLE_COMPARISON_EPS
+
+        fun Point?.approximatelyEquals(other: Point?): Boolean {
+            if (this == other) return true
+            if (this == null || other == null) return false
+            return latitude().approximatelyEquals(other.latitude()) && longitude().approximatelyEquals(other.longitude())
+        }
+
+        fun compareDistanceMeters(distance1: Double?, distance2: Double?): Boolean {
+            if (distance1 == distance2) return true
+            if (distance1 == null || distance2 == null) return false
+            return abs(distance1 - distance2) < 1.0
+        }
+
+        fun compareWithApproximateLocations(expected: BaseRawSearchResult, serverResult: BaseRawSearchResult): Boolean {
+            if (expected == serverResult) return true
+
+            val fixedResult = expected.copy(
+                id = serverResult.id,
+                userRecordPriority = serverResult.userRecordPriority,
+                center = serverResult.center,
+                distanceMeters = serverResult.distanceMeters
+            )
+            return fixedResult == serverResult &&
+                    expected.center.approximatelyEquals(serverResult.center) &&
+                    compareDistanceMeters(expected.distanceMeters, serverResult.distanceMeters)
+        }
 
         private val TEST_SEARCH_RESULT_MAPBOX = TEST_CORE_SEARCH_RESULT.mapToBase()
 

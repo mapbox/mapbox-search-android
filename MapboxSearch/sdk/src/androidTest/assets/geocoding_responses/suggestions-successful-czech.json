@@ -1,0 +1,72 @@
+{
+  "type":"FeatureCollection",
+  "query":[
+    "legerova",
+    "15"
+  ],
+  "features":[
+    {
+      "id":"address.7989551230977156",
+      "type":"Feature",
+      "place_type":[
+        "address"
+      ],
+      "relevance":0.96,
+      "properties":{
+        "accuracy":"interpolated"
+      },
+      "text_en":"Legerova",
+      "place_name_en":"Legerova 15, 12000 Praha, Praha, Česko",
+      "text":"Legerova",
+      "place_name":"Legerova 15, 12000 Praha, Praha, Česko",
+      "center":[
+        18.345731,
+        49.834847
+      ],
+      "geometry":{
+        "type":"Point",
+        "coordinates":[
+          18.345731,
+          49.834847
+        ],
+        "interpolated":true,
+        "omitted":true
+      },
+      "address":"15",
+      "context":[
+        {
+          "id":"postcode.7989551230977156",
+          "text_en":"71500",
+          "text":"71500"
+        },
+        {
+          "id":"place.29952057",
+          "wikidata":"Q8385",
+          "text_en":"Praha",
+          "language_en":"en",
+          "text":"Praha",
+          "language":"en"
+        },
+        {
+          "id":"region.33849",
+          "short_code":"CZ-80",
+          "wikidata":"Q190550",
+          "text_en":"Praha",
+          "language_en":"en",
+          "text":"Praha",
+          "language":"en"
+        },
+        {
+          "id":"country.8761",
+          "short_code":"cz",
+          "wikidata":"Q213",
+          "text_en":"Czech Republic",
+          "language_en":"en",
+          "text":"Czech Republic",
+          "language":"en"
+        }
+      ]
+    }
+  ],
+  "attribution":"NOTICE: © 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare."
+}

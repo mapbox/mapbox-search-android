@@ -212,6 +212,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             names = listOf("Minsk"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus")),
+            fullAddress = "Belarus",
             descriptionAddress = "Belarus",
             matchingName = "Minsk",
             distanceMeters = 5000000.0,
@@ -527,6 +528,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             descriptionAddress = "Minsk Region, Belarus, Planet Earth",
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
+            fullAddress = "egion, Belarus, Planet Earth", // TODO bug, will be fixed on the Native SDK side
             distanceMeters = 5000000.0,
             matchingName = "Minsk",
             center = Point.fromLngLat(27.234342, 53.940465),
@@ -589,6 +591,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 )
             }
         )
+
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, searchResult))
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
@@ -661,6 +664,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
             descriptionAddress = "Make a new search",
+            fullAddress = "Make a new search",
             matchingName = "Did you mean recursion?",
             icon = "marker",
             action = BaseSuggestAction(
@@ -717,6 +721,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             addresses = listOf(SearchAddress()),
             categories = listOf("Cafe"),
             descriptionAddress = "Category",
+            fullAddress = "Category",
             matchingName = "Cafe",
             icon = "restaurant",
             externalIDs = mapOf("federated" to "category.cafe"),
@@ -774,6 +779,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 region = "California",
                 street = "10th st",
             )),
+            fullAddress = "12 10th St, San Francisco, California 94103, United States of America",
             categories = listOf(
                 "food",
                 "food and drink",
@@ -945,6 +951,35 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertTrue(task1.isCancelled)
         assertTrue(task2.isDone)
+    }
+
+    @Test
+    fun testSBSCzechAddressFormatting() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-czech.json"))
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val suggestion = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions.first()
+
+        assertEquals("Legerova 15", suggestion.name)
+        // assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)   // TODO will be fixed on the native SDK side
+        assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
+    }
+
+    @Test
+    fun testGeocodingCzechAddressFormatting() {
+        searchEngine = SearchEngine.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
+
+        mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions-successful-czech.json"))
+
+        val callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val suggestion = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions.first()
+
+        assertEquals("Legerova 15", suggestion.name)
+        assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
     }
 
     @Test

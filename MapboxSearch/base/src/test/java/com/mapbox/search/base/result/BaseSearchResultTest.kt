@@ -32,14 +32,16 @@ internal class BaseSearchResultTest {
                     BaseServerSearchResultImpl(
                         searchResultTypes,
                         BASE_RAW_SEARCH_RESULT,
-                        REQUEST_OPTIONS)
+                        REQUEST_OPTIONS
+                    )
                 }
             } else {
                 When("Creating ServerSearchResultImpl") {
                     BaseServerSearchResultImpl(
                         searchResultTypes,
                         BASE_RAW_SEARCH_RESULT,
-                        REQUEST_OPTIONS)
+                        REQUEST_OPTIONS
+                    )
 
                     Then("ServerSearchResultImpl Successfully is created") { }
                 }
@@ -99,6 +101,7 @@ internal class BaseSearchResultTest {
                     houseNumber = "1"
                 )
             ),
+            fullAddress = "Test full address",
             distanceMeters = 123.0,
             icon = "cafe",
             etaMinutes = 5.0,
