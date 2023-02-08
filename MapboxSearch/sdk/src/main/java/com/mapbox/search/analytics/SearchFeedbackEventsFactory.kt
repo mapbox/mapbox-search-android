@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.ViewportProvider
 import com.mapbox.search.analytics.events.AppMetadata
@@ -19,6 +18,7 @@ import com.mapbox.search.base.result.BaseSearchResponse
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.utils.FormattedTimeProvider
 import com.mapbox.search.base.utils.UUIDProvider
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchAddress.FormatStyle

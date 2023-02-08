@@ -1,7 +1,7 @@
 package com.mapbox.search.ui.utils
 
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 

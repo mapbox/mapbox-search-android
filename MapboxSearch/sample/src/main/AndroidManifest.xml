@@ -43,6 +43,7 @@
 
         <activity android:name=".DiscoverActivity" />
         <activity android:name=".api.DiscoverKotlinExampleActivity" />
+        <activity android:name=".api.DiscoverJavaExampleActivity" />
 
         <activity android:name=".api.CustomIndexableDataProviderKotlinExample" />
         <activity android:name=".api.CustomIndexableDataProviderJavaExample" />

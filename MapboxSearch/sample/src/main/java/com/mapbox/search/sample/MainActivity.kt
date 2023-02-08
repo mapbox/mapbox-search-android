@@ -42,6 +42,7 @@ import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
 import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
+import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
 import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
@@ -325,8 +326,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, DiscoverActivity::class.java))
                 true
             }
-            R.id.open_discover_example -> {
+            R.id.open_discover_kotlin_example -> {
                 startActivity(Intent(this, DiscoverKotlinExampleActivity::class.java))
+                true
+            }
+            R.id.open_discover_java_example -> {
+                startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
                 true
             }
             R.id.open_custom_data_provider_kt_example -> {

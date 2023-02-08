@@ -18,6 +18,7 @@ import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -28,6 +29,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
+import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
@@ -193,6 +195,7 @@ internal class DiscoverIntegrationTest {
                 district = null,
                 region = "Île-de-France",
                 country = "France",
+                formattedAddress = "26 Av. de l'Opéra, 75001 Paris, France",
                 countryIso1 = "fra",
                 countryIso2 = "fr"
             ),
@@ -239,6 +242,75 @@ internal class DiscoverIntegrationTest {
         assertEquals(error, response.error)
     }
 
+    @Test
+    fun testSuccessfulResponseToCallbacks() {
+        mockServer.enqueue(createSuccessfulResponse("successful_response.json"))
+
+        val response = discover.searchBlocking(
+            DiscoverQuery.Category.COFFEE_SHOP_CAFE,
+            Point.fromLngLat(2.2966029609152523, 48.85993304489138)
+        )
+
+        assertTrue(response.isResult)
+
+        val results = response.requireResult()
+        assertEquals(2, results.size)
+
+        val first = results.first()
+        assertEquals("Starbucks", first.name)
+
+        assertEquals(Point.fromLngLat(2.2966029609152523, 48.85993304489138), first.coordinate)
+        assertEquals(
+            listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
+            first.categories
+        )
+        assertEquals(
+            listOf(RoutablePoint(Point.fromLngLat(2.2966029609152523, 48.85993304489138), "Address")),
+            first.routablePoints
+        )
+        assertEquals("restaurant", first.makiIcon)
+
+        assertEquals(
+            DiscoverAddress(
+                houseNumber = "26",
+                street = "26 Av. de l'Opéra",
+                neighborhood = "Paris",
+                locality = null,
+                postcode = "75001",
+                place = "Paris",
+                district = null,
+                region = "Île-de-France",
+                country = "France",
+                formattedAddress = "26 Av. de l'Opéra, 75001 Paris, France",
+                countryIso1 = "fra",
+                countryIso2 = "fr"
+            ),
+            first.address
+        )
+    }
+
+    @Test
+    fun testErrorResponseToCallbacks() {
+        val errorResponse = MockResponse()
+            .setResponseCode(400)
+            .setBody(readFileFromAssets("error-response.json"))
+
+        mockServer.enqueue(errorResponse)
+
+        val response = discover.searchBlocking(
+            DiscoverQuery.Category.COFFEE_SHOP_CAFE,
+            Point.fromLngLat(2.2966029609152523, 48.85993304489138)
+        )
+
+        val error = SearchRequestException(
+            readFileFromAssets("error-response.json"),
+            400
+        )
+
+        assertTrue(response.isError)
+        assertEquals(error, response.requireError())
+    }
+
     private companion object {
 
         val CONTEXT: Context
@@ -279,6 +351,17 @@ internal class DiscoverIntegrationTest {
                 requestContextProvider = SearchRequestContextProvider(app),
                 searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY),
             )
+        }
+
+        fun Discover.searchBlocking(
+            query: DiscoverQuery,
+            proximity: Point,
+            options: DiscoverOptions = DiscoverOptions(),
+            executor: Executor = SearchSdkMainThreadWorker.mainExecutor
+        ): BlockingCompletionCallback.CompletionCallbackResult<List<DiscoverResult>> {
+            val callback = BlockingCompletionCallback<List<DiscoverResult>>()
+            search(query, proximity, options, executor, callback)
+            return callback.getResultBlocking()
         }
 
         fun Double.format(digits: Int) = "%.${digits}f".format(Locale.ENGLISH, this)

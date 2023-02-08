@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener
 import com.mapbox.search.result.SearchAddress

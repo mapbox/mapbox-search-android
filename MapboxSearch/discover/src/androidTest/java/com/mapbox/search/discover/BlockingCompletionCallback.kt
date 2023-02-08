@@ -1,4 +1,4 @@
-package com.mapbox.search.tests_support
+package com.mapbox.search.discover
 
 import com.mapbox.search.common.CompletionCallback
 import java.util.concurrent.CountDownLatch

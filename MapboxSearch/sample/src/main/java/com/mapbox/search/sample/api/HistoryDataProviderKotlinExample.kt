@@ -3,9 +3,9 @@ package com.mapbox.search.sample.api
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.HistoryRecord
 
 class HistoryDataProviderKotlinExample : AppCompatActivity() {

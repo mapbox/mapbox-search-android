@@ -38,7 +38,7 @@ internal class DiscoverSearchEngine(
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR
 ) : BaseSearchEngine() {
 
-    private fun search(
+    fun search(
         categoryName: String,
         options: CoreSearchOptions,
         executor: Executor,

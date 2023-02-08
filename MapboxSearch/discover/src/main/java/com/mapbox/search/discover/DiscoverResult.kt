@@ -108,6 +108,7 @@ public class DiscoverResult internal constructor(
                     district = address?.district?.nullIfEmpty(),
                     region = address?.region?.nullIfEmpty(),
                     country = address?.country?.nullIfEmpty(),
+                    formattedAddress = result.fullAddress ?: result.descriptionText,
                     countryIso1 = metadata?.countryIso1,
                     countryIso2 = metadata?.countryIso2
                 )

@@ -8,7 +8,6 @@ import com.mapbox.common.Event
 import com.mapbox.common.EventsServiceInterface
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
@@ -18,6 +17,7 @@ import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.catchThrowable

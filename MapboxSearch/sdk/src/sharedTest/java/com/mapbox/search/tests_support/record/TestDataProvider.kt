@@ -1,8 +1,8 @@
 package com.mapbox.search.tests_support.record
 
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.record.LocalDataProviderImpl

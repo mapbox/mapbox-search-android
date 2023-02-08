@@ -16,6 +16,11 @@ package com.mapbox.search.common {
     property public final com.mapbox.search.common.AsyncOperationTask COMPLETED;
   }
 
+  public interface CompletionCallback<T> {
+    method public void onComplete(T? result);
+    method public void onError(Exception e);
+  }
+
   public interface DistanceCalculator {
     method public double distance(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
     method public default static double distanceOnSphere(com.mapbox.geojson.Point from, com.mapbox.geojson.Point to);
