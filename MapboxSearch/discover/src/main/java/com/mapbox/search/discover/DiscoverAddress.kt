@@ -55,6 +55,11 @@ public class DiscoverAddress internal constructor(
     public val country: String?,
 
     /**
+     * String representation of this address.
+     */
+    public val formattedAddress: String?,
+
+    /**
      * The country code in ISO 3166-1.
      */
     public val countryIso1: String?,
@@ -83,6 +88,7 @@ public class DiscoverAddress internal constructor(
         if (district != other.district) return false
         if (region != other.region) return false
         if (country != other.country) return false
+        if (formattedAddress != other.formattedAddress) return false
         if (countryIso1 != other.countryIso1) return false
         if (countryIso2 != other.countryIso2) return false
 
@@ -102,6 +108,7 @@ public class DiscoverAddress internal constructor(
         result = 31 * result + (district?.hashCode() ?: 0)
         result = 31 * result + (region?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
+        result = 31 * result + (formattedAddress?.hashCode() ?: 0)
         result = 31 * result + (countryIso1?.hashCode() ?: 0)
         result = 31 * result + (countryIso2?.hashCode() ?: 0)
         return result
@@ -111,7 +118,7 @@ public class DiscoverAddress internal constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "DiscoverApiAddress(" +
+        return "DiscoverAddress(" +
                 "houseNumber=$houseNumber, " +
                 "street=$street, " +
                 "neighborhood=$neighborhood, " +
@@ -121,6 +128,7 @@ public class DiscoverAddress internal constructor(
                 "district=$district, " +
                 "region=$region, " +
                 "country=$country, " +
+                "formattedAddress=$formattedAddress, " +
                 "countryIso1=$countryIso1, " +
                 "countryIso2=$countryIso2" +
                 ")"

@@ -195,6 +195,7 @@ internal class DiscoverIntegrationTest {
                 district = null,
                 region = "Île-de-France",
                 country = "France",
+                formattedAddress = "26 Av. de l'Opéra, 75001 Paris, France",
                 countryIso1 = "fra",
                 countryIso2 = "fr"
             ),
@@ -280,6 +281,7 @@ internal class DiscoverIntegrationTest {
                 district = null,
                 region = "Île-de-France",
                 country = "France",
+                formattedAddress = "26 Av. de l'Opéra, 75001 Paris, France",
                 countryIso1 = "fra",
                 countryIso2 = "fr"
             ),
