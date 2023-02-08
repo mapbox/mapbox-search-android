@@ -7,6 +7,7 @@
 
 ### Bug fixes
 - [CORE] Fixed `SearchSuggestion.name` and `SearchResult.name` formatting for address types.
+- [AUTOFILL] Fixed address formatting for `AddressAutofillSuggestion.formattedAddress`. 
 
 ### Mapbox dependencies
 - Search Native SDK `0.67.0`

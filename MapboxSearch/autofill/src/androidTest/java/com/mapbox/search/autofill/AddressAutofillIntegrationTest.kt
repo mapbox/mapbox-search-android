@@ -125,15 +125,15 @@ internal class AddressAutofillIntegrationTest {
         assertEquals(3, results.size)
 
         assertEquals(
-            "740, 15th St NW, 20005, Washington, District of Columbia, United States",
+            "740 15th St NW, Washington, District of Columbia 20005, United States",
             results[0].formattedAddress
         )
         assertEquals(
-            "740, 15th Street, 15033, Donora, Pennsylvania, United States",
+            "740 15th Street, Donora, Pennsylvania 15033, United States",
             results[1].formattedAddress
         )
         assertEquals(
-            "740, 15th Street, 16112, Bessemer, Pennsylvania, United States",
+            "740 15th Street, Bessemer, Pennsylvania 16112, United States",
             results[2].formattedAddress
         )
 
