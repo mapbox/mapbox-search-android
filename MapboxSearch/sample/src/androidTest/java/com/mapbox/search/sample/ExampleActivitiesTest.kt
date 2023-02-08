@@ -9,6 +9,7 @@ import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
 import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
+import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
 import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
@@ -60,6 +61,7 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
             AddressAutofillUiActivity::class.java,
 
             DiscoverKotlinExampleActivity::class.java,
+            DiscoverJavaExampleActivity::class.java,
             DiscoverActivity::class.java,
 
             CustomThemeActivity::class.java,
