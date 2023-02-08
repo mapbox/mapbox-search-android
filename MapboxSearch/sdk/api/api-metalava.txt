@@ -75,11 +75,6 @@ package com.mapbox.search {
   public final class CategorySearchOptionsKt {
   }
 
-  public interface CompletionCallback<T> {
-    method public void onComplete(T? result);
-    method public void onError(Exception e);
-  }
-
   @kotlinx.parcelize.Parcelize public final class EtaType implements android.os.Parcelable {
     ctor public EtaType(String rawName);
     method public String getRawName();
@@ -231,17 +226,17 @@ package com.mapbox.search {
   public interface SearchEngine {
     method public default static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     method public default static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
-    method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
-    method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
     method public com.mapbox.search.analytics.AnalyticsService getAnalyticsService();
     method public com.mapbox.search.ApiType getApiType();
     method public com.mapbox.search.SearchEngineSettings getSettings();
-    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
@@ -253,8 +248,8 @@ package com.mapbox.search {
     method public com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
-    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
     property public abstract com.mapbox.search.ApiType apiType;
     property public abstract com.mapbox.search.SearchEngineSettings settings;
@@ -264,10 +259,10 @@ package com.mapbox.search {
   public static final class SearchEngine.Companion {
     method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
-    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
-    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.StubCompletionCallback());
+    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
   }
@@ -468,8 +463,8 @@ package com.mapbox.search {
 package com.mapbox.search.analytics {
 
   public interface AnalyticsService {
-    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.String> callback);
-    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.String> callback);
+    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.String> callback);
+    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.String> callback);
     method public void sendFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
     method public void sendFeedback(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
     method public void sendFeedback(com.mapbox.search.record.HistoryRecord historyRecord, com.mapbox.search.analytics.FeedbackEvent event);
@@ -603,26 +598,26 @@ package com.mapbox.search.record {
   }
 
   public interface IndexableDataProvider<R extends com.mapbox.search.record.IndexableRecord> {
-    method public com.mapbox.search.common.AsyncOperationTask clear(java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask clear(com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public com.mapbox.search.common.AsyncOperationTask contains(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask contains(String id, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public com.mapbox.search.common.AsyncOperationTask get(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<? super R> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask get(String id, com.mapbox.search.CompletionCallback<? super R> callback);
-    method public com.mapbox.search.common.AsyncOperationTask getAll(java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask getAll(com.mapbox.search.CompletionCallback<java.util.List<R>> callback);
+    method public com.mapbox.search.common.AsyncOperationTask clear(java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask clear(com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.common.AsyncOperationTask contains(String id, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask contains(String id, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.common.AsyncOperationTask get(String id, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<? super R> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask get(String id, com.mapbox.search.common.CompletionCallback<? super R> callback);
+    method public com.mapbox.search.common.AsyncOperationTask getAll(java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<R>> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask getAll(com.mapbox.search.common.CompletionCallback<java.util.List<R>> callback);
     method public String getDataProviderName();
     method public int getPriority();
-    method public com.mapbox.search.common.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public com.mapbox.search.common.AsyncOperationTask remove(String id, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask remove(String id, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public com.mapbox.search.common.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.CompletionCallback<java.lang.Boolean> callback);
-    method public com.mapbox.search.common.AsyncOperationTask upsert(R record, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask upsert(R record, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public com.mapbox.search.common.AsyncOperationTask upsertAll(java.util.List<? extends R> records, java.util.concurrent.Executor executor, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
-    method public default com.mapbox.search.common.AsyncOperationTask upsertAll(java.util.List<? extends R> records, com.mapbox.search.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.common.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask registerIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.common.AsyncOperationTask remove(String id, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask remove(String id, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.common.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask unregisterIndexableDataProviderEngine(com.mapbox.search.record.IndexableDataProviderEngine dataProviderEngine, com.mapbox.search.common.CompletionCallback<java.lang.Boolean> callback);
+    method public com.mapbox.search.common.AsyncOperationTask upsert(R record, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask upsert(R record, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.common.AsyncOperationTask upsertAll(java.util.List<? extends R> records, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask upsertAll(java.util.List<? extends R> records, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     property public abstract String dataProviderName;
     property public abstract int priority;
   }

@@ -1,7 +1,7 @@
 package com.mapbox.search.analytics
 
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult

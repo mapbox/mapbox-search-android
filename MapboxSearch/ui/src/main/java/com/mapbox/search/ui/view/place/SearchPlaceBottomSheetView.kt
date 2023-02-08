@@ -10,11 +10,11 @@ import androidx.annotation.IntDef
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.adapter.engines.SearchEntityPresentation

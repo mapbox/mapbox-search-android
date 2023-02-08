@@ -7,6 +7,7 @@ import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.base.utils.extension.addValue
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.DataProviderEngineRegistrationService
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngineImpl

@@ -1,8 +1,8 @@
 package com.mapbox.search.utils
 
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import java.util.concurrent.Executor
 
 internal class CompoundCompletionCallback<T>(

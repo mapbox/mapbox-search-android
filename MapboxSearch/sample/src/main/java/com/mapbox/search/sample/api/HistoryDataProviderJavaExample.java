@@ -11,7 +11,7 @@ import com.mapbox.search.ServiceProvider;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.record.HistoryDataProvider;
 import com.mapbox.search.record.HistoryRecord;
-import com.mapbox.search.CompletionCallback;
+import com.mapbox.search.common.CompletionCallback;
 
 import java.util.List;
 

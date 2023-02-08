@@ -3,9 +3,9 @@ package com.mapbox.search.record
 import android.annotation.SuppressLint
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap

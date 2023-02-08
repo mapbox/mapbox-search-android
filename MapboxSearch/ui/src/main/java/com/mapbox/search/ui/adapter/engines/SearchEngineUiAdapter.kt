@@ -11,7 +11,6 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
@@ -24,6 +23,7 @@ import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine

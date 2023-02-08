@@ -1,4 +1,4 @@
-package com.mapbox.search
+package com.mapbox.search.common
 
 /**
  * Interface definition for a commonly used in the Search SDK callback
@@ -17,10 +17,4 @@ public interface CompletionCallback<T> {
      * @param e Exception, occurred during operation.
      */
     public fun onError(e: Exception)
-}
-
-internal class StubCompletionCallback<T> : CompletionCallback<T> {
-    override fun onComplete(result: T) {}
-
-    override fun onError(e: Exception) {}
 }

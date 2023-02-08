@@ -5,6 +5,9 @@
 ### New features
 - [CORE] Now `SearchSuggestion` and `SearchResult` types provide a new field `fullAddress` which contains formatted text address from backend.
 
+### Breaking changes
+- [CORE] `com.mapbox.search.CompletionCallback` has been moved to `com.mapbox.search.common.CompletionCallback`.
+
 ### Bug fixes
 - [CORE] Fixed `SearchSuggestion.name` and `SearchResult.name` formatting for address types.
 - [AUTOFILL] Fixed address formatting for `AddressAutofillSuggestion.formattedAddress`. 

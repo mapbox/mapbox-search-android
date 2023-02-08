@@ -12,7 +12,7 @@ import com.mapbox.search.ServiceProvider;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.FavoritesDataProvider;
-import com.mapbox.search.CompletionCallback;
+import com.mapbox.search.common.CompletionCallback;
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener;
 import com.mapbox.search.result.SearchAddress;
 import com.mapbox.search.result.SearchResultType;

@@ -6,13 +6,13 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.Event
 import com.mapbox.common.EventsServiceInterface
 import com.mapbox.geojson.Point
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.logger.loge
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult

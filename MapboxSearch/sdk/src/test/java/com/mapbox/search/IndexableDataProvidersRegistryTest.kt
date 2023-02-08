@@ -3,6 +3,7 @@ package com.mapbox.search
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.common.equalsTo

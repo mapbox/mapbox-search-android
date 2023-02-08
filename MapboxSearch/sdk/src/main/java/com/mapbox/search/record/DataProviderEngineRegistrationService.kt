@@ -1,11 +1,11 @@
 package com.mapbox.search.record
 
-import com.mapbox.search.CompletionCallback
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreUserRecordsLayer
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

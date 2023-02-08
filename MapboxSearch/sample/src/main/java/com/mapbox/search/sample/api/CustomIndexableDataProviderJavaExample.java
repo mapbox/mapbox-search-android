@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
 import com.mapbox.search.common.AsyncOperationTask;
-import com.mapbox.search.CompletionCallback;
+import com.mapbox.search.common.CompletionCallback;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
@@ -23,7 +23,6 @@ import com.mapbox.search.record.IndexableRecord;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchResultType;
 import com.mapbox.search.result.SearchSuggestion;
-import com.mapbox.search.sample.BuildConfig;
 import com.mapbox.search.sample.R;
 
 import java.util.ArrayList;

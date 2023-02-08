@@ -1,6 +1,6 @@
 package com.mapbox.search.ui.tools
 
-import com.mapbox.search.CompletionCallback
+import com.mapbox.search.common.CompletionCallback
 import java.util.concurrent.CountDownLatch
 
 internal class BlockingCompletionCallback<T> : CompletionCallback<T> {
