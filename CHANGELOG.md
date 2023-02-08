@@ -2,9 +2,15 @@
 
 ## 1.0.0-beta.46-SNAPSHOT
 
+### New features
+- [CORE] Now `SearchSuggestion` and `SearchResult` types provide a new field `fullAddress` which contains formatted text address from backend.
+
+### Bug fixes
+- [CORE] Fixed `SearchSuggestion.name` and `SearchResult.name` formatting for address types.
+
 ### Mapbox dependencies
-- Search Native SDK `0.66.0`
-- Common SDK `23.2.1`
+- Search Native SDK `0.67.0`
+- Common SDK `23.3.1`
 - Kotlin `1.5.31`
 
 

@@ -898,6 +898,7 @@ public final class com/mapbox/search/result/SearchResult : android/os/Parcelable
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getExternalIDs ()Ljava/util/Map;
+	public final fun getFullAddress ()Ljava/lang/String;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIndexableRecord ()Lcom/mapbox/search/record/IndexableRecord;
 	public final fun getMakiIcon ()Ljava/lang/String;
@@ -939,6 +940,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getExternalIDs ()Ljava/util/Map;
+	public final fun getFullAddress ()Ljava/lang/String;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getMatchingName ()Ljava/lang/String;

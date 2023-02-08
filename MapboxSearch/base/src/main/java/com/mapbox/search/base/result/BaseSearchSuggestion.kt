@@ -19,6 +19,9 @@ sealed class BaseSearchSuggestion(
     open val matchingName: String?
         get() = rawSearchResult.matchingName
 
+    open val fullAddress: String?
+        get() = rawSearchResult.fullAddress
+
     open val descriptionText: String?
         get() = rawSearchResult.descriptionAddress
 

@@ -15,8 +15,8 @@ import io.mockk.every
 import io.mockk.spyk
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.TestFactory
 
 @Suppress("LargeClass")
@@ -48,6 +48,11 @@ internal class BaseSearchSuggestionTest {
                 Then("Suggestion address should be derived from Search result") {
                     assertEquals(BASE_RAW_SEARCH_RESULT_1.addresses?.firstOrNull(), suggestion1.address)
                     assertEquals(BASE_RAW_SEARCH_RESULT_2.addresses?.firstOrNull(), suggestion2.address)
+                }
+
+                Then("Suggestion full address should be derived from Search result") {
+                    assertEquals(BASE_RAW_SEARCH_RESULT_1.fullAddress, suggestion1.fullAddress)
+                    assertEquals(BASE_RAW_SEARCH_RESULT_2.fullAddress, suggestion2.fullAddress)
                 }
 
                 Then("Suggestion distanceMeters should be derived from Search result") {
@@ -403,6 +408,7 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "1"
                 )
             ),
+            fullAddress = "Full formatted address",
             distanceMeters = 123.0,
             icon = "cafe",
             etaMinutes = 5.0,
@@ -428,6 +434,7 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "15"
                 )
             ),
+            fullAddress = "Full formatted address 2",
             distanceMeters = 456.0,
             icon = "bar",
             etaMinutes = 10.0,
@@ -455,6 +462,7 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "24"
                 )
             ),
+            fullAddress = "Full formatted address 3",
             distanceMeters = 789.0,
             icon = null,
             etaMinutes = 15.0,
