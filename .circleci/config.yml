@@ -70,6 +70,7 @@ commands:
             ./gradlew :sdk-common:lint
             ./gradlew :autofill:lint
             ./gradlew :discover:lint
+            ./gradlew :place-autocomplete:lint
             ./gradlew :sample:lint
             ./gradlew :base:ktlint
             ./gradlew :sdk:ktlint
@@ -78,6 +79,7 @@ commands:
             ./gradlew :sdk-common:ktlint
             ./gradlew :autofill:ktlint
             ./gradlew :discover:ktlint
+            ./gradlew :place-autocomplete:ktlint
             ./gradlew :sample:ktlint
             ./gradlew detektAll
 
@@ -137,6 +139,7 @@ commands:
             ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
             ./gradlew :autofill:testDebugUnitTest -Pcoverage
             ./gradlew :discover:testDebugUnitTest -Pcoverage
+            ./gradlew :place-autocomplete:testDebugUnitTest -Pcoverage
 
   store-results:
     parameters:
@@ -281,6 +284,8 @@ jobs:
           module_target: "autofill"
       - store-results:
           module_target: "discover"
+      - store-results:
+          module_target: "place-autocomplete"
       - run:
           name: Calculate coverage
           command: cd MapboxSearch && ./gradlew :sdk:testDebugUnitTestCoverage

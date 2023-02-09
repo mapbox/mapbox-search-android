@@ -73,6 +73,7 @@ dependencies {
     implementation project(':offline')
     implementation project(':autofill')
     implementation project(':discover')
+    implementation project(':place-autocomplete')
 
     debugImplementation "androidx.multidex:multidex:$multidex_version"
 

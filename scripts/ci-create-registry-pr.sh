@@ -47,6 +47,9 @@ cp "$INITIAL_PATH/sdk-registry-config-templates/search-autofill-android.yaml" "$
 mkdir -p "${TMPDIR}/config/search-discover-sdk"
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-discover-android.yaml" "${TMPDIR}/config/search-discover-sdk/${VERSION}.yaml"
 
+mkdir -p "${TMPDIR}/config/search-place-autocomplete-sdk"
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-place-autocomplete-android.yaml" "${TMPDIR}/config/search-place-autocomplete-sdk/${VERSION}.yaml"
+
 # For iOS, both SDK and UI SDK artifacts are described in a `search-sdk` config
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-ui-sdk-android.yaml" "${TMPDIR}/config/search-ui-sdk/${VERSION}.yaml"
 

@@ -14,6 +14,7 @@ searchVersion="$(grep 'VERSION_NAME' gradle.properties | sed 's/^VERSION_NAME=//
 ./gradlew :offline:dokkaHtml
 ./gradlew :autofill:dokkaHtml
 ./gradlew :discover:dokkaHtml
+./gradlew :place-autocomplete:dokkaHtml
 
 mkdir -p build/generated-docs/sdk-common/$searchVersion
 cp -r sdk-common/build/dokka/ build/generated-docs/sdk-common/$searchVersion
@@ -32,5 +33,8 @@ cp -r autofill/build/dokka/ build/generated-docs/autofill/$searchVersion
 
 mkdir -p build/generated-docs/discover/$searchVersion
 cp -r discover/build/dokka/ build/generated-docs/discover/$searchVersion
+
+mkdir -p build/generated-docs/place-autocomplete/$searchVersion
+cp -r place-autocomplete/build/dokka/ build/generated-docs/place-autocomplete/$searchVersion
 
 popd

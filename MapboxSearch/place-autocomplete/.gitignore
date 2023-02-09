@@ -1,0 +1,7 @@
+*.iml
+.gradle
+local.properties
+.idea
+/build
+app/src/main/res/values/developer-config.xml
+src/main/assets/sdk_versions/com.mapbox.search.autocomplete
