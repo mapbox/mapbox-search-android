@@ -1,0 +1,136 @@
+public final class com/mapbox/search/autocomplete/AdministrativeUnit : java/lang/Enum {
+	public static final field ADDRESS Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field COUNTRY Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field DISTRICT Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field LOCALITY Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field NEIGHBORHOOD Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field PLACE Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field POSTCODE Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field REGION Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static final field STREET Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+	public static fun values ()[Lcom/mapbox/search/autocomplete/AdministrativeUnit;
+}
+
+public final class com/mapbox/search/autocomplete/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete {
+	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
+	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun suggestions (Lcom/mapbox/search/autocomplete/TextQuery;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {
+	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/search/autocomplete/TextQuery;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteAddress : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getCountryIso1 ()Ljava/lang/String;
+	public final fun getCountryIso2 ()Ljava/lang/String;
+	public final fun getDistrict ()Ljava/lang/String;
+	public final fun getFormattedAddress ()Ljava/lang/String;
+	public final fun getHouseNumber ()Ljava/lang/String;
+	public final fun getLocality ()Ljava/lang/String;
+	public final fun getNeighborhood ()Ljava/lang/String;
+	public final fun getPlace ()Ljava/lang/String;
+	public final fun getPostcode ()Ljava/lang/String;
+	public final fun getRegion ()Ljava/lang/String;
+	public final fun getStreet ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> ()V
+	public fun <init> (I)V
+	public fun <init> (ILjava/util/List;)V
+	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;)V
+	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAdministrativeUnits ()Ljava/util/List;
+	public final fun getCountries ()Ljava/util/List;
+	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
+	public final fun getLimit ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lcom/mapbox/search/autocomplete/PlaceAutocompleteAddress;
+	public final fun getAverageRating ()Ljava/lang/Double;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
+	public final fun getPhone ()Ljava/lang/String;
+	public final fun getReviewCount ()Ljava/lang/Integer;
+	public final fun getRoutablePoints ()Ljava/util/List;
+	public final fun getWebsite ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getFormattedAddress ()Ljava/lang/String;
+	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun result ()Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/TextQuery : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/search/autocomplete/TextQuery$Companion;
+	public static final field MIN_QUERY_LENGTH I
+	public static final fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/TextQuery;
+	public static final fun create (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/autocomplete/TextQuery;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBoundingBox ()Lcom/mapbox/geojson/BoundingBox;
+	public final fun getQuery ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/TextQuery$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/TextQuery;
+	public final fun create (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/autocomplete/TextQuery;
+	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/TextQuery$Companion;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/TextQuery;
+}
+
