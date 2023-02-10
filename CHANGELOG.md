@@ -15,7 +15,7 @@
 - [AUTOFILL] Fixed address formatting for `AddressAutofillSuggestion.formattedAddress`. 
 
 ### Mapbox dependencies
-- Search Native SDK `0.67.0`
+- Search Native SDK `0.67.1`
 - Common SDK `23.3.1`
 - Kotlin `1.5.31`
 

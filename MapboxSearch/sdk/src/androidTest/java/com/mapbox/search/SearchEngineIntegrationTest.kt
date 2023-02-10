@@ -528,7 +528,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             descriptionAddress = "Minsk Region, Belarus, Planet Earth",
             languages = listOf("en"),
             addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
-            fullAddress = "egion, Belarus, Planet Earth", // TODO bug, will be fixed on the Native SDK side
+            fullAddress = "Minsk Region, Belarus, Planet Earth",
             distanceMeters = 5000000.0,
             matchingName = "Minsk",
             center = Point.fromLngLat(27.234342, 53.940465),
@@ -664,7 +664,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
             descriptionAddress = "Make a new search",
-            fullAddress = "Make a new search",
+            fullAddress = null,
             matchingName = "Did you mean recursion?",
             icon = "marker",
             action = BaseSuggestAction(
@@ -721,7 +721,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             addresses = listOf(SearchAddress()),
             categories = listOf("Cafe"),
             descriptionAddress = "Category",
-            fullAddress = "Category",
+            fullAddress = null,
             matchingName = "Cafe",
             icon = "restaurant",
             externalIDs = mapOf("federated" to "category.cafe"),
@@ -963,7 +963,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestion = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions.first()
 
         assertEquals("Legerova 15", suggestion.name)
-        // assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)   // TODO will be fixed on the native SDK side
+        assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
         assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
     }
 
