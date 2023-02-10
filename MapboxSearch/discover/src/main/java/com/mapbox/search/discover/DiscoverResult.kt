@@ -27,7 +27,7 @@ public class DiscoverResult internal constructor(
     public val address: DiscoverAddress,
 
     /**
-     * Address geographic point.
+     * Place's geographic point.
      */
     public val coordinate: Point,
 
