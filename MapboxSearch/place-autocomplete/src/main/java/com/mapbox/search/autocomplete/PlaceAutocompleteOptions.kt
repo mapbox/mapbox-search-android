@@ -39,7 +39,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
      * Limit results to one or more types of features, provided as a comma-separated list.
      * If no types are specified, all possible types may be returned.
      */
-    public val administrativeUnits: List<AdministrativeUnit> = emptyList(),
+    public val administrativeUnits: List<AdministrativeUnit>? = null,
 ) : Parcelable {
 
     /**

@@ -15,15 +15,16 @@ import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
-import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.internal.bindgen.QueryType
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 internal class PlaceAutocompleteImpl(
-    private val searchEngine: TwoStepsToOneStepSearchEngineAdapter
+    private val searchEngine: TwoStepsToOneStepSearchEngineAdapter,
+    private val resultFactory: PlaceAutocompleteResultFactory = PlaceAutocompleteResultFactory()
 ) : PlaceAutocomplete {
 
     override suspend fun suggestions(
@@ -35,12 +36,12 @@ internal class PlaceAutocompleteImpl(
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = options.administrativeUnits.map { it.coreType },
+            types = generateCoreTypes(options.administrativeUnits),
             ignoreUR = false,
         )
 
         return searchEngine.searchResolveImmediately(query = query.query, coreOptions)
-            .mapValue { it.toPlaceAutocompleteSuggestions() }
+            .mapValue { resultFactory.createPlaceAutocompleteSuggestions(it) }
     }
 
     override suspend fun suggestions(
@@ -52,26 +53,29 @@ internal class PlaceAutocompleteImpl(
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = options.administrativeUnits.map { it.coreType },
+            types = generateCoreTypes(options.administrativeUnits),
         )
 
         return searchEngine.reverseGeocoding(coreOptions)
-            .mapValue { it.first.toPlaceAutocompleteSuggestions() }
+            .mapValue { resultFactory.createPlaceAutocompleteSuggestions(it.first) }
+    }
+
+    private fun generateCoreTypes(administrativeUnits: List<AdministrativeUnit>?): List<QueryType> {
+        // We should not leave core types list empty or null in order to avoid unsupported types being requested
+        val coreTypes = administrativeUnits?.map { it.coreType }
+        return if (coreTypes.isNullOrEmpty()) {
+            ALL_ADMINISTRATIVE_UNITS
+        } else {
+            coreTypes
+        }
     }
 
     internal companion object {
 
+        private val ALL_ADMINISTRATIVE_UNITS = AdministrativeUnit.values().toList().map { it.coreType }
+
         private val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
             Thread(runnable, "Place Autocomplete executor")
-        }
-
-        private fun List<BaseSearchResult>.toPlaceAutocompleteSuggestions(): List<PlaceAutocompleteSuggestion> {
-            return map { it.toPlaceAutocompleteSuggestion() }
-        }
-
-        private fun BaseSearchResult.toPlaceAutocompleteSuggestion(): PlaceAutocompleteSuggestion {
-            val result = PlaceAutocompleteResult.createFromSearchResult(this)
-            return PlaceAutocompleteSuggestion(result)
         }
 
         fun create(

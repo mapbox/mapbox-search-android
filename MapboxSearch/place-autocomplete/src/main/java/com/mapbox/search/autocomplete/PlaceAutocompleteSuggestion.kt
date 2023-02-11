@@ -43,6 +43,12 @@ public class PlaceAutocompleteSuggestion internal constructor(
         get() = result.distanceMeters
 
     /**
+     * The type of result using the global context hierarchy (region, place, locality, neighborhood, address).
+     */
+    public val administrativeUnitType: AdministrativeUnit
+        get() = result.administrativeUnitType
+
+    /**
      * Returns resolved [PlaceAutocompleteResult] object.
      * @return resolved [PlaceAutocompleteResult] object.
      */
@@ -59,11 +65,7 @@ public class PlaceAutocompleteSuggestion internal constructor(
 
         other as PlaceAutocompleteSuggestion
 
-        if (name != other.name) return false
-        if (formattedAddress != other.formattedAddress) return false
-        if (coordinate != other.coordinate) return false
-        if (makiIcon != other.makiIcon) return false
-        if (distanceMeters != other.distanceMeters) return false
+        if (result != other.result) return false
 
         return true
     }
@@ -72,12 +74,7 @@ public class PlaceAutocompleteSuggestion internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + (formattedAddress?.hashCode() ?: 0)
-        result = 31 * result + coordinate.hashCode()
-        result = 31 * result + (makiIcon?.hashCode() ?: 0)
-        result = 31 * result + (distanceMeters?.hashCode() ?: 0)
-        return result
+        return result.hashCode()
     }
 
     /**
@@ -89,7 +86,8 @@ public class PlaceAutocompleteSuggestion internal constructor(
                 "formattedAddress=$formattedAddress, " +
                 "coordinate=$coordinate, " +
                 "makiIcon=$makiIcon, " +
-                "distanceMeters=$distanceMeters" +
+                "distanceMeters=$distanceMeters, " +
+                "administrativeUnitType=$administrativeUnitType" +
                 ")"
     }
 }

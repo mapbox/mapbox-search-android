@@ -64,36 +64,44 @@ package com.mapbox.search.autocomplete {
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteResult implements android.os.Parcelable {
     method public com.mapbox.search.autocomplete.PlaceAutocompleteAddress? getAddress();
+    method public com.mapbox.search.autocomplete.AdministrativeUnit getAdministrativeUnitType();
     method public Double? getAverageRating();
     method public com.mapbox.geojson.Point getCoordinate();
     method public Double? getDistanceMeters();
     method public String? getMakiIcon();
     method public String getName();
     method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
     method public String? getPhone();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
     method public Integer? getReviewCount();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public String? getWebsite();
     property public final com.mapbox.search.autocomplete.PlaceAutocompleteAddress? address;
+    property public final com.mapbox.search.autocomplete.AdministrativeUnit administrativeUnitType;
     property public final Double? averageRating;
     property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final String? makiIcon;
     property public final String name;
     property public final com.mapbox.search.common.metadata.OpenHours? openHours;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
     property public final String? phone;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
     property public final Integer? reviewCount;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final String? website;
   }
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteSuggestion implements android.os.Parcelable {
+    method public com.mapbox.search.autocomplete.AdministrativeUnit getAdministrativeUnitType();
     method public com.mapbox.geojson.Point getCoordinate();
     method public Double? getDistanceMeters();
     method public String? getFormattedAddress();
     method public String? getMakiIcon();
     method public String getName();
     method public com.mapbox.search.autocomplete.PlaceAutocompleteResult result();
+    property public final com.mapbox.search.autocomplete.AdministrativeUnit administrativeUnitType;
     property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final String? formattedAddress;
@@ -102,19 +110,18 @@ package com.mapbox.search.autocomplete {
   }
 
   @kotlinx.parcelize.Parcelize public final class TextQuery implements android.os.Parcelable {
-    method public static com.mapbox.search.autocomplete.TextQuery? create(String query, com.mapbox.geojson.BoundingBox? boundingBox = null);
-    method public static com.mapbox.search.autocomplete.TextQuery? create(String query);
+    method public static com.mapbox.search.autocomplete.TextQuery create(String query, com.mapbox.geojson.BoundingBox? boundingBox = null);
+    method public static com.mapbox.search.autocomplete.TextQuery create(String query);
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public String getQuery();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final String query;
     field public static final com.mapbox.search.autocomplete.TextQuery.Companion Companion;
-    field public static final int MIN_QUERY_LENGTH = 1; // 0x1
   }
 
   public static final class TextQuery.Companion {
-    method public com.mapbox.search.autocomplete.TextQuery? create(String query, com.mapbox.geojson.BoundingBox? boundingBox = null);
-    method public com.mapbox.search.autocomplete.TextQuery? create(String query);
+    method public com.mapbox.search.autocomplete.TextQuery create(String query, com.mapbox.geojson.BoundingBox? boundingBox = null);
+    method public com.mapbox.search.autocomplete.TextQuery create(String query);
   }
 
 }

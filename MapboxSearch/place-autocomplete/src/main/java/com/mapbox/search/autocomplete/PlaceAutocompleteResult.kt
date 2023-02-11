@@ -2,13 +2,8 @@ package com.mapbox.search.autocomplete
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.countryIso1
-import com.mapbox.search.base.core.countryIso2
-import com.mapbox.search.base.mapToPlatform
-import com.mapbox.search.base.result.BaseSearchResult
-import com.mapbox.search.base.utils.extension.mapToPlatform
-import com.mapbox.search.base.utils.extension.nullIfEmpty
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import kotlinx.parcelize.Parcelize
 
@@ -49,6 +44,11 @@ public class PlaceAutocompleteResult internal constructor(
     public val address: PlaceAutocompleteAddress?,
 
     /**
+     * The type of result using the global context hierarchy (region, place, locality, neighborhood, address).
+     */
+    public val administrativeUnitType: AdministrativeUnit,
+
+    /**
      * Business phone number.
      */
     public val phone: String?,
@@ -72,6 +72,16 @@ public class PlaceAutocompleteResult internal constructor(
      * Business opening hours.
      */
     public val openHours: OpenHours?,
+
+    /**
+     * List of place's primary photos.
+     */
+    public val primaryPhotos: List<ImageInfo>?,
+
+    /**
+     * List of place's photos (non-primary).
+     */
+    public val otherPhotos: List<ImageInfo>?,
 ) : Parcelable {
 
     /**
@@ -89,11 +99,14 @@ public class PlaceAutocompleteResult internal constructor(
         if (makiIcon != other.makiIcon) return false
         if (distanceMeters != other.distanceMeters) return false
         if (address != other.address) return false
+        if (administrativeUnitType != other.administrativeUnitType) return false
         if (phone != other.phone) return false
         if (website != other.website) return false
         if (reviewCount != other.reviewCount) return false
         if (averageRating != other.averageRating) return false
         if (openHours != other.openHours) return false
+        if (primaryPhotos != other.primaryPhotos) return false
+        if (otherPhotos != other.otherPhotos) return false
 
         return true
     }
@@ -108,11 +121,14 @@ public class PlaceAutocompleteResult internal constructor(
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + (distanceMeters?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
+        result = 31 * result + administrativeUnitType.hashCode()
         result = 31 * result + (phone?.hashCode() ?: 0)
         result = 31 * result + (website?.hashCode() ?: 0)
         result = 31 * result + (reviewCount ?: 0)
         result = 31 * result + (averageRating?.hashCode() ?: 0)
         result = 31 * result + (openHours?.hashCode() ?: 0)
+        result = 31 * result + (primaryPhotos?.hashCode() ?: 0)
+        result = 31 * result + (otherPhotos?.hashCode() ?: 0)
         return result
     }
 
@@ -127,48 +143,14 @@ public class PlaceAutocompleteResult internal constructor(
                 "makiIcon=$makiIcon, " +
                 "distanceMeters=$distanceMeters, " +
                 "address=$address, " +
+                "administrativeUnitType=$administrativeUnitType, " +
                 "phone=$phone, " +
                 "website=$website, " +
                 "reviewCount=$reviewCount, " +
                 "averageRating=$averageRating, " +
-                "openHours=$openHours" +
+                "openHours=$openHours, " +
+                "primaryPhotos=$primaryPhotos, " +
+                "otherPhotos=$otherPhotos" +
                 ")"
-    }
-
-    internal companion object {
-
-        @JvmSynthetic
-        fun createFromSearchResult(result: BaseSearchResult): PlaceAutocompleteResult {
-            with(result) {
-                val discoverAddress = PlaceAutocompleteAddress(
-                    houseNumber = address?.houseNumber?.nullIfEmpty(),
-                    street = address?.street?.nullIfEmpty(),
-                    neighborhood = address?.neighborhood?.nullIfEmpty(),
-                    locality = address?.locality?.nullIfEmpty(),
-                    postcode = address?.postcode?.nullIfEmpty(),
-                    place = address?.place?.nullIfEmpty(),
-                    district = address?.district?.nullIfEmpty(),
-                    region = address?.region?.nullIfEmpty(),
-                    country = address?.country?.nullIfEmpty(),
-                    formattedAddress = result.fullAddress ?: result.descriptionText,
-                    countryIso1 = metadata?.countryIso1,
-                    countryIso2 = metadata?.countryIso2
-                )
-
-                return PlaceAutocompleteResult(
-                    name = name,
-                    coordinate = coordinate,
-                    routablePoints = routablePoints?.map { it.mapToPlatform() },
-                    makiIcon = makiIcon,
-                    distanceMeters = distanceMeters,
-                    address = discoverAddress,
-                    phone = metadata?.phone,
-                    website = metadata?.website,
-                    reviewCount = metadata?.reviewCount,
-                    averageRating = metadata?.avRating,
-                    openHours = metadata?.openHours?.mapToPlatform()
-                )
-            }
-        }
     }
 }
