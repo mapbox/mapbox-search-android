@@ -60,12 +60,10 @@ public interface AddressAutofill {
             accessToken: String,
             locationEngine: LocationEngine = defaultLocationEngine(),
         ): AddressAutofill {
-            return AddressAutofillImpl(
-                AutofillSearchEngine.create(
-                    accessToken = accessToken,
-                    app = BaseSearchSdkInitializer.app,
-                    locationEngine = locationEngine
-                )
+            return AddressAutofillImpl.create(
+                accessToken = accessToken,
+                app = BaseSearchSdkInitializer.app,
+                locationEngine = locationEngine
             )
         }
     }
