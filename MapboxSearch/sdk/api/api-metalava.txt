@@ -86,19 +86,6 @@ package com.mapbox.search {
   public static final class EtaType.Companion {
   }
 
-  @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
-    ctor public ImageInfo(String url, @Px int width, @Px int height);
-    method public int getHeight();
-    method public String getUrl();
-    method public int getWidth();
-    property public final int height;
-    property public final String url;
-    property public final int width;
-  }
-
-  public final class ImageInfoKt {
-  }
-
   public enum QueryType {
     enum_constant public static final com.mapbox.search.QueryType ADDRESS;
     enum_constant public static final com.mapbox.search.QueryType CATEGORY;
@@ -405,10 +392,10 @@ package com.mapbox.search {
     method public String? getDescription();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
     method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
-    method public java.util.List<com.mapbox.search.ImageInfo>? getOtherPhotos();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
     method public com.mapbox.search.common.metadata.ParkingData? getParking();
     method public String? getPhone();
-    method public java.util.List<com.mapbox.search.ImageInfo>? getPrimaryPhotos();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
     method public Integer? getReviewCount();
     method public String? getWebsite();
     property public final Double? averageRating;
@@ -418,10 +405,10 @@ package com.mapbox.search {
     property public final String? description;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
     property public final com.mapbox.search.common.metadata.OpenHours? openHours;
-    property public final java.util.List<com.mapbox.search.ImageInfo>? otherPhotos;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
     property public final com.mapbox.search.common.metadata.ParkingData? parking;
     property public final String? phone;
-    property public final java.util.List<com.mapbox.search.ImageInfo>? primaryPhotos;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
     property public final Integer? reviewCount;
     property public final String? website;
   }

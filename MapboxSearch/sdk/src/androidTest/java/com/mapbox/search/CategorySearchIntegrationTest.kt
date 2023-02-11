@@ -16,6 +16,7 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.record.FavoritesDataProvider

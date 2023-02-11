@@ -1,8 +1,7 @@
-package com.mapbox.search
+package com.mapbox.search.common.metadata
 
 import android.os.Parcelable
 import androidx.annotation.Px
-import com.mapbox.search.base.core.CoreImageInfo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -56,17 +55,3 @@ public class ImageInfo(
                 ")"
     }
 }
-
-@JvmSynthetic
-internal fun CoreImageInfo.mapToPlatform(): ImageInfo = ImageInfo(
-    url = url,
-    width = width,
-    height = height
-)
-
-@JvmSynthetic
-internal fun ImageInfo.mapToCore(): CoreImageInfo = CoreImageInfo(
-    url,
-    width,
-    height
-)

@@ -2,11 +2,11 @@ package com.mapbox.search.history
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.BaseTest
-import com.mapbox.search.ImageInfo
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData

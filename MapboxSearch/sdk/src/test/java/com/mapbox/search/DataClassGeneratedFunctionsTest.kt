@@ -6,6 +6,7 @@ import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
