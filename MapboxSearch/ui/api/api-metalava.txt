@@ -1,4 +1,22 @@
 // Signature format: 3.0
+package com.mapbox.search.ui.adapter.autocomplete {
+
+  public final class PlaceAutocompleteUiAdapter {
+    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    method public void addSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
+    method public void removeSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
+    method public suspend Object? search(com.mapbox.search.autocomplete.TextQuery query, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(com.mapbox.search.autocomplete.TextQuery query, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+  }
+
+  public static interface PlaceAutocompleteUiAdapter.SearchListener {
+    method public void onError(Exception e);
+    method public void onSuggestionSelected(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion);
+    method public void onSuggestionsShown(java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion> suggestions);
+  }
+
+}
+
 package com.mapbox.search.ui.adapter.autofill {
 
   public final class AddressAutofillUiAdapter {

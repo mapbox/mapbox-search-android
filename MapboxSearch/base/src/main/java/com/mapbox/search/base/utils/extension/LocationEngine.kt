@@ -11,6 +11,7 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 @SuppressLint("MissingPermission")
 fun LocationEngine.lastKnownLocation(context: Context, callback: (Expected<Exception, Point>) -> Unit): AsyncOperationTask {
@@ -54,6 +55,18 @@ fun LocationEngine.lastKnownLocationOrNull(context: Context, callback: (Point?) 
     return lastKnownLocation(context) { result ->
         result.onValue(callback).onError {
             callback(null)
+        }
+    }
+}
+
+suspend fun LocationEngine.lastKnownLocation(context: Context): Expected<Exception, Point> {
+    return suspendCancellableCoroutine { continuation ->
+        val task = lastKnownLocation(context) {
+            continuation.resumeWith(Result.success(it))
+        }
+
+        continuation.invokeOnCancellation {
+            task.cancel()
         }
     }
 }

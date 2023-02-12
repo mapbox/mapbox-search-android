@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.common.HighlightsCalculator
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
@@ -145,6 +146,13 @@ internal class SearchEntityPresentation(
     @DrawableRes
     fun getDrawableForSearchResult(result: SearchResult): Int {
         return getDrawableForSearchResult(result.makiIcon, result.categories, result.types)
+    }
+
+    @DrawableRes
+    fun getDrawable(suggestion: PlaceAutocompleteSuggestion): Int {
+        return pickEntityDrawable(
+            suggestion.makiIcon, emptyList(), R.drawable.mapbox_search_sdk_ic_search_result_address
+        )
     }
 
     @DrawableRes
