@@ -39,6 +39,16 @@
         />
 
     <item
+        android:id="@+id/open_place_autocomplete_ui_example"
+        android:title="@string/action_place_autocomplete_ui_example"
+        />
+
+    <item
+        android:id="@+id/open_place_autocomplete_kotlin_example"
+        android:title="@string/action_place_autocomplete_kotlin_example"
+        />
+
+    <item
         android:id="@+id/open_custom_data_provider_kt_example"
         android:title="@string/action_open_custom_data_provider_kt_example"
         />

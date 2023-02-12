@@ -70,7 +70,11 @@ fun Context.isPermissionGranted(permission: String): Boolean {
 }
 
 fun Context.showToast(@StringRes resId: Int) {
-    Toast.makeText(applicationContext, getString(resId), Toast.LENGTH_SHORT).show()
+    showToast(getString(resId))
+}
+
+fun Context.showToast(text: CharSequence) {
+    Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
 }
 
 val Context.inputMethodManager: InputMethodManager

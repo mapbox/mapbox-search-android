@@ -42,7 +42,8 @@ internal class PlaceAutocompleteItemsCreator(
                 subtitle = suggestion.formattedAddress,
                 distanceMeters = distance,
                 drawable = searchEntityPresentation.getDrawable(suggestion),
-                payload = suggestion
+                isPopulateQueryVisible = true,
+                payload = suggestion,
             )
         }
     }

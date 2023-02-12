@@ -48,15 +48,15 @@ package com.mapbox.search.autocomplete {
   }
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteOptions implements android.os.Parcelable {
-    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), java.util.List<? extends com.mapbox.search.autocomplete.AdministrativeUnit> administrativeUnits = emptyList());
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), java.util.List<? extends com.mapbox.search.autocomplete.AdministrativeUnit>? administrativeUnits = null);
     ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage());
     ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public PlaceAutocompleteOptions(int limit = 10);
-    method public java.util.List<com.mapbox.search.autocomplete.AdministrativeUnit> getAdministrativeUnits();
+    method public java.util.List<com.mapbox.search.autocomplete.AdministrativeUnit>? getAdministrativeUnits();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public com.mapbox.search.common.IsoLanguageCode getLanguage();
     method public int getLimit();
-    property public final java.util.List<com.mapbox.search.autocomplete.AdministrativeUnit> administrativeUnits;
+    property public final java.util.List<com.mapbox.search.autocomplete.AdministrativeUnit>? administrativeUnits;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final com.mapbox.search.common.IsoLanguageCode language;
     property public final int limit;

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.autocomplete.PlaceAutocompleteResult
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.offline.OfflineSearchResult
@@ -13,8 +14,11 @@ import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.ui.utils.extenstion.toSearchAddress
+import com.mapbox.search.ui.utils.extenstion.toSearchResultType
 import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 /**
  * Search place UI model to show in [SearchPlaceBottomSheetView].
@@ -292,6 +296,38 @@ public class SearchPlace(
                 metadata = record.metadata,
                 distanceMeters = distanceMeters,
                 feedback = feedback,
+            )
+        }
+
+        /**
+         * Creates a new search place instance from [PlaceAutocompleteResult].
+         *
+         * @param result [PlaceAutocompleteResult].
+         * @param distanceMeters Distance in meters to the given search place.
+         * By default [PlaceAutocompleteResult.distanceMeters] will be used.
+         *
+         * @return Search place instance
+         */
+        @JvmStatic
+        @JvmOverloads
+        public fun createFromPlaceAutocompleteResult(
+            result: PlaceAutocompleteResult,
+            distanceMeters: Double? = result.distanceMeters
+        ): SearchPlace {
+            return SearchPlace(
+                id = result.name + UUID.randomUUID().toString(),
+                name = result.name,
+                address = result.address?.toSearchAddress(),
+                resultTypes = listOf(result.administrativeUnitType.toSearchResultType()),
+                coordinate = result.coordinate,
+                routablePoints = result.routablePoints,
+                makiIcon = result.makiIcon,
+                distanceMeters = distanceMeters,
+                record = null,
+                categories = null,
+                descriptionText = null,
+                metadata = null,
+                feedback = null,
             )
         }
     }

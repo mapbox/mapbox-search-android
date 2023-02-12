@@ -14,12 +14,12 @@ import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.UiError
-import java.util.concurrent.CopyOnWriteArrayList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Helper class that implements search-specific logic over [PlaceAutocomplete]
@@ -83,7 +83,12 @@ public class PlaceAutocompleteUiAdapter(
             }
 
             override fun onPopulateQueryClick(item: SearchResultAdapterItem.Result) {
-                // Should not be called
+                when (val payload = item.payload) {
+                    is PlaceAutocompleteSuggestion -> searchListeners.forEach { it.onPopulateQueryClick(payload) }
+                    else -> failDebug {
+                        "Unknown adapter item payload: $payload"
+                    }
+                }
             }
 
             override fun onMissingResultFeedbackClick(item: SearchResultAdapterItem.MissingResultFeedback) {
@@ -168,6 +173,12 @@ public class PlaceAutocompleteUiAdapter(
          * @param suggestion The clicked [PlaceAutocompleteSuggestion].
          */
         public fun onSuggestionSelected(suggestion: PlaceAutocompleteSuggestion)
+
+        /**
+         * Called when [SearchResultAdapterItem.Result]'s "Populate query" button is clicked.
+         * @param suggestion The clicked [PlaceAutocompleteSuggestion].
+         */
+        public fun onPopulateQueryClick(suggestion: PlaceAutocompleteSuggestion)
 
         /**
          * Called when error occurs during the suggestions request.

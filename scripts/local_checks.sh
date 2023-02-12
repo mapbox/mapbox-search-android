@@ -6,29 +6,29 @@ python scripts/license-validate.py
 
 pushd MapboxSearch/
 
-#./gradlew :base:ktlintFormat
-#./gradlew :sdk:ktlintFormat
-#./gradlew :ui:ktlintFormat
-#./gradlew :offline:ktlintFormat
-#./gradlew :sdk-common:ktlintFormat
-#./gradlew :autofill:ktlintFormat
-#./gradlew :discover:ktlintFormat
-#./gradlew :place-autocomplete:ktlintFormat
-#./gradlew :sample:ktlintFormat
-#
-#./gradlew :base:lint
-#./gradlew :sdk:lint
-#./gradlew :ui:lint
-#./gradlew :offline:lint
-#./gradlew :sdk-common:lint
-#./gradlew :autofill:lint
-#./gradlew :discover:lint
-#./gradlew :place-autocomplete:lint
-#./gradlew :sample:lint
-#
-#./gradlew detektAll
-#
-#../scripts/public-api.sh --check
+./gradlew :base:ktlintFormat
+./gradlew :sdk:ktlintFormat
+./gradlew :ui:ktlintFormat
+./gradlew :offline:ktlintFormat
+./gradlew :sdk-common:ktlintFormat
+./gradlew :autofill:ktlintFormat
+./gradlew :discover:ktlintFormat
+./gradlew :place-autocomplete:ktlintFormat
+./gradlew :sample:ktlintFormat
+
+./gradlew :base:lint
+./gradlew :sdk:lint
+./gradlew :ui:lint
+./gradlew :offline:lint
+./gradlew :sdk-common:lint
+./gradlew :autofill:lint
+./gradlew :discover:lint
+./gradlew :place-autocomplete:lint
+./gradlew :sample:lint
+
+./gradlew detektAll
+
+../scripts/public-api.sh --check
 
 ../scripts/validate-kdocs.sh
 

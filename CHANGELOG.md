@@ -7,6 +7,8 @@
 - [DISCOVER] Now `Discover` SDK provides callback-based alternatives for Kotlin suspend functions.
 - [DISCOVER] Now `DiscoverResult` provides a new field `formattedAddress`.
 - [PLACE AUTOCOMPLETE] Place Autocomplete SDK is available now. See docs for more information.
+- [UI] `PlaceAutocompleteUiAdapter` type is available. It's a helper class for connecting `Place Autocomple SDK` with the `SearchResultsView`. 
+- [UI] A new `SearchPlace.createFromPlaceAutocompleteResult()` function is available.
 
 ### Breaking changes
 - [CORE] `com.mapbox.search.CompletionCallback` has been moved to `com.mapbox.search.common.CompletionCallback`.
