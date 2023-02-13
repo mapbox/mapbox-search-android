@@ -22,7 +22,7 @@ data class BaseSearchAddress(
 ) : Parcelable
 
 @JvmSynthetic
-internal fun CoreSearchAddress.mapToBaseSearchAddress(): BaseSearchAddress {
+fun CoreSearchAddress.mapToBaseSearchAddress(): BaseSearchAddress {
     return BaseSearchAddress(
         houseNumber = houseNumber?.nullIfEmpty(),
         street = street?.nullIfEmpty(),
@@ -37,7 +37,7 @@ internal fun CoreSearchAddress.mapToBaseSearchAddress(): BaseSearchAddress {
 }
 
 @JvmSynthetic
-internal fun BaseSearchAddress.mapToCore(): CoreSearchAddress {
+fun BaseSearchAddress.mapToCore(): CoreSearchAddress {
     return CoreSearchAddress(
         houseNumber,
         street,

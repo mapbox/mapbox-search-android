@@ -2,6 +2,7 @@ package com.mapbox.search.autocomplete
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
@@ -97,13 +98,13 @@ public class PlaceAutocompleteResult internal constructor(
         if (coordinate != other.coordinate) return false
         if (routablePoints != other.routablePoints) return false
         if (makiIcon != other.makiIcon) return false
-        if (distanceMeters != other.distanceMeters) return false
+        if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
         if (address != other.address) return false
         if (administrativeUnitType != other.administrativeUnitType) return false
         if (phone != other.phone) return false
         if (website != other.website) return false
         if (reviewCount != other.reviewCount) return false
-        if (averageRating != other.averageRating) return false
+        if (!averageRating.safeCompareTo(other.averageRating)) return false
         if (openHours != other.openHours) return false
         if (primaryPhotos != other.primaryPhotos) return false
         if (otherPhotos != other.otherPhotos) return false
