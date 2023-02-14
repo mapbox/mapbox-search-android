@@ -2,7 +2,6 @@ package com.mapbox.search.autocomplete
 
 import com.mapbox.search.autocomplete.test.utils.TypeObjectCreator
 import com.mapbox.search.base.defaultLocaleLanguage
-import com.mapbox.search.common.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import nl.jqno.equalsverifier.EqualsVerifier

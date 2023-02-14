@@ -1,0 +1,73 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "bbox": [
+        -77.1311702,
+        38.906068762,
+        -77.116515883,
+        38.91542593
+      ],
+      "geometry": {
+        "coordinates": [
+          -77.118094,
+          38.912398
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "feature_name": "Washington Golf and Country Club",
+        "matching_name": "Washington Golf and Country Club",
+        "highlighted_name": "Washington Golf and Country Club",
+        "description": "Arlington, Virginia, United States",
+        "place_name": "Washington Golf and Country Club, Arlington, Virginia, United States",
+        "id": "neighborhood.690367724",
+        "place_type": [
+          "neighborhood"
+        ],
+        "context": [
+          {
+            "layer": "postcode.69119724",
+            "localized_layer": "postcode.69119724",
+            "name": "22207"
+          },
+          {
+            "layer": "place.11102444",
+            "localized_layer": "place.11102444",
+            "name": "Arlington"
+          },
+          {
+            "layer": "district.689900",
+            "localized_layer": "district.689900",
+            "name": "Arlington County"
+          },
+          {
+            "layer": "region.91372",
+            "localized_layer": "region.91372",
+            "name": "Virginia"
+          },
+          {
+            "layer": "country.8940",
+            "localized_layer": "country.8940",
+            "name": "United States"
+          }
+        ],
+        "language": "en",
+        "maki": "marker",
+        "internal_id": "42GAgLzUzPSMpPyijPz8FAA=.Y2OAgOTEotzUPAA=.TY2xDsIwDET5lCgzA-qCxIYY-AAEjMhNQmoptZHjDhXiT_kYHLUDt9073d13s-jtA0-kMvuDvxJqiu6ioKn6rZeUkcmCG0pGQjAWsapgUKNHKUhZmdypTcyWvgqE9B81xlUDx4a7rtvtDRUOUFDbpzlKmIeeZWCORu5Qh3X3zOXpgOJyILM7lam3BsQoqdal3syDprFPsu7B2M785wc=",
+        "external_ids": {
+          "carmen": "neighborhood.690367724",
+          "federated": "carmen.neighborhood.690367724"
+        },
+        "metadata": {
+          "iso_3166_1": "us",
+          "iso_3166_2": "US-VA"
+        }
+      }
+    }
+  ],
+  "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "55:ce8b854900df80c271126016a2dbb1b8ee9345c1",
+  "response_uuid": "29862a22-d092-4e20-9cd5-03f0d3afb82d"
+}

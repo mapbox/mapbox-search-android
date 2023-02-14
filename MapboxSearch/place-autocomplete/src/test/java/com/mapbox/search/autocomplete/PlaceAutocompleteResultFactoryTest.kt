@@ -6,12 +6,10 @@ import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.result.BaseRawSearchResult
-import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.utils.extension.mapToCore
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
 internal class PlaceAutocompleteResultFactoryTest {

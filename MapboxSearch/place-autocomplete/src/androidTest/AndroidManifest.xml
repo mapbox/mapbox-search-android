@@ -1,0 +1,10 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mapbox.search.autocomplete"
+    >
+
+    <application
+        android:label="Place Autocomplete SDK test"
+        android:usesCleartextTraffic="true"
+        />
+</manifest>
