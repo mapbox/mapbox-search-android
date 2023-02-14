@@ -7,6 +7,7 @@ import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.utils.extension.mapToCore
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -26,12 +27,6 @@ internal class PlaceAutocompleteResultFactoryTest {
     }
 
     @Test
-    fun `test createPlaceAutocompleteResult with unsupported type`() {
-        val result = factory.createPlaceAutocompleteResult(testBaseResult.copy(types = listOf(BaseSearchResultType.POI)))
-        assertNull(result)
-    }
-
-    @Test
     fun `test createPlaceAutocompleteSuggestion`() {
         val result = factory.createPlaceAutocompleteResult(testBaseResult)
         val suggestion = factory.createPlaceAutocompleteSuggestion(testBaseResult)
@@ -40,18 +35,6 @@ internal class PlaceAutocompleteResultFactoryTest {
         assertNotNull(suggestion)
 
         assertEquals(result, suggestion?.result())
-    }
-
-    @Test
-    fun `test createPlaceAutocompleteSuggestions filters incorrect results`() {
-        val baseResults = listOf(
-            testBaseResult,
-            testBaseResult.copy(types = listOf(BaseSearchResultType.POI))
-        )
-
-        val results = factory.createPlaceAutocompleteSuggestions(baseResults)
-        assertEquals(1, results.size)
-        compare(testBaseResult.rawSearchResult, results.first().result())
     }
 
     private fun compare(baseResult: BaseRawSearchResult, result: PlaceAutocompleteResult) {
@@ -74,7 +57,7 @@ internal class PlaceAutocompleteResultFactoryTest {
         assertEquals(baseResult.metadata?.countryIso1, result.address?.countryIso1)
         assertEquals(baseResult.metadata?.countryIso2, result.address?.countryIso2)
 
-        assertEquals(AdministrativeUnit.ADDRESS, result.administrativeUnitType)
+        assertEquals(PlaceAutocompleteType.AdministrativeUnit.Address, result.type)
 
         assertEquals(baseResult.metadata?.phone, result.phone)
         assertEquals(baseResult.metadata?.website, result.website)

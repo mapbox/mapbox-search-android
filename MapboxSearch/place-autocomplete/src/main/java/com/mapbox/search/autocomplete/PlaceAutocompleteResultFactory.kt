@@ -22,7 +22,7 @@ internal class PlaceAutocompleteResultFactory {
 
     fun createPlaceAutocompleteResult(result: BaseSearchResult): PlaceAutocompleteResult? {
         with(result) {
-            val type = types.firstNotNullOfOrNull { it.mapToAdministrativeUnit() } ?: return null
+            val type = types.firstNotNullOfOrNull { it.mapToAutocompleteType() } ?: return null
 
             return PlaceAutocompleteResult(
                 name = name,
@@ -31,7 +31,8 @@ internal class PlaceAutocompleteResultFactory {
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
                 address = createPlaceAutocompleteAddress(this),
-                administrativeUnitType = type,
+                type = type,
+                categories = categories,
                 phone = metadata?.phone,
                 website = metadata?.website,
                 reviewCount = metadata?.reviewCount,
@@ -62,18 +63,19 @@ internal class PlaceAutocompleteResultFactory {
         }
     }
 
-    private fun BaseSearchResultType.mapToAdministrativeUnit(): AdministrativeUnit? {
+    private fun BaseSearchResultType.mapToAutocompleteType(): PlaceAutocompleteType {
         return when (this) {
-            BaseSearchResultType.COUNTRY -> AdministrativeUnit.COUNTRY
-            BaseSearchResultType.REGION -> AdministrativeUnit.REGION
-            BaseSearchResultType.POSTCODE -> AdministrativeUnit.POSTCODE
-            BaseSearchResultType.PLACE -> AdministrativeUnit.PLACE
-            BaseSearchResultType.DISTRICT -> AdministrativeUnit.DISTRICT
-            BaseSearchResultType.LOCALITY -> AdministrativeUnit.LOCALITY
-            BaseSearchResultType.NEIGHBORHOOD -> AdministrativeUnit.NEIGHBORHOOD
-            BaseSearchResultType.STREET -> AdministrativeUnit.STREET
-            BaseSearchResultType.ADDRESS -> AdministrativeUnit.ADDRESS
-            else -> null
+            BaseSearchResultType.POI -> PlaceAutocompleteType.Poi
+            BaseSearchResultType.COUNTRY -> PlaceAutocompleteType.AdministrativeUnit.Country
+            BaseSearchResultType.REGION -> PlaceAutocompleteType.AdministrativeUnit.Region
+            BaseSearchResultType.POSTCODE -> PlaceAutocompleteType.AdministrativeUnit.Postcode
+            BaseSearchResultType.PLACE -> PlaceAutocompleteType.AdministrativeUnit.Place
+            BaseSearchResultType.DISTRICT -> PlaceAutocompleteType.AdministrativeUnit.District
+            BaseSearchResultType.LOCALITY -> PlaceAutocompleteType.AdministrativeUnit.Locality
+            BaseSearchResultType.NEIGHBORHOOD -> PlaceAutocompleteType.AdministrativeUnit.Neighborhood
+            BaseSearchResultType.STREET -> PlaceAutocompleteType.AdministrativeUnit.Street
+            BaseSearchResultType.ADDRESS -> PlaceAutocompleteType.AdministrativeUnit.Address
+            BaseSearchResultType.BLOCK -> PlaceAutocompleteType.AdministrativeUnit.Address
         }
     }
 }

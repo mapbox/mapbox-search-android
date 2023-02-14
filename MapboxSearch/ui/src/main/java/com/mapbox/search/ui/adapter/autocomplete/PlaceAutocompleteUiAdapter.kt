@@ -5,10 +5,11 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.geojson.BoundingBox
+import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
-import com.mapbox.search.autocomplete.TextQuery
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.ui.view.SearchResultAdapterItem
@@ -51,7 +52,7 @@ public class PlaceAutocompleteUiAdapter(
     private val searchListeners = CopyOnWriteArrayList<SearchListener>()
 
     @Volatile
-    private var latestQueryOptions: Pair<TextQuery, PlaceAutocompleteOptions>? = null
+    private var latestQueryOptions: QueryOptions? = null
 
     @Volatile
     private var currentRequestJob: Job? = null
@@ -72,8 +73,8 @@ public class PlaceAutocompleteUiAdapter(
 
             override fun onErrorItemClick(item: SearchResultAdapterItem.Error) {
                 view.findViewTreeLifecycleOwner()?.lifecycle?.coroutineScope?.launchWhenStarted {
-                    latestQueryOptions?.let { (query, options) ->
-                        search(query, options)
+                    latestQueryOptions?.let {
+                        search(it.query, it.region, it.proximity, it.options)
                     }
                 }
             }
@@ -100,17 +101,24 @@ public class PlaceAutocompleteUiAdapter(
     /**
      * Performs suggestions request.
      * @param query The search query.
+     * @param region Limit results to only those contained within the supplied bounding box.
+     * @param proximity Optional geographic point that bias the response to favor results that are closer to this location.
      * @param options The autofill options.
      */
     @JvmOverloads
-    public suspend fun search(query: TextQuery, options: PlaceAutocompleteOptions = PlaceAutocompleteOptions()) {
+    public suspend fun search(
+        query: String,
+        region: BoundingBox? = null,
+        proximity: Point? = null,
+        options: PlaceAutocompleteOptions = PlaceAutocompleteOptions()
+    ) {
         currentRequestJob?.let {
             if (it.isActive) {
                 it.cancel()
             }
         }
 
-        latestQueryOptions = query to options
+        latestQueryOptions = QueryOptions(query, region, proximity, options)
 
         coroutineScope {
             currentRequestJob = launch {
@@ -120,13 +128,13 @@ public class PlaceAutocompleteUiAdapter(
                     }
                 }
 
-                val response = placeAutocomplete.suggestions(query, options)
+                val response = placeAutocomplete.suggestions(query, region, proximity, options)
                 withContext(Dispatchers.Main) {
                     if (response.isValue) {
                         val suggestions = requireNotNull(response.value)
                         searchResultsShown = true
                         searchListeners.forEach { it.onSuggestionsShown(suggestions) }
-                        view.setAdapterItems(itemsCreator.createForSuggestions(suggestions, query.query))
+                        view.setAdapterItems(itemsCreator.createForSuggestions(suggestions, query))
                     } else {
                         val error = requireNotNull(response.error)
                         searchResultsShown = false
@@ -189,4 +197,11 @@ public class PlaceAutocompleteUiAdapter(
          */
         public fun onError(e: Exception)
     }
+
+    private data class QueryOptions(
+        val query: String,
+        val region: BoundingBox?,
+        val proximity: Point?,
+        val options: PlaceAutocompleteOptions
+    )
 }

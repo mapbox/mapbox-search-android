@@ -23,11 +23,10 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.search.autocomplete.AdministrativeUnit
 import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
-import com.mapbox.search.autocomplete.TextQuery
+import com.mapbox.search.autocomplete.PlaceAutocompleteType
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchResultsView
@@ -162,9 +161,8 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
                 }
 
                 lifecycleScope.launchWhenStarted {
-                    val query = TextQuery.create(text.toString())
-                    placeAutocompleteUiAdapter.search(TextQuery.create(text.toString()))
-                    searchResultsView.isVisible = query.query.isNotEmpty()
+                    placeAutocompleteUiAdapter.search(text.toString())
+                    searchResultsView.isVisible = text.isNotEmpty()
                 }
             }
 
@@ -190,7 +188,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
     }
 
     private fun reverseGeocoding(point: Point) {
-        val types: List<AdministrativeUnit> = when (mapboxMap.cameraState.zoom) {
+        val types: List<PlaceAutocompleteType> = when (mapboxMap.cameraState.zoom) {
             in 0.0..4.0 -> REGION_LEVEL_TYPES
             in 4.0..6.0 -> DISTRICT_LEVEL_TYPES
             in 6.0..12.0 -> LOCALITY_LEVEL_TYPES
@@ -198,7 +196,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launchWhenStarted {
-            val response = placeAutocomplete.suggestions(point, PlaceAutocompleteOptions(administrativeUnits = types))
+            val response = placeAutocomplete.suggestions(point, PlaceAutocompleteOptions(types = types))
             response.onValue { suggestions ->
                 if (suggestions.isEmpty()) {
                     showToast(R.string.place_autocomplete_reverse_geocoding_error_message)
@@ -276,18 +274,32 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
             MARKERS_TOP_OFFSET, MARKERS_EDGE_OFFSET, PLACE_CARD_HEIGHT, MARKERS_EDGE_OFFSET
         )
 
-        val REGION_LEVEL_TYPES = listOf(AdministrativeUnit.COUNTRY, AdministrativeUnit.REGION)
+        val REGION_LEVEL_TYPES = listOf(
+            PlaceAutocompleteType.AdministrativeUnit.Country,
+            PlaceAutocompleteType.AdministrativeUnit.Region
+        )
 
         val DISTRICT_LEVEL_TYPES = REGION_LEVEL_TYPES + listOf(
-            AdministrativeUnit.POSTCODE,
-            AdministrativeUnit.DISTRICT
+            PlaceAutocompleteType.AdministrativeUnit.Postcode,
+            PlaceAutocompleteType.AdministrativeUnit.District
         )
 
         val LOCALITY_LEVEL_TYPES = DISTRICT_LEVEL_TYPES + listOf(
-            AdministrativeUnit.PLACE,
-            AdministrativeUnit.LOCALITY
+            PlaceAutocompleteType.AdministrativeUnit.Place,
+            PlaceAutocompleteType.AdministrativeUnit.Locality
         )
 
-        val ALL_TYPES = AdministrativeUnit.values().toList()
+        private val ALL_TYPES = listOf(
+            PlaceAutocompleteType.Poi,
+            PlaceAutocompleteType.AdministrativeUnit.Country,
+            PlaceAutocompleteType.AdministrativeUnit.Region,
+            PlaceAutocompleteType.AdministrativeUnit.Postcode,
+            PlaceAutocompleteType.AdministrativeUnit.District,
+            PlaceAutocompleteType.AdministrativeUnit.Place,
+            PlaceAutocompleteType.AdministrativeUnit.Locality,
+            PlaceAutocompleteType.AdministrativeUnit.Neighborhood,
+            PlaceAutocompleteType.AdministrativeUnit.Street,
+            PlaceAutocompleteType.AdministrativeUnit.Address,
+        )
     }
 }

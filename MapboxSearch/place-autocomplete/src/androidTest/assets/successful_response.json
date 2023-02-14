@@ -1,0 +1,727 @@
+{
+  "suggestions":[
+    {
+      "feature_name":"Washington Institute of Dermatologic Laser Surgery",
+      "matching_name":"Washington Center For Dentistry",
+      "highlighted_name":"Washington Center For Dentistry",
+      "description":"1430 K St NW Ste 800, Washington, District of Columbia 20005, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pBhHd-x9GK-skcOHTLj05ZOyKpKgn26CcDHcrVAu8aJnQobmtTFghNBQ2RNatdoS-MISx23ZefVH_lp_IZgJ6aLu_CmR3WxTeZXUIVlbILF5jNSmIJSN1WoyMsrcT0DqNr0q-sbNaGBtjDJ9ARqNFHsJWxS-c8p2zgENWKNf51W9qq9LAINj9gB9uSgJNIyJmGVQUhpUzdGz4GYRmptxWXzOfKIxetKlsjt97QtqwpPn5OTibbB4DyATjvUA7xTAuTV6XbFFfDS0k-hSRGuyvlPEhH3edNvc9LQ0mfR8fadcStvpPJfOdzOowek6S2Ef0BsSDC7mhGksGhcYJ5n1AhYXHhoXaPV8XzYGGLOou_cFSXgPqISHYKRTsLpAhOHEwoPQWkLdeQr3rHOKi-FdxfBU7lkjUnXC6fOSBv0YWoA1U4BZmpkoCvIcdrsemumM93Q0zeARMInHxXLxy2HA0IlFZhSuKYwrGcHaPEtKgNPOEmWK4WWF4znuyU8dYvkpuMYmBBccOegHTDGIAtuCZjpXvEN5WE0CHXepJTc3P1VgcG0VFBX0NxTlzL7krA5EJgFbnm4vYmuhL0wUDOdTRZQM_uoQ3vw-JxOi8KM0inh6utYowbxXYrzCcyJYrVhMIiOC0PGPSugkJBmAqXE2qQrkLg7whcBy1KF-JTNge4cZXOHmWqqFEjqaD6qi2RbMIcBrj8BxmXwHVIkSft8zLpbssnOc2Dk0GOE6PBEhG7ww_v_TVZubEwdhNnhzw85Y84SDTpJPJi2-R6PRot3nTXV0SQPkaMfy9GOolKgyw3VBOEKDIewKZYQ5yWF3f8k1jnUa8oMDhXNDLKeTQoIS0wmNz3XGqMZbJevx_xnbK51DMWBdUkd0wzJYYe3nz13UPm87VBBd-OnU3SJxZZipWB3WfQPnIPhjKwxuvEwiBJrB1Dl8QoJ-RMAWFQN4_Dfi0yb0TI8sYQ5ztOvR2l1oEf1IGFGGhPl7Hc3nXJG3qtSBiuU09jY9C1jEax7MEfMWtLeXTmzDSjhina681tp8noY0-6sevLXk_jqbi1NT2a2SrRlOAMHoac23B5-m87-1l5nUchSucIQyACrb9kHJwubKa6Qho5C9UREj5DuXYOVT7VLtg5Qa8dLiYbe-A0cfH0iWtOCHCKkZE6nX2FhR1k_3o-p_cykpcTZg_Seg2aC5pkoXuP9PRWP_sE1nJ8juRGnvmlgNKgeOr8yp41Rj0gZikgrRcw-V3lfSMJAiGTEEHNgLKNtXjKXvTjA6xBeRB19jIgIeqZmRKjY48wTkQqwllxfGeybCKTRcBNmyBrK6Wh5zlptpfLovRTR2osF6akdAk6_qeP8P9pCkzXrQNjnLjO90Nb3vjOQApqx2zjiQt3wMDw3MYkJ9MGWPHb7DTWUkfqc6klrsbF9GlC5BjFDxIjXLoHADnLs8jCn5cHRFiXhKc1NmRd-pkKCdBBvcD7lvxVmiu83W1itsqgKGWZapj2qdjuMNrWgf5P_e3to_gvSOG82lYO9eMgijvkjrsxWxt3MaEIhOTBVknx20ztgHff9YOQk9eofslSb9E3sHz4iwKr1WN6Ke4wRnAtx7kPC8cZuZiQJbqbziTLmGXVkYVoRWLg7Oa3HC2t_ddRU9Jn9jUzeRilxdCp1a7ZQhIq9QedZKWvsu0fIcmPBrqO_Rwkn_CJmTMferOSGaXDQJfq5nS8wtRbhRxEL12eIiE-YmMjicjHnVCoaOcPDFJKzSoyTAHh9Rc8oP_Lyn1IzQnaB2y6FaeKLEVoBm01AsGltXMOHrQOmznkWPEthd5uEo0kDvRBCeQMmtYkhbXBgw_aWdrAxwRU1xOLXGieEnqRHUz7KM5_GumVhg_V3i-Vm4bjz13QYKtRzamf3zOYY4vBs9APGbKA8dZk6RIVpzBoTbckxnJbI_f2NLjlYIZKLFMDpKhmSuJzyVEv_8ff5Jxvp"
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "doctors office",
+        "health services",
+        "services",
+        "dentist"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.JcBBDoAgDARAX2SQUqDRz3RD92rE8H8PzrX9eK_5Pstn7AUOH3bQanHNqQMUDzlLMETBoUSjZ1hqXVg_",
+      "external_ids":{
+        "safegraph":"22h-222@63r-6ct-j9z;22h-223@63r-6ct-j9z;zzw-222@63r-6ct-j9z",
+        "foursquare":"4babad91f964a5208bbf3ae3;4efe35bfd5fb7fa2b90783f6",
+        "mbx_poi":"c51b9e199bb5c21f5c04dde53af0eec9f452749948e56d11be3df8a11952d919",
+        "federated":"poi.c51b9e199bb5c21f5c04dde53af0eec9f452749948e56d11be3df8a11952d919"
+      },
+      "mapbox_id":"CkIKQGM1MWI5ZTE5OWJiNWMyMWY1YzA0ZGRlNTNhZjBlZWM5ZjQ1Mjc0OTk0OGU1NmQxMWJlM2RmOGExMTk1MmQ5MTk=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1430 K St NW Ste 800"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"k st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20005"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Downtown"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington City Paper",
+      "matching_name":"Washington City Paper",
+      "highlighted_name":"Washington City Paper",
+      "description":"1444 I St NW, Washington, District of Columbia 20005, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pDtHd-x9GO9_xyKVHEi8SAoept5gl04h-IGMrtsunUPQEGGNBXlxernxC9Nl8UNp2-dbUdlBXemWBYEXZh9H6GK5UfFJ_V2-v3ckYalXlRRAPRI7J_ATwjjQ5PqZR6mmN9jKC_fbwvk7T9ZGIH73pqES0mzO0xrUcLogNwPibc94QD3PxvcBhPKq8Cnewack2cQC7kJgy4y_IvLb1uRleOd81Ya84vs8Fv8FqLELGHbQGOxGNpZclHmk9WFGvu1L_JFR18bkFD703gLLsVQcJzficFnl1rEKhLSr0iCg9jH9fG1jvPzcqUdc2HjgobE1EAZ1e_pzRZK4lC657l-_djb3fW7ZnqnBrA5PvJMxqab2YC-D04hN9qIIx4ZxxPh5qESSxTr5VSAgr5atshsshc6zdT_voh6awzKhdE-9_NI_uHiQlM1qiM0W8CnBiWifFuKf5T-nP1cpuUOXCk9rp4bBeWfyy0NwHUUaXRPzyrJm8VS3OowmS7Dr9KXKtTWl-wnrLHfWvVQvxKH_S6-bmizVwlIRG71s7x6H-Rvn3WJ1SJ21IAHehu5k8RamW1fPVw6a3T_kdq5Gh1-Jfm7zsdJ9G1pxjwPorzfJiLR1IGCSCraEZt21eFQ4r6l0n2TYI78I1_73qk3ug3ct5oPbkgyola-zWyUWB0_yHnvv0L1ccZJN_pklI8gs_7naiLBWOvh_DsqRJ3pNfIX2k7mncjVK4z2wRNAUFbmQq3Q1QdF93i_Ug3__K69U-5J5BSHGTH8-5VvUyTXRF8Kqjr4nDy6h2AO7gbrvw4Uljmm2v1hvd1JYafZiebRdbTVksIS3ya8EZveQbgGBYm8_oW-KoHNjW7GntB92LQkB8vgJffulEGIB9dwHWybhfMYixM2AtoMQvU2eSM5LA8-lBdv5e5lcHK_1WvkSz3ZGfl0gK5e4Bqsqs-qpFrWYFgxS-702-vHZgXLKKLy6h2IrWmzyGKlz4-sRhUIojz4BP67fh3GZ1DozgsTzjCJAsAIIN8mOrWGcBBmwZDh0KoFYBkd0BVCZfPyWEIBgmUc4BqL_xjrvPihR-L6XYkF5GyXDrAlfMVLapwkixZBgF2T0zWJWq87y5P6mnLKRaVMn7eWhQgdDOI5YmiYqbw6jUr66jufFVo4cz2I92mT-HGKxM412Ii_PPadrTlRffoBBUQdzapJbCZrcGH49X7vC7vnyvMFwBVFKyt1L2cf7iXCPJDu2uBLz8SJ-DmBzDGqItXJO2c8CwPs0PA4N3sz8iAkq7_ZVgMa1CvOSKFrxr0Wecw9ZcefLHpmmbxJS-nAUejdarNmU9xwSr438ECx6XGpT24TVv2W75Rc1mPWYn4ELl9VuxkklHjyFd2wRdKDMswJQCZYx8UpOlcjpDqn9-jXWAxmaRiTRCC9J4Ruujj4Hi8IdVLE8mN1HDwVPipjk8TsUFnj5Xx18heRnFnsfDsr7QqHz2HFaQvpetrIz0ESZx2YXk5iaTTzzuzDytfIQIwVq9pENVHE7eseqBx0T0ALs4cx12AT5gja_H8eUQk5p4djiYUxan8CxCNIXFLnTPoquYzpfjOgfKwDRP2Gb7bwBwepeDCpUKkErcN3Gn2NwUYe9CEpS4iGBS5UbztSZGs9a5Ya-in7N1w77YXeI2lVpBDEl9lh3gObRLvp9FOjQeEiAcfvAptgtxOjWQ1Etp0n8AymPu-HFYxDIgzJdYvJZs4bZnJUbP6ODoskKaiFsMrPZf_6cTJ6tKkMezvwC3my64lO5wng8NRHbxnlk3fmE9OQiwUnNCxNsh-DM-r29UGVMZSuHOpxINu50W5p7MUq7xDM4YWTpmNXdg1moGV5wnAQlSWwKDtrtIuqhHM-XcCSBH-2VfGReDaF24rMOW6HzHNgHnWAkhDu-iQ="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "landscaping",
+        "services",
+        "alternative healthcare",
+        "health services",
+        "chiropractor"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.JcDBDYAgDAVQJzIU2i8NczgArfRqxLC_B9-5_eJe831Wn2Nncz9UEVbZ1UAAciqjCceg7om1DpUuwlxAXVrAEGGZRIi5ophn0bg-",
+      "external_ids":{
+        "mbx_poi":"dbed5bdf733d279aa7b8bf8d38d16f41aa1ecfce0a9845908f950742e5068bb8",
+        "foursquare":"4bcc7996fb84c9b61666203e;54fe1ac0498e95a5544361a5;f6b6ffb2155144863bc259fd",
+        "federated":"poi.dbed5bdf733d279aa7b8bf8d38d16f41aa1ecfce0a9845908f950742e5068bb8"
+      },
+      "mapbox_id":"CkIKQGRiZWQ1YmRmNzMzZDI3OWFhN2I4YmY4ZDM4ZDE2ZjQxYWExZWNmY2UwYTk4NDU5MDhmOTUwNzQyZTUwNjhiYjg=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1444 I St NW"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"i st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20005"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Downtown"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington DC Ghost Tours",
+      "matching_name":"Washington DC Ghost Tours",
+      "highlighted_name":"Washington DC Ghost Tours",
+      "description":"1520 H St NW, Washington, District of Columbia 20005, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pDj_eez9cqGWMEBZVETuqUIACrJQ9GOHczH2yaOH6HRrQD2MDmfoUxf4hAjeW3FV8ckoce9zyE0Pb53aRQoxzjxI8dAH1u7JCP1PhCiatXfEU5OOY0mZ1eDR1cQhaXqwEnpc127I-T6R2ksgOXzLw-T2VJHne84Mc3AFwSzkrfeAIKCcQGQPgJyOlkCt8NlTB_D0x5gT_aQtzkuIdbKKJXrAM-1XieruGfe78nC99iXC2WyJiSYxZrrSEFWPT3IYrpycvbCejCJdNNLPEZtZ3_1QEa1urMvAAQuT7AHFYLBPo9g0wsphU0MNHvVClAFMEeL7DqHaWzn1iINMSSfBU4n23fX4dtCp79C3jZDtMS_36XDSqJAvJemjQCQ6b2w2j47oqsvvNopUCD_inmK3lFi3rPJ4kldTLYpKtP8LMqbO3SG5ZAq68THMys6wYrYTY9b9ypvDUCzyYKYW5xTli8CGJl4MuW3HnzvkB1_jys5XtPE8inOvsxGHwm3SxitKZCwa8bQOF-p2Z_gtUDFQyi4KN1xDIJXGW6LN_vDXq7dWmv0k3v3vu683NnhLKDJO6Os1B36D9pswR3hi0cKK73RTOMzJ1t2ItDe4HF_wUWMw8-OitNrdhr0O-V_A3TNNd5JarUNYZ_SYnNqKI0t1puVWQf42mI3uLjvu380VAhzzTAje6C7ElTh-0o9geH7PM4fEDpv7qWimdZBRZw34iT2dEHXxTEl39_15FxA_WBk2bMH3FpF2BSLqIoGnF6OYwY4Za4uBu6_om-D2XcwT3AmdI5pbIQbRU4umbH_u2_lzv1NcRYPmWPX_r-2d125xWX5_ZbZWseXyGogQVNIToSo_XyoZSw-1HctEcoOwCLdWyQldaUI20udfHOfj04fPedmfnoixbTz4R9VkWnMxf-KUbdi16JjhlRdI57-LnHZsdyzzB_4Yi5ozM8oXeJRKyaGyWKL8e4hWTXhCIXFxffx5RyHD-2eb5ezu38fENTMOJ_k6vMZ67XuE33aSoOB2-iYxQW866IO8BUQTTxkdbkDSvQYfgIhAQscRbMa7Aq7EO17PwBmMl-pYBdf-6DRVNbkWF2-TtlsBmpc_fQ7kez9dZ-0hTgU8aMU-veNlDfKHUQVV0s4HcFBkYHo2SrW8l6C7ePgA0kgRM8t5ks3NIhChGwj7AKYn_DsDoafj8b61eWHqLM6EAMqX9m483zv3leS3U43c2OTYPVsrqOL9grtr3oE-DKYngvkpfxZESGt_9AA5lI9HTlUR0B0Q_xyMAphNEGG7p94d2BCBUHLmELZjsy4N7-HvM9NsoBq06Sx2MB02fhv0jawhq7lU8XExco3dvxXUQCNnI4AhbaPfUzGNvBqOpmJP40L0wlfY6vP8hotpAV78N1IjE3TVvLyJeTOH04icFJbNXs6LN82ss7M2T-ORqEBAHNnxUrwxnIBLDOwW1Yuj4Gl4YKBIlnnngBfDiV6o9ojQO8kBTfsTQJpSV8rO4BnQsFOHwUvHumDjh4RM3hdgxoK2VoNZ7-fUb9mA63IGFvfnA9i7myV0nZRSWEZmCBtxeYHl1YJa7AoXfZxoYYO2IHQeab1Lr3Ty13hN8hWG2pvptvp2LsRgzcv4gwnku8QFxILFSxivVK9SNyFCdgKj_EI3l-zwuX_eucJSJ4ogcD4WFKDqsXsSL-auDRTCUYtIVjajouPXCGnPuJeoW63YfHO6QN0HgwQN7TwK4iNtA3eWYMiz12yqA5uwVoA6Ojoniago5-AgZHBywp7SxmmK2ExJGLr_lqAESja22Pw90b7SpRpccrw0i6b9-BNyNydktjH7thwCS0i8rSe611Q8StkSGJdIxTOqH0saXpetBQlsovDgkLnqkTpuM0xqu97akZ2wNk_B_FGwzgMY7Ixl_gDhBU5ZzeqLEpMdskxMYWYCuK7dF7gND5p1n5-yB3au87nEb4H13PZol7r8XT2OtyTvAW_rzDjmOi0TQgEs7peqh8sgMQzYBh8kjBFJhqfl84OcihO1cKCcyQN6T67t1WWeUHC00K4WrWu5Fe-YV549eg73r518CsEnSs7Q4BidCtDVgKca0Q2uhvj7-bhG3O2_llZXUBlVX_VfA=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "tours",
+        "tourist attraction"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k6TExEQjs-Q0SzOTRFMjA3ND8yTjxFRjAA==",
+      "external_ids":{
+        "foursquare":"4baaa26cf964a520717b3ae3",
+        "mbx_poi":"ae903092c3f63695996c7e370a7149a6b83fbebb4b9aeeb0102f8056d1996c39",
+        "federated":"poi.ae903092c3f63695996c7e370a7149a6b83fbebb4b9aeeb0102f8056d1996c39",
+        "tripadvisor":"3217609",
+        "safegraph":"224-222@63r-6cs-j7q"
+      },
+      "mapbox_id":"CkIKQGFlOTAzMDkyYzNmNjM2OTU5OTZjN2UzNzBhNzE0OWE2YjgzZmJlYmI0YjlhZWViMDEwMmY4MDU2ZDE5OTZjMzk=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1520 H St NW, Washington DC, DC 20005-1003"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"h st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20005"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Downtown"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Square",
+      "matching_name":"Washington Square",
+      "highlighted_name":"Washington Square",
+      "description":"1050 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pPtGd-z9GNJrsgOejEqRAbballOZHFl-vXGCqf1vTmCqklLoN6QegMOFmzy0kzR5sqvkQMZ-NCf_pbCXn5_R8QO1sC7WBp2W7CxOKlNmi6IHhRHyYvHQAGTuIfr5R_qyIUx3Zei7gFv7MSasYZncj50J3xDEawGT1Bf23KUII2WtyJQ5KyvkyxZ6XaIob-cecRLboYi-EjKhJYH5ikctT6XpdgdvlfgRI76Ew1GBSAkj9A7vjDazPB6ndpBEtmiNYwTesCnwPV6kfc8iZwgmtwnSuDya8gZ7Eg30UurPhm49bQuwGc4qfzTWorUvk_kadoIhrjgkqRTAU20ZKAH1npaiov3qArVb6ujG8A8MlinB8Y2wKfYMl4mEb3ZPqPPPPv7apW4m-_HO9-KSE7pwtN1amN-RavWMkKp8NUHHiCuqKvy4t5EWyfkb2KWKYrwlgUWm9g3X2GQkixeuVhpAkLxh4nryCbpHhMbbAm4fH6f9bbOAN6uVk3I6Wp6nQuInYYmlgXsRZ9m57dZcxo0vadFdye26Z7wX27nFbs-8G6ooAuj63ft-IW6UdmRGE2GmYVTtjyOygLd4gLTO0_2VeaIvmKOcJjK-aJc59_JGdanlCPe1lMWm2xXxioP0DRhw_4IrRT5toG1Fnyekur8OcS6Pd-_gS_jypxVwLZF1SHoCc5ip4FFQ3ylJ-qjyuJBUvUR7C8lxr1ZEy-aL3zCSUlFSpBzZcvKMnsuPBi83zfWtzFpIm3P-pj0SO2jR33LJhXn_V92U0Hn8LQ8nvTyxYT2nuxkpvQiiAMbNKQkqAS60Jdfk9vHVF1BzDi1tORdE4sL23QFjpW8wp6E_jVnlFgBKqxJD-zwNmBQHI1kxhDF_Mm30K7n8R8Es_CoO3-0MZBKdrrFhXO2LNl9hCyvM0qCh3dBUS1SHFKl3FzlgFpMusvTMMbLwOuU0fMmBgda8_xpd4X7dFpZS2gFL-J0N3BvJAfyKInxycCQ9mMpCyRNUazNI6a7FGkrRzWuADPWWcbzW_teVBtI8FCS4GMiD2aQc6FTv4aS04WNHy7dbQr_tEgaR9UvXIBdJe3FUimNUgNUpqCJ4W2awOSB65MXYyJElfzfO4Gz56nTm5WD6KXJT_Tkrs90yO56hLH4pVpxWbloVWo6zHCjSLQi427dkXrEVL4fJChXa1zQ-CaT2jG2ySHyd_6RYxJQIr2FePN7CayU_4J2JPgHNOGpwuvZaSKCEj5bUYIwuHLj9ja9KxHsAt14sjk28_0Uj8rK8W79Z2_tnxqftasEKTX2bqdLTejtXNdvjWRo76zpqDhxtR1667vAIPz67jpIxclkPKz5OL9J8nkNsol266o1lvLt00ZvceBM_a30B4lrx7b44qXrgiBsC-FzNENPDoUpsNATs5nUgFdP3xY2EoEUZbiEzG_gw6mbAD3mlHeCYBMQY_tHhVpq_17yJoUx8ZxBu3Pk3B50l_jy9o0Jzm-lrf8vmV8Gg5vD5KXlyeUhn76zFmwGFFo8qM6U06qiD8qsv978mhkLyPMAeFiFiReuwpOYBLq6hnS01dDkcg_XoPtwuTSHeGyDDA4DRpvznPYc_C8RbZt7R7V2-uUZ2Sd-zaR7rwysrWy4HbORNwkfJiynrHdQlSU5Tw303MpQnilAAQ6NYqkuMF5cg8Da_pMslxSTibmwpvcV5qe6h9-_qKfh3DTn52jMl7SQEYexydDtEriaVHH9wGrBObAPnvQdJMlU9j-6hGaz"
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyQL47QkM-M0SzOTRFMjA4tEQ0tjw1RjAA==",
+      "external_ids":{
+        "mbx_poi":"f75992f49751ef0e37b0070f0866c26c4e11700f04d3a242327ebc192d18cf49",
+        "federated":"poi.f75992f49751ef0e37b0070f0866c26c4e11700f04d3a242327ebc192d18cf49",
+        "foursquare":"4b83fb63f964a5208a1931e3"
+      },
+      "mapbox_id":"CkIKQGY3NTk5MmY0OTc1MWVmMGUzN2IwMDcwZjA4NjZjMjZjNGUxMTcwMGYwNGQzYTI0MjMyN2ViYzE5MmQxOGNmNDk=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1050 Connecticut Ave NW"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"connecticut ave nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20036"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Dupont Circle"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Photo Safari",
+      "matching_name":"Washington Photo Safari",
+      "highlighted_name":"Washington Photo Safari",
+      "description":"4545 Connecticut Ave NW Ste. 418, Washington, District of Columbia 20006, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pHj_R-y9cq-s4iXRH1JhsCOMN_P_tle_yedCegBRbhdoIoIVfpdJqHnmhgVAqH7R8diKHPx0SSmHXXTqK0m6yT8QP9Fa9I3RO73tEgxhzsUAUUdrnKY9UDb2exHLrc3mFyNa3N5B8zd_I4MFuu2p7Elyh3uVvw-pzlR6uM5m0bWXIjOo1iqnhaZZFLPLZdLcltk8aPqOrlJWcPHEmTfoUy4OBSNKD9KGMwU90SPq_s22aUnnjC2ECZGesnAkqQ-5T2na_m2q7x-WU6mNXboGzQyKiT9-8SzUBFCwonrBjfWLPWhn1Nx5GC6v0W4D_4ODMeFHuSSGzQOfl6BrQ05kmxN8JJWDvbU_Nej4o0ta8i6oSf4wn1zvWD0hWl53Q4aQhfDll-dKqS0CRwtz0f4vuLZSQvmF4CslGqqoaKQfDG17sNwmkNK7UqY-LjldbTqwzKgslMqcuqINY_ZQ9lB_Kftn_86DS_AQYhslUfhK-OOZf39qDDr4a3zNm_tUcAPoBKHnMHUfBst8HGZjlq0Q4essufxsYfXswqEtIvLCF7veo9u9pe5Zlw2NGDjK3GRl9btv4Gg62Yo2GK-pEXrQ5EMl-pgnrgNrnvE9uYhyJmISaZ51cybdhrIO_sHeXTP7b7pq4m1Er-jkwBuu5ZM5_ZDNVjc44fyMapbJQ42tKZQBFR8iU4EDXoS-0KThXYsA-aXYZQmQYi91dA6dYG-NTXOShPzrRXkGHpkHPVZmhAH8yZpJQ4n7Oz6E656rQLBS-44o_VHsMz2WQuGtIGdFVyyvXt279cibJQ-pohLsLDBuiD2uLYxBR3AXTaX9b3B9UofsTGSBJ8Hcd50qorovDR5kVN4qNW5Eg-So_KsOGdcGEfgGUzcL5UwyGWTnYnX_aexcye0CWBVY1GIPVDuISvj_CuQwC_6H-yKSRUYShUJX4yluwaYFjYE4GFcoQ9EDNiEUSMhNVhYyuuAzRpCvq4XMe04F_rYZfl14anPwOELF-J6ya8l3SMSjL4-2exYdQ0RocJ1H3M9UN-GhjUmHD5JrXV7XHCDNqlnEo5DKTMPNzIdShoGZDfxZN_KVXOlL0fOcjafHDKur3dJHMWljstz4pTg2POxVH-guRHdlpwr3X8FoJiDx6BhMjsHX4rS0nbzjOM7D-Msdwb5Ob1_t_lwM5cnupFKPLYlDA1Sf5FehtkVkC_44UwlwgProJm731Nb3l60xTUMBR4zayLxZv6q9m5roDtONCWJI-uqTt1vcQ8FZs5B7sUsesDq1nt1Vm0PxNX4LuTz1u_Kz7P_xKvGH2GlEzxChIElZLlWBMD3uwYA1vkewBEcRb5necuLLSZON6y7RszH5kKl_Rp-4qZdvIQ265oRN-SRxDCf8k0wPR968L_glLZhU1mogWuSXp6mUHySbaVPnO8DzjeC2rWGEYh3T7bmJzfJRkPxWMfDLQ89zoi7gr4-TTOokgxxscthelXWyathKg6jQKX4fkav91miBKCq4tCHxDn2o1_grvD0gxJ4Fvo8lZgDVCVLYhMnwiAMRW8iSGKGLWRI9NRS9OzB_xA3fHrkwjDYpkbVq3UgsfqxBxmYyAeszcUEnYSfErOFKchTEIaLKWFv5FM0W0oqdcaBAvCGAAplBklNHVhV4d4s63Mg74moej7WVaRFgsVAlry7foiEYe3D4qiNkoi3uHSOIlmNzS4N-06d8ziDOfj4tOxgvjh8eAY3lBOrtBhnkjCzefHdJvEXqDCjylfuCfLYYDalrzjKMXtnkwKx_ngyV4EGZNPWNoJMvT3d2ovauIwF7JZUeRbHgo4f6BfhnS7VqmL3JGPiiQL-YsQDZZ5pjDHxj8d_DHMiJ31l6Go8kixUO0YsmS1rFETCoW_GPV44MqkjqNyL6msjhIUimrF3SYDd1-4kUVxm4FmwFLmo2aW14VmPsTTr92j0iFv2Q2FEtrh-oiPim5X3rDh_6B9K225OnfZi0_YGxbdwjjJzeAYvnLkrx0-ntEyuDacbvQiGnGMfFr3NKT4tvETGP9O-szD353o6z06OkCqfseYo4NssGANU6wurTupq3Es69X9E_ndK9FlCDrJlq6sXmui6rOrbqnVUpsN6v8BfCJyglMwHaJSAuOqdIITK6C-zAzhjMK4V3Y7r8WyrzLIGtzC8e1lS57Xmkc2erKgVLIS6bQBtctqffhdhZr6zfaGfxQwwFEldc1vNGkAdMTMIWZkIh6Hc4ZVPeF6LV42oMshGPa_kew3L86AtliW14MEtZN32B4HZrqzMyg_tAnj-ylnliJTglj3F88Kz6k6I_B6W3NqYg23DpzJzmYXU0di1NZBqpsfa3cSiEYHBfu4NklLcslJdLicEu8WqFwimJj8cX-d6Z5BYfFiObee0CiLwEW3BTsqyO_jw8m3s6IzF5ZaHTEASS2-bWkmepHm7zyknI1mr1wZclCIZqjAgWPM4rYxfx3ZnFcHFIYU9YL2K6Gfos9Ux_C52Zil0jm3YriOMPG3Y-L-Z1k66-Xy0g5c47-Bt_HwA_XmnhXscZAVMJzG9F7J-UvudkZGKL0mPDrX3OqEXWImK5V9mXIiGgTT5R1LVUJtMiDtlA6T1duUj6v24lA85VQqPuWh8S6HeT6Hq94n7IAYzMQnjELG8OJ01QcbO0YrDHyuFNPr06bBVRTMuZ-y4YuAEzgB-_yW-31Y1tEDitTY9h7a6NNYYZnvsIvtTxirHR9LtLGjQfSFmdBJOSL2PzlsNALW0KgpILtA_oujrB6iHYxtpFy_8cR1wcSGSS2ZAZ194Vb0_ERHFTKX2SBHS5N8zUlNRNtLEbOq9_LiQm_9PFGwlbNOg8LIKriZ59gKB1r6IqAjXLS22fhKhcQIi9xiCk56hco41Ykai4FpKOQ=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "historic site",
+        "tourist attraction",
+        "museum",
+        "monument",
+        "tours"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolS9ZFMjw6REY_NEczMTE0tDc8vk1BTDJIs0AA==",
+      "external_ids":{
+        "federated":"poi.fc7832f96944539f67d84421a9a9d36fc8c8b887422d14beecc40b95f9677a83",
+        "tripadvisor":"218825",
+        "foursquare":"c521ba37a76449179ced1b8f",
+        "mbx_poi":"fc7832f96944539f67d84421a9a9d36fc8c8b887422d14beecc40b95f9677a83"
+      },
+      "mapbox_id":"CkIKQGZjNzgzMmY5Njk0NDUzOWY2N2Q4NDQyMWE5YTlkMzZmYzhjOGI4ODc0MjJkMTRiZWVjYzQwYjk1Zjk2NzdhODM=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"4545 Connecticut Ave NW Ste. 418,, Washington DC, DC 20008-6042"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"connecticut ave nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20006"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Dupont Circle"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington En Français",
+      "matching_name":"Washington En Français",
+      "highlighted_name":"Washington En Français",
+      "description":"Pennsylvania Avenue, Washington, District of Columbia 20500, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pDj_R-y9YrsHllRlWtL5JYuIppyykWiVksdzbL6QhxCR9KWkxm8aN6Ra9Sp6G4Fnzjtg_22pSSmHXXT-OYZ_0L9BsG9GnQB1OQ0Mf1yccK2PO1g2dbO3bsRuxJ-VwpPND9_S6PxC7jbaT05jxqqOx8b87f6f-_FBEHrFtBxbfEoxuicsNmMVuclnHxWpz-kl1S4QBIyt-uTTakAGOrBwjEfNrIplA1WHoM4XVEp27Ui_5fK9_FWCD2fZUxymF4VOnLPl1PnV0CIRjdW1jfR5GXJYe9yvXxdPmYUEN-zmuZESqowHYs-ey2FHNSZCHz8_oQJn9KKXBPaObDjySL-8YbxDSLSk8efTL20vUzSvEnIHMlByphnGxRjxvpja8L9PV8MFvxr3Rm_Tavc1xQBpUQ6DClhfI-dAa6Wxg1XXP8tdkPx1jPnZ9J7VdjNTVbldiIKo_JCoB6xMa-vGPJ5MUfd5whoRYyMYSsrVLuXZ2RPB0Ups0h-XXR9zM528Oztv0O7h0fKJgqH4DUxBHzX64I5o0D3AzoULRwSicFofZYMFdLEsGpZAVDOK9Yj5HOXk74Mkw9ElXggpF2xURtiAdUsh-6iRaiIkhxh6kJspJNhT8TYoBfPDBP3oNi-FSFQQh3QT6xa0xntmFzMu5sKqHvbOqnSvvbYa6uW2xa7iTC2tKcOFH4IXDa6h1_hMjCTnpNbbBom_n2hkdwRxpWaEuf8CFejrThfwvMRLVFYf9AZ1RL58h7073A_0iNrrWaMAy8w5hKoowQBtp-EyXfhSnagA1_BRZ1Zi9IpUeYMe-6r7obVZn89-MIHHyUn6qOG06u1jqYNL6je7GA6kknOFg4-QlqLLQNK33jASZ_31tNBgAS1QmQher9Th2ZjDrF2NHekfDoP6WXOUYjRfiBKirillCJBcbGsqXib75xm5ZOh0ehU2vIzH-Y26wRtCm0Ce8v2Cqp8umGXlsMy2-Dom2-xS_QKzNi_dPmOMfIdMtfDgk05EGfLkjIwKZ3axdFtMCh9TDPYxwQaglQjcc9YOzBdpEElu-EWq6jxM8m0R8VP8qLfHAIdPU5JTOAmmJPKJ8avFayCdmJC2YTO482WVznSreHFNl8JfII41rIC3aGdj_ok1gjdVwGA9nqb6n2koV6rxhfSw3-KuwkY-0OcaYV-FWNFl1nvM248QtG1sq89wvVaV0N0Pjy3aMdHmneZUHIkCQsJF2oxydxGM1ULk1oMZg9ejpPfupO6Bhnrj75lhFHM-B6YzqHf75yPHaqfF184r4RzCNS9XjyxdRBg44BmjOHW1RqK7644seU_IHLFzZ6HgazbEYqv4r5WwOxr-Avk4KZfpdM4nvtQtYzHZuwnLwzI2KiY6xaRZBPG8e8b-8Zx0g3ob-SHenhYEuI27-05XSilGqs4W12kgQsEQ9DUxkBB7Eao8XMAYS4ORETMHuLeuDKATy8x7wcUvPix21EgmUhp9k2G0ygh3NylbUKPVtmDNm0O64dnzJlL7lFe82FgPgCfKCIbeehGmx7NjJpPrrYeauHrYm5CKrschGoSBVFicv-kycmO_5E02AGkOyACaFer4jwUOuX_S3Vq-F-DgLIJZGShRWNcRUbwTyoO0bPLMPuRtScapkhYg04ynu1YtFc39OaypahTvhIAdEX5T4PPoISdw1_zjin3hnGBohgtumQXmt-Wdvr440I_y5TpUn8F3iXmA6x9lA-Tki7yBYdW9gvPxoX6b7KD5B7SqmRvwS8mlOjvGm3vW2YxjtxG4hrSBIvHYmmK4JdRuBMnVSDUbsc0flVeefdkQ7kMVnqxXjkhIxYzUsDYK_vBMNrIFeakJhH0hDMKSwL2Ph9dkCeGjOXpaQK-qX0MAZWdmkg7-phQRDpZOIPOlJhS5cHXukkZ9MwbQ496kq_nBSko5FkGr45du1ONlptTCQDDqAeO6XNSdqHD51sy05OjBZWv2giXv1-dL9boUe2x1oWC6zp-RKJzRQVAzP1AdS8jbrXyJF3sggYy0hU006a4zBN6owjoK8GvgsF_8E0lrDqr_oIkMDK9JxuZstXpjzdFWCzwMaNDSDOOiHVUr_qTAEq-qzGDnTswXI7zSihW0Kz7ae3lrCSZqZmyfDLx_EaDQuGz-uTzN4c1MvFOhelSRjtpcWpG8YpZSMvjSedx_7uzRslj2SmeDchZNwILabMK37HWos3Cm7mVgbBOuzMKbp3d9mrGjcuRcLNu6DyZox3udQ54toavpzod2oGIt82KAdXWpYKejoKKXxwKoPAGn-GHByBrFDVv"
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "historic site",
+        "tourist attraction",
+        "monument",
+        "tours"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.E2GAgJKizILElLLM4vwiPUNzCwMjUxMLAA==",
+      "external_ids":{
+        "federated":"poi.fc80f6ada1653f47335d09a4d9dc153be70d6517f1c4af4681c7ec47912f43bb",
+        "tripadvisor":"17802548",
+        "mbx_poi":"fc80f6ada1653f47335d09a4d9dc153be70d6517f1c4af4681c7ec47912f43bb"
+      },
+      "mapbox_id":"CkIKQGZjODBmNmFkYTE2NTNmNDczMzVkMDlhNGQ5ZGMxNTNiZTcwZDY1MTdmMWM0YWY0NjgxYzdlYzQ3OTEyZjQzYmI=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"Pennsylvania Avenue, Washington DC, DC 20500"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"pennsylvania avenue"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20500"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"National Mall"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Deli",
+      "matching_name":"Washington Deli",
+      "highlighted_name":"Washington Deli",
+      "description":"1990 K St NW, Washington, District of Columbia 20006, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pBhHd8z9Zq1O7dMUn8JcqxWtv1jlNYwsN-tbXkkRfrtaQtUfkEchFXdpD8j1p3K6eejdV33xHusFhIbWSpt-fi4DcbPREa5K9QVqO9CcIlxG3lPYBuNS7nUl9y17VBLtPmOM9f9ZhjGwf-dgfD_uckiHneVTvzurDhSquO7N_-177NEi7Kgz90XIdf5pGdPfoEJYckGyZfyT5_3PAnD3TOa3pZpaM6B8PqvLeLSFp5g3xoLWte0we-xNcZCTxsBczxfpJQgOjJ4oJo-YDmHgGG0PCI6FcYrsg9FIDGLLrjXrG7v4TOQWs5jB5HGEqjrMA_xkYK05a4A0HrQMyjiUHW3a5kxStFvVVKS2FoKkOzDQ88XUASTNHBYTjio6SkVYOV75z6gjtgqvBU1NFcz0EGZ7pk2Zyg6Ms02hYZvqVTYx-M-23K4j9t0r8oRryV8pCzp0L7Q9IdAOZgwY99NK3nQh7azqfUdypYQqBtkiJUv5Q8wcSbs7ozj1AOQpjtqp_F1X2iYi42p_8fbxj82tegugX3bMMz7Yp-R5775Iwv1xDAxqyje54Wr-srYbB6VMTcLuJjPI1DeEKe2qnxwdvm-gnwy6ph313-wNO30prqhW5zlJMPdw2Z4ndQsg7YpLNBMiPRTdQ1Oq2iefYxPlNDBTQ_24Y-2t_YHWFbrcMbtbCrRd5v66kEry7A-E2tGWP4x4ToHTIfl1ZAqbsnDOgbv3jkM61_fehdtwyZDKajIBdhb8Az_QiX6nraJsAINgC9dvsnSkJbj9pL1VYyFyBmNV_CxY2qBpw2wBvOdykjT7lNv6DemKXhwVim2mV1yv_k6KbVum7AKAztTg7BMPEITvtIHHoTxXVD2y_reXDKuwv_cCW161DMEwhtvXyzQYoOU9hG7-SAmwR_6YCHN8N7HEyPW8JYNUFgEvk_ewmMwhIrGop4YimyH9OXtZq9d1EYt4VFiDCQ4HlH4OV039lnquYJmdcy6bVywK6b2yw5LfMTq_KO7FX7QszFxQPXQcIurNBMUycptdL6S4NfzeJN3_z84Y9v4ZnVsIVwcs5BDE__UnVO5_nXnJyNrn1Xxdof5iU_UTA6qQUDA4J9xsEmjyAhnDtS0jNtUhpD2pVAFR_ArRtjbfo9a-fSbgiaD0BPE4jxVBpJpVzlkkY3N2N_QG9O1dufPWxLH4NyHyb7jNxd4nvnufGGAJkC9IiapqFok8XreI4reRoGRlDYv3mVNgtUm8J-Nw9ZuNClxTPvhULCoG1jTS2xjxLTseagr2ZV07-2895efJ-nLfMjNGMdfkXDlRJ6p9UI3oWa3jRKf1NHIbZHvVo7nwrajMZYg5i9QuEwbCQ2ouEvab-Rpg5BwlKWlby_hex5drDIxKlZxVP04cDEEABDaA0Vcwb9z2iY92DQcZchfI4uGim_gz_da6ezfKPcvau8Qu-gFub8VpY-VKppqgEFpko_vmnUBJPpaKg9V8hzYuW-3xHBTTYvx34tM8IOIh_Lx4hinkbofK18uR7JK5RfQ4K43Uq1npJYbrsm0Ok0-L3_ZREd9ZAQEBxSDyjN_1_llDZooFZa0wUHlHpaJXNSyj7Da5sipE4wx5nVB1H0RAKS-Y23ofCWLrOFucE-yD5-ZskkA5tjixn7zGf7ajeIiQtOXiYdZeFuOMLsMy-XVPWc_P9yObW9hm5AYmq7lk6ZyK7PEt-gd0HoIRtV5VW8lnBLDZqB6M_Nic4ZSFXl8rRRX5hXrMc6r_BUXtUSNRm7LGDSl4AO7w3CvTkAmR1BziuNXJqH5qe3XkRZqRZ8Ur35iqSkSkdvfMOPJc12Xr81khwmbDhKoB8jkP3VtORZ8PlIG_o0Ar5Rrn3UM9fmvBllg5HXuk3e0hsotSidKS3KW_ANyNNAbU9J_TTWFipDkoFSNIXZ1HNBESrphcKrK2z126gX0lpGWpD5qYU_RtACO46ukzggHCDvG0myoCVovmFl5a2XIwl37-owbsCPwEQi3DUtBnW8pyQxo4fFFDcc5ecZcUdPzfp9HkMgVSt7zai2JjaZl860fpi0ys0a4z_ecKxNjA9aH3F01uIkEfJX9b9y8qZn-s2JlalOJW1z2v1GiRoGidCgF3M2hXOl5HA=="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"restaurant",
+      "category":[
+        "restaurant",
+        "food",
+        "food and drink",
+        "pizza",
+        "sandwich shop"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.k2WAgOLEtNT0osSCDD0jIyNdIyMzBzPjIl2zvFzdqopCAA==",
+      "external_ids":{
+        "mbx_poi":"ec6c1c086cd1bb619c1c73c220643a5999570c82387ee92505e71298d8fe717d",
+        "federated":"poi.ec6c1c086cd1bb619c1c73c220643a5999570c82387ee92505e71298d8fe717d",
+        "safegraph":"222-226@63r-6nm-zxq",
+        "tripadvisor":"1758182"
+      },
+      "mapbox_id":"CkIKQGVjNmMxYzA4NmNkMWJiNjE5YzFjNzNjMjIwNjQzYTU5OTk1NzBjODIzODdlZTkyNTA1ZTcxMjk4ZDhmZTcxN2Q=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1990 K St NW, Washington DC, DC 20006-1103"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"k st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20006"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Dupont Circle"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Sports Club",
+      "matching_name":"Washington Sports Club",
+      "highlighted_name":"Washington Sports Club",
+      "description":"1990 K St NW, Washington, District of Columbia 20006, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pOd_Riw9DM3UwzsjHgK8RlD9Jb5mAG9f6obI2zFgSYTR-wF3hc5cwP9qz6nP4LlTUTISkP9lCFVlfre3JpiATx8gA3Ohr91T2eTFZgQhaKJbnosWY9A1lKpEhqJcb0y3CDjDWyJ7koCuVZwObEVjHl_yxxk1muHB4OJMUMIIbFxmiJm5Mztm0FdRQlseT2ENqr3LuhK-91T4BVNH7uXc_c0bBJ5hGL04IAtIgXXqjWxCklV-h4yzTjGe0XE-JqE5hEFcrEnVEroNeW7z94B0jjhWtA65MmJay1ckMuo_xmU9bgux2E-ScxmcqS6I833b9fpIaXi39jLNSemZgQV0ZqEbqnRXL360_aNu6BYdmls5uFZzWCvN6IoEPY1mNK5Em5Loe2t4IZuXZgCKDs9ou5JDfPPToK4rNPOCalEdywuFfkHHUwNoyn5kF4PrKL0V4gWWLrkOeYQh9xmsui8qxYdojSMSF5sow-RvLVALi4pncU-Lx4pNqEwYjFVJcmnuOwnEwR22L0jqo6GPZ8mWVOY3tfuyDOAKor8H-pv__PPXMCo-cCGy4acQEnVzHevRAah0ymDWbehV8bFJPm7zscJNF0yz3NiVSsB5neqoxYHGL5Re37zg3tWntSevxkxRRx6B0SQqBxsQBL8OV8pPkxReTeeFXGIPJjElYjS6vxb_XjtvrXj89U7T9Jqrn5iqHZx6BfnriVhFA5VOfYCjMhiJUBjLWUyatSLvXl2bhULpAq905rNiNknRPaPlt_OM8mZhxzSHQ0rmVWRiDxT7ttTrr9rulm-8_tQICH-oOMC2tZh2c0WLfKR7ArlTFO5sWI8ICOhDwJ82_S09Jr6URoXWVmAs5xrXvB_ZOYqhQJ_a3CreHfWyoKvB3s6VidXj9kXWX7N9BgIfh72LH4wnWX0OFyNQQnwLYeVaiq8r_OP5SmC4khGqhxeIGWEQ6mfo90TrnmqeFi8AEXV2_PD5YKpk6fYUanSvCLOfY6JftxltB0SfjaLFtZeJWOE-EIvyC7V6f0t2OXOHnfbAlvQaS1S7fcpKRDI12zV3N_DzUrnGivCM8INV1p5VkMY-C8lr0macNb7iYS4Go2osgEt-mtUZQ1pWAt4-S3A5mzISI7ODOyFt2gEMc6czFmJq-fCxhx7kLvf9CdyRtfKqSvydq8Zs98fFCMtuvpmLitKnS0aqiRqtKUIEtznRqFLPaP9RWqwgVkDrk4XJnrvVNfQ_G1o9L5s961pb8-8syjcO7v3VsTPlLs-6Pr8COsFIyjtNu5xJ7XbciVA0x0xoAKad_5ozgnOBJezzqGqWhZ9mb1hLt7syNhCwqbje8EkUKwIX4g1VUMo7M5CjIjBiu4mY8_JGNdSrEFPNRl8SkAg-rYi6MMmNfT5FOZBXlLtd0hKJZRu3-MNSWRk_ctW2R2wwAyEUAPv8X_4p7hI10I0D80VH5n_3pnCfM6TsQAFg64D4Nq8_2AvtjyM561zQ95ijTm9lMT8KTemu4OCsRzqCeC5w0SXiYTjPI4JkyQpznnWwNb36IIeVEM5s_siLTcHEufkHPrzL7U8GhiVFXYz4V9wMlYrbVylBPk1KaK3mJKdOh-CwT4_Gnz8o17trc_XFFTfBrctcyXffqlWOweKohdVrwoXzFjtNIjQaAOIECjfdWu9X5_DWzYoFF6iU19McUlqwQoozNJY49E5qUNoH8u-pb9MPI9GYvOs9CDgFTmawEQMlNiy2ZUkn6bgRi0DbLtEx8YMQy0riC7P47iVz62Y9N66JE5Ta-xs"
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "swimming pool",
+        "park",
+        "outdoors"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyQD0-Q0S5M0SzOTRFMjgyTzVGMjo1RjAA==",
+      "external_ids":{
+        "foursquare":"4b05cf94f964a520b7e322e3",
+        "mbx_poi":"77be15edc1a8a2fb3fc72aa6653349b23243f10a178b0bcc1eab75dba7952cc4",
+        "federated":"poi.77be15edc1a8a2fb3fc72aa6653349b23243f10a178b0bcc1eab75dba7952cc4"
+      },
+      "mapbox_id":"CkIKQDc3YmUxNWVkYzFhOGEyZmIzZmM3MmFhNjY1MzM0OWIyMzI0M2YxMGExNzhiMGJjYzFlYWI3NWRiYTc5NTJjYzQ=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1990 K St NW"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"k st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20006"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Dupont Circle"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Sports Clubs",
+      "matching_name":"Washington Sports Clubs",
+      "highlighted_name":"Washington Sports Clubs",
+      "description":"1345 F St NW, Washington, District of Columbia 20004, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pOdHR-w9MvjTV3fPcxDkswy6YJ7wnzCIp0-_do1yuEUUoS1c32fq89JApjNOoKlLSsQdhnoNcCXSfrenAnqGyS5gA3OhzX-0HCpOckg5xfLjnAsWY8ijh2A72XDIDegKDn3m5o7tVo5K55O067gyxFHS6EbZqWQhLplNtub7bldsCnJdg6iOG77EXwS8lHQIWhGskIGudAwEWJxVBGz29JO4FJUQn0shwoQO-MTPqN33R0l_W8-CWRyPLoou_o11nJEp9wbXFfz33yJDrVQdtz_eU8i8qQHAKmsmQ5cBKuabvDmpuPBkMyvD4yjdVpOTa6ZEy0Ih4f8Pgfx7JkWcz90YNeIf08vy6riqPJYBMeWjJIBTXa5dUf3ksaNH87xf9qbkRch9d13iP-xuNjI4iTAtiDXGh4pmUOQiILG75eZikOwkRPUKdtrflPePDCzXF2zdMTxeDU2iEdI7wnXOsWLZYSHEFFYCnAGceGoRy5wrNA3PNEQvvLEgCK8f_7UubJiHNFchI-LYbBhiZVtCSXoFn-6mnvrDrMMUadx0yBigi8FezgGeHuiF_vqaDPf5iTiSz2C4Q-2GVxeNhxFW6I9qKtpyTwPok68prR8cJg7383W3oRwRIs-oIvqdTjPUJYiE0svwKk3ui3UtRgPjLFnEjGNjwnWpU98fMvy9GEZVkfb--aXBjFGvCDstncwmLUk_esnxwThn5DiuQwKyLnT_gKzoXX4y_aYO59CMtvSKAf231LMzzuI2O_6mCk6DTrnnFpe1VM2sOg-Nq2cpSTyMdOSw_dS5tOfLly4EFxY_GuxcFWofcPJPSY68B3S3GSwar6UpY_okO0Ahp-8Ubsib2ojItPOkqT5CoXgAAfGWedERGRxLiN15yE2wCZXjynVwhd8qaIIf-f2LHrGrJjmFgvhVznueOSnoeqY-UJb-JiKlZ3zlL85v3O4TJjwwcNzLbxsQXvumCqlyQevbv9QPzQdtcgxJtD91cCNI2_CkuhkVVrUsS5logRAPXGl7FRCjvOvbIqaOIaix4TeQUIZd5GfzLoOupyjOPANG_4HwG1Aafbhn3GRGDmHYmYjdLd994Y44jNE_VOwpjQqHFkK2W22kio1JCPXn6CYv6rwOVjln9FsuFJ0ryvJ8E0zm3ARAgOZHyAZNkZQxHFqRWcP3CeKtWskgAeHEAclyc-Ht3XYW2ZoKD3aEgYzoWbic0jvaTg2a04XZmTvVNfg_K-OFpXgqhTMJk8G53rqG8u_QpyBLcwbpLGLGNaadbZ3egn7sp9QnfsqQTm7miu2zBGjjF2Fx86ozntEXPgWILKLRv0m6gb4w5nxF6K_O6MjQuxZsyHkSd7TWZ59uX7V744izzd0Jvhfur8fI_otXMHpFAZs9hSz_u9mNZ6XQW1EFowuT9Yz8mT0klFW2X2wxhyEUADvMOdiHqzUmZk3ZPcOv1d-IEtwpyQ86Pg0QDBCn1WSZiy1E1VXlkG8Z3LG1mFCJC8mwmbpZMVbZYJHKgD1vCVX6uhVluFKZYUbr_oFdz5cD6pLNvFFTV3r_33gd4K2gnZ-vVD5hCXyvBBMHsl5Mav32wcm6b2mU3AZ3SMtP29PEgtVS61H_UhdMoJwpVZPHU4jjBSGEhuT_hwRdbj1DDEQX43gELq3QcmgJknh0F970EkV6mSZsn_Pgku8F1AW0dOymeg-Kam593EQZWZoK_tWJoW-IHzu2EDS0hAknREzm0WYI4SmMoNjliEr1Ilst7BgcTvOhUCxvoMD8L_MEVsLSIs="
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "swimming pool",
+        "park",
+        "outdoors"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8SUFCNzY8M0SzOTRFMjA1NjMxMjw1RjAA==",
+      "external_ids":{
+        "foursquare":"4add2731f964a520536421e3",
+        "federated":"poi.6b3539e3237c8440532c8183a7024df1b49456997fcaf7463d8ef716f2878261",
+        "mbx_poi":"6b3539e3237c8440532c8183a7024df1b49456997fcaf7463d8ef716f2878261"
+      },
+      "mapbox_id":"CkIKQDZiMzUzOWUzMjM3Yzg0NDA1MzJjODE4M2E3MDI0ZGYxYjQ5NDU2OTk3ZmNhZjc0NjNkOGVmNzE2ZjI4NzgyNjE=",
+      "context":[
+        {
+          "layer":"address",
+          "localized_layer":"address",
+          "name":"1345 F St NW"
+        },
+        {
+          "layer":"street",
+          "localized_layer":"street",
+          "name":"f st nw"
+        },
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20004"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Downtown"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    },
+    {
+      "feature_name":"Washington Plaza Hotel Pool",
+      "matching_name":"Washington Plaza Hotel Pool",
+      "highlighted_name":"Washington Plaza Hotel Pool",
+      "description":"Washington, District of Columbia 20005, United States of America",
+      "result_type":[
+        "poi"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"0pOd_Riw9DOnOMuc7TqJQErLeFHi90_JmRgbI4wFgt0Q9XCIhcJ1wpq0CJjNkyg7iz64RF0NIe1Aeft2-dhSxwu6TQKkP-VXZKzCGy0zvMzNpnJbsr1m8tWxuTBPcbsCsMFTqJrqje3FFD7umof7Xpsktd7_9NA1nGQEyRIHibc94QCxPxvcBhPKlNLh2TJzK3lYVh_jpv0Im-KSTUOWpTGq0TaxcNE2zNiH1LsyW18Nwac49Fhh8Ck-dz325nhvKGX7ui_JISC4ZOa1E1-hc3ds2wHz21b23e-T1wHDriZbPd2rPyqT3poOr-S9M0Ntu1yDdRm1IEaAo2y4IlAitV-aH9C3w17Sp6aNP_l8Av7BcCcumU5Sf-YJGfaV04Xv06zAcfGhx7mNRaFhBtpM63LscQHcg4NeEtr_LuT8DUqz3rmyFe5T88UREr2iLwHS1Yj4XYfgAHmeowQCqJYMFFhJDi8bMJFsiDqRCDJW_bYlWhD0VbdauYNGn1bcIjWmlXJJBMxi0c0wj9zVRGK3K0MYyz4Ocxi8UhWxhEc13-OyZj8h2H4LIOmIWCCnUdjcKps8qMiZMeZVjbgRxTua0ORrwkHRLhbeXAwEKxFQGyXcD0eJd-RmkSv57wIFgbFCx944gSeDm34gqw0H3IsRsbudRwIVTdMBb_O6MdS4BYlNDjqO3TQnrYAgtPqHMgPiWqgdaPsl4IPz_V6HtKpUx1qJJOxzB_Xwy_YowJtlplBOMA57KN0yShgmRPaPl9_OSBbz_Pw3uRet6uOcPXsOjX6cdCLAkZYTCoiPovTgiE3sk3sV9fPLR_6H2Ckmak771uCIkjSS376YUdtH6P3E4Ugi8lsXlqMreCqSTvbJ_l2u8YigqA3FK42mtHokGsUybkx21apAzwnNTiLpIlhx3yhp22VnWagshTUY_C5C28oi47ot3VqJCnag8khei8IUukeCL1bFYF4-U-mVsz0QIngSAL3xfXxMydx4r4a40x3sUmDKYHrnZT5HcyIolKdNKm8YLlfUdibhssSq5GwfEf-YsdjwODK_P0N7BpqPUmowJCRoMx_fSfROmKIIdrYvVGE3W-F_kCcbgY-nZpZTQS70FZwe-gh2bZXARorPQ9TMpz6RW7Fm8T-6zPH_pVrRbcpQOmhFXipZqSZdoh50qNXVQrfLfmQ9jZMppj5-6Gq91DFrlt2CRPsoX76jPG8aaFAxqnjniqGDlAEyvqF_lilPmsQTXXlloIHBpos_VXPea3G0NH1boeEw_B77UvOTxaFCcS0EdNdzD10rew3iELf9LDGTDiSTWqS5JZ1VcLbgbWhyOVf1yzOu_Hzi44L1NE89DW9WyUSu4jN7wsfXcQDTtIKE5cBtPMDuqKaTNxpEehTM_hA96EjMWIUjQKF5hrxs3z1joWyY5R9dsRaDgRsB0eMIOzmLbids6q2DVl2yALUnsGEBDZV55bytPZSo9YYrD8i90keADIZaUeA0rUuxlntycSEE8vYYNvW9Ez6aAtEk9ul5GgE0fw5hM4gA6jSJk_ShUsyrXlcUtTTLzGleASXyedCjQu8NfTGhRjp4MLM4a3GvM0dZ7CnxseiinLZMjEXZttNc6MdcvgBpnOWGe-6lRqBybmmpIzWwVQqjIjqlV7xg1E8VhxpaVpOLFCJueZqzPEOmRY94XvmGbifK3uJp9UMQ_fLIsg9D9aUDOmI76GoQtXdqCo0kqy4P1l4nvpcNI-n_ylfK"
+        },
+        "multi_retrievable":true
+      },
+      "maki":"marker",
+      "category":[
+        "swimming pool",
+        "park",
+        "outdoors"
+      ],
+      "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k7RkI_O05KRUkySDFDNTU5PEFENTg6Q0AA==",
+      "external_ids":{
+        "foursquare":"4fc27fcbe4b0d6554ad150bf",
+        "mbx_poi":"e4dc8130547228a332afeafeb036997f679a0fbb410cf370152d19eb27a9bf97",
+        "federated":"poi.e4dc8130547228a332afeafeb036997f679a0fbb410cf370152d19eb27a9bf97"
+      },
+      "mapbox_id":"CkIKQGU0ZGM4MTMwNTQ3MjI4YTMzMmFmZWFmZWIwMzY5OTdmNjc5YTBmYmI0MTBjZjM3MDE1MmQxOWViMjdhOWJmOTc=",
+      "context":[
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20005"
+        },
+        {
+          "layer":"neighborhood",
+          "localized_layer":"neighborhood",
+          "name":"Logan Circle"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States of America"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"US",
+        "iso_3166_2":"US-DC"
+      }
+    }
+  ],
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"54:d854a3277645f75c12ac282a6de254ac1ec9f7c3",
+  "response_uuid":"6ead4390-e797-4c7e-9560-cbfd31e2d127"
+}

@@ -39,7 +39,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
      * Limit results to one or more types of features, provided as a comma-separated list.
      * If no types are specified, all possible types may be returned.
      */
-    public val administrativeUnits: List<AdministrativeUnit>? = null,
+    public val types: List<PlaceAutocompleteType>? = null,
 ) : Parcelable {
 
     /**
@@ -54,7 +54,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
         if (limit != other.limit) return false
         if (countries != other.countries) return false
         if (language != other.language) return false
-        if (administrativeUnits != other.administrativeUnits) return false
+        if (types != other.types) return false
 
         return true
     }
@@ -66,7 +66,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
         var result = limit
         result = 31 * result + (countries?.hashCode() ?: 0)
         result = 31 * result + language.hashCode()
-        result = 31 * result + administrativeUnits.hashCode()
+        result = 31 * result + types.hashCode()
         return result
     }
 
@@ -78,7 +78,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
                 "limit=$limit, " +
                 "countries=$countries, " +
                 "language=$language, " +
-                "administrativeUnits=$administrativeUnits" +
+                "types=$types" +
                 ")"
     }
 }

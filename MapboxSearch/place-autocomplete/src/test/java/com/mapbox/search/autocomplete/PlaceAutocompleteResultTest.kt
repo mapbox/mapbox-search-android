@@ -24,7 +24,9 @@ internal class PlaceAutocompleteResultTest {
         ToStringVerifier(
             clazz = PlaceAutocompleteResult::class,
             objectsFactory = ReflectionObjectsFactory(
-                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS + TypeObjectCreator.OPEN_HOURS_CREATOR
+                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS +
+                        TypeObjectCreator.OPEN_HOURS_CREATOR +
+                        TypeObjectCreator.PLACE_TYPE_CREATOR
             ),
             includeAllProperties = false
         ).verify()

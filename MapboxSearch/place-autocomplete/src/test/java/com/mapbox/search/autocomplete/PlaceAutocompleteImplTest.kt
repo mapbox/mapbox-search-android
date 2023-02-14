@@ -95,20 +95,25 @@ internal class PlaceAutocompleteImplTest {
             limit = 5,
             countries = listOf(IsoCountryCode.FRANCE),
             language = IsoLanguageCode.FRENCH,
-            administrativeUnits = listOf(AdministrativeUnit.ADDRESS, AdministrativeUnit.STREET)
+            types = listOf(
+                PlaceAutocompleteType.Poi,
+                PlaceAutocompleteType.AdministrativeUnit.Address,
+                PlaceAutocompleteType.AdministrativeUnit.Street,
+            )
         )
 
         val coreOptions = createCoreSearchOptions(
-            bbox = TEST_QUERY.boundingBox?.mapToCore(),
+            proximity = TEST_PROXIMITY,
+            bbox = TEST_BBOX.mapToCore(),
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = listOf(QueryType.ADDRESS, QueryType.STREET),
+            types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.STREET),
             ignoreUR = false,
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, options) }
-        coVerify { searchEngine.searchResolveImmediately(eq(TEST_QUERY.query), coreOptions) }
+        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, TEST_BBOX, TEST_PROXIMITY, options) }
+        coVerify { searchEngine.searchResolveImmediately(eq(TEST_QUERY), coreOptions) }
     }
 
     @Test
@@ -119,12 +124,12 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val options = PlaceAutocompleteOptions(
-            administrativeUnits = null
+            types = null
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, options) }
+        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, options = options) }
 
-        assertEquals(AdministrativeUnit.values().toList().map { it.coreType }, slotOptions.captured.types)
+        assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
 
     @Test
@@ -135,12 +140,12 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val options = PlaceAutocompleteOptions(
-            administrativeUnits = emptyList()
+            types = emptyList()
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, options) }
+        runBlocking { placeAutocomplete.suggestions(TEST_QUERY, options = options) }
 
-        assertEquals(AdministrativeUnit.values().toList().map { it.coreType }, slotOptions.captured.types)
+        assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
 
     @Test
@@ -186,7 +191,11 @@ internal class PlaceAutocompleteImplTest {
             limit = 5,
             countries = listOf(IsoCountryCode.FRANCE),
             language = IsoLanguageCode.FRENCH,
-            administrativeUnits = listOf(AdministrativeUnit.ADDRESS, AdministrativeUnit.STREET)
+            types = listOf(
+                PlaceAutocompleteType.Poi,
+                PlaceAutocompleteType.AdministrativeUnit.Address,
+                PlaceAutocompleteType.AdministrativeUnit.Street,
+            )
         )
 
         val coreOptions = createCoreReverseGeoOptions(
@@ -194,7 +203,7 @@ internal class PlaceAutocompleteImplTest {
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = listOf(QueryType.ADDRESS, QueryType.STREET),
+            types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.STREET),
         )
 
         runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
@@ -209,12 +218,12 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val options = PlaceAutocompleteOptions(
-            administrativeUnits = null
+            types = null
         )
 
         runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
 
-        assertEquals(AdministrativeUnit.values().toList().map { it.coreType }, slotOptions.captured.types)
+        assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
 
     @Test
@@ -225,23 +234,26 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val options = PlaceAutocompleteOptions(
-            administrativeUnits = emptyList()
+            types = emptyList()
         )
 
         runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
 
-        assertEquals(AdministrativeUnit.values().toList().map { it.coreType }, slotOptions.captured.types)
+        assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
 
     private companion object {
 
         val TEST_POINT: Point = Point.fromLngLat(1.0, 5.0)
         val TEST_BBOX: BoundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 11.0), Point.fromLngLat(15.0, 16.0))
-        val TEST_QUERY: TextQuery = TextQuery.create("", TEST_BBOX)
+        val TEST_PROXIMITY: Point = Point.fromLngLat(100.0, 150.0)
+        const val TEST_QUERY = "Test query"
 
         val TEST_BASE_RESULTS: List<BaseSearchResult> = listOf(testBaseResult)
 
         val TEST_AUTOCOMPLETE_RESULT: PlaceAutocompleteResult = PlaceAutocompleteResultFactory().createPlaceAutocompleteResult(testBaseResult)!!
         val TEST_AUTOCOMPLETE_SUGGESTIONS: List<PlaceAutocompleteSuggestion> = listOf(PlaceAutocompleteSuggestion(TEST_AUTOCOMPLETE_RESULT))
+
+        private val ALL_TYPES = PlaceAutocompleteType.ALL_DECLARED_TYPES.map { it.coreType }
     }
 }

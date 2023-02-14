@@ -3,6 +3,7 @@ package com.mapbox.search.autocomplete
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -28,19 +29,22 @@ internal class PlaceAutocompleteImpl(
 ) : PlaceAutocomplete {
 
     override suspend fun suggestions(
-        query: TextQuery,
+        query: String,
+        region: BoundingBox?,
+        proximity: Point?,
         options: PlaceAutocompleteOptions
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>> {
         val coreOptions = createCoreSearchOptions(
-            bbox = query.boundingBox?.mapToCore(),
+            proximity = proximity,
+            bbox = region?.mapToCore(),
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = generateCoreTypes(options.administrativeUnits),
+            types = generateCoreTypes(options.types),
             ignoreUR = false,
         )
 
-        return searchEngine.searchResolveImmediately(query = query.query, coreOptions)
+        return searchEngine.searchResolveImmediately(query = query, coreOptions)
             .mapValue { resultFactory.createPlaceAutocompleteSuggestions(it) }
     }
 
@@ -53,18 +57,18 @@ internal class PlaceAutocompleteImpl(
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
-            types = generateCoreTypes(options.administrativeUnits),
+            types = generateCoreTypes(options.types),
         )
 
         return searchEngine.reverseGeocoding(coreOptions)
             .mapValue { resultFactory.createPlaceAutocompleteSuggestions(it.first) }
     }
 
-    private fun generateCoreTypes(administrativeUnits: List<AdministrativeUnit>?): List<QueryType> {
+    private fun generateCoreTypes(types: List<PlaceAutocompleteType>?): List<QueryType> {
         // We should not leave core types list empty or null in order to avoid unsupported types being requested
-        val coreTypes = administrativeUnits?.map { it.coreType }
+        val coreTypes = types?.map { it.coreType }
         return if (coreTypes.isNullOrEmpty()) {
-            ALL_ADMINISTRATIVE_UNITS
+            ALL_TYPES
         } else {
             coreTypes
         }
@@ -72,7 +76,7 @@ internal class PlaceAutocompleteImpl(
 
     internal companion object {
 
-        private val ALL_ADMINISTRATIVE_UNITS = AdministrativeUnit.values().toList().map { it.coreType }
+        private val ALL_TYPES = PlaceAutocompleteType.ALL_DECLARED_TYPES.map { it.coreType }
 
         private val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
             Thread(runnable, "Place Autocomplete executor")

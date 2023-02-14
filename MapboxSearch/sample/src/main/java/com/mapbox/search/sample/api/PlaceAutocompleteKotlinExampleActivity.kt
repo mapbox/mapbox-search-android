@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autocomplete.PlaceAutocomplete
-import com.mapbox.search.autocomplete.TextQuery
 import com.mapbox.search.sample.R
 
 class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
@@ -19,7 +18,7 @@ class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenCreated {
             val response = placeAutocomplete.suggestions(
-                query = TextQuery.create("Washington DC"),
+                query = "Washington DC",
             )
 
             response.onValue { results ->

@@ -1,5 +1,6 @@
 package com.mapbox.search.autocomplete.test.utils
 
+import com.mapbox.search.autocomplete.PlaceAutocompleteType
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.WeekDay
@@ -19,6 +20,13 @@ internal object TypeObjectCreator {
                     )
                 )
             )
+        )[mode.ordinal]
+    }
+
+    val PLACE_TYPE_CREATOR = CustomTypeObjectCreatorImpl(PlaceAutocompleteType::class) { mode ->
+        listOf(
+            PlaceAutocompleteType.Poi,
+            PlaceAutocompleteType.AdministrativeUnit.Address
         )[mode.ordinal]
     }
 }

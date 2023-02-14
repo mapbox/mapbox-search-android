@@ -45,9 +45,15 @@ public class PlaceAutocompleteResult internal constructor(
     public val address: PlaceAutocompleteAddress?,
 
     /**
-     * The type of result using the global context hierarchy (region, place, locality, neighborhood, address).
+     * The type of result.
      */
-    public val administrativeUnitType: AdministrativeUnit,
+    public val type: PlaceAutocompleteType,
+
+    /**
+     * Poi categories. Always empty for non-POI results.
+     * @see type
+     */
+    public val categories: List<String>?,
 
     /**
      * Business phone number.
@@ -100,7 +106,8 @@ public class PlaceAutocompleteResult internal constructor(
         if (makiIcon != other.makiIcon) return false
         if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
         if (address != other.address) return false
-        if (administrativeUnitType != other.administrativeUnitType) return false
+        if (type != other.type) return false
+        if (categories != other.categories) return false
         if (phone != other.phone) return false
         if (website != other.website) return false
         if (reviewCount != other.reviewCount) return false
@@ -122,7 +129,8 @@ public class PlaceAutocompleteResult internal constructor(
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + (distanceMeters?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
-        result = 31 * result + administrativeUnitType.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (categories?.hashCode() ?: 0)
         result = 31 * result + (phone?.hashCode() ?: 0)
         result = 31 * result + (website?.hashCode() ?: 0)
         result = 31 * result + (reviewCount ?: 0)
@@ -144,7 +152,8 @@ public class PlaceAutocompleteResult internal constructor(
                 "makiIcon=$makiIcon, " +
                 "distanceMeters=$distanceMeters, " +
                 "address=$address, " +
-                "administrativeUnitType=$administrativeUnitType, " +
+                "type=$type, " +
+                "categories=$categories, " +
                 "phone=$phone, " +
                 "website=$website, " +
                 "reviewCount=$reviewCount, " +

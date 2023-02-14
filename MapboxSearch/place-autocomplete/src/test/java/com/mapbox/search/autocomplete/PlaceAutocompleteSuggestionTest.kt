@@ -26,7 +26,9 @@ internal class PlaceAutocompleteSuggestionTest {
         ToStringVerifier(
             clazz = PlaceAutocompleteSuggestion::class,
             objectsFactory = ReflectionObjectsFactory(
-                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS + TypeObjectCreator.OPEN_HOURS_CREATOR
+                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS +
+                        TypeObjectCreator.OPEN_HOURS_CREATOR +
+                        TypeObjectCreator.PLACE_TYPE_CREATOR
             ),
             ignoredProperties = listOf("result"),
             includeAllProperties = false
@@ -42,7 +44,8 @@ internal class PlaceAutocompleteSuggestionTest {
             makiIcon = "test",
             distanceMeters = 123.0,
             address = null,
-            administrativeUnitType = AdministrativeUnit.PLACE,
+            type = PlaceAutocompleteType.AdministrativeUnit.Place,
+            categories = null,
             phone = "+123456789",
             website = "https://test.com",
             reviewCount = 123,

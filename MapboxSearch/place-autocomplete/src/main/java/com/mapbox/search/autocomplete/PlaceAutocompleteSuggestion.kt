@@ -43,10 +43,17 @@ public class PlaceAutocompleteSuggestion internal constructor(
         get() = result.distanceMeters
 
     /**
-     * The type of result using the global context hierarchy (region, place, locality, neighborhood, address).
+     * The type of result.
      */
-    public val administrativeUnitType: AdministrativeUnit
-        get() = result.administrativeUnitType
+    public val type: PlaceAutocompleteType
+        get() = result.type
+
+    /**
+     * Poi categories. Always empty for non-POI suggestions.
+     * @see type
+     */
+    public val categories: List<String>?
+        get() = result.categories
 
     /**
      * Returns resolved [PlaceAutocompleteResult] object.
@@ -87,7 +94,8 @@ public class PlaceAutocompleteSuggestion internal constructor(
                 "coordinate=$coordinate, " +
                 "makiIcon=$makiIcon, " +
                 "distanceMeters=$distanceMeters, " +
-                "administrativeUnitType=$administrativeUnitType" +
+                "type=$type, " +
+                "categories=$categories" +
                 ")"
     }
 }

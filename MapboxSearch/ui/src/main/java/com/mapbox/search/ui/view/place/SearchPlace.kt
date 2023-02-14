@@ -318,7 +318,7 @@ public class SearchPlace(
                 id = result.name + UUID.randomUUID().toString(),
                 name = result.name,
                 address = result.address?.toSearchAddress(),
-                resultTypes = listOf(result.administrativeUnitType.toSearchResultType()),
+                resultTypes = listOf(result.type.toSearchResultType()),
                 coordinate = result.coordinate,
                 routablePoints = result.routablePoints,
                 makiIcon = result.makiIcon,
