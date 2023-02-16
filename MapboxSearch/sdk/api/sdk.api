@@ -88,19 +88,6 @@ public final class com/mapbox/search/EtaType : android/os/Parcelable {
 public final class com/mapbox/search/EtaType$Companion {
 }
 
-public final class com/mapbox/search/ImageInfo : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;II)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getHeight ()I
-	public final fun getUrl ()Ljava/lang/String;
-	public final fun getWidth ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
 public final class com/mapbox/search/QueryType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/QueryType;
 	public static final field CATEGORY Lcom/mapbox/search/QueryType;

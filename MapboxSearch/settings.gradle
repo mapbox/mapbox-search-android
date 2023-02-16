@@ -8,4 +8,4 @@ include ':custom-detekt-rules'
 include ':common-tests'
 // For more info check https://github.com/mapbox/mapbox-search-android#notes-about-japicmp-usage
 // include ':gradle:japicmp'
-include ':sdk', ':ui', ':offline', ':autofill', ':discover', ':sdk-common', ':base', ':sample'
+include ':sdk', ':ui', ':offline', ':autofill', ':discover', ':place-autocomplete', ':sdk-common', ':base', ':sample'

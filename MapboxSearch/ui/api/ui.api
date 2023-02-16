@@ -5,6 +5,25 @@ public final class com/mapbox/search/ui/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter {
+	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/android/core/location/LocationEngine;)V
+	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun addSearchListener (Lcom/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter$SearchListener;)V
+	public final fun removeSearchListener (Lcom/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter$SearchListener;)V
+	public final fun search (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun search (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun search (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun search (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun search$default (Lcom/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class com/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter$SearchListener {
+	public abstract fun onError (Ljava/lang/Exception;)V
+	public abstract fun onPopulateQueryClick (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;)V
+	public abstract fun onSuggestionSelected (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;)V
+	public abstract fun onSuggestionsShown (Ljava/util/List;)V
+}
+
 public final class com/mapbox/search/ui/adapter/autofill/AddressAutofillUiAdapter {
 	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autofill/AddressAutofill;Lcom/mapbox/android/core/location/LocationEngine;)V
 	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autofill/AddressAutofill;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -245,6 +264,8 @@ public final class com/mapbox/search/ui/view/place/SearchPlace : android/os/Parc
 	public static final fun createFromIndexableRecord (Lcom/mapbox/search/record/IndexableRecord;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static final fun createFromPlaceAutocompleteResult (Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static final fun createFromPlaceAutocompleteResult (Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public fun describeContents ()I
@@ -272,6 +293,9 @@ public final class com/mapbox/search/ui/view/place/SearchPlace$Companion {
 	public final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public final fun createFromOfflineSearchResult (Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static synthetic fun createFromOfflineSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/offline/OfflineSearchResult;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public final fun createFromPlaceAutocompleteResult (Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public final fun createFromPlaceAutocompleteResult (Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
+	public static synthetic fun createFromPlaceAutocompleteResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public final fun createFromSearchResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;)Lcom/mapbox/search/ui/view/place/SearchPlace;
 	public static synthetic fun createFromSearchResult$default (Lcom/mapbox/search/ui/view/place/SearchPlace$Companion;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ui/view/place/SearchPlace;

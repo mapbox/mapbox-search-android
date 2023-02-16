@@ -58,6 +58,7 @@ import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
+import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
@@ -332,6 +333,14 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_discover_java_example -> {
                 startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
+                true
+            }
+            R.id.open_place_autocomplete_ui_example -> {
+                startActivity(Intent(this, PlaceAutocompleteUiActivity::class.java))
+                true
+            }
+            R.id.open_place_autocomplete_kotlin_example -> {
+                startActivity(Intent(this, PlaceAutocompleteKotlinExampleActivity::class.java))
                 true
             }
             R.id.open_custom_data_provider_kt_example -> {

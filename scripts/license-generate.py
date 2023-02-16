@@ -71,6 +71,8 @@ try:
         generateLicense(licenseFile, "autofill")
         licenseFile.write("\n\n#### Search Discover module\n")
         generateLicense(licenseFile, "discover")
+        licenseFile.write("\n\n#### Search Place Autocomplete module\n")
+        generateLicense(licenseFile, "place-autocomplete")
 
     licenseFile.close()
 except IOError as err:

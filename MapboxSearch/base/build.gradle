@@ -73,6 +73,8 @@ dependencies {
     api project(path: ':sdk-common')
     api "com.mapbox.search:mapbox-search-android-native:$search_native_version"
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
     implementation "com.mapbox.common:common:$common_sdk_version"
 
     // Explicit dependency for http service implementation, should be declared on the Common SDK side

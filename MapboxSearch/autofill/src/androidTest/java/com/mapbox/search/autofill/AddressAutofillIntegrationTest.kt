@@ -7,8 +7,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
+import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationEngine
@@ -269,7 +271,7 @@ internal class AddressAutofillIntegrationTest {
             token: String,
             url: String,
             locationEngine: LocationEngine
-        ): AutofillSearchEngine {
+        ): TwoStepsToOneStepSearchEngineAdapter {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     token,
@@ -283,7 +285,8 @@ internal class AddressAutofillIntegrationTest {
                 ),
             )
 
-            return AutofillSearchEngine(
+            return TwoStepsToOneStepSearchEngineAdapter(
+                apiType = CoreApiType.AUTOFILL,
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
             )

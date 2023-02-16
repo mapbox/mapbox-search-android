@@ -45,7 +45,7 @@ public interface Discover {
     public fun search(
         query: DiscoverQuery,
         proximity: Point,
-        options: DiscoverOptions = DiscoverOptions(),
+        options: DiscoverOptions,
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask
@@ -62,7 +62,7 @@ public interface Discover {
     public fun search(
         query: DiscoverQuery,
         proximity: Point,
-        options: DiscoverOptions = DiscoverOptions(),
+        options: DiscoverOptions,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
         return search(query, proximity, options, SearchSdkMainThreadWorker.mainExecutor, callback)
@@ -103,7 +103,7 @@ public interface Discover {
         query: DiscoverQuery,
         region: BoundingBox,
         proximity: Point? = null,
-        options: DiscoverOptions = DiscoverOptions(),
+        options: DiscoverOptions,
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask
@@ -124,7 +124,7 @@ public interface Discover {
         query: DiscoverQuery,
         region: BoundingBox,
         proximity: Point? = null,
-        options: DiscoverOptions = DiscoverOptions(),
+        options: DiscoverOptions,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
         return search(query, region, proximity, options, SearchSdkMainThreadWorker.mainExecutor, callback)
@@ -160,8 +160,8 @@ public interface Discover {
     public fun search(
         query: DiscoverQuery,
         route: List<Point>,
-        deviation: RouteDeviationOptions = RouteDeviationOptions.DEFAULT_DEVIATION,
-        options: DiscoverOptions = DiscoverOptions(),
+        deviation: RouteDeviationOptions,
+        options: DiscoverOptions,
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask
@@ -179,8 +179,8 @@ public interface Discover {
     public fun search(
         query: DiscoverQuery,
         route: List<Point>,
-        deviation: RouteDeviationOptions = RouteDeviationOptions.DEFAULT_DEVIATION,
-        options: DiscoverOptions = DiscoverOptions(),
+        deviation: RouteDeviationOptions,
+        options: DiscoverOptions,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
         return search(query, route, deviation, options, SearchSdkMainThreadWorker.mainExecutor, callback)

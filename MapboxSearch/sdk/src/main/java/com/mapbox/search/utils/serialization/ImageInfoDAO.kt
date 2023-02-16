@@ -1,7 +1,7 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.ImageInfo
+import com.mapbox.search.common.metadata.ImageInfo
 
 internal class ImageInfoDAO(
     @SerializedName("url") val url: String? = null,

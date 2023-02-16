@@ -11,7 +11,6 @@ import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationEngine
-import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.UiError
@@ -159,7 +158,7 @@ public class AddressAutofillUiAdapter(
         /**
          * Called when the [AddressAutofillSuggestion]s are received and displayed on the [view].
          *
-         * @param suggestions List of [SearchSuggestion] as result of the first step of forward geocoding.
+         * @param suggestions List of [AddressAutofillSuggestion] shown.
          * @see AddressAutofill.suggestions
          */
         public fun onSuggestionsShown(suggestions: List<AddressAutofillSuggestion>)

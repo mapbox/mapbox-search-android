@@ -23,7 +23,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             limit = options.limit,
-            language = listOf(options.language.code)
+            language = listOf(options.language.code),
+            ignoreUR = true,
         )
         return search(query, coreOptions)
     }
@@ -38,7 +39,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             limit = options.limit,
-            language = listOf(options.language.code)
+            language = listOf(options.language.code),
+            ignoreUR = true,
         )
         return search(query, coreOptions, executor, callback)
     }
@@ -53,7 +55,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
             proximity = proximity,
             bbox = region.mapToCore(),
             limit = options.limit,
-            language = listOf(options.language.code)
+            language = listOf(options.language.code),
+            ignoreUR = true,
         )
         return search(query, coreOptions)
     }
@@ -70,7 +73,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
             proximity = proximity,
             bbox = region.mapToCore(),
             limit = options.limit,
-            language = listOf(options.language.code)
+            language = listOf(options.language.code),
+            ignoreUR = true,
         )
         return search(query, coreOptions, executor, callback)
     }
@@ -87,6 +91,7 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
             route = route,
             sarType = deviation.sarType?.rawName,
             timeDeviation = deviation.timeDeviationMinutes,
+            ignoreUR = true,
         )
         return search(query, coreOptions)
     }
@@ -105,6 +110,7 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
             route = route,
             sarType = deviation.sarType?.rawName,
             timeDeviation = deviation.timeDeviationMinutes,
+            ignoreUR = true,
         )
         return search(query, coreOptions, executor, callback)
     }

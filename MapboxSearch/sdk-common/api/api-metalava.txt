@@ -411,6 +411,16 @@ package com.mapbox.search.common.concurrent {
 
 package com.mapbox.search.common.metadata {
 
+  @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
+    ctor public ImageInfo(String url, @Px int width, @Px int height);
+    method public int getHeight();
+    method public String getUrl();
+    method public int getWidth();
+    property public final int height;
+    property public final String url;
+    property public final int width;
+  }
+
   public abstract class OpenHours implements android.os.Parcelable {
   }
 

@@ -1,0 +1,153 @@
+// Signature format: 3.0
+package com.mapbox.search.autocomplete {
+
+  public interface PlaceAutocomplete {
+    method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    method public default static final com.mapbox.search.autocomplete.PlaceAutocomplete create(String accessToken);
+    method public suspend Object? suggestions(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
+    method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
+  }
+
+  @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteAddress implements android.os.Parcelable {
+    method public String? getCountry();
+    method public String? getCountryIso1();
+    method public String? getCountryIso2();
+    method public String? getDistrict();
+    method public String? getFormattedAddress();
+    method public String? getHouseNumber();
+    method public String? getLocality();
+    method public String? getNeighborhood();
+    method public String? getPlace();
+    method public String? getPostcode();
+    method public String? getRegion();
+    method public String? getStreet();
+    property public final String? country;
+    property public final String? countryIso1;
+    property public final String? countryIso2;
+    property public final String? district;
+    property public final String? formattedAddress;
+    property public final String? houseNumber;
+    property public final String? locality;
+    property public final String? neighborhood;
+    property public final String? place;
+    property public final String? postcode;
+    property public final String? region;
+    property public final String? street;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteOptions implements android.os.Parcelable {
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteType>? types = null);
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage());
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
+    ctor public PlaceAutocompleteOptions(int limit = 10);
+    method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
+    method public com.mapbox.search.common.IsoLanguageCode getLanguage();
+    method public int getLimit();
+    method public java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteType>? getTypes();
+    property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
+    property public final com.mapbox.search.common.IsoLanguageCode language;
+    property public final int limit;
+    property public final java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteType>? types;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteResult implements android.os.Parcelable {
+    method public com.mapbox.search.autocomplete.PlaceAutocompleteAddress? getAddress();
+    method public Double? getAverageRating();
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public Double? getDistanceMeters();
+    method public String? getMakiIcon();
+    method public String getName();
+    method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
+    method public String? getPhone();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
+    method public Integer? getReviewCount();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
+    method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
+    method public String? getWebsite();
+    property public final com.mapbox.search.autocomplete.PlaceAutocompleteAddress? address;
+    property public final Double? averageRating;
+    property public final java.util.List<java.lang.String>? categories;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final Double? distanceMeters;
+    property public final String? makiIcon;
+    property public final String name;
+    property public final com.mapbox.search.common.metadata.OpenHours? openHours;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
+    property public final String? phone;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
+    property public final Integer? reviewCount;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+    property public final com.mapbox.search.autocomplete.PlaceAutocompleteType type;
+    property public final String? website;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteSuggestion implements android.os.Parcelable {
+    method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public Double? getDistanceMeters();
+    method public String? getFormattedAddress();
+    method public String? getMakiIcon();
+    method public String getName();
+    method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
+    method public com.mapbox.search.autocomplete.PlaceAutocompleteResult result();
+    property public final java.util.List<java.lang.String>? categories;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final Double? distanceMeters;
+    property public final String? formattedAddress;
+    property public final String? makiIcon;
+    property public final String name;
+    property public final com.mapbox.search.autocomplete.PlaceAutocompleteType type;
+  }
+
+  public abstract class PlaceAutocompleteType implements android.os.Parcelable {
+    ctor public PlaceAutocompleteType(@kotlin.jvm.JvmSynthetic com.mapbox.search.internal.bindgen.QueryType coreType);
+  }
+
+  public abstract static class PlaceAutocompleteType.AdministrativeUnit extends com.mapbox.search.autocomplete.PlaceAutocompleteType {
+    ctor public PlaceAutocompleteType.AdministrativeUnit(com.mapbox.search.internal.bindgen.QueryType type);
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Address extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Address INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Country extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Country INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.District extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.District INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Locality extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Locality INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Neighborhood extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Neighborhood INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Place extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Place INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Postcode extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Postcode INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Region extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Region INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Street extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit.Street INSTANCE;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.Poi extends com.mapbox.search.autocomplete.PlaceAutocompleteType {
+    field public static final com.mapbox.search.autocomplete.PlaceAutocompleteType.Poi INSTANCE;
+  }
+
+}
+

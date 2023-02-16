@@ -1,0 +1,127 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -77.033568,
+          38.90143
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "feature_name": "Starbucks",
+        "matching_name": "Starbucks",
+        "highlighted_name": "Starbucks",
+        "description": "901 15th St NW, Washington, District of Columbia 20005, United States of America",
+        "place_name": "Starbucks, 901 15th St NW, Washington, District of Columbia 20005, United States of America",
+        "id": "9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80",
+        "place_type": [
+          "poi"
+        ],
+        "context": [
+          {
+            "layer": "address",
+            "localized_layer": "address",
+            "name": "901 15th St NW, Washington DC, DC 20005-2327"
+          },
+          {
+            "layer": "street",
+            "localized_layer": "street",
+            "name": "15th st nw"
+          },
+          {
+            "layer": "postcode",
+            "localized_layer": "postcode",
+            "name": "20005"
+          },
+          {
+            "layer": "neighborhood",
+            "localized_layer": "neighborhood",
+            "name": "Downtown"
+          },
+          {
+            "layer": "place",
+            "localized_layer": "place",
+            "name": "Washington"
+          },
+          {
+            "layer": "region",
+            "localized_layer": "region",
+            "name": "District of Columbia"
+          },
+          {
+            "layer": "country",
+            "localized_layer": "country",
+            "name": "United States of America"
+          }
+        ],
+        "maki": "restaurant",
+        "poi_category": [
+          "food",
+          "food and drink",
+          "coffee shop"
+        ],
+        "brand": [
+          "Starbucks"
+        ],
+        "brand_id": "e486aeca0b12918313aba2cc445c5cb4",
+        "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8SkRBPDFNM0SzOTRFMjg0RLCwMjg1RjAA==",
+        "external_ids": {
+          "tripadvisor": "4274836",
+          "federated": "poi.9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80",
+          "foursquare": "4aba41d5f964a520a98020e3",
+          "mbx_poi": "9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80"
+        },
+        "mapbox_id": "CkIKQDlmNjE2ZDBhM2RhOTExNjhhYTJmMzEzNDM0ZjNhOTg3ZThlZjU5N2FkNTBiY2RmM2VmMGFiOTZkNDRkNzNiODA=",
+        "metadata": {
+          "review_count": 35,
+          "phone": "+1 123-456-789",
+          "website": "http://www.test.com/",
+          "average_rating": 4,
+          "primary_photo": [
+            {
+              "width": 300,
+              "height": 350,
+              "url": "https://test.com/img-primary.jpg"
+            }
+          ],
+          "other_photo": [
+            {
+              "width": 150,
+              "height": 350,
+              "url": "https://test.com/img-other.jpg"
+            }
+          ],
+          "open_hours": {
+            "open_type": "Scheduled",
+            "open_periods": [
+              {
+                "open": {
+                  "day": 5,
+                  "time": {
+                    "hour": 7,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 5,
+                  "time": {
+                    "hour": 20,
+                    "minute": 0
+                  }
+                }
+              }
+            ]
+          },
+          "iso_3166_1": "US",
+          "iso_3166_2": "US-DC"
+        }
+      }
+    }
+  ],
+  "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "55:ce8b854900df80c271126016a2dbb1b8ee9345c1",
+  "response_uuid": "1594ddc1-4010-42e5-bc99-e4f5f573eb9d"
+}

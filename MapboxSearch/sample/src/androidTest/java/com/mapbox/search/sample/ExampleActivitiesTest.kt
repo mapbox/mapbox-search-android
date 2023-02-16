@@ -25,6 +25,7 @@ import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
+import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import org.junit.Rule
@@ -63,6 +64,9 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
             DiscoverKotlinExampleActivity::class.java,
             DiscoverJavaExampleActivity::class.java,
             DiscoverActivity::class.java,
+
+            PlaceAutocompleteUiActivity::class.java,
+            PlaceAutocompleteKotlinExampleActivity::class.java,
 
             CustomThemeActivity::class.java,
 

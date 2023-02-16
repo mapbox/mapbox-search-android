@@ -54,7 +54,8 @@ internal class DiscoverImplTest {
         val coreOptions = createCoreSearchOptions(
             proximity = TEST_USER_LOCATION,
             limit = TEST_OPTIONS.limit,
-            language = listOf(TEST_OPTIONS.language.code)
+            language = listOf(TEST_OPTIONS.language.code),
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -78,7 +79,8 @@ internal class DiscoverImplTest {
         val coreOptions = createCoreSearchOptions(
             proximity = TEST_USER_LOCATION,
             limit = defaultOptions.limit,
-            language = listOf(defaultOptions.language.code)
+            language = listOf(defaultOptions.language.code),
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -105,7 +107,8 @@ internal class DiscoverImplTest {
         val coreOptions = createCoreSearchOptions(
             proximity = TEST_USER_LOCATION,
             limit = defaultOptions.limit,
-            language = listOf(defaultOptions.language.code)
+            language = listOf(defaultOptions.language.code),
+            ignoreUR = true,
         )
 
         verify(exactly = 1) {
@@ -130,7 +133,8 @@ internal class DiscoverImplTest {
             proximity = TEST_USER_LOCATION,
             bbox = TEST_BOUNDING_BOX.mapToCore(),
             limit = TEST_OPTIONS.limit,
-            language = listOf(TEST_OPTIONS.language.code)
+            language = listOf(TEST_OPTIONS.language.code),
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -155,7 +159,8 @@ internal class DiscoverImplTest {
             proximity = null,
             bbox = TEST_BOUNDING_BOX.mapToCore(),
             limit = defaultOptions.limit,
-            language = listOf(defaultOptions.language.code)
+            language = listOf(defaultOptions.language.code),
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -183,7 +188,8 @@ internal class DiscoverImplTest {
             proximity = TEST_USER_LOCATION,
             bbox = TEST_BOUNDING_BOX.mapToCore(),
             limit = defaultOptions.limit,
-            language = listOf(defaultOptions.language.code)
+            language = listOf(defaultOptions.language.code),
+            ignoreUR = true,
         )
 
         verify(exactly = 1) {
@@ -210,6 +216,7 @@ internal class DiscoverImplTest {
             route = TEST_ROUTE,
             sarType = TEST_DEVIATION.sarType?.rawName,
             timeDeviation = TEST_DEVIATION.timeDeviationMinutes,
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -236,6 +243,7 @@ internal class DiscoverImplTest {
             route = TEST_ROUTE,
             sarType = RouteDeviationOptions.SarType.ISOCHROME.rawName,
             timeDeviation = RouteDeviationOptions.Time(value = 10L, unit = TimeUnit.MINUTES).timeDeviationMinutes,
+            ignoreUR = true,
         )
 
         coVerify(exactly = 1) {
@@ -265,6 +273,7 @@ internal class DiscoverImplTest {
             route = TEST_ROUTE,
             sarType = RouteDeviationOptions.SarType.ISOCHROME.rawName,
             timeDeviation = RouteDeviationOptions.Time(value = 10L, unit = TimeUnit.MINUTES).timeDeviationMinutes,
+            ignoreUR = true,
         )
 
         verify(exactly = 1) {

@@ -1,0 +1,11 @@
+api-downloads: v2
+
+android:
+  group: search
+
+packages:
+  android:
+    - place-autocomplete
+
+bundles:
+  android: place-autocomplete-all

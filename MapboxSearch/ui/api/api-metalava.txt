@@ -1,4 +1,25 @@
 // Signature format: 3.0
+package com.mapbox.search.ui.adapter.autocomplete {
+
+  public final class PlaceAutocompleteUiAdapter {
+    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    method public void addSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
+    method public void removeSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+  }
+
+  public static interface PlaceAutocompleteUiAdapter.SearchListener {
+    method public void onError(Exception e);
+    method public void onPopulateQueryClick(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion);
+    method public void onSuggestionSelected(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion);
+    method public void onSuggestionsShown(java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion> suggestions);
+  }
+
+}
+
 package com.mapbox.search.ui.adapter.autofill {
 
   public final class AddressAutofillUiAdapter {
@@ -54,6 +75,9 @@ package com.mapbox.search.ui.utils {
 
 package com.mapbox.search.ui.utils.extenstion {
 
+  public final class AddressAutocompleteExtKt {
+  }
+
   public final class BottomSheetBehaviorKt {
   }
 
@@ -61,9 +85,6 @@ package com.mapbox.search.ui.utils.extenstion {
   }
 
   public final class DrawableKt {
-  }
-
-  public final class EditTextKt {
   }
 
   public final class LocaleKt {
@@ -261,6 +282,8 @@ package com.mapbox.search.ui.view.place {
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromPlaceAutocompleteResult(com.mapbox.search.autocomplete.PlaceAutocompleteResult result, Double? distanceMeters = com.mapbox.search.autocomplete.PlaceAutocompleteResult.distanceMeters);
+    method public static com.mapbox.search.ui.view.place.SearchPlace createFromPlaceAutocompleteResult(com.mapbox.search.autocomplete.PlaceAutocompleteResult result);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, Double? distanceMeters = com.mapbox.search.result.SearchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
     method public com.mapbox.search.result.SearchAddress? getAddress();
@@ -296,6 +319,8 @@ package com.mapbox.search.ui.view.place {
     method public com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
     method public com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
     method public com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromPlaceAutocompleteResult(com.mapbox.search.autocomplete.PlaceAutocompleteResult result, Double? distanceMeters = com.mapbox.search.autocomplete.PlaceAutocompleteResult.distanceMeters);
+    method public com.mapbox.search.ui.view.place.SearchPlace createFromPlaceAutocompleteResult(com.mapbox.search.autocomplete.PlaceAutocompleteResult result);
     method public com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, Double? distanceMeters = com.mapbox.search.result.SearchResult.distanceMeters);
     method public com.mapbox.search.ui.view.place.SearchPlace createFromSearchResult(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
   }
