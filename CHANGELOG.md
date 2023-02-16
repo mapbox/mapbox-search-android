@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-beta.46-SNAPSHOT
+## 1.0.0-beta.46
 
 ### New features
 - [CORE] Now `SearchSuggestion` and `SearchResult` types provide a new field `fullAddress` which contains formatted text address from backend.
