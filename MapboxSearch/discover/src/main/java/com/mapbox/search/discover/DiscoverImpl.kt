@@ -11,15 +11,21 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.Executor
 
-internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover {
+internal class DiscoverImpl(
+    private val engine: DiscoverSearchEngine,
+    private val activityReporter: UserActivityReporterInterface
+) : Discover {
 
     override suspend fun search(
         query: DiscoverQuery,
         proximity: Point,
         options: DiscoverOptions
     ): Expected<Exception, List<DiscoverResult>> {
+        activityReporter.reportActivity("discover-search-nearby")
+
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             limit = options.limit,
@@ -36,6 +42,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
+        activityReporter.reportActivity("discover-search-nearby")
+
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             limit = options.limit,
@@ -51,6 +59,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         proximity: Point?,
         options: DiscoverOptions
     ): Expected<Exception, List<DiscoverResult>> {
+        activityReporter.reportActivity("discover-search-in-area")
+
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             bbox = region.mapToCore(),
@@ -69,6 +79,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
+        activityReporter.reportActivity("discover-search-in-area")
+
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
             bbox = region.mapToCore(),
@@ -85,6 +97,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         deviation: RouteDeviationOptions,
         options: DiscoverOptions
     ): Expected<Exception, List<DiscoverResult>> {
+        activityReporter.reportActivity("discover-search-along-the-route")
+
         val coreOptions = createCoreSearchOptions(
             limit = options.limit,
             language = listOf(options.language.code),
@@ -104,6 +118,8 @@ internal class DiscoverImpl(private val engine: DiscoverSearchEngine) : Discover
         executor: Executor,
         callback: CompletionCallback<List<DiscoverResult>>
     ): AsyncOperationTask {
+        activityReporter.reportActivity("discover-search-along-the-route")
+
         val coreOptions = createCoreSearchOptions(
             limit = options.limit,
             language = listOf(options.language.code),
