@@ -10,6 +10,7 @@ import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
@@ -50,7 +51,11 @@ internal class AddressAutofillIntegrationTest {
             locationEngine = defaultLocationEngine()
         )
 
-        addressAutofill = AddressAutofillImpl(engine)
+        addressAutofill = AddressAutofillImpl(
+            accessToken = TEST_ACCESS_TOKEN,
+            searchEngine = engine,
+            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+        )
     }
 
     @Test
