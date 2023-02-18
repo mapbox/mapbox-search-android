@@ -18,6 +18,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillSuggestion
@@ -90,18 +91,6 @@ class MainActivity : AppCompatActivity() {
             addressAutofill = addressAutofill
         )
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
-                    CameraOptions.Builder()
-                        .center(point)
-                        .zoom(9.0)
-                        .build()
-                )
-                ignoreNextMapIdleEvent = true
-            }
-        }
-
         searchEngineUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
@@ -155,6 +144,18 @@ class MainActivity : AppCompatActivity() {
                 ),
                 PERMISSIONS_REQUEST_LOCATION
             )
+        } else {
+            LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+                point?.let {
+                    mapView.getMapboxMap().setCamera(
+                        CameraOptions.Builder()
+                            .center(point)
+                            .zoom(9.0)
+                            .build()
+                    )
+                    ignoreNextMapIdleEvent = true
+                }
+            }
         }
     }
 
