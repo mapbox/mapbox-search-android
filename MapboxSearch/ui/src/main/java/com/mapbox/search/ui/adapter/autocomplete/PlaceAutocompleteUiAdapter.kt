@@ -10,8 +10,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
+import com.mapbox.search.base.MapboxApiClient
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.UiError
@@ -58,6 +61,10 @@ public class PlaceAutocompleteUiAdapter(
     private var currentRequestJob: Job? = null
 
     private var searchResultsShown: Boolean = false
+
+    private val activityReporter: UserActivityReporter? = (placeAutocomplete as? MapboxApiClient)?.accessToken?.let {
+        getUserActivityReporter(it)
+    }
 
     init {
         view.addActionListener(object : SearchResultsView.ActionListener {
@@ -127,6 +134,8 @@ public class PlaceAutocompleteUiAdapter(
                         view.setAdapterItems(itemsCreator.createForLoading())
                     }
                 }
+
+                activityReporter?.reportActivity("place-autocomplete-forward-geocoding-ui")
 
                 val response = placeAutocomplete.suggestions(query, region, proximity, options)
                 withContext(Dispatchers.Main) {
