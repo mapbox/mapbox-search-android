@@ -13,6 +13,7 @@ import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
 import java.util.concurrent.Executor
@@ -22,6 +23,7 @@ import java.util.concurrent.Executors
 internal class OfflineSearchEngineImpl(
     override val settings: OfflineSearchEngineSettings,
     private val coreEngine: CoreSearchEngineInterface,
+    private val activityReporter: UserActivityReporterInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
@@ -63,6 +65,8 @@ internal class OfflineSearchEngineImpl(
     ): AsyncOperationTask {
         logd("search($query, $options) called")
 
+        activityReporter.reportActivity("offline-search-engine-forward-geocoding")
+
         return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
@@ -83,6 +87,8 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("offline-search-engine-reverse-geocoding")
+
         return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
             coreEngine.reverseGeocodingOffline(
                 options.mapToCore(),
@@ -105,6 +111,8 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("offline-search-engine-search-nearby-street")
+
         if (radiusMeters < 0.0) {
             executor.execute {
                 callback.onError(IllegalArgumentException("Negative radius"))
