@@ -24,6 +24,7 @@ import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.SearchAddress
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
@@ -42,6 +43,7 @@ import java.util.concurrent.Executor
 internal class CategorySearchTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
+    private lateinit var activityReporter: UserActivityReporterInterface
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executor: Executor
     private lateinit var requestContextProvider: SearchRequestContextProvider
@@ -51,6 +53,7 @@ internal class CategorySearchTest {
     @BeforeEach
     fun setUp() {
         coreEngine = mockk(relaxed = true)
+        activityReporter = mockk(relaxed = true)
         searchResultFactory = spyk(SearchResultFactory(mockk()))
         executor = spyk(TestExecutor())
         requestContextProvider = mockk()
@@ -62,6 +65,7 @@ internal class CategorySearchTest {
             settings = mockk(),
             analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
+            activityReporter = activityReporter,
             historyService = mockk(),
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
@@ -125,6 +129,10 @@ internal class CategorySearchTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
+                }
             }
         }
     }
@@ -177,6 +185,10 @@ internal class CategorySearchTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
+                }
             }
         }
     }
@@ -220,6 +232,10 @@ internal class CategorySearchTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
+                }
             }
         }
     }
@@ -251,6 +267,10 @@ internal class CategorySearchTest {
                 VerifyNo("Core cancel() is not called") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
+                }
             }
         }
     }
@@ -277,6 +297,10 @@ internal class CategorySearchTest {
 
                 VerifyOnce("Core cancel() is called with correct request id") {
                     coreEngine.cancel(TEST_REQUEST_ID)
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
                 }
             }
         }

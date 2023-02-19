@@ -7,6 +7,7 @@ import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreLocationProvider
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.utils.UserAgentProvider
@@ -73,6 +74,7 @@ internal class SearchEngineFactory {
             settings,
             analyticsService,
             coreEngine,
+            getUserActivityReporter(settings.accessToken),
             ServiceProvider.INTERNAL_INSTANCE.historyService(),
             MapboxSearchSdk.searchRequestContextProvider,
             MapboxSearchSdk.searchResultFactory,
@@ -105,7 +107,6 @@ internal class SearchEngineFactory {
         }
 
         return CoreSearchEngine(
-            // TODO allow customer to customize events url
             CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
             coreLocationProvider
         )
