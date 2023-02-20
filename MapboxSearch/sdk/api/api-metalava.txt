@@ -450,8 +450,6 @@ package com.mapbox.search {
 package com.mapbox.search.analytics {
 
   public interface AnalyticsService {
-    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.String> callback);
-    method @Deprecated public void createRawFeedbackEvent(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.lang.String> callback);
     method public void sendFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
     method public void sendFeedback(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
     method public void sendFeedback(com.mapbox.search.record.HistoryRecord historyRecord, com.mapbox.search.analytics.FeedbackEvent event);

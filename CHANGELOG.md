@@ -1,6 +1,9 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 1.0.0-rc.1-SNAPSHOT
+## 1.0.0-rc.1
+
+### Breaking changes
+- [CORE] Deprecated functions `AnalyticsService.createRawFeedbackEvent()` have been removed.
 
 ### Mapbox dependencies
 - Search Native SDK `0.67.1`

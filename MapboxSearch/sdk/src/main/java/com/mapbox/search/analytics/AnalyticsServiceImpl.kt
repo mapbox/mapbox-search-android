@@ -28,7 +28,7 @@ internal class AnalyticsServiceImpl(
     private val locationEngine: LocationEngine
 ) : AnalyticsService {
 
-    override fun createRawFeedbackEvent(
+    fun createRawFeedbackEvent(
         searchResult: SearchResult,
         responseInfo: ResponseInfo,
         executor: Executor,
@@ -57,7 +57,7 @@ internal class AnalyticsServiceImpl(
         )
     }
 
-    override fun createRawFeedbackEvent(
+    fun createRawFeedbackEvent(
         searchSuggestion: SearchSuggestion,
         responseInfo: ResponseInfo,
         executor: Executor,
