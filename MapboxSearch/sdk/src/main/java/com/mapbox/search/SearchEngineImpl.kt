@@ -28,6 +28,7 @@ import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
@@ -41,6 +42,7 @@ internal class SearchEngineImpl(
     override val settings: SearchEngineSettings,
     override val analyticsService: AnalyticsService,
     private val coreEngine: CoreSearchEngineInterface,
+    private val activityReporter: UserActivityReporterInterface,
     private val historyService: SearchHistoryService,
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
@@ -54,6 +56,8 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchSuggestionsCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-forward-geocoding-suggestions")
+
         logd("search($query, $options) called")
 
         val baseCallback: BaseSearchSuggestionsCallback = BaseSearchSuggestionsCallbackAdapter(callback)
@@ -85,6 +89,8 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchMultipleSelectionCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-forward-geocoding-selection")
+
         require(suggestions.isNotEmpty()) {
             "No suggestions were provided! Please, provide at least 1 suggestion."
         }
@@ -203,13 +209,14 @@ internal class SearchEngineImpl(
         }
     }
 
-    @Suppress("ReturnCount")
     override fun select(
         suggestion: SearchSuggestion,
         options: SelectOptions,
         executor: Executor,
         callback: SearchSelectionCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-forward-geocoding-selection")
+
         logd("select($suggestion, $options) called")
 
         val coreRequestOptions = suggestion.requestOptions.mapToCore()
@@ -305,6 +312,8 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback,
     ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-category-search")
+
         return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             val requestId = coreEngine.search(
@@ -331,6 +340,8 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchCallback
     ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-reverse-geocoding")
+
         return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             val requestId = coreEngine.reverseGeocoding(

@@ -9,8 +9,11 @@ import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
+import com.mapbox.search.base.MapboxApiClient
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.UiError
@@ -57,6 +60,10 @@ public class AddressAutofillUiAdapter(
 
     private var searchResultsShown: Boolean = false
 
+    private val activityReporter: UserActivityReporter? = (addressAutofill as? MapboxApiClient)?.accessToken?.let {
+        getUserActivityReporter(it)
+    }
+
     init {
         view.addActionListener(object : SearchResultsView.ActionListener {
 
@@ -98,6 +105,8 @@ public class AddressAutofillUiAdapter(
      */
     @JvmOverloads
     public suspend fun search(query: Query, options: AddressAutofillOptions = AddressAutofillOptions()) {
+        activityReporter?.reportActivity("address-autofill-forward-geocoding-ui")
+
         currentRequestJob?.let {
             if (it.isActive) {
                 it.cancel()

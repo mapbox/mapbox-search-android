@@ -15,6 +15,7 @@ import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.TestExecutor
 import com.mapbox.search.common.createTestCoreSearchResult
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -34,13 +35,16 @@ internal class DiscoverImplTest {
 
     private lateinit var discover: Discover
     private lateinit var engine: DiscoverSearchEngine
+    private lateinit var activityReporter: UserActivityReporterInterface
 
     private val testExecutor = TestExecutor()
 
     @BeforeEach
     fun setUp() {
         engine = mockk()
-        discover = DiscoverImpl(engine)
+        activityReporter = mockk(relaxed = true)
+
+        discover = DiscoverImpl(engine, activityReporter)
     }
 
     @Test
@@ -63,6 +67,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-nearby"))
         }
     }
 
@@ -88,6 +96,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-nearby"))
         }
     }
 
@@ -119,6 +131,10 @@ internal class DiscoverImplTest {
                 eq(slotCallback.captured)
             )
         }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-nearby"))
+        }
     }
 
     @Test
@@ -142,6 +158,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-in-area"))
         }
     }
 
@@ -168,6 +188,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-in-area"))
         }
     }
 
@@ -200,6 +224,10 @@ internal class DiscoverImplTest {
                 eq(slotCallback.captured)
             )
         }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-in-area"))
+        }
     }
 
     @Test
@@ -224,6 +252,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-along-the-route"))
         }
     }
 
@@ -251,6 +283,10 @@ internal class DiscoverImplTest {
                 eq(TEST_QUERY.canonicalName),
                 eq(coreOptions)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-along-the-route"))
         }
     }
 
@@ -283,6 +319,10 @@ internal class DiscoverImplTest {
                 eq(testExecutor),
                 eq(slotCallback.captured)
             )
+        }
+
+        verify(exactly = 1) {
+            activityReporter.reportActivity(eq("discover-search-along-the-route"))
         }
     }
 

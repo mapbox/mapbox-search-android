@@ -9,6 +9,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationEngine
@@ -48,7 +49,10 @@ internal class DiscoverIntegrationTest {
             url = mockServer.url("").toString()
         )
 
-        discover = DiscoverImpl(engine)
+        discover = DiscoverImpl(
+            engine = engine,
+            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+        )
     }
 
     @Test

@@ -14,6 +14,7 @@ import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.internal.bindgen.QueryType
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -29,15 +30,22 @@ import org.junit.jupiter.api.Test
 internal class PlaceAutocompleteImplTest {
 
     private lateinit var searchEngine: TwoStepsToOneStepSearchEngineAdapter
+    private lateinit var activityReporter: UserActivityReporterInterface
     private lateinit var resultFactory: PlaceAutocompleteResultFactory
     private lateinit var placeAutocomplete: PlaceAutocomplete
 
     @BeforeEach
     fun setUp() {
         searchEngine = mockk(relaxed = true)
+        activityReporter = mockk(relaxed = true)
         resultFactory = mockk(relaxed = true)
 
-        placeAutocomplete = PlaceAutocompleteImpl(searchEngine, resultFactory)
+        placeAutocomplete = PlaceAutocompleteImpl(
+            accessToken = TEST_ACCESS_TOKEN,
+            searchEngine = searchEngine,
+            activityReporter = activityReporter,
+            resultFactory = resultFactory
+        )
 
         coEvery { searchEngine.searchResolveImmediately(any(), any()) } answers {
             ExpectedFactory.createValue(mockk())
@@ -70,6 +78,7 @@ internal class PlaceAutocompleteImplTest {
 
         coVerify(exactly = 1) { searchEngine.searchResolveImmediately(any(), any()) }
         verify(exactly = 1) { resultFactory.createPlaceAutocompleteSuggestions(listOf(testBaseResult)) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-forward-geocoding")) }
     }
 
     @Test
@@ -87,6 +96,7 @@ internal class PlaceAutocompleteImplTest {
 
         coVerify(exactly = 1) { searchEngine.searchResolveImmediately(any(), any()) }
         verify(exactly = 0) { resultFactory.createPlaceAutocompleteSuggestions(any()) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-forward-geocoding")) }
     }
 
     @Test
@@ -114,6 +124,7 @@ internal class PlaceAutocompleteImplTest {
 
         runBlocking { placeAutocomplete.suggestions(TEST_QUERY, TEST_BBOX, TEST_PROXIMITY, options) }
         coVerify { searchEngine.searchResolveImmediately(eq(TEST_QUERY), coreOptions) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-forward-geocoding")) }
     }
 
     @Test
@@ -166,6 +177,7 @@ internal class PlaceAutocompleteImplTest {
 
         coVerify(exactly = 1) { searchEngine.reverseGeocoding(any()) }
         verify(exactly = 1) { resultFactory.createPlaceAutocompleteSuggestions(listOf(testBaseResult)) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
 
     @Test
@@ -183,6 +195,7 @@ internal class PlaceAutocompleteImplTest {
 
         coVerify(exactly = 1) { searchEngine.reverseGeocoding(any()) }
         verify(exactly = 0) { resultFactory.createPlaceAutocompleteSuggestions(any()) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
 
     @Test
@@ -208,6 +221,7 @@ internal class PlaceAutocompleteImplTest {
 
         runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
         coVerify { searchEngine.reverseGeocoding(coreOptions) }
+        verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
 
     @Test
@@ -243,6 +257,8 @@ internal class PlaceAutocompleteImplTest {
     }
 
     private companion object {
+
+        const val TEST_ACCESS_TOKEN = "pk.test"
 
         val TEST_POINT: Point = Point.fromLngLat(1.0, 5.0)
         val TEST_BBOX: BoundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 11.0), Point.fromLngLat(15.0, 16.0))

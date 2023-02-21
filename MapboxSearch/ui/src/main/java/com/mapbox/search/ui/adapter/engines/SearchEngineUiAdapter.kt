@@ -18,12 +18,14 @@ import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.concurrent.checkMainThread
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -177,6 +179,8 @@ public class SearchEngineUiAdapter(
         }
     }
 
+    private val activityReporter: UserActivityReporter = getUserActivityReporter(searchEngine.settings.accessToken)
+
     init {
         val helper = ItemTouchHelper(
             HistoryItemSwipeCallback(
@@ -296,12 +300,18 @@ public class SearchEngineUiAdapter(
             cancelCurrentNetworkRequest()
 
             currentSearchRequestTask = when (isOnlineSearch) {
-                true -> searchEngine.search(query, options, searchCallback)
-                false -> offlineSearchEngine.search(
-                    query,
-                    options.mapToOfflineOptions(),
-                    offlineSearchCallback
-                )
+                true -> {
+                    activityReporter.reportActivity("search-engine-forward-geocoding-suggestions-ui")
+                    searchEngine.search(query, options, searchCallback)
+                }
+                false -> {
+                    activityReporter.reportActivity("offline-search-engine-forward-geocoding-ui")
+                    offlineSearchEngine.search(
+                        query,
+                        options.mapToOfflineOptions(),
+                        offlineSearchCallback
+                    )
+                }
             }
         }
     }
@@ -441,6 +451,7 @@ public class SearchEngineUiAdapter(
 
     private fun onSuggestionSelected(searchSuggestion: SearchSuggestion) {
         cancelCurrentNetworkRequest()
+        activityReporter.reportActivity("search-engine-forward-geocoding-selection-ui")
         currentSearchRequestTask = searchEngine.select(searchSuggestion, searchCallback)
     }
 

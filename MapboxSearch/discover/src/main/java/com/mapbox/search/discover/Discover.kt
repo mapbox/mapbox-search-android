@@ -7,6 +7,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
@@ -214,7 +215,11 @@ public interface Discover {
                 BaseSearchSdkInitializer.app,
                 locationEngine
             )
-            return DiscoverImpl(engine)
+
+            return DiscoverImpl(
+                engine = engine,
+                activityReporter = getUserActivityReporter(accessToken),
+            )
         }
     }
 }

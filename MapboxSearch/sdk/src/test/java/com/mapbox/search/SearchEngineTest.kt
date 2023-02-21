@@ -39,6 +39,7 @@ import com.mapbox.search.common.createTestCoreSearchResponseHttpError
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.common.createTestCoreSuggestAction
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.mapToBase
@@ -69,6 +70,7 @@ import java.util.concurrent.Executor
 internal class SearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
+    private lateinit var activityReporter: UserActivityReporterInterface
     private lateinit var indexableRecordResolver: IndexableRecordResolver
     private lateinit var historyService: SearchHistoryService
     private lateinit var searchResultFactory: SearchResultFactory
@@ -81,6 +83,7 @@ internal class SearchEngineTest {
     @BeforeEach
     fun setUp() {
         coreEngine = mockk(relaxed = true)
+        activityReporter = mockk(relaxed = true)
         historyService = mockk(relaxed = true)
 
         indexableRecordResolver = mockk()
@@ -111,6 +114,7 @@ internal class SearchEngineTest {
             settings = mockk(),
             analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,
+            activityReporter = activityReporter,
             historyService = historyService,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
@@ -164,6 +168,10 @@ internal class SearchEngineTest {
                         )
                     )
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
+                }
             }
         }
     }
@@ -216,6 +224,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
+                }
             }
         }
     }
@@ -250,6 +262,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
+                }
             }
         }
     }
@@ -279,6 +295,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
+                }
             }
         }
     }
@@ -305,6 +325,10 @@ internal class SearchEngineTest {
 
                 VerifyOnce("Core cancel() is called with correct request id") {
                     coreEngine.cancel(TEST_REQUEST_ID)
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
                 }
             }
         }
@@ -352,6 +376,10 @@ internal class SearchEngineTest {
                 VerifyOnce("Core cancel() is called with second request id") {
                     coreEngine.cancel(testRequestId2)
                 }
+
+                Verify("User activity reported", exactly = 2) {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
+                }
             }
         }
     }
@@ -385,6 +413,10 @@ internal class SearchEngineTest {
 
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-suggestions"))
                 }
             }
         }
@@ -445,6 +477,10 @@ internal class SearchEngineTest {
 
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
                 }
             }
         }
@@ -535,6 +571,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
+                }
             }
         }
     }
@@ -606,6 +646,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
+                }
             }
         }
     }
@@ -643,6 +687,10 @@ internal class SearchEngineTest {
                 VerifyNo("Request is not cancelled") {
                     coreEngine.cancel(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
+                }
             }
         }
     }
@@ -679,6 +727,10 @@ internal class SearchEngineTest {
                 VerifyOnce("Core cancel() is called with correct request id") {
                     coreEngine.cancel(TEST_REQUEST_ID)
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
+                }
             }
         }
     }
@@ -712,6 +764,10 @@ internal class SearchEngineTest {
 
                 VerifyOnce("Core cancel() is called with correct request id") {
                     coreEngine.cancel(TEST_REQUEST_ID)
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
                 }
             }
         }

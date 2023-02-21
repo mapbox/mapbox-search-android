@@ -475,8 +475,6 @@ public abstract interface class com/mapbox/search/ViewportProvider {
 }
 
 public abstract interface class com/mapbox/search/analytics/AnalyticsService {
-	public abstract fun createRawFeedbackEvent (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)V
-	public abstract fun createRawFeedbackEvent (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)V
 	public abstract fun sendFeedback (Lcom/mapbox/search/record/FavoriteRecord;Lcom/mapbox/search/analytics/FeedbackEvent;)V
 	public abstract fun sendFeedback (Lcom/mapbox/search/record/HistoryRecord;Lcom/mapbox/search/analytics/FeedbackEvent;)V
 	public abstract fun sendFeedback (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;)V

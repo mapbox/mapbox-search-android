@@ -21,8 +21,8 @@ class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
                 query = "Washington DC",
             )
 
-            response.onValue { results ->
-                Log.i("SearchApiExample", "Place Autocomplete results: $results")
+            response.onValue { suggestions ->
+                Log.i("SearchApiExample", "Place Autocomplete results: $suggestions")
             }.onError { e ->
                 Log.i("SearchApiExample", "Place Autocomplete error", e)
             }

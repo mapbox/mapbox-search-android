@@ -24,6 +24,7 @@ import com.mapbox.search.common.createTestCoreSearchResponseHttpError
 import com.mapbox.search.common.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
+import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -31,7 +32,6 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
-import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -45,6 +45,7 @@ import java.util.concurrent.ExecutorService
 internal class OfflineSearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
+    private lateinit var activityReporter: UserActivityReporterInterface
     private lateinit var searchResultFactory: SearchResultFactory
     private lateinit var executorService: ExecutorService
     private lateinit var mainThreadWorker: MainThreadWorker
@@ -69,6 +70,8 @@ internal class OfflineSearchEngineTest {
 
         coreEngine = mockk(relaxed = true)
 
+        activityReporter = mockk(relaxed = true)
+
         searchResultFactory = spyk(SearchResultFactory(mockk()))
 
         requestContextProvider = mockk()
@@ -90,6 +93,7 @@ internal class OfflineSearchEngineTest {
         searchEngine = OfflineSearchEngineImpl(
             settings = settings,
             coreEngine = coreEngine,
+            activityReporter = activityReporter,
             requestContextProvider = requestContextProvider,
             searchResultFactory = searchResultFactory,
             engineExecutorService = executorService
@@ -151,6 +155,10 @@ internal class OfflineSearchEngineTest {
                 VerifyNo("onError() wasn't called") {
                     callback.onError(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-reverse-geocoding"))
+                }
             }
         }
     }
@@ -170,6 +178,10 @@ internal class OfflineSearchEngineTest {
 
                 VerifyOnce("Callback called inside executor") {
                     executor.execute(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-reverse-geocoding"))
                 }
             }
         }
@@ -216,6 +228,10 @@ internal class OfflineSearchEngineTest {
 
                 VerifyNo("onError() wasn't called") {
                     callback.onError(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
                 }
             }
         }
@@ -267,6 +283,10 @@ internal class OfflineSearchEngineTest {
                 VerifyNo("onResults() wasn't called") {
                     callback.onResults(any(), any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
+                }
             }
         }
     }
@@ -305,12 +325,16 @@ internal class OfflineSearchEngineTest {
                 }
 
                 Then("Passed error is correct") {
-                    Assert.assertTrue(errorSlot.captured is IllegalArgumentException)
+                    Assertions.assertTrue(errorSlot.captured is IllegalArgumentException)
                     Assertions.assertEquals("Negative radius", errorSlot.captured.message)
                 }
 
                 VerifyNo("onResults() wasn't called") {
                     callback.onResults(any(), any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
                 }
             }
         }
@@ -334,12 +358,16 @@ internal class OfflineSearchEngineTest {
                 VerifyOnce("Callback called inside executor") {
                     executor.execute(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
+                }
             }
         }
     }
 
     @TestFactory
-    fun `Check offline forward geocoding initial call`() = TestCase {
+    fun `Check successful offline forward geocoding`() = TestCase {
         Given("OfflineSearchEngine with mocked dependencies") {
             val slotSearchCallback = slot<CoreSearchCallback>()
             every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
@@ -381,6 +409,10 @@ internal class OfflineSearchEngineTest {
                 VerifyNo("onError() wasn't called") {
                     callback.onError(any())
                 }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-forward-geocoding"))
+                }
             }
         }
     }
@@ -401,6 +433,10 @@ internal class OfflineSearchEngineTest {
 
                 Verify("Callback called inside executor", exactly = 1) {
                     executor.execute(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-forward-geocoding"))
                 }
             }
         }
@@ -425,6 +461,10 @@ internal class OfflineSearchEngineTest {
 
                 VerifyOnce("Callback called with cancellation error") {
                     callback.onError(eq(SearchCancellationException(cancellationReason)))
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-forward-geocoding"))
                 }
             }
         }
