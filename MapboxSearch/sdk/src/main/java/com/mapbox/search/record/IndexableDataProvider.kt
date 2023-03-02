@@ -29,8 +29,6 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     public val priority: Int
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     *
      * Registers [engine][IndexableDataProviderEngine] with this data provider.
      * Allows to keep search index of [search engines][com.mapbox.search.SearchEngine],
      * associated with this data provider, up-to-date.
@@ -47,8 +45,6 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     ): AsyncOperationTask
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     *
      * Registers [engine][IndexableDataProviderEngine] with this data provider.
      * Allows to keep search index of [search engines][com.mapbox.search.SearchEngine],
      * associated with this data provider, up-to-date.
@@ -67,8 +63,6 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     )
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     *
      * Unregisters [engine][IndexableDataProviderEngine] from this data provider.
      *
      * Passed to [callback] `true` if [dataProviderEngine] was removed and `false` if there was no such engine.
@@ -87,8 +81,6 @@ public interface IndexableDataProvider<R : IndexableRecord> {
     ): AsyncOperationTask
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
-     *
      * Unregisters [engine][IndexableDataProviderEngine] from this data provider.
      *
      * Passed to [callback] `true` if [dataProviderEngine] was removed and `false` if there was no such engine.

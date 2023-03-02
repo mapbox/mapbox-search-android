@@ -58,13 +58,11 @@ import java.util.concurrent.Executor
 public interface SearchEngine {
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
      * The type of the API used by the Search Engine.
      */
     public val apiType: ApiType
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
      * Settings used for [SearchEngine] initialization.
      */
     public val settings: SearchEngineSettings
@@ -350,8 +348,6 @@ public interface SearchEngine {
         }
 
         /**
-         * Experimental API, can be changed or removed in the next SDK releases.
-         *
          * Creates a new instance of the [SearchEngine].
          * A new instance doesn't have any [IndexableDataProvider] registered by default.
          *
@@ -391,8 +387,6 @@ public interface SearchEngine {
         }
 
         /**
-         * Experimental API, can be changed or removed in the next SDK releases.
-         *
          * Creates a new instance of the [SearchEngine] with default data providers (
          * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
          * registered by default.

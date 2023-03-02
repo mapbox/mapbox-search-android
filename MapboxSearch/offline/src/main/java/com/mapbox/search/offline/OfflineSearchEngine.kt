@@ -72,7 +72,6 @@ public interface OfflineSearchEngine {
     }
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
      * Settings used for [OfflineSearchEngine] initialization.
      */
     public val settings: OfflineSearchEngineSettings
