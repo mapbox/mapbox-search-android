@@ -1,0 +1,26 @@
+{
+  "records": [
+    {
+      "coordinate": [
+        2.295135021209717,
+        48.859291076660156
+      ],
+      "id": "poi.609885454495",
+      "name": "Eiffel Tower",
+      "searchResultType": "POI",
+      "timestamp": 1598138435443
+    },
+    {
+      "address": "address",
+      "coordinate": [
+        -3.6922054290771484,
+        40.41393280029297
+      ],
+      "id": "poi.979252559345",
+      "name": "Museo del Prado",
+      "searchResultType": "ADDRESS",
+      "timestamp": 1598138865525
+    }
+  ],
+  "version": 0
+}
