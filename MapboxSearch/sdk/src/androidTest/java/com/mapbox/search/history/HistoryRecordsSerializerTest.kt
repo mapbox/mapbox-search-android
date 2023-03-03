@@ -1,5 +1,6 @@
 package com.mapbox.search.history
 
+import com.google.gson.JsonSyntaxException
 import com.mapbox.geojson.Point
 import com.mapbox.search.BaseTest
 import com.mapbox.search.SearchResultMetadata
@@ -61,12 +62,17 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
     }
 
     @Test
-    fun tesIncorrectDataFiltered() {
+    fun testIncorrectDataFiltered() {
         val deserialized = serializer.deserialize(readBytesFromAssets("test_data_search_history_incorrect.json"))
         Assert.assertEquals(
             listOf(TEST_EMPTY_RECORD),
             deserialized
         )
+    }
+
+    @Test(expected = JsonSyntaxException::class)
+    fun testIncorrectJsonFormat() {
+        serializer.deserialize(readBytesFromAssets("test_data_search_history_incorrect_json_format.json"))
     }
 
     private companion object {

@@ -16,7 +16,7 @@ internal class HistoryRecordsSerializer : RecordsSerializer<HistoryRecord, Histo
         if (json.isEmpty()) {
             return HistoryData(CURRENT_VERSION_DATA, emptyList())
         }
-        return gson.fromJson<HistoryData>(json, HistoryData::class.java)
+        return gson.fromJson(json, HistoryData::class.java)
     }
 
     internal data class HistoryData(

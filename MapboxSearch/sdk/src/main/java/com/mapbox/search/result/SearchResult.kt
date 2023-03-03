@@ -116,7 +116,6 @@ public class SearchResult internal constructor(
     public val metadata: SearchResultMetadata? = base.metadata?.let { SearchResultMetadata(it) }
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
      * Map of external ids. Returned Map instance is unmodifiable.
      */
     @IgnoredOnParcel

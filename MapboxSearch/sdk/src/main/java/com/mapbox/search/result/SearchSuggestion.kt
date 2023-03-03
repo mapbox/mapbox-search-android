@@ -77,7 +77,6 @@ public class SearchSuggestion internal constructor(
     public val categories: List<String>? = base.categories
 
     /**
-     * Experimental field, can be changed or removed in the next SDK releases.
      * [Maki](https://github.com/mapbox/maki/) icon name for search suggestion.
      */
     @IgnoredOnParcel
@@ -96,7 +95,6 @@ public class SearchSuggestion internal constructor(
     public val metadata: SearchResultMetadata? = base.metadata?.let { SearchResultMetadata(it) }
 
     /**
-     * Experimental API, can be changed or removed in the next SDK releases.
      * Map of external ids. Returned Map instance is unmodifiable.
      */
     @IgnoredOnParcel

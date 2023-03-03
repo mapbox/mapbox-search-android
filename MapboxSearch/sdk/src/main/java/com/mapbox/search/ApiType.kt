@@ -4,8 +4,6 @@ import com.mapbox.search.Reserved.Flags
 import com.mapbox.search.base.core.CoreApiType
 
 /**
- * Experimental API, can be changed or removed in the next SDK releases.
- *
  * The type of the API used by one of the Search Engines.
  */
 public enum class ApiType {
