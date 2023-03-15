@@ -6,6 +6,7 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.IgnoredOnParcel
@@ -126,14 +127,46 @@ public class SearchSuggestion internal constructor(
         if (javaClass != other?.javaClass) return false
 
         other as SearchSuggestion
-        return base == other.base
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (matchingName != other.matchingName) return false
+        if (descriptionText != other.descriptionText) return false
+        if (address != other.address) return false
+        if (fullAddress != other.fullAddress) return false
+        if (requestOptions != other.requestOptions) return false
+        if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
+        if (categories != other.categories) return false
+        if (makiIcon != other.makiIcon) return false
+        if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
+        if (metadata != other.metadata) return false
+        if (externalIDs != other.externalIDs) return false
+        if (isBatchResolveSupported != other.isBatchResolveSupported) return false
+        if (serverIndex != other.serverIndex) return false
+
+        return true
     }
 
     /**
      * @suppress
      */
     override fun hashCode(): Int {
-        return base.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (matchingName?.hashCode() ?: 0)
+        result = 31 * result + (descriptionText?.hashCode() ?: 0)
+        result = 31 * result + (address?.hashCode() ?: 0)
+        result = 31 * result + (fullAddress?.hashCode() ?: 0)
+        result = 31 * result + requestOptions.hashCode()
+        result = 31 * result + (distanceMeters?.hashCode() ?: 0)
+        result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (makiIcon?.hashCode() ?: 0)
+        result = 31 * result + (etaMinutes?.hashCode() ?: 0)
+        result = 31 * result + (metadata?.hashCode() ?: 0)
+        result = 31 * result + externalIDs.hashCode()
+        result = 31 * result + isBatchResolveSupported.hashCode()
+        result = 31 * result + (serverIndex ?: 0)
+        return result
     }
 
     /**

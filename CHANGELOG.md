@@ -1,5 +1,18 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.2
+
+### Bug fixes
+- [CORE] Partially fixed a bug when indexable records couldn't be matched with corresponding search results which caused duplicated search results.
+- [UI] Fixed a crash in `SearchEngineUiAdapter` that could happen during history records removing. 
+
+### Mapbox dependencies
+- Search Native SDK `0.67.2`
+- Common SDK `23.3.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.1
 
 ### Breaking changes

@@ -533,7 +533,7 @@ public class SearchEngineUiAdapter(
     ) : ItemTouchHelper.SimpleCallback(0, swipeDirs) {
 
         private fun extractHistoryItemOrNull(position: Int): SearchResultAdapterItem.History? {
-            if (position < view.adapterItems.size) {
+            if (position >= 0 && position < view.adapterItems.size) {
                 return view.adapterItems[position] as? SearchResultAdapterItem.History
             }
             return null
