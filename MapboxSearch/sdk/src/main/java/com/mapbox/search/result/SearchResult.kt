@@ -6,6 +6,7 @@ import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
@@ -151,7 +152,25 @@ public class SearchResult internal constructor(
 
         other as SearchResult
 
-        if (base != other.base) return false
+        if (requestOptions != other.requestOptions) return false
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (matchingName != other.matchingName) return false
+        if (descriptionText != other.descriptionText) return false
+        if (address != other.address) return false
+        if (fullAddress != other.fullAddress) return false
+        if (routablePoints != other.routablePoints) return false
+        if (categories != other.categories) return false
+        if (makiIcon != other.makiIcon) return false
+        if (coordinate != other.coordinate) return false
+        if (accuracy != other.accuracy) return false
+        if (types != other.types) return false
+        if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
+        if (metadata != other.metadata) return false
+        if (externalIDs != other.externalIDs) return false
+        if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
+        if (serverIndex != other.serverIndex) return false
+        if (indexableRecord != other.indexableRecord) return false
 
         return true
     }
@@ -160,7 +179,26 @@ public class SearchResult internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        return base.hashCode()
+        var result = requestOptions.hashCode()
+        result = 31 * result + id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (matchingName?.hashCode() ?: 0)
+        result = 31 * result + (descriptionText?.hashCode() ?: 0)
+        result = 31 * result + (address?.hashCode() ?: 0)
+        result = 31 * result + (fullAddress?.hashCode() ?: 0)
+        result = 31 * result + (routablePoints?.hashCode() ?: 0)
+        result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (makiIcon?.hashCode() ?: 0)
+        result = 31 * result + coordinate.hashCode()
+        result = 31 * result + (accuracy?.hashCode() ?: 0)
+        result = 31 * result + types.hashCode()
+        result = 31 * result + (etaMinutes?.hashCode() ?: 0)
+        result = 31 * result + (metadata?.hashCode() ?: 0)
+        result = 31 * result + externalIDs.hashCode()
+        result = 31 * result + (distanceMeters?.hashCode() ?: 0)
+        result = 31 * result + (serverIndex ?: 0)
+        result = 31 * result + (indexableRecord?.hashCode() ?: 0)
+        return result
     }
 
     /**

@@ -1,24 +1,33 @@
 package com.mapbox.search
 
 import com.google.gson.JsonSyntaxException
+import com.mapbox.geojson.Point
 import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingOnDataProviderEngineRegisterListener
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
 import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.upsertBlocking
+import com.mapbox.search.tests_support.searchBlocking
+import com.mapbox.search.tests_support.selectBlocking
 import com.mapbox.search.utils.loader.DataLoader
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
 internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
+    private lateinit var mockServer: MockWebServer
     private lateinit var searchEngine: SearchEngine
     private lateinit var historyDataProvider: HistoryDataProvider
     private lateinit var favoritesDataProvider: FavoritesDataProvider
@@ -27,12 +36,14 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
     override fun setUp() {
         super.setUp()
 
+        mockServer = MockWebServer()
+
         MapboxSearchSdk.initialize(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
             accessToken = DEFAULT_TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
-            singleBoxSearchBaseUrl = MockWebServer().url("").toString()
+            singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
         searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(ApiType.SBS, searchEngineSettings)
@@ -100,6 +111,46 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
             error.message
         )
         assertTrue(error is JsonSyntaxException)
+    }
+
+    @Test
+    fun testIndexableRecordMatchingWithServerResult() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+
+        val historyRecord = HistoryRecord(
+            id = "test-id",
+            name = "Mia's Minks",
+            descriptionText = "Mia's Minks, 3249 Stevens Creek Blvd Ste 205, San Jose, California 95117, United States of America",
+            address = SearchAddress(
+                place = "San Jose",
+                postcode = "95117",
+                region = "California",
+                street = "stevens creek blvd",
+                neighborhood = "Valley Fair",
+                houseNumber = "3249",
+                country = "United States of America"
+            ),
+            routablePoints = null,
+            categories = emptyList(),
+            makiIcon = null,
+            coordinate = Point.fromLngLat(10.0, 50.0),
+            type = SearchResultType.POI,
+            metadata = null,
+            timestamp = 100,
+        )
+
+        historyDataProvider.upsertBlocking(historyRecord)
+
+        val suggestions = searchEngine.searchBlocking("Minsk").requireSuggestions()
+
+        assertEquals(5, suggestions.size)
+
+        val type = suggestions.first().type as? SearchSuggestionType.IndexableRecordItem
+        assertNotNull(type)
+        assertTrue(type!!.isHistoryRecord)
+
+        val searchResult = searchEngine.selectBlocking(suggestions.first()).requireResult().result
+        assertEquals(historyRecord, searchResult.indexableRecord)
     }
 
     private object WrongDataFormatDataLoader : DataLoader<ByteArray> {
