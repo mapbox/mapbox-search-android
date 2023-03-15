@@ -63,4 +63,9 @@ git config user.name "Release SDK bot"
 git add -A
 git commit -m "[mapbox-search-android] API reference for v${VERSION}"
 git push origin "${BRANCH_NAME}"
+
+# workaround for https://github.com/mapbox/documentation/issues/668
+git commit --allow-empty -m "trigger publisher"
+git push origin "${BRANCH_NAME}"
+
 popd > /dev/null
