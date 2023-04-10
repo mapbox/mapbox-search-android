@@ -6,13 +6,13 @@ import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
-import com.mapbox.search.common.TestConstants
-import com.mapbox.search.common.catchThrowable
-import com.mapbox.search.common.createTestCoreRoutablePoint
-import com.mapbox.search.common.equalsTo
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
+import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.tests.catchThrowable
+import com.mapbox.search.common.tests.createTestCoreRoutablePoint
+import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.offline.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.offline.tests_support.createTestBaseSearchAddress
 import com.mapbox.test.dsl.TestCase

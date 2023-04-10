@@ -5,7 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
-import com.mapbox.search.common.createTestCoreSearchOptions
+import com.mapbox.search.common.tests.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before

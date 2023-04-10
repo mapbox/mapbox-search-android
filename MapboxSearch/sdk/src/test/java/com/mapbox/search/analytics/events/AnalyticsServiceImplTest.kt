@@ -18,10 +18,10 @@ import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.CompletionCallback
-import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.TestExecutor
-import com.mapbox.search.common.catchThrowable
-import com.mapbox.search.common.createTestCoreSearchResponseSuccess
+import com.mapbox.search.common.tests.FixedPointLocationEngine
+import com.mapbox.search.common.tests.TestExecutor
+import com.mapbox.search.common.tests.catchThrowable
+import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.createTestBaseSearchSuggestion

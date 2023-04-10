@@ -1,4 +1,4 @@
-package com.mapbox.search.common
+package com.mapbox.search.common.tests
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point

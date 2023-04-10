@@ -32,7 +32,7 @@ import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
-import com.mapbox.search.common.createTestCoreSearchResponseSuccess
+import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.mapToBase
 import com.mapbox.search.mapToPlatform

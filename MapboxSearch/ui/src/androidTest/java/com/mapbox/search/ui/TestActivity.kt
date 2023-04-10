@@ -25,7 +25,7 @@ import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.DistanceCalculator
-import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings

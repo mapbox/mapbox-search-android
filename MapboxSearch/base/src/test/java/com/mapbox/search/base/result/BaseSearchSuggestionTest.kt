@@ -7,9 +7,9 @@ import com.mapbox.search.base.tests_support.createBaseSearchAddress
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.base.tests_support.createTestBaseRequestOptions
 import com.mapbox.search.base.tests_support.withPrefabTestBaseRawSearchResult
-import com.mapbox.search.common.createTestCoreRequestOptions
-import com.mapbox.search.common.withPrefabTestBoundingBox
-import com.mapbox.search.common.withPrefabTestPoint
+import com.mapbox.search.common.tests.createTestCoreRequestOptions
+import com.mapbox.search.common.tests.withPrefabTestBoundingBox
+import com.mapbox.search.common.tests.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.spyk

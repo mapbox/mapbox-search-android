@@ -16,9 +16,9 @@ import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.mapToBaseSearchAddress
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.common.createTestCoreRequestOptions
-import com.mapbox.search.common.createTestCoreSearchAddress
-import com.mapbox.search.common.createTestResultMetadata
+import com.mapbox.search.common.tests.createTestCoreRequestOptions
+import com.mapbox.search.common.tests.createTestCoreSearchAddress
+import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.internal.bindgen.ImageInfo
 import com.mapbox.search.internal.bindgen.OpenHours
 import com.mapbox.search.internal.bindgen.OpenMode

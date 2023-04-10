@@ -1,4 +1,4 @@
-package com.mapbox.search.common
+package com.mapbox.search.common.tests
 
 inline fun <reified T : Throwable> catchThrowable(block: () -> Unit): T? {
     return try {

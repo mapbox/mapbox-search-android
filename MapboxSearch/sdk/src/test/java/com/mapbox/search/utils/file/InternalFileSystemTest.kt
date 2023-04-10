@@ -2,7 +2,7 @@ package com.mapbox.search.utils.file
 
 import android.content.Context
 import android.os.Build
-import com.mapbox.search.common.catchThrowable
+import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk

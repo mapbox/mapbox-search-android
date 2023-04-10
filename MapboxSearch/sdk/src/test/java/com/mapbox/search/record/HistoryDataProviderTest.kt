@@ -7,10 +7,10 @@ import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.common.TestExecutor
-import com.mapbox.search.common.TestThreadExecutorService
 import com.mapbox.search.common.concurrent.MainThreadWorker
-import com.mapbox.search.common.createTestCoreSearchResult
+import com.mapbox.search.common.tests.TestExecutor
+import com.mapbox.search.common.tests.TestThreadExecutorService
+import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
@@ -240,7 +240,8 @@ internal class HistoryDataProviderTest {
             }
 
             When("One record added") {
-                val singleRecord = createTestHistoryRecord(id = "test-id-10", timestamp = 1000L)
+                val singleRecord =
+                    createTestHistoryRecord(id = "test-id-10", timestamp = 1000L)
                 historyDataProvider.upsertBlocking(singleRecord, executor)
 
                 val allRecords = historyDataProvider.getAllBlocking(executor)

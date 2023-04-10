@@ -1,10 +1,10 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.common.equalsTo
+import com.mapbox.search.common.tests.FixedPointLocationEngine
+import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.SearchSuggestion

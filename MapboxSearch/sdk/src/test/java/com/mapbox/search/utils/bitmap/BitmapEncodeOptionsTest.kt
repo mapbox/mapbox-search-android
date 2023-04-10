@@ -1,6 +1,6 @@
 package com.mapbox.search.utils.bitmap
 
-import com.mapbox.search.common.catchThrowable
+import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 import java.lang.IllegalStateException

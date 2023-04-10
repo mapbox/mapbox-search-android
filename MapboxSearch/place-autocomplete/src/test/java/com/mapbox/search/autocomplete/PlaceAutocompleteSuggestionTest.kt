@@ -2,11 +2,11 @@ package com.mapbox.search.autocomplete
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.test.utils.TypeObjectCreator
-import com.mapbox.search.common.CommonSdkTypeObjectCreators
+import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
-import com.mapbox.search.common.withPrefabTestBoundingBox
-import com.mapbox.search.common.withPrefabTestPoint
+import com.mapbox.search.common.tests.withPrefabTestBoundingBox
+import com.mapbox.search.common.tests.withPrefabTestPoint
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test

@@ -3,6 +3,7 @@ package com.mapbox.search.tests_support
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchMultipleSelectionCallback
 import com.mapbox.search.SearchSelectionCallback
+import com.mapbox.search.common.tests.BaseBlockingCallback
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 
