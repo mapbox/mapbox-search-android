@@ -1,28 +1,75 @@
 package com.mapbox.search.autocomplete
 
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.base.result.BaseSearchResult
-import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.nullIfEmpty
 
 internal class PlaceAutocompleteResultFactory {
 
-    fun createPlaceAutocompleteSuggestions(results: List<BaseSearchResult>): List<PlaceAutocompleteSuggestion> {
-        return results.mapNotNull { createPlaceAutocompleteSuggestion(it) }
-    }
-
-    fun createPlaceAutocompleteSuggestion(result: BaseSearchResult): PlaceAutocompleteSuggestion? {
-        return createPlaceAutocompleteResult(result)?.let {
-            PlaceAutocompleteSuggestion(it)
+    fun createPlaceAutocompleteSuggestion(
+        coordinate: Point,
+        type: PlaceAutocompleteType,
+        suggestion: BaseSearchSuggestion,
+    ): PlaceAutocompleteSuggestion {
+        return with(suggestion) {
+            PlaceAutocompleteSuggestion(
+                name = name,
+                formattedAddress = formattedAddress(),
+                coordinate = coordinate,
+                routablePoints = suggestion.routablePoints?.map { it.mapToPlatform() },
+                makiIcon = makiIcon,
+                distanceMeters = distanceMeters,
+                type = type,
+                categories = categories,
+                underlying = PlaceAutocompleteSuggestion.Underlying.Suggestion(suggestion)
+            )
         }
     }
 
-    fun createPlaceAutocompleteResult(result: BaseSearchResult): PlaceAutocompleteResult? {
+    fun createPlaceAutocompleteSuggestion(
+        type: PlaceAutocompleteType,
+        result: BaseSearchResult
+    ): PlaceAutocompleteSuggestion {
+        return with(result) {
+            PlaceAutocompleteSuggestion(
+                name = name,
+                formattedAddress = formattedAddress(),
+                coordinate = coordinate,
+                routablePoints = routablePoints?.map { it.mapToPlatform() },
+                makiIcon = makiIcon,
+                distanceMeters = distanceMeters,
+                type = type,
+                categories = categories,
+                underlying = PlaceAutocompleteSuggestion.Underlying.Result(result)
+            )
+        }
+    }
+
+    fun createPlaceAutocompleteSuggestions(results: List<BaseSearchResult>): List<PlaceAutocompleteSuggestion> {
+        return results.mapNotNull { result ->
+            val type = result.types.firstNotNullOfOrNull {
+                PlaceAutocompleteType.createFromBaseType(it)
+            } ?: return@mapNotNull null
+            createPlaceAutocompleteSuggestion(type, result)
+        }
+    }
+
+    fun createPlaceAutocompleteResultOrError(result: BaseSearchResult): Expected<Exception, PlaceAutocompleteResult> {
+        return createPlaceAutocompleteResult(result)?.let {
+            ExpectedFactory.createValue(it)
+        } ?: ExpectedFactory.createError(Exception("Unable to create PlaceAutocompleteResult from $result"))
+    }
+
+    private fun createPlaceAutocompleteResult(result: BaseSearchResult): PlaceAutocompleteResult? {
         with(result) {
-            val type = types.firstNotNullOfOrNull { it.mapToAutocompleteType() } ?: return null
+            val type = types.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) } ?: return null
 
             return PlaceAutocompleteResult(
                 name = name,
@@ -56,26 +103,14 @@ internal class PlaceAutocompleteResultFactory {
                 district = address?.district?.nullIfEmpty(),
                 region = address?.region?.nullIfEmpty(),
                 country = address?.country?.nullIfEmpty(),
-                formattedAddress = result.fullAddress ?: result.descriptionText,
+                formattedAddress = result.formattedAddress(),
                 countryIso1 = metadata?.countryIso1,
                 countryIso2 = metadata?.countryIso2
             )
         }
     }
 
-    private fun BaseSearchResultType.mapToAutocompleteType(): PlaceAutocompleteType {
-        return when (this) {
-            BaseSearchResultType.POI -> PlaceAutocompleteType.Poi
-            BaseSearchResultType.COUNTRY -> PlaceAutocompleteType.AdministrativeUnit.Country
-            BaseSearchResultType.REGION -> PlaceAutocompleteType.AdministrativeUnit.Region
-            BaseSearchResultType.POSTCODE -> PlaceAutocompleteType.AdministrativeUnit.Postcode
-            BaseSearchResultType.PLACE -> PlaceAutocompleteType.AdministrativeUnit.Place
-            BaseSearchResultType.DISTRICT -> PlaceAutocompleteType.AdministrativeUnit.District
-            BaseSearchResultType.LOCALITY -> PlaceAutocompleteType.AdministrativeUnit.Locality
-            BaseSearchResultType.NEIGHBORHOOD -> PlaceAutocompleteType.AdministrativeUnit.Neighborhood
-            BaseSearchResultType.STREET -> PlaceAutocompleteType.AdministrativeUnit.Street
-            BaseSearchResultType.ADDRESS -> PlaceAutocompleteType.AdministrativeUnit.Address
-            BaseSearchResultType.BLOCK -> PlaceAutocompleteType.AdministrativeUnit.Address
-        }
-    }
+    private fun BaseSearchResult.formattedAddress(): String? = fullAddress ?: descriptionText
+
+    private fun BaseSearchSuggestion.formattedAddress(): String? = fullAddress ?: descriptionText
 }

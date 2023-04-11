@@ -1,15 +1,16 @@
 package com.mapbox.search.autocomplete
 
+import com.mapbox.search.autocomplete.test.utils.createTestBaseSearchSuggestion
 import com.mapbox.search.autocomplete.test.utils.testBaseRawSearchResult
+import com.mapbox.search.autocomplete.test.utils.testBaseRawSearchSuggestionWithCoordinates
 import com.mapbox.search.autocomplete.test.utils.testBaseResult
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.result.BaseRawSearchResult
-import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.utils.extension.mapToCore
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class PlaceAutocompleteResultFactoryTest {
@@ -17,22 +18,46 @@ internal class PlaceAutocompleteResultFactoryTest {
     private val factory = PlaceAutocompleteResultFactory()
 
     @Test
-    fun `test createPlaceAutocompleteResult`() {
-        val result = factory.createPlaceAutocompleteResult(testBaseResult)
-        assertNotNull(result)
-        requireNotNull(result)
-        compare(testBaseRawSearchResult, result)
+    fun `test create PlaceAutocompleteSuggestion from base suggestion`() {
+        val baseSuggestion = createTestBaseSearchSuggestion(testBaseRawSearchSuggestionWithCoordinates)
+        val coordinate = testBaseRawSearchSuggestionWithCoordinates.center!!
+        val type = PlaceAutocompleteType.AdministrativeUnit.Address
+        val suggestion = factory.createPlaceAutocompleteSuggestion(coordinate, type, baseSuggestion)
+        compare(testBaseRawSearchSuggestionWithCoordinates, suggestion)
     }
 
     @Test
-    fun `test createPlaceAutocompleteSuggestion`() {
-        val result = factory.createPlaceAutocompleteResult(testBaseResult)
-        val suggestion = factory.createPlaceAutocompleteSuggestion(testBaseResult)
+    fun `test create PlaceAutocompleteSuggestion from base result`() {
+        val suggestion = factory.createPlaceAutocompleteSuggestion(
+            PlaceAutocompleteType.AdministrativeUnit.Address,
+            testBaseResult
+        )
+        compare(testBaseResult.rawSearchResult, suggestion)
+    }
 
-        assertNotNull(result)
-        assertNotNull(suggestion)
+    @Test
+    fun `test createPlaceAutocompleteSuggestions`() {
+        val suggestions = factory.createPlaceAutocompleteSuggestions(listOf(testBaseResult))
+        assertEquals(1, suggestions.size)
+        compare(testBaseResult.rawSearchResult, suggestions.first())
+    }
 
-        assertEquals(result, suggestion?.result())
+    @Test
+    fun `test createPlaceAutocompleteResult`() {
+        val result = factory.createPlaceAutocompleteResultOrError(testBaseResult)
+        assertTrue(result.isValue)
+        compare(testBaseRawSearchResult, result.value!!)
+    }
+
+    private fun compare(baseResult: BaseRawSearchResult, suggestion: PlaceAutocompleteSuggestion) {
+        assertEquals(baseResult.names.first(), suggestion.name)
+        assertEquals(baseResult.fullAddress, suggestion.formattedAddress)
+        assertEquals(baseResult.center, suggestion.coordinate)
+        assertEquals(baseResult.routablePoints, suggestion.routablePoints?.map { it.mapToCore() })
+        assertEquals(baseResult.icon, suggestion.makiIcon)
+        assertEquals(baseResult.distanceMeters, suggestion.distanceMeters)
+        assertEquals(PlaceAutocompleteType.AdministrativeUnit.Address, suggestion.type)
+        assertEquals(baseResult.categories, suggestion.categories)
     }
 
     private fun compare(baseResult: BaseRawSearchResult, result: PlaceAutocompleteResult) {
@@ -41,6 +66,7 @@ internal class PlaceAutocompleteResultFactoryTest {
         assertEquals(baseResult.routablePoints, result.routablePoints?.map { it.mapToCore() })
         assertEquals(baseResult.icon, result.makiIcon)
         assertEquals(baseResult.distanceMeters, result.distanceMeters)
+        assertEquals(baseResult.categories, result.categories)
 
         assertEquals(baseResult.fullAddress, result.address?.formattedAddress)
         assertEquals(baseResult.addresses?.first()?.houseNumber, result.address?.houseNumber)

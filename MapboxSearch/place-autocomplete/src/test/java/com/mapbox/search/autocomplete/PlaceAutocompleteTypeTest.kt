@@ -1,6 +1,7 @@
 package com.mapbox.search.autocomplete
 
 import com.mapbox.search.base.core.CoreQueryType
+import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.internal.bindgen.QueryType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -41,5 +42,24 @@ internal class PlaceAutocompleteTypeTest {
             remove(QueryType.CATEGORY)
         }.toList().sorted()
         assertEquals(allValidCoreTypes, coreTypes)
+    }
+
+    @Test
+    fun `check createFromBaseType`() {
+        BaseSearchResultType.values().forEach {
+            val placeType = when (it) {
+                BaseSearchResultType.POI -> PlaceAutocompleteType.Poi
+                BaseSearchResultType.COUNTRY -> PlaceAutocompleteType.AdministrativeUnit.Country
+                BaseSearchResultType.REGION -> PlaceAutocompleteType.AdministrativeUnit.Region
+                BaseSearchResultType.POSTCODE -> PlaceAutocompleteType.AdministrativeUnit.Postcode
+                BaseSearchResultType.PLACE -> PlaceAutocompleteType.AdministrativeUnit.Place
+                BaseSearchResultType.DISTRICT -> PlaceAutocompleteType.AdministrativeUnit.District
+                BaseSearchResultType.LOCALITY -> PlaceAutocompleteType.AdministrativeUnit.Locality
+                BaseSearchResultType.NEIGHBORHOOD -> PlaceAutocompleteType.AdministrativeUnit.Neighborhood
+                BaseSearchResultType.STREET -> PlaceAutocompleteType.AdministrativeUnit.Street
+                BaseSearchResultType.ADDRESS, BaseSearchResultType.BLOCK -> PlaceAutocompleteType.AdministrativeUnit.Address
+            }
+            assertEquals(placeType, PlaceAutocompleteType.createFromBaseType(it))
+        }
     }
 }

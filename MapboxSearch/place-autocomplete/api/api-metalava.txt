@@ -4,6 +4,7 @@ package com.mapbox.search.autocomplete {
   public interface PlaceAutocomplete {
     method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
     method public default static final com.mapbox.search.autocomplete.PlaceAutocomplete create(String accessToken);
+    method public suspend Object? select(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autocomplete.PlaceAutocompleteResult>> p);
     method public suspend Object? suggestions(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
     method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
   }
@@ -90,14 +91,15 @@ package com.mapbox.search.autocomplete {
     method public String? getFormattedAddress();
     method public String? getMakiIcon();
     method public String getName();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
-    method public com.mapbox.search.autocomplete.PlaceAutocompleteResult result();
     property public final java.util.List<java.lang.String>? categories;
     property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final String? formattedAddress;
     property public final String? makiIcon;
     property public final String name;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final com.mapbox.search.autocomplete.PlaceAutocompleteType type;
   }
 

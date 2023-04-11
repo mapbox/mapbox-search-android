@@ -50,4 +50,5 @@
 
     <string name="place_autocomplete_query_hint">Search for places</string>
     <string name="place_autocomplete_reverse_geocoding_error_message">Unable to locate selected coordinate</string>
+    <string name="place_autocomplete_selection_error">Error happened during request</string>
 </resources>

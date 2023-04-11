@@ -112,13 +112,13 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                         }
                     }
                     CoreApiType.SBS, CoreApiType.AUTOFILL -> {
-                        if (searchResult.types.isValidMultiType() && searchResult.center == null) {
+                        if (searchResult.types.isValidMultiType()) {
                             val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                             callback(Result.success(value))
                             AsyncOperationTaskImpl.COMPLETED
                         } else {
-                            failDebug { "Invalid search result with types or coordinate set. ${debugInfo()}" }
-                            callback(Result.failure(Exception("Invalid search result with types or coordinate set: $searchResult")))
+                            failDebug { "Invalid search result types: ${debugInfo()}" }
+                            callback(Result.failure(Exception("Invalid search result types: $searchResult")))
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
