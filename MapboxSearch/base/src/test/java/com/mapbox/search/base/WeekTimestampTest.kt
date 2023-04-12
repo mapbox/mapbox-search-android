@@ -2,9 +2,9 @@ package com.mapbox.search.base
 
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.search.common.TestConstants
-import com.mapbox.search.common.catchThrowable
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.tests.TestConstants
+import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic

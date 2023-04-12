@@ -7,7 +7,7 @@ import com.mapbox.common.TileRegionError
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileRegionsCallback
 import com.mapbox.common.TileStore
-import com.mapbox.search.common.BaseBlockingCallback
+import com.mapbox.search.common.tests.BaseBlockingCallback
 
 internal fun TileStore.loadTileRegionBlocking(
     id: String,

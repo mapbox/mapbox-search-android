@@ -8,12 +8,12 @@ import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.SearchRequestException
-import com.mapbox.search.common.TestExecutor
-import com.mapbox.search.common.TestThreadExecutorService
-import com.mapbox.search.common.createTestCoreSearchOptions
-import com.mapbox.search.common.createTestCoreSearchResponseHttpError
-import com.mapbox.search.common.createTestCoreSearchResponseSuccess
-import com.mapbox.search.common.createTestCoreSearchResult
+import com.mapbox.search.common.tests.TestExecutor
+import com.mapbox.search.common.tests.TestThreadExecutorService
+import com.mapbox.search.common.tests.createTestCoreSearchOptions
+import com.mapbox.search.common.tests.createTestCoreSearchResponseHttpError
+import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
+import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ApiType
 import com.mapbox.search.internal.bindgen.SearchCallback
 import com.mapbox.search.internal.bindgen.SearchResponse
@@ -82,9 +82,9 @@ internal class DiscoverSearchEngineTest {
             createTestCoreSearchResult(center = Point.fromLngLat(30.0, 50.0)),
         )
 
-        mockEngineResponse(createTestCoreSearchResponseSuccess(
-            results = results
-        ))
+        mockEngineResponse(
+            createTestCoreSearchResponseSuccess(results = results)
+        )
 
         val result = runBlocking {
             engine.search(TEST_CATEGORY_NAME, TEST_SEARCH_OPTIONS)

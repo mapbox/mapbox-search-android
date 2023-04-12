@@ -1,7 +1,7 @@
 package com.mapbox.search.offline
 
-import com.mapbox.search.common.createTestCoreRequestOptions
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.tests.createTestCoreRequestOptions
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory

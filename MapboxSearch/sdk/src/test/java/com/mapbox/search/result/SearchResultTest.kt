@@ -3,12 +3,12 @@ package com.mapbox.search.result
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
+import com.mapbox.search.common.tests.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.ToStringVerifier
-import com.mapbox.search.common.withPrefabTestBoundingBox
-import com.mapbox.search.common.withPrefabTestPoint
+import com.mapbox.search.common.tests.withPrefabTestBoundingBox
+import com.mapbox.search.common.tests.withPrefabTestPoint
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.search.tests_support.createTestSearchResult
 import com.mapbox.search.tests_support.withPrefabTestBaseRawSearchResult

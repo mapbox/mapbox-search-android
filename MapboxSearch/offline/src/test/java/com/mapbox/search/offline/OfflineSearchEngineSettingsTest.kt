@@ -2,7 +2,7 @@ package com.mapbox.search.offline
 
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
-import com.mapbox.search.common.CommonSdkTypeObjectCreators
+import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier

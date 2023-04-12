@@ -5,6 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.tests.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
 import org.junit.Before
@@ -149,7 +150,7 @@ internal class SearchOptionsTest {
             When("Build new SearchOptions with all values set") {
                 val actualOptions = SearchOptions().mapToCore()
 
-                val expectedOptions = com.mapbox.search.common.createTestCoreSearchOptions(
+                val expectedOptions = createTestCoreSearchOptions(
                     language = listOf(TEST_LOCALE.language)
                 )
 
@@ -182,7 +183,7 @@ internal class SearchOptionsTest {
 
                 val actualOptions = originalOptions.mapToCore()
 
-                val expectedOptions = com.mapbox.search.common.createTestCoreSearchOptions(
+                val expectedOptions = createTestCoreSearchOptions(
                     proximity = TEST_POINT,
                     origin = TEST_ORIGIN_POINT,
                     navProfile = TEST_NAV_OPTIONS.navigationProfile.rawName,

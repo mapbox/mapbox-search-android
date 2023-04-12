@@ -13,8 +13,8 @@ import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.IsoLanguageCode
-import com.mapbox.search.common.TestExecutor
-import com.mapbox.search.common.createTestCoreSearchResult
+import com.mapbox.search.common.tests.TestExecutor
+import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import io.mockk.coEvery
 import io.mockk.coVerify

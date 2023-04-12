@@ -1,9 +1,7 @@
-package com.mapbox.search.common
+package com.mapbox.search.common.tests
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.common.tests.CustomTypeObjectCreator
-import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import java.io.IOException
 import java.net.URI
 

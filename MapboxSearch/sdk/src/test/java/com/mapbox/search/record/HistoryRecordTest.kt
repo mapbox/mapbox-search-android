@@ -1,7 +1,5 @@
 package com.mapbox.search.record
 
-import com.mapbox.geojson.Point
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.createSearchAddress
 import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.test.dsl.TestCase
@@ -28,21 +26,5 @@ internal class HistoryRecordTest {
                 )
             }
         }
-    }
-
-    private companion object {
-        val TEST_RECORD = HistoryRecord(
-            id = "test id",
-            name = "test name",
-            coordinate = Point.fromLngLat(.0, .1),
-            descriptionText = null,
-            address = null,
-            type = SearchResultType.POI,
-            timestamp = 123L,
-            routablePoints = null,
-            metadata = null,
-            makiIcon = null,
-            categories = emptyList(),
-        )
     }
 }

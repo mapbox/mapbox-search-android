@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.result.SearchSuggestionType

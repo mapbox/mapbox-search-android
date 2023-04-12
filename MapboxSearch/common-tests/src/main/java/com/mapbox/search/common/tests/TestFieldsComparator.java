@@ -1,4 +1,4 @@
-package com.mapbox.search.tests_support;
+package com.mapbox.search.common.tests;
 
 import java.lang.reflect.Field;
 

@@ -4,8 +4,8 @@ import com.mapbox.search.BuildConfig
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.search.common.TestConstants.ASSERTIONS_KT_CLASS_NAME
-import com.mapbox.search.common.catchThrowable
+import com.mapbox.search.common.tests.TestConstants.ASSERTIONS_KT_CLASS_NAME
+import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic

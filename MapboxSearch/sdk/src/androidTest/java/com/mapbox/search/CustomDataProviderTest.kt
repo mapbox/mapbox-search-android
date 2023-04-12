@@ -9,9 +9,9 @@ import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
-import com.mapbox.search.common.FixedPointLocationEngine
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.common.equalsTo
+import com.mapbox.search.common.tests.FixedPointLocationEngine
+import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord

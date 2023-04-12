@@ -12,7 +12,7 @@ import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
-import com.mapbox.search.common.createTestCoreRequestOptions
+import com.mapbox.search.common.tests.createTestCoreRequestOptions
 
 @Suppress("LongParameterList")
 internal fun createTestBaseRawSearchResult(

@@ -2,7 +2,7 @@ package com.mapbox.search
 
 import com.google.gson.JsonSyntaxException
 import com.mapbox.geojson.Point
-import com.mapbox.search.common.FixedPointLocationEngine
+import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider

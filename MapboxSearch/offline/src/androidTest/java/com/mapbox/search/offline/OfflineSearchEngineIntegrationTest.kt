@@ -16,9 +16,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.mapToBase
-import com.mapbox.search.common.FixedPointLocationEngine
-import com.mapbox.search.common.createCoreSearchAddress
-import com.mapbox.search.common.createTestCoreSearchResult
+import com.mapbox.search.common.tests.FixedPointLocationEngine
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.offline.test.R
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback
