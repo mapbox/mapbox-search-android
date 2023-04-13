@@ -289,9 +289,9 @@ jobs:
       - run:
           name: Calculate coverage
           command: cd MapboxSearch && ./gradlew :sdk:testDebugUnitTestCoverage
-      - run:
-          name: Post code coverage reports to Codecov.io
-          command: bash ./scripts/codecov.sh ./MapboxSearch/sdk/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
+#      - run:
+#          name: Post code coverage reports to Codecov.io
+#          command: bash ./scripts/codecov.sh ./MapboxSearch/sdk/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
       - write-workspace
 
   instrumentation-tests:
