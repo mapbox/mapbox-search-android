@@ -21,10 +21,26 @@ class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
                 query = "Washington DC",
             )
 
-            response.onValue { suggestions ->
-                Log.i("SearchApiExample", "Place Autocomplete results: $suggestions")
-            }.onError { e ->
-                Log.i("SearchApiExample", "Place Autocomplete error", e)
+            if (response.isValue) {
+                val suggestions = requireNotNull(response.value)
+
+                Log.i("SearchApiExample", "Place Autocomplete suggestions: $suggestions")
+
+                if (suggestions.isNotEmpty()) {
+                    // Supposing that a user has selected (clicked in UI) the first suggestion
+                    val selectedSuggestion = suggestions.first()
+
+                    Log.i("SearchApiExample", "Selecting first suggestion...")
+
+                    val selectionResponse = placeAutocomplete.select(selectedSuggestion)
+                    selectionResponse.onValue { result ->
+                        Log.i("SearchApiExample", "Place Autocomplete result: $result")
+                    }.onError { e ->
+                        Log.i("SearchApiExample", "An error occurred during selection", e)
+                    }
+                }
+            } else {
+                Log.i("SearchApiExample", "Place Autocomplete error", response.error)
             }
         }
     }
