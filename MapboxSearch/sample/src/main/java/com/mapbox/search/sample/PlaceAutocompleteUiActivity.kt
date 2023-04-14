@@ -214,11 +214,17 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         ignoreNextQueryUpdate = true
         queryEditText.setText("")
 
-        val result = suggestion.result()
-        mapMarkersManager.showMarker(suggestion.coordinate)
-        searchPlaceView.open(SearchPlace.createFromPlaceAutocompleteResult(result))
-        queryEditText.hideKeyboard()
-        searchResultsView.isVisible = false
+        lifecycleScope.launchWhenStarted {
+            placeAutocomplete.select(suggestion).onValue { result ->
+                mapMarkersManager.showMarker(suggestion.coordinate)
+                searchPlaceView.open(SearchPlace.createFromPlaceAutocompleteResult(result))
+                queryEditText.hideKeyboard()
+                searchResultsView.isVisible = false
+            }.onError { error ->
+                Log.d(LOG_TAG, "Suggestion selection error", error)
+                showToast(R.string.place_autocomplete_selection_error)
+            }
+        }
     }
 
     private fun closePlaceCard() {

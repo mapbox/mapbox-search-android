@@ -1,8 +1,10 @@
 package com.mapbox.search.base.result
 
 import android.os.Parcelable
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreRoutablePoint
 import java.util.Collections
 
 sealed class BaseSearchSuggestion(
@@ -15,6 +17,12 @@ sealed class BaseSearchSuggestion(
 
     open val name: String
         get() = rawSearchResult.names[0]
+
+    open val coordinate: Point?
+        get() = rawSearchResult.center
+
+    open val routablePoints: List<CoreRoutablePoint>?
+        get() = rawSearchResult.routablePoints
 
     open val matchingName: String?
         get() = rawSearchResult.matchingName

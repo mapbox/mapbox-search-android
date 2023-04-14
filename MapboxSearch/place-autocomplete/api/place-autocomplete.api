@@ -9,6 +9,7 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
 	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -98,9 +99,9 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : 
 	public final fun getFormattedAddress ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getType ()Lcom/mapbox/search/autocomplete/PlaceAutocompleteType;
 	public fun hashCode ()I
-	public final fun result ()Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }

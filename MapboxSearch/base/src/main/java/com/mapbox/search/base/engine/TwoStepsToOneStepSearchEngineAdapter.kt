@@ -26,6 +26,7 @@ import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.extension.suspendFlatMap
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import kotlinx.coroutines.Deferred
@@ -100,13 +101,11 @@ class TwoStepsToOneStepSearchEngineAdapter(
 
     suspend fun searchResolveImmediately(
         query: String,
-        options: CoreSearchOptions
+        options: CoreSearchOptions,
+        allowCategorySuggestions: Boolean = true
     ): Expected<Exception, List<BaseSearchResult>> {
-        val response = search(query = query, options = options)
-        return if (response.isValue) {
-            resolveAll(requireNotNull(response.value).first)
-        } else {
-            ExpectedFactory.createError(requireNotNull(response.error))
+        return search(query = query, options = options).suspendFlatMap { (suggestions, _) ->
+            resolveAll(suggestions, allowCategorySuggestions)
         }
     }
 
@@ -139,23 +138,29 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private suspend fun search(
+    suspend fun search(
         query: String,
         options: CoreSearchOptions
     ): Expected<Exception, Pair<List<BaseSearchSuggestion>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
-            val task = search(query, options, SearchSdkMainThreadWorker.mainExecutor, object :
-                BaseSearchSuggestionsCallback {
-                override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
-                    continuation.resumeWith(
-                        Result.success(ExpectedFactory.createValue(suggestions to responseInfo))
-                    )
-                }
+            val task = search(
+                query,
+                options,
+                SearchSdkMainThreadWorker.mainExecutor,
+                object : BaseSearchSuggestionsCallback {
+                    override fun onSuggestions(
+                        suggestions: List<BaseSearchSuggestion>,
+                        responseInfo: BaseResponseInfo
+                    ) {
+                        continuation.resumeWith(
+                            Result.success(ExpectedFactory.createValue(suggestions to responseInfo))
+                        )
+                    }
 
-                override fun onError(e: Exception) {
-                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                }
-            })
+                    override fun onError(e: Exception) {
+                        continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
+                    }
+                })
 
             continuation.invokeOnCancellation {
                 task.cancel()
@@ -205,7 +210,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private suspend fun select(suggestion: BaseSearchSuggestion): Expected<Exception, SearchSelectionResponse> {
+    suspend fun select(suggestion: BaseSearchSuggestion): Expected<Exception, SearchSelectionResponse> {
         return suspendCancellableCoroutine { continuation ->
             val task = select(suggestion, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchSelectionCallback {
                 override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
@@ -360,7 +365,10 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private suspend fun resolveAll(suggestions: List<BaseSearchSuggestion>): Expected<Exception, List<BaseSearchResult>> {
+    suspend fun resolveAll(
+        suggestions: List<BaseSearchSuggestion>,
+        allowCategorySuggestions: Boolean,
+    ): Expected<Exception, List<BaseSearchResult>> {
         return when {
             suggestions.isEmpty() -> {
                 ExpectedFactory.createValue(emptyList())
@@ -371,20 +379,25 @@ class TwoStepsToOneStepSearchEngineAdapter(
             else -> {
                 coroutineScope {
                     val deferredSuggestions: List<Deferred<Expected<Exception, SearchSelectionResponse>>> = suggestions
-                        // Filtering in order to avoid infinite recursion
-                        // because of some specific suggestions like "Did you mean recursion?"
-                        .filter { it.type !is BaseSearchSuggestionType.Query }
+                        .filter {
+                            when (it.type) {
+                                // Filtering in order to avoid infinite recursion
+                                // because of some specific suggestions like "Did you mean recursion?"
+                                is BaseSearchSuggestionType.Query -> false
+                                is BaseSearchSuggestionType.Category -> allowCategorySuggestions
+                                else -> true
+                            }
+                        }
                         .map { suggestion ->
                             async { select(suggestion) }
                         }
 
                     val responses: List<Expected<Exception, List<BaseSearchResult>>> = deferredSuggestions
                         .map { deferred ->
-                            val result = deferred.await()
-                            if (result.isValue) {
-                                when (val response = requireNotNull(result.value)) {
+                            deferred.await().suspendFlatMap { response ->
+                                when (response) {
                                     is SearchSelectionResponse.Suggestions -> {
-                                        resolveAll(response.suggestions)
+                                        resolveAll(response.suggestions, allowCategorySuggestions)
                                     }
                                     is SearchSelectionResponse.Result -> {
                                         ExpectedFactory.createValue(listOf(response.result))
@@ -393,8 +406,6 @@ class TwoStepsToOneStepSearchEngineAdapter(
                                         ExpectedFactory.createValue(response.results)
                                     }
                                 }
-                            } else {
-                                ExpectedFactory.createError(requireNotNull(result.error))
                             }
                         }
 
@@ -415,7 +426,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private sealed class SearchSelectionResponse {
+    sealed class SearchSelectionResponse {
 
         data class Suggestions(
             val suggestions: List<BaseSearchSuggestion>,

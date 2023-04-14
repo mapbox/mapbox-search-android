@@ -2,6 +2,7 @@ package com.mapbox.search.autocomplete
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreQueryType
+import com.mapbox.search.base.result.BaseSearchResultType
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -105,6 +106,22 @@ public abstract class PlaceAutocompleteType constructor(
                 AdministrativeUnit.Street,
                 AdministrativeUnit.Address,
             )
+        }
+
+        @JvmSynthetic
+        fun createFromBaseType(baseType: BaseSearchResultType): PlaceAutocompleteType {
+            return when (baseType) {
+                BaseSearchResultType.POI -> Poi
+                BaseSearchResultType.COUNTRY -> AdministrativeUnit.Country
+                BaseSearchResultType.REGION -> AdministrativeUnit.Region
+                BaseSearchResultType.POSTCODE -> AdministrativeUnit.Postcode
+                BaseSearchResultType.PLACE -> AdministrativeUnit.Place
+                BaseSearchResultType.DISTRICT -> AdministrativeUnit.District
+                BaseSearchResultType.LOCALITY -> AdministrativeUnit.Locality
+                BaseSearchResultType.NEIGHBORHOOD -> AdministrativeUnit.Neighborhood
+                BaseSearchResultType.STREET -> AdministrativeUnit.Street
+                BaseSearchResultType.ADDRESS, BaseSearchResultType.BLOCK -> AdministrativeUnit.Address
+            }
         }
     }
 }

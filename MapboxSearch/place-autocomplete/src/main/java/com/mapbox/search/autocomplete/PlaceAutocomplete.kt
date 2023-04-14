@@ -44,6 +44,19 @@ public interface PlaceAutocomplete {
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>>
 
     /**
+     * Retrieves detailed information about the [PlaceAutocompleteSuggestion].
+     * Use this function to end search session even if you don't need detailed information.
+     *
+     * Subject to change: in future, you may be charged for a suggestion call in case your UX flow
+     * accepts one of suggestions as selected and uses the coordinates,
+     * but you don’t call [select] method to confirm this. Other than that suggestions calls are not billed.
+     *
+     * @param suggestion Suggestion to select
+     * @return Result of the select request, one of error or value.
+     */
+    public suspend fun select(suggestion: PlaceAutocompleteSuggestion): Expected<Exception, PlaceAutocompleteResult>
+
+    /**
      * @suppress
      */
     public companion object {

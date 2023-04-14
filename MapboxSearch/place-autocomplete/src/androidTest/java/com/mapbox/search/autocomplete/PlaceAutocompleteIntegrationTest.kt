@@ -18,6 +18,7 @@ import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
@@ -33,6 +34,7 @@ import okhttp3.mockwebserver.RecordedRequest
 import okhttp3.mockwebserver.SocketPolicy
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -171,7 +173,12 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
         assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
 
-        val result = suggestion.result()
+        val selectResponse = runBlocking {
+            placeAutocomplete.select(suggestion)
+        }
+        assertTrue(response.isValue)
+
+        val result = selectResponse.value!!
         assertEquals("Starbucks", result.name)
         assertEquals(Point.fromLngLat(-77.033568, 38.90143), result.coordinate)
         assertEquals(null, result.routablePoints)
@@ -293,6 +300,137 @@ internal class PlaceAutocompleteIntegrationTest {
         assertTrue(response.isError)
         val error = requireNotNull(response.error)
         assertEquals(SearchRequestException("", 501), error)
+    }
+
+    @Test
+    fun testSuccessfulResponseWhenAllSuggestionsHaveCoordinates() {
+        mockServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                val path = requireNotNull(request.path)
+                return when {
+                    path.contains("/suggest") -> createSuccessfulResponse("suggestions_successful_with_coordinates_response.json")
+                    path.contains("/retrieve") -> {
+                        val body = String(request.body.readByteArray())
+                        when (val id = JSONObject(body).getString("id")) {
+                            "suggestion-id-1" -> createSuccessfulResponse("retrieve_successful_1.json")
+                            else -> error("Unknown suggestion id: $id")
+                        }
+                    }
+                    else -> error("Unknown URL path: $path")
+                }
+            }
+        }
+
+        val suggestionsResponse = runBlocking {
+            placeAutocomplete.suggestions(TEST_QUERY)
+        }
+
+        assertTrue(suggestionsResponse.isValue)
+        val suggestions = suggestionsResponse.value!!
+        assertEquals(3, suggestions.size)
+
+        assertEquals("Starbucks", suggestions[0].name)
+        assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
+        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
+        assertEquals(
+            listOf(
+                RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
+            ),
+            suggestions[0].routablePoints
+        )
+
+        assertEquals("Starbucks", suggestions[1].name)
+        assertEquals(
+            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
+            suggestions[1].formattedAddress
+        )
+        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[1].coordinate)
+        assertEquals(
+            listOf(
+                RoutablePoint(Point.fromLngLat(-77.033568, 38.90143), "POI")
+            ),
+            suggestions[1].routablePoints
+        )
+
+        assertEquals("Starbucks", suggestions[2].name)
+        assertEquals(
+            "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
+            suggestions[2].formattedAddress
+        )
+        assertEquals(Point.fromLngLat(-77.03207, 38.899268), suggestions[2].coordinate)
+        assertEquals(null, suggestions[2].routablePoints)
+
+        val selectionResponse = runBlocking {
+            placeAutocomplete.select(suggestions.first())
+        }
+
+        assertTrue(selectionResponse.isValue)
+        val result = selectionResponse.value!!
+        assertNotNull(result.phone)
+    }
+
+    @Test
+    fun testSuccessfulResponseWhenSomeSuggestionsHaveCoordinates() {
+        mockServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                val path = requireNotNull(request.path)
+                return when {
+                    path.contains("/suggest") -> createSuccessfulResponse("suggestions_successful_with_mixed_coordinates_response.json")
+                    path.contains("/retrieve") -> {
+                        val body = String(request.body.readByteArray())
+                        when (val id = JSONObject(body).getString("id")) {
+                            "suggestion-id-1" -> createSuccessfulResponse("retrieve_successful_1.json")
+                            else -> error("Unknown suggestion id: $id")
+                        }
+                    }
+                    else -> error("Unknown URL path: $path")
+                }
+            }
+        }
+
+        val suggestionsResponse = runBlocking {
+            placeAutocomplete.suggestions(TEST_QUERY)
+        }
+
+        assertTrue(suggestionsResponse.isValue)
+        val suggestions = suggestionsResponse.value!!
+        assertEquals(3, suggestions.size)
+
+        assertEquals("Starbucks", suggestions[0].name)
+        assertEquals("901 15th St NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
+        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[0].coordinate)
+        assertEquals(null, suggestions[0].routablePoints)
+
+        val selectionResponse = runBlocking {
+            placeAutocomplete.select(suggestions.first())
+        }
+
+        assertTrue(selectionResponse.isValue)
+        val result = selectionResponse.value!!
+        assertNotNull(result.phone)
+    }
+
+    @Test
+    fun testSuccessfulResponseWithUnsupportedSuggestionTypes() {
+        mockServer.enqueue(createSuccessfulResponse("suggestions_successful_with_unsupported_suggestions.json"))
+
+        val suggestionsResponse = runBlocking {
+            placeAutocomplete.suggestions(TEST_QUERY)
+        }
+
+        assertTrue(suggestionsResponse.isValue)
+        val suggestions = suggestionsResponse.value!!
+        assertEquals(1, suggestions.size)
+
+        assertEquals("Starbucks", suggestions[0].name)
+        assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
+        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
+        assertEquals(
+            listOf(
+                RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
+            ),
+            suggestions[0].routablePoints
+        )
     }
 
     @Test

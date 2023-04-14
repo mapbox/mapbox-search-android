@@ -1,5 +1,6 @@
 package com.mapbox.search.autocomplete.test.utils
 
+import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.autocomplete.PlaceAutocompleteType
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -27,6 +28,13 @@ internal object TypeObjectCreator {
         listOf(
             PlaceAutocompleteType.Poi,
             PlaceAutocompleteType.AdministrativeUnit.Address
+        )[mode.ordinal]
+    }
+
+    val SUGGESTION_UNDERLYING_CREATOR = CustomTypeObjectCreatorImpl(PlaceAutocompleteSuggestion.Underlying::class) { mode ->
+        listOf(
+            PlaceAutocompleteSuggestion.Underlying.Suggestion(createTestBaseSearchSuggestion()),
+            PlaceAutocompleteSuggestion.Underlying.Result(testBaseResult)
         )[mode.ordinal]
     }
 }

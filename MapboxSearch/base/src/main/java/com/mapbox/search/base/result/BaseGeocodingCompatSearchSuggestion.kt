@@ -1,5 +1,6 @@
 package com.mapbox.search.base.result
 
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.assertDebug
 import kotlinx.parcelize.IgnoredOnParcel
@@ -18,6 +19,9 @@ data class BaseGeocodingCompatSearchSuggestion(
                     "`center`: ${rawSearchResult.center}"
         }
     }
+
+    override val coordinate: Point
+        get() = requireNotNull(rawSearchResult.center)
 
     @IgnoredOnParcel
     val searchResultType: BaseSearchResultType = checkNotNull(rawSearchResult.type.tryMapToSearchResultType())

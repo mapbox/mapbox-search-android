@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.3
+
+### New features
+- [Place Autocomplete] Now `PlaceAutocompleteSuggestion` provides additional property `PlaceAutocompleteSuggestion.routablePoints`.
+
+### Breaking changes
+- [Place Autocomplete] `PlaceAutocompleteSuggestion.result()` function has been removed. Use `PlaceAutocomplete.select(PlaceAutocompleteSuggestion)` instead. Note that developers must call this function when user selects a search suggestion in the UI.
+
+### Mapbox dependencies
+- Search Native SDK `0.68.0`
+- Common SDK `23.3.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.2
 
 ### Bug fixes
