@@ -18,6 +18,7 @@ import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.metadata.ImageInfo
@@ -91,9 +92,18 @@ internal class PlaceAutocompleteIntegrationTest {
             url.queryParameter("types")
         )
         assertEquals(formatPoints(TEST_LOCATION), url.queryParameter("proximity"))
+        assertEquals(formatPoints(TEST_LOCATION), url.queryParameter("origin"))
         assertEquals(
             formatPoints(TEST_REGION.southwest(), TEST_REGION.northeast()),
             url.queryParameter("bbox")
+        )
+        assertEquals(
+            TEST_OPTIONS.navigationProfile?.rawName,
+            url.queryParameter("navigation_profile")
+        )
+        assertEquals(
+            "navigation",
+            url.queryParameter("eta_type")
         )
     }
 
@@ -484,7 +494,8 @@ internal class PlaceAutocompleteIntegrationTest {
                 PlaceAutocompleteType.Poi,
                 PlaceAutocompleteType.AdministrativeUnit.Street,
                 PlaceAutocompleteType.AdministrativeUnit.Address
-            )
+            ),
+            navigationProfile = NavigationProfile.CYCLING
         )
 
         val TEST_LOCATION: Point = Point.fromLngLat(14.421576441071238, 50.087300021978024)

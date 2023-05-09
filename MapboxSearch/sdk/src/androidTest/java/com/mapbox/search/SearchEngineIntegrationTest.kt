@@ -14,6 +14,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -132,7 +133,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             types = listOf(QueryType.COUNTRY, QueryType.LOCALITY, QueryType.ADDRESS),
             origin = Point.fromLngLat(50.123, 70.123),
             navigationOptions = SearchNavigationOptions(
-                navigationProfile = SearchNavigationProfile.DRIVING,
+                navigationProfile = NavigationProfile.DRIVING,
                 etaType = EtaType.NAVIGATION
             ),
             routeOptions = TEST_ROUTE_OPTIONS
@@ -1053,7 +1054,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
         val TEST_ORIGIN_LOCATION: Point = Point.fromLngLat(10.1, 11.12345)
         val TEST_NAV_OPTIONS: SearchNavigationOptions = SearchNavigationOptions(
-            navigationProfile = SearchNavigationProfile.DRIVING,
+            navigationProfile = NavigationProfile.DRIVING,
             etaType = EtaType.NAVIGATION
         )
 

@@ -57,7 +57,7 @@ public interface PlaceAutocomplete {
     public suspend fun select(suggestion: PlaceAutocompleteSuggestion): Expected<Exception, PlaceAutocompleteResult>
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

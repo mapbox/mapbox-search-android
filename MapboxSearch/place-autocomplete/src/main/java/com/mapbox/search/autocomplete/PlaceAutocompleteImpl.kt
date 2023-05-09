@@ -52,11 +52,14 @@ internal class PlaceAutocompleteImpl(
 
         val coreOptions = createCoreSearchOptions(
             proximity = proximity,
+            origin = proximity,
             bbox = region?.mapToCore(),
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
             types = generateCoreTypes(options.types),
+            navProfile = options.navigationProfile?.rawName,
+            etaType = DEFAULT_ETA_TYPE,
             ignoreUR = false,
         )
 
@@ -165,6 +168,8 @@ internal class PlaceAutocompleteImpl(
     }
 
     internal companion object {
+
+        private const val DEFAULT_ETA_TYPE = "navigation"
 
         private val ALL_TYPES = PlaceAutocompleteType.ALL_DECLARED_TYPES.map { it.coreType }
 

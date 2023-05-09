@@ -13,6 +13,12 @@ package com.mapbox.search.discover {
     method public suspend Object? search(com.mapbox.search.discover.DiscoverQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.discover.RouteDeviationOptions deviation = RouteDeviationOptions.DEFAULT_DEVIATION, com.mapbox.search.discover.DiscoverOptions options = DiscoverOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.discover.DiscoverResult>>> p = DiscoverOptions());
     method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.discover.DiscoverQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.discover.RouteDeviationOptions deviation, com.mapbox.search.discover.DiscoverOptions options, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.discover.DiscoverResult>> callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.discover.DiscoverQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.discover.RouteDeviationOptions deviation, com.mapbox.search.discover.DiscoverOptions options, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.discover.DiscoverResult>> callback);
+    field public static final com.mapbox.search.discover.Discover.Companion Companion;
+  }
+
+  public static final class Discover.Companion {
+    method public com.mapbox.search.discover.Discover create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    method public com.mapbox.search.discover.Discover create(String accessToken);
   }
 
   @kotlinx.parcelize.Parcelize public final class DiscoverAddress implements android.os.Parcelable {
@@ -112,7 +118,11 @@ package com.mapbox.search.discover {
     ctor public RouteDeviationOptions.SarType(String rawName);
     method public String getRawName();
     property public final String rawName;
+    field public static final com.mapbox.search.discover.RouteDeviationOptions.SarType.Companion Companion;
     field public static final com.mapbox.search.discover.RouteDeviationOptions.SarType ISOCHROME;
+  }
+
+  public static final class RouteDeviationOptions.SarType.Companion {
   }
 
   @kotlinx.parcelize.Parcelize public static final class RouteDeviationOptions.Time extends com.mapbox.search.discover.RouteDeviationOptions {

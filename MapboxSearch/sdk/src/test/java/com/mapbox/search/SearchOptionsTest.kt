@@ -5,6 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.tests.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
 import org.junit.After
@@ -315,7 +316,7 @@ internal class SearchOptionsTest {
         val TEST_POINT: Point = Point.fromLngLat(10.0, 10.0)
         val TEST_ORIGIN_POINT: Point = Point.fromLngLat(20.0, 20.0)
         val TEST_NAV_OPTIONS: SearchNavigationOptions = SearchNavigationOptions(
-            navigationProfile = SearchNavigationProfile.DRIVING,
+            navigationProfile = NavigationProfile.DRIVING,
             etaType = EtaType.NAVIGATION
         )
         val TEST_ROUTE_OPTIONS = RouteOptions(

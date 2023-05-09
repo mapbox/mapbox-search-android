@@ -40,6 +40,11 @@ public class PlaceAutocompleteResult internal constructor(
     public val distanceMeters: Double?,
 
     /**
+     * Estimated time of arrival (in minutes) based on the specified navigation profile.
+     */
+    public val etaMinutes: Double?,
+
+    /**
      * Place's address.
      */
     public val address: PlaceAutocompleteAddress?,
@@ -105,6 +110,7 @@ public class PlaceAutocompleteResult internal constructor(
         if (routablePoints != other.routablePoints) return false
         if (makiIcon != other.makiIcon) return false
         if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
+        if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (address != other.address) return false
         if (type != other.type) return false
         if (categories != other.categories) return false
@@ -128,6 +134,7 @@ public class PlaceAutocompleteResult internal constructor(
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + (distanceMeters?.hashCode() ?: 0)
+        result = 31 * result + (etaMinutes?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + type.hashCode()
         result = 31 * result + (categories?.hashCode() ?: 0)
@@ -151,6 +158,7 @@ public class PlaceAutocompleteResult internal constructor(
                 "routablePoints=$routablePoints, " +
                 "makiIcon=$makiIcon, " +
                 "distanceMeters=$distanceMeters, " +
+                "etaMinutes=$etaMinutes, " +
                 "address=$address, " +
                 "type=$type, " +
                 "categories=$categories, " +

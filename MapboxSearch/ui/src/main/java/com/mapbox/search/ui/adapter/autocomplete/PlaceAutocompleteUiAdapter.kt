@@ -110,7 +110,7 @@ public class PlaceAutocompleteUiAdapter(
      * @param query The search query.
      * @param region Limit results to only those contained within the supplied bounding box.
      * @param proximity Optional geographic point that bias the response to favor results that are closer to this location.
-     * @param options The autofill options.
+     * @param options Place autocomplete options.
      */
     @JvmOverloads
     public suspend fun search(
@@ -137,7 +137,10 @@ public class PlaceAutocompleteUiAdapter(
 
                 activityReporter?.reportActivity("place-autocomplete-forward-geocoding-ui")
 
-                val response = placeAutocomplete.suggestions(query, region, proximity, options)
+                val response = placeAutocomplete.suggestions(
+                    query, region, proximity, options
+                )
+
                 withContext(Dispatchers.Main) {
                     if (response.isValue) {
                         val suggestions = requireNotNull(response.value)

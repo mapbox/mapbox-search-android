@@ -9,6 +9,7 @@ import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -75,7 +76,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
      * Note: Supported for Single Box Search API only. Reserved for internal and special use.
      */
     @Reserved(SBS)
-    public val navigationProfile: SearchNavigationProfile? = null,
+    public val navigationProfile: NavigationProfile? = null,
 
     /**
      * Options to configure Route for search along the route functionality.
@@ -128,7 +129,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         limit: Int? = this.limit,
         requestDebounce: Int? = this.requestDebounce,
         origin: Point? = this.origin,
-        navigationProfile: SearchNavigationProfile? = this.navigationProfile,
+        navigationProfile: NavigationProfile? = this.navigationProfile,
         routeOptions: RouteOptions? = this.routeOptions,
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
@@ -239,7 +240,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         private var limit: Int? = null
         private var requestDebounce: Int? = null
         private var origin: Point? = null
-        private var navigationProfile: SearchNavigationProfile? = null
+        private var navigationProfile: NavigationProfile? = null
         private var routeOptions: RouteOptions? = null
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
@@ -330,7 +331,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
          * Note: Supported for Single Box Search API only. Reserved for internal and special use.
          */
         @Reserved(SBS)
-        public fun navigationProfile(navigationProfile: SearchNavigationProfile): Builder = apply {
+        public fun navigationProfile(navigationProfile: NavigationProfile): Builder = apply {
             this.navigationProfile = navigationProfile
         }
 

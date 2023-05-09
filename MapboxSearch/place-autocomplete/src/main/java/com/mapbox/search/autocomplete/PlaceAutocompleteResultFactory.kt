@@ -26,6 +26,7 @@ internal class PlaceAutocompleteResultFactory {
                 routablePoints = suggestion.routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
+                etaMinutes = etaMinutes,
                 type = type,
                 categories = categories,
                 underlying = PlaceAutocompleteSuggestion.Underlying.Suggestion(suggestion)
@@ -45,6 +46,7 @@ internal class PlaceAutocompleteResultFactory {
                 routablePoints = routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
+                etaMinutes = etaMinutes,
                 type = type,
                 categories = categories,
                 underlying = PlaceAutocompleteSuggestion.Underlying.Result(result)
@@ -77,6 +79,7 @@ internal class PlaceAutocompleteResultFactory {
                 routablePoints = routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
+                etaMinutes = etaMinutes,
                 address = createPlaceAutocompleteAddress(this),
                 type = type,
                 categories = categories,

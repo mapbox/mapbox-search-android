@@ -1,5 +1,25 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.4
+
+### New features
+- [Place Autocomplete] Now `PlaceAutocompleteSuggestion` and `PlaceAutocompleteResult` provide new property `etaMinutes`.
+- [Place Autocomplete] Now `PlaceAutocompleteOptions` accepts an additional parameter `navigationProfile` which that determines how the distance and eta will be calculated.
+
+### Breaking changes
+- [CORE] `SearchNavigationProfile` type has been renamed to `NavigationProfile` and moved to `com.mapbox.search.common` package.
+- [UI] Now `PlaceAutocompleteUiAdapter.search()` function accepts one more argument `MavigationProfile`.
+
+### Bug fixes
+- [Place Autocomplete] Fixed a bug with missing `PlaceAutocompleteSuggestion.distanceMeters`.
+
+### Mapbox dependencies
+- Search Native SDK `0.68.0`
+- Common SDK `23.3.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.3
 
 ### New features
