@@ -8,7 +8,6 @@ import com.mapbox.search.EtaType
 import com.mapbox.search.QueryType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchNavigationOptions
-import com.mapbox.search.SearchNavigationProfile
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.ViewportProvider
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
@@ -32,6 +31,7 @@ import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
 import com.mapbox.search.mapToBase
@@ -627,7 +627,7 @@ internal class SearchFeedbackEventsFactoryTest {
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = SearchNavigationOptions(
-                navigationProfile = SearchNavigationProfile.DRIVING,
+                navigationProfile = NavigationProfile.DRIVING,
                 etaType = EtaType.NAVIGATION
             )
         )

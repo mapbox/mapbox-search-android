@@ -53,12 +53,14 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions : and
 	public fun <init> (ILjava/util/List;)V
 	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;)V
 	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;)V
-	public synthetic fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;Lcom/mapbox/search/common/NavigationProfile;)V
+	public synthetic fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;Lcom/mapbox/search/common/NavigationProfile;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountries ()Ljava/util/List;
 	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
 	public final fun getLimit ()I
+	public final fun getNavigationProfile ()Lcom/mapbox/search/common/NavigationProfile;
 	public final fun getTypes ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -74,6 +76,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult : andr
 	public final fun getCategories ()Ljava/util/List;
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
@@ -96,6 +99,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : 
 	public final fun getCategories ()Ljava/util/List;
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
+	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getFormattedAddress ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;

@@ -2,6 +2,7 @@ public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
 	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
 	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public abstract fun select (Lcom/mapbox/search/autofill/AddressAutofillSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -46,7 +47,6 @@ public final class com/mapbox/search/autofill/AddressAutofillSuggestion : androi
 	public final fun getFormattedAddress ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun result ()Lcom/mapbox/search/autofill/AddressAutofillResult;
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }

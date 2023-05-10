@@ -43,6 +43,7 @@
     <string name="address_autofill_address_apt_hint">Apt., suite, etc. (optional)</string>
     <string name="address_autofill_pin_correction_note">Drag map to correct pin position</string>
     <string name="address_autofill_error_pin_correction">Unable to locate selected coordinate</string>
+    <string name="address_autofill_error_select">Unable to resolve selected suggestion</string>
 
     <string name="discover_search_nearby">Search for cafes nearby</string>
     <string name="discover_search_in_area">Search for cafes in selected area</string>

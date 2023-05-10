@@ -10,11 +10,11 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class CategorySearchOptions implements android.os.Parcelable {
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null);
-    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationProfile? navigationProfile = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
@@ -30,7 +30,7 @@ package com.mapbox.search {
     method public Double? getIndexableRecordsDistanceThresholdMeters();
     method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
-    method public com.mapbox.search.SearchNavigationProfile? getNavigationProfile();
+    method public com.mapbox.search.common.NavigationProfile? getNavigationProfile();
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public Integer? getRequestDebounce();
@@ -44,7 +44,7 @@ package com.mapbox.search {
     property public final Double? indexableRecordsDistanceThresholdMeters;
     property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
-    property public final com.mapbox.search.SearchNavigationProfile? navigationProfile;
+    property public final com.mapbox.search.common.NavigationProfile? navigationProfile;
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Integer? requestDebounce;
@@ -64,7 +64,7 @@ package com.mapbox.search {
     method public com.mapbox.search.CategorySearchOptions.Builder languages(com.mapbox.search.common.IsoLanguageCode... languages);
     method public com.mapbox.search.CategorySearchOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.CategorySearchOptions.Builder limit(int limit);
-    method public com.mapbox.search.CategorySearchOptions.Builder navigationProfile(com.mapbox.search.SearchNavigationProfile navigationProfile);
+    method public com.mapbox.search.CategorySearchOptions.Builder navigationProfile(com.mapbox.search.common.NavigationProfile navigationProfile);
     method public com.mapbox.search.CategorySearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.CategorySearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.CategorySearchOptions.Builder requestDebounce(int debounce);
@@ -292,25 +292,12 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchNavigationOptions implements android.os.Parcelable {
-    ctor public SearchNavigationOptions(com.mapbox.search.SearchNavigationProfile navigationProfile, com.mapbox.search.EtaType? etaType = null);
-    ctor public SearchNavigationOptions(com.mapbox.search.SearchNavigationProfile navigationProfile);
+    ctor public SearchNavigationOptions(com.mapbox.search.common.NavigationProfile navigationProfile, com.mapbox.search.EtaType? etaType = null);
+    ctor public SearchNavigationOptions(com.mapbox.search.common.NavigationProfile navigationProfile);
     method public com.mapbox.search.EtaType? getEtaType();
-    method public com.mapbox.search.SearchNavigationProfile getNavigationProfile();
+    method public com.mapbox.search.common.NavigationProfile getNavigationProfile();
     property public final com.mapbox.search.EtaType? etaType;
-    property public final com.mapbox.search.SearchNavigationProfile navigationProfile;
-  }
-
-  @kotlinx.parcelize.Parcelize public final class SearchNavigationProfile implements android.os.Parcelable {
-    ctor public SearchNavigationProfile(String rawName);
-    method public String getRawName();
-    property public final String rawName;
-    field public static final com.mapbox.search.SearchNavigationProfile CYCLING;
-    field public static final com.mapbox.search.SearchNavigationProfile.Companion Companion;
-    field public static final com.mapbox.search.SearchNavigationProfile DRIVING;
-    field public static final com.mapbox.search.SearchNavigationProfile WALKING;
-  }
-
-  public static final class SearchNavigationProfile.Companion {
+    property public final com.mapbox.search.common.NavigationProfile navigationProfile;
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {

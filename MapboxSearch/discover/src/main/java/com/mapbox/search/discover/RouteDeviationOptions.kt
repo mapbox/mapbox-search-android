@@ -58,7 +58,7 @@ public abstract class RouteDeviationOptions internal constructor() : Parcelable 
         }
 
         /**
-         * @suppress
+         * Companion object.
          */
         public companion object {
 

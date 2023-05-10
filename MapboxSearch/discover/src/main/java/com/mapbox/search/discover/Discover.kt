@@ -188,7 +188,7 @@ public interface Discover {
     }
 
     /**
-     * @suppress
+     * Companion object.
      */
     public companion object {
 

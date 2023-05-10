@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -40,6 +41,13 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
      * If no types are specified, all possible types may be returned.
      */
     public val types: List<PlaceAutocompleteType>? = null,
+
+    /**
+     * Optional navigation routing profile to use.
+     * Required for [PlaceAutocompleteSuggestion.distanceMeters] and
+     * [PlaceAutocompleteSuggestion.etaMinutes] calculations.
+     */
+    public val navigationProfile: NavigationProfile? = null,
 ) : Parcelable {
 
     /**
@@ -55,6 +63,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
         if (countries != other.countries) return false
         if (language != other.language) return false
         if (types != other.types) return false
+        if (navigationProfile != other.navigationProfile) return false
 
         return true
     }
@@ -67,6 +76,7 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
         result = 31 * result + (countries?.hashCode() ?: 0)
         result = 31 * result + language.hashCode()
         result = 31 * result + types.hashCode()
+        result = 31 * result + navigationProfile.hashCode()
         return result
     }
 
@@ -78,7 +88,8 @@ public class PlaceAutocompleteOptions @JvmOverloads public constructor(
                 "limit=$limit, " +
                 "countries=$countries, " +
                 "language=$language, " +
-                "types=$types" +
+                "types=$types, " +
+                "navigationProfile=$navigationProfile" +
                 ")"
     }
 }

@@ -1,6 +1,7 @@
 package com.mapbox.search
 
 import android.os.Parcelable
+import com.mapbox.search.common.NavigationProfile
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -23,7 +24,7 @@ public class SearchNavigationOptions @JvmOverloads public constructor(
      * Used to calculate ETA from [SearchOptions.origin] point to a search suggestion
      * and search result or to affect search ranking logic.
      */
-    public val navigationProfile: SearchNavigationProfile,
+    public val navigationProfile: NavigationProfile,
 
     /**
      * Indicates that the caller intends to perform a higher cost navigation ETA estimate.

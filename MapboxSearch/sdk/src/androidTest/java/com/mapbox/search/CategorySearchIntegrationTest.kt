@@ -12,6 +12,7 @@ import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -118,7 +119,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             languages = listOf(IsoLanguageCode.ENGLISH),
             limit = 5,
             origin = Point.fromLngLat(50.123, 70.123),
-            navigationProfile = SearchNavigationProfile.DRIVING,
+            navigationProfile = NavigationProfile.DRIVING,
             routeOptions = TEST_ROUTE_OPTIONS
         )
 

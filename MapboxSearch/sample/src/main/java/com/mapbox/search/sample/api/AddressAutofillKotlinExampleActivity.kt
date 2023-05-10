@@ -23,13 +23,30 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             val query = Query.create("740 15th St NW, Washington") ?: return@launchWhenCreated
 
-            addressAutofill.suggestions(
+            val response = addressAutofill.suggestions(
                 query = query,
                 options = AddressAutofillOptions()
-            ).onValue { suggestions ->
+            )
+
+            if (response.isValue) {
+                val suggestions = requireNotNull(response.value)
                 Log.i("SearchApiExample", "Autofill suggestions: $suggestions")
-            }.onError { error ->
-                Log.i("SearchApiExample", "Autofill suggestions error", error)
+
+                if (suggestions.isNotEmpty()) {
+                    // Supposing that a user has selected (clicked in UI) the first suggestion
+                    val selectedSuggestion = suggestions.first()
+
+                    Log.i("SearchApiExample", "Selecting first suggestion...")
+
+                    val selectionResponse = addressAutofill.select(selectedSuggestion)
+                    selectionResponse.onValue { result ->
+                        Log.i("SearchApiExample", "Autofill result: $result")
+                    }.onError { e ->
+                        Log.i("SearchApiExample", "An error occurred during selection", e)
+                    }
+                }
+            } else {
+                Log.i("SearchApiExample", "Autofill suggestions error", response.error)
             }
         }
     }

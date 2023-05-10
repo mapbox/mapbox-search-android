@@ -16,6 +16,7 @@ import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import io.mockk.coEvery
@@ -113,16 +114,20 @@ internal class PlaceAutocompleteImplTest {
                 PlaceAutocompleteType.Poi,
                 PlaceAutocompleteType.AdministrativeUnit.Address,
                 PlaceAutocompleteType.AdministrativeUnit.Street,
-            )
+            ),
+            navigationProfile = NavigationProfile.CYCLING
         )
 
         val coreOptions = createCoreSearchOptions(
             proximity = TEST_PROXIMITY,
+            origin = TEST_PROXIMITY,
             bbox = TEST_BBOX.mapToCore(),
             countries = options.countries?.map { it.code },
             language = listOf(options.language.code),
             limit = options.limit,
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.STREET),
+            navProfile = NavigationProfile.CYCLING.rawName,
+            etaType = DEFAULT_ETA_TYPE,
             ignoreUR = false,
         )
 
@@ -273,6 +278,8 @@ internal class PlaceAutocompleteImplTest {
     private companion object {
 
         const val TEST_ACCESS_TOKEN = "pk.test"
+
+        const val DEFAULT_ETA_TYPE = "navigation"
 
         val TEST_POINT: Point = Point.fromLngLat(1.0, 5.0)
         val TEST_BBOX: BoundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 11.0), Point.fromLngLat(15.0, 16.0))

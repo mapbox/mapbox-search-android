@@ -28,16 +28,9 @@ public class AddressAutofillSuggestion internal constructor(
     /**
      * @suppress
      */
-    private val address: AddressComponents,
+    @JvmSynthetic
+    internal val address: AddressComponents,
 ) : Parcelable {
-
-    /**
-     * Returns resolved [AddressAutofillResult] object.
-     * @return resolved [AddressAutofillResult] object.
-     */
-    public fun result(): AddressAutofillResult {
-        return AddressAutofillResult(this, address)
-    }
 
     /**
      * @suppress
@@ -51,7 +44,6 @@ public class AddressAutofillSuggestion internal constructor(
         if (name != other.name) return false
         if (formattedAddress != other.formattedAddress) return false
         if (coordinate != other.coordinate) return false
-        if (address != other.address) return false
 
         return true
     }
@@ -63,7 +55,6 @@ public class AddressAutofillSuggestion internal constructor(
         var result = name.hashCode()
         result = 31 * result + formattedAddress.hashCode()
         result = 31 * result + coordinate.hashCode()
-        result = 31 * result + address.hashCode()
         return result
     }
 

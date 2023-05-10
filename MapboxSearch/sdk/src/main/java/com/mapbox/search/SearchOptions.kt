@@ -13,6 +13,7 @@ import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.NavigationProfile
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -462,7 +463,7 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     origin = origin,
     navigationOptions = navProfile?.let {
         SearchNavigationOptions(
-            navigationProfile = SearchNavigationProfile(it),
+            navigationProfile = NavigationProfile(it),
             etaType = etaType?.let(::EtaType),
         )
     },
