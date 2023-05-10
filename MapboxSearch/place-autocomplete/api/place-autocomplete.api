@@ -11,7 +11,7 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/common/NavigationProfile;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
@@ -22,7 +22,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {
 	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/common/NavigationProfile;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteAddress : android/os/Parcelable {
@@ -53,12 +53,14 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions : and
 	public fun <init> (ILjava/util/List;)V
 	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;)V
 	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;)V
-	public synthetic fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;Lcom/mapbox/search/common/NavigationProfile;)V
+	public synthetic fun <init> (ILjava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/util/List;Lcom/mapbox/search/common/NavigationProfile;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountries ()Ljava/util/List;
 	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
 	public final fun getLimit ()I
+	public final fun getNavigationProfile ()Lcom/mapbox/search/common/NavigationProfile;
 	public final fun getTypes ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

@@ -148,7 +148,12 @@ internal class AddressAutofillIntegrationTest {
         assertEquals("740 15th St NW", firstSuggestion.name)
         assertEquals(Point.fromLngLat(-77.03375, 38.89936), firstSuggestion.coordinate)
 
-        val resultAddress = firstSuggestion.result().address
+        val selectionResponse = runBlocking {
+            addressAutofill.select(firstSuggestion)
+        }
+        assertTrue(selectionResponse.isValue)
+
+        val resultAddress = requireNotNull(selectionResponse.value).address
         assertEquals("740", resultAddress.houseNumber)
         assertEquals("15th St NW", resultAddress.street)
         assertEquals(null, resultAddress.neighborhood)

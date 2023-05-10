@@ -4,7 +4,6 @@ import android.Manifest
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -20,6 +19,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
+import com.mapbox.search.autofill.AddressAutofillResult
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
@@ -105,7 +105,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         addressAutofillUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
-                showAddressAutofillSuggestion(
+                selectSuggestion(
                     suggestion,
                     fromReverseGeocoding = false,
                 )
@@ -165,33 +165,43 @@ class AddressAutofillUiActivity : AppCompatActivity() {
                 if (suggestions.isEmpty()) {
                     showToast(R.string.address_autofill_error_pin_correction)
                 } else {
-                    showAddressAutofillSuggestion(
+                    selectSuggestion(
                         suggestions.first(),
                         fromReverseGeocoding = true
                     )
                 }
-            }.onError { error ->
-                Log.d("Test.", "Test. $error", error)
+            }.onError {
                 showToast(R.string.address_autofill_error_pin_correction)
             }
         }
     }
 
-    private fun showAddressAutofillSuggestion(suggestion: AddressAutofillSuggestion, fromReverseGeocoding: Boolean) {
-        val address = suggestion.result().address
+    private fun selectSuggestion(suggestion: AddressAutofillSuggestion, fromReverseGeocoding: Boolean) {
+        lifecycleScope.launchWhenStarted {
+            val response = addressAutofill.select(suggestion)
+            response.onValue { result ->
+                showAddressAutofillResult(result, fromReverseGeocoding)
+            }.onError {
+                showToast(R.string.address_autofill_error_select)
+            }
+        }
+    }
+
+    private fun showAddressAutofillResult(result: AddressAutofillResult, fromReverseGeocoding: Boolean) {
+        val address = result.address
         cityEditText.setText(address.place)
         stateEditText.setText(address.region)
         zipEditText.setText(address.postcode)
 
         fullAddress.isVisible = true
-        fullAddress.text = suggestion.formattedAddress
+        fullAddress.text = result.suggestion.formattedAddress
 
         pinCorrectionNote.isVisible = true
 
         if (!fromReverseGeocoding) {
             mapView.getMapboxMap().setCamera(
                 CameraOptions.Builder()
-                    .center(suggestion.coordinate)
+                    .center(result.suggestion.coordinate)
                     .zoom(16.0)
                     .build()
             )

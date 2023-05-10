@@ -3,6 +3,7 @@ package com.mapbox.search.autofill
 import android.app.Application
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.MapboxApiClient
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -65,6 +66,14 @@ internal class AddressAutofillImpl(
         return searchEngine.searchResolveImmediately(query.query, coreOptions).mapValue {
             it.toAddressAutofillSuggestions()
         }
+    }
+
+    override suspend fun select(
+        suggestion: AddressAutofillSuggestion
+    ): Expected<Exception, AddressAutofillResult> {
+        activityReporter.reportActivity("address-autofill-suggestion-select")
+
+        return ExpectedFactory.createValue(AddressAutofillResult(suggestion, suggestion.address))
     }
 
     internal companion object {
