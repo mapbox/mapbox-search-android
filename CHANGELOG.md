@@ -1,5 +1,25 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.5
+
+### New features
+- [CORE] Now `SearchSuggestion` might return suggestions with type `SearchSuggestionType.Brand`.
+
+### Breaking changes
+- [CORE]  Function `SearchSelectionCallback.onCategoryResult()` has been renamed to `onResults()`. Now this function is called when brand search suggestion is resolved.
+- [UI] Similarly, function `SearchEngineUiAdapter.onCategoryResultsShown()` has been renamed to `onSearchResultsShown`().
+
+### Bug fixes
+- [ALL] Fixed an issue with truncated formatted address.
+- [ALL] Fixed an issue with excessive normalization of category names in request's url.
+
+### Mapbox dependencies
+- Search Native SDK `0.69.0`
+- Common SDK `23.6.0-rc.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.4
 
 ### New features

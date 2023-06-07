@@ -109,7 +109,9 @@ class TwoStepsRequestCallbackWrapper(
                 )
                 val responseInfo = createResponseInfo(response, requestOptions)
 
-                if (suggestion?.type is BaseSearchSuggestionType.Category) {
+                if (suggestion?.type is BaseSearchSuggestionType.Category ||
+                    suggestion?.type is BaseSearchSuggestionType.Brand
+                ) {
                     val results = responseResult.mapNotNull {
                         val searchResult = it.mapToBase()
                         searchResultFactory.createSearchResult(searchResult, requestOptions)
@@ -121,7 +123,7 @@ class TwoStepsRequestCallbackWrapper(
                                 "requestOptions: $requestOptions"
                     }
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                        (this as BaseSearchSelectionCallback).onCategoryResult(suggestion, results, responseInfo)
+                        (this as BaseSearchSelectionCallback).onResults(suggestion, results, responseInfo)
                     }
                 } else if (suggestion != null &&
                     responseResult.size == 1 &&

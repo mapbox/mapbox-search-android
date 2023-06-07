@@ -78,7 +78,7 @@ class CustomThemeActivity : AppCompatActivity() {
                 // Nothing to do
             }
 
-            override fun onCategoryResultsShown(
+            override fun onSearchResultsShown(
                 suggestion: SearchSuggestion,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo

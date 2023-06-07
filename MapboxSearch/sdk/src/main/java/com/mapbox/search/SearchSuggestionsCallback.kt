@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.result.SearchSuggestionType
 
 /**
  * Used in the first step of forward geocoding to get a list of [SearchSuggestion].
@@ -37,13 +38,15 @@ public interface SearchSelectionCallback : SearchSuggestionsCallback {
     public fun onResult(suggestion: SearchSuggestion, result: SearchResult, responseInfo: ResponseInfo)
 
     /**
-     * Called when a category suggestion has been resolved.
+     * Called when suggestion selection returned more than one result.
+     * This may happen when selected suggestion of type [SearchSuggestionType.Category] or
+     * [SearchSuggestionType.Brand].
      *
-     * @param suggestion The category suggestion from which the [results] were resolved.
+     * @param suggestion The suggestion from which the [results] were resolved.
      * @param results Search results matched by category search.
      * @param responseInfo Search response and request information.
      */
-    public fun onCategoryResult(
+    public fun onResults(
         suggestion: SearchSuggestion,
         results: List<SearchResult>,
         responseInfo: ResponseInfo

@@ -162,6 +162,19 @@ internal class BaseSearchSuggestionTest {
                             BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
                         }
                     }
+                    BaseRawResultType.BRAND -> {
+                        When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
+                            val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                                types = listOf(BaseRawResultType.BRAND),
+                            )
+
+                            val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+
+                            val expectedType = BaseSearchSuggestionType.Brand("", "")
+
+                            Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
+                        }
+                    }
                     BaseRawResultType.QUERY -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
@@ -318,6 +331,7 @@ internal class BaseSearchSuggestionTest {
                         }
                     }
                     BaseRawResultType.CATEGORY,
+                    BaseRawResultType.BRAND,
                     BaseRawResultType.QUERY,
                     BaseRawResultType.USER_RECORD,
                     BaseRawResultType.UNKNOWN -> {

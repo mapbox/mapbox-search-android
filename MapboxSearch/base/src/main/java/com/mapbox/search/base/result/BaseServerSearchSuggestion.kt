@@ -24,6 +24,10 @@ data class BaseServerSearchSuggestion(
         rawSearchResult.type == BaseRawResultType.CATEGORY -> {
             BaseSearchSuggestionType.Category(requireNotNull(rawSearchResult.categoryCanonicalName))
         }
+        rawSearchResult.type == BaseRawResultType.BRAND -> BaseSearchSuggestionType.Brand(
+            // TODO get brand name and brand id from the search native
+            "", ""
+        )
         rawSearchResult.type == BaseRawResultType.QUERY -> BaseSearchSuggestionType.Query
         else -> error("Illegal raw search result type: ${rawSearchResult.type}")
     }

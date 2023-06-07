@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.search.Reserved.Flags.SBS
 import com.mapbox.search.base.core.CoreQueryType
+import com.mapbox.search.base.failDebug
 
 /**
  * Values to filter results to include only a subset (one or more) of the available feature types.
@@ -101,6 +102,12 @@ internal fun CoreQueryType.mapToPlatform(): QueryType {
         CoreQueryType.ADDRESS -> QueryType.ADDRESS
         CoreQueryType.POI -> QueryType.POI
         CoreQueryType.CATEGORY -> QueryType.CATEGORY
+        CoreQueryType.BRAND -> {
+            failDebug {
+                "CoreQueryType.BRAND is not supported"
+            }
+            QueryType.POI
+        }
     }
 }
 

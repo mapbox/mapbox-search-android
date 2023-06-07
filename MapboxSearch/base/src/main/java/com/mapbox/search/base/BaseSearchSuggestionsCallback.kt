@@ -12,7 +12,7 @@ interface BaseSearchSelectionCallback : BaseSearchSuggestionsCallback {
 
     fun onResult(suggestion: BaseSearchSuggestion, result: BaseSearchResult, responseInfo: BaseResponseInfo)
 
-    fun onCategoryResult(
+    fun onResults(
         suggestion: BaseSearchSuggestion,
         results: List<BaseSearchResult>,
         responseInfo: BaseResponseInfo

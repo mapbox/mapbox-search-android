@@ -117,7 +117,9 @@ internal class PlaceAutocompleteImpl(
                         }
                         null
                     }
-                    is BaseSearchSuggestionType.Category, BaseSearchSuggestionType.Query -> null
+                    is BaseSearchSuggestionType.Category,
+                    is BaseSearchSuggestionType.Brand,
+                    is BaseSearchSuggestionType.Query -> null
                 }?.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) } ?: return@mapNotNull null
 
                 val coordinate = suggestion.coordinate

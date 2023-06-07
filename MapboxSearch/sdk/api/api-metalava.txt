@@ -401,8 +401,8 @@ package com.mapbox.search {
   }
 
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
-    method public void onCategoryResult(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
     method public void onResult(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onResults(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   public interface SearchSuggestionsCallback {
@@ -866,6 +866,14 @@ package com.mapbox.search.result {
   }
 
   public abstract class SearchSuggestionType implements android.os.Parcelable {
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Brand extends com.mapbox.search.result.SearchSuggestionType {
+    ctor public SearchSuggestionType.Brand(String brandName, String brandId);
+    method public String getBrandId();
+    method public String getBrandName();
+    property public final String brandId;
+    property public final String brandName;
   }
 
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Category extends com.mapbox.search.result.SearchSuggestionType {

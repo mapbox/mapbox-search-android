@@ -125,20 +125,20 @@ internal class SearchEntityPresentation(
 
     @DrawableRes
     fun getDrawable(suggestion: SearchSuggestion): Int {
-        val categories = listOfNotNull((suggestion.type as? SearchSuggestionType.Category)?.canonicalName)
         return when (val type = suggestion.type) {
             is SearchSuggestionType.SearchResultSuggestion -> getDrawableForSearchResult(
                 maki = suggestion.makiIcon,
-                categories = categories,
+                categories = suggestion.categories,
                 types = type.types
             )
-            is SearchSuggestionType.Category -> R.drawable.mapbox_search_sdk_ic_mdi_search
             is SearchSuggestionType.IndexableRecordItem -> getDrawableForDataProvider(type)
             is SearchSuggestionType.Query -> pickEntityDrawable(
                 makiIcon = suggestion.makiIcon,
                 categories = emptyList(),
                 fallback = R.drawable.mapbox_search_sdk_ic_mdi_search
             )
+            is SearchSuggestionType.Category,
+            is SearchSuggestionType.Brand -> R.drawable.mapbox_search_sdk_ic_mdi_search
             else -> error("Unknown SearchSuggestionType type: $type.")
         }
     }

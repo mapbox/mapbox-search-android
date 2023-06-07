@@ -53,7 +53,6 @@ public final class com/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter {
 }
 
 public abstract interface class com/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter$SearchListener {
-	public abstract fun onCategoryResultsShown (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onFeedbackItemClick (Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onHistoryItemClick (Lcom/mapbox/search/record/HistoryRecord;)V
@@ -61,6 +60,7 @@ public abstract interface class com/mapbox/search/ui/adapter/engines/SearchEngin
 	public abstract fun onOfflineSearchResultsShown (Ljava/util/List;Lcom/mapbox/search/offline/OfflineResponseInfo;)V
 	public abstract fun onPopulateQueryClick (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onSearchResultSelected (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onSearchResultsShown (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onSuggestionSelected (Lcom/mapbox/search/result/SearchSuggestion;)Z
 	public abstract fun onSuggestionsShown (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 }

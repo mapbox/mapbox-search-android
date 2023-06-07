@@ -9,6 +9,7 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.result.SearchSuggestionType
 import java.util.concurrent.Executor
 
 /**
@@ -38,7 +39,9 @@ import java.util.concurrent.Executor
  *       - For [default suggestion][SearchSuggestionType.SearchResultSuggestion] additional network
  *   request will be executed and [result][SearchResult] will be passed to [SearchSelectionCallback.onResult];
  *       - For [category suggestion][SearchSuggestionType.Category] additional network request
- *   will be executed and [list of results][SearchResult] will be passed to [SearchSelectionCallback.onCategoryResult];
+ *   will be executed and [list of results][SearchResult] will be passed to [SearchSelectionCallback.onResults];
+       - For [brand suggestion][SearchSuggestionType.Brand] additional network request
+ *   will be executed and [list of results][SearchResult] will be passed to [SearchSelectionCallback.onResults];
  *       - For [query suggestion][SearchSuggestionType.Query] additional network request will be
  *   executed and another [list of suggestions][SearchSuggestion] will be passed to [SearchSelectionCallback.onSuggestions].
  *   To get more information for provided suggestions you should use the same step ([select]);

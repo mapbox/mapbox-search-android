@@ -140,14 +140,14 @@ public class SearchEngineUiAdapter(
             }
         }
 
-        override fun onCategoryResult(
+        override fun onResults(
             suggestion: SearchSuggestion,
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         ) {
             if (searchQuery.isNotEmpty()) {
                 showResults(results, responseInfo)
-                searchListeners.forEach { it.onCategoryResultsShown(suggestion, results, responseInfo) }
+                searchListeners.forEach { it.onSearchResultsShown(suggestion, results, responseInfo) }
             }
         }
 
@@ -582,16 +582,16 @@ public class SearchEngineUiAdapter(
         public fun onSuggestionsShown(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo)
 
         /**
-         * Called when a category results are resolved and displayed on the [view].
-         * This happens when [SearchSelectionCallback.onCategoryResult] callback called.
+         * Called when multiple search results displayed on the [view].
+         * This happens when [SearchSelectionCallback.onResults] callback called.
          *
-         * @param suggestion The category suggestion from which the [results] were resolved.
+         * @param suggestion The suggestion from which the [results] were resolved.
          * @param results Search results matched by category search.
          * @param responseInfo Search response and request information.
          *
-         * @see SearchSelectionCallback.onCategoryResult
+         * @see SearchSelectionCallback.onResults
          */
-        public fun onCategoryResultsShown(
+        public fun onSearchResultsShown(
             suggestion: SearchSuggestion,
             results: List<SearchResult>,
             responseInfo: ResponseInfo

@@ -51,7 +51,8 @@ internal class SearchResultsItemsCreator(
                 distanceMeters = suggestion.distanceMeters,
                 drawable = searchEntityPresentation.getDrawable(suggestion),
                 drawableColor = when (suggestion.type) {
-                    is SearchSuggestionType.Category -> R.attr.mapboxSearchSdkPrimaryAccentColor
+                    is SearchSuggestionType.Category,
+                    is SearchSuggestionType.Brand -> R.attr.mapboxSearchSdkPrimaryAccentColor
                     else -> R.attr.mapboxSearchSdkIconTintColor
                 }.let { context.resolveAttrOrThrow(it) },
                 isPopulateQueryVisible = true,

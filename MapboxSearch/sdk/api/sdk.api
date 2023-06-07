@@ -419,8 +419,8 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 }
 
 public abstract interface class com/mapbox/search/SearchSelectionCallback : com/mapbox/search/SearchSuggestionsCallback {
-	public abstract fun onCategoryResult (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 	public abstract fun onResult (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
+	public abstract fun onResults (Lcom/mapbox/search/result/SearchSuggestion;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 }
 
 public abstract interface class com/mapbox/search/SearchSuggestionsCallback {
@@ -918,6 +918,18 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 }
 
 public abstract class com/mapbox/search/result/SearchSuggestionType : android/os/Parcelable {
+}
+
+public final class com/mapbox/search/result/SearchSuggestionType$Brand : com/mapbox/search/result/SearchSuggestionType {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBrandId ()Ljava/lang/String;
+	public final fun getBrandName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
 public final class com/mapbox/search/result/SearchSuggestionType$Category : com/mapbox/search/result/SearchSuggestionType {
