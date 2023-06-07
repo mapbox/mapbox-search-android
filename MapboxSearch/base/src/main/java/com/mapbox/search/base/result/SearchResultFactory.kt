@@ -84,6 +84,10 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     return AsyncOperationTaskImpl.COMPLETED
                 }
             }
+            CoreApiType.SEARCH_BOX -> {
+                callback(Result.failure(Exception("Search Box is not supported yet")))
+                return AsyncOperationTaskImpl.COMPLETED
+            }
         }
 
         return when (searchResult.type) {
@@ -122,7 +126,16 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
+                    CoreApiType.SEARCH_BOX -> {
+                        // TODO Support Search Box
+                        error("Unsupported api type SEARCH_BOX")
+                    }
                 }
+            }
+            BaseRawResultType.BRAND -> {
+                val value = BaseServerSearchSuggestion(searchResult, requestOptions)
+                callback(Result.success(value))
+                AsyncOperationTaskImpl.COMPLETED
             }
             BaseRawResultType.CATEGORY -> {
                 if (searchResult.categoryCanonicalName != null) {
@@ -197,6 +210,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
         val NOT_SEARCH_RESULT_TYPES = arrayOf(
             BaseRawResultType.USER_RECORD,
             BaseRawResultType.CATEGORY,
+            BaseRawResultType.BRAND,
             BaseRawResultType.QUERY,
             BaseRawResultType.UNKNOWN
         )

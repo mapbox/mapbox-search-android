@@ -240,7 +240,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
                     )
                 }
 
-                override fun onCategoryResult(
+                override fun onResults(
                     suggestion: BaseSearchSuggestion,
                     results: List<BaseSearchResult>,
                     responseInfo: BaseResponseInfo
@@ -248,7 +248,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
                     continuation.resumeWith(
                         Result.success(
                             ExpectedFactory.createValue(
-                                SearchSelectionResponse.CategoryResult(
+                                SearchSelectionResponse.Results(
                                     suggestion,
                                     results,
                                     responseInfo
@@ -402,7 +402,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
                                     is SearchSelectionResponse.Result -> {
                                         ExpectedFactory.createValue(listOf(response.result))
                                     }
-                                    is SearchSelectionResponse.CategoryResult -> {
+                                    is SearchSelectionResponse.Results -> {
                                         ExpectedFactory.createValue(response.results)
                                     }
                                 }
@@ -439,7 +439,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
             val responseInfo: BaseResponseInfo,
         ) : SearchSelectionResponse()
 
-        data class CategoryResult(
+        data class Results(
             val suggestion: BaseSearchSuggestion,
             val results: List<BaseSearchResult>,
             val responseInfo: BaseResponseInfo,

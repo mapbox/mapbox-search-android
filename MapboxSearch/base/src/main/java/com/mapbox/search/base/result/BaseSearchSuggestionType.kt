@@ -20,6 +20,9 @@ sealed class BaseSearchSuggestionType : Parcelable {
     data class Category internal constructor(val canonicalName: String) : BaseSearchSuggestionType()
 
     @Parcelize
+    data class Brand(val brandName: String, val brandId: String) : BaseSearchSuggestionType()
+
+    @Parcelize
     object Query : BaseSearchSuggestionType()
 
     @Parcelize

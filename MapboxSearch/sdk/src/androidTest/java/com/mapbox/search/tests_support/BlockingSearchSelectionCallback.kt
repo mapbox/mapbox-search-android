@@ -24,12 +24,12 @@ internal class BlockingSearchSelectionCallback :
         publishResult(SearchEngineResult.Result(result, responseInfo))
     }
 
-    override fun onCategoryResult(
+    override fun onResults(
         suggestion: SearchSuggestion,
         results: List<SearchResult>,
         responseInfo: ResponseInfo
     ) {
-        publishResult(SearchEngineResult.CategoryResult(results, responseInfo))
+        publishResult(SearchEngineResult.Results(results, responseInfo))
     }
 
     override fun onResult(
@@ -46,11 +46,13 @@ internal class BlockingSearchSelectionCallback :
 
         fun requireResult() = (this as Result)
 
+        fun requireResults() = (this as Results).results
+
         fun requireError() = (this as Error).e
 
         data class Suggestions(val suggestions: List<SearchSuggestion>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class Result(val result: SearchResult, val responseInfo: ResponseInfo) : SearchEngineResult()
-        data class CategoryResult(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()
+        data class Results(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class BatchResult(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class Error(val e: Exception) : SearchEngineResult()
     }

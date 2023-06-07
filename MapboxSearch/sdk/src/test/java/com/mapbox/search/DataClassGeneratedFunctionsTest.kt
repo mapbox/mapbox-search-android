@@ -62,6 +62,7 @@ internal class DataClassGeneratedFunctionsTest {
             SearchAddress.FormatStyle.Full::class,
             SearchSuggestionType.SearchResultSuggestion::class,
             SearchSuggestionType.Category::class,
+            SearchSuggestionType.Brand::class,
             SearchSuggestionType.Query::class,
             SearchSuggestionType.IndexableRecordItem::class,
             FavoriteRecord::class,

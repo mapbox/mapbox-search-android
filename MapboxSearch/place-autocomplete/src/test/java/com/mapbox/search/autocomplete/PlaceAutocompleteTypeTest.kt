@@ -40,6 +40,7 @@ internal class PlaceAutocompleteTypeTest {
         val coreTypes = PlaceAutocompleteType.ALL_DECLARED_TYPES.map { it.coreType }.sorted()
         val allValidCoreTypes = CoreQueryType.values().toMutableSet().apply {
             remove(QueryType.CATEGORY)
+            remove(QueryType.BRAND)
         }.toList().sorted()
         assertEquals(allValidCoreTypes, coreTypes)
     }

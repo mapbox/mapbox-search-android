@@ -2,7 +2,7 @@ package com.mapbox.search.base.result
 
 import com.mapbox.search.base.core.CoreResultType
 
-// TODO merge with BaseSearchResultType?
+// TODO remove in favor of CoreResultType?
 enum class BaseRawResultType {
     UNKNOWN,
     COUNTRY,
@@ -17,6 +17,7 @@ enum class BaseRawResultType {
     POSTCODE,
     BLOCK,
     CATEGORY,
+    BRAND,
     QUERY,
     USER_RECORD;
 
@@ -39,6 +40,7 @@ enum class BaseRawResultType {
             UNKNOWN,
             USER_RECORD,
             CATEGORY,
+            BRAND,
             QUERY -> null
         }
     }
@@ -56,6 +58,7 @@ internal fun BaseRawResultType.mapToCore(): CoreResultType {
         BaseRawResultType.ADDRESS -> CoreResultType.ADDRESS
         BaseRawResultType.POI -> CoreResultType.POI
         BaseRawResultType.CATEGORY -> CoreResultType.CATEGORY
+        BaseRawResultType.BRAND -> CoreResultType.BRAND
         BaseRawResultType.USER_RECORD -> CoreResultType.USER_RECORD
         BaseRawResultType.STREET -> CoreResultType.STREET
         BaseRawResultType.POSTCODE -> CoreResultType.POSTCODE
@@ -75,6 +78,7 @@ internal fun CoreResultType.mapToBase(): BaseRawResultType {
         CoreResultType.NEIGHBORHOOD -> BaseRawResultType.NEIGHBORHOOD
         CoreResultType.ADDRESS -> BaseRawResultType.ADDRESS
         CoreResultType.POI -> BaseRawResultType.POI
+        CoreResultType.BRAND -> BaseRawResultType.BRAND
         CoreResultType.CATEGORY -> BaseRawResultType.CATEGORY
         CoreResultType.USER_RECORD -> BaseRawResultType.USER_RECORD
         CoreResultType.STREET -> BaseRawResultType.STREET

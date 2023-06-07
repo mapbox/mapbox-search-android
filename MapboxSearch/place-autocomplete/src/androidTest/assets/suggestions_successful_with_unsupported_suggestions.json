@@ -53,6 +53,29 @@
       }
     },
     {
+      "feature_name": "Starbucks",
+      "matching_name": "Starbucks",
+      "highlighted_name": "Starbucks",
+      "description": "Brand",
+      "result_type": [
+        "brand"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "test-brand-action-id"
+        },
+        "multi_retrievable": false
+      },
+      "maki": "",
+      "internal_id": "test-brand-internal-id",
+      "external_ids": {
+        "federated": "brand.test-external-id"
+      }
+    },
+    {
       "feature_name":"Starbucks",
       "matching_name":"Starbucks",
       "highlighted_name":"Starbucks",

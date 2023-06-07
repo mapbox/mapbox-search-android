@@ -22,7 +22,6 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
-import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
 import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.common.tests.FixedPointLocationEngine
@@ -45,7 +44,6 @@ import java.util.Locale
 
 public class TestActivity : AppCompatActivity() {
 
-    private val serviceProvider = ServiceProvider.INSTANCE
     private lateinit var locationEngine: LocationEngine
 
     private lateinit var toolbar: Toolbar
@@ -125,7 +123,7 @@ public class TestActivity : AppCompatActivity() {
                 // Nothing to do
             }
 
-            override fun onCategoryResultsShown(
+            override fun onSearchResultsShown(
                 suggestion: SearchSuggestion,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo

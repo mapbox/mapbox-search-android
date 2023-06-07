@@ -15,7 +15,6 @@ import com.mapbox.search.SearchSelectionCallback;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchSuggestion;
-import com.mapbox.search.sample.BuildConfig;
 import com.mapbox.search.sample.R;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class ForwardGeocodingJavaExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
+        public void onResults(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo responseInfo) {
             Log.i("SearchApiExample", "Category search results: " + results);
         }
 

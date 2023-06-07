@@ -100,6 +100,7 @@ internal class BaseRawResultTypeTest {
                             )
                         }
                         BaseRawResultType.CATEGORY,
+                        BaseRawResultType.BRAND,
                         BaseRawResultType.QUERY,
                         BaseRawResultType.USER_RECORD,
                         BaseRawResultType.UNKNOWN -> {

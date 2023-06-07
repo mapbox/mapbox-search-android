@@ -42,6 +42,7 @@ internal class OfflineSearchResultTypeTest {
                         BaseRawResultType.POSTCODE,
                         BaseRawResultType.BLOCK,
                         BaseRawResultType.CATEGORY,
+                        BaseRawResultType.BRAND,
                         BaseRawResultType.QUERY,
                         BaseRawResultType.USER_RECORD,
                         BaseRawResultType.UNKNOWN -> {

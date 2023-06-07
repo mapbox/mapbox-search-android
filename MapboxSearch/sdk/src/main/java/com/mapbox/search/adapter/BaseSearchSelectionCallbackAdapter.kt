@@ -25,12 +25,12 @@ internal class BaseSearchSelectionCallbackAdapter(
         )
     }
 
-    override fun onCategoryResult(
+    override fun onResults(
         suggestion: BaseSearchSuggestion,
         results: List<BaseSearchResult>,
         responseInfo: BaseResponseInfo
     ) {
-        callback.onCategoryResult(
+        callback.onResults(
             suggestion.mapToPlatform(),
             results.map { SearchResult(it) },
             responseInfo.mapToPlatform()

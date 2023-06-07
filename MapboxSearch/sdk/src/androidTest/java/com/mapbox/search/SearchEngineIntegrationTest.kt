@@ -50,6 +50,7 @@ import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.tests_support.searchBlocking
+import com.mapbox.search.tests_support.selectBlocking
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.enqueueMultiple
 import okhttp3.mockwebserver.MockResponse
@@ -762,7 +763,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         callback.reset()
         searchEngine.select(suggestions.first(), callback)
 
-        val selectionResult = callback.getResultBlocking() as SearchEngineResult.CategoryResult
+        val selectionResult = callback.getResultBlocking() as SearchEngineResult.Results
         val categoryResults = selectionResult.results
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
@@ -821,6 +822,59 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertNotNull(selectionResult.responseInfo.coreSearchResponse)
         assertFalse(selectionResult.responseInfo.isReproducible)
+    }
+
+    @Test
+    fun testBrandSuggestionSelection() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-only-brand.json"))
+
+        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION)
+        val suggestionsResult = searchEngine.searchBlocking(TEST_QUERY, options)
+        val suggestions = suggestionsResult.requireSuggestions()
+        assertEquals(1, suggestions.size)
+
+        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
+            id = "test-brand-internal-id",
+            types = listOf(BaseRawResultType.BRAND),
+            names = listOf("Starbucks"),
+            languages = listOf("en"),
+            addresses = listOf(SearchAddress()),
+            categories = null,
+            descriptionAddress = "Brand",
+            fullAddress = "Brand",
+            matchingName = "Starbucks",
+            icon = null,
+            externalIDs = mapOf("federated" to "brand.test-external-id"),
+            action = BaseSuggestAction(
+                endpoint = "retrieve",
+                path = "",
+                query = null,
+                body = "{\"id\":\"test-brand-action-id\"}".toByteArray(),
+                multiRetrievable = false
+            ),
+        )
+
+        val expectedSearchSuggestion = BaseServerSearchSuggestion(
+            baseRawCategorySuggestion,
+            TEST_REQUEST_OPTIONS.run {
+                copy(
+                    options = options,
+                    requestContext = requestContext.copy(
+                        responseUuid = "ca7c0ef1-ec25-40c4-962c-ca6e279a2146"
+                    ),
+                )
+            }.mapToBase()
+        ).mapToPlatform()
+
+        val suggestion = suggestions.first()
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestion))
+        assertEquals(SearchSuggestionType.Brand("", ""), suggestion.type)
+
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
+
+        val selectionResult = searchEngine.selectBlocking(suggestion)
+        val results = selectionResult.requireResults()
+        assertEquals(results.size, 3)
     }
 
     @Test
@@ -928,7 +982,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 countDownLatch.countDown()
             }
 
-            override fun onCategoryResult(
+            override fun onResults(
                 suggestion: SearchSuggestion,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
@@ -967,6 +1021,18 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("Legerova 15", suggestion.name)
         assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
         assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
+    }
+
+    @Test
+    fun testSBSPoiAddressFormatting() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-address-formatting-test.json"))
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+
+        val suggestions = suggestionsResponse.requireSuggestions()
+        val suggestion = suggestions.first()
+
+        assertEquals("667 Madison Ave, New York City, New York 10065, United States of America", suggestion.fullAddress)
     }
 
     @Test

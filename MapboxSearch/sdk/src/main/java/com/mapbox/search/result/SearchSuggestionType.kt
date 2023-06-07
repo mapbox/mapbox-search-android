@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
+import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -96,13 +97,57 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
     }
 
     /**
+     * Search suggestion of the [Brand] type points to a list of [SearchResult] that will be returned after selection.
+     *
+     * @property brandName - the name of the brand.
+     * @property brandId - the id of the brand.
+     */
+    @Parcelize
+    public class Brand(
+        public val brandName: String,
+        public val brandId: String,
+    ) : SearchSuggestionType() {
+
+        /**
+         * @suppress
+         */
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Brand
+
+            if (brandName != other.brandName) return false
+            if (brandId != other.brandId) return false
+
+            return true
+        }
+
+        /**
+         * @suppress
+         */
+        override fun hashCode(): Int {
+            var result = brandName.hashCode()
+            result = 31 * result + brandId.hashCode()
+            return result
+        }
+
+        /**
+         * @suppress
+         */
+        override fun toString(): String {
+            return "Brand(brandName='$brandName', brandId='$brandId')"
+        }
+    }
+
+    /**
      * [Query] suggestion type points to a new list of [SearchSuggestion], i.e. selection of this suggestion type will result in new suggestions.
      */
     @Parcelize
     public object Query : SearchSuggestionType()
 
     /**
-     * Search suggestion of the [IndexableRecordItem] type points to the only [IndexableRecordSearchResult] that will be returned after selection.
+     * Search suggestion of the [IndexableRecordItem] type points to the search results with [IndexableRecord] that will be returned after selection.
      *
      * @property dataProviderName - the id of the data provider.
      * @property type - type of the [com.mapbox.search.record.IndexableRecord] that will be resolved after selection of the search suggestion.

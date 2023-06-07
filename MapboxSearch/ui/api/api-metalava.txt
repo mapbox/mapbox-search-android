@@ -52,7 +52,6 @@ package com.mapbox.search.ui.adapter.engines {
   }
 
   public static interface SearchEngineUiAdapter.SearchListener {
-    method public void onCategoryResultsShown(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
     method public void onError(Exception e);
     method public void onFeedbackItemClick(com.mapbox.search.ResponseInfo responseInfo);
     method public void onHistoryItemClick(com.mapbox.search.record.HistoryRecord historyRecord);
@@ -60,6 +59,7 @@ package com.mapbox.search.ui.adapter.engines {
     method public void onOfflineSearchResultsShown(java.util.List<com.mapbox.search.offline.OfflineSearchResult> results, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
     method public void onPopulateQueryClick(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.ResponseInfo responseInfo);
     method public void onSearchResultSelected(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo);
+    method public void onSearchResultsShown(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
     method public boolean onSuggestionSelected(com.mapbox.search.result.SearchSuggestion searchSuggestion);
     method public void onSuggestionsShown(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.ResponseInfo responseInfo);
   }

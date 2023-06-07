@@ -59,6 +59,7 @@ internal class SearchResultFactoryTest {
                 listOf(BaseRawResultType.PLACE, BaseRawResultType.CATEGORY) to false,
                 listOf(BaseRawResultType.UNKNOWN) to false,
                 listOf(BaseRawResultType.CATEGORY) to false,
+                listOf(BaseRawResultType.BRAND) to false,
                 listOf(BaseRawResultType.QUERY) to false,
                 listOf(BaseRawResultType.USER_RECORD) to false,
             )

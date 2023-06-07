@@ -212,6 +212,10 @@ internal fun BaseSearchSuggestion.getSearchSuggestionType(): SearchSuggestionTyp
             t.types.map { it.mapToPlatform() }
         )
         is BaseSearchSuggestionType.Category -> SearchSuggestionType.Category(t.canonicalName)
+        is BaseSearchSuggestionType.Brand -> SearchSuggestionType.Brand(
+            brandName = t.brandName,
+            brandId = t.brandId
+        )
         is BaseSearchSuggestionType.Query -> SearchSuggestionType.Query
         is BaseSearchSuggestionType.IndexableRecordItem -> SearchSuggestionType.IndexableRecordItem(
             t.dataProviderName,
