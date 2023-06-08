@@ -4,29 +4,31 @@ import android.Manifest
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
+import com.mapbox.search.autofill.AddressAutofillResult
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -119,8 +121,10 @@ class MainActivity : AppCompatActivity() {
 
                 val query = Query.create(text.toString())
                 if (query != null) {
-                    lifecycleScope.launchWhenStarted {
-                        searchEngineUiAdapter.search(query)
+                    lifecycleScope.launch {
+                        repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            searchEngineUiAdapter.search(query)
+                        }
                     }
                 }
                 searchResultsView.isVisible = query != null
@@ -160,39 +164,54 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun findAddress(point: Point) {
-        lifecycleScope.launchWhenStarted {
-            val response = addressAutofill.suggestions(point, AddressAutofillOptions())
-            response.onValue { suggestions ->
-                if (suggestions.isEmpty()) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val response = addressAutofill.suggestions(point, AddressAutofillOptions())
+                response.onValue { suggestions ->
+                    if (suggestions.isEmpty()) {
+                        showToast(R.string.address_autofill_error_pin_correction)
+                    } else {
+                        showAddressAutofillSuggestion(
+                            suggestions.first(),
+                            fromReverseGeocoding = true
+                        )
+                    }
+                }.onError {
                     showToast(R.string.address_autofill_error_pin_correction)
-                } else {
-                    showAddressAutofillSuggestion(
-                        suggestions.first(),
-                        fromReverseGeocoding = true
-                    )
                 }
-            }.onError { error ->
-                Log.d("Test.", "Test. $error", error)
-                showToast(R.string.address_autofill_error_pin_correction)
             }
         }
     }
 
     private fun showAddressAutofillSuggestion(suggestion: AddressAutofillSuggestion, fromReverseGeocoding: Boolean) {
-        val address = suggestion.result().address
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val response = addressAutofill.select(suggestion)
+                response.onValue { result ->
+                    showAddressAutofillResult(result, fromReverseGeocoding)
+                }.onError {
+                    showToast(R.string.address_autofill_error_select)
+                }
+            }
+        }
+    }
+
+    private fun showAddressAutofillResult(result: AddressAutofillResult, fromReverseGeocoding: Boolean) {
+        val address = result.address
+
         cityEditText.setText(address.place)
         stateEditText.setText(address.region)
         zipEditText.setText(address.postcode)
 
         fullAddress.isVisible = true
-        fullAddress.text = suggestion.formattedAddress
+        fullAddress.text = result.suggestion.formattedAddress
 
         pinCorrectionNote.isVisible = true
 
         if (!fromReverseGeocoding) {
             mapView.getMapboxMap().setCamera(
                 CameraOptions.Builder()
-                    .center(suggestion.coordinate)
+                    .center(result.suggestion.coordinate)
                     .zoom(16.0)
                     .build()
             )
