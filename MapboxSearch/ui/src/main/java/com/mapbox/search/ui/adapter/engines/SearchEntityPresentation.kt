@@ -210,7 +210,9 @@ internal class SearchEntityPresentation(
         return when (suggestionType) {
             is SearchSuggestionType.IndexableRecordItem -> context.getString(getRecordTypeName(suggestionType))
             is SearchSuggestionType.SearchResultSuggestion -> getResultTypeName(suggestionType.types)
-            is SearchSuggestionType.Category, is SearchSuggestionType.Query -> null
+            is SearchSuggestionType.Category,
+            is SearchSuggestionType.Query,
+            is SearchSuggestionType.Brand -> null
             else -> error("Unknown SearchSuggestionType type: $suggestionType.")
         }
     }
