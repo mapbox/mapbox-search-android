@@ -3,12 +3,15 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
@@ -26,6 +29,7 @@ import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
@@ -59,8 +63,10 @@ import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
@@ -494,6 +500,116 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val suggestions = suggestionsResult.suggestions
         assertFalse(suggestions.any { it.isIndexableRecordSuggestion })
+    }
+
+    @Test
+    fun testIndexableRecordsMatching() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-indexable-records-matching.json"))
+
+        val recordCoordinate = Point.fromLngLat(-122.41936, 37.77707)
+        val record = createTestHistoryRecord(
+            id = "id1",
+            name = "Starbucks",
+            coordinate = recordCoordinate,
+            address = SearchAddress(
+                country = "United States of America",
+                region = "California",
+                place = "San Francisco",
+                neighborhood = "Downtown",
+                postcode = "94102",
+                street = "van ness",
+                houseNumber = "150"
+            ),
+            searchResultType = SearchResultType.ADDRESS,
+        )
+        historyDataProvider.upsertBlocking(record, callbacksExecutor)
+
+        val suggestionsResponse = searchEngine.searchBlocking(
+            query = "Starbucks",
+            options = SearchOptions(
+                proximity = recordCoordinate,
+                origin = recordCoordinate,
+            )
+        )
+
+        val suggestions = suggestionsResponse.requireSuggestions()
+        assertEquals(1, suggestions.size)
+
+        val suggestion = suggestions.first()
+        assertTrue(suggestion.type is SearchSuggestionType.IndexableRecordItem)
+
+        val matchedRecord = (suggestion.type as SearchSuggestionType.IndexableRecordItem).record
+        assertSame(record, matchedRecord)
+
+        val selectionResult = searchEngine.selectBlocking(suggestion)
+        val searchResult = selectionResult.requireResult().result
+        assertSame(record, searchResult.indexableRecord)
+
+        assertEquals(suggestion.id, record.id)
+        assertEquals(searchResult.id, record.id)
+
+        /**
+         * Suggestion name, address and coordinate are always the same as in [IndexableRecord]
+         * because record is matched by these fields.
+         */
+        assertEquals(suggestion.name, record.name)
+        assertEquals(suggestion.address, record.address)
+        assertEquals(suggestion.base.coordinate, record.coordinate)
+
+        assertEquals(searchResult.name, record.name)
+        assertEquals(searchResult.address, record.address)
+        assertEquals(searchResult.base.coordinate, record.coordinate)
+
+        /**
+         * All the other fields might be different and suggestion should return values from backend
+         * as they are likely to be up-to-date.
+         *
+         * If user needs values from indexable record, that data is also available to user from
+         * [IndexableRecord] instance.
+         */
+        val routablePoints = listOf(
+            CoreRoutablePoint(Point.fromLngLat(-122.419548, 37.777044), "POI")
+        )
+        assertEquals(
+            routablePoints,
+            suggestion.base.routablePoints
+        )
+        assertEquals(
+            routablePoints,
+            searchResult.routablePoints?.map { it.mapToCore() }
+        )
+        assertNotEquals(
+            routablePoints,
+            record.routablePoints
+        )
+
+        assertEquals(
+            "150 Van Ness, San Francisco, California 94102, United States of America",
+            suggestion.descriptionText
+        )
+        assertEquals(
+            "150 Van Ness, San Francisco, California 94102, United States of America",
+            searchResult.descriptionText
+        )
+        assertNotEquals(
+            "150 Van Ness, San Francisco, California 94102, United States of America",
+            record.descriptionText
+        )
+
+        assertEquals(listOf("cafe"), suggestion.categories)
+        assertEquals(listOf("cafe"), searchResult.categories)
+        assertNotEquals(listOf("cafe"), record.categories)
+
+        assertEquals("restaurant", suggestion.makiIcon)
+        assertEquals("restaurant", searchResult.makiIcon)
+        assertNotEquals("restaurant", record.makiIcon)
+
+        val metadata = SearchResultMetadata(
+            createCoreResultMetadata(data = hashMapOf("iso_3166_1" to "US"))
+        )
+        assertEquals(metadata, suggestion.metadata)
+        assertEquals(metadata, searchResult.metadata)
+        assertNotEquals(metadata, record.metadata)
     }
 
     @Test

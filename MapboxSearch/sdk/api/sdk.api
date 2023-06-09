@@ -947,7 +947,7 @@ public final class com/mapbox/search/result/SearchSuggestionType$IndexableRecord
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDataProviderName ()Ljava/lang/String;
-	public final fun getType ()Lcom/mapbox/search/result/SearchResultType;
+	public final fun getRecord ()Lcom/mapbox/search/record/IndexableRecord;
 	public fun hashCode ()I
 	public final fun isFavoriteRecord ()Z
 	public final fun isHistoryRecord ()Z

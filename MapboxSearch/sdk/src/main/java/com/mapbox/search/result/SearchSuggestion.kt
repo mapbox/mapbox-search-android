@@ -218,8 +218,8 @@ internal fun BaseSearchSuggestion.getSearchSuggestionType(): SearchSuggestionTyp
         )
         is BaseSearchSuggestionType.Query -> SearchSuggestionType.Query
         is BaseSearchSuggestionType.IndexableRecordItem -> SearchSuggestionType.IndexableRecordItem(
+            t.record.sdkResolvedRecord as IndexableRecord,
             t.dataProviderName,
-            t.type.mapToPlatform()
         )
     }
 }

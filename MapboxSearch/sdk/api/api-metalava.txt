@@ -883,13 +883,13 @@ package com.mapbox.search.result {
 
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.IndexableRecordItem extends com.mapbox.search.result.SearchSuggestionType {
     method public String getDataProviderName();
-    method public com.mapbox.search.result.SearchResultType getType();
+    method public com.mapbox.search.record.IndexableRecord getRecord();
     method public boolean isFavoriteRecord();
     method public boolean isHistoryRecord();
     property public final String dataProviderName;
     property public final boolean isFavoriteRecord;
     property public final boolean isHistoryRecord;
-    property public final com.mapbox.search.result.SearchResultType type;
+    property public final com.mapbox.search.record.IndexableRecord record;
   }
 
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.Query extends com.mapbox.search.result.SearchSuggestionType {

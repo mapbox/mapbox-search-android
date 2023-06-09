@@ -1,6 +1,9 @@
 package com.mapbox.search.base.result
 
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
+import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.record.BaseIndexableRecord
 import kotlinx.parcelize.Parcelize
 
@@ -22,18 +25,30 @@ data class BaseIndexableRecordSearchSuggestion(
     override val name: String
         get() = record.name
 
-    override val address: BaseSearchAddress?
-        get() = record.address
+    override val coordinate: Point
+        get() = rawSearchResult.center ?: record.coordinate
 
-    override val type: BaseSearchSuggestionType.IndexableRecordItem
-        get() = BaseSearchSuggestionType.IndexableRecordItem(rawSearchResult.layerId!!, record.type)
+    override val routablePoints: List<CoreRoutablePoint>?
+        get() = rawSearchResult.routablePoints ?: record.routablePoints
 
     override val descriptionText: String?
-        get() = record.descriptionText
+        get() = rawSearchResult.descriptionAddress ?: record.descriptionText
+
+    override val address: BaseSearchAddress?
+        get() = rawSearchResult.addresses?.first() ?: record.address
+
+    override val categories: List<String>?
+        get() = rawSearchResult.categories ?: record.categories
+
+    override val makiIcon: String?
+        get() = rawSearchResult.icon ?: record.makiIcon
+
+    override val metadata: CoreResultMetadata?
+        get() = rawSearchResult.metadata ?: record.metadata
+
+    override val type: BaseSearchSuggestionType.IndexableRecordItem
+        get() = BaseSearchSuggestionType.IndexableRecordItem(record, rawSearchResult.layerId!!)
 
     override val isBatchResolveSupported: Boolean
         get() = true
-
-    override val makiIcon: String?
-        get() = record.makiIcon
 }

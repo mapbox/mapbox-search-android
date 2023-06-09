@@ -147,15 +147,15 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
     public object Query : SearchSuggestionType()
 
     /**
-     * Search suggestion of the [IndexableRecordItem] type points to the search results with [IndexableRecord] that will be returned after selection.
+     * Search suggestion of the [IndexableRecordItem] type points to the search result based on [IndexableRecord].
      *
+     * @property record - [IndexableRecord] that was matched with a search query.
      * @property dataProviderName - the id of the data provider.
-     * @property type - type of the [com.mapbox.search.record.IndexableRecord] that will be resolved after selection of the search suggestion.
      */
     @Parcelize
     public class IndexableRecordItem internal constructor(
+        public val record: IndexableRecord,
         public val dataProviderName: String,
-        public val type: SearchResultType,
     ) : SearchSuggestionType() {
 
         /**
@@ -179,8 +179,8 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
 
             other as IndexableRecordItem
 
+            if (record != other.record) return false
             if (dataProviderName != other.dataProviderName) return false
-            if (type != other.type) return false
 
             return true
         }
@@ -189,8 +189,8 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
          * @suppress
          */
         override fun hashCode(): Int {
-            var result = dataProviderName.hashCode()
-            result = 31 * result + type.hashCode()
+            var result = record.hashCode()
+            result = 31 * result + dataProviderName.hashCode()
             return result
         }
 
@@ -198,7 +198,7 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
          * @suppress
          */
         override fun toString(): String {
-            return "IndexableRecordItem(dataProviderName='$dataProviderName', type=$type)"
+            return "IndexableRecordItem(record=$record, dataProviderName='$dataProviderName')"
         }
     }
 }

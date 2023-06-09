@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.6-SNAPSHOT
+
+### Breaking changes
+- [CORE] `SearchSuggestionType.IndexableRecordItem.type` field has been replaced with `record` field which provides `IndexableRecord` instance.
+
+### Bug fixes
+- [CORE] Now search suggestions and search results that are matched with `IndexableRecord`s provide data from the backend which is likely to be up-to-date than data from `IndexableRecord`. Original `IndexableRecord` instance can be obtained from `SearchSuggestionType.IndexableRecordItem.record` and `SearchResult.indexableRecord`.
+
+### Mapbox dependencies
+- Search Native SDK `0.69.0`
+- Common SDK `23.6.0-rc.1`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.5
 
 ### New features
