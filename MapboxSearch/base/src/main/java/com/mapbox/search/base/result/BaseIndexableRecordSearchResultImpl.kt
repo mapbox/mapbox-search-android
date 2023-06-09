@@ -19,33 +19,32 @@ data class BaseIndexableRecordSearchResultImpl(
     override val baseType: Type = Type.IndexableRecordSearchResult(record)
 
     override val id: String
-        get() = record.id
+        get() = rawSearchResult.userRecordId ?: rawSearchResult.id
 
     override val name: String
         get() = record.name
 
     override val descriptionText: String?
-        get() = record.descriptionText
+        get() = rawSearchResult.descriptionAddress ?: record.descriptionText
 
     override val address: BaseSearchAddress?
-        get() = record.address ?: rawSearchResult.addresses?.get(0)
+        get() = rawSearchResult.addresses?.first() ?: record.address
 
     override val coordinate: Point
-        get() = record.coordinate
+        get() = rawSearchResult.center ?: record.coordinate
 
     override val routablePoints: List<CoreRoutablePoint>?
-        get() = record.routablePoints
+        get() = rawSearchResult.routablePoints ?: record.routablePoints
 
-    // TODO(search-sdk/#526): consider multiple types for IndexableRecord
     override val types: List<BaseSearchResultType>
         get() = listOf(record.type)
 
     override val categories: List<String>?
-        get() = record.categories ?: super.categories
+        get() = rawSearchResult.categories ?: record.categories
 
     override val makiIcon: String?
-        get() = record.makiIcon
+        get() = rawSearchResult.icon ?: record.makiIcon
 
     override val metadata: CoreResultMetadata?
-        get() = record.metadata
+        get() = rawSearchResult.metadata ?: record.metadata
 }

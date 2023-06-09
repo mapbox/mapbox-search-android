@@ -2,6 +2,7 @@ package com.mapbox.search.base.result
 
 import android.os.Parcelable
 import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.record.BaseIndexableRecord
 import kotlinx.parcelize.Parcelize
 
 sealed class BaseSearchSuggestionType : Parcelable {
@@ -27,7 +28,7 @@ sealed class BaseSearchSuggestionType : Parcelable {
 
     @Parcelize
     data class IndexableRecordItem internal constructor(
+        val record: BaseIndexableRecord,
         val dataProviderName: String,
-        val type: BaseSearchResultType,
     ) : BaseSearchSuggestionType()
 }

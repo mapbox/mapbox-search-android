@@ -268,7 +268,7 @@ internal class BaseSearchSuggestionTest {
 
                 Then(
                     "Suggestion type value should be derived from core search result",
-                    BaseSearchSuggestionType.IndexableRecordItem(searchResult.layerId!!, TEST_RECORD.type),
+                    BaseSearchSuggestionType.IndexableRecordItem(TEST_RECORD, searchResult.layerId!!),
                     suggestion.type
                 )
 
