@@ -1,0 +1,85 @@
+{
+  "suggestions": [
+    {
+      "feature_name": "667 Madison",
+      "matching_name": "667 Madison",
+      "highlighted_name": "667 Madison,New York City,madison ave,New York",
+      "description": "667 Madison Ave, New York City, New York 10065, United States of America",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "0pDj_Rew9CLUO8R2UnOKPup2ZJZuWwQpNNTqyTGmGB1WTC30P0_sht2U3w7UOiTI4H1681Oq4MPdoT93OZOI5q7nwmuBm8TYKZuSCGybp2VH0rXMM8k7hBGxgwLggoQGzRh4qOQRnKM2EtcbxLM-tb5aQeC_NiGWX5aa_8ZWcRcFwxGhQ-8GxBuY-f2EzBOVUu1ACpUZIzmiaft27CZiaxIFEuut89nTyk_k_yFCcVhF5xFodu5YHIWFhbmHbYolnATIjVhguYVUqXlDpGroxY3PLhwtGhABn_FV59Hw97vWQz2tXLjJsZ_m94m9bslREzZovbRVWTtt17IGlQZUbQME8ft3c98eLGxrh50Z8YNG-7aKr4_pJ9llCSuPkivNLZKVsbbdCz1t5nM_WPn8f8Xbb9wX3KnM4CBMWM2bvo13zcujlRj1xigzqHTs2JlqrVaVbK-J9IKo-1qk9qX1rBvzvjUnxVVoI0ppb4xwoR71k0Rqaet2UJ8iU19jizxgopAB7sKQVjEYpVs_PMFNr-TMNewjYFVDMUeprLEVIufYatvRboeoeGtsuYsI5XJ3meV5fZsOMX4IeIcLDNG-Fh5cVYlFvw-VojTfXEhPyiZlIjSy2ftASYd5IJ7JrDjrw0EC-GwzwfswFj7ZBGu1o40N7_kubT2KxN6kdzDuA8oHucrxBPmr5jqONJOUAIbNPoT9U85uUHMSqA_3__QH5BEh9O49cUYujsfMWxGOX-zkCM44iXtXQHbEDqtQDiVJrw_7YPK5ArCoStFUvlgwYBWFpooENF2BNKVNJzFAgN8HmrOR37RBIoPjik-N3lQVOkpoDUDSh-2nanEve4GKZ-ynbQr4FYK_Pv36UYu5u9-alvc2zAv3lU4u1bgt0g17oej7lMjTQasE4XrZGxK4m4BrZwszeoQxqMB-7W75vfGDV6TMJzRfpjdRRtTkSRTJ680jTwEKkDQRZcXjso8D8TWgK_DE9ctJnwg0Hz_3T_0LKkaclE18zpzSXBDDXxYV0C1ZEytX1JIn09HLF7zDE7zKpa5xIJZd0qOLeva9TeWifC2k-uVQqjTDyvj5uRmk7LleDH21KZOSWoFKZxoIvAnqv7ylFFLvBhRKueYSM_3ydDMGZtno8TDPwS_tY8LV0714eH8ZEA9IZKMFGGJagMisaG2H7WiDPQGTvmxmgCgg-zkVG0N50V6BcihrY0N3J9W0f5H1S3xaDNLyf5NxApM1AJvQNsSqXXJmIrN3zlFIb5yDCSzn0xKxS1UPjxBkCmH9g7Zob-J7WJwzRuPRnwllhRx-h5fV-WCoISZAQCaNm2a0AId6EZNxMQuzhnNtKHJKRdceTvBWYnDLEykdASeDW4eIvkNAPMAKfv1UuPBdhi3MrIofYtj_nq0c-cv-H90b6OILxFjHF2fZYixLRepzJHUnBYXOSzFLW7LmrszlGCw20Nzv3p2FYZWFyXunSlt6mgg3jrHtIKQep8bGsPNkVumPl_hovpmQE-NGrwmznZI5bps4jLW16GvMdgZBUWSnSKN4IF_0RqNT7BBLO2iI2qY40SmT6UlkS-Qwjgm9uJQBekv6wsAkYItW_QnLKlsyghHOVR5x9PI9XaoqDJ59B1ObxwQyyH2nan6rT57h0V1YooYegCzBfDrSNmIBgqurHvAawlvl1k69aQwaOnRkdfXr76QbGB7iq3xWUYRa6tGhV52sA69n_0pm3DTYnMRzgLgi4cPhzY9q_NKpEEBMuGmnkGcGzRNaxNfNz2ShtUa6voxh6_YN1cI_KonSRx7WUlF0vdUNzX5ZRxPQSWC-5dhECPnemlRyXMe6i2dZQ1hCM5nnuya0DKoO9tKJpLYsyMPRebv5RXxV3rKw_WVd4mPxFm2NmFO09sL-NNwY8V7Oz1DzIBASMzZfj0azUIxcBpc9X1HjJnQ_e2VxNkEAN3zBaxF7Vr5z8ULCNMFEVEN4TqO7BVrajELWEmYJzPw="
+        },
+        "multi_retrievable": true
+      },
+      "coordinates": "-73.970262,40.764425",
+      "routable_points": [
+        {
+          "name": "POI",
+          "coordinates": [
+            -73.97061240745133,
+            40.764688323942714
+          ]
+        }
+      ],
+      "maki": "marker",
+      "category": [
+        "office"
+      ],
+      "category_ids": [
+        "office"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8SUVHMjA9M0SzOTRFMjg9RUc1Mjw1RjAA==",
+      "external_ids": {
+        "foursquare": "4ade7205f964a520ee7521e3",
+        "federated": "poi.b064d09463365d08f3d3ec6b54e1e9673e157cf65b0dbb4fb7c38c6343d404ff",
+        "mbx_poi": "b064d09463365d08f3d3ec6b54e1e9673e157cf65b0dbb4fb7c38c6343d404ff"
+      },
+      "mapbox_id": "CkIKQGIwNjRkMDk0NjMzNjVkMDhmM2QzZWM2YjU0ZTFlOTY3M2UxNTdjZjY1YjBkYmI0ZmI3YzM4YzYzNDNkNDA0ZmY=",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "667 Madison Ave"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "madison ave"
+        },
+        {
+          "layer": "postcode",
+          "localized_layer": "postcode",
+          "name": "10065"
+        },
+        {
+          "layer": "place",
+          "localized_layer": "place",
+          "name": "New York City"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "New York"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States of America"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-NY"
+      }
+    }
+  ],
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "141:f9a22b62836e23acbb9bf1fc5a7b63c46cd301ce",
+  "response_uuid": "836c2755-59c5-4798-8493-4fe37edd2b62"
+}

@@ -196,7 +196,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                     place = "Mountain View",
                     postcode = "94041",
                     region = "California",
-                    street = "castro st"
+                    street = "Castro St"
                 )
             ),
             fullAddress = "750 Castro St, Mountain View, California 94041, United States of America",

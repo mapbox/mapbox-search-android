@@ -517,7 +517,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 place = "San Francisco",
                 neighborhood = "Downtown",
                 postcode = "94102",
-                street = "van ness",
+                street = "Van Ness",
                 houseNumber = "150"
             ),
             searchResultType = SearchResultType.ADDRESS,
@@ -1149,6 +1149,24 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestion = suggestions.first()
 
         assertEquals("667 Madison Ave, New York City, New York 10065, United States of America", suggestion.fullAddress)
+    }
+
+    @Test
+    fun testSbsBackendDataCorrections() {
+        /**
+         * For some results backend sends incorrectly formatted fields. Search SDK tries to patch such data:
+         * (SSDK-276) street: madison ave -> Madison Ave
+         * (SSDK-277) name: 667 Madison -> 667 Madison Ave
+         */
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-data-formatting-corrections-test.json"))
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+
+        val suggestions = suggestionsResponse.requireSuggestions()
+        val suggestion = suggestions.first()
+
+        assertEquals("667 Madison Ave", suggestion.name)
+        assertEquals("Madison Ave", suggestion.address?.street)
     }
 
     @Test

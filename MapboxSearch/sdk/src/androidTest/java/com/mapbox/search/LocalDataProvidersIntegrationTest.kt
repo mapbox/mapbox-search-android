@@ -125,7 +125,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
                 place = "San Jose",
                 postcode = "95117",
                 region = "California",
-                street = "stevens creek blvd",
+                street = "Stevens Creek Blvd",
                 neighborhood = "Valley Fair",
                 houseNumber = "3249",
                 country = "United States of America"
