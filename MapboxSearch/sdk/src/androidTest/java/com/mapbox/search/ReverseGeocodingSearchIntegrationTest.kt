@@ -161,7 +161,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                     neighborhood = "Gros-Caillou",
                     place = "Paris",
                     postcode = "75007",
-                    street = "avenue anatole france"
+                    street = "Avenue Anatole France"
                 )
             ),
             fullAddress = "5 Avenue Anatole France, 75007 Paris, France",
