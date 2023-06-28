@@ -896,7 +896,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 place = "San Francisco",
                 postcode = "94103",
                 region = "California",
-                street = "10th st",
+                street = "10th St",
             )),
             fullAddress = "12 10th St, San Francisco, California 94103, United States of America",
             categories = listOf(
@@ -1163,10 +1163,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
 
         val suggestions = suggestionsResponse.requireSuggestions()
-        val suggestion = suggestions.first()
 
-        assertEquals("667 Madison Ave", suggestion.name)
-        assertEquals("Madison Ave", suggestion.address?.street)
+        val suggestion1 = suggestions.first()
+        assertEquals("667 Madison Ave", suggestion1.name)
+        assertEquals("Madison Ave", suggestion1.address?.street)
+
+        val suggestion2 = suggestions[1]
+        assertEquals("E 59th St", suggestion2.address?.street)
     }
 
     @Test
