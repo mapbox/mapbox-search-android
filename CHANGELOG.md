@@ -1,5 +1,18 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.7
+
+### Bug fixes
+- [ALL] Fixed street name capitalization for names with numbers.
+- [ALL] Fixed indexable records matching where a record with lower cased street wasn't matched correctly.
+
+### Mapbox dependencies
+- Search Native SDK `0.71.0`
+- Common SDK `23.6.0`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.6
 
 ### Breaking changes
