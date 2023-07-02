@@ -75,7 +75,7 @@ internal class OfflineSearchEngineTest {
         searchResultFactory = spyk(SearchResultFactory(mockk()))
 
         requestContextProvider = mockk()
-        every { requestContextProvider.provide(CoreApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
+        every { requestContextProvider.provide(CoreApiType.SEARCH_BOX) } returns TEST_SEARCH_REQUEST_CONTEXT
 
         createSearchEngine()
         mockDefaultSearchEngineFunctions()
@@ -475,7 +475,7 @@ internal class OfflineSearchEngineTest {
         const val TEST_QUERY = "Minsk"
 
         const val TEST_RESPONSE_UUID = "test response uuid"
-        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SBS, responseUuid = TEST_RESPONSE_UUID)
+        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SEARCH_BOX, responseUuid = TEST_RESPONSE_UUID)
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)

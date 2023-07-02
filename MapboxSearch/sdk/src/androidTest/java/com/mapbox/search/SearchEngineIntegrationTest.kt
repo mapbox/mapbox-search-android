@@ -1274,7 +1274,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             originRewritten = false,
             sessionID = TEST_UUID,
             requestContext = SearchRequestContext(
-                apiType = CoreApiType.SBS,
+                apiType = CoreApiType.SEARCH_BOX,
                 keyboardLocale = TEST_KEYBOARD_LOCALE,
                 screenOrientation = TEST_ORIENTATION,
                 responseUuid = ""

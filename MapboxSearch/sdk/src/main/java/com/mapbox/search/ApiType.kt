@@ -17,6 +17,7 @@ public enum class ApiType {
      * Single Box Search API.
      */
     @Reserved(Flags.SBS)
+    // TODO FIXME rename
     SBS,
 }
 
@@ -24,6 +25,6 @@ public enum class ApiType {
 internal fun ApiType.mapToCore(): CoreApiType {
     return when (this) {
         ApiType.GEOCODING -> CoreApiType.GEOCODING
-        ApiType.SBS -> CoreApiType.SBS
+        ApiType.SBS -> CoreApiType.SEARCH_BOX
     }
 }
