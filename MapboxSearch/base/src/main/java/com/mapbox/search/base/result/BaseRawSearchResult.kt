@@ -55,7 +55,7 @@ data class BaseRawSearchResult(
             } else {
                 null
             }
-        } ?: categories?.firstOrNull() ?: "cafe"
+        } ?: categories?.firstOrNull()?.lowercase() ?: "cafe"
     }
 
     private companion object {
