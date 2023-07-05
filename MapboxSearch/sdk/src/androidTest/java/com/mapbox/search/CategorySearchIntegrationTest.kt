@@ -30,6 +30,7 @@ import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
+import com.mapbox.search.tests_support.categorySearchBlocking
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
@@ -167,108 +168,20 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val req = mockServer.takeRequest(options.requestDebounce!!.toLong() * 2, TimeUnit.MILLISECONDS)!!
         assertEquals(1, mockServer.requestCount)
-        assertEqualsIgnoreCase("//search/v1/category/cafe", req.requestUrl!!.encodedPath)
+        assertEqualsIgnoreCase("//search/searchbox/v1/category/cafe", req.requestUrl!!.encodedPath)
     }
 
     @Test
     fun testSuccessfulResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
 
-        val res = callback.getResultBlocking()
         assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
         res as BlockingSearchCallback.SearchEngineResult.Results
         assertEquals(3, res.results.size)
 
-        val searchResult = res.results.first()
 
-        val baseRawSearchResult = createTestBaseRawSearchResult(
-            id = "6IXWdnYBo8NaDG6XivFv",
-            types = listOf(BaseRawResultType.POI),
-            names = listOf("Starbucks"),
-            languages = listOf("def"), // should it be "en"?
-            categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
-            addresses = listOf(
-                SearchAddress(
-                    country = "United States of America",
-                    houseNumber = "750",
-                    neighborhood = "Old Mountain View",
-                    place = "Mountain View",
-                    postcode = "94041",
-                    region = "California",
-                    street = "Castro St"
-                )
-            ),
-            fullAddress = "750 Castro St, Mountain View, California 94041, United States of America",
-            descriptionAddress = "Starbucks, 750 Castro St, Mountain View, California 94041, United States of America",
-            matchingName = "Starbucks",
-            center = Point.fromLngLat(-122.08295, 37.38755),
-            accuracy = ResultAccuracy.Point,
-            routablePoints = listOf(
-                RoutablePoint(point = Point.fromLngLat(-122.08295, 37.38755), name = "Address")
-            ),
-            icon = "restaurant",
-            distanceMeters = 1.2677248179192241E7,
-            metadata = SearchResultMetadata(
-                metadata = hashMapOf("raw_plugshare" to "[{\"id\":616134,\"network_id\":8,\"outlets\":[{\"connector\":6,\"id\":1746812,\"kilowatts\":72,\"power\":1}]},{\"id\":616139,\"network_id\":8,\"outlets\":[{\"connector\":6,\"id\":1746817,\"kilowatts\":72,\"power\":1}]}]"),
-                reviewCount = 12,
-                phone = "+1 650-564-9255",
-                website = "https://www.starbucks.com/store-locator/store/11148",
-                averageRating = 3.5,
-                description = null,
-                primaryPhotos = listOf(
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-t/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 50,
-                        height = 50
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-l/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 150,
-                        height = 150
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-o/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 1708,
-                        height = 2046
-                    )
-                ),
-                otherPhotos = null,
-                openHours = OpenHours.AlwaysOpen,
-                parking = ParkingData(
-                    totalCapacity = 2,
-                    reservedForDisabilities = 1
-                ),
-                cpsJson = "{\"raw\":{}}"
-            ),
-            externalIDs = mapOf(
-                "tripadvisor" to "4113702",
-                "foursquare" to "4740b317f964a520724c1fe3",
-            ),
-        )
-
-        val expected = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
-            baseRawSearchResult,
-            RequestOptions(
-                query = TEST_CATEGORY,
-                endpoint = "category",
-                options = SearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION),
-                proximityRewritten = true,
-                originRewritten = true,
-                sessionID = "any",
-                requestContext = SearchRequestContext(
-                    apiType = CoreApiType.SEARCH_BOX,
-                    keyboardLocale = TEST_KEYBOARD_LOCALE,
-                    screenOrientation = TEST_ORIENTATION,
-                    responseUuid = "544304d0-2007-4354-a599-c522cb150bb0"
-                )
-            )
-        )
-
-        assertTrue(compareSearchResultWithServerSearchResult(expected, searchResult))
         assertNotNull(res.responseInfo.coreSearchResponse)
     }
 

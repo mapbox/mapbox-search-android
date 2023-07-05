@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.common.SdkInfoRegistryFactory
 import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
@@ -56,6 +57,7 @@ internal class SearchEngineImpl(
         executor: Executor,
         callback: SearchSuggestionsCallback
     ): AsyncOperationTask {
+        SdkInfoRegistryFactory.getInstance().sdkInformation
         activityReporter.reportActivity("search-engine-forward-geocoding-suggestions")
 
         logd("search($query, $options) called")
