@@ -3,9 +3,14 @@ package com.mapbox.search.base.utils
 import com.mapbox.search.common.BuildConfig
 
 object UserAgentProvider {
+
+    const val sdkPackageName = "com.mapbox.search"
+    const val sdkName = "search-sdk-android"
+    const val sdkVersionName = BuildConfig.VERSION_NAME
+
     val userAgent = if (BuildConfig.DEBUG) {
-        "search-sdk-android-internal/${BuildConfig.VERSION_NAME}"
+        "$sdkName-internal/$sdkVersionName"
     } else {
-        "search-sdk-android/${BuildConfig.VERSION_NAME}"
+        "$sdkName/$sdkVersionName"
     }
 }
