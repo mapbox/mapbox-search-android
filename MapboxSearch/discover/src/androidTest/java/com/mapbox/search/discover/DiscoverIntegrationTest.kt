@@ -191,7 +191,7 @@ internal class DiscoverIntegrationTest {
         assertEquals(
             DiscoverAddress(
                 houseNumber = "26",
-                street = "26 Av. de l'Opéra",
+                street = "26 Av. De l'Opéra",
                 neighborhood = "Paris",
                 locality = null,
                 postcode = "75001",
@@ -277,7 +277,7 @@ internal class DiscoverIntegrationTest {
         assertEquals(
             DiscoverAddress(
                 houseNumber = "26",
-                street = "26 Av. de l'Opéra",
+                street = "26 Av. De l'Opéra",
                 neighborhood = "Paris",
                 locality = null,
                 postcode = "75001",

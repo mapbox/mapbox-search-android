@@ -87,14 +87,3 @@ internal fun createBaseSearchAddress(
 ) = BaseSearchAddress(
     houseNumber, street, neighborhood, locality, postcode, place, district, region, country
 )
-
-@Suppress("LongParameterList")
-internal fun createTestBaseSuggestAction(
-    endpoint: String = "test_endpoint",
-    path: String = "test_path",
-    query: String? = null,
-    body: ByteArray? = null,
-    multiRetrievable: Boolean = false,
-) = BaseSuggestAction(
-    endpoint, path, query, body, multiRetrievable
-)

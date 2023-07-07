@@ -199,7 +199,7 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(
             PlaceAutocompleteAddress(
                 houseNumber = "901",
-                street = "15th st nw",
+                street = "15th St Nw",
                 neighborhood = "Downtown",
                 locality = null,
                 postcode = "20005",
