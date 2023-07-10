@@ -53,16 +53,6 @@ android {
         }
     }
 
-    sourceSets {
-        String sharedTestDir = "src/sharedTest/java"
-        test {
-            java.srcDirs += sharedTestDir
-        }
-        androidTest {
-            java.srcDirs += sharedTestDir
-        }
-    }
-
     lint {
         abortOnError true
         disable 'ParcelCreator', 'ContentDescription'
