@@ -5,6 +5,8 @@ import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.utils.extension.nullIfEmpty
 import com.mapbox.search.base.utils.printableName
+import com.mapbox.search.internal.bindgen.SearchAddressCountry
+import com.mapbox.search.internal.bindgen.SearchAddressRegion
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.COUNTRY
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.DISTRICT
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.HOUSE_NUMBER
@@ -478,8 +480,10 @@ internal fun SearchAddress.mapToCore(): CoreSearchAddress {
         postcode,
         place,
         district,
-        region,
-        country,
+
+        // TODO FIXME
+        region?.let { SearchAddressRegion(it, null, null) },
+        country?.let { SearchAddressCountry(it, null, null) },
     )
 }
 

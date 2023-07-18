@@ -3,6 +3,8 @@ package com.mapbox.search.base.result
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.utils.extension.nullIfEmpty
+import com.mapbox.search.internal.bindgen.SearchAddressCountry
+import com.mapbox.search.internal.bindgen.SearchAddressRegion
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -31,8 +33,10 @@ fun CoreSearchAddress.mapToBaseSearchAddress(): BaseSearchAddress {
         postcode = postcode?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
         district = district?.nullIfEmpty(),
-        region = region?.nullIfEmpty(),
-        country = country?.nullIfEmpty()
+
+        // TODO FIXME
+        region = region?.name?.nullIfEmpty(),
+        country = country?.name?.nullIfEmpty()
     )
 }
 
@@ -46,7 +50,9 @@ fun BaseSearchAddress.mapToCore(): CoreSearchAddress {
         postcode,
         place,
         district,
-        region,
-        country,
+
+        // TODO FIXME
+        region?.let { SearchAddressRegion(it, null, null) },
+        country?.let { SearchAddressCountry(it, null, null) },
     )
 }

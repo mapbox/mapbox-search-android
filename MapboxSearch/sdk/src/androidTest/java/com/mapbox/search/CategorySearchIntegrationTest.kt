@@ -175,7 +175,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testSuccessfulResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
+        val res = searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
 
         assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
         res as BlockingSearchCallback.SearchEngineResult.Results

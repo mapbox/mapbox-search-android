@@ -906,8 +906,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestions = suggestionsResponse.requireSuggestions()
         val suggestion = suggestions.first()
 
-        // TODO FIXME
-        //assertEquals("667 Madison Ave", suggestion.name)
+        assertEquals("667 Madison Ave", suggestion.name)
         assertEquals("667 Madison Ave, New York City, New York 10065, United States of America", suggestion.fullAddress)
         assertEquals("Madison Ave", suggestion.address?.street)
 
