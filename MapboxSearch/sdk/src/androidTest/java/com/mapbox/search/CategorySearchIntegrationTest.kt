@@ -258,7 +258,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 originRewritten = true,
                 sessionID = "any",
                 requestContext = SearchRequestContext(
-                    apiType = CoreApiType.SEARCH_BOX,
+                    apiType = CoreApiType.SBS,
                     keyboardLocale = TEST_KEYBOARD_LOCALE,
                     screenOrientation = TEST_ORIENTATION,
                     responseUuid = "544304d0-2007-4354-a599-c522cb150bb0"

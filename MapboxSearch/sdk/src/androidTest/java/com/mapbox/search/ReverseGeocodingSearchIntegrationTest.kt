@@ -232,7 +232,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 originRewritten = false,
                 sessionID = "",
                 requestContext = SearchRequestContext(
-                    apiType = CoreApiType.SEARCH_BOX,
+                    apiType = CoreApiType.SBS,
                     keyboardLocale = TEST_KEYBOARD_LOCALE,
                     screenOrientation = TEST_ORIENTATION,
                     responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"

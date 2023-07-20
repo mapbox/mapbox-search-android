@@ -290,7 +290,7 @@ public interface OfflineSearchEngine {
                 CoreEngineOptions(
                     settings.accessToken,
                     null,
-                    CoreApiType.SEARCH_BOX,
+                    CoreApiType.SBS,
                     UserAgentProvider.userAgent,
                     null
                 ),

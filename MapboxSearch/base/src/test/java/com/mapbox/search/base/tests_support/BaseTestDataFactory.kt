@@ -66,7 +66,7 @@ internal fun createTestBaseRawSearchResult(
 @Suppress("LongParameterList")
 internal fun createTestBaseRequestOptions(
     core: CoreRequestOptions = createTestCoreRequestOptions(),
-    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
 ) = BaseRequestOptions(
     core = core,
     requestContext = requestContext

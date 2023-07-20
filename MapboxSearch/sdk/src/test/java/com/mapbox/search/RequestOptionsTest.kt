@@ -25,7 +25,7 @@ internal class RequestOptionsTest {
 
         private val TEST_POINT: Point = Point.fromLngLat(10.0, 10.0)
         private val TEST_ORIGIN_POINT: Point = Point.fromLngLat(20.0, 20.0)
-        private val TEST_SEARCH_REQUEST_CONTEXT: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX)
+        private val TEST_SEARCH_REQUEST_CONTEXT: SearchRequestContext = SearchRequestContext(CoreApiType.SBS)
 
         private val TEST_ENTRIES = mapOf(
             RequestOptions(

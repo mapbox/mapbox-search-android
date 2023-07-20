@@ -637,7 +637,7 @@ internal class SearchFeedbackEventsFactoryTest {
             endpoint = "suggest",
             options = TEST_SEARCH_OPTIONS,
             requestContext = SearchRequestContext(
-                apiType = CoreApiType.SEARCH_BOX,
+                apiType = CoreApiType.SBS,
                 keyboardLocale = TEST_LOCALE,
                 screenOrientation = ScreenOrientation.PORTRAIT,
                 responseUuid = TEST_RESPONSE_UUID

@@ -77,15 +77,15 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     return AsyncOperationTaskImpl.COMPLETED
                 }
             }
-            CoreApiType.SEARCH_BOX, CoreApiType.AUTOFILL -> {
+            CoreApiType.SBS, CoreApiType.AUTOFILL -> {
                 if (searchResult.action == null && searchResult.type != BaseRawResultType.USER_RECORD) {
                     failDebug { "Can't create search suggestion from. ${debugInfo()}" }
                     callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
                     return AsyncOperationTaskImpl.COMPLETED
                 }
             }
-            CoreApiType.SBS -> {
-                callback(Result.failure(Exception("Unsupported API type: $apiType")))
+            CoreApiType.SEARCH_BOX -> {
+                callback(Result.failure(Exception("Search Box is not supported yet")))
                 return AsyncOperationTaskImpl.COMPLETED
             }
         }
@@ -115,7 +115,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    CoreApiType.SEARCH_BOX, CoreApiType.AUTOFILL -> {
+                    CoreApiType.SBS, CoreApiType.AUTOFILL -> {
                         if (searchResult.types.isValidMultiType()) {
                             val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                             callback(Result.success(value))
@@ -126,7 +126,10 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    else -> error("Unsupported API type: $apiType")
+                    CoreApiType.SEARCH_BOX -> {
+                        // TODO Support Search Box
+                        error("Unsupported api type SEARCH_BOX")
+                    }
                 }
             }
             BaseRawResultType.BRAND -> {
