@@ -2,9 +2,6 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.BaseRawResultType
-import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
@@ -13,35 +10,24 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
-import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.common.metadata.ImageInfo
-import com.mapbox.search.common.metadata.OpenHours
-import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.ResultAccuracy
-import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.categorySearchBlocking
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.getBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
-import com.mapbox.search.tests_support.searchBlocking
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.enqueueMultiple
 import okhttp3.mockwebserver.MockResponse
@@ -125,8 +111,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             routeOptions = TEST_ROUTE_OPTIONS
         )
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, options, callback)
+        searchEngine.categorySearchBlocking(TEST_CATEGORY, options)
 
         val request = mockServer.takeRequest()
         assertEqualsIgnoreCase("get", request.method!!)
@@ -176,36 +161,34 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testSuccessfulResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val res = searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
-        res as BlockingSearchCallback.SearchEngineResult.Results
-        assertEquals(3, res.results.size)
-
-
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        val (results, responseInfo) = response.requireResultPair()
+        assertEquals(3, results.size)
+        assertNotNull(responseInfo.coreSearchResponse)
     }
 
     @Test
     fun testOptionsLimit() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(limit = 1), callback)
+        val response = searchEngine.categorySearchBlocking(
+            TEST_CATEGORY,
+            CategorySearchOptions(limit = 1)
+        )
 
-        assertEquals(1, callback.getResultBlocking().requireResults().size)
+        assertEquals(1, response.requireResults().size)
     }
 
     @Test
     fun testSuccessfulEmptyResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_empty_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
+        val (results, responseInfo) = response.requireResultPair()
 
-        val res = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertTrue(res.results.isEmpty())
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        assertTrue(results.isEmpty())
+        assertNotNull(responseInfo.coreSearchResponse)
     }
 
     @Test
@@ -221,10 +204,9 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         }
         historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
 
-        val results = callback.getResultBlocking().requireResults()
+        val results = response.requireResults()
         assertEquals(records.size, results.size)
         assertTrue(results.all { it.indexableRecord != null })
     }
@@ -233,7 +215,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testMixedIndexableRecordsResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val response1 = searchEngine.searchBlocking(TEST_CATEGORY)
+        val response1 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
         val firstRun = response1.requireResults()
         assertEquals(3, firstRun.size)
         assertFalse(firstRun.any { it.indexableRecord != null })
@@ -246,7 +228,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response_new_ids.json"))
 
-        val response2 = searchEngine.searchBlocking(TEST_CATEGORY)
+        val response2 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
         val secondRun = response2.requireResults()
         assertEquals(3, secondRun.size)
@@ -263,14 +245,8 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             firstResult.base.rawSearchResult.userRecordId
         )
 
-        val blockingCompletionCallback = BlockingCompletionCallback<IndexableRecord?>()
-        historyDataProvider.get(secondRun[0].id, blockingCompletionCallback)
-        val callbackResult = blockingCompletionCallback.getResultBlocking()
-
-        assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
-        callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
-
-        assertEquals(callbackResult.result, secondRun[0].indexableRecord)
+        val historyRecord = historyDataProvider.getBlocking(secondRun[0].id)
+        assertEquals(historyRecord, secondRun[0].indexableRecord)
 
         assertTrue(compareSearchResultWithServerSearchResult(secondRun[1], firstRun[1]))
         assertTrue(compareSearchResultWithServerSearchResult(secondRun[2], firstRun[2]))
@@ -280,28 +256,30 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testIgnoredIndexableRecordsResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response1 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
+        val (results1, responseInfo1) = response1.requireResultPair()
 
-        val firstRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertEquals(3, firstRun.results.size)
-        assertFalse(firstRun.results.any { it.indexableRecord != null })
+        assertEquals(3, results1.size)
+        assertFalse(results1.any { it.indexableRecord != null })
         assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
-        assertNotNull(firstRun.responseInfo.coreSearchResponse)
+        assertNotNull(responseInfo1.coreSearchResponse)
 
         historyDataProvider.upsertBlocking(
-            createHistoryRecord(firstRun.results.first(), timeProvider.currentTimeMillis()),
+            createHistoryRecord(results1.first(), timeProvider.currentTimeMillis()),
             callbacksExecutor,
         )
 
-        callback.reset()
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response_new_ids.json"))
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(ignoreIndexableRecords = true), callback)
 
-        val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertEquals(3, secondRun.results.size)
-        assertFalse(secondRun.results.any { it.indexableRecord != null })
-        assertNotNull(secondRun.responseInfo.coreSearchResponse)
+        val response2 = searchEngine.categorySearchBlocking(
+            TEST_CATEGORY,
+            CategorySearchOptions(ignoreIndexableRecords = true)
+        )
+        val (results2, responseInfo2) = response2.requireResultPair()
+
+        assertEquals(3, results2.size)
+        assertFalse(results2.any { it.indexableRecord != null })
+        assertNotNull(responseInfo2.coreSearchResponse)
     }
 
     @Test
@@ -317,19 +295,16 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
         historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(
+        val response = searchEngine.categorySearchBlocking(
             TEST_CATEGORY,
             CategorySearchOptions(
                 proximity = recordCoordinate,
                 origin = recordCoordinate,
                 indexableRecordsDistanceThresholdMeters = 0.0
             ),
-            callback
         )
 
-        val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertEquals(record, results.first().indexableRecord)
+        assertEquals(record, response.requireResults().first().indexableRecord)
     }
 
     @Test
@@ -348,19 +323,16 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(
+        val response = searchEngine.categorySearchBlocking(
             TEST_CATEGORY,
             CategorySearchOptions(
                 proximity = userLocation,
                 origin = userLocation,
                 indexableRecordsDistanceThresholdMeters = 500.0
             ),
-            callback
         )
 
-        val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertEquals(record, results.first().indexableRecord)
+        assertEquals(record, response.requireResults().first().indexableRecord)
     }
 
     @Test
@@ -379,19 +351,16 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(
+        val response = searchEngine.categorySearchBlocking(
             TEST_CATEGORY,
             CategorySearchOptions(
                 proximity = userLocation,
                 origin = userLocation,
                 indexableRecordsDistanceThresholdMeters = 15.0
             ),
-            callback
         )
 
-        val results = (callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results).results
-        assertFalse(results.any { it.indexableRecord != null })
+        assertFalse(response.requireResults().any { it.indexableRecord != null })
     }
 
     @Test
@@ -399,8 +368,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_incorrect_response.json"))
 
         try {
-            val callback = BlockingSearchCallback()
-            searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+            searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
             if (BuildConfig.DEBUG) {
                 Assert.fail()
             }
@@ -429,34 +397,24 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testErrorResponse() {
         mockServer.enqueue(MockResponse().setResponseCode(404))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error && res.e is SearchRequestException && res.e.code == 404)
+        val e = response.requireError()
+        assertTrue(e is SearchRequestException && e.code == 404)
     }
 
     @Test
     fun testNetworkError() {
         mockServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
-
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error && res.e is IOException)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
+        assertTrue(response.requireError() is IOException)
     }
 
     @Test
     fun testBrokenResponseContent() {
         mockServer.enqueue(MockResponse().setResponseCode(200).setBody("I'm broken"))
-
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
-        res as BlockingSearchCallback.SearchEngineResult.Error
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
+        assertTrue(response.isError)
     }
 
     @Test
@@ -488,16 +446,11 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         mockServer.enqueue(errorResponse)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+        val error = response.requireError()
 
-        assertEquals(
-            SearchRequestException("Wrong arguments", 422),
-            (res as BlockingSearchCallback.SearchEngineResult.Error).e
-        )
+        assertEquals(SearchRequestException("Wrong arguments", 422), error)
     }
 
     @Test
@@ -508,18 +461,15 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         mockServer.enqueue(errorResponse)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+        val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
+        val error = response.requireError()
 
         assertEquals(
             SearchRequestException(
                 readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
-            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+            error
         )
     }
 
