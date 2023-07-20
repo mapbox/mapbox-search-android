@@ -735,44 +735,6 @@ internal class SearchEngineTest {
         }
     }
 
-    @TestFactory
-    fun `Check search multiple-suggestions selection cancellation initiated by user`() = TestCase {
-        Given("SearchEngine with mocked dependencies") {
-            every {
-                coreEngine.retrieveBucket(any(), any(), any())
-            } answers {
-                TEST_REQUEST_ID
-            }
-
-            When("Selection task cancelled by user") {
-                val callback = mockk<SearchMultipleSelectionCallback>(relaxed = true)
-
-                val task = searchEngine.select(
-                    suggestions = listOf(TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform()),
-                    executor = executor,
-                    callback = callback,
-                )
-
-                task.cancel()
-
-                Then("Task is marked as cancelled", true, task.isCancelled)
-
-                VerifyNo("Callback is not called") {
-                    callback.onResult(any(), any(), any())
-                    callback.onError(any())
-                }
-
-                VerifyOnce("Core cancel() is called with correct request id") {
-                    coreEngine.cancel(TEST_REQUEST_ID)
-                }
-
-                VerifyOnce("User activity reported") {
-                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
-                }
-            }
-        }
-    }
-
     private companion object {
 
         const val TEST_REQUEST_ID = 1L
@@ -852,7 +814,7 @@ internal class SearchEngineTest {
         val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
                 types = listOf(BaseRawResultType.POI),
-                action = createTestCoreSuggestAction(multiRetrievable = true).mapToBase()
+                action = createTestCoreSuggestAction().mapToBase()
             ),
             BASE_TEST_REQUEST_OPTIONS
         )

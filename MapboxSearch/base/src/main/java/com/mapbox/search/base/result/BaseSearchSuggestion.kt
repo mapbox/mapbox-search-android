@@ -54,9 +54,6 @@ sealed class BaseSearchSuggestion(
     open val externalIDs: Map<String, String>
         get() = Collections.unmodifiableMap(rawSearchResult.externalIDs ?: emptyMap())
 
-    open val isBatchResolveSupported: Boolean
-        get() = rawSearchResult.action?.multiRetrievable == true
-
     open val serverIndex: Int?
         get() = rawSearchResult.serverIndex
 

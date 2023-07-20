@@ -10,7 +10,6 @@ data class BaseSuggestAction(
     val path: String,
     var query: String?,
     val body: ByteArray?,
-    val multiRetrievable: Boolean,
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {
@@ -26,7 +25,6 @@ data class BaseSuggestAction(
             if (other.body == null) return false
             if (!body.contentEquals(other.body)) return false
         } else if (other.body != null) return false
-        if (multiRetrievable != other.multiRetrievable) return false
 
         return true
     }
@@ -36,13 +34,12 @@ data class BaseSuggestAction(
         result = 31 * result + path.hashCode()
         result = 31 * result + query.hashCode()
         result = 31 * result + (body?.contentHashCode() ?: 0)
-        result = 31 * result + multiRetrievable.hashCode()
         return result
     }
 }
 
 fun CoreSuggestAction.mapToBase() = BaseSuggestAction(
-    endpoint = endpoint, path = path, query = query, body = body, multiRetrievable = multiRetrievable
+    endpoint = endpoint, path = path, query = query, body = body
 )
 
 fun BaseSuggestAction.mapToCore() = CoreSuggestAction(
@@ -50,5 +47,5 @@ fun BaseSuggestAction.mapToCore() = CoreSuggestAction(
     path,
     query,
     body,
-    multiRetrievable
+    false
 )

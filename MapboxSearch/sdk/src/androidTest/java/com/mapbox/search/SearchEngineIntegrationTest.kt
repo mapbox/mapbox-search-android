@@ -25,7 +25,6 @@ import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.equalsTo
-import com.mapbox.search.internal.bindgen.ResultAccuracy
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -596,7 +595,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("test-id", searchResult.id)
         assertEquals("Washington", searchResult.name)
         // TODO FIXME remove matchingName
-        //assertEquals(null, searchResult.matchingName)
+        // assertEquals(null, searchResult.matchingName)
         assertEquals(
             "Washington, District of Columbia 20036, United States of America",
             searchResult.descriptionText
@@ -606,7 +605,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             searchResult.fullAddress
         )
         // TODO fixme Search Native should parse accuracy
-        //assertEquals(ResultAccuracy.APPROXIMATE, searchResult.accuracy)
+        // assertEquals(ResultAccuracy.APPROXIMATE, searchResult.accuracy)
         assertEquals(
             SearchAddress(
                 country = "United States of America",
@@ -661,7 +660,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         }
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
-
 
         val historyData = historyDataProvider.getAllBlocking()
         assertEquals(1, historyData.size)

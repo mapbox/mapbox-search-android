@@ -16,7 +16,6 @@ import io.mockk.spyk
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.TestFactory
 
 @Suppress("LargeClass")
@@ -73,11 +72,6 @@ internal class BaseSearchSuggestionTest {
                 Then("Suggestion etaMinutes should be derived from Search result") {
                     assertEquals(BASE_RAW_SEARCH_RESULT_1.etaMinutes, suggestion1.etaMinutes)
                     assertEquals(BASE_RAW_SEARCH_RESULT_2.etaMinutes, suggestion2.etaMinutes)
-                }
-
-                Then("Suggestion isBatchResolveSupported value should be derived from Search result") {
-                    assertEquals(BASE_RAW_SEARCH_RESULT_1.action?.multiRetrievable, suggestion1.isBatchResolveSupported)
-                    assertEquals(BASE_RAW_SEARCH_RESULT_2.action?.multiRetrievable, suggestion2.isBatchResolveSupported)
                 }
             }
         }
@@ -272,34 +266,12 @@ internal class BaseSearchSuggestionTest {
                     BaseSearchSuggestionType.IndexableRecordItem(TEST_RECORD, searchResult.layerId!!),
                     suggestion.type
                 )
-
-                Then(
-                    "'isBatchResolveSupported' is always true for IndexableRecordItem",
-                    true,
-                    suggestion.isBatchResolveSupported
-                )
             }
         }
     }
 
     @TestFactory
     fun `Check GeocodingCompatSearchSuggestion-specific implementation`() = TestCase {
-        Given("Correct Core search result representing Geocoding search suggestion") {
-            val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                action = null,
-                center = Point.fromLngLat(10.123, 50.456),
-                types = listOf(BaseRawResultType.POI)
-            )
-
-            val suggestion = BaseGeocodingCompatSearchSuggestion(searchResult, REQUEST_OPTIONS)
-
-            When("Getting GeocodingCompatSearchSuggestion properties") {
-                Then("'isBatchResolveSupported' is always true for GeocodingCompatSearchSuggestion") {
-                    assertTrue(suggestion.isBatchResolveSupported)
-                }
-            }
-        }
-
         Given("All the possible BaseRawResultType types") {
             BaseRawResultType.values().forEach { rawResultType ->
                 when (rawResultType) {
@@ -432,8 +404,7 @@ internal class BaseSearchSuggestionTest {
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",
                 query = "test-query-1",
-                body = null,
-                multiRetrievable = true
+                body = null
             )
         )
 
@@ -460,8 +431,7 @@ internal class BaseSearchSuggestionTest {
                 endpoint = "test-endpoint-2",
                 path = "test-path-2",
                 query = "test-query-2",
-                body = null,
-                multiRetrievable = false
+                body = null
             )
         )
 
@@ -487,8 +457,7 @@ internal class BaseSearchSuggestionTest {
                 endpoint = "test-endpoint-3",
                 path = "test-path-3",
                 query = "test-query-3",
-                body = null,
-                multiRetrievable = false
+                body = null
             )
         )
     }

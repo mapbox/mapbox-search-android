@@ -4,17 +4,14 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
-import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
-import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.failDebug
-import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
@@ -269,102 +266,6 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private fun selectBatch(
-        suggestions: List<BaseSearchSuggestion>,
-        executor: Executor,
-        callback: BaseSearchMultipleSelectionCallback,
-    ): AsyncOperationTask {
-        require(suggestions.isNotEmpty()) {
-            "No suggestions were provided! Please, provide at least 1 suggestion."
-        }
-
-        if (suggestions.distinctBy { it.requestOptions }.size != 1) {
-            executor.execute {
-                callback.onError(
-                    IllegalArgumentException("All provided suggestions must originate from the same search result!")
-                )
-            }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
-
-        logd("batch select($suggestions) called")
-
-        val searchResponseInfo = BaseResponseInfo(suggestions.first().requestOptions, null, isReproducible = false)
-
-        val filtered: List<BaseServerSearchSuggestion> = suggestions
-            .mapNotNull { it as? BaseServerSearchSuggestion }
-            .filter { it.isBatchResolveSupported }
-
-        if (filtered.isEmpty()) {
-            executor.execute { callback.onResult(filtered, emptyList(), searchResponseInfo) }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
-
-        logd("Batch retrieve. ${suggestions.size} requested, ${filtered.size} took for processing")
-
-        val coreSearchResults = filtered.map { it.rawSearchResult.mapToCore() }
-
-        val resultingFunction: (List<BaseSearchResult>) -> List<BaseSearchResult> = { remoteResults ->
-            assertDebug(remoteResults.size == filtered.size) {
-                "Not all items have been resolved. " +
-                        "To resolve: ${filtered.map { it.id to it.type }}, " +
-                        "actual: ${remoteResults.map { it.id to it.types }}"
-            }
-            remoteResults
-        }
-
-        return makeRequest(callback) { task ->
-            val requestOptions = filtered.first().requestOptions
-            val requestContext = requestOptions.requestContext
-            val requestId = coreEngine.retrieveBucket(
-                requestOptions.core,
-                coreSearchResults,
-                TwoStepsBatchRequestCallbackWrapper(
-                    suggestions = filtered,
-                    searchResultFactory = searchResultFactory,
-                    callbackExecutor = executor,
-                    workerExecutor = engineExecutorService,
-                    searchRequestTask = task,
-                    resultingFunction = resultingFunction,
-                    searchRequestContext = requestContext,
-                )
-            )
-            task.addOnCancelledCallback {
-                coreEngine.cancel(requestId)
-            }
-        }
-    }
-
-    private suspend fun selectBatch(
-        suggestions: List<BaseSearchSuggestion>
-    ): Expected<Exception, Triple<List<BaseSearchSuggestion>, List<BaseSearchResult>, BaseResponseInfo>> {
-        return suspendCancellableCoroutine { continuation ->
-            val task = selectBatch(
-                suggestions,
-                SearchSdkMainThreadWorker.mainExecutor,
-                object : BaseSearchMultipleSelectionCallback {
-                    override fun onResult(
-                        suggestions: List<BaseSearchSuggestion>,
-                        results: List<BaseSearchResult>,
-                        responseInfo: BaseResponseInfo
-                    ) {
-                        continuation.resumeWith(
-                            Result.success(ExpectedFactory.createValue(Triple(suggestions, results, responseInfo)))
-                        )
-                    }
-
-                    override fun onError(e: Exception) {
-                        continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                    }
-                }
-            )
-
-            continuation.invokeOnCancellation {
-                task.cancel()
-            }
-        }
-    }
-
     suspend fun resolveAll(
         suggestions: List<BaseSearchSuggestion>,
         allowCategorySuggestions: Boolean,
@@ -372,9 +273,6 @@ class TwoStepsToOneStepSearchEngineAdapter(
         return when {
             suggestions.isEmpty() -> {
                 ExpectedFactory.createValue(emptyList())
-            }
-            suggestions.all { it.isBatchResolveSupported } -> {
-                selectBatch(suggestions).mapValue { (_, results, _) -> results }
             }
             else -> {
                 coroutineScope {

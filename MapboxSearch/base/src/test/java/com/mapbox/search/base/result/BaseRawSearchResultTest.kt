@@ -211,7 +211,7 @@ internal class BaseRawSearchResultTest {
                 "test layer id",
                 "test user record id",
                 -1,
-                CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
+                CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), false),
                 123
             )
         }

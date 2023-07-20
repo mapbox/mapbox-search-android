@@ -74,16 +74,6 @@
         />
 
     <item
-        android:id="@+id/open_forward_geocoding_batch_resolving_kt_example"
-        android:title="@string/action_open_forward_geocoding_batch_resolving_kt_example"
-        />
-
-    <item
-        android:id="@+id/open_forward_geocoding_batch_resolving_java_example"
-        android:title="@string/action_open_forward_geocoding_batch_resolving_java_example"
-        />
-
-    <item
         android:id="@+id/open_reverse_geocoding_kt_example"
         android:title="@string/action_open_reverse_geocoding_kt_example"
         />

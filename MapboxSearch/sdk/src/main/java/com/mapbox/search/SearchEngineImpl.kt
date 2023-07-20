@@ -1,26 +1,20 @@
 package com.mapbox.search
 
 import com.mapbox.search.adapter.BaseSearchCallbackAdapter
-import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSuggestionsCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
-import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
-import com.mapbox.search.base.engine.TwoStepsBatchRequestCallbackWrapper
 import com.mapbox.search.base.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
-import com.mapbox.search.base.result.BaseSearchResult
-import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
@@ -80,131 +74,6 @@ internal class SearchEngineImpl(
             )
             task.addOnCancelledCallback {
                 coreEngine.cancel(requestId)
-            }
-        }
-    }
-
-    override fun select(
-        suggestions: List<SearchSuggestion>,
-        executor: Executor,
-        callback: SearchMultipleSelectionCallback
-    ): AsyncOperationTask {
-        activityReporter.reportActivity("search-engine-forward-geocoding-selection")
-
-        require(suggestions.isNotEmpty()) {
-            "No suggestions were provided! Please, provide at least 1 suggestion."
-        }
-
-        if (suggestions.distinctBy { it.requestOptions }.size != 1) {
-            executor.execute {
-                callback.onError(
-                    IllegalArgumentException("All provided suggestions must originate from the same search result!")
-                )
-            }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
-
-        logd("batch select($suggestions) called")
-
-        val searchResponseInfo = ResponseInfo(suggestions.first().requestOptions, null, isReproducible = false)
-
-        val filtered: List<SearchSuggestion> = suggestions.filter { it.isBatchResolveSupported }
-        if (filtered.isEmpty()) {
-            executor.execute { callback.onResult(filtered, emptyList(), searchResponseInfo) }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
-
-        logd("Batch retrieve. ${suggestions.size} requested, ${filtered.size} took for processing")
-
-        val alreadyResolved = HashMap<Int, BaseSearchResult>(filtered.size)
-        val toResolve = ArrayList<BaseSearchSuggestion>(filtered.size)
-
-        filtered.forEachIndexed { index, suggestion ->
-            when (val base = suggestion.base) {
-                is BaseGeocodingCompatSearchSuggestion -> {
-                    val result = BaseServerSearchResultImpl(
-                        listOf(base.searchResultType),
-                        base.rawSearchResult,
-                        base.requestOptions
-                    )
-                    alreadyResolved[index] = result
-                }
-                is BaseIndexableRecordSearchSuggestion -> {
-                    val resolved = BaseIndexableRecordSearchResultImpl(
-                        base.record,
-                        base.rawSearchResult,
-                        base.requestOptions
-                    )
-
-                    alreadyResolved[index] = resolved
-                }
-                is BaseServerSearchSuggestion -> {
-                    toResolve.add(base)
-                }
-            }
-        }
-
-        return when (alreadyResolved.size) {
-            filtered.size -> {
-                val result = filtered.indices.mapNotNull { index ->
-                    alreadyResolved[index]?.let { SearchResult(it) }
-                }
-                executor.execute {
-                    callback.onResult(filtered, result, searchResponseInfo)
-                }
-                AsyncOperationTaskImpl.COMPLETED
-            }
-            else -> {
-                val coreSearchResults = toResolve.map {
-                    it.rawSearchResult.mapToCore()
-                }
-
-                val resultingFunction: (List<BaseSearchResult>) -> List<BaseSearchResult> = { remoteResults ->
-                    assertDebug(remoteResults.size == toResolve.size) {
-                        "Not all items have been resolved. " +
-                                "To resolve: ${toResolve.map { it.id to it.type }}, " +
-                                "actual: ${remoteResults.map { it.id to it.types }}"
-                    }
-                    if (remoteResults.size != toResolve.size) {
-                        alreadyResolved.values + remoteResults
-                    } else {
-                        val finalSize = alreadyResolved.size + remoteResults.size
-                        val result = ArrayList<BaseSearchResult>(finalSize)
-
-                        var remoteResultsIndex = 0
-                        (0 until finalSize).map { index ->
-                            val element = if (alreadyResolved[index] != null) {
-                                alreadyResolved[index]!!
-                            } else {
-                                remoteResults[remoteResultsIndex++]
-                            }
-                            result.add(element)
-                        }
-                        result
-                    }
-                }
-
-                val baseCallback: BaseSearchMultipleSelectionCallback = BaseSearchMultipleSelectionCallbackAdapter(callback)
-                makeRequest(baseCallback) { task ->
-                    val requestOptions = toResolve.first().requestOptions
-                    val requestContext = requestOptions.requestContext
-                    val requestId = coreEngine.retrieveBucket(
-                        requestOptions.core,
-                        coreSearchResults,
-                        TwoStepsBatchRequestCallbackWrapper(
-                            suggestions = filtered.map { it.base },
-                            searchResultFactory = searchResultFactory,
-                            callbackExecutor = executor,
-                            workerExecutor = engineExecutorService,
-                            searchRequestTask = task,
-                            resultingFunction = resultingFunction,
-                            searchRequestContext = requestContext,
-                        )
-                    )
-                    task.addOnCancelledCallback {
-                        coreEngine.cancel(requestId)
-                    }
-                }
             }
         }
     }

@@ -102,12 +102,6 @@ public class SearchSuggestion internal constructor(
     public val externalIDs: Map<String, String> = Collections.unmodifiableMap(base.externalIDs)
 
     /**
-     * Denotes whether this suggestion can be passed as a parameter to a batch selection method of the [com.mapbox.search.SearchEngine].
-     */
-    @IgnoredOnParcel
-    public val isBatchResolveSupported: Boolean = base.isBatchResolveSupported
-
-    /**
      * Index in response from server.
      */
     @IgnoredOnParcel
@@ -141,7 +135,6 @@ public class SearchSuggestion internal constructor(
         if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (metadata != other.metadata) return false
         if (externalIDs != other.externalIDs) return false
-        if (isBatchResolveSupported != other.isBatchResolveSupported) return false
         if (serverIndex != other.serverIndex) return false
 
         return true
@@ -164,7 +157,6 @@ public class SearchSuggestion internal constructor(
         result = 31 * result + (etaMinutes?.hashCode() ?: 0)
         result = 31 * result + (metadata?.hashCode() ?: 0)
         result = 31 * result + externalIDs.hashCode()
-        result = 31 * result + isBatchResolveSupported.hashCode()
         result = 31 * result + (serverIndex ?: 0)
         return result
     }
@@ -187,7 +179,6 @@ public class SearchSuggestion internal constructor(
                 "etaMinutes=$etaMinutes, " +
                 "metadata=$metadata, " +
                 "externalIDs=$externalIDs, " +
-                "isBatchResolveSupported=$isBatchResolveSupported, " +
                 "serverIndex=$serverIndex, " +
                 "type=$type" +
                 ")"

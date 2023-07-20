@@ -113,14 +113,12 @@ internal fun createTestBaseSuggestAction(
     path: String = "test-path",
     query: String? = "test-query",
     body: ByteArray? = null,
-    multiRetrievable: Boolean = false,
 ): BaseSuggestAction {
     return BaseSuggestAction(
         endpoint = endpoint,
         path = path,
         query = query,
-        body = body,
-        multiRetrievable = multiRetrievable
+        body = body
     )
 }
 

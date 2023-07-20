@@ -197,7 +197,7 @@ internal class PlaceAutocompleteIntegrationTest {
             "1401 New York Ave Nw, Washington, District of Columbia 20005, United States of America",
             suggestion.formattedAddress
         )
-        assertEquals(Point.fromLngLat( -77.0323, 38.899795), suggestion.coordinate)
+        assertEquals(Point.fromLngLat(-77.0323, 38.899795), suggestion.coordinate)
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
         assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
@@ -425,7 +425,7 @@ internal class PlaceAutocompleteIntegrationTest {
             "740 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestions[0].formattedAddress
         )
-        assertEquals(Point.fromLngLat( -77.034063, 38.899815), suggestions[0].coordinate)
+        assertEquals(Point.fromLngLat(-77.034063, 38.899815), suggestions[0].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(

@@ -163,50 +163,6 @@ public interface SearchEngine {
     ): AsyncOperationTask
 
     /**
-     * Function to select multiple suggestions at once.
-     * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
-     *
-     * Note that all the search suggestions must originate from the same search request and only certain suggestions
-     * can be used in the batch selection, to check if a [SearchSuggestion] can be passed to this function,
-     * call [SearchSuggestion.isBatchResolveSupported].
-     * With the current implementation, only POI and indexable record suggestions support batch resolving.
-     * All the suggestions that can't be used in batch resolving will be filtered.
-     *
-     * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
-     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
-     * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [AsyncOperationTask] object representing pending completion of the request.
-     */
-    public fun select(
-        suggestions: List<SearchSuggestion>,
-        executor: Executor,
-        callback: SearchMultipleSelectionCallback,
-    ): AsyncOperationTask
-
-    /**
-     * Function to select multiple suggestions at once.
-     * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
-     *
-     * Note that all the search suggestions must originate from the same search request and only certain suggestions
-     * can be used in the batch selection, to check if a [SearchSuggestion] can be passed to this function,
-     * call [SearchSuggestion.isBatchResolveSupported].
-     * With the current implementation, only POI and indexable record suggestions support batch resolving.
-     * All the suggestions that can't be used in batch resolving will be filtered.
-     *
-     * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
-     * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [AsyncOperationTask] object representing pending completion of the request.
-     */
-    public fun select(
-        suggestions: List<SearchSuggestion>,
-        callback: SearchMultipleSelectionCallback,
-    ): AsyncOperationTask = select(
-        suggestions = suggestions,
-        executor = SearchSdkMainThreadWorker.mainExecutor,
-        callback = callback,
-    )
-
-    /**
      * Performs a search request for places based on a category.
      *
      * @param categoryName Name of category to search.

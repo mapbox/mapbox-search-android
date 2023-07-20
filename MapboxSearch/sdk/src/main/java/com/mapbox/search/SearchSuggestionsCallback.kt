@@ -52,30 +52,3 @@ public interface SearchSelectionCallback : SearchSuggestionsCallback {
         responseInfo: ResponseInfo
     )
 }
-
-/**
- * Callback called when multiple selection request completes.
- */
-public interface SearchMultipleSelectionCallback {
-
-    /**
-     * Called when suggestions have been resolved.
-     *
-     * @param suggestions The suggestions from which the [results] were resolved.
-     * Note that these suggestions is not necessary the same as ones passed to [SearchEngine.select]
-     * because the function filters suggestions that don't support batch resolving.
-     * @param results Resolved search results for search suggestions.
-     * @param responseInfo Search response and request information.
-     */
-    public fun onResult(
-        suggestions: List<SearchSuggestion>,
-        results: List<SearchResult>,
-        responseInfo: ResponseInfo
-    )
-
-    /**
-     * Called if an error occurred during the request.
-     * @param e exception, occurred during the request.
-     */
-    public fun onError(e: Exception)
-}

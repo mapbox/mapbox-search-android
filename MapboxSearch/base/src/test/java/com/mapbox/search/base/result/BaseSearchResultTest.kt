@@ -110,8 +110,7 @@ internal class BaseSearchResultTest {
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",
                 query = "test-query-1",
-                body = null,
-                multiRetrievable = true
+                body = null
             )
         )
 

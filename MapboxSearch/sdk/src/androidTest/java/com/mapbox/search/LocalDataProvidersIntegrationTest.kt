@@ -1,7 +1,6 @@
 package com.mapbox.search
 
 import com.google.gson.JsonSyntaxException
-import com.mapbox.geojson.Point
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
@@ -13,7 +12,6 @@ import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingOnDataProviderEngineRegisterListener
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestHistoryRecord
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
 import com.mapbox.search.tests_support.searchBlocking
