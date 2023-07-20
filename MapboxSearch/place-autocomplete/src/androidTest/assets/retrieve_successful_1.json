@@ -5,123 +5,68 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          -77.033568,
-          38.90143
+          -77.034063,
+          38.899815
         ],
         "type": "Point"
       },
       "properties": {
-        "feature_name": "Starbucks",
-        "matching_name": "Starbucks",
-        "highlighted_name": "Starbucks",
-        "description": "901 15th St NW, Washington, District of Columbia 20005, United States of America",
-        "place_name": "Starbucks, 901 15th St NW, Washington, District of Columbia 20005, United States of America",
-        "id": "9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80",
-        "place_type": [
-          "poi"
-        ],
-        "context": [
-          {
-            "layer": "address",
-            "localized_layer": "address",
-            "name": "901 15th St NW, Washington DC, DC 20005-2327"
+        "name": "Mapbox DC",
+        "mapbox_id": "dXJuOm1ieHJldDowcEJqSFJpdzlNc3lRV0JjRnlJQkJBOWhyX0hQOUpfRmF0NjdoUmRnb09yWFNCWFpKVXEtd1dsQlE4Vk5sM0RfaXdlaFBnMlptLTFDdHp0Vnl2Z3JfX256VmUzTVp4R3VRWmZZWF9ybmRfREQxNXpUYVZDS19oWGdneUlEb012U1kxd210ekRMdmRRNkpCendPMlViZzBUOHVCdU1KMU9oQk9wR1RGUE5qekUtYWRtaURmOXZCcU5jQThJZW9mTWpKaUVsZXAzaDNvdWk3WHF0ZXZvU3FQT1ViNkQ5YUdnM2lBQ3Zra3dydWRhWTRTQS1HcGlsSmxxcW5lX3padEF3cjJKR054LVBTMXpnMjFBeGFLT1JRQXQ2UGlTSXpjSnpQaVhIcE5jRFA1c08tSlYyTU05U05WVkxMSnJpODhZVE9yMzVFeWpoZzlVZ1dqNTVhWUxhYXFHQU9lbE5zU2gxNXk0Vl9JSjVEY1FIalNWVUh1c3V4LWQtUUdLR1VES1d1VVBnVWlHVmh4NllwUnpZSXB2cHdsLUU2NGdJeUVqUzRHWVRlS2xnQ1NsdGl0dlRUaTVEamMwTnB6NUh0RW1FVE1HTmZ0VGZvYWVqeWJTZ0ozeWpLRXdIU3pqTEJ5T3p4TFNCREZ4M0ZkR2xpRnBhNU50dzdXRWZ0bm55ZE9iVjV1bExJVkJQVFpPQV9SREhnODVOci1rbWJqSUtVMXU4VVRXNXBLVmkxLUFsWDVRa0Nua1Z4Ry0tcDdKc3ZCSE1kZFBPUklMaXJpMXZaTGZKWDFTTjU3bldjMnVCWHpja2FzX3pFNm01dFJzWG5IZUk3TUVpeURmd2Q3WklIWkdLM3J3YVNWZmU4eGNGX2d4WERUaTNGUFNFMnp3LXVKUVlPQlRQWDJRbU9aTk1pOFE5T0RBS0diLWEtazZ3NWI2R28xUFhvQmVZRXJyTS1LYjdORFhoR2E0dE5DeUpKamJMV1ZQTUF2dC1sTnA2N2RiOTh2THF4Qk1RRHRpT3JkREY4QllNYWd0YmdZZlIzRHJmZS1BWGNxXzMyeFA1dzdXTGd3SWpRZ2thZXg5YUQwVU1naXFGRFdSejlZMld5UHR2dnFQQU1BVE83ZFNwaW1ibjZSNmpqS1ZzamQwdVZUZzdZTXhiRU1LbFhaNUdBNzFOa2wzUHdXSWZjamtkdTRGaWFJZ0lmOHFzQVhtWUVET1ZJYWlxMXBWXzE4ZDRzNDZ6RElqSDR3WmM1Vk1wMVJzbTVCTlRFUkVWSzkxQkpuVmlXYWlxUFM5bERzaGQ5MGF2VEp5Rk1wVXYtS0NEOWFQODgzc1FkbS01Tl9XaS15LUJSMlJudV9XNXVab1BJSWRZRmp6MkY0eElXcDlfb2pSVkdQTk90dGpYY0VwLWpMTTFVUjJjQjdQYUFtYkMzdUVYVWdkWmR2Um1BYUxNdE1jd19Kdks3endqTWVibXVDcUdUU3RBY05LRUNvaVpfUzE0c09sUE1Ha3VwUmxZRVI1a3JsUlFXekZiTEdGRnJBc2Q5X2k0YkdEQmxkMVJ4QlBoVHpoX29aY01oc2dXNUFQNGU3QjNyOUhITE1EN19sN2lJTWlSdHZTaVFzd0tya2ZCZnFyQ2hKc05JbEtEdjFXY1FqdGVIcTdBajZhV1dTWGlWVzZyUk1FTnlEbGprWk9EaGJLbW43Rm5kTkp2RE9qSlIyRlUybXNtbzZETVZ4NGpHbnFXcHA2MFdVYUxNTDFNQWJBczM4XzRHMzlLUDhjWWlkY2h2cFhZemZIaFZNeGpERlhTWFZlQUptRk5wRnFSeXllS2luWnRvWnhxdVlkb3hCY1E1TlZ6YmdKdEtKUE5rallUUWZlZVhLV1d3Z0JreXJmNjZxdnFzWWNINDQwOGhtS2pTWnJDQk04T1hLb2RQWV9ycXVqYnUzbnYyMmpEOHFMRWNuYUhBbDQ2WWFWVHYwcG9INlc4VFpVNDNzVnJHU2dMQTl5c21COEVQNklRX0NLR0hhUXo2Z3FkN0JfMEtqRURuTTBFTDFHUWc5LWFsY0FHWXlrZ3hVRHNyQ2tQdDVnbzUza0MyVTZuSVk1Yy1wT0FGLTZIXzJqY3AzRUszZEVZQng3ZFgxVjR2UEt0SWt0UXdLa0Z5UUlmUlFBcGtoWk9TTW9IVWdYai1GU3RYUWhKMUs2ZEtFeTV5VXRFcjJUQUVDNWpUN1FuZEExMHAteDc0U1k2dlRKWE04c0ZfU1VMaGhZaUdwSUZuRFloQ1laNlI0ekFLN3VOLVN5ejVEdDFneF9PaUhyQVlpNkhWc3RRV0hQOFJCOFhnV0xkQUV5dU1GZC1jTEwwTFhSaUVNNTE5UUVwZ0VTcWVYTkZ1WjczbWMzbnZJVFBUV3JxWGxaMmUyeV9qZWxRdmpmREU3S1dwSUp4S3NyV0p5eEVJVjFkTkhOV24zWWRlTUY5V2ZMVzRaVWd1YVdrRWN4UXBNeGcwVHVJUWdKLTBZQkIzSGVxUDh0MlJQZzlQekdHaGdCbmM3M1Z4LWtYMTkzYU9Ydmc3SW1IRFlQbVdtVWluQ3diUUI5czF5T2VtMjRPUDgwZEdIdVM0NjlkY0ExSENUcndQVkJWZHZGWA==",
+        "feature_type": "poi",
+        "address": "740 15th St NW",
+        "full_address": "740 15th St NW, Washington, District of Columbia 20005, United States of America",
+        "place_formatted": "Washington, District of Columbia 20005, United States of America",
+        "context": {
+          "country": {
+            "name": "United States of America",
+            "country_code": "US",
+            "country_code_alpha_3": "USA"
           },
-          {
-            "layer": "street",
-            "localized_layer": "street",
-            "name": "15th st nw"
+          "region": {
+            "name": "District of Columbia",
+            "region_code": "DC",
+            "region_code_full": "US-DC"
           },
-          {
-            "layer": "postcode",
-            "localized_layer": "postcode",
+          "postcode": {
             "name": "20005"
           },
-          {
-            "layer": "neighborhood",
-            "localized_layer": "neighborhood",
-            "name": "Downtown"
-          },
-          {
-            "layer": "place",
-            "localized_layer": "place",
+          "place": {
             "name": "Washington"
           },
-          {
-            "layer": "region",
-            "localized_layer": "region",
-            "name": "District of Columbia"
+          "neighborhood": {
+            "name": "Downtown"
           },
-          {
-            "layer": "country",
-            "localized_layer": "country",
-            "name": "United States of America"
+          "street": {
+            "name": "15th st nw"
           }
-        ],
-        "maki": "restaurant",
-        "poi_category": [
-          "food",
-          "food and drink",
-          "coffee shop"
-        ],
-        "brand": [
-          "Starbucks"
-        ],
-        "brand_id": "e486aeca0b12918313aba2cc445c5cb4",
-        "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k8SkRBPDFNM0SzOTRFMjg0RLCwMjg1RjAA==",
-        "external_ids": {
-          "tripadvisor": "4274836",
-          "federated": "poi.9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80",
-          "foursquare": "4aba41d5f964a520a98020e3",
-          "mbx_poi": "9f616d0a3da91168aa2f313434f3a987e8ef597ad50bcdf3ef0ab96d44d73b80"
         },
-        "mapbox_id": "CkIKQDlmNjE2ZDBhM2RhOTExNjhhYTJmMzEzNDM0ZjNhOTg3ZThlZjU5N2FkNTBiY2RmM2VmMGFiOTZkNDRkNzNiODA=",
+        "coordinates": {
+          "latitude": 38.899815,
+          "longitude": -77.034063,
+          "routable_points": [
+            {
+              "name": "default",
+              "latitude": 38.89981619552106,
+              "longitude": -77.03364137957142
+            }
+          ]
+        },
+        "maki": "marker",
+        "poi_category": [
+          "office"
+        ],
+        "poi_category_ids": [
+          "office"
+        ],
+        "external_ids": {
+          "foursquare": "4f2bff92e4b0f215a542dafe"
+        },
         "metadata": {
-          "review_count": 35,
-          "phone": "+1 123-456-789",
-          "website": "http://www.test.com/",
-          "average_rating": 4,
-          "primary_photo": [
-            {
-              "width": 300,
-              "height": 350,
-              "url": "https://test.com/img-primary.jpg"
-            }
-          ],
-          "other_photo": [
-            {
-              "width": 150,
-              "height": 350,
-              "url": "https://test.com/img-other.jpg"
-            }
-          ],
-          "open_hours": {
-            "open_type": "Scheduled",
-            "open_periods": [
-              {
-                "open": {
-                  "day": 5,
-                  "time": {
-                    "hour": 7,
-                    "minute": 0
-                  }
-                },
-                "close": {
-                  "day": 5,
-                  "time": {
-                    "hour": 20,
-                    "minute": 0
-                  }
-                }
-              }
-            ]
-          },
-          "iso_3166_1": "US",
-          "iso_3166_2": "US-DC"
+          "phone": "+123 456 789"
         }
       }
     }
   ],
-  "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
-  "version": "55:ce8b854900df80c271126016a2dbb1b8ee9345c1",
-  "response_uuid": "1594ddc1-4010-42e5-bc99-e4f5f573eb9d"
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
 }

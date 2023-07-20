@@ -62,6 +62,7 @@ internal class AddressAutofillImpl(
             language = options.language?.let { listOf(it.code) },
             limit = 10,
             ignoreUR = true,
+            addonAPI = hashMapOf("types" to "address", "streets" to "true")
         )
         return searchEngine.searchResolveImmediately(query.query, coreOptions).mapValue {
             it.toAddressAutofillSuggestions()

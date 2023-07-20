@@ -19,6 +19,8 @@ import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
 import com.mapbox.search.internal.bindgen.RoutablePoint
 import com.mapbox.search.internal.bindgen.SearchAddress
+import com.mapbox.search.internal.bindgen.SearchAddressCountry
+import com.mapbox.search.internal.bindgen.SearchAddressRegion
 import com.mapbox.search.internal.bindgen.SearchOptions
 import com.mapbox.search.internal.bindgen.SearchResponse
 import com.mapbox.search.internal.bindgen.SearchResult
@@ -100,8 +102,10 @@ fun createTestCoreSearchAddress(
     postcode,
     place,
     district,
-    region,
-    country
+
+    // TODO FIXME address
+    region?.let { SearchAddressRegion(it, null, null) },
+    country?.let { SearchAddressCountry(it, null, null) },
 )
 
 @Suppress("LongParameterList")
@@ -267,7 +271,11 @@ fun createCoreSearchAddress(
     region: String? = defaultValue,
     country: String? = defaultValue,
 ) = SearchAddress(
-    houseNumber, street, neighborhood, locality, postcode, place, district, region, country
+    houseNumber, street, neighborhood, locality, postcode, place, district,
+
+    // TODO FIXME address
+    region?.let { SearchAddressRegion(it, null, null) },
+    country?.let { SearchAddressCountry(it, null, null) },
 )
 
 fun createTestCoreRequestOptions(

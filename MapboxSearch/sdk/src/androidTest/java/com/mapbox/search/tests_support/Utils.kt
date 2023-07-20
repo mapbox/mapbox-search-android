@@ -10,6 +10,8 @@ import com.mapbox.search.mapToBase
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 
+// TODO FIXME remove
+
 internal fun ResponseInfo.fixNonDeterminedFields(fixedSessionID: String): ResponseInfo {
     return ResponseInfo(
         requestOptions = requestOptions.copy(sessionID = fixedSessionID),

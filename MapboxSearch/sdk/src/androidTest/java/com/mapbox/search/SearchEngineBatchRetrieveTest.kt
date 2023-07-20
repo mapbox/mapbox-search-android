@@ -157,7 +157,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsOnlyRetrieval() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-empty.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-empty.json"))
 
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")

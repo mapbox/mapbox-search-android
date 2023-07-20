@@ -6,6 +6,7 @@ import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.InternalIgnorableException
 import com.mapbox.search.common.AsyncOperationTask
 import java.util.concurrent.Executor
 
@@ -77,15 +78,20 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     return AsyncOperationTaskImpl.COMPLETED
                 }
             }
-            CoreApiType.SBS, CoreApiType.AUTOFILL -> {
-                if (searchResult.action == null && searchResult.type != BaseRawResultType.USER_RECORD) {
-                    failDebug { "Can't create search suggestion from. ${debugInfo()}" }
-                    callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
-                    return AsyncOperationTaskImpl.COMPLETED
+            CoreApiType.SEARCH_BOX, CoreApiType.AUTOFILL -> {
+                if (searchResult.action == null) {
+                    if (searchResult.type == BaseRawResultType.QUERY) {
+                        callback(Result.failure(InternalIgnorableException("Skipping query suggestion without action")))
+                        return AsyncOperationTaskImpl.COMPLETED
+                    } else if (searchResult.type != BaseRawResultType.USER_RECORD) {
+                        failDebug { "Can't create search suggestion from. ${debugInfo()}" }
+                        callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
+                        return AsyncOperationTaskImpl.COMPLETED
+                    }
                 }
             }
-            CoreApiType.SEARCH_BOX -> {
-                callback(Result.failure(Exception("Search Box is not supported yet")))
+            CoreApiType.SBS -> {
+                callback(Result.failure(Exception("Unsupported API type: $apiType")))
                 return AsyncOperationTaskImpl.COMPLETED
             }
         }
@@ -115,7 +121,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    CoreApiType.SBS, CoreApiType.AUTOFILL -> {
+                    CoreApiType.SEARCH_BOX, CoreApiType.AUTOFILL -> {
                         if (searchResult.types.isValidMultiType()) {
                             val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                             callback(Result.success(value))
@@ -126,10 +132,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    CoreApiType.SEARCH_BOX -> {
-                        // TODO Support Search Box
-                        error("Unsupported api type SEARCH_BOX")
-                    }
+                    else -> error("Unsupported API type: $apiType")
                 }
             }
             BaseRawResultType.BRAND -> {

@@ -97,7 +97,7 @@ internal class SearchEngineTest {
         searchResultFactory = spyk(SearchResultFactory(indexableRecordResolver))
 
         val slotSuggestionCallback = slot<(Result<BaseSearchSuggestion>) -> Unit>()
-        every { searchResultFactory.createSearchSuggestionAsync(any(), any(), CoreApiType.SBS, any(), capture(slotSuggestionCallback)) } answers {
+        every { searchResultFactory.createSearchSuggestionAsync(any(), any(), CoreApiType.SEARCH_BOX, any(), capture(slotSuggestionCallback)) } answers {
             slotSuggestionCallback.captured(Result.success(TEST_GEOCODING_SEARCH_SUGGESTION))
             AsyncOperationTaskImpl.COMPLETED
         }
@@ -105,7 +105,7 @@ internal class SearchEngineTest {
         executor = spyk(TestExecutor())
 
         requestContextProvider = mockk()
-        every { requestContextProvider.provide(CoreApiType.SBS) } returns TEST_SEARCH_REQUEST_CONTEXT
+        every { requestContextProvider.provide(CoreApiType.SEARCH_BOX) } returns TEST_SEARCH_REQUEST_CONTEXT
 
         indexableDataProvidersRegistry = mockk()
 
@@ -527,7 +527,7 @@ internal class SearchEngineTest {
                     executor.execute(any())
                 }
 
-                val expectedSearchRequestContext = requestContextProvider.provide(CoreApiType.SBS)
+                val expectedSearchRequestContext = requestContextProvider.provide(CoreApiType.SEARCH_BOX)
                     .copy(responseUuid = TEST_SUCCESSFUL_CORE_RESPONSE.responseUUID)
 
                 val expectedRequestOptions = BaseRequestOptions(
@@ -784,7 +784,7 @@ internal class SearchEngineTest {
         const val TEST_DESCRIPTION_TEXT = "Test description text"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
-        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SBS, responseUuid = TEST_RESPONSE_UUID_2)
+        val TEST_SEARCH_REQUEST_CONTEXT = SearchRequestContext(CoreApiType.SEARCH_BOX, responseUuid = TEST_RESPONSE_UUID_2)
 
         val TEST_REQUEST_OPTIONS = createTestRequestOptions(
             query = TEST_QUERY,

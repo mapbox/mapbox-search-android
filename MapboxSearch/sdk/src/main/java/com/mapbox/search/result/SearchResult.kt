@@ -40,6 +40,7 @@ public class SearchResult internal constructor(
     public val name: String = base.name
 
     /**
+     * TODO FIXME remove matchingName
      * The feature name, as matched by the search algorithm.
      */
     @IgnoredOnParcel
@@ -89,6 +90,7 @@ public class SearchResult internal constructor(
     public val coordinate: Point = base.coordinate
 
     /**
+     * TODO FIXME remove accuracy
      * A point accuracy metric for the returned address.
      */
     @IgnoredOnParcel

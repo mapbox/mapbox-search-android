@@ -120,7 +120,15 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         assertEqualsIgnoreCase("get", request.method!!)
 
         val url = request.requestUrl!!
-        assertEqualsIgnoreCase("//search/v1/reverse/${formatPoints(TEST_POINT)}", url.encodedPath)
+        assertEqualsIgnoreCase("//search/searchbox/v1/reverse", url.encodedPath)
+        assertEquals(
+            TEST_POINT.longitude().formatToBackendConvention(),
+            url.queryParameter("longitude")
+        )
+        assertEquals(
+            TEST_POINT.latitude().formatToBackendConvention(),
+            url.queryParameter("latitude")
+        )
         assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(IsoLanguageCode.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
@@ -128,9 +136,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             options.types?.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
             url.queryParameter("types")
         )
-
-        // We don't test `reverseMode` because SBS doesn't accept it anymore.
-
         assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
     }
 
@@ -232,7 +237,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 originRewritten = false,
                 sessionID = "",
                 requestContext = SearchRequestContext(
-                    apiType = CoreApiType.SBS,
+                    apiType = CoreApiType.SEARCH_BOX,
                     keyboardLocale = TEST_KEYBOARD_LOCALE,
                     screenOrientation = TEST_ORIENTATION,
                     responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
