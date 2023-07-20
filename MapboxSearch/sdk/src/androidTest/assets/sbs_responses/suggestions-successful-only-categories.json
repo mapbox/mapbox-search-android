@@ -1,0 +1,57 @@
+{
+  "suggestions": [
+    {
+      "feature_name": "Cafe",
+      "matching_name": "Cafe",
+      "description": "Category",
+      "result_type": [
+        "category"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "category-test-id"
+        },
+        "multi_retrievable": false
+      },
+      "maki": "restaurant",
+      "category": [
+        "Cafe"
+      ],
+      "internal_id": "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
+      "external_ids": {
+        "federated": "category.cafe"
+      }
+    },
+    {
+      "feature_name": "Internet Cafe",
+      "matching_name": "Internet Cafe",
+      "description": "Category",
+      "result_type": [
+        "category"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "category-test-id-2"
+        },
+        "multi_retrievable": false
+      },
+      "maki": "marker",
+      "category": [
+        "Internet Cafe"
+      ],
+      "internal_id": "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.42WAgMy8ktSivNSS-OTEtFQA",
+      "external_ids": {
+        "federated": "category.internet_cafe"
+      }
+    }
+  ],
+  "attribution": "© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "11:95ae07b33c2b6ad4f971e9cc1b9e1fbdc5a7c776",
+  "response_uuid": "be35d556-9e14-4303-be15-57497c331348"
+}

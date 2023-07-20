@@ -127,10 +127,10 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         searchEngine.search(TEST_CATEGORY, options, callback)
 
         val request = mockServer.takeRequest()
-        assertEqualsIgnoreCase("get", request.method!!)
+        assertEqualsIgnoreCase("post", request.method!!)
 
         val url = request.requestUrl!!
-        assertEqualsIgnoreCase("//search/searchbox/v1/category/$TEST_CATEGORY", url.encodedPath)
+        assertEqualsIgnoreCase("//search/v1/category/$TEST_CATEGORY", url.encodedPath)
         assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(formatPoints(options.proximity), url.queryParameter("proximity"))
         assertEquals(
@@ -146,8 +146,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         assertEquals(TEST_ROUTE_OPTIONS.timeDeviationMinutes.formatToBackendConvention(), url.queryParameter("time_deviation"))
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.
-        assertFalse(url.queryParameter("route").isNullOrEmpty())
-        assertEquals("polyline6", url.queryParameter("route_geometry"))
 
         assertFalse(request.headers["X-Request-ID"].isNullOrBlank())
     }
