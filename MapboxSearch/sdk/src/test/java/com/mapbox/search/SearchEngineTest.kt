@@ -1028,7 +1028,7 @@ internal class SearchEngineTest {
         val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
                 types = listOf(BaseRawResultType.POI),
-                action = createTestCoreSuggestAction(multiRetrievable = true).mapToBase()
+                action = createTestCoreSuggestAction().mapToBase()
             ),
             BASE_TEST_REQUEST_OPTIONS
         )

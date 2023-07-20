@@ -18,14 +18,3 @@ interface BaseSearchSelectionCallback : BaseSearchSuggestionsCallback {
         responseInfo: BaseResponseInfo
     )
 }
-
-interface BaseSearchMultipleSelectionCallback {
-
-    fun onResult(
-        suggestions: List<BaseSearchSuggestion>,
-        results: List<BaseSearchResult>,
-        responseInfo: BaseResponseInfo
-    )
-
-    fun onError(e: Exception)
-}

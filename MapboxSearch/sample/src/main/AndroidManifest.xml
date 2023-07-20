@@ -53,8 +53,6 @@
         <activity android:name=".api.CustomIndexableDataProviderJavaExample" />
         <activity android:name=".api.ForwardGeocodingKotlinExampleActivity" />
         <activity android:name=".api.ForwardGeocodingJavaExampleActivity" />
-        <activity android:name=".api.ForwardGeocodingBatchResolvingKotlinExampleActivity" />
-        <activity android:name=".api.ForwardGeocodingBatchResolvingJavaExampleActivity" />
         <activity android:name=".api.ReverseGeocodingKotlinExampleActivity" />
         <activity android:name=".api.ReverseGeocodingJavaExampleActivity" />
         <activity android:name=".api.CategorySearchKotlinExampleActivity" />

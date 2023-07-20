@@ -11,7 +11,6 @@ import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
-import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreReverseGeoOptions
@@ -32,13 +31,18 @@ import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
+import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.extension.suspendFlatMap
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -182,137 +186,60 @@ internal class PlaceAutocompleteEngine(
         }
     }
 
-    fun select(
+    suspend fun resolveAll(
         suggestions: List<BaseSearchSuggestion>,
-        executor: Executor,
-        callback: BaseSearchMultipleSelectionCallback,
-    ): AsyncOperationTask {
-        require(suggestions.isNotEmpty()) {
-            "No suggestions were provided! Please, provide at least 1 suggestion."
-        }
-
-        if (suggestions.distinctBy { it.requestOptions }.size != 1) {
-            executor.execute {
-                callback.onError(
-                    IllegalArgumentException("All provided suggestions must originate from the same search result!")
-                )
+        allowCategorySuggestions: Boolean,
+    ): Expected<Exception, List<BaseSearchResult>> {
+        return when {
+            suggestions.isEmpty() -> {
+                ExpectedFactory.createValue(emptyList())
             }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
+            else -> {
+                coroutineScope {
+                    val deferredSuggestions: List<Deferred<Expected<Exception, SearchSelectionResponse>>> = suggestions
+                        .filter {
+                            when (it.type) {
+                                // Filtering in order to avoid infinite recursion
+                                // because of some specific suggestions like "Did you mean recursion?"
+                                is BaseSearchSuggestionType.Query -> false
+                                is BaseSearchSuggestionType.Category -> allowCategorySuggestions
+                                else -> true
+                            }
+                        }
+                        .map { suggestion ->
+                            async { select(suggestion) }
+                        }
 
-        logd("batch select($suggestions) called")
+                    val responses: List<Expected<Exception, List<BaseSearchResult>>> = deferredSuggestions
+                        .map { deferred ->
+                            deferred.await().suspendFlatMap { response ->
+                                when (response) {
+                                    is SearchSelectionResponse.Suggestions -> {
+                                        resolveAll(response.suggestions, allowCategorySuggestions)
+                                    }
+                                    is SearchSelectionResponse.Result -> {
+                                        ExpectedFactory.createValue(listOf(response.result))
+                                    }
+                                    is SearchSelectionResponse.Results -> {
+                                        ExpectedFactory.createValue(response.results)
+                                    }
+                                }
+                            }
+                        }
 
-        val searchResponseInfo = BaseResponseInfo(suggestions.first().requestOptions, null, isReproducible = false)
-
-        val filtered: List<BaseServerSearchSuggestion> = suggestions
-            .mapNotNull { it as? BaseServerSearchSuggestion }
-            .filter { it.isBatchResolveSupported }
-
-        if (filtered.isEmpty()) {
-            executor.execute { callback.onResult(filtered, emptyList(), searchResponseInfo) }
-            return AsyncOperationTaskImpl.COMPLETED
-        }
-
-        logd("Batch retrieve. ${suggestions.size} requested, ${filtered.size} took for processing")
-
-        val coreSearchResults = filtered.map { it.rawSearchResult.mapToCore() }
-
-        val resultingFunction: (List<BaseSearchResult>) -> List<BaseSearchResult> = { remoteResults ->
-            assertDebug(remoteResults.size == filtered.size) {
-                "Not all items have been resolved. " +
-                        "To resolve: ${filtered.map { it.id to it.type }}, " +
-                        "actual: ${remoteResults.map { it.id to it.types }}"
-            }
-            remoteResults
-        }
-
-        return makeRequest(callback) { task ->
-            val requestOptions = filtered.first().requestOptions
-            val requestContext = requestOptions.requestContext
-            val requestId = coreEngine.retrieveBucket(
-                requestOptions.core,
-                coreSearchResults,
-                TwoStepsBatchRequestCallbackWrapper(
-                    suggestions = filtered,
-                    searchResultFactory = searchResultFactory,
-                    callbackExecutor = executor,
-                    workerExecutor = engineExecutorService,
-                    searchRequestTask = task,
-                    resultingFunction = resultingFunction,
-                    searchRequestContext = requestContext,
-                )
-            )
-            task.addOnCancelledCallback {
-                coreEngine.cancel(requestId)
-            }
-        }
-    }
-
-    suspend fun select(suggestions: List<BaseSearchSuggestion>): Expected<Exception, Triple<List<BaseSearchSuggestion>, List<BaseSearchResult>, BaseResponseInfo>> {
-        return suspendCancellableCoroutine { continuation ->
-            val task = select(suggestions, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchMultipleSelectionCallback {
-
-                override fun onResult(
-                    suggestions: List<BaseSearchSuggestion>,
-                    results: List<BaseSearchResult>,
-                    responseInfo: BaseResponseInfo
-                ) {
-                    continuation.resumeWith(
-                        Result.success(ExpectedFactory.createValue(Triple(suggestions, results, responseInfo)))
-                    )
+                    // If at least one response completed successfully, return it.
+                    if (responses.isNotEmpty() && responses.all { it.isError }) {
+                        responses.first()
+                    } else {
+                        responses.asSequence()
+                            .mapNotNull { it.value }
+                            .flatten()
+                            .toList()
+                            .let {
+                                ExpectedFactory.createValue(it)
+                            }
+                    }
                 }
-
-                override fun onError(e: Exception) {
-                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                }
-            })
-
-            continuation.invokeOnCancellation {
-                task.cancel()
-            }
-        }
-    }
-
-    fun search(
-        options: CoreReverseGeoOptions,
-        executor: Executor,
-        callback: BaseSearchCallback,
-    ): AsyncOperationTask {
-        return makeRequest(callback) { task ->
-            val requestContext = requestContextProvider.provide(apiType)
-            val requestId = coreEngine.reverseGeocoding(
-                options,
-                OneStepRequestCallbackWrapper(
-                    searchResultFactory = searchResultFactory,
-                    callbackExecutor = executor,
-                    workerExecutor = engineExecutorService,
-                    searchRequestTask = task,
-                    searchRequestContext = requestContext,
-                    isOffline = false,
-                )
-            )
-            task.addOnCancelledCallback {
-                coreEngine.cancel(requestId)
-            }
-        }
-    }
-
-    suspend fun search(options: CoreReverseGeoOptions): Expected<Exception, Pair<List<BaseSearchResult>, BaseResponseInfo>> {
-        return suspendCancellableCoroutine { continuation ->
-            val task = search(options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchCallback {
-                override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
-                    continuation.resumeWith(
-                        Result.success(ExpectedFactory.createValue(results to responseInfo))
-                    )
-                }
-
-                override fun onError(e: Exception) {
-                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                }
-            })
-
-            continuation.invokeOnCancellation {
-                task.cancel()
             }
         }
     }

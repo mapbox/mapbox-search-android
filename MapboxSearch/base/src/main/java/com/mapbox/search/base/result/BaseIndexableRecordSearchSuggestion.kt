@@ -48,7 +48,4 @@ data class BaseIndexableRecordSearchSuggestion(
 
     override val type: BaseSearchSuggestionType.IndexableRecordItem
         get() = BaseSearchSuggestionType.IndexableRecordItem(record, rawSearchResult.layerId!!)
-
-    override val isBatchResolveSupported: Boolean
-        get() = true
 }

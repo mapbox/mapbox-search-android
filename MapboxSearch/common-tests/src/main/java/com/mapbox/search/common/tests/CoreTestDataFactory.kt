@@ -114,9 +114,8 @@ fun createTestCoreSuggestAction(
     path: String = "test_path",
     query: String? = null,
     body: ByteArray? = null,
-    multiRetrievable: Boolean = false,
 ) = SuggestAction(
-    endpoint, path, query, body, multiRetrievable
+    endpoint, path, query, body, false
 )
 
 fun createTestCoreSearchResponseSuccess(

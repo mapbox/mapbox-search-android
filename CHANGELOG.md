@@ -52,6 +52,16 @@
 
 
 
+## 1.0.0-rc.8-SNAPSHOT
+
+### Breaking changes
+- [CORE] Suggestions multiple selection functionality has been removed along with `SearchSuggestion.isBatchResolveSupported` property, `SearchMultipleSelectionCallback` interface and `SearchEngine#.select(List<SearchSuggestion>, Executor, SearchMultipleSelectionCallback)` function.
+
+### Mapbox dependencies
+- Search Native SDK `0.71.0`
+- Common SDK `23.6.0`
+- Kotlin `1.5.31`
+
 ## 1.0.0-rc.7
 
 ### Bug fixes

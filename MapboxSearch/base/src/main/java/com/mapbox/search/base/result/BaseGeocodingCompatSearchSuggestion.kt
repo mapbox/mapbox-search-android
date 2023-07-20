@@ -29,7 +29,4 @@ data class BaseGeocodingCompatSearchSuggestion(
     @IgnoredOnParcel
     override val type: BaseSearchSuggestionType =
         BaseSearchSuggestionType.SearchResultSuggestion(listOf(searchResultType))
-
-    override val isBatchResolveSupported: Boolean
-        get() = true
 }

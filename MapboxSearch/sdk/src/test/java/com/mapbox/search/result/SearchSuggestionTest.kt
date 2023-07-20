@@ -45,7 +45,6 @@ internal class SearchSuggestionTest {
                 Then("etaMinutes should be ${base.etaMinutes}", base.etaMinutes, suggestion.etaMinutes)
                 Then("metadata should be ${base.metadata?.let { SearchResultMetadata(it) }}", base.metadata?.let { SearchResultMetadata(it) }, suggestion.metadata)
                 Then("externalIDs should be ${base.externalIDs}", base.externalIDs, suggestion.externalIDs)
-                Then("isBatchResolveSupported should be ${base.isBatchResolveSupported}", base.isBatchResolveSupported, suggestion.isBatchResolveSupported)
                 Then("serverIndex should be ${base.serverIndex}", base.serverIndex, suggestion.serverIndex)
                 Then("type should be ${base.getSearchSuggestionType()}", base.getSearchSuggestionType(), suggestion.type)
             }
