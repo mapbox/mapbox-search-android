@@ -102,7 +102,7 @@ internal val testBaseRawSearchSuggestionWithoutCoordinates: BaseRawSearchResult 
 
 internal fun createTestBaseRequestOptions(
     core: CoreRequestOptions = createTestCoreRequestOptions(),
-    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX),
 ) = BaseRequestOptions(
     core = core,
     requestContext = requestContext

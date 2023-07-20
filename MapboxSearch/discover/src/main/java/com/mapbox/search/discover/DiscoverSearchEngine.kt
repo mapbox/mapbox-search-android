@@ -93,7 +93,7 @@ internal class DiscoverSearchEngine(
 
     companion object {
 
-        private val API_TYPE = ApiType.SBS
+        private val API_TYPE = ApiType.SEARCH_BOX
 
         private val DEFAULT_EXECUTOR = Executors.newSingleThreadExecutor { runnable ->
             Thread(runnable, "DiscoverApi executor")

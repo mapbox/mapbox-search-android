@@ -44,7 +44,7 @@ internal class DiscoverSearchEngineTest {
         coreEngine = mockk(relaxed = true)
 
         requestContextProvider = mockk()
-        every { requestContextProvider.provide(any()) } returns SearchRequestContext(ApiType.SBS)
+        every { requestContextProvider.provide(any()) } returns SearchRequestContext(ApiType.SEARCH_BOX)
 
         searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
 

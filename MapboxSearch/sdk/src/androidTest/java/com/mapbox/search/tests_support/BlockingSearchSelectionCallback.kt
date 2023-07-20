@@ -42,7 +42,18 @@ internal class BlockingSearchSelectionCallback :
 
     sealed class SearchEngineResult {
 
+        val isResult: Boolean
+            get() = this is Result
+
+        val isResults: Boolean
+            get() = this is Results
+
+        val isSuggestions: Boolean
+            get() = this is Suggestions
+
         fun requireSuggestions() = (this as Suggestions).suggestions
+
+        fun requireSuggestionsAndInfo() = (this as Suggestions).suggestions to this.responseInfo
 
         fun requireResult() = (this as Result)
 

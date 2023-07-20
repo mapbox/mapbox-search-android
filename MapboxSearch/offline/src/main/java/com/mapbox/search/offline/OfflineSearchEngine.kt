@@ -366,7 +366,7 @@ public interface OfflineSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
-                    apiType = CoreApiType.SBS,
+                    apiType = CoreApiType.SEARCH_BOX,
                     sdkInformation = BaseSearchSdkInitializer.sdkInformation,
                     eventsUrl = null,
                 ),

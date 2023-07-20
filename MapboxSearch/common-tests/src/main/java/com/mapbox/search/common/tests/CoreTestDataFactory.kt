@@ -84,6 +84,31 @@ fun createTestCoreReverseGeoOptions(
 )
 
 @Suppress("LongParameterList")
+fun createTestCoreSearchAddress(
+    houseNumber: String? = null,
+    street: String? = null,
+    neighborhood: String? = null,
+    locality: String? = null,
+    postcode: String? = null,
+    place: String? = null,
+    district: String? = null,
+    region: String? = null,
+    country: String? = null,
+): SearchAddress = SearchAddress(
+    houseNumber,
+    street,
+    neighborhood,
+    locality,
+    postcode,
+    place,
+    district,
+
+    // TODO FIXME address
+    region?.let { SearchAddressRegion(it, null, null) },
+    country?.let { SearchAddressCountry(it, null, null) },
+)
+
+@Suppress("LongParameterList")
 fun createTestCoreSuggestAction(
     endpoint: String = "test_endpoint",
     path: String = "test_path",
@@ -285,6 +310,7 @@ fun createCoreSearchAddress(
     postcode,
     place,
     district,
+    // TODO FIXME address
     region ?: defaultValue?.let { createCoreSearchAddressRegion(name = it) },
     country ?: defaultValue?.let { createCoreSearchAddressCountry(name = it) }
 )

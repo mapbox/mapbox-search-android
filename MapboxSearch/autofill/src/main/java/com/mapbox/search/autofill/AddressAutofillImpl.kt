@@ -71,7 +71,7 @@ internal class AddressAutofillImpl(
             language = options.language?.let { listOf(it.code) },
             limit = 10,
             ignoreUR = true,
-            addonAPI = mapOf("types" to "address", "streets" to "true")
+            addonAPI = hashMapOf("types" to "address", "streets" to "true")
         )
 
         return autofillEngine.search(query.query, coreOptions).mapValue { (suggestions, _) ->

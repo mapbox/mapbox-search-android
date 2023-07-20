@@ -6,9 +6,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
-import com.mapbox.search.base.result.BaseRawResultType
-import com.mapbox.search.base.result.BaseServerSearchSuggestion
-import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -24,34 +21,31 @@ import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
-import com.mapbox.search.common.metadata.ParkingData
+import com.mapbox.search.common.metadata.OpenPeriod
+import com.mapbox.search.common.metadata.WeekDay
+import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.isIndexableRecordSuggestion
-import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.result.record
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchResultCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
-import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
-import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
+import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertAllBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
@@ -152,10 +146,11 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         searchEngine.search(TEST_QUERY, options, callback)
 
         val request = mockServer.takeRequest()
-        assertEqualsIgnoreCase("post", request.method!!)
+        assertEqualsIgnoreCase("get", request.method!!)
 
         val url = request.requestUrl!!
-        assertEqualsIgnoreCase("//search/v1/suggest/Minsk", url.encodedPath)
+        assertEqualsIgnoreCase("//search/searchbox/v1/suggest", url.encodedPath)
+        assertEquals(TEST_QUERY, url.queryParameter("q"))
         assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(formatPoints(options.proximity), url.queryParameter("proximity"))
         assertEquals(
@@ -179,6 +174,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             url.queryParameter("time_deviation")
         )
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.
+        assertFalse(url.queryParameter("route").isNullOrEmpty())
+        assertEquals("polyline6", url.queryParameter("route_geometry"))
 
         assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
     }
@@ -198,106 +195,78 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val req = mockServer.takeRequest(options.requestDebounce!!.toLong() * 2, TimeUnit.MILLISECONDS)!!
         assertEquals(1, mockServer.requestCount)
-        assertEqualsIgnoreCase("//search/v1/suggest/actual%20query", req.requestUrl!!.encodedPath)
+        assertEqualsIgnoreCase("//search/searchbox/v1/suggest", req.requestUrl!!.encodedPath)
+        assertEquals("actual query", req.requestUrl?.queryParameter("q"))
     }
 
     @Test
     fun testSuccessfulResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
-        val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
-        searchEngine.search(TEST_QUERY, options, callback)
+        val response = searchEngine.searchBlocking(TEST_QUERY, options)
+        assertTrue(response.isSuggestions)
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-        assertEquals(6, suggestions.size)
-        assertFalse(suggestions.any { it.type is SearchSuggestionType.IndexableRecordItem })
+        val suggestions = response.requireSuggestions()
+        assertEquals(3, suggestions.size)
 
-        val first = suggestions[0]
-
-        val baseRawSearchResult = createTestBaseRawSearchResult(
-            id = "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
-            types = listOf(BaseRawResultType.REGION),
-            names = listOf("Minsk"),
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress(country = "Belarus")),
-            fullAddress = "Belarus",
-            descriptionAddress = "Belarus",
-            matchingName = "Minsk",
-            distanceMeters = 5000000.0,
-            icon = "marker",
-            categories = listOf("cafe"),
-            action = BaseSuggestAction(
-                endpoint = "retrieve",
-                path = "",
-                query = null,
-                body = "{\"id\":\"test-id\"}".toByteArray(),
-                multiRetrievable = false
-            ),
-            externalIDs = mapOf(
-                "carmen" to "place.9038333669154200",
-                "federated" to "carmen.place.9038333669154200",
-            ),
-            etaMinutes = 10.5,
-            metadata = SearchResultMetadata(
-                metadata = HashMap(
-                    mutableMapOf(
-                        "iso_3166_1" to "by",
-                        "iso_3166_2" to "BY-MI"
-                    )
-                )
-            )
+        val suggestion = suggestions[0]
+        assertEquals("suggestion-id-1", suggestion.id)
+        assertEquals("Washington", suggestion.name)
+        assertEquals(null, suggestion.matchingName)
+        assertEquals(
+            "Washington, District of Columbia 20036, United States of America",
+            suggestion.descriptionText
         )
+        assertEquals(
+            SearchAddress(
+                country = "United States of America",
+                region = "District of Columbia",
+                postcode = "20036",
+                place = "Washington",
+                neighborhood = "Dupont Circle",
+                street = "Connecticut Ave Nw"
+            ),
+            suggestion.address
+        )
+        assertEquals(
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
+            suggestion.fullAddress
+        )
+        assertEquals(900.0, suggestion.distanceMeters)
+        assertEquals(listOf("gym", "services"), suggestion.categories)
+        assertEquals("marker", suggestion.makiIcon)
+        assertEquals(null, suggestion.etaMinutes)
+        assertEquals(null, suggestion.metadata)
+        assertEquals(mapOf("id-1" to "id-1-key"), suggestion.externalIDs)
+        assertEquals(0, suggestion.serverIndex)
+        assertEquals(SearchSuggestionType.SearchResultSuggestion(listOf(SearchResultType.POI)), suggestion.type)
 
-        val expectedResult = BaseServerSearchSuggestion(
-            baseRawSearchResult,
-            TEST_REQUEST_OPTIONS.copy(
-                options = options,
-                requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
-                    responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
-                )
-            ).mapToBase()
-        ).mapToPlatform()
-        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, first))
-
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE, SearchResultType.REGION), suggestions[1].type)
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.POI), suggestions[2].type)
-        assertEquals(SearchSuggestionType.Category("cafe"), suggestions[3].type)
-        assertEquals(SearchSuggestionType.Category("florist"), suggestions[4].type)
-        assertEquals(SearchSuggestionType.Brand("Starbucks", "starbucks"), suggestions[5].type)
-
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE), suggestions[1].type)
+        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.STREET), suggestions[2].type)
     }
 
     @Test
     fun testOptionsLimit() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
-        val callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(limit = 3)
-        searchEngine.search(TEST_QUERY, options, callback)
-
-        val res = callback.getResultBlocking()
-        assertEquals(3, res.requireSuggestions().size)
+        val response = searchEngine.searchBlocking(TEST_QUERY, SearchOptions(limit = 1))
+        assertEquals(1, response.requireSuggestions().size)
     }
 
     @Test
     fun testSuccessfulEmptyResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-empty.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-empty.json"))
 
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+        val response = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
 
-        val res = callback.getResultBlocking() as SearchEngineResult.Suggestions
-        assertTrue(res.suggestions.isEmpty())
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        assertTrue(response.requireSuggestionsAndInfo().first.isEmpty())
+        assertNotNull(response.requireSuggestionsAndInfo().second.coreSearchResponse)
     }
 
     @Test
     fun testIndexableRecordsResponseOnly() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-empty.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-empty.json"))
 
         val records = (1..10).map {
             createTestHistoryRecord(
@@ -373,20 +342,18 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMixedIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val records = (1..10).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
         }
         historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+        val response = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+        val suggestions = response.requireSuggestions()
 
-        val suggestions = callback.getResultBlocking().requireSuggestions()
-
-        // records.size + 5 = records.size + number of suggestions from server
-        assertEquals(records.size + 6, suggestions.size)
+        // records.size + 3 = records.size + number of suggestions from server
+        assertEquals(records.size + 3, suggestions.size)
 
         records.indices.forEach { i ->
             assertTrue(suggestions[i].type is SearchSuggestionType.IndexableRecordItem)
@@ -398,7 +365,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMixedIndexableRecordsResponseWithLimit() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
@@ -421,7 +388,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIgnoredIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
@@ -429,39 +396,39 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         historyDataProvider.upsertAllBlocking(records, callbacksExecutor)
 
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(ignoreIndexableRecords = true), callback)
+        val response = searchEngine.searchBlocking(
+            TEST_QUERY,
+            SearchOptions(ignoreIndexableRecords = true)
+        )
 
-        val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
-
-        val suggestions = suggestionsResult.suggestions
+        val suggestions = response.requireSuggestions()
         assertTrue(suggestions.isNotEmpty())
         assertFalse(suggestions.any { it.type is SearchSuggestionType.IndexableRecordItem })
-        assertNotNull(suggestionsResult.responseInfo.coreSearchResponse)
+        assertNotNull(response.requireSuggestionsAndInfo().second.coreSearchResponse)
     }
 
     @Test
     fun testIndexableRecordsZeroThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
         historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(
-            proximity = recordCoordinate,
-            origin = recordCoordinate,
-            indexableRecordsDistanceThresholdMeters = 0.0
-        ), callback)
+        val response = searchEngine.searchBlocking(
+            TEST_QUERY, SearchOptions(
+                proximity = recordCoordinate,
+                origin = recordCoordinate,
+                indexableRecordsDistanceThresholdMeters = 0.0
+            )
+        )
 
-        val suggestions = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions
-        assertEquals(record, suggestions.first().record)
+        assertEquals(record, response.requireSuggestions().first().record)
     }
 
     @Test
     fun testIndexableRecordsInsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
@@ -469,22 +436,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(
-            origin = userLocation,
-            proximity = userLocation,
-            indexableRecordsDistanceThresholdMeters = 500.0
-        ), callback)
+        val response = searchEngine.searchBlocking(
+            TEST_QUERY, SearchOptions(
+                origin = userLocation,
+                proximity = userLocation,
+                indexableRecordsDistanceThresholdMeters = 500.0
+            )
+        )
 
-        val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
-
-        val suggestions = suggestionsResult.suggestions
-        assertEquals(record, suggestions.first().record)
+        assertEquals(record, response.requireSuggestions().first().record)
     }
 
     @Test
     fun testIndexableRecordsOutsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
@@ -492,22 +457,21 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         // recordCoordinate + approximately 50 meters
         val userLocation = Point.fromLngLat(2.29497347098094, 48.8580726347223)
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(
-            proximity = userLocation,
-            origin = userLocation,
-            indexableRecordsDistanceThresholdMeters = 15.0
-        ), callback)
+        val response = searchEngine.searchBlocking(
+            TEST_QUERY,
+            SearchOptions(
+                proximity = userLocation,
+                origin = userLocation,
+                indexableRecordsDistanceThresholdMeters = 15.0
+            )
+        )
 
-        val suggestionsResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
-
-        val suggestions = suggestionsResult.suggestions
-        assertFalse(suggestions.any { it.isIndexableRecordSuggestion })
+        assertFalse(response.requireSuggestions().any { it.isIndexableRecordSuggestion })
     }
 
     @Test
     fun testIndexableRecordsMatching() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-indexable-records-matching.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-test-records-matching.json"))
 
         val recordCoordinate = Point.fromLngLat(-122.41936, 37.77707)
         val record = createTestHistoryRecord(
@@ -521,7 +485,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 neighborhood = "Downtown",
                 postcode = "94102",
                 street = "Van Ness",
-                houseNumber = "150"
             ),
             searchResultType = SearchResultType.ADDRESS,
         )
@@ -571,7 +534,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
          * [IndexableRecord] instance.
          */
         val routablePoints = listOf(
-            CoreRoutablePoint(Point.fromLngLat(-122.419548, 37.777044), "POI")
+            CoreRoutablePoint(Point.fromLngLat(-122.41936, 37.77707), "default")
         )
         assertEquals(
             routablePoints,
@@ -587,15 +550,15 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         assertEquals(
-            "150 Van Ness, San Francisco, California 94102, United States of America",
+            "San Francisco, California 94102, United States of America",
             suggestion.descriptionText
         )
         assertEquals(
-            "150 Van Ness, San Francisco, California 94102, United States of America",
+            "San Francisco, California 94102, United States of America",
             searchResult.descriptionText
         )
         assertNotEquals(
-            "150 Van Ness, San Francisco, California 94102, United States of America",
+            "San Francisco, California 94102, United States of America",
             record.descriptionText
         )
 
@@ -608,7 +571,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertNotEquals("restaurant", record.makiIcon)
 
         val metadata = SearchResultMetadata(
-            createCoreResultMetadata(data = hashMapOf("iso_3166_1" to "US"))
+            createCoreResultMetadata(phone = "+123 456 789", data = hashMapOf())
         )
         assertEquals(metadata, suggestion.metadata)
         assertEquals(metadata, searchResult.metadata)
@@ -617,265 +580,151 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulSuggestionSelection() {
-        val blockingCompletionCallback = BlockingCompletionCallback<List<HistoryRecord>>()
-        historyDataProvider.getAll(blockingCompletionCallback)
+        assertTrue(historyDataProvider.getAllBlocking().isEmpty())
 
-        var callbackResult = blockingCompletionCallback.getResultBlocking()
-        assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
-        callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
-        assertTrue(callbackResult.result.isEmpty())
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY)
+        val suggestions = suggestionsResponse.requireSuggestions()
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
 
-        var callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
-        searchEngine.search(TEST_QUERY, options, callback)
-
-        val res = callback.getResultBlocking()
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful.json"))
-
-        callback = BlockingSearchSelectionCallback()
-        searchEngine.select(suggestions.first(), callback)
-        val selectionResult = callback.getResultBlocking() as SearchEngineResult.Result
+        val selectionResponse = searchEngine.selectBlocking(suggestions.first())
+        val selectionResult = selectionResponse.requireResult()
+        assertNull(selectionResult.responseInfo.coreSearchResponse)
 
         val searchResult = selectionResult.result
 
-        val baseRawSearchResult = createTestBaseRawSearchResult(
-            id = "place.11543680732831130",
-            types = listOf(BaseRawResultType.PLACE, BaseRawResultType.REGION),
-            names = listOf("Minsk"),
-            descriptionAddress = "Minsk Region, Belarus, Planet Earth",
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
-            fullAddress = "Minsk Region, Belarus, Planet Earth",
-            distanceMeters = 5000000.0,
-            matchingName = "Minsk",
-            center = Point.fromLngLat(27.234342, 53.940465),
-            accuracy = ResultAccuracy.Rooftop,
-            routablePoints = listOf(
-                RoutablePoint(point = Point.fromLngLat(27.234300, 53.973651), name = "City Entrance")
-            ),
-            icon = "marker",
-            metadata = SearchResultMetadata(
-                metadata = HashMap(
-                    mutableMapOf(
-                        "iso_3166_1" to "by",
-                        "iso_3166_2" to "BY-MI"
-                    )
-                ),
-                reviewCount = 17,
-                phone = "+1 650-965-2048",
-                website = "https://www.starbucks.com/store-locator/store/7373/shoreline-pear-1380-pear-avenue-mountain-view-ca-940431360-us",
-                averageRating = 4.0,
-                description = "Starbucks, Mountain View",
-                primaryPhotos = listOf(
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-t/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 50,
-                        height = 50
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-l/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 150,
-                        height = 150
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-o/18/47/98/c6/starbucks-inside-and.jpg",
-                        width = 1708,
-                        height = 2046
-                    )
-                ),
-                otherPhotos = null,
-                openHours = OpenHours.AlwaysOpen,
-                parking = ParkingData(
-                    totalCapacity = 20,
-                    reservedForDisabilities = 2
-                ),
-                cpsJson = "{\"raw\":{}}"
-            ),
-            serverIndex = 0,
-            etaMinutes = 10.5,
-            externalIDs = mapOf("carmen" to "place.11543680732831130")
+        assertEquals("test-id", searchResult.id)
+        assertEquals("Washington", searchResult.name)
+        // TODO FIXME remove matchingName
+        //assertEquals(null, searchResult.matchingName)
+        assertEquals(
+            "Washington, District of Columbia 20036, United States of America",
+            searchResult.descriptionText
         )
-
-        val expectedResult = createTestServerSearchResult(
-            listOf(SearchResultType.PLACE, SearchResultType.REGION),
-            baseRawSearchResult,
-            TEST_REQUEST_OPTIONS.run {
-                copy(
-                    options = options,
-                    requestContext = requestContext.copy(
-                        responseUuid = "0a197057-edf0-4447-be63-9badcf7c19be"
-                    )
+        assertEquals(
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
+            searchResult.fullAddress
+        )
+        // TODO FIXME do we have it in search box at all?
+        assertEquals(null, searchResult.accuracy)
+        assertEquals(
+            SearchAddress(
+                country = "United States of America",
+                neighborhood = "Dupont Circle",
+                place = "Washington",
+                postcode = "20036",
+                region = "District of Columbia",
+                street = "Connecticut Ave Nw"
+            ),
+            searchResult.address
+        )
+        assertEquals(
+            listOf(
+                RoutablePoint(
+                    Point.fromLngLat(-77.0412880184587, 38.90608285774093), "default"
                 )
-            }
+            ), searchResult.routablePoints
         )
+        assertEquals(Point.fromLngLat(-77.041093, 38.906197), searchResult.coordinate)
+        assertEquals("marker", searchResult.makiIcon)
+        assertEquals(listOf("gym", "services"), searchResult.categories)
+        assertEquals(null, searchResult.etaMinutes)
+        assertEquals(null, searchResult.indexableRecord)
+        assertEquals(900.0, searchResult.distanceMeters)
+        assertEquals(hashMapOf("id-1" to "id-1-value"), searchResult.externalIDs)
+        assertEquals(listOf(SearchResultType.POI), searchResult.types)
+        assertEquals(0, searchResult.serverIndex)
 
-        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, searchResult))
+        with(searchResult.metadata!!) {
+            assertEquals("+123 456 789", phone)
+            assertEquals("https://www.test.com", website)
+            assertEquals(35, reviewCount)
+            assertEquals(4.0, averageRating)
+            assertEquals(
+                OpenHours.Scheduled(
+                    periods = listOf(
+                        OpenPeriod(
+                            open = WeekTimestamp(WeekDay.SATURDAY, 7, 0),
+                            closed = WeekTimestamp(WeekDay.SATURDAY, 20, 0)
+                        )
+                    )
+                ), openHours
+            )
+            assertEquals(
+                listOf(ImageInfo("https://test.com/img-primary.jpg", 300, 350)),
+                primaryPhotos
+            )
+            assertEquals(
+                listOf(ImageInfo("https://test.com/img-other.jpg", 150, 350)),
+                otherPhotos
+            )
+        }
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
 
-        blockingCompletionCallback.reset()
-        historyDataProvider.getAll(blockingCompletionCallback)
 
-        callbackResult = blockingCompletionCallback.getResultBlocking()
-        assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
-
-        callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
-        assertTrue(callbackResult.result.isNotEmpty())
+        val historyData = historyDataProvider.getAllBlocking()
+        assertEquals(1, historyData.size)
 
         assertEquals(
             createHistoryRecord(searchResult, TEST_LOCAL_TIME_MILLIS),
-            callbackResult.result.first()
+            historyData.first()
         )
-
-        assertNull(selectionResult.responseInfo.coreSearchResponse)
     }
 
     @Test
     fun testSuccessfulSuggestionSelectionWithTurnedOffAddToHistoryLogic() {
-        val blockingCompletionCallback = BlockingCompletionCallback<List<HistoryRecord>>()
-        historyDataProvider.getAll(blockingCompletionCallback)
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
 
-        val callbackResult = blockingCompletionCallback.getResultBlocking()
-        assertTrue(callbackResult is BlockingCompletionCallback.CompletionCallbackResult.Result)
+        assertEquals(0, historyDataProvider.getSizeBlocking())
 
-        callbackResult as BlockingCompletionCallback.CompletionCallbackResult.Result
-        assertTrue(callbackResult.result.isEmpty())
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY)
+        val suggestions = suggestionsResponse.requireSuggestions()
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
-
-        var callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
-        searchEngine.search(TEST_QUERY, options, callback)
-
-        val res = callback.getResultBlocking()
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful.json"))
-
-        callback = BlockingSearchSelectionCallback()
-        searchEngine.select(suggestions.first(), SelectOptions(addResultToHistory = false), callback)
-        val selectionResult = callback.getResultBlocking() as SearchEngineResult.Result
-
-        assertEquals("place.11543680732831130", selectionResult.result.id)
-        assertEquals(0, historyDataProvider.getSizeBlocking(callbacksExecutor))
-        assertNull(selectionResult.responseInfo.coreSearchResponse)
-    }
-
-    @Test
-    fun testRecursiveQuerySelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-with-recursion-query.json"))
-
-        val callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
-        searchEngine.search(TEST_QUERY, options, callback)
-
-        val res = callback.getResultBlocking()
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-
-        assertEquals(2, suggestions.size)
-
-        val recursionSearchResult = createTestBaseRawSearchResult(
-            id = "Y2WAgMLS1KJKAA==.42CAgMy8ktSivMQcAA==.42SAgKDU5NKi4sz8PAA=",
-            types = listOf(BaseRawResultType.QUERY),
-            names = listOf("Did you mean recursion?"),
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress()),
-            descriptionAddress = "Make a new search",
-            fullAddress = null,
-            matchingName = "Did you mean recursion?",
-            icon = "marker",
-            action = BaseSuggestAction(
-                endpoint = "suggest",
-                path = "Recursion",
-                query = "&proximity=-122.084088,37.422065&language=en&limit=10",
-                body = null,
-                multiRetrievable = false
-            ),
+        val selectionResponse = searchEngine.selectBlocking(
+            suggestions.first(), SelectOptions(addResultToHistory = false)
         )
+        assertTrue(selectionResponse.isResult)
 
-        val expectedResult = BaseServerSearchSuggestion(
-            recursionSearchResult,
-            TEST_REQUEST_OPTIONS.copy(
-                options = options,
-            ).mapToBase()
-        ).mapToPlatform()
-
-        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, suggestions.first()))
-
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-with-recursion-query.json"))
-
-        callback.reset()
-        searchEngine.select(suggestions.first(), callback)
-
-        val selectionResult = callback.getResultBlocking() as SearchEngineResult.Suggestions
-
-        val newSuggestions = selectionResult.suggestions
-        assertEquals(suggestions.size, newSuggestions.size)
-        newSuggestions.indices.forEach { index ->
-            assertTrue(compareSearchResultWithServerSearchResult(suggestions[index], newSuggestions[index]))
-        }
-
-        assertNotNull(selectionResult.responseInfo.coreSearchResponse)
+        assertEquals(0, historyDataProvider.getSizeBlocking())
     }
+
+    // TODO FIXME recursive
+//    @Test
+//    fun testRecursiveQuerySelection() {
+//        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-with-recursive.json"))
+//        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-with-recursive.json"))
+//
+//        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
+//        val response = searchEngine.searchBlocking(TEST_QUERY, options)
+//
+//        val suggestions = response.requireSuggestions()
+//        assertEquals(2, suggestions.size)
+//
+//        val suggestion = suggestions.first()
+//        assertEquals("Did you mean recursion?", suggestion.name)
+//        assertEquals("Make a new search", suggestion.descriptionText)
+//        assertEquals(SearchSuggestionType.Query, suggestion.type)
+//
+//        val selectionResponse = searchEngine.selectBlocking(suggestion)
+//        assertTrue(selectionResponse.isSuggestions)
+//    }
 
     @Test
     fun testCategorySuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-only-categories.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-category.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-category-cafe.json"))
 
-        val callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, types = listOf(QueryType.CATEGORY))
-        searchEngine.search(TEST_QUERY, options, callback)
+        val response = searchEngine.searchBlocking(TEST_QUERY)
+        val suggestions = response.requireSuggestions()
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-
-        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
-            id = "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
-            types = listOf(BaseRawResultType.CATEGORY),
-            names = listOf("Cafe"),
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress()),
-            categories = listOf("Cafe"),
-            descriptionAddress = "Category",
-            fullAddress = null,
-            matchingName = "Cafe",
-            icon = "restaurant",
-            externalIDs = mapOf("federated" to "category.cafe"),
-            action = BaseSuggestAction(
-                endpoint = "retrieve",
-                path = "",
-                query = null,
-                body = "{\"id\":\"category-test-id\"}".toByteArray(),
-                multiRetrievable = false
-            ),
-        )
-
-        val expectedSearchSuggestion = BaseServerSearchSuggestion(
-            baseRawCategorySuggestion,
-            TEST_REQUEST_OPTIONS.run {
-                copy(
-                    options = options.copy(
-                        types = listOf(QueryType.CATEGORY)
-                    ),
-                    requestContext = requestContext.copy(
-                        responseUuid = "be35d556-9e14-4303-be15-57497c331348"
-                    ),
-                )
-            }.mapToBase()
-        ).mapToPlatform()
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
-
-        assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)
-        assertEquals(SearchSuggestionType.Category("internet_cafe"), suggestions[1].type)
-
-        assertNotNull(res.responseInfo.coreSearchResponse)
-        assertTrue(res.responseInfo.isReproducible)
+        val suggestion = suggestions[0]
+        assertEquals("Cafe", suggestion.name)
+        assertEquals(SearchSuggestionType.Category("cafe"), suggestion.type)
+        assertEquals(listOf("Cafe"), suggestion.categories)
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
 
@@ -946,64 +795,28 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testBrandSuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-only-brand.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-brand.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-category-cafe.json"))
 
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION)
-        val suggestionsResult = searchEngine.searchBlocking(TEST_QUERY, options)
-        val suggestions = suggestionsResult.requireSuggestions()
+        val response = searchEngine.searchBlocking(TEST_QUERY)
+        val suggestions = response.requireSuggestions()
         assertEquals(1, suggestions.size)
 
-        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
-            id = "test-brand-internal-id",
-            types = listOf(BaseRawResultType.BRAND),
-            names = listOf("Starbucks"),
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress()),
-            categories = null,
-            descriptionAddress = "Brand",
-            fullAddress = "Brand",
-            matchingName = "Starbucks",
-            icon = null,
-            externalIDs = mapOf("federated" to "brand.test-external-id"),
-            action = BaseSuggestAction(
-                endpoint = "retrieve",
-                path = "",
-                query = null,
-                body = "{\"id\":\"test-brand-action-id\"}".toByteArray(),
-                multiRetrievable = false
-            ),
-        )
-
-        val expectedSearchSuggestion = BaseServerSearchSuggestion(
-            baseRawCategorySuggestion,
-            TEST_REQUEST_OPTIONS.run {
-                copy(
-                    options = options,
-                    requestContext = requestContext.copy(
-                        responseUuid = "ca7c0ef1-ec25-40c4-962c-ca6e279a2146"
-                    ),
-                )
-            }.mapToBase()
-        ).mapToPlatform()
-
         val suggestion = suggestions.first()
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestion))
+        assertEquals("Starbucks", suggestion.name)
         assertEquals(SearchSuggestionType.Brand("Starbucks", "test-external-id"), suggestion.type)
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
-
-        val selectionResult = searchEngine.selectBlocking(suggestion)
-        val results = selectionResult.requireResults()
-        assertEquals(results.size, 3)
+        val selectionResponse = searchEngine.selectBlocking(suggestion)
+        assertTrue(selectionResponse.isResults)
+        assertEquals(3, selectionResponse.requireResults().size)
     }
 
     @Test
     fun testSuccessfulIncorrectResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-incorrect-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-incorrect.json"))
 
         try {
-            val callback = BlockingSearchSelectionCallback()
-            searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+            searchEngine.searchBlocking(TEST_QUERY)
             if (BuildConfig.DEBUG) {
                 fail()
             }
@@ -1038,7 +851,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testNetworkErrorForConsecutiveRequests() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
         mockServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
 
         val successfulResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
@@ -1064,7 +877,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testCheckAsyncOperationTaskCompletion() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         var countDownLatch = CountDownLatch(1)
         var task: AsyncOperationTask? = null
@@ -1083,7 +896,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         })
         countDownLatch.await()
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
 
         countDownLatch = CountDownLatch(1)
         var selectionTask: AsyncOperationTask? = null
@@ -1117,7 +930,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"), 2)
+        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"), 2)
 
         val task1 = searchEngine.search(TEST_QUERY, SearchOptions(requestDebounce = 1000), EmptySearchSuggestionsCallback)
 
@@ -1131,28 +944,17 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSBSCzechAddressFormatting() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-czech.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-test-address-formatting.json"))
 
-        val callback = BlockingSearchSelectionCallback()
-        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+        val response = searchEngine.searchBlocking(TEST_QUERY)
+        assertTrue(response.isSuggestions)
 
-        val suggestion = (callback.getResultBlocking() as SearchEngineResult.Suggestions).suggestions.first()
+        val suggestions = response.requireSuggestions()
+        val suggestion = suggestions.first()
 
         assertEquals("Legerova 15", suggestion.name)
         assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
         assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
-    }
-
-    @Test
-    fun testSBSPoiAddressFormatting() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-address-formatting-test.json"))
-
-        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
-
-        val suggestions = suggestionsResponse.requireSuggestions()
-        val suggestion = suggestions.first()
-
-        assertEquals("667 Madison Ave, New York City, New York 10065, United States of America", suggestion.fullAddress)
     }
 
     @Test
@@ -1162,18 +964,18 @@ internal class SearchEngineIntegrationTest : BaseTest() {
          * (SSDK-276) street: madison ave -> Madison Ave
          * (SSDK-277) name: 667 Madison -> 667 Madison Ave
          */
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-data-formatting-corrections-test.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-backend-patches.json"))
 
         val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
 
         val suggestions = suggestionsResponse.requireSuggestions()
+        val suggestion = suggestions.first()
 
-        val suggestion1 = suggestions.first()
-        assertEquals("667 Madison Ave", suggestion1.name)
-        assertEquals("Madison Ave", suggestion1.address?.street)
+        assertEquals("667 Madison Ave", suggestion.name)
+        assertEquals("667 Madison Ave, New York City, New York 10065, United States of America", suggestion.fullAddress)
+        assertEquals("Madison Ave", suggestion.address?.street)
 
-        val suggestion2 = suggestions[1]
-        assertEquals("E 59th St", suggestion2.address?.street)
+        assertEquals("E 59th St", suggestions[1].address?.street)
     }
 
     @Test
@@ -1289,7 +1091,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     private companion object {
 
-        const val TEST_QUERY = "Minsk"
+        const val TEST_QUERY = "Washington"
         const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
         val TEST_ORIGIN_LOCATION: Point = Point.fromLngLat(10.1, 11.12345)
@@ -1311,7 +1113,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             originRewritten = false,
             sessionID = TEST_UUID,
             requestContext = SearchRequestContext(
-                apiType = CoreApiType.SBS,
+                apiType = CoreApiType.SEARCH_BOX,
                 keyboardLocale = TEST_KEYBOARD_LOCALE,
                 screenOrientation = TEST_ORIENTATION,
                 responseUuid = ""

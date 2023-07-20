@@ -97,7 +97,7 @@ internal fun createTestRequestOptions(
     proximityRewritten: Boolean = false,
     originRewritten: Boolean = false,
     sessionID: String = "test-session-id",
-    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX),
 ) = RequestOptions(
     query = query,
     endpoint = endpoint,
@@ -110,7 +110,7 @@ internal fun createTestRequestOptions(
 
 internal fun createTestBaseRequestOptions(
     core: CoreRequestOptions = createTestCoreRequestOptions(),
-    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX),
 ) = BaseRequestOptions(
     core = core,
     requestContext = requestContext

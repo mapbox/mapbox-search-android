@@ -80,7 +80,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SEARCH_BOX),
                     isOffline = true,
                 )
             )
@@ -102,7 +102,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SEARCH_BOX),
                     isOffline = true,
                 )
             )
@@ -144,7 +144,7 @@ internal class OfflineSearchEngineImpl(
                     callbackExecutor = executor,
                     workerExecutor = engineExecutorService,
                     searchRequestTask = request,
-                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SEARCH_BOX),
                     isOffline = true,
                 )
             )

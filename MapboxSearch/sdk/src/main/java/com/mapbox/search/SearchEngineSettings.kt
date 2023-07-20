@@ -24,6 +24,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
      */
     public val viewportProvider: ViewportProvider? = null,
 
+    // TODO FIXME merge geocodingEndpointBaseUrl and singleBoxSearchBaseUrl into baseUrl
     /**
      * Geocoding API endpoint URL.
      */
