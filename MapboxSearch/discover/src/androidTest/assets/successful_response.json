@@ -5,69 +5,77 @@
       "type":"Feature",
       "geometry":{
         "coordinates":[
-          2.2930926,
-          48.858407
+          2.2966029609152523,
+          48.85993304489138
         ],
         "type":"Point"
       },
       "properties":{
-        "name":"fruit stand",
-        "mapbox_id":"CkIKQDM0MWFjOTIzOTcxOTQ1MjQ4M2I2ZjVlNDY4OWM2MTg1NzlhOWZiNjljMDQyYTI1ZDkyNjMzOTExZWVhYjVmODk=",
-        "feature_type":"poi",
-        "address":"75007 Paris",
-        "full_address":"75007 Paris, France",
-        "place_formatted":"France",
-        "context":{
-          "country":{
-            "name":"France",
-            "country_code":"FR",
-            "country_code_alpha_3":"FRA"
+        "feature_name":"Starbucks",
+        "matching_name":"Starbucks",
+        "description":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "place_name":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "id":"6IXWdnYBo8NaDG6XivFv",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"26 Av. de l'Opéra, 75001 Paris, France"
           },
-          "postcode":{
-            "name":"75007"
+          {
+            "layer":"street",
+            "name":"26 Av. de l'Opéra"
           },
-          "place":{
+          {
+            "layer":"postcode",
+            "name":"75001"
+          },
+          {
+            "layer":"neighborhood",
             "name":"Paris"
           },
-          "locality":{
-            "name":"7th arrondissement of Paris"
-          },
-          "neighborhood":{
-            "name":"Gros-Caillou"
-          },
-          "street":{
+          {
+            "layer":"place",
             "name":"Paris"
+          },
+          {
+            "layer":"region",
+            "name":"Île-de-France"
+          },
+          {
+            "layer":"country",
+            "name":"France"
           }
-        },
-        "coordinates":{
-          "latitude":48.858407,
-          "longitude":2.2930926,
-          "routable_points":[
-            {
-              "name":"default",
-              "latitude":48.85865467984879,
-              "longitude":2.292922543158576
-            }
-          ]
-        },
+        ],
         "maki":"restaurant",
         "poi_category":[
-          "cafe",
+          "restaurant",
           "food",
-          "food and drink"
+          "food and drink",
+          "coffee shop",
+          "coffee",
+          "cafe"
         ],
-        "poi_category_ids":[
-          "cafe",
-          "food",
-          "food_and_drink"
-        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9E3MTgyRjQ_M0SzOTRFMjA3Mjk2TDtFRjAA==",
         "external_ids":{
-
+          "foursquare":"4740b317f964a520724c1fe3",
+          "tripadvisor":"4113702"
         },
+        "accuracy": "point",
+        "routable_points":[
+          {
+            "name":"Address",
+            "coordinates":[
+              2.2966029609152523,
+              48.85993304489138
+            ]
+          }
+        ],
         "metadata":{
-          "primary_photo":[
-
-          ]
+          "iso_3166_1":"fra",
+          "iso_3166_2":"fr"
         }
       }
     },
@@ -75,97 +83,64 @@
       "type":"Feature",
       "geometry":{
         "coordinates":[
-          2.2999417,
-          48.8579342
+          -122.08305,
+          37.3881
         ],
         "type":"Point"
       },
       "properties":{
-        "name":"Le Champ de Mars",
-        "mapbox_id":"CkIKQGVkZTU1M2Q5ZGI3MTdhMGRmZDA2NDFjZGQ1NGZhNTJjYzdlNmQ5NWE0NTkzZmI5MjRkNmJiZWU3ZDNkMTE5MjU=",
-        "feature_type":"poi",
-        "address":"75007 Paris",
-        "full_address":"75007 Paris, France",
-        "place_formatted":"France",
-        "context":{
-          "country":{
-            "name":"France",
-            "country_code":"FR",
-            "country_code_alpha_3":"FRA"
+        "feature_name":"Le Boulanger",
+        "matching_name":"Le Boulanger",
+        "description":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "place_name":"Starbucks, 26 Av. de l'Opéra, 75001 Paris, France",
+        "id":"hmjBdnYBo8NaDG6XR6G3",
+        "place_type":[
+          "poi"
+        ],
+        "context":[
+          {
+            "layer":"address",
+            "name":"26 Av. de l'Opéra, 75001 Paris, France"
           },
-          "postcode":{
-            "name":"75007"
+          {
+            "layer":"street",
+            "name":"26 Av. de l'Opéra"
           },
-          "place":{
+          {
+            "layer":"postcode",
+            "name":"75001"
+          },
+          {
+            "layer":"neighborhood",
             "name":"Paris"
           },
-          "locality":{
-            "name":"7th arrondissement of Paris"
-          },
-          "neighborhood":{
-            "name":"Gros-Caillou"
-          },
-          "street":{
+          {
+            "layer":"place",
             "name":"Paris"
+          },
+          {
+            "layer":"region",
+            "name":"Île-de-France"
+          },
+          {
+            "layer":"country",
+            "name":"France"
           }
-        },
-        "coordinates":{
-          "latitude":48.8579342,
-          "longitude":2.2999417,
-          "routable_points":[
-            {
-              "name":"default",
-              "latitude":48.857935,
-              "longitude":2.300095
-            }
-          ]
-        },
+        ],
         "maki":"restaurant",
         "poi_category":[
-          "cafe"
+          "food"
         ],
-        "poi_category_ids":[
-          "cafe",
-          "food",
-          "food_and_drink"
-        ],
+        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9kyRDwySLZNM0SzOTRFMjA8M0C2Mj41RjAA==",
         "external_ids":{
-          "tripadvisor":"3543218",
-          "safegraph":"zzy-22m@53v-7yf-qpv"
-        },
-        "metadata":{
-          "review_count":395,
-          "average_rating":1.5,
-          "primary_photo":[
-            {
-              "width":50,
-              "height":50,
-              "url":"https://media-cdn.tripadvisor.com/media/photo-t/12/cb/3a/41/plat-du-jour.jpg"
-            },
-            {
-              "width":150,
-              "height":150,
-              "url":"https://media-cdn.tripadvisor.com/media/photo-l/12/cb/3a/41/plat-du-jour.jpg"
-            },
-            {
-              "width":250,
-              "height":188,
-              "url":"https://media-cdn.tripadvisor.com/media/photo-f/12/cb/3a/41/plat-du-jour.jpg"
-            },
-            {
-              "width":550,
-              "height":413,
-              "url":"https://media-cdn.tripadvisor.com/media/photo-s/12/cb/3a/41/plat-du-jour.jpg"
-            },
-            {
-              "width":2000,
-              "height":1500,
-              "url":"https://media-cdn.tripadvisor.com/media/photo-o/12/cb/3a/41/plat-du-jour.jpg"
-            }
-          ]
+          "safegraph":"sg:b06beba1518a429a83ebbfe51c79394e",
+          "tripadvisor":"922316",
+          "foursquare":"4b11b8c5f964a5201f8323e3"
         }
       }
     }
   ],
-  "attribution":"© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"46:a4b40e46f08bf603328aace583b2e0d6db4eb851",
+  "response_uuid":"544304d0-2007-4354-a599-c522cb150bb0"
 }
