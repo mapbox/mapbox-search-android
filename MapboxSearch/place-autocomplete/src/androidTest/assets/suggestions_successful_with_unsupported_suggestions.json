@@ -48,16 +48,6 @@
       "maki":"marker"
     },
     {
-      "name":"Did you mean recursion?",
-      "feature_type":"query",
-      "place_formatted":"Make a new search",
-      "context":{
-
-      },
-      "language":"en",
-      "maki":"marker"
-    },
-    {
       "name": "Starbucks",
       "mapbox_id": "suggestion-id-3",
       "feature_type": "poi",

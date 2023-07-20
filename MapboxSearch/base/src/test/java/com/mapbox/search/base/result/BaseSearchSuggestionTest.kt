@@ -151,17 +151,16 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
 
-                        // TODO FIXME search native should parse "poi_category_ids" and provide it to platforms
-//                        WhenThrows(
-//                            "Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType and without canonical name",
-//                            IllegalStateException::class
-//                        ) {
-//                            val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-//                                types = listOf(BaseRawResultType.CATEGORY),
-//                                externalIDs = emptyMap()
-//                            )
-//                            BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
-//                        }
+                        WhenThrows(
+                            "Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType and without canonical name",
+                            IllegalStateException::class
+                        ) {
+                            val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                                types = listOf(BaseRawResultType.CATEGORY),
+                                externalIDs = emptyMap()
+                            )
+                            BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+                        }
                     }
                     BaseRawResultType.BRAND -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
