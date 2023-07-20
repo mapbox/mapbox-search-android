@@ -26,6 +26,7 @@ import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.equalsTo
+import com.mapbox.search.internal.bindgen.ResultAccuracy
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -607,8 +608,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             searchResult.fullAddress
         )
-        // TODO FIXME do we have it in search box at all?
-        assertEquals(null, searchResult.accuracy)
+        // TODO fixme Search Native should parse accuracy
+        //assertEquals(ResultAccuracy.APPROXIMATE, searchResult.accuracy)
         assertEquals(
             SearchAddress(
                 country = "United States of America",

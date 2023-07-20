@@ -44,6 +44,7 @@
         "coordinates": {
           "latitude": 38.906197,
           "longitude": -77.041093,
+          "accuracy":"proximate",
           "routable_points": [
             {
               "name": "default",
