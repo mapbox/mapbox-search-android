@@ -2,8 +2,6 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -15,21 +13,19 @@ import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.record.mapToBase
 import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.isIndexableRecordSuggestion
-import com.mapbox.search.result.mapToPlatform
-import com.mapbox.search.tests_support.BlockingCompletionCallback
-import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
-import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
-import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.record.CustomRecord
 import com.mapbox.search.tests_support.record.StubRecordsStorage
 import com.mapbox.search.tests_support.record.TestDataProvider
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getBlocking
+import com.mapbox.search.tests_support.registerDataProviderBlocking
+import com.mapbox.search.tests_support.searchBlocking
+import com.mapbox.search.tests_support.selectBlocking
+import com.mapbox.search.tests_support.unregisterDataProviderBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -82,63 +78,38 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testSuccessfulCustomProviderRegistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val customDataProvider = TestDataProvider(
             stubStorage = StubRecordsStorage(TEST_CUSTOM_USER_RECORDS.toMutableList())
         )
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingCompletionCallback<Unit>()
-
-        searchEngine.registerDataProvider(
+        val registrationResult = searchEngine.registerDataProviderBlocking(
             dataProvider = customDataProvider,
             executor = callbacksExecutor,
-            callback = blockingCallback,
         )
 
-        assertTrue(blockingCallback.getResultBlocking().isResult)
+        assertTrue(registrationResult.isResult)
 
-        val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
-        searchEngine.search(secondCustomRecord.name, options, callback)
+        val response = searchEngine.searchBlocking(secondCustomRecord.name, options)
+        val suggestions = response.requireSuggestions()
 
-        var searchResult = callback.getResultBlocking()
-        assertTrue(searchResult is SearchEngineResult.Suggestions)
-        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
-
-        val expectedSuggestion = BaseIndexableRecordSearchSuggestion(
-            record = secondCustomRecord.mapToBase(),
-            rawSearchResult = createTestBaseRawSearchResult(
-                id = secondCustomRecord.id,
-                layerId = customDataProvider.dataProviderName,
-                types = listOf(BaseRawResultType.USER_RECORD),
-                names = listOf(secondCustomRecord.name),
-                center = secondCustomRecord.coordinate,
-                addresses = listOf(SearchAddress()),
-                distanceMeters = 0.0,
-                serverIndex = null,
+        val first = suggestions.first()
+        assertEquals(secondCustomRecord.id, first.id)
+        assertEquals(secondCustomRecord.name, first.name)
+        assertEquals(secondCustomRecord.descriptionText, first.descriptionText)
+        assertEquals(SearchAddress(), first.address)
+        assertEquals(
+            SearchSuggestionType.IndexableRecordItem(
+                secondCustomRecord, customDataProvider.dataProviderName
             ),
-            requestOptions = TEST_REQUEST_OPTIONS.copy(
-                query = secondCustomRecord.name,
-                options = options.copy(
-                    origin = secondCustomRecord.coordinate
-                ),
-                requestContext = TEST_REQUEST_OPTIONS.requestContext.copy(
-                    responseUuid = "bf62f6f4-92db-11eb-a8b3-0242ac130003"
-                )
-            ).mapToBase()
-        ).mapToPlatform()
-        assertTrue(
-            compareSearchResultWithServerSearchResult(expectedSuggestion, suggestions[0])
+            first.type
         )
 
-        callback.reset()
-        searchEngine.select(suggestions[0], callback)
-
-        searchResult = callback.getResultBlocking()
-        assertTrue(searchResult is SearchEngineResult.Result)
-        val result = (searchResult as SearchEngineResult.Result).result
+        val selectionResponse = searchEngine.selectBlocking(suggestions[0])
+        val result = selectionResponse.requireResult().result
 
         assertEquals(secondCustomRecord, result.indexableRecord)
 
@@ -164,7 +135,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testFailCustomProviderRegistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val testException = RuntimeException("Test exception")
         val customDataProvider = TestDataProvider(
@@ -174,25 +145,18 @@ internal class CustomDataProviderTest : BaseTest() {
         }
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingCompletionCallback<Unit>()
-
-        searchEngine.registerDataProvider(
+        val registrationResult = searchEngine.registerDataProviderBlocking(
             dataProvider = customDataProvider,
-            executor = callbacksExecutor,
-            callback = blockingCallback,
+            executor = callbacksExecutor
         )
 
-        val res = blockingCallback.getResultBlocking()
-        assertTrue(blockingCallback.getResultBlocking().isError)
-        assertTrue(testException.equalsTo(res.requireError()))
+        assertTrue(registrationResult.isError)
+        assertTrue(testException.equalsTo(registrationResult.requireError()))
 
-        val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
-        searchEngine.search(secondCustomRecord.name, options, callback)
+        val response = searchEngine.searchBlocking(secondCustomRecord.name, options)
 
-        val searchResult = callback.getResultBlocking()
-        assertTrue(searchResult is SearchEngineResult.Suggestions)
-        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
+        val suggestions = response.requireSuggestions()
 
         assertTrue(
             suggestions.none {
@@ -203,39 +167,29 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testSuccessfulCustomProviderUnregistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-for-minsk.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
 
         val customDataProvider = TestDataProvider(
             stubStorage = StubRecordsStorage(TEST_CUSTOM_USER_RECORDS.toMutableList())
         )
         val secondCustomRecord = TEST_CUSTOM_USER_RECORDS[1]
 
-        val blockingCallback = BlockingCompletionCallback<Unit>()
-
-        searchEngine.registerDataProvider(
+        val registerResult = searchEngine.registerDataProviderBlocking(
             dataProvider = customDataProvider,
             executor = callbacksExecutor,
-            callback = blockingCallback,
         )
 
-        assertTrue(blockingCallback.getResultBlocking().isResult)
+        assertTrue(registerResult.isResult)
 
-        blockingCallback.reset()
-
-        searchEngine.unregisterDataProvider(
+        val unregisterResult = searchEngine.unregisterDataProviderBlocking(
             dataProvider = customDataProvider,
             executor = callbacksExecutor,
-            callback = blockingCallback,
         )
-        assertTrue(blockingCallback.getResultBlocking().isResult)
+        assertTrue(unregisterResult.isResult)
 
-        val callback = BlockingSearchSelectionCallback()
         val options = SearchOptions(origin = secondCustomRecord.coordinate)
-        searchEngine.search(secondCustomRecord.name, options, callback)
-
-        val searchResult = callback.getResultBlocking()
-        assertTrue(searchResult is SearchEngineResult.Suggestions)
-        val suggestions = (searchResult as SearchEngineResult.Suggestions).suggestions
+        val response = searchEngine.searchBlocking(secondCustomRecord.name, options)
+        val suggestions = response.requireSuggestions()
 
         assertTrue(
             suggestions.none {

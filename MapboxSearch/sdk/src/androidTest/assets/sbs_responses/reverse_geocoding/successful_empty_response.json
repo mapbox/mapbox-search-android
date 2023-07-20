@@ -1,8 +1,6 @@
 {
-  "type":"FeatureCollection",
-  "features":[
+  "type": "FeatureCollection",
+  "features": [
   ],
-  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
-  "version":"46:a4b40e46f08bf603328aace583b2e0d6db4eb851",
-  "response_uuid":"4fb99f9a-9615-4e34-9408-d71d613e606c"
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
 }

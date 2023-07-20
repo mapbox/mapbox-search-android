@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
+import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchCallback
@@ -38,12 +39,12 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SBS,
             SearchEngineSettings()
         )
 
         val options = ReverseGeoOptions(
-            center = Point.fromLngLat(2.294434, 48.858349),
-            limit = 1
+            center = Point.fromLngLat(2.294434, 48.858349)
         )
         searchRequestTask = searchEngine.search(options, searchCallback)
     }

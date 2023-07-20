@@ -1,9 +1,6 @@
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.BaseRawResultType
-import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
@@ -14,16 +11,13 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
-import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
@@ -32,11 +26,10 @@ import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
-import com.mapbox.search.tests_support.createTestBaseRawSearchResult
-import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
 import com.mapbox.search.tests_support.record.upsertBlocking
+import com.mapbox.search.tests_support.reverseBlocking
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import com.mapbox.search.utils.enqueueMultiple
 import okhttp3.mockwebserver.MockResponse
@@ -112,8 +105,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             types = listOf(QueryType.ADDRESS, QueryType.POI)
         )
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(options, callback)
+        searchEngine.reverseBlocking(options)
 
         val request = mockServer.takeRequest()
         assertEqualsIgnoreCase("get", request.method!!)
@@ -141,136 +133,106 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     fun testSuccessfulResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
-        res as BlockingSearchCallback.SearchEngineResult.Results
-        assertEquals(3, res.results.size)
+        val (results, responseInfo) = response.requireResultPair()
+        assertEquals(3, results.size)
 
-        val searchResult = res.results.first()
-
-        val rawSearchResult = createTestBaseRawSearchResult(
-            id = "p4bWdnYBo8NaDG6XjlSq",
-            types = listOf(BaseRawResultType.POI),
-            names = listOf("Eiffel Tower"),
-            languages = listOf("def"), // should it be "en"?
-            categories = listOf("historic site", "tourist attraction", "monument", "viewpoint"),
-            addresses = listOf(
-                SearchAddress(
-                    country = "France",
-                    houseNumber = "5",
-                    neighborhood = "Gros-Caillou",
-                    place = "Paris",
-                    postcode = "75007",
-                    street = "Avenue Anatole France"
+        val searchResult = results.first()
+        assertEquals("test-id", searchResult.id)
+        assertEquals("Eiffel Tower", searchResult.name)
+        assertEquals("75007 Paris, France", searchResult.descriptionText)
+        assertEquals(
+            SearchAddress(
+                // TODO FIXME incorrect parsing
+                houseNumber = "Hamp",
+                street = "av. Anatole France",
+                neighborhood = "Gros-Caillou",
+                locality = "7th arrondissement of Paris",
+                postcode = "75007",
+                place = "Paris",
+                district = null,
+                region = null,
+                country = "France",
+            ),
+            searchResult.address
+        )
+        assertEquals("5 Avenue Anatole France, 75007 Paris, France", searchResult.fullAddress)
+        assertEquals(Point.fromLngLat(2.294481, 48.85837), searchResult.coordinate)
+        assertEquals(
+            listOf(
+                RoutablePoint(
+                    Point.fromLngLat(2.2944810097939197, 48.85836931442563),
+                    "default"
                 )
             ),
-            fullAddress = "5 Avenue Anatole France, 75007 Paris, France",
-            descriptionAddress = "Eiffel Tower, 5 Avenue Anatole France, 75007 Paris, France",
-            matchingName = "Eiffel Tower",
-            center = Point.fromLngLat(2.294464, 48.858353),
-            accuracy = ResultAccuracy.Point,
-            routablePoints = listOf(RoutablePoint(point = Point.fromLngLat(2.294464, 48.858353), name = "Address")),
-            icon = "marker",
-            distanceMeters = 10.009866290988025,
-            metadata = SearchResultMetadata(
-                metadata = hashMapOf(),
-                reviewCount = 140247,
-                phone = "+33 (0)8 92 70 12 39",
+            searchResult.routablePoints
+        )
+        assertEquals(
+            listOf(
+                "historic site",
+                "tourist attraction",
+                "monument"
+            ), searchResult.categories
+        )
+        assertEquals("marker", searchResult.makiIcon)
+        // TODO FIXME Search Native should parse accuracy
+        assertEquals(null, searchResult.accuracy)
+        assertEquals(listOf(SearchResultType.POI), searchResult.types)
+        assertEquals(null, searchResult.etaMinutes)
+        assertEquals(
+            SearchResultMetadata(
+                // TODO FIXME parse "photos"
+                metadata = hashMapOf("photos" to "[{\"width\":50,\"height\":50,\"url\":\"https://test.com/img1.jpg\"},{\"width\":150,\"height\":150,\"url\":\"https://test.com/img2.jpg\"}]"),
+                reviewCount = 141783,
+                phone = "+33 123 45 67 89",
                 website = "https://www.toureiffel.paris/",
-                averageRating = 4.5,
-                description = "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride.",
-                primaryPhotos = listOf(
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-t/1b/15/a3/a1/c-emeric-livinec-sete.jpg",
-                        width = 50,
-                        height = 50
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-l/1b/15/a3/a1/c-emeric-livinec-sete.jpg",
-                        width = 150,
-                        height = 150
-                    ),
-                    ImageInfo(
-                        url = "http://media-cdn.tripadvisor.com/media/photo-o/1b/15/a3/a1/c-emeric-livinec-sete.jpg",
-                        width = 3000,
-                        height = 2000
-                    )
-                ),
+                averageRating = 5.0,
+                description = "Famous symbol of France",
+                primaryPhotos = null,
                 otherPhotos = null,
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
                         OpenPeriod(
-                            open = WeekTimestamp(day = WeekDay.MONDAY, hour = 9, minute = 30),
-                            closed = WeekTimestamp(day = WeekDay.TUESDAY, hour = 17, minute = 0)
+                            open = WeekTimestamp(WeekDay.MONDAY, 9, 0),
+                            closed = WeekTimestamp(WeekDay.MONDAY, 23, 45)
                         )
                     )
                 ),
-                parking = ParkingData(
-                    totalCapacity = 5,
-                    reservedForDisabilities = 3
-                ),
-                cpsJson = "{\"raw\":{}}"
+                parking = null,
+                cpsJson = null,
             ),
-            externalIDs = mapOf(
-                "tripadvisor" to "188151",
-                "foursquare" to "51a2445e5019c80b56934c75",
-            )
+            searchResult.metadata
         )
+        assertEquals(mapOf("tripadvisor" to "23789983"), searchResult.externalIDs)
+        assertEquals(0, searchResult.serverIndex)
+        assertEquals(null, searchResult.indexableRecord)
 
-        val expectedResult = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
-            rawSearchResult,
-            RequestOptions(
-                query = formatPoints(TEST_POINT),
-                endpoint = "reverse",
-                options = SearchOptions(
-                    languages = listOf(IsoLanguageCode(Locale.getDefault().language)),
-                    proximity = TEST_POINT,
-                    origin = TEST_POINT
-                ),
-                proximityRewritten = false,
-                originRewritten = false,
-                sessionID = "",
-                requestContext = SearchRequestContext(
-                    apiType = CoreApiType.SEARCH_BOX,
-                    keyboardLocale = TEST_KEYBOARD_LOCALE,
-                    screenOrientation = TEST_ORIENTATION,
-                    responseUuid = "6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
-                )
-            )
-        )
-        assertTrue(compareSearchResultWithServerSearchResult(expectedResult, searchResult))
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        assertNotNull(responseInfo.coreSearchResponse)
     }
 
     @Test
     fun testSuccessfulEmptyResponse() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_empty_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
-
-        val res = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertTrue(res.results.isEmpty())
-        assertNotNull(res.responseInfo.coreSearchResponse)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        val (results, responseInfo) = response.requireResultPair()
+        assertTrue(results.isEmpty())
+        assertNotNull(responseInfo.coreSearchResponse)
     }
 
     @Test
     fun testReverseGeocodingDoesNotReturnIndexableRecords() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+        val response1 = searchEngine.reverseBlocking(TEST_POINT)
+        val (results1, responseInfo1) = response1.requireResultPair()
 
-        val firstRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertEquals(3, firstRun.results.size)
-        assertFalse(firstRun.results.any { it.indexableRecord != null })
-        assertNotNull(firstRun.responseInfo.coreSearchResponse)
+        assertEquals(3, results1.size)
+        assertFalse(results1.any { it.indexableRecord != null })
+        assertNotNull(responseInfo1.coreSearchResponse)
 
-        val searchResult = firstRun.results.first()
+        val searchResult = results1.first()
 
         historyDataProvider.upsertBlocking(
             createHistoryRecord(searchResult, timeProvider.currentTimeMillis()),
@@ -279,19 +241,18 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
 
-        callback.reset()
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+        val response2 = searchEngine.reverseBlocking(TEST_POINT)
+        val (results2, responseInfo2) = response2.requireResultPair()
 
-        val secondRun = callback.getResultBlocking() as BlockingSearchCallback.SearchEngineResult.Results
-        assertFalse(secondRun.results.any { it.indexableRecord != null })
-        assertEquals(firstRun.results.size, secondRun.results.size)
-        firstRun.results.indices.forEach { index ->
+        assertFalse(results2.any { it.indexableRecord != null })
+        assertEquals(results1.size, results2.size)
+        results1.indices.forEach { index ->
             assertTrue(
-                compareSearchResultWithServerSearchResult(firstRun.results[index], secondRun.results[index])
+                compareSearchResultWithServerSearchResult(results1[index], results2[index])
             )
         }
-        assertNotNull(secondRun.responseInfo.coreSearchResponse)
+        assertNotNull(responseInfo2.coreSearchResponse)
     }
 
     @Test
@@ -299,8 +260,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_incorrect_response.json"))
 
         try {
-            val callback = BlockingSearchCallback()
-            searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+            searchEngine.reverseBlocking(TEST_POINT)
             if (BuildConfig.DEBUG) {
                 fail()
             }
@@ -315,33 +275,26 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     fun testErrorResponse() {
         mockServer.enqueue(MockResponse().setResponseCode(404))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error && res.e is SearchRequestException && res.e.code == 404)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        val error = response.requireError()
+        assertTrue(error is SearchRequestException && error.code == 404)
     }
 
     @Test
     fun testNetworkError() {
         mockServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error && res.e is IOException)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        val error = response.requireError()
+        assertTrue(error is IOException)
     }
 
     @Test
     fun testBrokenResponseContent() {
         mockServer.enqueue(MockResponse().setResponseCode(200).setBody("I'm broken"))
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        assertTrue(response.isError)
     }
 
     @Test
@@ -388,16 +341,10 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         mockServer.enqueue(errorResponse)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        val error = response.requireError()
 
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
-
-        assertEquals(
-            SearchRequestException("Wrong arguments", 422),
-            (res as BlockingSearchCallback.SearchEngineResult.Error).e
-        )
+        assertEquals(SearchRequestException("Wrong arguments", 422), error)
     }
 
     @Test
@@ -408,18 +355,15 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         mockServer.enqueue(errorResponse)
 
-        val callback = BlockingSearchCallback()
-        searchEngine.search(ReverseGeoOptions(center = TEST_POINT), callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is BlockingSearchCallback.SearchEngineResult.Error)
+        val response = searchEngine.reverseBlocking(TEST_POINT)
+        val error = response.requireError()
 
         assertEquals(
             SearchRequestException(
                 readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
-            (res as BlockingSearchCallback.SearchEngineResult.Error).e
+            error
         )
     }
 

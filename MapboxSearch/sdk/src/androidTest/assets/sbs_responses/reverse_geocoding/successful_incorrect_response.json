@@ -1,74 +1,29 @@
 {
-  "type":"FeatureCollection",
-  "features":[
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature"
+    },
     {
     },
     {
-      "type":"Feature"
-    },
-    {
-      "type":"Feature",
-      "geometry":{
-        "coordinates":[
-          2.2944565,
-          48.85834
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -77.031342,
+          38.897361
         ],
-        "type":"Point"
+        "type": "Point"
       },
-      "properties":{
-        "feature_name":"Salon Gustave Eiffel",
-        "matching_name":"Salon Gustave Eiffel",
-        "description":"Salon Gustave Eiffel, 5 avenue Anatole France, 75007 Paris, France",
-        "place_name":"Salon Gustave Eiffel, 5 avenue Anatole France, 75007 Paris, France",
-        "id":"TtkQd3YBo8NaDG6XN1VO",
-        "place_type":[
-          "poi"
-        ],
-        "context":[
-          {
-            "layer":"address",
-            "name":"5 avenue Anatole France"
-          },
-          {
-            "layer":"street",
-            "name":"avenue anatole france"
-          },
-          {
-            "layer":"postcode",
-            "name":"75007"
-          },
-          {
-            "layer":"neighborhood",
-            "name":"Gros-Caillou"
-          },
-          {
-            "layer":"place",
-            "name":"Paris"
-          },
-          {
-            "layer":"country",
-            "name":"France"
-          }
-        ],
-        "maki":"marker",
-        "poi_category":[
-          "theater",
-          "entertainment",
-          "nightlife"
-        ],
-        "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U3Mzo8SUFAMTS4tU8xQjIG2SlGRpYQIA",
-        "external_ids":{
-          "foursquare":"5762add0498e7d20494bb984"
-        },
-        "metadata":{
-          "primary_photo":[
-
-          ]
-        }
+      "properties": {
+        "name": "Maison Kayser",
+        "mapbox_id": "CkIKQDQ0MzBmNmJkMTY5N2VlZmMyZjQ4MDZhYjQzMzdjMmI4ODliNmI4MzI0YzlhNTU4NzE0MDMyMGM2ZmNkNThhMjc=",
+        "feature_type": "poi",
+        "address": "1345 F St NW North side of F between 13th and 14th Streets",
+        "full_address": "1345 F St NW North side of F between 13th and 14th Streets, Washington, District of Columbia 20005, United States of America",
+        "place_formatted": "Washington, District of Columbia 20005, United States of America"
       }
     }
   ],
-  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
-  "version":"46:a4b40e46f08bf603328aace583b2e0d6db4eb851",
-  "response_uuid":"6b5d7e47-f901-48e9-ab14-9b8319fa07ed"
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
 }
