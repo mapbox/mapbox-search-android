@@ -1,125 +1,145 @@
 {
-  "suggestions": [
+  "suggestions":[
     {
-      "name": "Mapbox DC",
-      "mapbox_id": "suggestion-id-1",
-      "feature_type": "poi",
-      "address": "740 15th St NW",
-      "full_address": "740 15th St NW, Washington, District of Columbia 20005, United States of America",
-      "place_formatted": "Washington, District of Columbia 20005, United States of America",
-      "context": {
-        "country": {
-          "name": "United States of America",
-          "country_code": "US",
-          "country_code_alpha_3": "USA"
+      "feature_name":"Washington",
+      "matching_name":"Washington",
+      "highlighted_name":"Washington",
+      "description":"District of Columbia, United States",
+      "result_type":[
+        "place"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"suggestion-id-1"
         },
-        "region": {
-          "name": "District of Columbia",
-          "region_code": "DC",
-          "region_code_full": "US-DC"
+        "multi_retrievable":false
+      },
+      "distance":600,
+      "maki":"marker",
+      "internal_id":"Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RY1BDgIxCEU9StO1J3CrNzDGpWFabEk6xQCzmBhv5QEldpJhxf__wf8exrxj4qWbrPEUb50Mc7gaGGo8RsFC3D24kJpQssDPcOa2zBOB53mznXD1apDQ1ztopV7ML91ktcQZB9I4QSNbh-pIpU4slTkPB3IWVN3Fo3sXysbD_P_z-QE=",
+      "external_ids":{
+        "federated":"carmen.place.345549036",
+        "carmen":"place.345549036"
+      },
+      "context":[
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
         },
-        "postcode": {
-          "name": "20005"
-        },
-        "place": {
-          "name": "Washington"
-        },
-        "neighborhood": {
-          "name": "Downtown"
-        },
-        "street": {
-          "name": "15th st nw"
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States"
         }
-      },
-      "language": "en",
-      "maki": "marker",
-      "poi_category": [
-        "office"
       ],
-      "poi_category_ids": [
-        "office"
-      ],
-      "external_ids": {
-        "foursquare": "4f2bff92e4b0f215a542dafe"
-      },
-      "metadata": {},
-      "distance": 0
+      "metadata":{
+        "iso_3166_1":"us",
+        "iso_3166_2":"US-DC"
+      }
     },
     {
-      "name": "Washington",
-      "mapbox_id": "suggestion-id-2",
-      "feature_type": "place",
-      "place_formatted": "District of Columbia, United States",
-      "context": {
-        "country": {
-          "id": "dXJuOm1ieHBsYzpJdXc",
-          "name": "United States",
-          "country_code": "US",
-          "country_code_alpha_3": "USA"
+      "feature_name":"Congress Heights",
+      "matching_name":"Washington Highlands",
+      "highlighted_name":"Washington Highlands",
+      "description":"Washington, District of Columbia, United States",
+      "result_type":[
+        "neighborhood"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"suggestion-id-2"
         },
-        "region": {
-          "id": "dXJuOm1ieHBsYzpCUVRz",
-          "name": "District of Columbia",
-          "region_code": "DC",
-          "region_code_full": "US-DC"
-        }
+        "multi_retrievable":false
       },
-      "language": "en",
-      "maki": "marker",
-      "external_ids": {},
-      "metadata": {},
-      "distance": 600
+      "distance":7000,
+      "maki":"marker",
+      "internal_id":"42GAgLzUzPSMpPyijPz8FAA=.Y2OAgOTEotzUPAA=.LY6xDsIwDET5lCgzQ1U21jKwI8SI3MSkllIbJe5QIT6Qv8JR68l-d2fd77DNxwdZWMvqz_7OpBjdTUGx-qMvmEjYhAtVLRTUycsNkpd5JDA97tgcdr0zBLT1AXUiTmpJg1I1SGy877pTbyhLgEy6bilGStMoZRKJRgbhVLBWd21cWwuIsZHN3o4nWwEsex7m9tx__w==",
+      "external_ids":{
+        "carmen":"neighborhood.132123884",
+        "federated":"carmen.neighborhood.132123884"
+      },
+      "context":[
+        {
+          "layer":"postcode",
+          "localized_layer":"postcode",
+          "name":"20032"
+        },
+        {
+          "layer":"place",
+          "localized_layer":"place",
+          "name":"Washington"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"District of Columbia"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States"
+        }
+      ],
+      "metadata":{
+        "iso_3166_1":"us",
+        "iso_3166_2":"US-DC"
+      }
     },
     {
-      "name": "Starbucks",
-      "mapbox_id": "suggestion-id-3",
-      "feature_type": "poi",
-      "address": "1401 New York Ave Nw",
-      "full_address": "1401 New York Ave Nw, Washington, District of Columbia 20005, United States of America",
-      "place_formatted": "Washington, District of Columbia 20005, United States of America",
-      "context": {
-        "country": {
-          "name": "United States of America",
-          "country_code": "US",
-          "country_code_alpha_3": "USA"
+      "feature_name":"Washington Grove",
+      "matching_name":"Washington Grove",
+      "highlighted_name":"Washington Grove",
+      "description":"Maryland, United States",
+      "result_type":[
+        "place"
+      ],
+      "language":"en",
+      "action":{
+        "endpoint":"retrieve",
+        "method":"POST",
+        "body":{
+          "id":"suggestion-id-3"
         },
-        "region": {
-          "name": "District of Columbia",
-          "region_code": "DC",
-          "region_code_full": "US-DC"
-        },
-        "postcode": {
-          "name": "20005"
-        },
-        "place": {
-          "name": "Washington"
-        },
-        "neighborhood": {
-          "name": "Downtown"
-        },
-        "street": {
-          "name": "new york ave nw"
-        }
+        "multi_retrievable":false
       },
-      "language": "en",
-      "maki": "restaurant",
-      "poi_category": [
-        "food",
-        "food and drink",
-        "coffee shop"
+      "distance":29000,
+      "maki":"marker",
+      "internal_id":"Y2WAgIKcxORUAA==.Y2OAgOTEotzUPAA=.RYxBCgIxDEU9ytC1J3DrwpUrEZeSaUIn0EkkzQhFPJtXs3WEye69F_5nt94rRF3ErYZDuAo74XBxcCphH4wSq7RwBqsZBJtDLm4cvVsVTzqT1eHYN2rLjwyRWrtBmViSqwwn0yf1pMWjYq-NskbI7HUlIU7TqDap4moA0aiUDe6yzCPZ_x_m3877Cw==",
+      "external_ids":{
+        "carmen":"place.345737452",
+        "federated":"carmen.place.345737452"
+      },
+      "context":[
+        {
+          "layer":"district",
+          "localized_layer":"district",
+          "name":"Montgomery County"
+        },
+        {
+          "layer":"region",
+          "localized_layer":"region",
+          "name":"Maryland"
+        },
+        {
+          "layer":"country",
+          "localized_layer":"country",
+          "name":"United States"
+        }
       ],
-      "poi_category_ids": [
-        "food",
-        "food_and_drink",
-        "coffee_shop"
-      ],
-      "brand": [
-        "Starbucks"
-      ],
-      "brand_id": "starbucks",
-      "external_ids": {},
-      "distance": 100
+      "metadata":{
+        "iso_3166_1":"us",
+        "iso_3166_2":"US-MD"
+      }
     }
   ],
-  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  "attribution":"© 2021 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version":"55:ce8b854900df80c271126016a2dbb1b8ee9345c1",
+  "response_uuid":"c48c9805-8d6d-459a-afbb-a9474ef28741"
 }

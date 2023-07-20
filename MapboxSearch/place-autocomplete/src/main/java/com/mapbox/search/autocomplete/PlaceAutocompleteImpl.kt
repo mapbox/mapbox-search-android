@@ -184,7 +184,7 @@ internal class PlaceAutocompleteImpl(
             app: Application,
             locationEngine: LocationEngine,
         ): PlaceAutocompleteImpl {
-            val apiType = CoreApiType.SEARCH_BOX
+            val apiType = CoreApiType.SBS
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(

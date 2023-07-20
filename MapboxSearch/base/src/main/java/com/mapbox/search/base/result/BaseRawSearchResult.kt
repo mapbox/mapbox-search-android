@@ -46,7 +46,6 @@ data class BaseRawSearchResult(
     @IgnoredOnParcel
     val type: BaseRawResultType = types.firstOrNull() ?: BaseRawResultType.UNKNOWN
 
-    // TODO FIXME search native should parse "poi_category_ids" and provide it to platforms
     @IgnoredOnParcel
     val categoryCanonicalName: String? by lazy(LazyThreadSafetyMode.NONE) {
         externalIDs?.get("federated")?.let { value ->
@@ -55,7 +54,7 @@ data class BaseRawSearchResult(
             } else {
                 null
             }
-        } ?: categories?.firstOrNull() ?: "cafe"
+        }
     }
 
     private companion object {
