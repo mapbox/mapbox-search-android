@@ -87,8 +87,8 @@ internal class SearchEngineFactory {
         settings: SearchEngineSettings
     ): CoreSearchEngineInterface {
         val endpoint = when (apiType) {
-            ApiType.GEOCODING -> settings.geocodingEndpointBaseUrl
-            ApiType.SBS -> settings.singleBoxSearchBaseUrl
+            ApiType.GEOCODING -> settings.baseUrl ?: DEFAULT_ENDPOINT_GEOCODING
+            ApiType.SBS -> settings.baseUrl
         }
 
         // Workaround for sync location provider in test environment.
@@ -110,5 +110,9 @@ internal class SearchEngineFactory {
             CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
             coreLocationProvider
         )
+    }
+
+    private companion object {
+        const val DEFAULT_ENDPOINT_GEOCODING: String = "https://api.mapbox.com"
     }
 }

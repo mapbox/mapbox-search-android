@@ -99,7 +99,7 @@ public class TestActivity : AppCompatActivity() {
             settings = SearchEngineSettings(
                 accessToken = getString(R.string.mapbox_access_token),
                 locationEngine = locationEngine,
-                singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
+                baseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             )
         )
 

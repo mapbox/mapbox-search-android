@@ -22,7 +22,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 internal class LocalDataProvidersIntegrationTest : BaseTest() {
@@ -43,7 +42,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
         val searchEngineSettings = SearchEngineSettings(
             accessToken = DEFAULT_TEST_ACCESS_TOKEN,
             locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
-            singleBoxSearchBaseUrl = mockServer.url("").toString()
+            baseUrl = mockServer.url("").toString()
         )
 
         searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(ApiType.SBS, searchEngineSettings)
