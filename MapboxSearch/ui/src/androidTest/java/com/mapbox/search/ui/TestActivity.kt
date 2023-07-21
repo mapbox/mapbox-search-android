@@ -98,7 +98,7 @@ public class TestActivity : AppCompatActivity() {
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(
                 locationProvider = locationProvider,
-                singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
+                baseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             )
         )
 

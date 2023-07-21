@@ -44,19 +44,6 @@ internal class SearchEngineSettingsTest {
     }
 
     @TestFactory
-    fun `Check SearchEngineSettings default settings`() = TestCase {
-        Given("SearchEngineSettings object") {
-            When("Values accessed") {
-                Then(
-                    "Default geocoding endpoint should be as expected",
-                    "https://api.mapbox.com",
-                    SearchEngineSettings.DEFAULT_ENDPOINT_GEOCODING
-                )
-            }
-        }
-    }
-
-    @TestFactory
     fun `Check SearchEngineSettings default builder`() = TestCase {
         Given("SearchEngineSettings builder") {
             When("Build new settings with default values") {
@@ -80,15 +67,13 @@ internal class SearchEngineSettingsTest {
                 val actual = SearchEngineSettings.Builder()
                     .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .viewportProvider(TEST_MOCKED_VIEWPORT_PROVIDER)
-                    .geocodingEndpointBaseUrl(TEST_V5_ENDPOINT)
-                    .singleBoxSearchBaseUrl(TEST_SBS_ENDPOINT)
+                    .baseUrl(TEST_SBS_ENDPOINT)
                     .build()
 
                 val expected = SearchEngineSettings(
                     locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
-                    geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
-                    singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,
+                    baseUrl = TEST_SBS_ENDPOINT,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -103,8 +88,7 @@ internal class SearchEngineSettingsTest {
                 val settings = SearchEngineSettings(
                     locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
-                    geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
-                    singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,
+                    baseUrl = TEST_SBS_ENDPOINT,
                 )
 
                 Then("Settings should be equal", settings, settings.toBuilder().build())
@@ -113,7 +97,6 @@ internal class SearchEngineSettingsTest {
     }
 
     private companion object {
-        const val TEST_V5_ENDPOINT = "https://test-v5.mapbox.com"
         const val TEST_SBS_ENDPOINT = "https://test-sbs.mapbox.com"
         val TEST_MOCKED_LOCATION_ENGINE: LocationProvider = mockk(relaxed = true)
         val TEST_MOCKED_VIEWPORT_PROVIDER: ViewportProvider = mockk(relaxed = true)

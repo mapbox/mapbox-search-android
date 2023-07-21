@@ -24,16 +24,10 @@ public class SearchEngineSettings @JvmOverloads constructor(
      */
     public val viewportProvider: ViewportProvider? = null,
 
-    // TODO FIXME merge geocodingEndpointBaseUrl and singleBoxSearchBaseUrl into baseUrl
     /**
-     * Geocoding API endpoint URL.
+     * Base endpoint URL.
      */
-    public val geocodingEndpointBaseUrl: String = DEFAULT_ENDPOINT_GEOCODING,
-
-    /**
-     * Single Box Search endpoint URL.
-     */
-    public val singleBoxSearchBaseUrl: String? = null,
+    public val baseUrl: String? = null,
 ) {
 
     /**
@@ -43,13 +37,11 @@ public class SearchEngineSettings @JvmOverloads constructor(
     public fun copy(
         locationProvider: LocationProvider? = this.locationProvider,
         viewportProvider: ViewportProvider? = this.viewportProvider,
-        geocodingEndpointBaseUrl: String = this.geocodingEndpointBaseUrl,
-        singleBoxSearchBaseUrl: String? = this.singleBoxSearchBaseUrl,
+        baseUrl: String? = this.baseUrl,
     ): SearchEngineSettings = SearchEngineSettings(
         locationProvider = locationProvider,
         viewportProvider = viewportProvider,
-        geocodingEndpointBaseUrl = geocodingEndpointBaseUrl,
-        singleBoxSearchBaseUrl = singleBoxSearchBaseUrl,
+        baseUrl = baseUrl,
     )
 
     /**
@@ -68,8 +60,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
 
         if (locationProvider != other.locationProvider) return false
         if (viewportProvider != other.viewportProvider) return false
-        if (geocodingEndpointBaseUrl != other.geocodingEndpointBaseUrl) return false
-        if (singleBoxSearchBaseUrl != other.singleBoxSearchBaseUrl) return false
+        if (baseUrl != other.baseUrl) return false
 
         return true
     }
@@ -80,8 +71,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
     override fun hashCode(): Int {
         var result = locationProvider.hashCode()
         result = 31 * result + (viewportProvider?.hashCode() ?: 0)
-        result = 31 * result + geocodingEndpointBaseUrl.hashCode()
-        result = 31 * result + (singleBoxSearchBaseUrl?.hashCode() ?: 0)
+        result = 31 * result + (baseUrl?.hashCode() ?: 0)
         return result
     }
 
@@ -92,8 +82,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
         return "SearchEngineSettings(" +
                 "locationProvider=$locationProvider, " +
                 "viewportProvider=$viewportProvider, " +
-                "geocodingEndpointBaseUrl='$geocodingEndpointBaseUrl', " +
-                "singleBoxSearchBaseUrl=$singleBoxSearchBaseUrl" +
+                "baseUrl=$baseUrl" +
                 ")"
     }
 
@@ -104,14 +93,12 @@ public class SearchEngineSettings @JvmOverloads constructor(
 
         private var locationProvider: LocationProvider ? = null
         private var viewportProvider: ViewportProvider? = null
-        private var geocodingEndpointBaseUrl: String? = null
-        private var singleBoxSearchBaseUrl: String? = null
+        private var baseUrl: String? = null
 
         internal constructor(settings: SearchEngineSettings) : this() {
             locationProvider = settings.locationProvider
             viewportProvider = settings.viewportProvider
-            geocodingEndpointBaseUrl = settings.geocodingEndpointBaseUrl
-            singleBoxSearchBaseUrl = settings.singleBoxSearchBaseUrl
+            baseUrl = settings.baseUrl
         }
 
         /**
@@ -132,17 +119,10 @@ public class SearchEngineSettings @JvmOverloads constructor(
         }
 
         /**
-         * Geocoding API endpoint URL.
+         * Base endpoint URL.
          */
-        public fun geocodingEndpointBaseUrl(geocodingEndpointBaseUrl: String): Builder = apply {
-            this.geocodingEndpointBaseUrl = geocodingEndpointBaseUrl
-        }
-
-        /**
-         * Single Box Search endpoint URL.
-         */
-        public fun singleBoxSearchBaseUrl(singleBoxSearchBaseUrl: String?): Builder = apply {
-            this.singleBoxSearchBaseUrl = singleBoxSearchBaseUrl
+        public fun baseUrl(baseUrl: String?): Builder = apply {
+            this.baseUrl = baseUrl
         }
 
         /**
@@ -151,12 +131,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
         public fun build(): SearchEngineSettings = SearchEngineSettings(
             locationProvider = locationProvider ?: defaultLocationProvider(),
             viewportProvider = viewportProvider,
-            geocodingEndpointBaseUrl = geocodingEndpointBaseUrl ?: DEFAULT_ENDPOINT_GEOCODING,
-            singleBoxSearchBaseUrl = singleBoxSearchBaseUrl,
+            baseUrl = baseUrl,
         )
-    }
-
-    internal companion object {
-        const val DEFAULT_ENDPOINT_GEOCODING: String = "https://api.mapbox.com"
     }
 }

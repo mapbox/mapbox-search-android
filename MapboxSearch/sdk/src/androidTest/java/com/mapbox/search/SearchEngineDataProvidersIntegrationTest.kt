@@ -34,8 +34,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
 
         searchEngineSettings = SearchEngineSettings(
             locationProvider = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
-            geocodingEndpointBaseUrl = mockServer.url("").toString(),
-            singleBoxSearchBaseUrl = mockServer.url("").toString()
+            baseUrl = mockServer.url("").toString()
         )
 
         MapboxSearchSdk.initialize(targetApplication)
