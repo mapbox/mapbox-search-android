@@ -51,18 +51,18 @@ internal val filledCoreSearchAddress: CoreSearchAddress = createTestCoreSearchAd
 
 internal val testBaseRawSearchResult: BaseRawSearchResult = createTestBaseRawSearchResult(
     id = "test-id",
+    types = listOf(BaseRawResultType.ADDRESS),
     names = listOf("test-name"),
-    descriptionAddress = "test-description",
     addresses = listOf(filledCoreSearchAddress),
+    descriptionAddress = "test-description",
     fullAddress = "test-full-address",
+    distanceMeters = 123.0,
     center = Point.fromLngLat(10.0, 15.0),
     routablePoints = listOf(RoutablePoint(Point.fromLngLat(11.0, 16.0), "test")),
-    distanceMeters = 123.0,
     icon = "test",
-    etaMinutes = 5.0,
-    types = listOf(BaseRawResultType.ADDRESS),
+    metadata = filledTestCoreMetadata,
     action = null,
-    metadata = filledTestCoreMetadata
+    etaMinutes = 5.0
 )
 
 internal val testBaseResult: BaseServerSearchResultImpl = BaseServerSearchResultImpl(
@@ -73,30 +73,30 @@ internal val testBaseResult: BaseServerSearchResultImpl = BaseServerSearchResult
 
 internal val testBaseRawSearchSuggestionWithCoordinates: BaseRawSearchResult = createTestBaseRawSearchResult(
     id = "test-suggestion-id",
+    types = listOf(BaseRawResultType.ADDRESS),
     names = listOf("test-suggestion"),
-    descriptionAddress = "test-description",
     addresses = listOf(filledCoreSearchAddress),
+    descriptionAddress = "test-description",
     fullAddress = "test-full-address",
+    distanceMeters = 123.0,
     center = Point.fromLngLat(10.0, 15.0),
     routablePoints = listOf(RoutablePoint(Point.fromLngLat(11.0, 16.0), "test")),
-    distanceMeters = 123.0,
     icon = "test-suggestion",
-    etaMinutes = 5.0,
-    types = listOf(BaseRawResultType.ADDRESS),
-    action = createTestBaseSuggestAction()
+    action = createTestBaseSuggestAction(),
+    etaMinutes = 5.0
 )
 
 internal val testBaseRawSearchSuggestionWithoutCoordinates: BaseRawSearchResult = createTestBaseRawSearchResult(
     id = "test-suggestion-id",
+    types = listOf(BaseRawResultType.ADDRESS),
     names = listOf("test-suggestion"),
-    descriptionAddress = "test-description",
     addresses = listOf(filledCoreSearchAddress),
+    descriptionAddress = "test-description",
     fullAddress = "test-full-address",
     distanceMeters = 123.0,
     icon = "test-suggestion",
-    etaMinutes = 5.0,
-    types = listOf(BaseRawResultType.ADDRESS),
-    action = createTestBaseSuggestAction()
+    action = createTestBaseSuggestAction(),
+    etaMinutes = 5.0
 )
 
 internal fun createTestBaseRequestOptions(
@@ -115,7 +115,6 @@ internal fun createTestBaseRawSearchResult(
     languages: List<String> = listOf("def"),
     addresses: List<CoreSearchAddress>? = null,
     descriptionAddress: String? = null,
-    matchingName: String? = null,
     fullAddress: String? = null,
     distanceMeters: Double? = null,
     center: Point? = null,
@@ -138,9 +137,8 @@ internal fun createTestBaseRawSearchResult(
     languages = languages,
     addresses = addresses?.map { it.mapToBaseSearchAddress() },
     descriptionAddress = descriptionAddress,
-    distanceMeters = distanceMeters,
-    matchingName = matchingName,
     fullAddress = fullAddress,
+    distanceMeters = distanceMeters,
     center = center,
     accuracy = accuracy,
     routablePoints = routablePoints?.map { it.mapToCore() },

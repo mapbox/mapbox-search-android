@@ -35,7 +35,6 @@ internal class SearchSuggestionTest {
             When("SearchSuggestion fields called") {
                 Then("id should be ${base.id}", base.id, suggestion.id)
                 Then("name should be ${base.name}", base.name, suggestion.name)
-                Then("matchingName should be ${base.matchingName}", base.matchingName, suggestion.matchingName)
                 Then("descriptionText should be ${base.descriptionText}", base.descriptionText, suggestion.descriptionText)
                 Then("address should be ${base.address?.mapToPlatform()}", base.address?.mapToPlatform(), suggestion.address)
                 Then("requestOptions should be ${base.requestOptions.mapToPlatform()}", base.requestOptions.mapToPlatform(), suggestion.requestOptions)

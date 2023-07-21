@@ -70,8 +70,8 @@ internal class SearchResultFactoryTest {
 
         val BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "Search result 1",
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Search result 1.1", "Search result 1.2"),
-            descriptionAddress = "Search result 1 description",
             addresses = listOf(
                 createBaseSearchAddress(
                     country = "Belarus",
@@ -80,11 +80,11 @@ internal class SearchResultFactoryTest {
                     houseNumber = "1"
                 )
             ),
+            descriptionAddress = "Search result 1 description",
             distanceMeters = 123.0,
-            icon = "cafe",
-            etaMinutes = 5.0,
             center = Point.fromLngLat(1.0, 1.0),
-            types = listOf(BaseRawResultType.POI)
+            icon = "cafe",
+            etaMinutes = 5.0
         )
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")

@@ -91,8 +91,8 @@ internal class BaseSearchResultTest {
 
         val BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "Search result 1",
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Search result 1.1", "Search result 1.2"),
-            descriptionAddress = "Search result 1 description",
             addresses = listOf(
                 createBaseSearchAddress(
                     country = "Belarus",
@@ -101,17 +101,17 @@ internal class BaseSearchResultTest {
                     houseNumber = "1"
                 )
             ),
+            descriptionAddress = "Search result 1 description",
             fullAddress = "Test full address",
             distanceMeters = 123.0,
             icon = "cafe",
-            etaMinutes = 5.0,
-            types = listOf(BaseRawResultType.POI),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",
                 query = "test-query-1",
                 body = null
-            )
+            ),
+            etaMinutes = 5.0
         )
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")

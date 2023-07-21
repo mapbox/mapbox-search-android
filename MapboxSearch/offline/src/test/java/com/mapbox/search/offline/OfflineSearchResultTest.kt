@@ -152,16 +152,16 @@ internal class OfflineSearchResultTest {
 
         val TEST_BASE_RAW_RESULT_1 = createTestBaseRawSearchResult(
             id = TEST_ID,
+            types = listOf(TEST_BASE_TYPE),
             names = listOf(TEST_NAME),
             descriptionAddress = TEST_DESCRIPTION_TEXT,
-            center = TEST_COORDINATE,
-            types = listOf(TEST_BASE_TYPE)
+            center = TEST_COORDINATE
         )
 
         val TEST_BASE_RAW_RESULT_2 = createTestBaseRawSearchResult(
             id = "id2",
-            center = Point.fromLngLat(30.0, 50.0),
-            types = listOf(BaseRawResultType.STREET)
+            types = listOf(BaseRawResultType.STREET),
+            center = Point.fromLngLat(30.0, 50.0)
         )
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
