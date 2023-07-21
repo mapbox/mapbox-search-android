@@ -112,7 +112,7 @@ internal class SearchEngineTest {
         indexableDataProvidersRegistry = mockk()
 
         searchEngine = SearchEngineImpl(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = mockk(),
             analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,

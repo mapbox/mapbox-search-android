@@ -95,7 +95,7 @@ public class TestActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = SearchEngineSettings(
                 locationProvider = locationProvider,
                 baseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"

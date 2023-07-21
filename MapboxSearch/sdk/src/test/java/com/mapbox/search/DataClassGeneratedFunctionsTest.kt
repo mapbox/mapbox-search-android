@@ -77,12 +77,14 @@ internal class DataClassGeneratedFunctionsTest {
             SelectOptions::class,
             // enums
             QueryType::class,
-            ApiType::class,
             SearchResultType::class,
             WeekDay::class,
             // data classes
             OpenPeriod::class,
             WeekTimestamp::class,
+            // objects
+            ApiType.Geocoding::class,
+            ApiType.SearchBox::class,
         )
             // Check only `data classes` and `classes`, don't check `objects`
             .filter { it.objectInstance == null }

@@ -61,7 +61,7 @@ internal class CategorySearchTest {
         every { requestContextProvider.provide(CoreApiType.GEOCODING) } returns TEST_SEARCH_REQUEST_CONTEXT
 
         searchEngine = SearchEngineImpl(
-            apiType = ApiType.GEOCODING,
+            apiType = ApiType.Geocoding,
             settings = mockk(),
             analyticsService = mockk(relaxed = true),
             coreEngine = coreEngine,

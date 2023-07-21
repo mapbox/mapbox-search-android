@@ -15,14 +15,11 @@ if (mapboxApiToken == null) {
     throw new Exception("API token is not specified.")
 }
 
-def enableSBS = project.hasProperty('ENABLE_SBS') or System.getenv('ENABLE_SBS') != null
-
 android {
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
         buildConfigField "boolean", "COVERAGE_ENABLED", "${project.hasProperty('coverage')}"
-        buildConfigField "boolean", "ENABLE_SBS", "${enableSBS}"
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         applicationId "com.mapbox.search.sample"
