@@ -35,12 +35,6 @@ public class SearchSuggestion internal constructor(
     public val name: String = base.name
 
     /**
-     * The feature name, as matched by the search algorithm.
-     */
-    @IgnoredOnParcel
-    public val matchingName: String? = base.matchingName
-
-    /**
      * Suggestion description.
      */
     @IgnoredOnParcel
@@ -124,7 +118,6 @@ public class SearchSuggestion internal constructor(
 
         if (id != other.id) return false
         if (name != other.name) return false
-        if (matchingName != other.matchingName) return false
         if (descriptionText != other.descriptionText) return false
         if (address != other.address) return false
         if (fullAddress != other.fullAddress) return false
@@ -146,7 +139,6 @@ public class SearchSuggestion internal constructor(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + (matchingName?.hashCode() ?: 0)
         result = 31 * result + (descriptionText?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (fullAddress?.hashCode() ?: 0)
@@ -168,7 +160,6 @@ public class SearchSuggestion internal constructor(
         return "SearchSuggestion(" +
                 "id='$id', " +
                 "name='$name', " +
-                "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
                 "fullAddress=$fullAddress, " +

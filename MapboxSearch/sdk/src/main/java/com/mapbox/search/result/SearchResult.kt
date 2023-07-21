@@ -46,13 +46,6 @@ public class SearchResult internal constructor(
     public val name: String = base.name
 
     /**
-     * TODO FIXME remove matchingName
-     * The feature name, as matched by the search algorithm.
-     */
-    @IgnoredOnParcel
-    public val matchingName: String? = base.matchingName
-
-    /**
      * Additional description for the search result.
      */
     @IgnoredOnParcel
@@ -163,7 +156,6 @@ public class SearchResult internal constructor(
         if (id != other.id) return false
         if (mapboxId != other.mapboxId) return false
         if (name != other.name) return false
-        if (matchingName != other.matchingName) return false
         if (descriptionText != other.descriptionText) return false
         if (address != other.address) return false
         if (fullAddress != other.fullAddress) return false
@@ -191,7 +183,6 @@ public class SearchResult internal constructor(
         result = 31 * result + id.hashCode()
         result = 31 * result + mapboxId.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + (matchingName?.hashCode() ?: 0)
         result = 31 * result + (descriptionText?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (fullAddress?.hashCode() ?: 0)
@@ -219,7 +210,6 @@ public class SearchResult internal constructor(
                 "id='$id', " +
                 "mapboxId='$mapboxId', " +
                 "name='$name', " +
-                "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +
                 "fullAddress=$fullAddress, " +

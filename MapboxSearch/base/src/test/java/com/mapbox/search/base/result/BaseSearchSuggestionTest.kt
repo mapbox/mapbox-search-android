@@ -460,8 +460,8 @@ internal class BaseSearchSuggestionTest {
 
         val BASE_RAW_SEARCH_RESULT_1 = createTestBaseRawSearchResult(
             id = "Search result 1",
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Search result 1.1", "Search result 1.2"),
-            descriptionAddress = "Search result 1 description",
             addresses = listOf(
                 createBaseSearchAddress(
                     country = "Belarus",
@@ -470,23 +470,23 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "1"
                 )
             ),
+            descriptionAddress = "Search result 1 description",
             fullAddress = "Full formatted address",
             distanceMeters = 123.0,
             icon = "cafe",
-            etaMinutes = 5.0,
-            types = listOf(BaseRawResultType.POI),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",
                 query = "test-query-1",
                 body = null
-            )
+            ),
+            etaMinutes = 5.0
         )
 
         val BASE_RAW_SEARCH_RESULT_2 = createTestBaseRawSearchResult(
             id = "Search result 2",
+            types = listOf(BaseRawResultType.CATEGORY),
             names = listOf("Search result 2.1", "Search result 2.2"),
-            descriptionAddress = "Search result 2 description",
             addresses = listOf(
                 createBaseSearchAddress(
                     country = "Belarus",
@@ -495,25 +495,25 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "15"
                 )
             ),
+            descriptionAddress = "Search result 2 description",
             fullAddress = "Full formatted address 2",
             distanceMeters = 456.0,
-            icon = "bar",
-            etaMinutes = 10.0,
-            types = listOf(BaseRawResultType.CATEGORY),
-            externalIDs = mapOf("federated" to "category.cafe"),
             categories = listOf("bar"),
+            icon = "bar",
+            externalIDs = mapOf("federated" to "category.cafe"),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-2",
                 path = "test-path-2",
                 query = "test-query-2",
                 body = null
-            )
+            ),
+            etaMinutes = 10.0
         )
 
         val BASE_RAW_SEARCH_RESULT_3 = createTestBaseRawSearchResult(
             id = "Search result 3",
+            types = listOf(BaseRawResultType.REGION, BaseRawResultType.PLACE),
             names = listOf("Search result 3.1", "Search result 3.2"),
-            descriptionAddress = "Search result 3 description",
             addresses = listOf(
                 createBaseSearchAddress(
                     country = "Belarus",
@@ -522,18 +522,18 @@ internal class BaseSearchSuggestionTest {
                     houseNumber = "24"
                 )
             ),
+            descriptionAddress = "Search result 3 description",
             fullAddress = "Full formatted address 3",
             distanceMeters = 789.0,
-            icon = null,
-            etaMinutes = 15.0,
-            types = listOf(BaseRawResultType.REGION, BaseRawResultType.PLACE),
             categories = emptyList(),
+            icon = null,
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-3",
                 path = "test-path-3",
                 query = "test-query-3",
                 body = null
-            )
+            ),
+            etaMinutes = 15.0
         )
     }
 }

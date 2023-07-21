@@ -23,9 +23,6 @@ abstract class BaseSearchResult(
     open val name: String
         get() = rawSearchResult.names[0]
 
-    open val matchingName: String?
-        get() = rawSearchResult.matchingName
-
     open val fullAddress: String?
         get() = rawSearchResult.fullAddress
 

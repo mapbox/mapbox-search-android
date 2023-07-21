@@ -213,7 +213,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestion = suggestions[0]
         assertEquals("suggestion-id-1", suggestion.id)
         assertEquals("Washington", suggestion.name)
-        assertEquals(null, suggestion.matchingName)
         assertEquals(
             "Washington, District of Columbia 20036, United States of America",
             suggestion.descriptionText
@@ -597,8 +596,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals("test-id", searchResult.id)
         assertEquals("Washington", searchResult.name)
-        // TODO FIXME remove matchingName
-        // assertEquals(null, searchResult.matchingName)
         assertEquals(
             "Washington, District of Columbia 20036, United States of America",
             searchResult.descriptionText

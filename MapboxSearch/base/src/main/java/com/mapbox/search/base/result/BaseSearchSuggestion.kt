@@ -24,9 +24,6 @@ sealed class BaseSearchSuggestion(
     open val routablePoints: List<CoreRoutablePoint>?
         get() = rawSearchResult.routablePoints
 
-    open val matchingName: String?
-        get() = rawSearchResult.matchingName
-
     open val fullAddress: String?
         get() = rawSearchResult.fullAddress
 

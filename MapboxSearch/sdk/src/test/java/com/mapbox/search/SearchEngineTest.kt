@@ -968,10 +968,10 @@ internal class SearchEngineTest {
             names = listOf("Result name"),
             languages = listOf("Default"),
             addresses = listOf(TEST_SEARCH_ADDRESS.mapToCore()),
+            descriptionAddress = "Test result description",
             distanceMeters = 123.0,
             center = Point.fromLngLat(20.0, 30.0),
-            categories = emptyList(),
-            descriptionAddress = "Test result description"
+            categories = emptyList()
         )
 
         val TEST_CORE_SEARCH_SUGGESTION = createTestCoreSearchResult(
@@ -980,10 +980,10 @@ internal class SearchEngineTest {
             names = listOf("Result name"),
             languages = listOf("Default"),
             addresses = listOf(TEST_SEARCH_ADDRESS.mapToCore()),
+            descriptionAddress = "Test result description",
             distanceMeters = 123.0,
             center = Point.fromLngLat(20.0, 30.0),
             categories = emptyList(),
-            descriptionAddress = "Test result description",
         )
 
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
