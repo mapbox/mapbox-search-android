@@ -11,7 +11,7 @@ internal annotation class Reserved(vararg val flags: Flags) {
     enum class Flags {
 
         /**
-         * Functionality related to [Single Box Search][ApiType.SBS].
+         * Functionality related to [Single Box Search][ApiType.SearchBox].
          */
         SBS,
     }

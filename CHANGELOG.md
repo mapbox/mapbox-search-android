@@ -3,6 +3,7 @@
 ## 1.0.0-rc.8-SNAPSHOT
 
 ### Breaking changes
+- [CORE] `ApiType` enum is an abstract class now which provides supported by the SDK values. The values are `ApiType.GeocodingApi` and `ApiType.SearchBox` 
 - [CORE] Suggestions multiple selection functionality has been removed along with `SearchSuggestion.isBatchResolveSupported` property, `SearchMultipleSelectionCallback` interface and `SearchEngine#.select(List<SearchSuggestion>, Executor, SearchMultipleSelectionCallback)` function.
 - [CORE] `SearchSuggestion.matchingName` and `SearchResult.matchingName` properties are not available anymore.
 - [CORE] `SearchEngineSettings.geocodingEndpointBaseUrl` and `SearchEngineSettings.singleBoxSearchBaseUrl` have been merged into `SearchEngineSettings.baseUrl` which will be used depending on provided Api Type. 

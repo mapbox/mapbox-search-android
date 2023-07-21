@@ -95,7 +95,7 @@ public class TestActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = SearchEngineSettings(
                 accessToken = getString(R.string.mapbox_access_token),
                 locationEngine = locationEngine,

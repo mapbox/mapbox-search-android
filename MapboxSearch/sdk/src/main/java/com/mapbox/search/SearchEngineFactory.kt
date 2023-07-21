@@ -25,7 +25,7 @@ internal class SearchEngineFactory {
         executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
         callback: CompletionCallback<Unit> = StubCompletionCallback()
     ): SearchEngine {
-        return createSearchEngineWithBuiltInDataProviders(ApiType.GEOCODING, settings, executor, callback)
+        return createSearchEngineWithBuiltInDataProviders(ApiType.Geocoding, settings, executor, callback)
     }
 
     @JvmOverloads
@@ -87,8 +87,8 @@ internal class SearchEngineFactory {
         settings: SearchEngineSettings
     ): CoreSearchEngineInterface {
         val endpoint = when (apiType) {
-            ApiType.GEOCODING -> settings.baseUrl ?: DEFAULT_ENDPOINT_GEOCODING
-            ApiType.SBS -> settings.baseUrl
+            ApiType.Geocoding -> settings.baseUrl ?: DEFAULT_ENDPOINT_GEOCODING
+            else -> settings.baseUrl
         }
 
         // Workaround for sync location provider in test environment.

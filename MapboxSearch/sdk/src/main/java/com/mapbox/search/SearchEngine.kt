@@ -303,7 +303,7 @@ public interface SearchEngine {
          */
         @JvmStatic
         public fun createSearchEngine(settings: SearchEngineSettings): SearchEngine {
-            return createSearchEngine(ApiType.GEOCODING, settings)
+            return createSearchEngine(ApiType.Geocoding, settings)
         }
 
         /**
@@ -312,7 +312,7 @@ public interface SearchEngine {
          *
          * @param settings [SearchEngine] settings.
          * @param apiType The type of the API used by the Search Engines.
-         * Note that [ApiType.GEOCODING] is the only available publicly.
+         * Note that [ApiType.Geocoding] is the only available publicly.
          * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
          *
          * @return a new instance instance of [SearchEngine].
@@ -342,7 +342,7 @@ public interface SearchEngine {
             executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
             callback: CompletionCallback<Unit> = StubCompletionCallback()
         ): SearchEngine {
-            return createSearchEngineWithBuiltInDataProviders(ApiType.GEOCODING, settings, executor, callback)
+            return createSearchEngineWithBuiltInDataProviders(ApiType.Geocoding, settings, executor, callback)
         }
 
         /**
@@ -351,8 +351,8 @@ public interface SearchEngine {
          * registered by default.
          *
          * @param settings [SearchEngine] settings.
-         * @param apiType The type of the API used by the Search Engines. By default [ApiType.GEOCODING] will be used.
-         * Note that [ApiType.GEOCODING] is the only available publicly.
+         * @param apiType The type of the API used by the Search Engines. By default [ApiType.Geocoding] will be used.
+         * Note that [ApiType.Geocoding] is the only available publicly.
          * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
          * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
          * @param callback Callback to handle result.

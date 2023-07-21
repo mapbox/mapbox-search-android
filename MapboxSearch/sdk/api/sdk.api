@@ -1,8 +1,13 @@
-public final class com/mapbox/search/ApiType : java/lang/Enum {
-	public static final field GEOCODING Lcom/mapbox/search/ApiType;
-	public static final field SBS Lcom/mapbox/search/ApiType;
-	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/ApiType;
-	public static fun values ()[Lcom/mapbox/search/ApiType;
+public abstract class com/mapbox/search/ApiType {
+	public fun <init> ()V
+}
+
+public final class com/mapbox/search/ApiType$Geocoding : com/mapbox/search/ApiType {
+	public static final field INSTANCE Lcom/mapbox/search/ApiType$Geocoding;
+}
+
+public final class com/mapbox/search/ApiType$SearchBox : com/mapbox/search/ApiType {
+	public static final field INSTANCE Lcom/mapbox/search/ApiType$SearchBox;
 }
 
 public final class com/mapbox/search/BuildConfig {
@@ -279,20 +284,17 @@ public final class com/mapbox/search/SearchEngine$DefaultImpls {
 }
 
 public final class com/mapbox/search/SearchEngineSettings {
-	public static final field DEFAULT_ENDPOINT_GEOCODING Ljava/lang/String;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)V
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getGeocodingEndpointBaseUrl ()Ljava/lang/String;
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
-	public final fun getSingleBoxSearchBaseUrl ()Ljava/lang/String;
 	public final fun getViewportProvider ()Lcom/mapbox/search/ViewportProvider;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/search/SearchEngineSettings$Builder;
@@ -301,12 +303,11 @@ public final class com/mapbox/search/SearchEngineSettings {
 
 public final class com/mapbox/search/SearchEngineSettings$Builder {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun baseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun build ()Lcom/mapbox/search/SearchEngineSettings;
-	public final fun geocodingEndpointBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun getAccessToken ()Ljava/lang/String;
 	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun setAccessToken (Ljava/lang/String;)V
-	public final fun singleBoxSearchBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun viewportProvider (Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 }
 
@@ -856,7 +857,6 @@ public final class com/mapbox/search/result/SearchResult : android/os/Parcelable
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIndexableRecord ()Lcom/mapbox/search/record/IndexableRecord;
 	public final fun getMakiIcon ()Ljava/lang/String;
-	public final fun getMatchingName ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
@@ -897,7 +897,6 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public final fun getFullAddress ()Ljava/lang/String;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
-	public final fun getMatchingName ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;

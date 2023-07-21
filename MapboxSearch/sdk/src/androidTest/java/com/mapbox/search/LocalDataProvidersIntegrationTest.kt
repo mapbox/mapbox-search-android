@@ -45,7 +45,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
             baseUrl = mockServer.url("").toString()
         )
 
-        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(ApiType.SBS, searchEngineSettings)
+        searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(ApiType.SearchBox, searchEngineSettings)
 
         historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
         historyDataProvider.clearBlocking()

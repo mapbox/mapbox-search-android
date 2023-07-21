@@ -1,9 +1,16 @@
 // Signature format: 3.0
 package com.mapbox.search {
 
-  public enum ApiType {
-    enum_constant public static final com.mapbox.search.ApiType GEOCODING;
-    enum_constant public static final com.mapbox.search.ApiType SBS;
+  public abstract class ApiType {
+    ctor public ApiType();
+  }
+
+  public static final class ApiType.Geocoding extends com.mapbox.search.ApiType {
+    field public static final com.mapbox.search.ApiType.Geocoding INSTANCE;
+  }
+
+  public static final class ApiType.SearchBox extends com.mapbox.search.ApiType {
+    field public static final com.mapbox.search.ApiType.SearchBox INSTANCE;
   }
 
   public final class ApiTypeKt {
@@ -253,33 +260,28 @@ package com.mapbox.search {
   }
 
   public final class SearchEngineSettings {
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null, String? baseUrl = null);
     ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null);
     ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
     ctor public SearchEngineSettings(String accessToken);
     method public String getAccessToken();
-    method public String getGeocodingEndpointBaseUrl();
+    method public String? getBaseUrl();
     method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
-    method public String? getSingleBoxSearchBaseUrl();
     method public com.mapbox.search.ViewportProvider? getViewportProvider();
     method public com.mapbox.search.SearchEngineSettings.Builder toBuilder();
     property public final String accessToken;
-    property public final String geocodingEndpointBaseUrl;
+    property public final String? baseUrl;
     property public final com.mapbox.android.core.location.LocationEngine locationEngine;
-    property public final String? singleBoxSearchBaseUrl;
     property public final com.mapbox.search.ViewportProvider? viewportProvider;
-    field public static final String DEFAULT_ENDPOINT_GEOCODING = "https://api.mapbox.com";
   }
 
   public static final class SearchEngineSettings.Builder {
     ctor public SearchEngineSettings.Builder(String accessToken);
+    method public com.mapbox.search.SearchEngineSettings.Builder baseUrl(String? baseUrl);
     method public com.mapbox.search.SearchEngineSettings build();
-    method public com.mapbox.search.SearchEngineSettings.Builder geocodingEndpointBaseUrl(String geocodingEndpointBaseUrl);
     method public String getAccessToken();
     method public com.mapbox.search.SearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
     method public void setAccessToken(String p);
-    method public com.mapbox.search.SearchEngineSettings.Builder singleBoxSearchBaseUrl(String? singleBoxSearchBaseUrl);
     method public com.mapbox.search.SearchEngineSettings.Builder viewportProvider(com.mapbox.search.ViewportProvider? viewportProvider);
     property public final String accessToken;
   }
@@ -775,7 +777,6 @@ package com.mapbox.search.result {
     method public String getId();
     method public com.mapbox.search.record.IndexableRecord? getIndexableRecord();
     method public String? getMakiIcon();
-    method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
@@ -794,7 +795,6 @@ package com.mapbox.search.result {
     property public final String id;
     property public final com.mapbox.search.record.IndexableRecord? indexableRecord;
     property public final String? makiIcon;
-    property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
     property public final com.mapbox.search.RequestOptions requestOptions;
@@ -830,7 +830,6 @@ package com.mapbox.search.result {
     method public String? getFullAddress();
     method public String getId();
     method public String? getMakiIcon();
-    method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public com.mapbox.search.RequestOptions getRequestOptions();
@@ -845,7 +844,6 @@ package com.mapbox.search.result {
     property public final String? fullAddress;
     property public final String id;
     property public final String? makiIcon;
-    property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
     property public final com.mapbox.search.RequestOptions requestOptions;

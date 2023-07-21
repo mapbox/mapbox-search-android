@@ -84,7 +84,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = searchEngineSettings,
         )
 

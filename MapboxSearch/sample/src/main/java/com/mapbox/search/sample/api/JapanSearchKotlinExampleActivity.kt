@@ -57,7 +57,7 @@ class JapanSearchKotlinExampleActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            ApiType.SBS,
+            ApiType.SearchBox,
             SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 

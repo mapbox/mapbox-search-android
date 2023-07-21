@@ -66,7 +66,7 @@ internal class CustomDataProviderTest : BaseTest() {
         )
 
         searchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = searchEngineSettings,
         )
 

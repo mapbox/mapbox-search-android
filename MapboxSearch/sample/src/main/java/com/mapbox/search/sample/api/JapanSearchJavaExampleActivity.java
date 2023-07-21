@@ -60,7 +60,7 @@ public class JapanSearchJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            ApiType.SBS,
+            ApiType.SearchBox.INSTANCE,
             new SearchEngineSettings(getString(R.string.mapbox_access_token))
         );
 

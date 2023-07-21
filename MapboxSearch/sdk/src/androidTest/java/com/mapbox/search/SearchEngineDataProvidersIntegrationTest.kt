@@ -56,7 +56,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     @Test
     fun testSearchEngineWithDefaultDataProviders() {
         val sharedSearchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = searchEngineSettings,
         )
         sharedSearchEngine.assertHistoryAndFavoritesInSearchResults()
@@ -69,7 +69,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     @Test
     fun testSearchEngineWithDefaultDataProvidersUnregister() {
         val sharedSearchEngine = createSearchEngineWithBuiltInDataProvidersBlocking(
-            apiType = ApiType.SBS,
+            apiType = ApiType.SearchBox,
             settings = searchEngineSettings,
         )
         sharedSearchEngine.unregisterDataProviderBlocking(historyDataProvider)
@@ -83,7 +83,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
      */
     @Test
     fun testCreatedSearchEngineNoDefaultDataProviders() {
-        val searchEngine = SearchEngine.createSearchEngine(apiType = ApiType.SBS, settings = searchEngineSettings)
+        val searchEngine = SearchEngine.createSearchEngine(apiType = ApiType.SearchBox, settings = searchEngineSettings)
         searchEngine.assertNoIndexableRecordsInSearchResults()
     }
 
@@ -92,7 +92,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
      */
     @Test
     fun testCreatedSearchEngineDataProvidersRegistration() {
-        val searchEngine = SearchEngine.createSearchEngine(apiType = ApiType.SBS, settings = searchEngineSettings)
+        val searchEngine = SearchEngine.createSearchEngine(apiType = ApiType.SearchBox, settings = searchEngineSettings)
 
         searchEngine.registerDataProviderBlocking(historyDataProvider)
         searchEngine.registerDataProviderBlocking(favoritesDataProvider)
@@ -108,13 +108,13 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
      */
     @Test
     fun testCreatedSearchEngineDataProvidersIndependence() {
-        val searchEngine1 = SearchEngine.createSearchEngine(apiType = ApiType.SBS, settings = searchEngineSettings)
+        val searchEngine1 = SearchEngine.createSearchEngine(apiType = ApiType.SearchBox, settings = searchEngineSettings)
 
         searchEngine1.registerDataProviderBlocking(historyDataProvider)
         searchEngine1.registerDataProviderBlocking(favoritesDataProvider)
         searchEngine1.assertHistoryAndFavoritesInSearchResults()
 
-        val searchEngine2 = SearchEngine.createSearchEngine(apiType = ApiType.SBS, settings = searchEngineSettings)
+        val searchEngine2 = SearchEngine.createSearchEngine(apiType = ApiType.SearchBox, settings = searchEngineSettings)
         searchEngine2.assertNoIndexableRecordsInSearchResults()
     }
 
