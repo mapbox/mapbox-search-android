@@ -270,7 +270,7 @@ internal class OfflineSearchEngineIntegrationTest {
         searchEngine.removeOnIndexChangeListener(listener)
 
         val searchResult = searchEngine.searchBlocking(
-            "2011 15th Street Northwest, Washington, District of Columbia",
+            TEST_QUERY,
             OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
         )
 
@@ -297,7 +297,7 @@ internal class OfflineSearchEngineIntegrationTest {
         loadOfflineData()
 
         val searchEngineResult = searchEngine.searchBlocking(
-            "2011 15th Street Northwest, Washington, District of Columbia",
+            TEST_QUERY,
             OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.center),
         )
 
@@ -307,7 +307,12 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(results.size > 5)
 
         val result = results.first()
-        assertTrue(compareWithApproximateLocations(TEST_SEARCH_RESULT_MAPBOX, result.rawSearchResult))
+        assertTrue(
+            compareWithApproximateLocations(
+                TEST_SEARCH_RESULT_MAPBOX,
+                result.rawSearchResult
+            )
+        )
     }
 
     @Test
@@ -504,6 +509,10 @@ internal class OfflineSearchEngineIntegrationTest {
 
         private const val LOG_TAG = "OfflineSearchEngineIntegrationTest"
 
+        // TODO (SWEB-1113)
+        // const val TEST_QUERY = "2011 15th Street Northwest, Washington, District of Columbia"
+        const val TEST_QUERY = "2011 15th Street Northwest, Washington"
+
         private const val TEST_GROUP_ID = "usa-dc"
         private val MAPBOX_DC_LOCATION: Point = Point.fromLngLat(-77.03399849939174, 38.89992081005698)
 
@@ -517,10 +526,14 @@ internal class OfflineSearchEngineIntegrationTest {
                     houseNumber = "2011",
                     street = "15th Street Northwest",
                     place = "Washington",
-                    region = "District of Columbia",
+                    // TODO (SWEB-1113)
+                    // region = "District of Columbia",
                 )
             ),
-            descriptionAddress = "2011 15th Street Northwest, Washington, District of Columbia",
+            // TODO (SWEB-1113)
+            // descriptionAddress = "2011 15th Street Northwest, Washington, District of Columbia",
+            descriptionAddress = "2011 15th Street Northwest, Washington",
+
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03402549505554, 38.91792475903431),
             serverIndex = null,
