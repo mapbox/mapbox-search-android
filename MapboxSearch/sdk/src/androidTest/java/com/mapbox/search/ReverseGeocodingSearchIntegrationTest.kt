@@ -133,7 +133,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_response.json"))
 
         val response = searchEngine.reverseBlocking(TEST_POINT)
 
@@ -215,7 +215,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulEmptyResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_empty_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_empty_response.json"))
 
         val response = searchEngine.reverseBlocking(TEST_POINT)
         val (results, responseInfo) = response.requireResultPair()
@@ -225,7 +225,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testReverseGeocodingDoesNotReturnIndexableRecords() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_response.json"))
 
         val response1 = searchEngine.reverseBlocking(TEST_POINT)
         val (results1, responseInfo1) = response1.requireResultPair()
@@ -243,7 +243,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         assertEquals(1, historyDataProvider.getSizeBlocking(callbacksExecutor))
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_response.json"))
         val response2 = searchEngine.reverseBlocking(TEST_POINT)
         val (results2, responseInfo2) = response2.requireResultPair()
 
@@ -259,7 +259,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulIncorrectResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_incorrect_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_incorrect_response.json"))
 
         try {
             searchEngine.reverseBlocking(TEST_POINT)
@@ -301,7 +301,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testCheckAsyncOperationTaskCompletion() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_response.json"))
 
         val countDownLatch = CountDownLatch(1)
         var task: AsyncOperationTask? = null
@@ -322,7 +322,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/reverse_geocoding/successful_response.json"), 2)
+        mockServer.enqueueMultiple(createSuccessfulResponse("search_box_responses/reverse_geocoding/successful_response.json"), 2)
 
         val task1 = searchEngine.search(ReverseGeoOptions(center = TEST_POINT), EmptySearchCallback)
 
@@ -339,7 +339,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     fun testErrorBackendResponseSimpleFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(422)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-simple-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -353,7 +353,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
     fun testErrorBackendResponseExtendedFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(400)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -362,7 +362,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
+                readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             error

@@ -197,7 +197,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
         val response = searchEngine.searchBlocking(TEST_QUERY, options)
@@ -243,7 +243,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testOptionsLimit() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val response = searchEngine.searchBlocking(TEST_QUERY, SearchOptions(limit = 1))
         assertEquals(1, response.requireSuggestions().size)
@@ -251,7 +251,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulEmptyResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-empty.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful-empty.json"))
 
         val response = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
 
@@ -261,7 +261,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsResponseOnly() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-empty.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful-empty.json"))
 
         val records = (1..10).map {
             createTestHistoryRecord(
@@ -337,7 +337,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMixedIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val records = (1..10).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
@@ -360,7 +360,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMixedIndexableRecordsResponseWithLimit() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
@@ -383,7 +383,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIgnoredIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val records = (1..3).map {
             createTestHistoryRecord(id = "id$it", name = "$TEST_QUERY $it")
@@ -404,7 +404,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsZeroThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
@@ -423,7 +423,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsInsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
@@ -444,7 +444,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsOutsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val recordCoordinate = Point.fromLngLat(2.2945173400760424, 48.85832005563483)
         val record = createTestHistoryRecord(id = "id1", name = TEST_QUERY, coordinate = recordCoordinate)
@@ -466,7 +466,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsMatching() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-test-records-matching.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-test-records-matching.json"))
 
         val recordCoordinate = Point.fromLngLat(-122.41936, 37.77707)
         val record = createTestHistoryRecord(
@@ -577,12 +577,12 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     fun testSuccessfulSuggestionSelection() {
         assertTrue(historyDataProvider.getAllBlocking().isEmpty())
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY)
         val suggestions = suggestionsResponse.requireSuggestions()
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
 
         val selectionResponse = searchEngine.selectBlocking(suggestions.first())
         val selectionResult = selectionResponse.requireResult()
@@ -668,8 +668,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulSuggestionSelectionWithTurnedOffAddToHistoryLogic() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
 
         assertEquals(0, historyDataProvider.getSizeBlocking())
 
@@ -687,8 +687,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     // TODO FIXME recursive
 //    @Test
 //    fun testRecursiveQuerySelection() {
-//        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-with-recursive.json"))
-//        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-with-recursive.json"))
+//        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-with-recursive.json"))
+//        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-with-recursive.json"))
 //
 //        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
 //        val response = searchEngine.searchBlocking(TEST_QUERY, options)
@@ -707,8 +707,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testCategorySuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-category.json"))
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-category-cafe.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-category.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-category-cafe.json"))
 
         val response = searchEngine.searchBlocking(TEST_QUERY)
         val suggestions = response.requireSuggestions()
@@ -725,8 +725,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testBrandSuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-brand.json"))
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-category-cafe.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-brand.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-category-cafe.json"))
 
         val response = searchEngine.searchBlocking(TEST_QUERY)
         val suggestions = response.requireSuggestions()
@@ -743,7 +743,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulIncorrectResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful-incorrect.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful-incorrect.json"))
 
         try {
             searchEngine.searchBlocking(TEST_QUERY)
@@ -781,7 +781,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testNetworkErrorForConsecutiveRequests() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
         mockServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
 
         val successfulResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
@@ -807,7 +807,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testCheckAsyncOperationTaskCompletion() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         var countDownLatch = CountDownLatch(1)
         var task: AsyncOperationTask? = null
@@ -826,7 +826,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         })
         countDownLatch.await()
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/retrieve-suggest.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
 
         countDownLatch = CountDownLatch(1)
         var selectionTask: AsyncOperationTask? = null
@@ -860,7 +860,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"), 2)
+        mockServer.enqueueMultiple(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"), 2)
 
         val task1 = searchEngine.search(TEST_QUERY, SearchOptions(requestDebounce = 1000), EmptySearchSuggestionsCallback)
 
@@ -873,8 +873,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testSBSCzechAddressFormatting() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-test-address-formatting.json"))
+    fun testSearchBoxCzechAddressFormatting() {
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-test-address-formatting.json"))
 
         val response = searchEngine.searchBlocking(TEST_QUERY)
         assertTrue(response.isSuggestions)
@@ -888,13 +888,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testSbsBackendDataCorrections() {
+    fun testSearchBoxBackendDataCorrections() {
         /**
          * For some results backend sends incorrectly formatted fields. Search SDK tries to patch such data:
          * (SSDK-276) street: madison ave -> Madison Ave
          * (SSDK-277) name: 667 Madison -> 667 Madison Ave
          */
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-backend-patches.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-backend-patches.json"))
 
         val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
 
@@ -927,7 +927,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     fun testErrorBackendResponseSimpleFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(422)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-simple-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -947,7 +947,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     fun testErrorBackendResponseExtendedFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(400)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -959,7 +959,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
+                readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             (res as SearchEngineResult.Error).e
