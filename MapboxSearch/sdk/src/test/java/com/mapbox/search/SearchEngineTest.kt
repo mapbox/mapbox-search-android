@@ -489,7 +489,7 @@ internal class SearchEngineTest {
     }
 
     @TestFactory
-    fun `Check successful search selection with SBS suggestion`() = TestCase {
+    fun `Check successful search selection with Search Box suggestion`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
             val slotSelectRequestOptions = slot<CoreRequestOptions>()
             val slotSelectSearchResult = slot<CoreSearchResult>()
@@ -513,7 +513,7 @@ internal class SearchEngineTest {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
                 val task = searchEngine.select(
-                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    suggestion = TEST_SEARCH_BOX_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback,
@@ -558,7 +558,7 @@ internal class SearchEngineTest {
 
                 Verify("Results passed to callback") {
                     callback.onResult(
-                        TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                        TEST_SEARCH_BOX_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                         SearchResult(expectedResult),
                         ResponseInfo(
                             TEST_REQUEST_OPTIONS.copy(
@@ -678,7 +678,7 @@ internal class SearchEngineTest {
                 every { callback.onError(capture(slotCallbackError)) } returns Unit
 
                 searchEngine.select(
-                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    suggestion = TEST_SEARCH_BOX_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback
@@ -710,7 +710,7 @@ internal class SearchEngineTest {
                 val callback = mockk<SearchSelectionCallback>(relaxed = true)
 
                 val task = searchEngine.select(
-                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    suggestion = TEST_SEARCH_BOX_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = SelectOptions(),
                     executor = executor,
                     callback = callback,
@@ -1025,7 +1025,7 @@ internal class SearchEngineTest {
             TEST_SEARCH_REQUEST_CONTEXT
         )
 
-        val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
+        val TEST_SEARCH_BOX_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
                 types = listOf(BaseRawResultType.POI),
                 action = createTestCoreSuggestAction().mapToBase()

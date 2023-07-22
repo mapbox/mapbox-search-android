@@ -114,7 +114,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
     @Ignore("TODO FIXME not matching")
     @Test
     fun testIndexableRecordMatchingWithServerResult() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val historyRecord = HistoryRecord(
             id = "test-id",

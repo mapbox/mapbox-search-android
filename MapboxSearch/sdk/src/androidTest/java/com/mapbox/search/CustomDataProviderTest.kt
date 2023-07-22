@@ -78,7 +78,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testSuccessfulCustomProviderRegistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val customDataProvider = TestDataProvider(
             stubStorage = StubRecordsStorage(TEST_CUSTOM_USER_RECORDS.toMutableList())
@@ -135,7 +135,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testFailCustomProviderRegistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val testException = RuntimeException("Test exception")
         val customDataProvider = TestDataProvider(
@@ -167,7 +167,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
     @Test
     fun testSuccessfulCustomProviderUnregistration() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val customDataProvider = TestDataProvider(
             stubStorage = StubRecordsStorage(TEST_CUSTOM_USER_RECORDS.toMutableList())

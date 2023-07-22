@@ -160,7 +160,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
@@ -171,7 +171,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testOptionsLimit() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val response = searchEngine.categorySearchBlocking(
             TEST_CATEGORY,
@@ -183,7 +183,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulEmptyResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_empty_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_empty_response.json"))
 
         val response = searchEngine.categorySearchBlocking(TEST_CATEGORY)
         val (results, responseInfo) = response.requireResultPair()
@@ -194,7 +194,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsResponseOnly() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_empty_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_empty_response.json"))
 
         val records = (1..10).map {
             createTestHistoryRecord(
@@ -214,7 +214,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testMixedIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val response1 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
         val firstRun = response1.requireResults()
@@ -227,7 +227,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             callbacksExecutor,
         )
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response_new_ids.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response_new_ids.json"))
 
         val response2 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
 
@@ -255,7 +255,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testIgnoredIndexableRecordsResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val response1 = searchEngine.categorySearchBlocking(TEST_CATEGORY)
         val (results1, responseInfo1) = response1.requireResultPair()
@@ -270,7 +270,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             callbacksExecutor,
         )
 
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response_new_ids.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response_new_ids.json"))
 
         val response2 = searchEngine.categorySearchBlocking(
             TEST_CATEGORY,
@@ -285,7 +285,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsZeroThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(
@@ -310,7 +310,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsInsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(
@@ -338,7 +338,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testIndexableRecordsOutsideThreshold() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val recordCoordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156)
         val record = createTestHistoryRecord(
@@ -366,7 +366,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulIncorrectResponse() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_incorrect_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_incorrect_response.json"))
 
         try {
             searchEngine.categorySearchBlocking(TEST_CATEGORY, CategorySearchOptions())
@@ -382,7 +382,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testConsecutiveRequests() {
-        mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/category/successful_incorrect_response.json"), 2)
+        mockServer.enqueueMultiple(createSuccessfulResponse("search_box_responses/category/successful_incorrect_response.json"), 2)
 
         val task1 = searchEngine.search(TEST_CATEGORY, CategorySearchOptions(requestDebounce = 1000), EmptySearchCallback)
 
@@ -420,7 +420,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
     @Test
     fun testCheckAsyncOperationTaskCompletion() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/category/successful_response.json"))
 
         val countDownLatch = CountDownLatch(1)
         var task: AsyncOperationTask? = null
@@ -443,7 +443,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testErrorBackendResponseSimpleFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(422)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-simple-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-simple-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -458,7 +458,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     fun testErrorBackendResponseExtendedFormat() {
         val errorResponse = MockResponse()
             .setResponseCode(400)
-            .setBody(readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"))
+            .setBody(readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"))
 
         mockServer.enqueue(errorResponse)
 
@@ -467,7 +467,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         assertEquals(
             SearchRequestException(
-                readFileFromAssets("sbs_responses/suggestions-error-response-extended-format.json"),
+                readFileFromAssets("search_box_responses/suggestions-error-response-extended-format.json"),
                 400
             ),
             error

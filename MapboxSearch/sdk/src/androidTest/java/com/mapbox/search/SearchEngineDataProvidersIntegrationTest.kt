@@ -124,7 +124,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     }
 
     private fun SearchEngine.assertHistoryAndFavoritesInSearchResults() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val suggestions = searchBlocking(TEST_QUERY).requireSuggestions()
         assertTrue(suggestions.isNotEmpty())
@@ -141,7 +141,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
     }
 
     private fun SearchEngine.assertNoIndexableRecordsInSearchResults() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
 
         val suggestions = searchBlocking(TEST_QUERY).requireSuggestions()
         assertTrue(suggestions.isNotEmpty())

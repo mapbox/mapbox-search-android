@@ -67,13 +67,13 @@ internal class SearchEngineSettingsTest {
                 val actual = SearchEngineSettings.Builder()
                     .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .viewportProvider(TEST_MOCKED_VIEWPORT_PROVIDER)
-                    .baseUrl(TEST_SBS_ENDPOINT)
+                    .baseUrl(TEST_SEARCH_BOX_ENDPOINT)
                     .build()
 
                 val expected = SearchEngineSettings(
                     locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
-                    baseUrl = TEST_SBS_ENDPOINT,
+                    baseUrl = TEST_SEARCH_BOX_ENDPOINT,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -88,7 +88,7 @@ internal class SearchEngineSettingsTest {
                 val settings = SearchEngineSettings(
                     locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
-                    baseUrl = TEST_SBS_ENDPOINT,
+                    baseUrl = TEST_SEARCH_BOX_ENDPOINT,
                 )
 
                 Then("Settings should be equal", settings, settings.toBuilder().build())
@@ -97,7 +97,7 @@ internal class SearchEngineSettingsTest {
     }
 
     private companion object {
-        const val TEST_SBS_ENDPOINT = "https://test-sbs.mapbox.com"
+        const val TEST_SEARCH_BOX_ENDPOINT = "https://test-search-box.mapbox.com"
         val TEST_MOCKED_LOCATION_ENGINE: LocationProvider = mockk(relaxed = true)
         val TEST_MOCKED_VIEWPORT_PROVIDER: ViewportProvider = mockk(relaxed = true)
     }
