@@ -145,7 +145,7 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
 
-                        // TODO FIXME search native should parse "poi_category_ids" and provide it to platforms
+                        // TODO(NN-899) FIXME search native should parse "poi_category_ids" and provide it to platforms
 //                        WhenThrows(
 //                            "Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType and without canonical name",
 //                            IllegalStateException::class
