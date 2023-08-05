@@ -1,7 +1,7 @@
 package com.mapbox.search
 
+import com.mapbox.common.MapboxOptions
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.StubCompletionCallback
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreLocationProvider
@@ -74,7 +74,7 @@ internal class SearchEngineFactory {
             settings,
             analyticsService,
             coreEngine,
-            getUserActivityReporter(settings.accessToken),
+            getUserActivityReporter(),
             ServiceProvider.INTERNAL_INSTANCE.historyService(),
             MapboxSearchSdk.searchRequestContextProvider,
             MapboxSearchSdk.searchResultFactory,
@@ -86,6 +86,8 @@ internal class SearchEngineFactory {
         apiType: ApiType,
         settings: SearchEngineSettings
     ): CoreSearchEngineInterface {
+        MapboxOptions.accessToken = settings.accessToken
+
         val endpoint = when (apiType) {
             ApiType.GEOCODING -> settings.geocodingEndpointBaseUrl
             ApiType.SBS -> settings.singleBoxSearchBaseUrl
@@ -93,13 +95,12 @@ internal class SearchEngineFactory {
 
         // Workaround for sync location provider in test environment.
         // Needed while https://github.com/mapbox/mapbox-search-sdk/issues/671 not fixed
-        val coreLocationProvider = if (settings.locationEngine is CoreLocationProvider) {
-            settings.locationEngine
+        val coreLocationProvider = if (settings.locationService is CoreLocationProvider) {
+            settings.locationService
         } else {
             WrapperLocationProvider(
                 LocationEngineAdapter(
-                    BaseSearchSdkInitializer.app,
-                    settings.locationEngine
+                    settings.locationService
                 )
             ) {
                 settings.viewportProvider?.getViewport()?.mapToCore()
@@ -107,7 +108,7 @@ internal class SearchEngineFactory {
         }
 
         return CoreSearchEngine(
-            CoreEngineOptions(settings.accessToken, endpoint, apiType.mapToCore(), UserAgentProvider.userAgent, null),
+            CoreEngineOptions(endpoint, apiType.mapToCore(), UserAgentProvider.sdkInformation(), null),
             coreLocationProvider
         )
     }

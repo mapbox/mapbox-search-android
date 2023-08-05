@@ -1,10 +1,10 @@
 package com.mapbox.search.analytics
 
 import android.content.Context
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Event
 import com.mapbox.common.EventsServiceInterface
+import com.mapbox.common.location.LocationService
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
@@ -25,7 +25,7 @@ internal class AnalyticsServiceImpl(
     private val eventsService: EventsServiceInterface,
     private val eventsJsonParser: AnalyticsEventJsonParser,
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
-    private val locationEngine: LocationEngine
+    private val locationService: LocationService
 ) : AnalyticsService {
 
     fun createRawFeedbackEvent(
@@ -91,7 +91,7 @@ internal class AnalyticsServiceImpl(
         responseInfo: ResponseInfo,
         event: FeedbackEvent
     ) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationService.lastKnownLocationOrNull {
             createFeedbackEvent(
                 searchResult = searchResult,
                 responseInfo = responseInfo,
@@ -115,7 +115,7 @@ internal class AnalyticsServiceImpl(
         responseInfo: ResponseInfo,
         event: FeedbackEvent
     ) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationService.lastKnownLocationOrNull {
             createFeedbackEvent(
                 searchSuggestion = searchSuggestion,
                 responseInfo = responseInfo,
@@ -135,21 +135,21 @@ internal class AnalyticsServiceImpl(
     }
 
     override fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationService.lastKnownLocationOrNull {
             val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(historyRecord, event, currentLocation = it)
             sendFeedbackInternal(feedbackEvent)
         }
     }
 
     override fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationService.lastKnownLocationOrNull {
             val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(favoriteRecord, event, currentLocation = it)
             sendFeedbackInternal(feedbackEvent)
         }
     }
 
     override fun sendMissingResultFeedback(event: MissingResultFeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationService.lastKnownLocationOrNull {
             feedbackEventsFactory.createSearchFeedbackEvent(
                 event,
                 currentLocation = it,
@@ -225,9 +225,9 @@ internal class AnalyticsServiceImpl(
         val eventValue = Value.fromJson(eventJson)
         if (eventValue.isValue) {
             val event = Event(eventValue.value!!, null)
-            eventsService.sendEvent(event) { error ->
-                if (error != null) {
-                    loge("Unable to send event: $error")
+            eventsService.sendEvent(event) { result ->
+                result.onError {
+                    loge("Unable to send event: $it")
                 }
             }
         } else {

@@ -7,8 +7,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -37,7 +37,7 @@ import java.util.UUID
 class DiscoverActivity : AppCompatActivity() {
 
     private lateinit var discover: Discover
-    private lateinit var locationEngine: LocationEngine
+    private lateinit var locationService: LocationService
 
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
@@ -53,7 +53,7 @@ class DiscoverActivity : AppCompatActivity() {
         setContentView(R.layout.activity_discover)
 
         discover = Discover.create(getString(R.string.mapbox_access_token))
-        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
+        locationService = LocationServiceFactory.getOrCreate()
 
         mapView = findViewById(R.id.map_view)
         mapMarkersManager = MapMarkersManager(mapView)
@@ -82,7 +82,7 @@ class DiscoverActivity : AppCompatActivity() {
 
         searchNearby = findViewById(R.id.search_nearby)
         searchNearby.setOnClickListener {
-            locationEngine.lastKnownLocation(this) { location ->
+            locationService.lastKnownLocation { location ->
                 if (location == null) {
                     return@lastKnownLocation
                 }
@@ -134,7 +134,7 @@ class DiscoverActivity : AppCompatActivity() {
         mapMarkersManager.onResultClickListener = { result ->
             mapMarkersManager.adjustMarkersForOpenCard()
             searchPlaceView.open(result.toSearchPlace())
-            locationEngine.userDistanceTo(this@DiscoverActivity, result.coordinate) { distance ->
+            locationService.userDistanceTo(result.coordinate) { distance ->
                 distance?.let { searchPlaceView.updateDistance(distance) }
             }
         }
@@ -153,7 +153,7 @@ class DiscoverActivity : AppCompatActivity() {
 
     private class MapMarkersManager(mapView: MapView) {
 
-        private val annotations = mutableMapOf<Long, DiscoverResult>()
+        private val annotations = mutableMapOf<String, DiscoverResult>()
         private val mapboxMap: MapboxMap = mapView.getMapboxMap()
         private val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(null)
         private val pinBitmap = mapView.context.bitmapFromDrawableRes(R.drawable.red_marker)

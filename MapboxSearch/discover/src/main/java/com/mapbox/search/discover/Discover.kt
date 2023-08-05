@@ -1,14 +1,14 @@
 package com.mapbox.search.discover
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.Expected
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationService
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -197,8 +197,8 @@ public interface Discover {
          *
          * @param accessToken [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
          *
-         * @param locationEngine The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * @param locationService The mechanism responsible for providing location approximations to the SDK.
+         * By default [LocationService] is retrieved from [LocationServiceFactory.getOrCreate].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
@@ -208,17 +208,17 @@ public interface Discover {
         @JvmOverloads
         public fun create(
             accessToken: String,
-            locationEngine: LocationEngine = defaultLocationEngine(),
+            locationService: LocationService = defaultLocationService(),
         ): Discover {
             val engine = DiscoverSearchEngine.create(
                 accessToken,
                 BaseSearchSdkInitializer.app,
-                locationEngine
+                locationService
             )
 
             return DiscoverImpl(
                 engine = engine,
-                activityReporter = getUserActivityReporter(accessToken),
+                activityReporter = getUserActivityReporter(),
             )
         }
     }

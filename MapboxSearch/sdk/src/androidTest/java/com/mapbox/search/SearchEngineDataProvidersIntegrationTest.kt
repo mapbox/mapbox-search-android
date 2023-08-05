@@ -34,7 +34,7 @@ internal class SearchEngineDataProvidersIntegrationTest : BaseTest() {
 
         searchEngineSettings = SearchEngineSettings(
             accessToken = DEFAULT_TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
+            locationService = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
             geocodingEndpointBaseUrl = mockServer.url("").toString(),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )

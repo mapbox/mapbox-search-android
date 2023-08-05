@@ -98,7 +98,7 @@ public class TestActivity : AppCompatActivity() {
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(
                 accessToken = getString(R.string.mapbox_access_token),
-                locationEngine = locationEngine,
+                locationService = locationEngine,
                 singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             )
         )
@@ -106,7 +106,7 @@ public class TestActivity : AppCompatActivity() {
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
                 accessToken = getString(R.string.mapbox_access_token),
-                locationEngine = locationEngine,
+                locationService = locationEngine,
             )
         )
 
@@ -114,7 +114,7 @@ public class TestActivity : AppCompatActivity() {
             view = searchResultsView,
             searchEngine = searchEngine,
             offlineSearchEngine = offlineSearchEngine,
-            locationEngine = locationEngine,
+            locationService = locationEngine,
         )
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {

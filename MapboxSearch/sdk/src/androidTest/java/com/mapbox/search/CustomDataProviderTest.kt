@@ -65,7 +65,7 @@ internal class CustomDataProviderTest : BaseTest() {
 
         val searchEngineSettings = SearchEngineSettings(
             accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationService = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 

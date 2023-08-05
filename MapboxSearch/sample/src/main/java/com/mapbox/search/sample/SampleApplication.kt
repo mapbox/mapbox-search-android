@@ -31,28 +31,29 @@ open class SampleApplication : Application() {
             return !onlySearchLogs || SEARCH_ENDPOINTS_URL.any { url.startsWith(it) }
         }
 
-        HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
-            override fun onRequest(request: HttpRequest): HttpRequest {
-                if (filter(request.url)) {
-                    Log.i("SearchSdkHttp", "onRequest: $request")
-                }
-                return request
-            }
-
-            override fun onDownload(download: DownloadOptions): DownloadOptions {
-                if (filter(download.request.url)) {
-                    Log.i("SearchSdkHttp", "onDownload: $download")
-                }
-                return download
-            }
-
-            override fun onResponse(response: HttpResponse): HttpResponse {
-                if (filter(response.request.url)) {
-                    Log.i("SearchSdkHttp", "onResponse: $response")
-                }
-                return response
-            }
-        })
+        // TODO FIXME
+//        HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
+//            override fun onRequest(request: HttpRequest): HttpRequest {
+//                if (filter(request.url)) {
+//                    Log.i("SearchSdkHttp", "onRequest: $request")
+//                }
+//                return request
+//            }
+//
+//            override fun onDownload(download: DownloadOptions): DownloadOptions {
+//                if (filter(download.request.url)) {
+//                    Log.i("SearchSdkHttp", "onDownload: $download")
+//                }
+//                return download
+//            }
+//
+//            override fun onResponse(response: HttpResponse): HttpResponse {
+//                if (filter(response.request.url)) {
+//                    Log.i("SearchSdkHttp", "onResponse: $response")
+//                }
+//                return response
+//            }
+//        })
     }
 
     private fun enableStrictMode() {

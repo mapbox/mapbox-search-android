@@ -1,9 +1,10 @@
 package com.mapbox.search
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
+import com.mapbox.common.MapboxOptions
+import com.mapbox.common.location.LocationService
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
@@ -112,7 +113,7 @@ internal object MapboxSearchSdk {
         application = application,
         accessToken = settings.accessToken,
         coreSearchEngine = coreSearchEngine,
-        locationEngine = settings.locationEngine,
+        locationService = settings.locationService,
         viewportProvider = settings.viewportProvider
     )
 
@@ -120,9 +121,11 @@ internal object MapboxSearchSdk {
         application: Application,
         accessToken: String,
         coreSearchEngine: CoreSearchEngineInterface,
-        locationEngine: LocationEngine,
+        locationService: LocationService,
         viewportProvider: ViewportProvider?,
     ): AnalyticsServiceImpl {
+        MapboxOptions.accessToken = accessToken
+
         val eventJsonParser = AnalyticsEventJsonParser()
 
         val searchFeedbackEventsFactory = SearchFeedbackEventsFactory(
@@ -134,14 +137,14 @@ internal object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, UserAgentProvider.userAgent, null))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(UserAgentProvider.sdkInformation(), null))
 
         return AnalyticsServiceImpl(
             context = application,
             eventsService = eventsService,
             eventsJsonParser = eventJsonParser,
             feedbackEventsFactory = searchFeedbackEventsFactory,
-            locationEngine = locationEngine,
+            locationService = locationService,
         )
     }
 }

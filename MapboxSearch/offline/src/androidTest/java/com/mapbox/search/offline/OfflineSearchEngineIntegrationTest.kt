@@ -74,7 +74,7 @@ internal class OfflineSearchEngineIntegrationTest {
             OfflineSearchEngineSettings(
                 accessToken = targetApplication.getString(R.string.mapbox_access_token),
                 tileStore = tileStore,
-                locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
+                locationService = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
             )
         )
 

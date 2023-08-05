@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -90,7 +90,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             addressAutofill = addressAutofill
         )
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+        LocationServiceFactory.getOrCreate().lastKnownLocation { point ->
             point?.let {
                 mapView.getMapboxMap().setCamera(
                     CameraOptions.Builder()

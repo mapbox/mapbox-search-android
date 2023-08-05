@@ -12,7 +12,7 @@ import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationService
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
@@ -51,7 +51,7 @@ internal class DiscoverIntegrationTest {
 
         discover = DiscoverImpl(
             engine = engine,
-            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+            activityReporter = getUserActivityReporter()
         )
     }
 
@@ -346,7 +346,7 @@ internal class DiscoverIntegrationTest {
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, defaultLocationEngine()), null
+                    LocationEngineAdapter(defaultLocationService()), null
                 ),
             )
 

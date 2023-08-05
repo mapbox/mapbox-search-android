@@ -1,9 +1,10 @@
 package com.mapbox.search.autofill
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.MapboxOptions
+import com.mapbox.common.location.LocationService
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.MapboxApiClient
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -85,18 +86,19 @@ internal class AddressAutofillImpl(
         fun create(
             accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationService: LocationService,
         ): AddressAutofillImpl {
+            MapboxOptions.accessToken = accessToken
+
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken,
                     null,
                     CoreApiType.AUTOFILL,
-                    UserAgentProvider.userAgent,
+                    UserAgentProvider.sdkInformation(),
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine),
+                    LocationEngineAdapter(locationService),
                     null
                 ),
             )
@@ -113,7 +115,7 @@ internal class AddressAutofillImpl(
             return AddressAutofillImpl(
                 accessToken = accessToken,
                 searchEngine = engine,
-                activityReporter = getUserActivityReporter(accessToken)
+                activityReporter = getUserActivityReporter()
             )
         }
 

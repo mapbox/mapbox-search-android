@@ -42,7 +42,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
         val searchEngineSettings = SearchEngineSettings(
             accessToken = DEFAULT_TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
+            locationService = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
