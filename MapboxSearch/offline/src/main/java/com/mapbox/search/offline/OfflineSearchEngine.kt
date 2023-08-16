@@ -2,6 +2,7 @@ package com.mapbox.search.offline
 
 import android.app.Application
 import com.mapbox.bindgen.Value
+import com.mapbox.common.MapboxOptions
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
@@ -279,23 +280,24 @@ public interface OfflineSearchEngine {
                     Value.valueOf(tilesBaseUri.toString())
                 )
 
-                tileStore.setOption(
-                    TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-                    TileDataDomain.SEARCH,
-                    Value.valueOf(accessToken)
-                )
+                // TODO FIXME check
+                MapboxOptions.accessToken = accessToken
+//                tileStore.setOption(
+//                    TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+//                    TileDataDomain.SEARCH,
+//                    Value.valueOf(accessToken)
+//                )
             }
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    settings.accessToken,
                     null,
                     CoreApiType.SBS,
-                    UserAgentProvider.userAgent,
+                    UserAgentProvider.sdkInformation(),
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, settings.locationEngine),
+                    LocationEngineAdapter(settings.locationService),
                     null
                 ),
             )
@@ -310,7 +312,7 @@ public interface OfflineSearchEngine {
             return OfflineSearchEngineImpl(
                 settings = settings,
                 coreEngine = coreEngine,
-                activityReporter = getUserActivityReporter(settings.accessToken),
+                activityReporter = getUserActivityReporter(),
                 requestContextProvider = requestContextProvider,
                 searchResultFactory = searchResultFactory,
             )

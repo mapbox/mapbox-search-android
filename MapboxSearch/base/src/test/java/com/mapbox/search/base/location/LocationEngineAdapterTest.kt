@@ -47,7 +47,7 @@ internal class LocationEngineAdapterTest {
                 callbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
+            adapter = LocationEngineAdapter(engine, timeProvider)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
@@ -76,7 +76,7 @@ internal class LocationEngineAdapterTest {
                 locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
+            adapter = LocationEngineAdapter(engine, timeProvider)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
@@ -113,7 +113,7 @@ internal class LocationEngineAdapterTest {
                 locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
+            adapter = LocationEngineAdapter(engine, timeProvider)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {

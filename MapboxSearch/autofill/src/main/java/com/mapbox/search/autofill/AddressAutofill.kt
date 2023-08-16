@@ -1,12 +1,12 @@
 package com.mapbox.search.autofill
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.Expected
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationService
 
 /**
  * Main entrypoint to the Mapbox Autofill SDK. Performs forward or reverse geocoding requests to fetch addresses.
@@ -60,8 +60,8 @@ public interface AddressAutofill {
          *
          * @param accessToken [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
          *
-         * @param locationEngine The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * @param locationService The mechanism responsible for providing location approximations to the SDK.
+         * By default [LocationService] is retrieved from [LocationServiceFactory.getOrCreate].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
@@ -71,12 +71,12 @@ public interface AddressAutofill {
         @JvmOverloads
         public fun create(
             accessToken: String,
-            locationEngine: LocationEngine = defaultLocationEngine(),
+            locationService: LocationService = defaultLocationService(),
         ): AddressAutofill {
             return AddressAutofillImpl.create(
                 accessToken = accessToken,
                 app = BaseSearchSdkInitializer.app,
-                locationEngine = locationEngine
+                locationService = locationService
             )
         }
     }

@@ -1,13 +1,13 @@
 package com.mapbox.search.autocomplete
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.Expected
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationService
 
 /**
  * Main entrypoint to the Mapbox Place Autocomplete SDK.
@@ -20,7 +20,7 @@ public interface PlaceAutocomplete {
      * @param query Search query.
      * @param region Limit results to only those contained within the supplied bounding box.
      * @param proximity Optional geographic point that bias the response to favor results that are closer to this location.
-     * If not specified the SDK will try to get user location from the [LocationEngine] that was provided in the [PlaceAutocomplete.create].
+     * If not specified the SDK will try to get user location from the [LocationService] that was provided in the [PlaceAutocomplete.create].
      * @param options Request options.
      * @return Result of the search request, one of error or value.
      */
@@ -66,8 +66,8 @@ public interface PlaceAutocomplete {
          *
          * @param accessToken [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
          *
-         * @param locationEngine The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * @param locationService The mechanism responsible for providing location approximations to the SDK.
+         * By default [LocationService] is retrieved from [LocationServiceFactory.getOrCreate].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
@@ -77,12 +77,12 @@ public interface PlaceAutocomplete {
         @JvmOverloads
         public fun create(
             accessToken: String,
-            locationEngine: LocationEngine = defaultLocationEngine(),
+            locationService: LocationService = defaultLocationService(),
         ): PlaceAutocomplete {
             return PlaceAutocompleteImpl.create(
                 accessToken = accessToken,
                 app = BaseSearchSdkInitializer.app,
-                locationEngine = locationEngine
+                locationService = locationService
             )
         }
     }

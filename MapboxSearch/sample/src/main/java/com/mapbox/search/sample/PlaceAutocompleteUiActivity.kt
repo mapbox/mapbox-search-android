@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -121,7 +121,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
             }
         }
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+        LocationServiceFactory.getOrCreate().lastKnownLocation { point ->
             point?.let {
                 mapView.getMapboxMap().setCamera(
                     CameraOptions.Builder()
@@ -236,7 +236,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
 
         private val mapboxMap = mapView.getMapboxMap()
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         fun clearMarkers() {
             markers.clear()

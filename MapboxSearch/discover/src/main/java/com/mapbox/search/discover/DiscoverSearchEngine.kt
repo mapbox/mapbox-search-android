@@ -1,10 +1,11 @@
 package com.mapbox.search.discover
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory.createError
 import com.mapbox.bindgen.ExpectedFactory.createValue
+import com.mapbox.common.MapboxOptions
+import com.mapbox.common.location.LocationService
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -102,14 +103,16 @@ internal class DiscoverSearchEngine(
         fun create(
             accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationService: LocationService,
         ): DiscoverSearchEngine {
+            MapboxOptions.accessToken = accessToken
+
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken, null, API_TYPE, UserAgentProvider.userAgent, null
+                    null, API_TYPE, UserAgentProvider.sdkInformation(), null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine), null
+                    LocationEngineAdapter(locationService), null
                 ),
             )
 

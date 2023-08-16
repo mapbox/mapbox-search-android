@@ -1,6 +1,5 @@
 package com.mapbox.search.offline
 
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
@@ -63,14 +62,14 @@ internal class OfflineSearchEngineSettingsTest {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with default values") {
                 val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                    .locationService(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .build()
 
                 val expected = OfflineSearchEngineSettings(
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE
+                    locationService = TEST_MOCKED_LOCATION_ENGINE
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -83,7 +82,7 @@ internal class OfflineSearchEngineSettingsTest {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with test values") {
                 val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                    .locationService(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .tilesBaseUri(TEST_DEFAULT_ENDPOINT_URI)
                     .build()
@@ -92,7 +91,7 @@ internal class OfflineSearchEngineSettingsTest {
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationService = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -108,7 +107,7 @@ internal class OfflineSearchEngineSettingsTest {
                     accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationService = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", settings, settings.toBuilder().build())

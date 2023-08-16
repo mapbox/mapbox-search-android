@@ -2,7 +2,7 @@ package com.mapbox.search.ui.adapter.autocomplete
 
 import android.content.Context
 import androidx.annotation.ColorInt
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationService
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocation
@@ -15,7 +15,7 @@ import com.mapbox.search.ui.view.SearchResultAdapterItem
 
 internal class PlaceAutocompleteItemsCreator(
     private val context: Context,
-    private val locationEngine: LocationEngine,
+    private val locationService: LocationService,
     private val searchEntityPresentation: SearchEntityPresentation = SearchEntityPresentation(context),
     @ColorInt
     private val selectionSpanColor: Int = context.resolveAttrOrThrow(R.attr.mapboxSearchSdkPrimaryAccentColor),
@@ -34,7 +34,7 @@ internal class PlaceAutocompleteItemsCreator(
             val distance = if (suggestion.distanceMeters != null) {
                 suggestion.distanceMeters
             } else {
-                locationEngine.lastKnownLocation(context).value?.distanceTo(suggestion.coordinate)
+                locationService.lastKnownLocation().value?.distanceTo(suggestion.coordinate)
             }
 
             SearchResultAdapterItem.Result(

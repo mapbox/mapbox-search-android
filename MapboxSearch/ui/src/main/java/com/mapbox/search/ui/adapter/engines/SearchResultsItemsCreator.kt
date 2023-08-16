@@ -1,7 +1,7 @@
 package com.mapbox.search.ui.adapter.engines
 
 import android.content.Context
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationService
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
@@ -20,7 +20,7 @@ import com.mapbox.search.ui.view.UiError
 internal class SearchResultsItemsCreator(
     private val context: Context,
     private val searchEntityPresentation: SearchEntityPresentation = SearchEntityPresentation(context),
-    private val locationEngine: LocationEngine,
+    private val locationService: LocationService,
 ) {
 
     fun createForHistory(historyItems: List<Pair<HistoryRecord, Boolean>>): List<SearchResultAdapterItem> {
@@ -71,7 +71,7 @@ internal class SearchResultsItemsCreator(
             callback(createForEmptySearchResults(responseInfo))
             return AsyncOperationTask.COMPLETED
         }
-        return locationEngine.lastKnownLocationOrNull(context) { location ->
+        return locationService.lastKnownLocationOrNull { location ->
             val resultItems = results.map { result ->
                 val distance = result.distanceMeters ?: location?.distanceTo(result.coordinate)
 
@@ -100,7 +100,7 @@ internal class SearchResultsItemsCreator(
             )
             return AsyncOperationTask.COMPLETED
         }
-        return locationEngine.lastKnownLocationOrNull(context) { location ->
+        return locationService.lastKnownLocationOrNull { location ->
             val resultItems = results.map { searchResult ->
                 val distance = searchResult.distanceMeters ?: location?.distanceTo(searchResult.coordinate)
                 SearchResultAdapterItem.Result(

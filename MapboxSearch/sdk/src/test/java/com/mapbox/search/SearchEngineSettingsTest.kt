@@ -61,12 +61,12 @@ internal class SearchEngineSettingsTest {
         Given("SearchEngineSettings builder") {
             When("Build new settings with default values") {
                 val actual = SearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                    .locationService(TEST_MOCKED_LOCATION_ENGINE)
                     .build()
 
                 val expected = SearchEngineSettings(
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationService = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -79,7 +79,7 @@ internal class SearchEngineSettingsTest {
         Given("SearchEngineSettings builder") {
             When("Build new settings with test values") {
                 val actual = SearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                    .locationService(TEST_MOCKED_LOCATION_ENGINE)
                     .viewportProvider(TEST_MOCKED_VIEWPORT_PROVIDER)
                     .geocodingEndpointBaseUrl(TEST_V5_ENDPOINT)
                     .singleBoxSearchBaseUrl(TEST_SBS_ENDPOINT)
@@ -87,7 +87,7 @@ internal class SearchEngineSettingsTest {
 
                 val expected = SearchEngineSettings(
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationService = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                     geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
                     singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,
@@ -104,7 +104,7 @@ internal class SearchEngineSettingsTest {
             When("Object created with toBuilder()") {
                 val settings = SearchEngineSettings(
                     accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationService = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                     geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
                     singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,

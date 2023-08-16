@@ -14,8 +14,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -71,7 +71,7 @@ import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var locationEngine: LocationEngine
+    private lateinit var locationService: LocationService
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
+        locationService = LocationServiceFactory.getOrCreate()
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                locationEngine.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
+                this@MainActivity.locationService.userDistanceTo(historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
@@ -444,7 +444,7 @@ class MainActivity : AppCompatActivity() {
 
         private val mapboxMap = mapView.getMapboxMap()
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         var onMarkersChangeListener: (() -> Unit)? = null
 

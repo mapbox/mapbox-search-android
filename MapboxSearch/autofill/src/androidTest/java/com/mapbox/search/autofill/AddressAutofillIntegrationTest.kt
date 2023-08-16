@@ -14,7 +14,7 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationService
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -48,13 +48,13 @@ internal class AddressAutofillIntegrationTest {
             app = APP,
             token = TEST_ACCESS_TOKEN,
             url = mockServer.url("").toString(),
-            locationEngine = defaultLocationEngine()
+            locationEngine = defaultLocationService()
         )
 
         addressAutofill = AddressAutofillImpl(
             accessToken = TEST_ACCESS_TOKEN,
             searchEngine = engine,
-            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+            activityReporter = getUserActivityReporter()
         )
     }
 
@@ -291,7 +291,7 @@ internal class AddressAutofillIntegrationTest {
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine), null
+                    LocationEngineAdapter(locationEngine), null
                 ),
             )
 

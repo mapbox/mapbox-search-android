@@ -2,7 +2,7 @@ package com.mapbox.search.ui.adapter.autofill
 
 import android.content.Context
 import androidx.annotation.ColorInt
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationService
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.base.utils.extension.distanceTo
 import com.mapbox.search.base.utils.extension.lastKnownLocation
@@ -14,7 +14,7 @@ import com.mapbox.search.ui.view.SearchResultAdapterItem
 
 internal class AutofillItemsCreator(
     private val context: Context,
-    private val locationEngine: LocationEngine,
+    private val locationService: LocationService,
     @ColorInt
     private val selectionSpanColor: Int = context.resolveAttrOrThrow(R.attr.mapboxSearchSdkPrimaryAccentColor),
     highlightsCalculator: HighlightsCalculator = HighlightsCalculator.INSTANCE
@@ -29,7 +29,7 @@ internal class AutofillItemsCreator(
         }
 
         return suggestions.map { suggestion ->
-            val locationRequest = locationEngine.lastKnownLocation(context)
+            val locationRequest = locationService.lastKnownLocation()
             val distance: Double? = locationRequest.value?.distanceTo(suggestion.coordinate)
 
             SearchResultAdapterItem.Result(

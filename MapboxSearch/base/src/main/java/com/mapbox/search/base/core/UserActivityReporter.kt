@@ -5,12 +5,12 @@ import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.internal.bindgen.UserActivityReporterOptions
 
 fun getUserActivityReporter(
-    accessToken: String,
-    userAgent: String = UserAgentProvider.userAgent,
-    eventsUrl: String? = null
+    eventsUrl: String? = null,
+    userAgentProvider: UserAgentProvider = UserAgentProvider
 ): UserActivityReporter {
     val options = UserActivityReporterOptions(
-        accessToken, userAgent, eventsUrl
+        userAgentProvider.sdkInformation(), eventsUrl
     )
+    
     return UserActivityReporter.getOrCreate(options)
 }

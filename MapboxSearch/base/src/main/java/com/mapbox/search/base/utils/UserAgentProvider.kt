@@ -1,5 +1,6 @@
 package com.mapbox.search.base.utils
 
+import com.mapbox.common.SdkInformation
 import com.mapbox.search.common.BuildConfig
 
 object UserAgentProvider {
@@ -13,4 +14,10 @@ object UserAgentProvider {
     } else {
         "$sdkName/$sdkVersionName"
     }
+
+    fun sdkInformation() = SdkInformation(
+        sdkName,
+        sdkVersionName,
+        sdkPackageName
+    )
 }

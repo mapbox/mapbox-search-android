@@ -1,6 +1,5 @@
 package com.mapbox.search.sample
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,10 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineResult
-import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.common.location.LocationService
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxMap
@@ -29,28 +25,25 @@ import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.ui.view.place.SearchPlace
 
-@SuppressLint("MissingPermission")
-fun LocationEngine.lastKnownLocation(context: Context, callback: (Point?) -> Unit) {
-    if (!PermissionsManager.areLocationPermissionsGranted(context)) {
-        callback(null)
-    }
-
-    getLastLocation(object : LocationEngineCallback<LocationEngineResult> {
-        override fun onSuccess(result: LocationEngineResult?) {
-            val location = (result?.locations?.lastOrNull() ?: result?.lastLocation)?.let { location ->
+fun LocationService.lastKnownLocation(
+    callback: (Point?) -> Unit
+) {
+    getDeviceLocationProvider(null).onValue {
+        it.getLastLocation { location ->
+            val res = if (location == null) {
+                null
+            } else {
                 Point.fromLngLat(location.longitude, location.latitude)
             }
-            callback(location)
+            callback(res)
         }
-
-        override fun onFailure(exception: Exception) {
-            callback(null)
-        }
-    })
+    }.onError {
+        callback(null)
+    }
 }
 
-fun LocationEngine.userDistanceTo(context: Context, destination: Point, callback: (Double?) -> Unit) {
-    lastKnownLocation(context) { location ->
+fun LocationService.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
+    lastKnownLocation { location ->
         if (location == null) {
             callback(null)
         } else {

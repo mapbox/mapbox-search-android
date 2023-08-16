@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.startup.Initializer
 import com.mapbox.common.MapboxSDKCommonInitializer
 import com.mapbox.common.SdkInfoRegistryFactory
-import com.mapbox.common.SdkInformation
 import com.mapbox.common.core.module.CommonSingletonModuleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
 
@@ -16,11 +15,7 @@ class BaseSearchSdkInitializer : Initializer<Unit> {
         CommonSingletonModuleProvider.loaderInstance.load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
 
         SdkInfoRegistryFactory.getInstance().registerSdkInformation(
-            SdkInformation(
-                UserAgentProvider.sdkName,
-                UserAgentProvider.sdkVersionName,
-                UserAgentProvider.sdkPackageName
-            )
+            UserAgentProvider.sdkInformation()
         )
     }
 

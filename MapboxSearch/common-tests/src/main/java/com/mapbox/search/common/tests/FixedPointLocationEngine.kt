@@ -4,10 +4,20 @@ import android.app.PendingIntent
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineRequest
-import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.Cancelable
+import com.mapbox.common.location.AccuracyAuthorization
+import com.mapbox.common.location.DeviceLocationProvider
+import com.mapbox.common.location.DeviceLocationProviderFactory
+import com.mapbox.common.location.DeviceLocationProviderType
+import com.mapbox.common.location.GetLocationCallback
+import com.mapbox.common.location.LocationError
+import com.mapbox.common.location.LocationObserver
+import com.mapbox.common.location.LocationProviderRequest
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceObserver
+import com.mapbox.common.location.PermissionStatus
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.LocationProvider
@@ -16,7 +26,7 @@ import com.mapbox.search.internal.bindgen.LonLatBBox
 class FixedPointLocationEngine(
     private val location: Location,
     private val viewPort: BoundingBox? = null,
-) : LocationEngine, LocationProvider {
+) : LocationService, LocationProvider {
 
     constructor(point: Point, viewPort: BoundingBox? = null) : this(point.toLocation(), viewPort)
 
@@ -28,39 +38,79 @@ class FixedPointLocationEngine(
         return viewPort?.toLonLatBBox()
     }
 
-    override fun getLastLocation(callback: LocationEngineCallback<LocationEngineResult>) {
-        callback.onSuccess(LocationEngineResult.create(location))
+    override fun getAccuracyAuthorization() = AccuracyAuthorization.EXACT
+
+    override fun getDeviceLocationProvider(
+        type: DeviceLocationProviderType,
+        request: LocationProviderRequest?
+    ): Expected<LocationError, DeviceLocationProvider> {
+        return getDeviceLocationProvider(request)
     }
 
-    override fun requestLocationUpdates(
-        request: LocationEngineRequest,
-        callback: LocationEngineCallback<LocationEngineResult>,
-        looper: Looper?
-    ) {
-        val callbackRunnable = Runnable {
-            callback.onSuccess(LocationEngineResult.create(location))
+    override fun getDeviceLocationProvider(
+        request: LocationProviderRequest?
+    ): Expected<LocationError, DeviceLocationProvider> {
+        return ExpectedFactory.createValue(FixedDeviceLocationProvider(location))
+    }
+
+    override fun getPermissionStatus() = PermissionStatus.FOREGROUND
+
+    override fun isAvailable() = true
+
+    override fun registerObserver(observer: LocationServiceObserver) {
+        // do nothing
+    }
+
+    override fun setUserDefinedDeviceLocationProviderFactory(factory: DeviceLocationProviderFactory?) {
+        // do nothing
+    }
+
+    override fun unregisterObserver(observer: LocationServiceObserver) {
+        // do nothing
+    }
+
+    private class FixedDeviceLocationProvider(
+        location: Location
+    ) : DeviceLocationProvider {
+
+        private val mapboxLocation = com.mapbox.common.location.Location.Builder()
+            .longitude(location.longitude)
+            .latitude(location.latitude)
+            .build()
+
+        override fun addLocationObserver(observer: LocationObserver, looper: Looper) {
+            Handler(looper).post {
+                observer.onLocationUpdateReceived(listOf(mapboxLocation))
+            }
         }
 
-        if (looper != null) {
-            Handler(looper).post(callbackRunnable)
-        } else {
-            callbackRunnable.run()
+        override fun addLocationObserver(observer: LocationObserver) {
+            observer.onLocationUpdateReceived(listOf(mapboxLocation))
         }
-    }
 
-    override fun requestLocationUpdates(request: LocationEngineRequest, pendingIntent: PendingIntent?) {
-        throw NotImplementedError()
-    }
+        override fun getLastLocation(callback: GetLocationCallback): Cancelable {
+            callback.run(mapboxLocation)
+            return STUB_CANCELABLE
+        }
 
-    override fun removeLocationUpdates(callback: LocationEngineCallback<LocationEngineResult>) {
-        // Do nothing
-    }
+        override fun removeLocationObserver(observer: LocationObserver) {
+            // do nothing
+        }
 
-    override fun removeLocationUpdates(pendingIntent: PendingIntent?) {
-        // Do nothing
+        override fun removeLocationUpdates(pendingIntent: PendingIntent) {
+            // do nothing
+        }
+
+        override fun requestLocationUpdates(pendingIntent: PendingIntent) {
+            // do nothing
+        }
     }
 
     private companion object {
+
+        val STUB_CANCELABLE = Cancelable {
+            // do nothing
+        }
 
         fun Point.toLocation(): Location {
             val location = Location("")

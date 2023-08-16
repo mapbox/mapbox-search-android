@@ -1,9 +1,10 @@
 package com.mapbox.search.autocomplete
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.MapboxOptions
+import com.mapbox.common.location.LocationService
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion.Underlying
@@ -182,20 +183,21 @@ internal class PlaceAutocompleteImpl(
         fun create(
             accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationService: LocationService,
         ): PlaceAutocompleteImpl {
+            MapboxOptions.accessToken = accessToken
+
             val apiType = CoreApiType.SBS
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken,
                     null,
                     apiType,
-                    UserAgentProvider.userAgent,
+                    UserAgentProvider.sdkInformation(),
                     null
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine),
+                    LocationEngineAdapter(locationService),
                     null
                 ),
             )
@@ -212,7 +214,7 @@ internal class PlaceAutocompleteImpl(
             return PlaceAutocompleteImpl(
                 accessToken = accessToken,
                 searchEngine = engine,
-                activityReporter = getUserActivityReporter(accessToken)
+                activityReporter = getUserActivityReporter()
             )
         }
     }

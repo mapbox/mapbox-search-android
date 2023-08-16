@@ -109,7 +109,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         searchEngineSettings = SearchEngineSettings(
             accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationService = FixedPointLocationEngine(TEST_USER_LOCATION),
             geocodingEndpointBaseUrl = mockServer.url("").toString(),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )

@@ -1,6 +1,6 @@
 ext {
     gradle_plugin = '7.3.1'
-    kotlin_version = '1.5.31'
+    kotlin_version = '1.7.20'
     kotlin_coroutines_version = '1.5.2'
 
     min_sdk_version = 21

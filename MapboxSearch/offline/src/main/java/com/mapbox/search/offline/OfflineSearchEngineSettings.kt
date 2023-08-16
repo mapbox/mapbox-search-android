@@ -1,12 +1,12 @@
 package com.mapbox.search.offline
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
+import com.mapbox.search.base.location.defaultLocationService
 import java.net.URI
 
 /**
@@ -38,11 +38,11 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 
     /**
      * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+     * By default [LocationService] is retrieved from [LocationServiceFactory.getOrCreate].
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    public val locationEngine: LocationEngine = defaultLocationEngine(),
+    public val locationService: LocationService = defaultLocationService(),
 ) {
 
     /**
@@ -60,7 +60,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         other as OfflineSearchEngineSettings
 
         if (accessToken != other.accessToken) return false
-        if (locationEngine != other.locationEngine) return false
+        if (locationService != other.locationService) return false
         if (tileStore != other.tileStore) return false
         if (tilesBaseUri != other.tilesBaseUri) return false
 
@@ -72,7 +72,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
      */
     override fun hashCode(): Int {
         var result = accessToken.hashCode()
-        result = 31 * result + locationEngine.hashCode()
+        result = 31 * result + locationService.hashCode()
         result = 31 * result + tileStore.hashCode()
         result = 31 * result + tilesBaseUri.hashCode()
         return result
@@ -84,7 +84,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     override fun toString(): String {
         return "OfflineSearchEngineSettings(" +
                 "accessToken='$accessToken', " +
-                "locationEngine=$locationEngine, " +
+                "locationEngine=$locationService, " +
                 "tileStore=$tileStore, " +
                 "tilesBaseUri=$tilesBaseUri" +
                 ")"
@@ -101,12 +101,12 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
         public var accessToken: String,
     ) {
 
-        private var locationEngine: LocationEngine? = null
+        private var locationService: LocationService? = null
         private var tileStore: TileStore? = null
         private var tilesBaseUri: URI? = null
 
         internal constructor(settings: OfflineSearchEngineSettings) : this(settings.accessToken) {
-            locationEngine = settings.locationEngine
+            locationService = settings.locationService
             tileStore = settings.tileStore
             tilesBaseUri = settings.tilesBaseUri
         }
@@ -129,12 +129,12 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 
         /**
          * The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * By default [LocationService] is retrieved from [LocationServiceFactory.getOrCreate].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          */
-        public fun locationEngine(locationEngine: LocationEngine): Builder = apply {
-            this.locationEngine = locationEngine
+        public fun locationService(locationService: LocationService): Builder = apply {
+            this.locationService = locationService
         }
 
         /**
@@ -144,7 +144,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
             accessToken = accessToken,
             tileStore = tileStore ?: defaultTileStore(),
             tilesBaseUri = tilesBaseUri ?: DEFAULT_ENDPOINT_URI,
-            locationEngine = locationEngine ?: defaultLocationEngine(),
+            locationService = locationService ?: defaultLocationService(),
         )
     }
 

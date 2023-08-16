@@ -102,6 +102,9 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     accuracy,
     routablePoints,
     categories,
+    null, // category ids
+    null,   // brand
+    null,   // brand id
     icon,
     metadata,
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },
