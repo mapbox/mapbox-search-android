@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
-            mapboxMap.loadStyleUri(getMapStyleUri())
+            mapboxMap.loadStyle(getMapStyleUri())
 
             mapView.location.updateSettings {
                 enabled = true

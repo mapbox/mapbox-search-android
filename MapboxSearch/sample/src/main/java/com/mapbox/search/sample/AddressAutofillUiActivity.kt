@@ -66,11 +66,11 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         mapPin = findViewById(R.id.map_pin)
         mapView = findViewById(R.id.map)
         mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.addOnMapIdleListener {
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS)
+        mapboxMap.subscribeMapIdle {
             if (ignoreNextMapIdleEvent) {
                 ignoreNextMapIdleEvent = false
-                return@addOnMapIdleListener
+                return@subscribeMapIdle
             }
 
             val mapCenter = mapboxMap.cameraState.center

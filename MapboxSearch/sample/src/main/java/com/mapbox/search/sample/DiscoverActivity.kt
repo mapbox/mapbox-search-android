@@ -60,7 +60,7 @@ class DiscoverActivity : AppCompatActivity() {
         mapView.getMapboxMap().also { mapboxMap ->
             this.mapboxMap = mapboxMap
 
-            mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+            mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
                 mapView.location.updateSettings {
                     enabled = true
                 }
