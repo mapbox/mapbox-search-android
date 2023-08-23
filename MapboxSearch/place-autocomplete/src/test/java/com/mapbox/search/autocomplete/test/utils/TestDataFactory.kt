@@ -18,8 +18,10 @@ import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.mapToBaseSearchAddress
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
-import com.mapbox.search.common.tests.createTestCoreSearchAddress
 import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.internal.bindgen.ImageInfo
 import com.mapbox.search.internal.bindgen.OpenHours
@@ -37,7 +39,7 @@ internal val filledTestCoreMetadata: CoreResultMetadata = createTestResultMetada
     data = hashMapOf("iso_3166_1" to "test-iso-1", "iso_3166_2" to "test-iso-2"),
 )
 
-internal val filledCoreSearchAddress: CoreSearchAddress = createTestCoreSearchAddress(
+internal val filledCoreSearchAddress: CoreSearchAddress = createCoreSearchAddress(
     houseNumber = "test-house-number",
     street = "test-street",
     neighborhood = "test-neighborhood",
@@ -45,8 +47,8 @@ internal val filledCoreSearchAddress: CoreSearchAddress = createTestCoreSearchAd
     postcode = "test-postcode",
     place = "test-place",
     district = "test-district",
-    region = "test-region",
-    country = "test-country",
+    region = createCoreSearchAddressRegion("test-region"),
+    country = createCoreSearchAddressCountry("test-country"),
 )
 
 internal val testBaseRawSearchResult: BaseRawSearchResult = createTestBaseRawSearchResult(
@@ -122,6 +124,9 @@ internal fun createTestBaseRawSearchResult(
     accuracy: CoreResultAccuracy? = null,
     routablePoints: List<RoutablePoint>? = null,
     categories: List<String>? = null,
+    categoryIds: List<String>? = null,
+    brand: List<String>? = null,
+    brandId: String? = null,
     icon: String? = null,
     metadata: CoreResultMetadata? = null,
     externalIDs: Map<String, String>? = null,
@@ -145,6 +150,9 @@ internal fun createTestBaseRawSearchResult(
     accuracy = accuracy,
     routablePoints = routablePoints?.map { it.mapToCore() },
     categories = categories,
+    categoryIds = categoryIds,
+    brand = brand,
+    brandId = brandId,
     icon = icon,
     metadata = metadata,
     externalIDs = externalIDs,

@@ -58,6 +58,16 @@
           "coffee",
           "cafe"
         ],
+        "category_ids":[
+          "restaurant",
+          "food",
+          "food_and_drink",
+          "coffee_shop",
+          "coffee",
+          "cafe"
+        ],
+        "brand":["Starbucks"],
+        "brand_id":["starbucks"],
         "internal_id":"Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9E3MTgyRjQ_M0SzOTRFMjA3Mjk2TDtFRjAA==",
         "external_ids":{
           "foursquare":"4740b317f964a520724c1fe3",

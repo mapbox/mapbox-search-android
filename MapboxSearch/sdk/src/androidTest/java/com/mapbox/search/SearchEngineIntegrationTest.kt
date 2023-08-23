@@ -210,7 +210,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val res = callback.getResultBlocking()
         assertTrue(res is SearchEngineResult.Suggestions)
         val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-        assertEquals(5, suggestions.size)
+        assertEquals(6, suggestions.size)
         assertFalse(suggestions.any { it.type is SearchSuggestionType.IndexableRecordItem })
 
         val first = suggestions[0]
@@ -264,6 +264,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.POI), suggestions[2].type)
         assertEquals(SearchSuggestionType.Category("cafe"), suggestions[3].type)
         assertEquals(SearchSuggestionType.Category("florist"), suggestions[4].type)
+        assertEquals(SearchSuggestionType.Brand("Starbucks", "starbucks"), suggestions[5].type)
 
         assertNotNull(res.responseInfo.coreSearchResponse)
     }
@@ -383,7 +384,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestions = callback.getResultBlocking().requireSuggestions()
 
         // records.size + 5 = records.size + number of suggestions from server
-        assertEquals(records.size + 5, suggestions.size)
+        assertEquals(records.size + 6, suggestions.size)
 
         records.indices.forEach { i ->
             assertTrue(suggestions[i].type is SearchSuggestionType.IndexableRecordItem)
@@ -984,7 +985,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val suggestion = suggestions.first()
         assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestion))
-        assertEquals(SearchSuggestionType.Brand("", ""), suggestion.type)
+        assertEquals(SearchSuggestionType.Brand("Starbucks", "test-external-id"), suggestion.type)
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
 

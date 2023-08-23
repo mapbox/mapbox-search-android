@@ -654,6 +654,9 @@ internal class SearchFeedbackEventsFactoryTest {
             distanceMeters = 7100000.0,
             center = Point.fromLngLat(2.294423282146454, 48.85825817805569),
             categories = listOf("site historique", "attraction touristique", "monument", "point de vue"),
+            categoryIds = listOf("site-historique", "attraction-touristique", "monument", "point-de-vue"),
+            brand = listOf("test-brand"),
+            brandId = "test-brand-id",
             icon = "marker",
             action = BaseSuggestAction(
                 "retrieve",

@@ -9,9 +9,11 @@ import com.mapbox.search.base.core.CoreSearchResult
 import com.mapbox.search.base.core.CoreSuggestAction
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
+import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.common.tests.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockkStatic
@@ -79,6 +81,185 @@ internal class BaseRawSearchResultTest {
         }
     }
 
+    @TestFactory
+    fun `Check brand type`() = TestCase {
+        Given("BaseRawSearchResult with 'brand' type") {
+            When("Brand name and id available") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("test-brand"),
+                    brandId = "test-brand-id"
+                )
+
+                Then(
+                    "isValidBrandType should be 'true'",
+                    true,
+                    result.isValidBrandType
+                )
+
+                Then(
+                    "extractedBrandName should match brand",
+                    "test-brand",
+                    result.extractedBrandName
+                )
+
+                Then(
+                    "extractedBrandId should match brand id",
+                    "test-brand-id",
+                    result.extractedBrandId
+                )
+            }
+
+            When("Brand id is available and names contains at leas one non empty name") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("", "test-brand"),
+                    brandId = "test-brand-id"
+                )
+
+                Then(
+                    "isValidBrandType should be 'true'",
+                    true,
+                    result.isValidBrandType
+                )
+
+                Then(
+                    "extractedBrandName should match non empty brand name",
+                    "test-brand",
+                    result.extractedBrandName
+                )
+            }
+
+            When("Brand names list is empty") {
+                val result = createTestBaseRawSearchResult(
+                    names = listOf("test-name"),
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = emptyList(),
+                    brandId = "test-brand-id"
+                )
+
+                Then(
+                    "isValidBrandType should be 'true'",
+                    true,
+                    result.isValidBrandType
+                )
+
+                Then(
+                    "extractedBrandName should match result name",
+                    "test-name",
+                    result.extractedBrandName
+                )
+            }
+
+            When("Brand names list contains empty names") {
+                val result = createTestBaseRawSearchResult(
+                    names = listOf("test-name"),
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("", ""),
+                    brandId = "test-brand-id"
+                )
+
+                Then(
+                    "isValidBrandType should be 'true'",
+                    true,
+                    result.isValidBrandType
+                )
+
+                Then(
+                    "extractedBrandName should match result name",
+                    "test-name",
+                    result.extractedBrandName
+                )
+            }
+
+            When("Brand id is null") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("test-brand"),
+                    brandId = null
+                )
+
+                Then(
+                    "isValidBrandType should be 'false'",
+                    false,
+                    result.isValidBrandType
+                )
+            }
+
+            When("Brand id is empty") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("test-brand"),
+                    brandId = ""
+                )
+
+                Then(
+                    "isValidBrandType should be 'false'",
+                    false,
+                    result.isValidBrandType
+                )
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check category type`() = TestCase {
+        Given("BaseRawSearchResult with 'category' type") {
+            When("Category id available") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.CATEGORY),
+                    categoryIds = listOf("test-category")
+                )
+
+                Then(
+                    "isValidCategoryType should be 'true'",
+                    true,
+                    result.isValidCategoryType
+                )
+            }
+
+            When("At least one non empty category id is available") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.CATEGORY),
+                    categoryIds = listOf("", "test-category")
+                )
+
+                Then(
+                    "isValidCategoryType should be 'true'",
+                    true,
+                    result.isValidCategoryType
+                )
+            }
+
+            When("Category id is null") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.CATEGORY),
+                    categoryIds = null
+                )
+
+                Then(
+                    "isValidCategoryType should be 'false'",
+                    false,
+                    result.isValidCategoryType
+                )
+            }
+
+            When("Category id is null and external ids contain category id") {
+                val result = createTestBaseRawSearchResult(
+                    types = listOf(BaseRawResultType.CATEGORY),
+                    categoryIds = null,
+                    externalIDs = mapOf("federated" to "category.test")
+                )
+
+                Then(
+                    "isValidCategoryType should be 'true'",
+                    true,
+                    result.isValidCategoryType
+                )
+            }
+        }
+    }
+
     private companion object {
 
         val RESULT_TYPES_MAP: Map<List<BaseRawResultType>, Boolean> = mapOf(
@@ -97,6 +278,9 @@ internal class BaseRawSearchResultTest {
             listOf(ResultType.PLACE, ResultType.REGION),
             listOf("Result name"),
             listOf("Default"),
+            null,
+            null,
+            null,
             null,
             null,
             null,
@@ -131,6 +315,9 @@ internal class BaseRawSearchResultTest {
             accuracy = CORE_EMPTY_SEARCH_RESULT.accuracy,
             routablePoints = CORE_EMPTY_SEARCH_RESULT.routablePoints,
             categories = CORE_EMPTY_SEARCH_RESULT.categories,
+            categoryIds = CORE_EMPTY_SEARCH_RESULT.categoryIDs,
+            brand = CORE_EMPTY_SEARCH_RESULT.brand,
+            brandId = CORE_EMPTY_SEARCH_RESULT.brandID,
             icon = CORE_EMPTY_SEARCH_RESULT.icon,
             metadata = CORE_EMPTY_SEARCH_RESULT.metadata,
             externalIDs = CORE_EMPTY_SEARCH_RESULT.externalIDs,
@@ -158,6 +345,9 @@ internal class BaseRawSearchResultTest {
             accuracy = CORE_FILLED_SEARCH_RESULT.accuracy,
             routablePoints = CORE_FILLED_SEARCH_RESULT.routablePoints,
             categories = CORE_FILLED_SEARCH_RESULT.categories,
+            categoryIds = CORE_FILLED_SEARCH_RESULT.categoryIDs,
+            brand = CORE_FILLED_SEARCH_RESULT.brand,
+            brandId = CORE_FILLED_SEARCH_RESULT.brandID,
             icon = CORE_FILLED_SEARCH_RESULT.icon,
             metadata = CORE_FILLED_SEARCH_RESULT.metadata,
             externalIDs = CORE_FILLED_SEARCH_RESULT.externalIDs,
@@ -176,7 +366,7 @@ internal class BaseRawSearchResultTest {
                 listOf("Test filled search result"),
                 listOf("en", "fr", "de"),
                 listOf(
-                    createCoreSearchAddress(country = "country"),
+                    createCoreSearchAddress(country = createCoreSearchAddressCountry("country")),
                     createCoreSearchAddress(neighborhood = "neighborhood"),
                     createCoreSearchAddress(postcode = "postcode")
                 ),
@@ -193,6 +383,9 @@ internal class BaseRawSearchResultTest {
                     CoreRoutablePoint(Point.fromLngLat(3.0, 4.0), "test point 3"),
                 ),
                 listOf("category 1", "category 2", "category 3"),
+                listOf("category id 1", "category id 2", "category id 3"),
+                listOf("test brand"),
+                "test brand id",
                 "test maki",
                 CoreResultMetadata(
                     3456,

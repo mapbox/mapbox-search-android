@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.0.0-rc.8
+
+### Bug fixes
+- [CORE] Fixed empty `SearchSuggestionType.Brand.brandName` and `SearchSuggestionType.Brand.brandId`.
+
+### Mapbox dependencies
+- Search Native SDK `0.72.0`
+- Common SDK `23.7.0`
+- Kotlin `1.5.31`
+
+
+
 ## 1.0.0-rc.7
 
 ### Bug fixes

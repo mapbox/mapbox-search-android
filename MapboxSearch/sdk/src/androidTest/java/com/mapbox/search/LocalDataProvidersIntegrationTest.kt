@@ -143,7 +143,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
         val suggestions = searchEngine.searchBlocking("Minsk").requireSuggestions()
 
-        assertEquals(5, suggestions.size)
+        assertEquals(6, suggestions.size)
 
         val type = suggestions.first().type as? SearchSuggestionType.IndexableRecordItem
         assertNotNull(type)
