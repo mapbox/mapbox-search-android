@@ -81,6 +81,8 @@ internal class AddressAutofillIntegrationTest {
         assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(options.language?.code, url.queryParameter("language"))
         assertEquals(options.countries?.joinToString(",") { it.code }, url.queryParameter("country"))
+        assertEquals("address", url.queryParameter("types"))
+        assertEquals("true", url.queryParameter("streets"))
     }
 
     @Test

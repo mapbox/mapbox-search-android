@@ -2,6 +2,9 @@
 
 ## 1.0.0-rc.8
 
+### New features
+- [AUTOFILL] Improved `AddressAutofill` search output.
+
 ### Bug fixes
 - [CORE] Fixed empty `SearchSuggestionType.Brand.brandName` and `SearchSuggestionType.Brand.brandId`.
 - [UI] Fixed a crash that could happen in `SearchEngineUiAdapter` when network connectivity status change.
