@@ -4,6 +4,7 @@
 
 ### Bug fixes
 - [CORE] Fixed empty `SearchSuggestionType.Brand.brandName` and `SearchSuggestionType.Brand.brandId`.
+- [UI] Fixed a crash that could happen in `SearchEngineUiAdapter` when network connectivity status change.
 
 ### Mapbox dependencies
 - Search Native SDK `0.72.0`

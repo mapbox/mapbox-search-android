@@ -41,8 +41,8 @@ public abstract interface class com/mapbox/search/ui/adapter/autofill/AddressAut
 }
 
 public final class com/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter {
-	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/record/HistoryDataProvider;)V
-	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/record/HistoryDataProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/record/HistoryDataProvider;Lcom/mapbox/search/common/concurrent/MainThreadWorker;)V
+	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/record/HistoryDataProvider;Lcom/mapbox/search/common/concurrent/MainThreadWorker;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun addSearchListener (Lcom/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter$SearchListener;)V
 	public final fun getSearchMode ()Lcom/mapbox/search/ui/view/SearchMode;
 	public final fun removeSearchListener (Lcom/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter$SearchListener;)V
