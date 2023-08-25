@@ -19,6 +19,8 @@ import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
 import com.mapbox.search.internal.bindgen.RoutablePoint
 import com.mapbox.search.internal.bindgen.SearchAddress
+import com.mapbox.search.internal.bindgen.SearchAddressCountry
+import com.mapbox.search.internal.bindgen.SearchAddressRegion
 import com.mapbox.search.internal.bindgen.SearchOptions
 import com.mapbox.search.internal.bindgen.SearchResponse
 import com.mapbox.search.internal.bindgen.SearchResult
@@ -79,29 +81,6 @@ fun createTestCoreReverseGeoOptions(
     language,
     limit,
     types,
-)
-
-@Suppress("LongParameterList")
-fun createTestCoreSearchAddress(
-    houseNumber: String? = null,
-    street: String? = null,
-    neighborhood: String? = null,
-    locality: String? = null,
-    postcode: String? = null,
-    place: String? = null,
-    district: String? = null,
-    region: String? = null,
-    country: String? = null,
-): SearchAddress = SearchAddress(
-    houseNumber,
-    street,
-    neighborhood,
-    locality,
-    postcode,
-    place,
-    district,
-    region,
-    country
 )
 
 @Suppress("LongParameterList")
@@ -172,6 +151,9 @@ fun createTestCoreSearchResult(
     accuracy: ResultAccuracy? = null,
     routablePoints: List<RoutablePoint>? = null,
     categories: List<String>? = null,
+    categoryIds: List<String>? = null,
+    brand: List<String>? = null,
+    brandId: String? = null,
     icon: String? = null,
     metadata: ResultMetadata? = null,
     externalIDs: Map<String, String>? = null,
@@ -195,6 +177,9 @@ fun createTestCoreSearchResult(
     accuracy,
     routablePoints,
     categories,
+    categoryIds,
+    brand,
+    brandId,
     icon,
     metadata,
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },
@@ -221,6 +206,9 @@ fun SearchResult.copy(
     accuracy: ResultAccuracy? = this.accuracy,
     routablePoints: List<RoutablePoint>? = this.routablePoints,
     categories: List<String>? = this.categories,
+    categoryIds: List<String>? = this.categoryIDs,
+    brand: List<String>? = this.brand,
+    brandId: String? = this.brandID,
     icon: String? = this.icon,
     metadata: ResultMetadata? = this.metadata,
     externalIDs: Map<String, String>? = this.externalIDs,
@@ -244,6 +232,9 @@ fun SearchResult.copy(
     accuracy,
     routablePoints,
     categories,
+    categoryIds,
+    brand,
+    brandId,
     icon,
     metadata,
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },
@@ -252,6 +243,22 @@ fun SearchResult.copy(
     userRecordPriority,
     action,
     serverIndex
+)
+
+fun createCoreSearchAddressRegion(
+    name: String,
+    regionCode: String? = null,
+    regionCodeFull: String? = null
+) = SearchAddressRegion(
+    name, regionCode, regionCodeFull
+)
+
+fun createCoreSearchAddressCountry(
+    name: String,
+    countryCode: String? = null,
+    countryCodeAlpha3: String? = null
+) = SearchAddressCountry(
+    name, countryCode, countryCodeAlpha3
 )
 
 @Suppress("LongParameterList")
@@ -264,10 +271,18 @@ fun createCoreSearchAddress(
     postcode: String? = defaultValue,
     place: String? = defaultValue,
     district: String? = defaultValue,
-    region: String? = defaultValue,
-    country: String? = defaultValue,
+    region: SearchAddressRegion? = null,
+    country: SearchAddressCountry? = null,
 ) = SearchAddress(
-    houseNumber, street, neighborhood, locality, postcode, place, district, region, country
+    houseNumber,
+    street,
+    neighborhood,
+    locality,
+    postcode,
+    place,
+    district,
+    region ?: defaultValue?.let { createCoreSearchAddressRegion(name = it) },
+    country ?: defaultValue?.let { createCoreSearchAddressCountry(name = it) }
 )
 
 fun createTestCoreRequestOptions(

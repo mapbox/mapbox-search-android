@@ -21,8 +21,8 @@ internal class SearchAddressExtensionTest {
                     Then("Postcode should be <${expectedValue.postcode}> ", expectedValue.postcode, actualValue.postcode)
                     Then("Place should be <${expectedValue.place}> ", expectedValue.place, actualValue.place)
                     Then("District should be <${expectedValue.district}> ", expectedValue.district, actualValue.district)
-                    Then("Region should be <${expectedValue.region}> ", expectedValue.region, actualValue.region)
-                    Then("Country should be <${expectedValue.country}> ", expectedValue.country, actualValue.country)
+                    Then("Region should be <${expectedValue.region}> ", expectedValue.region, actualValue.region?.name)
+                    Then("Country should be <${expectedValue.country}> ", expectedValue.country, actualValue.country?.name)
                 }
             }
         }

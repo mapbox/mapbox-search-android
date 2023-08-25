@@ -26,6 +26,9 @@ data class BaseRawSearchResult(
     val accuracy: CoreResultAccuracy?,
     val routablePoints: List<CoreRoutablePoint>?,
     val categories: List<String>?,
+    val categoryIds: List<String>?,
+    val brand: List<String>?,
+    val brandId: String?,
     val icon: String?,
     val metadata: CoreResultMetadata?,
     val externalIDs: Map<String, String>?,
@@ -48,17 +51,49 @@ data class BaseRawSearchResult(
 
     @IgnoredOnParcel
     val categoryCanonicalName: String? by lazy(LazyThreadSafetyMode.NONE) {
-        externalIDs?.get("federated")?.let { value ->
-            if (value.startsWith(CATEGORY_CANONICAL_NAME_PREFIX) && value.length > CATEGORY_CANONICAL_NAME_PREFIX.length) {
-                value.removePrefix(CATEGORY_CANONICAL_NAME_PREFIX)
-            } else {
-                null
-            }
-        }
+        categoryIds?.firstOrNull { it.isNotEmpty() } ?: extractFederatedValue(
+            externalIDs,
+            CATEGORY_CANONICAL_NAME_PREFIX,
+        )
     }
 
+    @IgnoredOnParcel
+    val extractedBrandId: String? by lazy(LazyThreadSafetyMode.NONE) {
+        brandId?.takeIf { it.isNotEmpty() } ?: extractFederatedValue(
+            externalIDs,
+            BRAND_CANONICAL_NAME_PREFIX,
+        )
+    }
+
+    // TODO `brand` field is not parsed for SBS backend.
+    @IgnoredOnParcel
+    val extractedBrandName: String?
+        get() = brand?.firstOrNull { it.isNotEmpty() } ?: names.firstOrNull { it.isNotEmpty() }
+
+    @IgnoredOnParcel
+    val isValidBrandType: Boolean
+        get() = type == BaseRawResultType.BRAND &&
+                extractedBrandName != null &&
+                !extractedBrandId.isNullOrEmpty()
+
+    @IgnoredOnParcel
+    val isValidCategoryType: Boolean
+        get() = type == BaseRawResultType.CATEGORY && categoryCanonicalName != null
+
     private companion object {
+
         const val CATEGORY_CANONICAL_NAME_PREFIX = "category."
+        const val BRAND_CANONICAL_NAME_PREFIX = "brand."
+
+        fun extractFederatedValue(externalIDs: Map<String, String>?, prefix: String): String? {
+            return externalIDs?.get("federated")?.let { value ->
+                if (value.startsWith(prefix) && value.length > prefix.length) {
+                    value.removePrefix(prefix)
+                } else {
+                    null
+                }
+            }
+        }
     }
 }
 
@@ -76,6 +111,9 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     accuracy = accuracy,
     routablePoints = routablePoints,
     categories = categories,
+    categoryIds = categoryIDs,
+    brand = brand,
+    brandId = brandID,
     icon = icon,
     metadata = metadata,
     externalIDs = externalIDs,
@@ -102,6 +140,9 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     accuracy,
     routablePoints,
     categories,
+    categoryIds,
+    brand,
+    brandId,
     icon,
     metadata,
     externalIDs?.let { (it as? HashMap<String, String>) ?: HashMap(it) },

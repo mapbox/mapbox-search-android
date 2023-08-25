@@ -133,20 +133,27 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 }
             }
             BaseRawResultType.BRAND -> {
-                val value = BaseServerSearchSuggestion(searchResult, requestOptions)
-                callback(Result.success(value))
+                val result = if (searchResult.isValidBrandType) {
+                    val value = BaseServerSearchSuggestion(searchResult, requestOptions)
+                    Result.success(value)
+                } else {
+                    val errorMsg = "Invalid brand search result: $searchResult"
+                    failDebug { errorMsg }
+                    Result.failure(Exception(errorMsg))
+                }
+                callback(result)
                 AsyncOperationTaskImpl.COMPLETED
             }
             BaseRawResultType.CATEGORY -> {
-                if (searchResult.categoryCanonicalName != null) {
+                val result = if (searchResult.isValidCategoryType) {
                     val value = BaseServerSearchSuggestion(searchResult, requestOptions)
-                    callback(Result.success(value))
-                    AsyncOperationTaskImpl.COMPLETED
+                    Result.success(value)
                 } else {
                     failDebug { "Invalid category search result without category canonical name. ${debugInfo()}" }
-                    callback(Result.failure(Exception("Invalid category search result without category canonical name: $searchResult")))
-                    AsyncOperationTaskImpl.COMPLETED
+                    Result.failure(Exception("Invalid category search result without category canonical name: $searchResult"))
                 }
+                callback(result)
+                AsyncOperationTaskImpl.COMPLETED
             }
             BaseRawResultType.USER_RECORD -> {
                 if (searchResult.layerId != null) {

@@ -12,7 +12,10 @@ data class BaseServerSearchSuggestion(
 
     init {
         check(rawSearchResult.action != null)
-        check(rawSearchResult.type != BaseRawResultType.CATEGORY || rawSearchResult.categoryCanonicalName != null)
+        check(rawSearchResult.type != BaseRawResultType.CATEGORY || rawSearchResult.isValidCategoryType)
+        check(
+            rawSearchResult.type != BaseRawResultType.BRAND || rawSearchResult.isValidBrandType
+        )
     }
 
     @IgnoredOnParcel
@@ -25,8 +28,8 @@ data class BaseServerSearchSuggestion(
             BaseSearchSuggestionType.Category(requireNotNull(rawSearchResult.categoryCanonicalName))
         }
         rawSearchResult.type == BaseRawResultType.BRAND -> BaseSearchSuggestionType.Brand(
-            // TODO get brand name and brand id from the search native
-            "", ""
+            requireNotNull(rawSearchResult.extractedBrandName),
+            requireNotNull(rawSearchResult.extractedBrandId)
         )
         rawSearchResult.type == BaseRawResultType.QUERY -> BaseSearchSuggestionType.Query
         else -> error("Illegal raw search result type: ${rawSearchResult.type}")

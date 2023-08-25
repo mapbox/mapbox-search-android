@@ -10,8 +10,10 @@ import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreRoutablePoint
-import com.mapbox.search.common.tests.createTestCoreSearchAddress
 import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.common.tests.withPrefabTestPoint
@@ -46,7 +48,7 @@ internal class DiscoverResultTest {
             data = hashMapOf("iso_3166_1" to "fra", "iso_3166_2" to "fr")
         )
 
-        val coreAddress = createTestCoreSearchAddress(
+        val coreAddress = createCoreSearchAddress(
             houseNumber = "test-house-number",
             street = "test-street",
             neighborhood = "test-neighborhood",
@@ -54,8 +56,8 @@ internal class DiscoverResultTest {
             postcode = "test-postcode",
             place = "test-place",
             district = "test-district",
-            region = "test-region",
-            country = "test-country",
+            region = createCoreSearchAddressRegion("test-region"),
+            country = createCoreSearchAddressCountry("test-country"),
         )
 
         val coreResult = createTestCoreSearchResult(
@@ -64,6 +66,9 @@ internal class DiscoverResultTest {
             center = Point.fromLngLat(123.0, 456.0),
             routablePoints = listOf(createTestCoreRoutablePoint()),
             categories = listOf("restaurant", "cafe"),
+            categoryIds = listOf("restaurant-id", "cafe-id"),
+            brand = listOf("test-brand"),
+            brandId = "test-brand-id",
             icon = "cafe",
             metadata = coreMetadata
         )
@@ -89,8 +94,8 @@ internal class DiscoverResultTest {
         assertEquals(coreAddress.postcode, discoverResult.address.postcode)
         assertEquals(coreAddress.place, discoverResult.address.place)
         assertEquals(coreAddress.district, discoverResult.address.district)
-        assertEquals(coreAddress.region, discoverResult.address.region)
-        assertEquals(coreAddress.country, discoverResult.address.country)
+        assertEquals(coreAddress.region?.name, discoverResult.address.region)
+        assertEquals(coreAddress.country?.name, discoverResult.address.country)
         assertEquals(coreMetadata.countryIso1, discoverResult.address.countryIso1)
         assertEquals(coreMetadata.countryIso2, discoverResult.address.countryIso2)
     }

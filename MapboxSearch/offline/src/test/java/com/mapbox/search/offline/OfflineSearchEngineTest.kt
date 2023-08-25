@@ -16,9 +16,9 @@ import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.TestThreadExecutorService
+import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
 import com.mapbox.search.common.tests.createTestCoreReverseGeoOptions
-import com.mapbox.search.common.tests.createTestCoreSearchAddress
 import com.mapbox.search.common.tests.createTestCoreSearchResponseCancelled
 import com.mapbox.search.common.tests.createTestCoreSearchResponseHttpError
 import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
@@ -479,7 +479,7 @@ internal class OfflineSearchEngineTest {
 
         val TEST_POINT: Point = Point.fromLngLat(10.0, 11.0)
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.0, 11.0)
-        val TEST_SEARCH_ADDRESS = createTestCoreSearchAddress()
+        val TEST_SEARCH_ADDRESS = createCoreSearchAddress()
 
         val TEST_RETRIEVED_CORE_SEARCH_RESULT = createTestCoreSearchResult(
             types = listOf(ResultType.ADDRESS),

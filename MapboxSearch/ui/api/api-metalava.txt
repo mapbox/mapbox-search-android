@@ -41,7 +41,7 @@ package com.mapbox.search.ui.adapter.autofill {
 package com.mapbox.search.ui.adapter.engines {
 
   public final class SearchEngineUiAdapter {
-    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider());
+    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider(), com.mapbox.search.common.concurrent.MainThreadWorker mainThreadWorker = SearchSdkMainThreadWorker);
     method public void addSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);
     method public com.mapbox.search.ui.view.SearchMode getSearchMode();
     method public void removeSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);

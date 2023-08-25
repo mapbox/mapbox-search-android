@@ -188,6 +188,9 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             names = listOf("Starbucks"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
+            categoryIds = listOf("restaurant", "food", "food_and_drink", "coffee_shop", "coffee", "cafe"),
+            brand = listOf("Starbucks"),
+            brandId = "starbucks",
             addresses = listOf(
                 SearchAddress(
                     country = "United States of America",

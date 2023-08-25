@@ -25,6 +25,8 @@ import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.common.concurrent.MainThreadWorker
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
@@ -77,7 +79,12 @@ public class SearchEngineUiAdapter(
     /**
      * Search history engine. Selected search results will automatically be added to the provided [HistoryDataProvider].
      */
-    private val historyDataProvider: HistoryDataProvider = ServiceProvider.INSTANCE.historyDataProvider()
+    private val historyDataProvider: HistoryDataProvider = ServiceProvider.INSTANCE.historyDataProvider(),
+
+    /**
+     * Working that's used to schedule task on the main thread
+     */
+    private val mainThreadWorker: MainThreadWorker = SearchSdkMainThreadWorker,
 ) {
 
     private val searchListeners = CopyOnWriteArrayList<SearchListener>()
@@ -432,7 +439,9 @@ public class SearchEngineUiAdapter(
     }
 
     private fun retrySearchRequest() {
-        search(searchQuery, latestSearchOptions)
+        mainThreadWorker.mainExecutor.execute {
+            search(searchQuery, latestSearchOptions)
+        }
     }
 
     private fun cancelCurrentNetworkRequest() {

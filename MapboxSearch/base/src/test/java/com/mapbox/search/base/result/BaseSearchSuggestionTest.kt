@@ -166,11 +166,13 @@ internal class BaseSearchSuggestionTest {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
                                 types = listOf(BaseRawResultType.BRAND),
+                                brandId = "test-brand-id",
+                                brand = listOf("Test brand", "other name")
                             )
 
                             val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
 
-                            val expectedType = BaseSearchSuggestionType.Brand("", "")
+                            val expectedType = BaseSearchSuggestionType.Brand("Test brand", "test-brand-id")
 
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
@@ -215,6 +217,79 @@ internal class BaseSearchSuggestionTest {
                 )
 
                 Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check Brand SearchSuggestion-specific implementation`() = TestCase {
+        Given("Base result with brand type") {
+            WhenThrows("Trying to instantiate brand without brand id", IllegalStateException::class) {
+                val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("test-brand"),
+                    brandId = null,
+                )
+                BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+            }
+
+            When("Trying to instantiate brand without brand name") {
+                val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                    names = listOf("test-name"),
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = null,
+                    brandId = "test-brand-id",
+                )
+
+                val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+                Then(
+                    "Suggestion type should be correct",
+                    BaseSearchSuggestionType.Brand("test-name", "test-brand-id"),
+                    suggestion.type
+                )
+            }
+
+            When("Trying to instantiate brand with empty brand name") {
+                val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                    names = listOf("test-name"),
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf(""),
+                    brandId = "test-brand-id",
+                )
+                val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+                Then(
+                    "Suggestion type should be correct",
+                    BaseSearchSuggestionType.Brand("test-name", "test-brand-id"),
+                    suggestion.type
+                )
+            }
+
+            When("Trying to instantiate brand with at least one non empty brand name") {
+                val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("", "test-brand"),
+                    brandId = "test-brand-id",
+                )
+                val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+                Then(
+                    "Suggestion type should be correct",
+                    BaseSearchSuggestionType.Brand("test-brand", "test-brand-id"),
+                    suggestion.type
+                )
+            }
+
+            When("Trying to instantiate brand with all non empty brand names") {
+                val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
+                    types = listOf(BaseRawResultType.BRAND),
+                    brand = listOf("test-brand-1", "test-brand-2"),
+                    brandId = "test-brand-id",
+                )
+                val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
+                Then(
+                    "Suggestion type should be correct",
+                    BaseSearchSuggestionType.Brand("test-brand-1", "test-brand-id"),
+                    suggestion.type
+                )
             }
         }
     }
