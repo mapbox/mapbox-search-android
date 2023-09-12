@@ -1,36 +1,36 @@
 <resources>
 
-    <string name="action_address_autofill_ui_example">Open address autofill UI example</string>
-    <string name="action_address_autofill_example">Open address autofill example</string>
+<!--    <string name="action_address_autofill_ui_example">Open address autofill UI example</string>-->
+<!--    <string name="action_address_autofill_example">Open address autofill example</string>-->
 
-    <string name="action_discover_ui_example">Open Discover UI example</string>
-    <string name="action_discover_kotlin_example">Open Discover Kotlin example</string>
-    <string name="action_discover_java_example">Open Discover Java example</string>
+<!--    <string name="action_discover_ui_example">Open Discover UI example</string>-->
+<!--    <string name="action_discover_kotlin_example">Open Discover Kotlin example</string>-->
+<!--    <string name="action_discover_java_example">Open Discover Java example</string>-->
 
-    <string name="action_place_autocomplete_ui_example">Open Place Autocomplete UI example</string>
-    <string name="action_place_autocomplete_kotlin_example">Open Place Autocomplete Kotlin example</string>
+<!--    <string name="action_place_autocomplete_ui_example">Open Place Autocomplete UI example</string>-->
+<!--    <string name="action_place_autocomplete_kotlin_example">Open Place Autocomplete Kotlin example</string>-->
 
-    <string name="action_open_custom_theme_example">Open custom theme example</string>
-    <string name="action_open_forward_geocoding_kt_example">Open forward geocoding Kotlin example</string>
-    <string name="action_open_forward_geocoding_java_example">Open forward geocoding Java example</string>
-    <string name="action_open_forward_geocoding_batch_resolving_kt_example">Open batch resolving Kotlin example</string>
-    <string name="action_open_forward_geocoding_batch_resolving_java_example">Open batch resolving Java example</string>
-    <string name="action_open_reverse_geocoding_kt_example">Open reverse geocoding Kotlin example</string>
-    <string name="action_open_reverse_geocoding_java_example">Open reverse geocoding Java example</string>
-    <string name="action_open_category_search_kt_example">Open category search Kotlin example</string>
-    <string name="action_open_category_search_java_example">Open category search Java example</string>
+<!--    <string name="action_open_custom_theme_example">Open custom theme example</string>-->
+<!--    <string name="action_open_forward_geocoding_kt_example">Open forward geocoding Kotlin example</string>-->
+<!--    <string name="action_open_forward_geocoding_java_example">Open forward geocoding Java example</string>-->
+<!--    <string name="action_open_forward_geocoding_batch_resolving_kt_example">Open batch resolving Kotlin example</string>-->
+<!--    <string name="action_open_forward_geocoding_batch_resolving_java_example">Open batch resolving Java example</string>-->
+<!--    <string name="action_open_reverse_geocoding_kt_example">Open reverse geocoding Kotlin example</string>-->
+<!--    <string name="action_open_reverse_geocoding_java_example">Open reverse geocoding Java example</string>-->
+<!--    <string name="action_open_category_search_kt_example">Open category search Kotlin example</string>-->
+<!--    <string name="action_open_category_search_java_example">Open category search Java example</string>-->
     <string name="action_open_offline_search_kt_example">Open offline search Kotlin example</string>
     <string name="action_open_offline_search_java_example">Open offline search Java example</string>
     <string name="action_open_offline_reverse_geocoding_kt_example">Open offline reverse geocoding Kotlin example</string>
     <string name="action_open_offline_reverse_geocoding_java_example">Open offline reverse geocoding Java example</string>
-    <string name="action_open_japan_search_kt_example">Open Japan Search Kotlin example</string>
-    <string name="action_open_japan_search_java_example">Open Japan Search Java example</string>
-    <string name="action_open_history_data_provider_kt_example">Open History Data Provider Kotlin example</string>
-    <string name="action_open_history_data_provider_java_example">Open History Data Provider Java example</string>
-    <string name="action_open_favorites_data_provider_kt_example">Open Favorites Data Provider Kotlin example</string>
-    <string name="action_open_favorites_data_provider_java_example">Open Favorites Data Provider Java example</string>
-    <string name="action_open_custom_data_provider_java_example">Open custom data provider Java example</string>
-    <string name="action_open_custom_data_provider_kt_example">Open custom data provider Kotlin example</string>
+<!--    <string name="action_open_japan_search_kt_example">Open Japan Search Kotlin example</string>-->
+<!--    <string name="action_open_japan_search_java_example">Open Japan Search Java example</string>-->
+<!--    <string name="action_open_history_data_provider_kt_example">Open History Data Provider Kotlin example</string>-->
+<!--    <string name="action_open_history_data_provider_java_example">Open History Data Provider Java example</string>-->
+<!--    <string name="action_open_favorites_data_provider_kt_example">Open Favorites Data Provider Kotlin example</string>-->
+<!--    <string name="action_open_favorites_data_provider_java_example">Open Favorites Data Provider Java example</string>-->
+<!--    <string name="action_open_custom_data_provider_java_example">Open custom data provider Java example</string>-->
+<!--    <string name="action_open_custom_data_provider_kt_example">Open custom data provider Kotlin example</string>-->
 
     <string name="simple_ui_toolbar_title">Mapbox search</string>
 

@@ -1,6 +1,7 @@
 package com.mapbox.search.offline
 
 import android.app.Application
+import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
@@ -329,6 +330,7 @@ public interface OfflineSearchEngine {
             dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
         ): TilesetDescriptor {
+            Log.i("TilesetDescriptorCreate", "DS: $dataset, :VER: $version")
             return CoreSearchEngine.createTilesetDescriptor(dataset, version)
         }
 

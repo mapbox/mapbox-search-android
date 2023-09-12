@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -164,8 +166,43 @@ class MainActivity : AppCompatActivity() {
             settings = SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 
+        val tileStore = TileStore.create()
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(
+            dataset = "experimental/poi-us-west-test-1",
+            version = "v2"
+        ))
+
+        // TODO: change geometry to us-west
+        val tileRegionId = "Washington DC fjndslkafjsdlk"
+        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+
+
+        val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(descriptors)
+            .geometry(dcLocation)
+            .acceptExpired(true)
+            .build()
+
+        val tilesLoadingTask = tileStore.loadTileRegion(
+            tileRegionId,
+            tileRegionLoadOptions,
+            { progress -> Log.i("SearchOfflineExample42", "Loading progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchOfflineExample42", "Tiles successfully loaded: ${result.value}")
+                    Log.i("SearchOfflineExample42", "descriptors: ${descriptors[0]}")
+
+                } else {
+                    Log.i("SearchOfflineExample42", "Tiles loading error: ${result.error}")
+                }
+            }
+        )
+
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(getString(R.string.mapbox_access_token))
+            OfflineSearchEngineSettings(
+                accessToken = getString(R.string.mapbox_access_token),
+                tileStore = tileStore
+            )
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
@@ -174,7 +211,8 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+//        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+        searchEngineUiAdapter.searchMode = SearchMode.OFFLINE
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
@@ -192,6 +230,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
+                Log.i("SearchOfflineExample42", "Loaded offline results: ${results},  response: ${responseInfo}")
                 // Nothing to do
             }
 
@@ -315,86 +354,86 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.open_address_autofill_ui_example -> {
-                startActivity(Intent(this, AddressAutofillUiActivity::class.java))
-                true
-            }
-            R.id.open_address_autofill_example -> {
-                startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_ui_example -> {
-                startActivity(Intent(this, DiscoverActivity::class.java))
-                true
-            }
-            R.id.open_discover_kotlin_example -> {
-                startActivity(Intent(this, DiscoverKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_java_example -> {
-                startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_place_autocomplete_ui_example -> {
-                startActivity(Intent(this, PlaceAutocompleteUiActivity::class.java))
-                true
-            }
-            R.id.open_place_autocomplete_kotlin_example -> {
-                startActivity(Intent(this, PlaceAutocompleteKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_custom_data_provider_kt_example -> {
-                startActivity(Intent(this, CustomIndexableDataProviderKotlinExample::class.java))
-                true
-            }
-            R.id.open_custom_data_provider_java_example -> {
-                startActivity(Intent(this, CustomIndexableDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.custom_theme_example -> {
-                startActivity(Intent(this, CustomThemeActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_kt_example -> {
-                startActivity(Intent(this, ForwardGeocodingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_java_example -> {
-                startActivity(Intent(this, ForwardGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_kt_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_java_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_reverse_geocoding_kt_example -> {
-                startActivity(Intent(this, ReverseGeocodingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_reverse_geocoding_java_example -> {
-                startActivity(Intent(this, ReverseGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_japan_search_kt_example -> {
-                startActivity(Intent(this, JapanSearchKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_japan_search_java_example -> {
-                startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_category_search_kt_example -> {
-                startActivity(Intent(this, CategorySearchKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_category_search_java_example -> {
-                startActivity(Intent(this, CategorySearchJavaExampleActivity::class.java))
-                true
-            }
+//            R.id.open_address_autofill_ui_example -> {
+//                startActivity(Intent(this, AddressAutofillUiActivity::class.java))
+//                true
+//            }
+//            R.id.open_address_autofill_example -> {
+//                startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_discover_ui_example -> {
+//                startActivity(Intent(this, DiscoverActivity::class.java))
+//                true
+//            }
+//            R.id.open_discover_kotlin_example -> {
+//                startActivity(Intent(this, DiscoverKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_discover_java_example -> {
+//                startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_place_autocomplete_ui_example -> {
+//                startActivity(Intent(this, PlaceAutocompleteUiActivity::class.java))
+//                true
+//            }
+//            R.id.open_place_autocomplete_kotlin_example -> {
+//                startActivity(Intent(this, PlaceAutocompleteKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_custom_data_provider_kt_example -> {
+//                startActivity(Intent(this, CustomIndexableDataProviderKotlinExample::class.java))
+//                true
+//            }
+//            R.id.open_custom_data_provider_java_example -> {
+//                startActivity(Intent(this, CustomIndexableDataProviderJavaExample::class.java))
+//                true
+//            }
+//            R.id.custom_theme_example -> {
+//                startActivity(Intent(this, CustomThemeActivity::class.java))
+//                true
+//            }
+//            R.id.open_forward_geocoding_kt_example -> {
+//                startActivity(Intent(this, ForwardGeocodingKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_forward_geocoding_java_example -> {
+//                startActivity(Intent(this, ForwardGeocodingJavaExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_forward_geocoding_batch_resolving_kt_example -> {
+//                startActivity(Intent(this, ForwardGeocodingBatchResolvingKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_forward_geocoding_batch_resolving_java_example -> {
+//                startActivity(Intent(this, ForwardGeocodingBatchResolvingJavaExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_reverse_geocoding_kt_example -> {
+//                startActivity(Intent(this, ReverseGeocodingKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_reverse_geocoding_java_example -> {
+//                startActivity(Intent(this, ReverseGeocodingJavaExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_japan_search_kt_example -> {
+//                startActivity(Intent(this, JapanSearchKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_japan_search_java_example -> {
+//                startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_category_search_kt_example -> {
+//                startActivity(Intent(this, CategorySearchKotlinExampleActivity::class.java))
+//                true
+//            }
+//            R.id.open_category_search_java_example -> {
+//                startActivity(Intent(this, CategorySearchJavaExampleActivity::class.java))
+//                true
+//            }
             R.id.open_offline_search_java_example -> {
                 startActivity(Intent(this, OfflineSearchJavaExampleActivity::class.java))
                 true
@@ -411,22 +450,22 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, OfflineReverseGeocodingKotlinExampleActivity::class.java))
                 true
             }
-            R.id.open_history_data_provider_java_example -> {
-                startActivity(Intent(this, HistoryDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.open_history_data_provider_kt_example -> {
-                startActivity(Intent(this, HistoryDataProviderKotlinExample::class.java))
-                true
-            }
-            R.id.open_favorites_data_provider_java_example -> {
-                startActivity(Intent(this, FavoritesDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.open_favorites_data_provider_kt_example -> {
-                startActivity(Intent(this, FavoritesDataProviderKotlinExample::class.java))
-                true
-            }
+//            R.id.open_history_data_provider_java_example -> {
+//                startActivity(Intent(this, HistoryDataProviderJavaExample::class.java))
+//                true
+//            }
+//            R.id.open_history_data_provider_kt_example -> {
+//                startActivity(Intent(this, HistoryDataProviderKotlinExample::class.java))
+//                true
+//            }
+//            R.id.open_favorites_data_provider_java_example -> {
+//                startActivity(Intent(this, FavoritesDataProviderJavaExample::class.java))
+//                true
+//            }
+//            R.id.open_favorites_data_provider_kt_example -> {
+//                startActivity(Intent(this, FavoritesDataProviderKotlinExample::class.java))
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
