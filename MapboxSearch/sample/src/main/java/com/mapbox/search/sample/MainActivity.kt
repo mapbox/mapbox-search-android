@@ -16,7 +16,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
+import com.mapbox.geojson.Polygon
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
@@ -30,6 +33,8 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.offline.OfflineIndexChangeEvent
+import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -164,9 +169,108 @@ class MainActivity : AppCompatActivity() {
             settings = SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 
+        // we need to create custom tilestore to manually handle tile region options
+        val tileStore = TileStore.create()
+
+        // create an engine and bind it with tilestore
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(getString(R.string.mapbox_access_token))
+            OfflineSearchEngineSettings(
+                accessToken = getString(R.string.mapbox_access_token),
+                tileStore = tileStore,
+            )
         )
+
+        // configure address tiles download
+        val addressRegionId = "Berlin"
+        val addressDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val addressGeometry = Polygon.fromLngLats(listOf(
+            listOf(
+                Point.fromLngLat(13.20124759959586, 52.669190804537635),
+                Point.fromLngLat(13.061495095577413, 52.500604140459586),
+                Point.fromLngLat(13.11978376559233, 52.344133090972036),
+                Point.fromLngLat(13.45554759895009, 52.36508969582471),
+                Point.fromLngLat(13.671220718187243, 52.32990687793716),
+                Point.fromLngLat(13.779057277805748, 52.43537135257702),
+                Point.fromLngLat(13.643036162832345, 52.4913668720219),
+                Point.fromLngLat(13.687151119039896, 52.54654599637422),
+                Point.fromLngLat(13.526621695062317, 52.61058604174599),
+                Point.fromLngLat(13.542552095915084, 52.65669642984892),
+                Point.fromLngLat(13.450645937149233, 52.690875966376154),
+                Point.fromLngLat(13.20124759959586, 52.669190804537635)
+            ),
+        ))
+        val addressLoadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(addressDescriptors)
+            .geometry(addressGeometry)
+            .acceptExpired(true)
+            .build()
+
+        // configure places tiles download
+        val placesRegionId = "Europe"
+        val placesDescriptors = listOf(OfflineSearchEngine.createPlacesTilesetDescriptor())
+        val placesGeometry = Polygon.fromLngLats(listOf(
+            listOf(
+                Point.fromLngLat(-14.517737554469221, 57.76042881345697),
+                Point.fromLngLat(-11.853406208892494, 45.72665474121723),
+                Point.fromLngLat(-10.051386845094072, 38.88009462157544),
+                Point.fromLngLat(-2.2992131105785063, 36.29671879353825),
+                Point.fromLngLat(27.59389305095351, 37.6602399426357),
+                Point.fromLngLat(40.59428640918992, 48.0701173318875),
+                Point.fromLngLat(38.820725050693994, 52.72710739192897),
+                Point.fromLngLat(28.817381826223766, 60.87210923121589),
+                Point.fromLngLat(34.02317116946227, 74.65796049778871),
+                Point.fromLngLat(32.099355774071455, 74.75401954004775),
+                Point.fromLngLat(-14.517737554469221, 57.76042881345697)
+            ),
+        ))
+        val placesLoadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(placesDescriptors)
+            .geometry(placesGeometry)
+            .acceptExpired(true)
+            .build()
+
+        // add index observer callback to track downloads
+        offlineSearchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
+            override fun onIndexChange(event: OfflineIndexChangeEvent) {
+                if ((event.regionId == addressRegionId || event.regionId == placesRegionId) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
+                    Log.i("SearchApiExample", "$event.regionId was successfully added or updated")
+                }
+            }
+
+            override fun onError(event: OfflineIndexErrorEvent) {
+                Log.i("SearchApiExample", "Offline index error: $event")
+            }
+        })
+
+        // start address tiles download
+        val addressLoadingTask = tileStore.loadTileRegion(
+            addressRegionId,
+            addressLoadOptions,
+            { progress -> Log.i("SearchApiExample", "Loading address progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Address tiles successfully loaded: ${result.value}")
+                } else {
+                    Log.i("SearchApiExample", "Address tiles loading error: ${result.error}")
+                }
+            }
+        )
+
+        // start places tiles download
+        val boundaryLoadingTask = tileStore.loadTileRegion(
+            placesRegionId,
+            placesLoadOptions,
+            { progress -> Log.i("SearchApiExample", "Loading places progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Places tiles successfully loaded: ${result.value}")
+                } else {
+                    Log.i("SearchApiExample", "Places tiles loading error: ${result.error}")
+                }
+            }
+        )
+
+        // TODO: wait till all tiles will be downloaded
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
             view = searchResultsView,
@@ -174,7 +278,7 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+        searchEngineUiAdapter.searchMode = SearchMode.OFFLINE
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
@@ -206,6 +310,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+                Log.i("OFFLINE", "Got offline results")
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
                 mapMarkersManager.showMarker(searchResult.coordinate)
