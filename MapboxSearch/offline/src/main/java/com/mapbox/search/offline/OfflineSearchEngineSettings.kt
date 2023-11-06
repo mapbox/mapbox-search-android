@@ -150,9 +150,10 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
 
     internal companion object {
 
-        val DEFAULT_ENDPOINT_URI: URI = URI.create("https://search-sdk-offline-staging.tilestream.net")
-        const val DEFAULT_DATASET = "experimental/poi-us-west-test-1"
-        const val DEFAULT_VERSION = "v2"
+        // TODO: change to POI
+        val DEFAULT_ENDPOINT_URI: URI = URI.create("https://api.mapbox.com")
+        const val DEFAULT_DATASET = "mbx-main"
+        const val DEFAULT_VERSION = ""
 
         private fun defaultTileStore() = TileStore.create()
     }
