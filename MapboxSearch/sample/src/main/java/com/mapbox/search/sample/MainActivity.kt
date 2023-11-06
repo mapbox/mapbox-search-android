@@ -128,10 +128,11 @@ class MainActivity : AppCompatActivity() {
 
             mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                 override fun onIndicatorPositionChanged(point: Point) {
+                    val defaultLocation = Point.fromLngLat(-77.030729, 38.87578)
                     mapView.getMapboxMap().setCamera(
                         CameraOptions.Builder()
-                            .center(point)
-                            .zoom(14.0)
+                            .center(defaultLocation)
+                            .zoom(11.0)
                             .build()
                     )
 
@@ -181,58 +182,28 @@ class MainActivity : AppCompatActivity() {
         )
 
         // configure address tiles download
-        val addressRegionId = "Berlin"
-        val addressDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
-        val addressGeometry = Polygon.fromLngLats(listOf(
-            listOf(
-                Point.fromLngLat(13.20124759959586, 52.669190804537635),
-                Point.fromLngLat(13.061495095577413, 52.500604140459586),
-                Point.fromLngLat(13.11978376559233, 52.344133090972036),
-                Point.fromLngLat(13.45554759895009, 52.36508969582471),
-                Point.fromLngLat(13.671220718187243, 52.32990687793716),
-                Point.fromLngLat(13.779057277805748, 52.43537135257702),
-                Point.fromLngLat(13.643036162832345, 52.4913668720219),
-                Point.fromLngLat(13.687151119039896, 52.54654599637422),
-                Point.fromLngLat(13.526621695062317, 52.61058604174599),
-                Point.fromLngLat(13.542552095915084, 52.65669642984892),
-                Point.fromLngLat(13.450645937149233, 52.690875966376154),
-                Point.fromLngLat(13.20124759959586, 52.669190804537635)
-            ),
-        ))
-        val addressLoadOptions = TileRegionLoadOptions.Builder()
-            .descriptors(addressDescriptors)
-            .geometry(addressGeometry)
-            .acceptExpired(true)
-            .build()
+        val regionId = "Washington DC"
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
-        // configure places tiles download
-        val placesRegionId = "Europe"
-        val placesDescriptors = listOf(OfflineSearchEngine.createPlacesTilesetDescriptor())
-        val placesGeometry = Polygon.fromLngLats(listOf(
+        val geometry = Polygon.fromLngLats(listOf(
             listOf(
-                Point.fromLngLat(-14.517737554469221, 57.76042881345697),
-                Point.fromLngLat(-11.853406208892494, 45.72665474121723),
-                Point.fromLngLat(-10.051386845094072, 38.88009462157544),
-                Point.fromLngLat(-2.2992131105785063, 36.29671879353825),
-                Point.fromLngLat(27.59389305095351, 37.6602399426357),
-                Point.fromLngLat(40.59428640918992, 48.0701173318875),
-                Point.fromLngLat(38.820725050693994, 52.72710739192897),
-                Point.fromLngLat(28.817381826223766, 60.87210923121589),
-                Point.fromLngLat(34.02317116946227, 74.65796049778871),
-                Point.fromLngLat(32.099355774071455, 74.75401954004775),
-                Point.fromLngLat(-14.517737554469221, 57.76042881345697)
+                Point.fromLngLat(-77.29777613027106, 39.060602164428076),
+                Point.fromLngLat(-77.29777613027106, 38.746270282559976),
+                Point.fromLngLat(-76.75921607959476, 38.746270282559976),
+                Point.fromLngLat(-76.75921607959476, 39.060602164428076),
+                Point.fromLngLat(-77.29777613027106, 39.060602164428076)
             ),
         ))
-        val placesLoadOptions = TileRegionLoadOptions.Builder()
-            .descriptors(placesDescriptors)
-            .geometry(placesGeometry)
+        val loadOptions = TileRegionLoadOptions.Builder()
+            .descriptors(descriptors)
+            .geometry(geometry)
             .acceptExpired(true)
             .build()
 
         // add index observer callback to track downloads
         offlineSearchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
             override fun onIndexChange(event: OfflineIndexChangeEvent) {
-                if ((event.regionId == addressRegionId || event.regionId == placesRegionId) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
+                if ((event.regionId == regionId) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
                     Log.i("SearchApiExample", "$event.regionId was successfully added or updated")
                 }
             }
@@ -243,29 +214,15 @@ class MainActivity : AppCompatActivity() {
         })
 
         // start address tiles download
-        val addressLoadingTask = tileStore.loadTileRegion(
-            addressRegionId,
-            addressLoadOptions,
+        val loadingTask = tileStore.loadTileRegion(
+            regionId,
+            loadOptions,
             { progress -> Log.i("SearchApiExample", "Loading address progress: $progress") },
             { result ->
                 if (result.isValue) {
                     Log.i("SearchApiExample", "Address tiles successfully loaded: ${result.value}")
                 } else {
                     Log.i("SearchApiExample", "Address tiles loading error: ${result.error}")
-                }
-            }
-        )
-
-        // start places tiles download
-        val boundaryLoadingTask = tileStore.loadTileRegion(
-            placesRegionId,
-            placesLoadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading places progress: $progress") },
-            { result ->
-                if (result.isValue) {
-                    Log.i("SearchApiExample", "Places tiles successfully loaded: ${result.value}")
-                } else {
-                    Log.i("SearchApiExample", "Places tiles loading error: ${result.error}")
                 }
             }
         )
