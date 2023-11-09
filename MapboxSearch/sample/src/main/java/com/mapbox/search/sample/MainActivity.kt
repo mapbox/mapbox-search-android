@@ -187,11 +187,11 @@ class MainActivity : AppCompatActivity() {
 
         val geometry = Polygon.fromLngLats(listOf(
             listOf(
-                Point.fromLngLat(-77.29777613027106, 39.060602164428076),
-                Point.fromLngLat(-77.29777613027106, 38.746270282559976),
-                Point.fromLngLat(-76.75921607959476, 38.746270282559976),
-                Point.fromLngLat(-76.75921607959476, 39.060602164428076),
-                Point.fromLngLat(-77.29777613027106, 39.060602164428076)
+                Point.fromLngLat(-78.0, 40.0),
+                Point.fromLngLat(-78.0, 37.0),
+                Point.fromLngLat(-76.0, 37.0),
+                Point.fromLngLat(-76.0, 40.0),
+                Point.fromLngLat(-78.0, 40.0)
             ),
         ))
         val loadOptions = TileRegionLoadOptions.Builder()
