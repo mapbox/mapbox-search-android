@@ -73,6 +73,7 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import java.net.URI
 
 class MainActivity : AppCompatActivity() {
 
@@ -178,12 +179,13 @@ class MainActivity : AppCompatActivity() {
             OfflineSearchEngineSettings(
                 accessToken = getString(R.string.mapbox_access_token),
                 tileStore = tileStore,
+                tilesBaseUri = URI.create("https://search-sdk-offline-staging.tilestream.net"),
             )
         )
 
         // configure address tiles download
         val regionId = "Washington DC"
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(dataset="experimental-poicat-dc-test-1"))
 
         val geometry = Polygon.fromLngLats(listOf(
             listOf(
