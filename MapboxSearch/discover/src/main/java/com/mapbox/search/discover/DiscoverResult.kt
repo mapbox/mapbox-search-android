@@ -17,6 +17,16 @@ import kotlinx.parcelize.Parcelize
 public class DiscoverResult internal constructor(
 
     /**
+     * Result ID
+     */
+    public val id: String,
+
+    /**
+     * Mapbox ID
+     */
+    public val mapboxId: String,
+
+    /**
      * Place's name.
      */
     public val name: String,
@@ -56,6 +66,8 @@ public class DiscoverResult internal constructor(
 
         other as DiscoverResult
 
+        if (id != other.id) return false
+        if (mapboxId != other.mapboxId) return false
         if (name != other.name) return false
         if (address != other.address) return false
         if (coordinate != other.coordinate) return false
@@ -71,6 +83,8 @@ public class DiscoverResult internal constructor(
      */
     override fun hashCode(): Int {
         var result = name.hashCode()
+        result = 31 * result + id.hashCode()
+        result = 31 * result + mapboxId.hashCode()
         result = 31 * result + address.hashCode()
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
@@ -84,6 +98,8 @@ public class DiscoverResult internal constructor(
      */
     override fun toString(): String {
         return "DiscoverApiResult(" +
+                "id='$id', " +
+                "mapboxId='$mapboxId', " +
                 "name='$name', " +
                 "address=$address, " +
                 "coordinate=$coordinate, " +
@@ -114,6 +130,8 @@ public class DiscoverResult internal constructor(
                 )
 
                 return DiscoverResult(
+                    id = id,
+                    mapboxId = mapboxId,
                     name = name,
                     address = discoverAddress,
                     coordinate = coordinate,
