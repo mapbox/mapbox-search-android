@@ -17,9 +17,6 @@ abstract class BaseSearchResult(
     open val id: String
         get() = rawSearchResult.id
 
-    open val mapboxId: String
-        get() = rawSearchResult.mapboxId
-
     open val name: String
         get() = rawSearchResult.names[0]
 
