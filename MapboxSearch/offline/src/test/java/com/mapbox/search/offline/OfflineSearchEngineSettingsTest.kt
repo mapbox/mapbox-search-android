@@ -117,7 +117,7 @@ internal class OfflineSearchEngineSettingsTest {
     }
 
     private companion object {
-        val TEST_DEFAULT_ENDPOINT_URI: URI = URI.create("https://api-offline-search-staging.tilestream.net")
+        val TEST_DEFAULT_ENDPOINT_URI: URI = URI.create("https://cloudfront-staging.tilestream.net")
         const val TEST_ACCESS_TOKEN = "test token"
         val TEST_MOCKED_LOCATION_ENGINE: LocationEngine = mockk(relaxed = true)
         val TEST_MOCKED_TILE_STORE: TileStore = mockk(relaxed = true)

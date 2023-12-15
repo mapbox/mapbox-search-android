@@ -24,7 +24,7 @@ object CommonSdkTypeObjectCreators {
     internal val URI_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(URI::class) { mode ->
         listOf(
             URI.create("https://api.mapbox.com"),
-            URI.create("https://api-offline-search-staging.tilestream.net")
+            URI.create("https://cloudfront-staging.tilestream.net")
         )[mode.ordinal]
     }
 
