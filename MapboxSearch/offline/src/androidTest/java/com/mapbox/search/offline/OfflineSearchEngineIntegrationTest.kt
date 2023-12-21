@@ -306,6 +306,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val results = searchEngineResult.requireResults()
         assertTrue(results.size > 5)
 
+        // SSDK-501: it's going to fail
         val result = results.first()
         assertTrue(
             compareWithApproximateLocations(
@@ -338,6 +339,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertEquals(1, results.size)
 
+        // SSDK-501: it's going to fail
         assertTrue(
             compareWithApproximateLocations(
                 TEST_SEARCH_RESULT_MAPBOX,
@@ -379,6 +381,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
         assertTrue(results.isNotEmpty())
 
+        // SSDK-501: it's going to fail
         val expectedResult = TEST_SEARCH_RESULT_MAPBOX.copy(distanceMeters = null)
         assertTrue(
             compareWithApproximateLocations(
