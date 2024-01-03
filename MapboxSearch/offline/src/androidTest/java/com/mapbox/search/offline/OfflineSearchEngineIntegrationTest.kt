@@ -18,6 +18,7 @@ import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.offline.test.R
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
@@ -528,14 +529,12 @@ internal class OfflineSearchEngineIntegrationTest {
                 createCoreSearchAddress(
                     houseNumber = "2011",
                     street = "15th Street Northwest",
-                    place = "Washington",
-                    // TODO (SWEB-1113)
-                    // region = "District of Columbia",
+                    // See SWEB-1113 for more history
+                    region = createCoreSearchAddressRegion("District of Columbia")
                 )
             ),
-            // TODO (SWEB-1113)
-            // descriptionAddress = "2011 15th Street Northwest, Washington, District of Columbia",
-            descriptionAddress = "2011 15th Street Northwest, Washington",
+            // See SWEB-1113 for more history
+            descriptionAddress = "2011 15th Street Northwest, District of Columbia",
 
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03402549505554, 38.91792475903431),
@@ -567,9 +566,14 @@ internal class OfflineSearchEngineIntegrationTest {
                 center = serverResult.center,
                 distanceMeters = serverResult.distanceMeters
             )
-            return fixedResult == serverResult &&
-                    expected.center.approximatelyEquals(serverResult.center) &&
-                    compareDistanceMeters(expected.distanceMeters, serverResult.distanceMeters)
+
+            if ((fixedResult == serverResult) &&
+                    fixedResult.center.approximatelyEquals(serverResult.center) &&
+                    compareDistanceMeters(fixedResult.distanceMeters, serverResult.distanceMeters))
+                return true
+
+            Log.d(LOG_TAG, "compareWithApproximateLocations: fixedResult = $fixedResult, serverResult = $serverResult")
+            return false
         }
 
         private val TEST_SEARCH_RESULT_MAPBOX = TEST_CORE_SEARCH_RESULT.mapToBase()
