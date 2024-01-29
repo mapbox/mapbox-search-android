@@ -30,7 +30,8 @@ public class SearchOptions @JvmOverloads public constructor(
 
     /**
      * Limit results to only those contained within the supplied bounding box.
-     * The bounding box cannot cross the 180th meridian.
+     * The bounding box cannot cross the 180th meridian (longitude +/-180.0 deg.)
+     * and North or South pole (latitude +/- 90.0 deg.).
      */
     public val boundingBox: BoundingBox? = null,
 
