@@ -1,6 +1,8 @@
 package com.mapbox.search.offline
 
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -47,6 +49,7 @@ internal class OfflineSearchOptionsTest {
                     proximity = null,
                     limit = null,
                     origin = null,
+                    boundingBox = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -63,12 +66,14 @@ internal class OfflineSearchOptionsTest {
                     .proximity(TEST_POINT)
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
+                    .boundingBox(TEST_BOUNDING_BOX)
                     .build()
 
                 val expectedOptions = OfflineSearchOptions(
                     proximity = TEST_POINT,
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
+                    boundingBox = TEST_BOUNDING_BOX,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -95,12 +100,14 @@ internal class OfflineSearchOptionsTest {
                     proximity = TEST_POINT,
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
+                    boundingBox = TEST_BOUNDING_BOX,
                 ).mapToCore()
 
                 val expectedOptions = createTestCoreSearchOptions(
                     proximity = TEST_POINT,
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
+                    bbox = TEST_BOUNDING_BOX.mapToCore(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -116,6 +123,7 @@ internal class OfflineSearchOptionsTest {
                     proximity = TEST_POINT,
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
+                    boundingBox = TEST_BOUNDING_BOX,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
@@ -160,5 +168,6 @@ internal class OfflineSearchOptionsTest {
     private companion object {
         val TEST_POINT: Point = Point.fromLngLat(10.0, 10.0)
         val TEST_ORIGIN_POINT: Point = Point.fromLngLat(20.0, 20.0)
+        val TEST_BOUNDING_BOX: BoundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0)
     }
 }
