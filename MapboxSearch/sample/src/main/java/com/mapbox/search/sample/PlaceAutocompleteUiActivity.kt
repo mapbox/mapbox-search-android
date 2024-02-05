@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -27,7 +26,15 @@ import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.autocomplete.PlaceAutocompleteType
+import com.mapbox.search.base.location.defaultLocationProvider
+import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
+import com.mapbox.search.ui.utils.extenstion.dpToPx
+import com.mapbox.search.ui.utils.extenstion.geoIntent
+import com.mapbox.search.ui.utils.extenstion.hideKeyboard
+import com.mapbox.search.ui.utils.extenstion.isPermissionGranted
+import com.mapbox.search.ui.utils.extenstion.shareIntent
+import com.mapbox.search.ui.utils.extenstion.showToast
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
@@ -54,22 +61,22 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_autocomplete)
 
-        placeAutocomplete = PlaceAutocomplete.create(getString(R.string.mapbox_access_token))
+        placeAutocomplete = PlaceAutocomplete.create()
 
         queryEditText = findViewById(R.id.query_text)
 
         mapView = findViewById(R.id.map_view)
-        mapView.getMapboxMap().also { mapboxMap ->
+        mapView.mapboxMap.also { mapboxMap ->
             this.mapboxMap = mapboxMap
 
-            mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+            mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
                 mapView.location.updateSettings {
                     enabled = true
                 }
 
                 mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                     override fun onIndicatorPositionChanged(point: Point) {
-                        mapView.getMapboxMap().setCamera(
+                        mapView.mapboxMap.setCamera(
                             CameraOptions.Builder()
                                 .center(point)
                                 .zoom(14.0)
@@ -121,9 +128,9 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
             }
         }
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
+        defaultLocationProvider().getLastLocation { location ->
+            location?.toPoint()?.let { point ->
+                mapView.mapboxMap.setCamera(
                     CameraOptions.Builder()
                         .center(point)
                         .zoom(9.0)
@@ -234,9 +241,9 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
 
     private class MapMarkersManager(mapView: MapView) {
 
-        private val mapboxMap = mapView.getMapboxMap()
+        private val mapboxMap = mapView.mapboxMap
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         fun clearMarkers() {
             markers.clear()

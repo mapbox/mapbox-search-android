@@ -73,7 +73,7 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(getString(R.string.mapbox_access_token))
+            SearchEngineSettings()
         )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")

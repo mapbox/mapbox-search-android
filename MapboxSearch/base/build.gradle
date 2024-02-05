@@ -67,9 +67,6 @@ dependencies {
 
     implementation "com.mapbox.common:common:$common_sdk_version"
 
-    // Explicit dependency for http service implementation, should be declared on the Common SDK side
-    implementation "com.mapbox.common:okhttp:$common_sdk_version"
-
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
     implementation "androidx.core:core-ktx:$androidx_core_version"
@@ -88,10 +85,10 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
     testImplementation project(":common-tests")
 
-    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
     androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     androidTestImplementation project(":common-tests")
 }

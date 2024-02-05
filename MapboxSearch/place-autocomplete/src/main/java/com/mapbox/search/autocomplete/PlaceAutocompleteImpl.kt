@@ -1,13 +1,13 @@
 package com.mapbox.search.autocomplete
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion.Underlying
-import com.mapbox.search.base.MapboxApiClient
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -26,7 +26,6 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.SearchResultFactory
-import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.suspendFlatMap
@@ -36,11 +35,10 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 internal class PlaceAutocompleteImpl(
-    override val accessToken: String,
     private val searchEngine: TwoStepsToOneStepSearchEngineAdapter,
     private val activityReporter: UserActivityReporterInterface,
     private val resultFactory: PlaceAutocompleteResultFactory = PlaceAutocompleteResultFactory()
-) : PlaceAutocomplete, MapboxApiClient {
+) : PlaceAutocomplete {
 
     override suspend fun suggestions(
         query: String,
@@ -180,22 +178,20 @@ internal class PlaceAutocompleteImpl(
         }
 
         fun create(
-            accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationProvider: LocationProvider,
         ): PlaceAutocompleteImpl {
             val apiType = CoreApiType.SBS
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken,
-                    null,
-                    apiType,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = null,
+                    apiType = apiType,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine),
+                    LocationEngineAdapter(app, locationProvider),
                     null
                 ),
             )
@@ -210,9 +206,8 @@ internal class PlaceAutocompleteImpl(
             )
 
             return PlaceAutocompleteImpl(
-                accessToken = accessToken,
                 searchEngine = engine,
-                activityReporter = getUserActivityReporter(accessToken)
+                activityReporter = getUserActivityReporter()
             )
         }
     }

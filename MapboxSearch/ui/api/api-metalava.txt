@@ -2,7 +2,7 @@
 package com.mapbox.search.ui.adapter.autocomplete {
 
   public final class PlaceAutocompleteUiAdapter {
-    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete, com.mapbox.common.location.LocationProvider locationEngine = <anonymous class>());
     method public void addSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
     method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
@@ -23,7 +23,7 @@ package com.mapbox.search.ui.adapter.autocomplete {
 package com.mapbox.search.ui.adapter.autofill {
 
   public final class AddressAutofillUiAdapter {
-    ctor public AddressAutofillUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autofill.AddressAutofill addressAutofill, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
+    ctor public AddressAutofillUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autofill.AddressAutofill addressAutofill, com.mapbox.common.location.LocationProvider locationEngine = <anonymous class>());
     method public void addSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
     method public suspend Object? search(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options = com.mapbox.search.autofill.AddressAutofillOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autofill.AddressAutofillOptions());
@@ -41,7 +41,7 @@ package com.mapbox.search.ui.adapter.autofill {
 package com.mapbox.search.ui.adapter.engines {
 
   public final class SearchEngineUiAdapter {
-    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider(), com.mapbox.search.common.concurrent.MainThreadWorker mainThreadWorker = SearchSdkMainThreadWorker);
+    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.common.location.LocationProvider locationEngine = <anonymous class>(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider(), com.mapbox.search.common.concurrent.MainThreadWorker mainThreadWorker = SearchSdkMainThreadWorker);
     method public void addSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);
     method public com.mapbox.search.ui.view.SearchMode getSearchMode();
     method public void removeSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);
@@ -66,6 +66,14 @@ package com.mapbox.search.ui.adapter.engines {
 
 }
 
+package com.mapbox.search.ui.extensions {
+
+  public final class DeviceLocatioonProviderKt {
+    method public static void userDistanceTo(com.mapbox.common.location.LocationProvider, com.mapbox.geojson.Point destination, kotlin.jvm.functions.Function1<? super java.lang.Double,kotlin.Unit> callback);
+  }
+
+}
+
 package com.mapbox.search.ui.utils {
 
   public final class ThemePatcherKt {
@@ -82,6 +90,12 @@ package com.mapbox.search.ui.utils.extenstion {
   }
 
   public final class ContextKt {
+    method public static android.graphics.Bitmap bitmapFromDrawableRes(android.content.Context, @DrawableRes int resId);
+    method public static int dpToPx(int dp);
+    method public static android.content.Intent geoIntent(com.mapbox.geojson.Point point);
+    method public static boolean isPermissionGranted(android.content.Context, String permission);
+    method public static android.content.Intent shareIntent(com.mapbox.search.ui.view.place.SearchPlace searchPlace);
+    method public static void showToast(android.content.Context, @StringRes int resId);
   }
 
   public final class DrawableKt {
@@ -94,6 +108,7 @@ package com.mapbox.search.ui.utils.extenstion {
   }
 
   public final class ViewKt {
+    method public static void hideKeyboard(android.view.View);
   }
 
 }

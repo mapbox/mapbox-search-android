@@ -19,7 +19,6 @@ import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreSearchResult
-import com.mapbox.search.offline.test.R
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback.SearchEngineResult
@@ -72,9 +71,8 @@ internal class OfflineSearchEngineIntegrationTest {
     fun setUp() {
         searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                accessToken = targetApplication.getString(R.string.mapbox_access_token),
                 tileStore = tileStore,
-                locationEngine = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
+                locationProvider = FixedPointLocationEngine(MAPBOX_DC_LOCATION)
             )
         )
 

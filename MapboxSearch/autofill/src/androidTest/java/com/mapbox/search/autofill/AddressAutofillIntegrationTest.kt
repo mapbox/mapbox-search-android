@@ -4,8 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -14,12 +15,10 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.location.defaultLocationEngine
-import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchRequestException
-import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -46,15 +45,12 @@ internal class AddressAutofillIntegrationTest {
 
         val engine = createAutofillSearchEngine(
             app = APP,
-            token = TEST_ACCESS_TOKEN,
-            url = mockServer.url("").toString(),
-            locationEngine = defaultLocationEngine()
+            locationProvider = defaultLocationProvider()
         )
 
         addressAutofill = AddressAutofillImpl(
-            accessToken = TEST_ACCESS_TOKEN,
             searchEngine = engine,
-            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+            activityReporter = getUserActivityReporter()
         )
     }
 
@@ -78,7 +74,6 @@ internal class AddressAutofillIntegrationTest {
 
         val url = requireNotNull(request.requestUrl)
         assertEqualsIgnoreCase("//autofill/v1/suggest/${query.query}", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(options.language?.code, url.queryParameter("language"))
         assertEquals(options.countries?.joinToString(",") { it.code }, url.queryParameter("country"))
         assertEquals("address", url.queryParameter("types"))
@@ -104,7 +99,6 @@ internal class AddressAutofillIntegrationTest {
 
         val url = requireNotNull(request.requestUrl)
         assertTrue(url.encodedPath.startsWith("//autofill/v1/retrieve/"))
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(options.language?.code, url.queryParameter("language"))
     }
 
@@ -267,8 +261,6 @@ internal class AddressAutofillIntegrationTest {
         val APP: Application
             get() = CONTEXT as Application
 
-        const val TEST_ACCESS_TOKEN = "pk.test"
-
         val TEST_QUERY: Query = requireNotNull(Query.create("123 Washington"))
 
         fun assertEqualsIgnoreCase(expected: String?, actual: String?) {
@@ -280,20 +272,17 @@ internal class AddressAutofillIntegrationTest {
 
         fun createAutofillSearchEngine(
             app: Application,
-            token: String,
-            url: String,
-            locationEngine: LocationEngine
+            locationProvider: LocationProvider
         ): TwoStepsToOneStepSearchEngineAdapter {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    token,
-                    url,
-                    ApiType.AUTOFILL,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = null,
+                    apiType = CoreApiType.AUTOFILL,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine), null
+                    LocationEngineAdapter(app, locationProvider), null
                 ),
             )
 

@@ -90,8 +90,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
@@ -131,7 +130,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val url = request.requestUrl!!
         assertEqualsIgnoreCase("//search/v1/category/$TEST_CATEGORY", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(formatPoints(options.proximity), url.queryParameter("proximity"))
         assertEquals(
             formatPoints(options.boundingBox?.southwest(), options.boundingBox?.northeast()),
@@ -624,7 +622,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     private companion object {
 
         const val TEST_CATEGORY = "cafe"
-        const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
 
         const val TEST_LOCAL_TIME_MILLIS = 12345L

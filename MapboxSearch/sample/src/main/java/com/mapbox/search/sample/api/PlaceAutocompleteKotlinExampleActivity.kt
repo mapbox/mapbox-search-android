@@ -5,16 +5,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autocomplete.PlaceAutocomplete
-import com.mapbox.search.sample.R
 
 class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val placeAutocomplete = PlaceAutocomplete.create(
-            accessToken = getString(R.string.mapbox_access_token),
-        )
+        val placeAutocomplete = PlaceAutocomplete.create()
 
         lifecycleScope.launchWhenCreated {
             val response = placeAutocomplete.suggestions(

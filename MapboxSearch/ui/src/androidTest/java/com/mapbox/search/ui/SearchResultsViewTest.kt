@@ -158,7 +158,7 @@ internal class SearchResultsViewTest : MockServerSearchActivityTest() {
         const val MINSK_QUERY = "Minsk"
 
         const val MINSK_REGION_SEARCH_RESULT_NAME = "Minsk Region"
-        const val NOT_SEARCHABLE_QUERY = "aaaaaaaaaaaa"
+        const val NOT_SEARCHABLE_QUERY = "SampleOfQueryWithNoResults"
 
         const val RANELAGH_TERRACE_62_SERVER_DISTANCE = "5281.7 mi"
         const val RANELAGH_TERRACE_62_LOCALLY_CALCULATED_DISTANCE = "5286 mi"

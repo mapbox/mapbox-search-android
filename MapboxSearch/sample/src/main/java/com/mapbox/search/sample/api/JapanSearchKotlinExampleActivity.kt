@@ -14,7 +14,6 @@ import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.sample.R
 
 class JapanSearchKotlinExampleActivity : Activity() {
 
@@ -58,7 +57,7 @@ class JapanSearchKotlinExampleActivity : Activity() {
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             ApiType.SBS,
-            SearchEngineSettings(getString(R.string.mapbox_access_token))
+            SearchEngineSettings()
         )
 
         searchRequestTask = searchEngine.search(

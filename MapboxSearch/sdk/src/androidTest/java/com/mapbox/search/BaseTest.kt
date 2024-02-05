@@ -41,7 +41,6 @@ internal abstract class BaseTest {
 
     protected companion object {
 
-        const val DEFAULT_TEST_ACCESS_TOKEN = "pk.test"
         val DEFAULT_TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
 
         fun Double.format(digits: Int) = "%.${digits}f".format(Locale.ENGLISH, this)

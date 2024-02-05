@@ -309,6 +309,14 @@ public final class com/mapbox/search/common/IsoCountryCode : android/os/Parcelab
 public final class com/mapbox/search/common/IsoCountryCode$Companion {
 }
 
+public final class com/mapbox/search/common/IsoCountryCode$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/IsoCountryCode;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/IsoCountryCode;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/IsoLanguageCode : android/os/Parcelable {
 	public static final field ALBANIAN Lcom/mapbox/search/common/IsoLanguageCode;
 	public static final field ARABIC Lcom/mapbox/search/common/IsoLanguageCode;
@@ -362,6 +370,14 @@ public final class com/mapbox/search/common/IsoLanguageCode : android/os/Parcela
 public final class com/mapbox/search/common/IsoLanguageCode$Companion {
 }
 
+public final class com/mapbox/search/common/IsoLanguageCode$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/IsoLanguageCode;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/IsoLanguageCode;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/NavigationProfile : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field CYCLING Lcom/mapbox/search/common/NavigationProfile;
@@ -380,6 +396,14 @@ public final class com/mapbox/search/common/NavigationProfile : android/os/Parce
 public final class com/mapbox/search/common/NavigationProfile$Companion {
 }
 
+public final class com/mapbox/search/common/NavigationProfile$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/NavigationProfile;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/NavigationProfile;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V
@@ -390,6 +414,14 @@ public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelabl
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/RoutablePoint$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/RoutablePoint;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/RoutablePoint;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/common/SearchCancellationException : java/lang/RuntimeException {
@@ -451,6 +483,14 @@ public final class com/mapbox/search/common/metadata/ImageInfo : android/os/Parc
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/common/metadata/ImageInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/ImageInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/ImageInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract class com/mapbox/search/common/metadata/OpenHours : android/os/Parcelable {
 }
 
@@ -461,11 +501,27 @@ public final class com/mapbox/search/common/metadata/OpenHours$AlwaysOpen : com/
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/common/metadata/OpenHours$AlwaysOpen$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/OpenHours$AlwaysOpen;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/OpenHours$AlwaysOpen;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/metadata/OpenHours$PermanentlyClosed : com/mapbox/search/common/metadata/OpenHours {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/common/metadata/OpenHours$PermanentlyClosed;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$PermanentlyClosed$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/OpenHours$PermanentlyClosed;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/OpenHours$PermanentlyClosed;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/common/metadata/OpenHours$Scheduled : com/mapbox/search/common/metadata/OpenHours {
@@ -479,11 +535,27 @@ public final class com/mapbox/search/common/metadata/OpenHours$Scheduled : com/m
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/common/metadata/OpenHours$Scheduled$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/OpenHours$Scheduled;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/OpenHours$Scheduled;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/metadata/OpenHours$TemporaryClosed : com/mapbox/search/common/metadata/OpenHours {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/common/metadata/OpenHours$TemporaryClosed;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/OpenHours$TemporaryClosed$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/OpenHours$TemporaryClosed;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/OpenHours$TemporaryClosed;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/common/metadata/OpenPeriod : android/os/Parcelable {
@@ -502,6 +574,14 @@ public final class com/mapbox/search/common/metadata/OpenPeriod : android/os/Par
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/common/metadata/OpenPeriod$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/OpenPeriod;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/OpenPeriod;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/metadata/ParkingData : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (II)V
@@ -512,6 +592,14 @@ public final class com/mapbox/search/common/metadata/ParkingData : android/os/Pa
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/ParkingData$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/ParkingData;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/ParkingData;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/common/metadata/WeekDay : java/lang/Enum {
@@ -544,5 +632,13 @@ public final class com/mapbox/search/common/metadata/WeekTimestamp : android/os/
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/WeekTimestamp$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/WeekTimestamp;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 

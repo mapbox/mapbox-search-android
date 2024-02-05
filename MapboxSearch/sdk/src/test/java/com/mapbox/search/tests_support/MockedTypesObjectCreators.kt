@@ -1,8 +1,8 @@
 package com.mapbox.search.tests_support
 
 import android.content.Context
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.ViewportProvider
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
@@ -16,9 +16,9 @@ internal object MockedTypesObjectCreators {
         )[mode.ordinal]
     }
 
-    val LOCATION_ENGINE_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(LocationEngine::class) { mode ->
+    val LOCATION_ENGINE_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(LocationProvider::class) { mode ->
         listOf(
-            mockk<LocationEngine>(relaxed = true), mockk<LocationEngine>(relaxed = true),
+            mockk<LocationProvider>(relaxed = true), mockk<LocationProvider>(relaxed = true),
         )[mode.ordinal]
     }
 
