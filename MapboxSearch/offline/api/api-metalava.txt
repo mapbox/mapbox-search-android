@@ -134,17 +134,14 @@ package com.mapbox.search.offline {
   }
 
   public final class OfflineSearchEngineSettings {
-    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
-    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
-    ctor public OfflineSearchEngineSettings(String accessToken, com.mapbox.common.TileStore tileStore = defaultTileStore());
-    ctor public OfflineSearchEngineSettings(String accessToken);
-    method public String getAccessToken();
-    method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
+    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.common.location.LocationProvider locationProvider = <anonymous class>());
+    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
+    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore());
+    method public com.mapbox.common.location.LocationProvider getLocationProvider();
     method public com.mapbox.common.TileStore getTileStore();
     method public java.net.URI getTilesBaseUri();
     method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder toBuilder();
-    property public final String accessToken;
-    property public final com.mapbox.android.core.location.LocationEngine locationEngine;
+    property public final com.mapbox.common.location.LocationProvider locationProvider;
     property public final com.mapbox.common.TileStore tileStore;
     property public final java.net.URI tilesBaseUri;
     field public static final String DEFAULT_DATASET = "mbx-main";
@@ -152,14 +149,11 @@ package com.mapbox.search.offline {
   }
 
   public static final class OfflineSearchEngineSettings.Builder {
-    ctor public OfflineSearchEngineSettings.Builder(String accessToken);
+    ctor public OfflineSearchEngineSettings.Builder();
     method public com.mapbox.search.offline.OfflineSearchEngineSettings build();
-    method public String getAccessToken();
-    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
-    method public void setAccessToken(String p);
+    method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder locationProvider(com.mapbox.common.location.LocationProvider locationProvider);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder tileStore(com.mapbox.common.TileStore tileStore);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings.Builder tilesBaseUri(java.net.URI? tilesBaseUri);
-    property public final String accessToken;
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {

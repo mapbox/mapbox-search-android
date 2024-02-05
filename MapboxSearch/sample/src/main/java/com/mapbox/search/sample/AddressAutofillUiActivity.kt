@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.Location
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -23,6 +24,9 @@ import com.mapbox.search.autofill.AddressAutofillResult
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
+import com.mapbox.search.ui.utils.extenstion.hideKeyboard
+import com.mapbox.search.ui.utils.extenstion.isPermissionGranted
+import com.mapbox.search.ui.utils.extenstion.showToast
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
@@ -53,7 +57,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address_autofill)
 
-        addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
+        addressAutofill = AddressAutofill.create()
 
         queryEditText = findViewById(R.id.query_text)
         apartmentEditText = findViewById(R.id.address_apartment)
@@ -65,12 +69,13 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
         mapPin = findViewById(R.id.map_pin)
         mapView = findViewById(R.id.map)
-        mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.addOnMapIdleListener {
+        mapboxMap = mapView.mapboxMap
+
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS)
+        mapboxMap.subscribeMapIdle {
             if (ignoreNextMapIdleEvent) {
                 ignoreNextMapIdleEvent = false
-                return@addOnMapIdleListener
+                return@subscribeMapIdle
             }
 
             val mapCenter = mapboxMap.cameraState.center
@@ -89,12 +94,16 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             view = searchResultsView,
             addressAutofill = addressAutofill
         )
-
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
+        fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
+        val locationService = LocationServiceFactory.getOrCreate()
+            .getDeviceLocationProvider(null)
+            .value
+            ?: throw Exception("Failed to get device location provider")
+        locationService.getLastLocation { location ->
+            location?.toPoint()?.let {
+                mapView.mapboxMap.setCamera(
                     CameraOptions.Builder()
-                        .center(point)
+                        .center(it)
                         .zoom(9.0)
                         .build()
                 )
@@ -199,7 +208,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         pinCorrectionNote.isVisible = true
 
         if (!fromReverseGeocoding) {
-            mapView.getMapboxMap().setCamera(
+            mapView.mapboxMap.setCamera(
                 CameraOptions.Builder()
                     .center(result.suggestion.coordinate)
                     .zoom(16.0)

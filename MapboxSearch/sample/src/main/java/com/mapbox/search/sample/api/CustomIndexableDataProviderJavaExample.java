@@ -83,7 +83,7 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(getString(R.string.mapbox_access_token))
+            new SearchEngineSettings()
         );
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...");

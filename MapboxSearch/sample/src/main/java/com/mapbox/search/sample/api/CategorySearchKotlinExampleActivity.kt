@@ -10,7 +10,6 @@ import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.sample.R
 
 class CategorySearchKotlinExampleActivity : AppCompatActivity() {
 
@@ -36,7 +35,7 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(getString(R.string.mapbox_access_token))
+            SearchEngineSettings()
         )
 
         searchRequestTask = searchEngine.search(

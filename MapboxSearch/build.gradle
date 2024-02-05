@@ -39,8 +39,8 @@ buildscript {
 
 plugins {
     id "io.gitlab.arturbosch.detekt" version "1.17.0"
-    id "org.jetbrains.dokka" version "1.5.0"
-    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.8.0"
+    id "org.jetbrains.dokka" version "1.7.20"
+    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.13.2"
     id "com.getkeepsafe.dexcount" version "3.0.1"
 }
 

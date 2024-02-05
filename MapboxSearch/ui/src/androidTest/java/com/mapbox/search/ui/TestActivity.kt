@@ -16,14 +16,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.geojson.Point
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
-import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
-import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -33,6 +30,7 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
+import com.mapbox.search.ui.extensions.userDistanceTo
 import com.mapbox.search.ui.test.R
 import com.mapbox.search.ui.tools.MockWebServerRule
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
@@ -44,7 +42,7 @@ import java.util.Locale
 
 public class TestActivity : AppCompatActivity() {
 
-    private lateinit var locationEngine: LocationEngine
+    private lateinit var locationProvider: LocationProvider
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -75,7 +73,7 @@ public class TestActivity : AppCompatActivity() {
             setSupportActionBar(this)
         }
 
-        locationEngine = FixedPointLocationEngine(Point.fromLngLat(-122.084000, 37.421998))
+        locationProvider = FixedPointLocationEngine(Constants.TEST_USER_LOCATION)
 
         // Ensure distance formatting uses miles (not meters).
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -97,16 +95,14 @@ public class TestActivity : AppCompatActivity() {
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(
-                accessToken = getString(R.string.mapbox_access_token),
-                locationEngine = locationEngine,
+                locationProvider = locationProvider,
                 singleBoxSearchBaseUrl = "http://localhost:${MockWebServerRule.DEFAULT_PORT}/"
             )
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                accessToken = getString(R.string.mapbox_access_token),
-                locationEngine = locationEngine,
+                locationProvider = locationProvider,
             )
         )
 
@@ -114,7 +110,7 @@ public class TestActivity : AppCompatActivity() {
             view = searchResultsView,
             searchEngine = searchEngine,
             offlineSearchEngine = offlineSearchEngine,
-            locationEngine = locationEngine,
+            locationEngine = locationProvider,
         )
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
@@ -157,7 +153,7 @@ public class TestActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                userDistanceTo(historyRecord.coordinate) { distance ->
+                locationProvider.userDistanceTo(historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
@@ -230,18 +226,6 @@ public class TestActivity : AppCompatActivity() {
             }
         })
         return true
-    }
-
-    private fun userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
-        locationEngine.lastKnownLocationOrNull(this) { location: Point? ->
-            if (location == null) {
-                callback(null)
-            } else {
-                val distance = DistanceCalculator.instance(latitude = location.latitude())
-                    .distance(location, destination)
-                callback(distance)
-            }
-        }
     }
 
     private companion object {

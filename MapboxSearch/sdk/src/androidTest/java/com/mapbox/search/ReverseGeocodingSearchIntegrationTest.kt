@@ -84,8 +84,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         )
 
         val searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
@@ -121,7 +120,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val url = request.requestUrl!!
         assertEqualsIgnoreCase("//search/v1/reverse/${formatPoints(TEST_POINT)}", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(IsoLanguageCode.ENGLISH.code, url.queryParameter("language"))
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
         assertEquals(
@@ -428,7 +426,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     private companion object {
 
-        const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
         val TEST_POINT: Point = Point.fromLngLat(2.2946, 48.85836)
 

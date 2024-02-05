@@ -108,8 +108,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             geocodingEndpointBaseUrl = mockServer.url("").toString(),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
@@ -154,7 +153,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val url = request.requestUrl!!
         assertEqualsIgnoreCase("//search/v1/suggest/Minsk", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(formatPoints(options.proximity), url.queryParameter("proximity"))
         assertEquals(
             formatPoints(options.boundingBox?.southwest(), options.boundingBox?.northeast()),
@@ -1254,7 +1252,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     private companion object {
 
         const val TEST_QUERY = "Minsk"
-        const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
         val TEST_ORIGIN_LOCATION: Point = Point.fromLngLat(10.1, 11.12345)
         val TEST_NAV_OPTIONS: SearchNavigationOptions = SearchNavigationOptions(

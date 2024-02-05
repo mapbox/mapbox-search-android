@@ -1,10 +1,11 @@
 package com.mapbox.search.base.location
 
 import android.app.Application
-import android.location.Location
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.common.Cancelable
+import com.mapbox.common.location.GetLocationCallback
+import com.mapbox.common.location.Location
+import com.mapbox.common.location.LocationObserver
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
@@ -21,7 +22,7 @@ import org.junit.jupiter.api.TestFactory
 internal class LocationEngineAdapterTest {
 
     private lateinit var app: Application
-    private lateinit var engine: LocationEngine
+    private lateinit var locationProvider: LocationProvider
     private lateinit var timeProvider: TimeProvider
 
     private lateinit var adapter: LocationEngineAdapter
@@ -31,7 +32,7 @@ internal class LocationEngineAdapterTest {
     @BeforeEach
     fun setUp() {
         app = mockk()
-        engine = mockk(relaxed = true)
+        locationProvider = mockk(relaxed = true)
         timeProvider = mockk()
         locationPermissionChecker = mockk()
         every { locationPermissionChecker.invoke(any()) } returns true
@@ -42,12 +43,13 @@ internal class LocationEngineAdapterTest {
     @TestFactory
     fun `Requests latest location at initialization if location permission granted`() = TestCase {
         Given("LocationEngineAdapter with mocked dependencies") {
-            val callbackSlot = slot<LocationEngineCallback<LocationEngineResult>>()
-            every { engine.getLastLocation(capture(callbackSlot)) } answers {
-                callbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
+            val callbackSlot = slot<GetLocationCallback>()
+            every { locationProvider.getLastLocation(capture(callbackSlot)) } answers {
+                callbackSlot.captured.run(createMockedLocation(LOCATION))
+                Cancelable { }
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
+            adapter = LocationEngineAdapter(app, locationProvider, timeProvider, locationPermissionChecker)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
@@ -55,7 +57,7 @@ internal class LocationEngineAdapterTest {
                 }
 
                 VerifyOnce("Last known location requested") {
-                    engine.getLastLocation(callbackSlot.captured)
+                    locationProvider.getLastLocation(callbackSlot.captured)
                 }
 
                 Then("Adapter returns correct location", LOCATION, adapter.location)
@@ -66,17 +68,18 @@ internal class LocationEngineAdapterTest {
     @TestFactory
     fun `Requests new location if there's no last known location`() = TestCase {
         Given("LocationEngineAdapter with mocked dependencies") {
-            val lastLocationCallbackSlot = slot< LocationEngineCallback<LocationEngineResult>>()
-            every { engine.getLastLocation(capture(lastLocationCallbackSlot)) } answers {
-                lastLocationCallbackSlot.captured.onSuccess(LocationEngineResult.create(emptyList()))
+            val lastLocationCallbackSlot = slot<GetLocationCallback>()
+            every { locationProvider.getLastLocation(capture(lastLocationCallbackSlot)) } answers {
+                lastLocationCallbackSlot.captured.run(null)
+                Cancelable { }
             }
 
-            val locationUpdatesCallbackSlot = slot< LocationEngineCallback<LocationEngineResult>>()
-            every { engine.requestLocationUpdates(any(), capture(locationUpdatesCallbackSlot), any()) } answers {
-                locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
+            val locationUpdatesCallbackSlot = slot<LocationObserver>()
+            every { locationProvider.addLocationObserver(capture(locationUpdatesCallbackSlot)) } answers {
+                locationUpdatesCallbackSlot.captured.onLocationUpdateReceived(listOf(createMockedLocation(LOCATION)))
             }
 
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
+            adapter = LocationEngineAdapter(app, locationProvider, timeProvider, locationPermissionChecker)
 
             When("LocationEngineAdapter instantiated") {
                 Verify("Location permissions checked") {
@@ -84,52 +87,15 @@ internal class LocationEngineAdapterTest {
                 }
 
                 VerifyOnce("Last known location requested") {
-                    engine.getLastLocation(lastLocationCallbackSlot.captured)
+                    locationProvider.getLastLocation(lastLocationCallbackSlot.captured)
                 }
 
                 VerifyOnce("Location updates requested") {
-                    engine.requestLocationUpdates(any(), locationUpdatesCallbackSlot.captured, any())
+                    locationProvider.addLocationObserver(locationUpdatesCallbackSlot.captured)
                 }
 
                 VerifyOnce("Unsubscribes from location updates when location is received") {
-                    engine.removeLocationUpdates(locationUpdatesCallbackSlot.captured)
-                }
-
-                Then("Adapter returns correct location", LOCATION, adapter.location)
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Requests new location if initial location request failed`() = TestCase {
-        Given("LocationEngineAdapter with mocked dependencies") {
-            val lastLocationCallbackSlot = slot< LocationEngineCallback<LocationEngineResult>>()
-            every { engine.getLastLocation(capture(lastLocationCallbackSlot)) } answers {
-                lastLocationCallbackSlot.captured.onFailure(Exception())
-            }
-
-            val locationUpdatesCallbackSlot = slot< LocationEngineCallback<LocationEngineResult>>()
-            every { engine.requestLocationUpdates(any(), capture(locationUpdatesCallbackSlot), any()) } answers {
-                locationUpdatesCallbackSlot.captured.onSuccess(LocationEngineResult.create(createMockedLocation(LOCATION)))
-            }
-
-            adapter = LocationEngineAdapter(app, engine, timeProvider, locationPermissionChecker)
-
-            When("LocationEngineAdapter instantiated") {
-                Verify("Location permissions checked") {
-                    locationPermissionChecker(app)
-                }
-
-                VerifyOnce("Last known location requested") {
-                    engine.getLastLocation(lastLocationCallbackSlot.captured)
-                }
-
-                VerifyOnce("Location updates requested") {
-                    engine.requestLocationUpdates(any(), locationUpdatesCallbackSlot.captured, any())
-                }
-
-                VerifyOnce("Unsubscribes from location updates when location is received") {
-                    engine.removeLocationUpdates(locationUpdatesCallbackSlot.captured)
+                    locationProvider.removeLocationObserver(locationUpdatesCallbackSlot.captured)
                 }
 
                 Then("Adapter returns correct location", LOCATION, adapter.location)

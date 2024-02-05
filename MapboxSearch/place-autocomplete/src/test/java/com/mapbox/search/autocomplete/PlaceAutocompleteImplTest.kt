@@ -45,7 +45,6 @@ internal class PlaceAutocompleteImplTest {
         resultFactory = spyk(PlaceAutocompleteResultFactory())
 
         placeAutocomplete = PlaceAutocompleteImpl(
-            accessToken = TEST_ACCESS_TOKEN,
             searchEngine = searchEngine,
             activityReporter = activityReporter,
             resultFactory = resultFactory
@@ -276,8 +275,6 @@ internal class PlaceAutocompleteImplTest {
     }
 
     private companion object {
-
-        const val TEST_ACCESS_TOKEN = "pk.test"
 
         const val DEFAULT_ETA_TYPE = "navigation"
 

@@ -46,6 +46,14 @@ public final class com/mapbox/search/offline/OfflineRequestOptions : android/os/
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/offline/OfflineRequestOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineRequestOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineRequestOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/offline/OfflineResponseInfo : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -54,6 +62,14 @@ public final class com/mapbox/search/offline/OfflineResponseInfo : android/os/Pa
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineResponseInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineResponseInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineResponseInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/offline/OfflineReverseGeoOptions : android/os/Parcelable {
@@ -65,6 +81,14 @@ public final class com/mapbox/search/offline/OfflineReverseGeoOptions : android/
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineReverseGeoOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineReverseGeoOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineReverseGeoOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/Parcelable {
@@ -81,6 +105,14 @@ public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/P
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchAddress$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineSearchAddress;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineSearchAddress;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/offline/OfflineSearchCallback {
@@ -145,14 +177,13 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$On
 public final class com/mapbox/search/offline/OfflineSearchEngineSettings {
 	public static final field DEFAULT_DATASET Ljava/lang/String;
 	public static final field DEFAULT_VERSION Ljava/lang/String;
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/common/TileStore;)V
+	public fun <init> (Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
+	public fun <init> (Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/common/location/LocationProvider;)V
+	public synthetic fun <init> (Lcom/mapbox/common/TileStore;Ljava/net/URI;Lcom/mapbox/common/location/LocationProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
+	public final fun getLocationProvider ()Lcom/mapbox/common/location/LocationProvider;
 	public final fun getTileStore ()Lcom/mapbox/common/TileStore;
 	public final fun getTilesBaseUri ()Ljava/net/URI;
 	public fun hashCode ()I
@@ -161,11 +192,9 @@ public final class com/mapbox/search/offline/OfflineSearchEngineSettings {
 }
 
 public final class com/mapbox/search/offline/OfflineSearchEngineSettings$Builder {
-	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ()V
 	public final fun build ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
-	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
-	public final fun setAccessToken (Ljava/lang/String;)V
+	public final fun locationProvider (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
 	public final fun tileStore (Lcom/mapbox/common/TileStore;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
 	public final fun tilesBaseUri (Ljava/net/URI;)Lcom/mapbox/search/offline/OfflineSearchEngineSettings$Builder;
 }
@@ -196,6 +225,14 @@ public final class com/mapbox/search/offline/OfflineSearchOptions$Builder {
 	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
 }
 
+public final class com/mapbox/search/offline/OfflineSearchOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineSearchOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineSearchOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -211,6 +248,14 @@ public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Pa
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineSearchResult;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineSearchResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/offline/OfflineSearchResultType : java/lang/Enum {

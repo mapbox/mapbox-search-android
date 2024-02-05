@@ -36,6 +36,10 @@ fun LocationEngine.lastKnownLocation(context: Context, callback: (Point?) -> Uni
     })
 }
 
+/**
+ * TODO
+ *
+ */
 fun LocationEngine.userDistanceTo(context: Context, destination: Point, callback: (Double?) -> Unit) {
     lastKnownLocation(context) { location ->
         if (location == null) {
@@ -48,6 +52,10 @@ fun LocationEngine.userDistanceTo(context: Context, destination: Point, callback
     }
 }
 
+/**
+ * TODO
+ *
+ */
 fun Context.isPermissionGranted(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }

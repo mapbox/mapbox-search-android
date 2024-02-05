@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.Query
-import com.mapbox.search.sample.R
 
 class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
 
@@ -16,9 +15,7 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addressAutofill = AddressAutofill.create(
-            accessToken = getString(R.string.mapbox_access_token),
-        )
+        addressAutofill = AddressAutofill.create()
 
         lifecycleScope.launchWhenCreated {
             val query = Query.create("740 15th St NW, Washington") ?: return@launchWhenCreated

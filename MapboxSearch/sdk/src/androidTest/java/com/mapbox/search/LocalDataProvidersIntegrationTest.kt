@@ -41,8 +41,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
         MapboxSearchSdk.initialize(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
-            accessToken = DEFAULT_TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(DEFAULT_TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 

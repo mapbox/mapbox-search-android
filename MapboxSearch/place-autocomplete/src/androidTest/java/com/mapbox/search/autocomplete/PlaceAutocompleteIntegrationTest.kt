@@ -4,9 +4,10 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
@@ -14,8 +15,7 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.location.defaultLocationEngine
-import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
@@ -55,15 +55,12 @@ internal class PlaceAutocompleteIntegrationTest {
 
         val engine = createEngine(
             app = APP,
-            token = TEST_ACCESS_TOKEN,
-            url = mockServer.url("").toString(),
-            locationEngine = defaultLocationEngine()
+            locationProvider = defaultLocationProvider()
         )
 
         placeAutocomplete = PlaceAutocompleteImpl(
-            accessToken = TEST_ACCESS_TOKEN,
             searchEngine = engine,
-            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN),
+            activityReporter = getUserActivityReporter(),
         )
     }
 
@@ -80,7 +77,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         val url = requireNotNull(request.requestUrl)
         assertEqualsIgnoreCase("//search/v1/suggest/$TEST_QUERY", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(TEST_OPTIONS.language.code, url.queryParameter("language"))
         assertEquals(
             TEST_OPTIONS.countries?.joinToString(",") { it.code },
@@ -120,7 +116,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         val url = requireNotNull(request.requestUrl)
         assertEqualsIgnoreCase("//search/v1/reverse/${formatPoints(TEST_LOCATION)}", url.encodedPath)
-        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
         assertEquals(TEST_OPTIONS.language.code, url.queryParameter("language"))
         assertEquals(TEST_OPTIONS.limit.toString(), url.queryParameter("limit"))
         assertEquals(
@@ -484,8 +479,6 @@ internal class PlaceAutocompleteIntegrationTest {
         val APP: Application
             get() = CONTEXT as Application
 
-        const val TEST_ACCESS_TOKEN = "pk.test"
-
         val TEST_OPTIONS = PlaceAutocompleteOptions(
             limit = 5,
             countries = listOf(IsoCountryCode.UNITED_STATES, IsoCountryCode.CANADA),
@@ -516,20 +509,17 @@ internal class PlaceAutocompleteIntegrationTest {
 
         fun createEngine(
             app: Application,
-            token: String,
-            url: String,
-            locationEngine: LocationEngine
+            locationProvider: LocationProvider
         ): TwoStepsToOneStepSearchEngineAdapter {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    token,
-                    url,
-                    ApiType.SBS,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = null,
+                    apiType = ApiType.SBS,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine), null
+                    LocationEngineAdapter(app, locationProvider), null
                 ),
             )
 

@@ -12,7 +12,11 @@ internal fun View.showKeyboard() {
     }
 }
 
-internal fun View.hideKeyboard() {
+/**
+ * TODO
+ *
+ */
+public fun View.hideKeyboard() {
     context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
 

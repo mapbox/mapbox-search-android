@@ -1,12 +1,13 @@
 package com.mapbox.search.discover
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory.createError
 import com.mapbox.bindgen.ExpectedFactory.createValue
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
@@ -20,7 +21,6 @@ import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
-import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -100,16 +100,18 @@ internal class DiscoverSearchEngine(
         }
 
         fun create(
-            accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationProvider: LocationProvider,
         ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken, null, API_TYPE, UserAgentProvider.userAgent, null
+                    baseUrl = null,
+                    apiType = API_TYPE,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine), null
+                    LocationEngineAdapter(app, locationProvider), null
                 ),
             )
 

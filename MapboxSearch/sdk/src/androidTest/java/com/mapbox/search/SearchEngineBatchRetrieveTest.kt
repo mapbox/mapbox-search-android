@@ -41,8 +41,7 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
         MapboxSearchSdk.initialize(targetApplication)
 
         val searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
@@ -273,7 +272,6 @@ internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
     private companion object {
         const val TEST_QUERY = "Starbucks"
-        const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
     }
 }
