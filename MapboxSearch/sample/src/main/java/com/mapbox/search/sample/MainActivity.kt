@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 
             mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                 override fun onIndicatorPositionChanged(point: Point) {
-                    val defaultLocation = Point.fromLngLat(-77.030729, 38.87578)
+                    val defaultLocation = Point.fromLngLat(13.404832349386826, 52.51908033891081, )
                     mapView.getMapboxMap().setCamera(
                         CameraOptions.Builder()
                             .center(defaultLocation)
@@ -184,16 +184,16 @@ class MainActivity : AppCompatActivity() {
         )
 
         // configure address tiles download
-        val regionId = "Washington DC"
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(dataset="experimental-poicat-dc-test-1"))
+        val regionId = "Berlin"
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(dataset="experimental-poi-country-mbx-small"))
 
         val geometry = Polygon.fromLngLats(listOf(
             listOf(
-                Point.fromLngLat(-78.0, 40.0),
-                Point.fromLngLat(-78.0, 37.0),
-                Point.fromLngLat(-76.0, 37.0),
-                Point.fromLngLat(-76.0, 40.0),
-                Point.fromLngLat(-78.0, 40.0)
+                Point.fromLngLat(12.950797669113996, 52.70351455240879),
+                Point.fromLngLat(12.950797669113996, 52.26445634597735),
+                Point.fromLngLat(13.920354477248736, 52.26445634597735),
+                Point.fromLngLat(13.920354477248736, 52.70351455240879),
+                Point.fromLngLat(12.950797669113996, 52.70351455240879)
             ),
         ))
         val loadOptions = TileRegionLoadOptions.Builder()
