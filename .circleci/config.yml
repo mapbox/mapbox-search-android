@@ -176,10 +176,25 @@ commands:
             	--timeout 900s \
             	--project mapbox-search-android
 
+  run-firebase-base-module-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for the Base module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :base:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test base/build/outputs/apk/androidTest/debug/base-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
   run-firebase-sdk-instrumentation:
     steps:
       - run:
-          name: Run instrumentation tests for SDK module on Firebase
+          name: Run instrumentation tests for the SDK module on Firebase
           no_output_timeout: 15m
           command: |
             cd MapboxSearch
@@ -194,13 +209,58 @@ commands:
   run-firebase-offline-sdk-instrumentation:
     steps:
       - run:
-          name: Run instrumentation tests for Offline SDK module on Firebase
+          name: Run instrumentation tests for the Offline SDK module on Firebase
           no_output_timeout: 15m
           command: |
             cd MapboxSearch
             ./gradlew :offline:assembleDebugAndroidTest -Pcoverage
             gcloud firebase test android run \
             	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test offline/build/outputs/apk/androidTest/debug/offline-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
+  run-firebase-discover-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for the Discover module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :discover:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test discover/build/outputs/apk/androidTest/debug/discover-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
+  run-firebase-place-autocomplete-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for the Place Autocomplete module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :place-autocomplete:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test place-autocomplete/build/outputs/apk/androidTest/debug/place-autocomplete-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Nexus6,version=21,locale=en,orientation=portrait \
+            	--timeout 900s \
+            	--project mapbox-search-android
+
+  run-firebase-address-autofill-instrumentation:
+    steps:
+      - run:
+          name: Run instrumentation tests for the Address Autofill module on Firebase
+          no_output_timeout: 15m
+          command: |
+            cd MapboxSearch
+            ./gradlew :autofill:assembleDebugAndroidTest -Pcoverage
+            gcloud firebase test android run \
+            	--type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test autofill/build/outputs/apk/androidTest/debug/autofill-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
             	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=21,locale=en,orientation=portrait \
             	--timeout 900s \
@@ -303,8 +363,12 @@ jobs:
       - login-google-cloud-platform
       - clean-build
       - assemble-sample-debug
+      - run-firebase-base-module-instrumentation
       - run-firebase-sdk-instrumentation
       - run-firebase-offline-sdk-instrumentation
+      - run-firebase-discover-instrumentation
+      - run-firebase-place-autocomplete-instrumentation
+      - run-firebase-address-autofill-instrumentation
 
   ui-instrumentation-tests:
     executor: default-executor
