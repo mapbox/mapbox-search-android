@@ -44,7 +44,8 @@ internal class DiscoverIntegrationTest {
         mockServer = MockWebServer()
 
         val engine = createDiscoverApiSearchEngine(
-            app = APP
+            app = APP,
+            url = mockServer.url("").toString()
         )
 
         discover = DiscoverImpl(
@@ -326,11 +327,12 @@ internal class DiscoverIntegrationTest {
         }
 
         fun createDiscoverApiSearchEngine(
-            app: Application
+            app: Application,
+            url: String
         ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
+                    baseUrl = url,
                     apiType = ApiType.SBS,
                     sdkInformation = BaseSearchSdkInitializer.sdkInformation,
                     eventsUrl = null,
