@@ -143,7 +143,7 @@ internal class PlaceAutocompleteIntegrationTest {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 val path = requireNotNull(request.path)
                 val responsePath = when {
-                    path.contains("/suggest") -> "suggestions_successful_response.json"
+                    path.contains("/suggest") -> "suggestions_successful_with_coordinates_response.json"
                     path.contains("/retrieve") -> {
                         val body = String(request.body.readByteArray())
                         when (val id = JSONObject(body).getString("id")) {
@@ -171,13 +171,13 @@ internal class PlaceAutocompleteIntegrationTest {
         val suggestion = suggestions.first()
         assertEquals("Starbucks", suggestion.name)
         assertEquals(
-            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
+            "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestion.formattedAddress
         )
         assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestion.coordinate)
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
-        assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
+        assertEquals(listOf("food", "food and drink", "coffee shop", "coffee", "cafe", "bakery", "teahouse"), suggestion.categories)
 
         val selectResponse = runBlocking {
             placeAutocomplete.select(suggestion)
@@ -227,12 +227,12 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(listOf(ImageInfo("https://test.com/img-other.jpg", 150, 350)), result.otherPhotos)
 
         assertEquals(
-            "Virginia, United States",
+            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestions[1].formattedAddress
         )
 
         assertEquals(
-            "Arlington, Virginia, United States",
+            "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestions[2].formattedAddress
         )
     }
