@@ -171,7 +171,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
         val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION), callback)
 
         val res = callback.getResultBlocking()
         assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
@@ -255,8 +255,8 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 query = TEST_CATEGORY,
                 endpoint = "category",
                 options = SearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION),
-                proximityRewritten = true,
-                originRewritten = true,
+                proximityRewritten = false,
+                originRewritten = false,
                 sessionID = "any",
                 requestContext = SearchRequestContext(
                     apiType = CoreApiType.SBS,
