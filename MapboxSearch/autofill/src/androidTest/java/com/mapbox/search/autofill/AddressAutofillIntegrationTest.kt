@@ -45,6 +45,7 @@ internal class AddressAutofillIntegrationTest {
 
         val engine = createAutofillSearchEngine(
             app = APP,
+            url = mockServer.url("").toString(),
             locationProvider = defaultLocationProvider()
         )
 
@@ -272,6 +273,7 @@ internal class AddressAutofillIntegrationTest {
 
         fun createAutofillSearchEngine(
             app: Application,
+            url: String,
             locationProvider: LocationProvider
         ): TwoStepsToOneStepSearchEngineAdapter {
             val coreEngine = CoreSearchEngine(
