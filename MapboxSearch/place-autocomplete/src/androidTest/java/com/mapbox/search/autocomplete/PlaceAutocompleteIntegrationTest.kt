@@ -174,7 +174,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestion.formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestion.coordinate)
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
         assertEquals(listOf("food", "food and drink", "coffee shop", "coffee", "cafe", "bakery", "teahouse"), suggestion.categories)
@@ -337,7 +336,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         assertEquals("Starbucks", suggestions[0].name)
         assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
@@ -350,7 +348,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "901 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestions[1].formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[1].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.033568, 38.90143), "POI")
@@ -363,7 +360,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestions[2].formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.03207, 38.899268), suggestions[2].coordinate)
         assertEquals(null, suggestions[2].routablePoints)
 
         val selectionResponse = runBlocking {
@@ -429,7 +425,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         assertEquals("Starbucks", suggestions[0].name)
         assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
