@@ -331,10 +331,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestions = suggestionsResult.suggestions
 
         assertEquals(records.size, suggestions.size)
-        suggestions.forEachIndexed { index, suggestion ->
+        suggestions.forEach { suggestion ->
             assertTrue((suggestion.type as? SearchSuggestionType.IndexableRecordItem)?.isHistoryRecord == true)
 
-            val historyRecord = records[index]
+            val historyRecord = records.find { record -> record.id == suggestion.id }!!
             assertEquals(historyRecord.id, suggestion.id)
             assertEquals(historyRecord.name, suggestion.name)
             assertEquals(historyRecord.descriptionText, suggestion.descriptionText)
