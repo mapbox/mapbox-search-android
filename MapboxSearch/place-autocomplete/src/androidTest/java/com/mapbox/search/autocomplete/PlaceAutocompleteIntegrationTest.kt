@@ -243,7 +243,7 @@ internal class PlaceAutocompleteIntegrationTest {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 val path = requireNotNull(request.path)
                 return when {
-                    path.contains("/suggest") -> createSuccessfulResponse("suggestions_successful_response.json")
+                    path.contains("/suggest") -> createSuccessfulResponse("suggestions_successful_with_coordinates_response.json")
                     path.contains("/retrieve") -> {
                         val body = String(request.body.readByteArray())
                         when (val id = JSONObject(body).getString("id")) {
@@ -265,15 +265,15 @@ internal class PlaceAutocompleteIntegrationTest {
         assertTrue(response.isValue)
 
         val suggestions = requireNotNull(response.value)
-        assertEquals(2, suggestions.size)
+        assertEquals(3, suggestions.size)
 
         assertEquals(
-            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
+            "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestions[0].formattedAddress
         )
 
         assertEquals(
-            "Virginia, United States",
+            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestions[1].formattedAddress
         )
     }
