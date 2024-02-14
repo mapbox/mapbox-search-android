@@ -274,31 +274,32 @@ internal class BaseRawSearchResultTest {
         ) + BaseRawResultType.values().associate { listOf(it) to true }
 
         val CORE_EMPTY_SEARCH_RESULT = CoreSearchResult(
-            "Empty result id",
-            listOf(ResultType.PLACE, ResultType.REGION),
-            listOf("Result name"),
-            listOf("Default"),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            -1,
-            null,
-            null
+            id = "Empty result id",
+            mapboxId = null,
+            types = listOf(ResultType.PLACE, ResultType.REGION),
+            names = listOf("Result name"),
+            languages = listOf("Default"),
+            addresses = null,
+            descrAddress = null,
+            matchingName = null,
+            fullAddress = null,
+            distance = null,
+            eta = null,
+            center = null,
+            accuracy = null,
+            routablePoints = null,
+            categories = null,
+            categoryIDs = null,
+            brand = null,
+            brandID = null,
+            icon = null,
+            metadata = null,
+            externalIDs = null,
+            layer = null,
+            userRecordID = null,
+            userRecordPriority = -1,
+            action = null,
+            serverIndex = null
         )
 
         val BASE_EMPTY_SEARCH_RESULT = BaseRawSearchResult(
@@ -361,33 +362,34 @@ internal class BaseRawSearchResultTest {
 
         fun createCoreSearchResult(types: List<ResultType> = listOf(ResultType.POI)): CoreSearchResult {
             return CoreSearchResult(
-                "test poi result id",
-                types,
-                listOf("Test filled search result"),
-                listOf("en", "fr", "de"),
-                listOf(
+                id = "test poi result id",
+                mapboxId = null,
+                types = types,
+                names = listOf("Test filled search result"),
+                languages = listOf("en", "fr", "de"),
+                addresses = listOf(
                     createCoreSearchAddress(country = createCoreSearchAddressCountry("country")),
                     createCoreSearchAddress(neighborhood = "neighborhood"),
                     createCoreSearchAddress(postcode = "postcode")
                 ),
-                "Test description address",
-                "Test matching name",
-                "Test full address",
-                123.456,
-                123.0,
-                Point.fromLngLat(10.0, 11.0),
-                CoreResultAccuracy.POINT,
-                listOf(
+                descrAddress = "Test description address",
+                matchingName = "Test matching name",
+                fullAddress = "Test full address",
+                distance = 123.456,
+                eta = 123.0,
+                center = Point.fromLngLat(10.0, 11.0),
+                accuracy = CoreResultAccuracy.POINT,
+                routablePoints = listOf(
                     CoreRoutablePoint(Point.fromLngLat(1.0, 2.0), "test point 1"),
                     CoreRoutablePoint(Point.fromLngLat(2.0, 3.0), "test point 2"),
                     CoreRoutablePoint(Point.fromLngLat(3.0, 4.0), "test point 3"),
                 ),
-                listOf("category 1", "category 2", "category 3"),
-                listOf("category id 1", "category id 2", "category id 3"),
-                listOf("test brand"),
-                "test brand id",
-                "test maki",
-                CoreResultMetadata(
+                categories = listOf("category 1", "category 2", "category 3"),
+                categoryIDs = listOf("category id 1", "category id 2", "category id 3"),
+                brand = listOf("test brand"),
+                brandID = "test brand id",
+                icon = "test maki",
+                metadata = CoreResultMetadata(
                     3456,
                     "+902 10 70 77",
                     "https://www.museodelprado.es/en/visit-the-museum",
@@ -400,12 +402,12 @@ internal class BaseRawSearchResultTest {
                     null,
                     hashMapOf()
                 ),
-                hashMapOf("external id 1" to "123", "external id 2" to "456", "external id 3" to "789"),
-                "test layer id",
-                "test user record id",
-                -1,
-                CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
-                123
+                externalIDs = hashMapOf("external id 1" to "123", "external id 2" to "456", "external id 3" to "789"),
+                layer = "test layer id",
+                userRecordID = "test user record id",
+                userRecordPriority = -1,
+                action = CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
+                serverIndex = 123
             )
         }
 
