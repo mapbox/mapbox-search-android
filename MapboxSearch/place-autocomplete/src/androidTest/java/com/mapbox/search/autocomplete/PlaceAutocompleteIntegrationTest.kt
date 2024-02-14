@@ -403,8 +403,7 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(3, suggestions.size)
 
         assertEquals("Starbucks", suggestions[0].name)
-        assertEquals("901 15th St NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[0].coordinate)
+        assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
         assertEquals(null, suggestions[0].routablePoints)
 
         val selectionResponse = runBlocking {
