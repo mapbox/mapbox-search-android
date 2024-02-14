@@ -55,6 +55,7 @@ internal class PlaceAutocompleteIntegrationTest {
 
         val engine = createEngine(
             app = APP,
+            url = mockServer.url("").toString(),
             locationProvider = defaultLocationProvider()
         )
 
@@ -509,11 +510,12 @@ internal class PlaceAutocompleteIntegrationTest {
 
         fun createEngine(
             app: Application,
+            url: String,
             locationProvider: LocationProvider
         ): TwoStepsToOneStepSearchEngineAdapter {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
+                    baseUrl = url,
                     apiType = ApiType.SBS,
                     sdkInformation = BaseSearchSdkInitializer.sdkInformation,
                     eventsUrl = null,
