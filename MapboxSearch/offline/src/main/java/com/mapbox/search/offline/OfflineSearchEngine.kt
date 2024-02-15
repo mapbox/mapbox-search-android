@@ -17,7 +17,6 @@ import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
-import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -278,24 +277,17 @@ public interface OfflineSearchEngine {
                     TileDataDomain.SEARCH,
                     Value.valueOf(tilesBaseUri.toString())
                 )
-
-                tileStore.setOption(
-                    TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-                    TileDataDomain.SEARCH,
-                    Value.valueOf(accessToken)
-                )
             }
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    settings.accessToken,
-                    null,
-                    CoreApiType.SBS,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = null,
+                    apiType = CoreApiType.SBS,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, settings.locationEngine),
+                    LocationEngineAdapter(app, settings.locationProvider),
                     null
                 ),
             )
@@ -310,7 +302,7 @@ public interface OfflineSearchEngine {
             return OfflineSearchEngineImpl(
                 settings = settings,
                 coreEngine = coreEngine,
-                activityReporter = getUserActivityReporter(settings.accessToken),
+                activityReporter = getUserActivityReporter(),
                 requestContextProvider = requestContextProvider,
                 searchResultFactory = searchResultFactory,
             )

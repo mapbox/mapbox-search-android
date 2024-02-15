@@ -45,7 +45,7 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(getString(R.string.mapbox_access_token))
+            new SearchEngineSettings()
         );
 
         final CategorySearchOptions options = new CategorySearchOptions.Builder()

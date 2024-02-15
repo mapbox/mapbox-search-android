@@ -34,14 +34,26 @@ fun LocationEngine.lastKnownLocation(context: Context, callback: (Point?) -> Uni
     })
 }
 
+/**
+ * TODO
+ *
+ */
 fun View.hideKeyboard() {
     context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
 
+/**
+ * TODO
+ *
+ */
 fun Context.isPermissionGranted(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
+/**
+ * TODO
+ *
+ */
 fun Context.showToast(@StringRes resId: Int) {
     Toast.makeText(applicationContext, getString(resId), Toast.LENGTH_SHORT).show()
 }

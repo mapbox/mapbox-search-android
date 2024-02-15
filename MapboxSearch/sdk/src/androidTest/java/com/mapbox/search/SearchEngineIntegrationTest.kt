@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
@@ -97,6 +98,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     @Before
     override fun setUp() {
         super.setUp()
+        MapboxOptions.accessToken = TEST_ACCESS_TOKEN
 
         mockServer = MockWebServer()
 
@@ -108,8 +110,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             geocodingEndpointBaseUrl = mockServer.url("").toString(),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
@@ -333,10 +334,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestions = suggestionsResult.suggestions
 
         assertEquals(records.size, suggestions.size)
-        suggestions.forEachIndexed { index, suggestion ->
+        suggestions.forEach { suggestion ->
             assertTrue((suggestion.type as? SearchSuggestionType.IndexableRecordItem)?.isHistoryRecord == true)
 
-            val historyRecord = records[index]
+            val historyRecord = records.find { record -> record.id == suggestion.id }!!
             assertEquals(historyRecord.id, suggestion.id)
             assertEquals(historyRecord.name, suggestion.name)
             assertEquals(historyRecord.descriptionText, suggestion.descriptionText)

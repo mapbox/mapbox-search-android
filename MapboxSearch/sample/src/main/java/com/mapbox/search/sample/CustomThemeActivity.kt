@@ -59,11 +59,11 @@ class CustomThemeActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            settings = SearchEngineSettings(getString(R.string.mapbox_access_token))
+            settings = SearchEngineSettings()
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(getString(R.string.mapbox_access_token))
+            OfflineSearchEngineSettings()
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(

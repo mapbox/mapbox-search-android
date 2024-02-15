@@ -1,16 +1,16 @@
 public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
-	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
-	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public static fun create ()Lcom/mapbox/search/autofill/AddressAutofill;
+	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autofill/AddressAutofill;
 	public abstract fun select (Lcom/mapbox/search/autofill/AddressAutofillSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofill$Companion {
-	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autofill/AddressAutofill;
-	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autofill/AddressAutofill;
-	public static synthetic fun create$default (Lcom/mapbox/search/autofill/AddressAutofill$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public final fun create ()Lcom/mapbox/search/autofill/AddressAutofill;
+	public final fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autofill/AddressAutofill;
+	public static synthetic fun create$default (Lcom/mapbox/search/autofill/AddressAutofill$Companion;Lcom/mapbox/common/location/LocationProvider;ILjava/lang/Object;)Lcom/mapbox/search/autofill/AddressAutofill;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofillOptions : android/os/Parcelable {
@@ -28,6 +28,14 @@ public final class com/mapbox/search/autofill/AddressAutofillOptions : android/o
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autofill/AddressAutofillOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autofill/AddressAutofillOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autofill/AddressAutofillOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autofill/AddressAutofillResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -37,6 +45,14 @@ public final class com/mapbox/search/autofill/AddressAutofillResult : android/os
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autofill/AddressAutofillResult;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autofill/AddressAutofillResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/AddressAutofillSuggestion : android/os/Parcelable {
@@ -49,6 +65,14 @@ public final class com/mapbox/search/autofill/AddressAutofillSuggestion : androi
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressAutofillSuggestion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autofill/AddressAutofillSuggestion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autofill/AddressAutofillSuggestion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/AddressComponents : android/os/Parcelable {
@@ -70,6 +94,14 @@ public final class com/mapbox/search/autofill/AddressComponents : android/os/Par
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autofill/AddressComponents$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autofill/AddressComponents;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autofill/AddressComponents;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autofill/BuildConfig {

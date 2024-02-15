@@ -15,13 +15,13 @@ class BaseSearchSdkInitializer : Initializer<Unit> {
         appContext = context.applicationContext
         CommonSingletonModuleProvider.loaderInstance.load(SEARCH_SDK_NATIVE_LIBRARY_NAME)
 
-        SdkInfoRegistryFactory.getInstance().registerSdkInformation(
-            SdkInformation(
-                UserAgentProvider.sdkName,
-                UserAgentProvider.sdkVersionName,
-                UserAgentProvider.sdkPackageName
-            )
+        sdkInformation = SdkInformation(
+            UserAgentProvider.sdkName,
+            UserAgentProvider.sdkVersionName,
+            UserAgentProvider.sdkPackageName
         )
+
+        SdkInfoRegistryFactory.getInstance().registerSdkInformation(sdkInformation)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
@@ -35,5 +35,8 @@ class BaseSearchSdkInitializer : Initializer<Unit> {
 
         val app: Application
             get() = appContext as Application
+
+        lateinit var sdkInformation: SdkInformation
+            private set
     }
 }

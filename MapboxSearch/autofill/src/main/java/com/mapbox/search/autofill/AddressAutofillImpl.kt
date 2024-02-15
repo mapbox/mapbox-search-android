@@ -1,11 +1,11 @@
 package com.mapbox.search.autofill
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.MapboxApiClient
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -20,7 +20,6 @@ import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
-import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -29,10 +28,9 @@ import java.util.concurrent.Executors
  * Temporary implementation of the [AddressAutofill] based on the two-step search.
  */
 internal class AddressAutofillImpl(
-    override val accessToken: String,
     private val searchEngine: TwoStepsToOneStepSearchEngineAdapter,
     private val activityReporter: UserActivityReporterInterface
-) : AddressAutofill, MapboxApiClient {
+) : AddressAutofill {
 
     override suspend fun suggestions(
         point: Point,
@@ -84,20 +82,18 @@ internal class AddressAutofillImpl(
         }
 
         fun create(
-            accessToken: String,
             app: Application,
-            locationEngine: LocationEngine,
+            locationProvider: LocationProvider?,
         ): AddressAutofillImpl {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    accessToken,
-                    null,
-                    CoreApiType.AUTOFILL,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = null,
+                    apiType = CoreApiType.AUTOFILL,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationEngine),
+                    LocationEngineAdapter(app, locationProvider),
                     null
                 ),
             )
@@ -112,9 +108,8 @@ internal class AddressAutofillImpl(
             )
 
             return AddressAutofillImpl(
-                accessToken = accessToken,
                 searchEngine = engine,
-                activityReporter = getUserActivityReporter(accessToken)
+                activityReporter = getUserActivityReporter()
             )
         }
 

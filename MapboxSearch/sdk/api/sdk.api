@@ -72,6 +72,14 @@ public final class com/mapbox/search/CategorySearchOptions$Builder {
 	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/CategorySearchOptions$Builder;
 }
 
+public final class com/mapbox/search/CategorySearchOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/CategorySearchOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/CategorySearchOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/EtaType : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lcom/mapbox/search/EtaType$Companion;
@@ -86,6 +94,14 @@ public final class com/mapbox/search/EtaType : android/os/Parcelable {
 }
 
 public final class com/mapbox/search/EtaType$Companion {
+}
+
+public final class com/mapbox/search/EtaType$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/EtaType;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/EtaType;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/QueryType : java/lang/Enum {
@@ -119,6 +135,14 @@ public final class com/mapbox/search/RequestOptions : android/os/Parcelable {
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/RequestOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/RequestOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/RequestOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/ResponseInfo : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -128,6 +152,14 @@ public final class com/mapbox/search/ResponseInfo : android/os/Parcelable {
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/ResponseInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ResponseInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/ResponseInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/ReverseGeoOptions : android/os/Parcelable {
@@ -168,6 +200,14 @@ public final class com/mapbox/search/ReverseGeoOptions$Builder {
 	public final fun types ([Lcom/mapbox/search/QueryType;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 }
 
+public final class com/mapbox/search/ReverseGeoOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ReverseGeoOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/ReverseGeoOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/ReverseMode : java/lang/Enum {
 	public static final field DISTANCE Lcom/mapbox/search/ReverseMode;
 	public static final field SCORE Lcom/mapbox/search/ReverseMode;
@@ -185,6 +225,14 @@ public final class com/mapbox/search/RouteOptions : android/os/Parcelable {
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/RouteOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/RouteOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/RouteOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract class com/mapbox/search/RouteOptions$Deviation : android/os/Parcelable {
@@ -207,6 +255,14 @@ public final class com/mapbox/search/RouteOptions$Deviation$SarType : android/os
 public final class com/mapbox/search/RouteOptions$Deviation$SarType$Companion {
 }
 
+public final class com/mapbox/search/RouteOptions$Deviation$SarType$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/RouteOptions$Deviation$SarType;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/RouteOptions$Deviation$SarType;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/RouteOptions$Deviation$Time : com/mapbox/search/RouteOptions$Deviation {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (JLjava/util/concurrent/TimeUnit;)V
@@ -220,6 +276,14 @@ public final class com/mapbox/search/RouteOptions$Deviation$Time : com/mapbox/se
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/RouteOptions$Deviation$Time$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/RouteOptions$Deviation$Time;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/RouteOptions$Deviation$Time;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/SearchCallback {
@@ -283,18 +347,17 @@ public final class com/mapbox/search/SearchEngine$DefaultImpls {
 
 public final class com/mapbox/search/SearchEngineSettings {
 	public static final field DEFAULT_ENDPOINT_GEOCODING Ljava/lang/String;
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
+	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/common/location/LocationProvider;)V
+	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;)V
+	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
+	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAccessToken ()Ljava/lang/String;
 	public final fun getGeocodingEndpointBaseUrl ()Ljava/lang/String;
-	public final fun getLocationEngine ()Lcom/mapbox/android/core/location/LocationEngine;
+	public final fun getLocationProvider ()Lcom/mapbox/common/location/LocationProvider;
 	public final fun getSingleBoxSearchBaseUrl ()Ljava/lang/String;
 	public final fun getViewportProvider ()Lcom/mapbox/search/ViewportProvider;
 	public fun hashCode ()I
@@ -303,12 +366,10 @@ public final class com/mapbox/search/SearchEngineSettings {
 }
 
 public final class com/mapbox/search/SearchEngineSettings$Builder {
-	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ()V
 	public final fun build ()Lcom/mapbox/search/SearchEngineSettings;
 	public final fun geocodingEndpointBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
-	public final fun getAccessToken ()Ljava/lang/String;
-	public final fun locationEngine (Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/SearchEngineSettings$Builder;
-	public final fun setAccessToken (Ljava/lang/String;)V
+	public final fun locationProvider (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun singleBoxSearchBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun viewportProvider (Lcom/mapbox/search/ViewportProvider;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 }
@@ -330,6 +391,14 @@ public final class com/mapbox/search/SearchNavigationOptions : android/os/Parcel
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/SearchNavigationOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/SearchNavigationOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/SearchNavigationOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/SearchOptions : android/os/Parcelable {
@@ -396,6 +465,14 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/SearchOptions$Builder;
 }
 
+public final class com/mapbox/search/SearchOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/SearchOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/SearchOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -416,6 +493,14 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/SearchResultMetadata$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/SearchResultMetadata;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/SearchResultMetadata;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/SearchSelectionCallback : com/mapbox/search/SearchSuggestionsCallback {
@@ -439,6 +524,14 @@ public final class com/mapbox/search/SelectOptions : android/os/Parcelable {
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/SelectOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/SelectOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/SelectOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/ServiceProvider {
@@ -521,6 +614,30 @@ public final class com/mapbox/search/analytics/MissingResultFeedbackEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/mapbox/search/analytics/events/AppMetadata$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/analytics/events/AppMetadata;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/analytics/events/AppMetadata;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/analytics/events/SearchResultEntry$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/analytics/events/SearchResultEntry;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/analytics/events/SearchResultEntry;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/analytics/events/SearchResultsInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/analytics/events/SearchResultsInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/analytics/events/SearchResultsInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/record/FavoriteRecord : android/os/Parcelable, com/mapbox/search/record/IndexableRecord {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/result/SearchAddress;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/result/SearchResultType;Lcom/mapbox/search/SearchResultMetadata;)V
@@ -542,6 +659,14 @@ public final class com/mapbox/search/record/FavoriteRecord : android/os/Parcelab
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/record/FavoriteRecord$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/record/FavoriteRecord;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/record/FavoriteRecord;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/record/FavoritesDataProvider : com/mapbox/search/record/LocalDataProvider {
@@ -616,6 +741,14 @@ public final class com/mapbox/search/record/HistoryRecord : android/os/Parcelabl
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/record/HistoryRecord$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/record/HistoryRecord;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/record/HistoryRecord;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public abstract interface class com/mapbox/search/record/IndexableDataProvider {
@@ -718,11 +851,27 @@ public final class com/mapbox/search/result/ResultAccuracy$Approximate : com/map
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/ResultAccuracy$Approximate$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Approximate;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Approximate;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/ResultAccuracy$Interpolated : com/mapbox/search/result/ResultAccuracy {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Interpolated;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Interpolated$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Interpolated;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Interpolated;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/ResultAccuracy$Intersection : com/mapbox/search/result/ResultAccuracy {
@@ -732,11 +881,27 @@ public final class com/mapbox/search/result/ResultAccuracy$Intersection : com/ma
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/ResultAccuracy$Intersection$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Intersection;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Intersection;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/ResultAccuracy$Parcel : com/mapbox/search/result/ResultAccuracy {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Parcel;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Parcel$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Parcel;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Parcel;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/ResultAccuracy$Point : com/mapbox/search/result/ResultAccuracy {
@@ -746,6 +911,14 @@ public final class com/mapbox/search/result/ResultAccuracy$Point : com/mapbox/se
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/ResultAccuracy$Point$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Point;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Point;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/ResultAccuracy$Rooftop : com/mapbox/search/result/ResultAccuracy {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Rooftop;
@@ -753,11 +926,27 @@ public final class com/mapbox/search/result/ResultAccuracy$Rooftop : com/mapbox/
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/ResultAccuracy$Rooftop$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Rooftop;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Rooftop;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/ResultAccuracy$Street : com/mapbox/search/result/ResultAccuracy {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Street;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Street$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Street;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Street;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/SearchAddress : android/os/Parcelable {
@@ -808,6 +997,14 @@ public final class com/mapbox/search/result/SearchAddress$Builder {
 	public final fun postcode (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun region (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun street (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
+}
+
+public final class com/mapbox/search/result/SearchAddress$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchAddress;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchAddress;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/SearchAddress$FormatComponent {
@@ -876,6 +1073,14 @@ public final class com/mapbox/search/result/SearchResult : android/os/Parcelable
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/SearchResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchResult;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/SearchResultType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/result/SearchResultType;
 	public static final field BLOCK Lcom/mapbox/search/result/SearchResultType;
@@ -917,6 +1122,14 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/SearchSuggestion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract class com/mapbox/search/result/SearchSuggestionType : android/os/Parcelable {
 }
 
@@ -932,6 +1145,14 @@ public final class com/mapbox/search/result/SearchSuggestionType$Brand : com/map
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/SearchSuggestionType$Brand$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestionType$Brand;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestionType$Brand;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/SearchSuggestionType$Category : com/mapbox/search/result/SearchSuggestionType {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -940,6 +1161,14 @@ public final class com/mapbox/search/result/SearchSuggestionType$Category : com/
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/SearchSuggestionType$Category$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestionType$Category;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestionType$Category;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/SearchSuggestionType$IndexableRecordItem : com/mapbox/search/result/SearchSuggestionType {
@@ -955,11 +1184,27 @@ public final class com/mapbox/search/result/SearchSuggestionType$IndexableRecord
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/result/SearchSuggestionType$IndexableRecordItem$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestionType$IndexableRecordItem;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestionType$IndexableRecordItem;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/SearchSuggestionType$Query : com/mapbox/search/result/SearchSuggestionType {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/SearchSuggestionType$Query;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/SearchSuggestionType$Query$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestionType$Query;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestionType$Query;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/result/SearchSuggestionType$SearchResultSuggestion : com/mapbox/search/result/SearchSuggestionType {
@@ -970,5 +1215,13 @@ public final class com/mapbox/search/result/SearchSuggestionType$SearchResultSug
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/SearchSuggestionType$SearchResultSuggestion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/SearchSuggestionType$SearchResultSuggestion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/SearchSuggestionType$SearchResultSuggestion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 

@@ -1,16 +1,25 @@
 package com.mapbox.search.sample
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -27,6 +36,9 @@ import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.autocomplete.PlaceAutocompleteType
+import com.mapbox.search.base.location.defaultLocationProvider
+import com.mapbox.search.base.utils.extension.toPoint
+import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.SearchResultsView
@@ -54,22 +66,22 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_autocomplete)
 
-        placeAutocomplete = PlaceAutocomplete.create(getString(R.string.mapbox_access_token))
+        placeAutocomplete = PlaceAutocomplete.create()
 
         queryEditText = findViewById(R.id.query_text)
 
         mapView = findViewById(R.id.map_view)
-        mapView.getMapboxMap().also { mapboxMap ->
+        mapView.mapboxMap.also { mapboxMap ->
             this.mapboxMap = mapboxMap
 
-            mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+            mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
                 mapView.location.updateSettings {
                     enabled = true
                 }
 
                 mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                     override fun onIndicatorPositionChanged(point: Point) {
-                        mapView.getMapboxMap().setCamera(
+                        mapView.mapboxMap.setCamera(
                             CameraOptions.Builder()
                                 .center(point)
                                 .zoom(14.0)
@@ -121,9 +133,9 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
             }
         }
 
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
+        defaultLocationProvider()?.getLastLocation { location ->
+            location?.toPoint()?.let { point ->
+                mapView.mapboxMap.setCamera(
                     CameraOptions.Builder()
                         .center(point)
                         .zoom(9.0)
@@ -210,6 +222,26 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         }
     }
 
+    private fun Context.showToast(@StringRes resId: Int): Unit = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+
+    private fun Context.isPermissionGranted(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+
+    private fun geoIntent(point: Point): Intent =
+        Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
+
+    private fun shareIntent(searchPlace: SearchPlace): Intent {
+        val text = "${searchPlace.name}. " +
+                "Address: ${searchPlace.address?.formattedAddress(SearchAddress.FormatStyle.Short) ?: "unknown"}. " +
+                "Geo coordinate: (lat=${searchPlace.coordinate.latitude()}, lon=${searchPlace.coordinate.longitude()})"
+
+        return Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+    }
+
     private fun openPlaceCard(suggestion: PlaceAutocompleteSuggestion) {
         ignoreNextQueryUpdate = true
         queryEditText.setText("")
@@ -232,11 +264,14 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         mapMarkersManager.clearMarkers()
     }
 
+    private fun View.hideKeyboard() =
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
+
     private class MapMarkersManager(mapView: MapView) {
 
-        private val mapboxMap = mapView.getMapboxMap()
+        private val mapboxMap = mapView.mapboxMap
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         fun clearMarkers() {
             markers.clear()
@@ -307,5 +342,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
             PlaceAutocompleteType.AdministrativeUnit.Street,
             PlaceAutocompleteType.AdministrativeUnit.Address,
         )
+
+        private fun dpToPx(dp: Int): Int = (dp * Resources.getSystem().displayMetrics.density).toInt()
     }
 }

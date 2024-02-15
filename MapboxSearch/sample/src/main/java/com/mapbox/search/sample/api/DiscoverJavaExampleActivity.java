@@ -39,7 +39,7 @@ public class DiscoverJavaExampleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Discover discover = Discover.create(getString(R.string.mapbox_access_token));
+        final Discover discover = Discover.create();
 
         final BoundingBox dcRegion = BoundingBox.fromPoints(
                 Point.fromLngLat(-77.04482563320445, 38.89626984069077),

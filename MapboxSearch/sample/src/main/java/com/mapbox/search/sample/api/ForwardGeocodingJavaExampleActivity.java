@@ -57,7 +57,7 @@ public class ForwardGeocodingJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(getString(R.string.mapbox_access_token))
+            new SearchEngineSettings()
         );
 
         final SearchOptions options = new SearchOptions.Builder()

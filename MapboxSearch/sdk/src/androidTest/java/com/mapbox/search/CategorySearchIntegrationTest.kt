@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
@@ -79,6 +80,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
     @Before
     override fun setUp() {
         super.setUp()
+        MapboxOptions.accessToken = TEST_ACCESS_TOKEN
 
         mockServer = MockWebServer()
 
@@ -90,8 +92,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val searchEngineSettings = SearchEngineSettings(
-            accessToken = TEST_ACCESS_TOKEN,
-            locationEngine = FixedPointLocationEngine(TEST_USER_LOCATION),
+            locationProvider = FixedPointLocationEngine(TEST_USER_LOCATION),
             singleBoxSearchBaseUrl = mockServer.url("").toString()
         )
 
@@ -173,7 +174,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/category/successful_response.json"))
 
         val callback = BlockingSearchCallback()
-        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(), callback)
+        searchEngine.search(TEST_CATEGORY, CategorySearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION), callback)
 
         val res = callback.getResultBlocking()
         assertTrue(res is BlockingSearchCallback.SearchEngineResult.Results)
@@ -257,8 +258,8 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 query = TEST_CATEGORY,
                 endpoint = "category",
                 options = SearchOptions(proximity = TEST_USER_LOCATION, origin = TEST_USER_LOCATION),
-                proximityRewritten = true,
-                originRewritten = true,
+                proximityRewritten = false,
+                originRewritten = false,
                 sessionID = "any",
                 requestContext = SearchRequestContext(
                     apiType = CoreApiType.SBS,

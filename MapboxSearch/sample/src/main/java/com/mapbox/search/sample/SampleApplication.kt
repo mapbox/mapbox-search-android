@@ -1,16 +1,19 @@
 package com.mapbox.search.sample
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
-import com.mapbox.common.DownloadOptions
 import com.mapbox.common.HttpRequest
+import com.mapbox.common.HttpRequestOrResponse
 import com.mapbox.common.HttpResponse
 import com.mapbox.common.HttpServiceFactory
 import com.mapbox.common.HttpServiceInterceptorInterface
+import com.mapbox.common.HttpServiceInterceptorRequestContinuation
+import com.mapbox.common.HttpServiceInterceptorResponseContinuation
 
 open class SampleApplication : Application() {
 
@@ -22,6 +25,7 @@ open class SampleApplication : Application() {
         LeakCanaryConfiguration.apply()
     }
 
+    @SuppressLint("RestrictedApi")
     private fun enableDebugHttpLogs(onlySearchLogs: Boolean = true) {
         if (!BuildConfig.DEBUG) {
             return
@@ -32,25 +36,18 @@ open class SampleApplication : Application() {
         }
 
         HttpServiceFactory.getInstance().setInterceptor(object : HttpServiceInterceptorInterface {
-            override fun onRequest(request: HttpRequest): HttpRequest {
+            override fun onRequest(request: HttpRequest, continuation: HttpServiceInterceptorRequestContinuation) {
                 if (filter(request.url)) {
                     Log.i("SearchSdkHttp", "onRequest: $request")
                 }
-                return request
+                continuation.run(HttpRequestOrResponse.valueOf(request))
             }
 
-            override fun onDownload(download: DownloadOptions): DownloadOptions {
-                if (filter(download.request.url)) {
-                    Log.i("SearchSdkHttp", "onDownload: $download")
-                }
-                return download
-            }
-
-            override fun onResponse(response: HttpResponse): HttpResponse {
+            override fun onResponse(response: HttpResponse, continuation: HttpServiceInterceptorResponseContinuation) {
                 if (filter(response.request.url)) {
                     Log.i("SearchSdkHttp", "onResponse: $response")
                 }
-                return response
+                continuation.run(response)
             }
         })
     }
