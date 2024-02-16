@@ -2,7 +2,7 @@
 package com.mapbox.search.ui.adapter.autocomplete {
 
   public final class PlaceAutocompleteUiAdapter {
-    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete, com.mapbox.common.location.LocationProvider? locationEngine = <anonymous class>());
+    ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete);
     method public void addSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
     method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
@@ -23,7 +23,7 @@ package com.mapbox.search.ui.adapter.autocomplete {
 package com.mapbox.search.ui.adapter.autofill {
 
   public final class AddressAutofillUiAdapter {
-    ctor public AddressAutofillUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autofill.AddressAutofill addressAutofill, com.mapbox.common.location.LocationProvider? locationEngine = <anonymous class>());
+    ctor public AddressAutofillUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autofill.AddressAutofill addressAutofill);
     method public void addSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
     method public suspend Object? search(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options = com.mapbox.search.autofill.AddressAutofillOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autofill.AddressAutofillOptions());

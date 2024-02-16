@@ -1,5 +1,10 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.0.0
+
+### Breaking changes
+- [Address Autofill, Place Autocomplete] Search is a two-steps action now, i.e. it returns `Suggestion`s (without the geo coordinate) at the first step and `Result` after suggestion selection. The `coordinate` field is no longer available in `Suggestion`. `reverseGeocoding` is renamed to `search`.
+
 ## 1.0.0-rc.8
 
 ### New features

@@ -1,6 +1,7 @@
 package com.mapbox.search.autofill
 
 import android.os.Parcelable
+import com.mapbox.geojson.Point
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,6 +14,11 @@ public class AddressAutofillResult internal constructor(
      * [AddressAutofillSuggestion] from which this result has been resolved.
      */
     public val suggestion: AddressAutofillSuggestion,
+
+    /**
+     * Place geographic point.
+     */
+    public val coordinate: Point,
 
     /**
      * Detailed address components like street, house number, etc.
@@ -30,6 +36,7 @@ public class AddressAutofillResult internal constructor(
         other as AddressAutofillResult
 
         if (suggestion != other.suggestion) return false
+        if (coordinate != other.coordinate) return false
         if (address != other.address) return false
 
         return true
@@ -40,6 +47,7 @@ public class AddressAutofillResult internal constructor(
      */
     override fun hashCode(): Int {
         var result = suggestion.hashCode()
+        result = 31 * result + coordinate.hashCode()
         result = 31 * result + address.hashCode()
         return result
     }
@@ -48,6 +56,6 @@ public class AddressAutofillResult internal constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "AddressAutofillResult(suggestion=$suggestion, address=$address)"
+        return "AddressAutofillResult(suggestion=$suggestion, coordinate=$coordinate, address=$address)"
     }
 }

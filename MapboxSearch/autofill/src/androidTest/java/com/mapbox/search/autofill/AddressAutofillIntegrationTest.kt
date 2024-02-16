@@ -13,13 +13,14 @@ import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchRequestException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -53,7 +54,7 @@ internal class AddressAutofillIntegrationTest {
         )
 
         addressAutofill = AddressAutofillImpl(
-            searchEngine = engine,
+            autofillEngine = engine,
             activityReporter = getUserActivityReporter()
         )
     }
@@ -96,7 +97,7 @@ internal class AddressAutofillIntegrationTest {
         val point = Point.fromLngLat(-77.03398187174899, 38.8999032596197)
 
         runBlocking {
-            addressAutofill.suggestions(point, options)
+            addressAutofill.reverseGeocoding(point, options)
         }
 
         val request = mockServer.takeRequest()
@@ -148,7 +149,6 @@ internal class AddressAutofillIntegrationTest {
 
         val firstSuggestion = results.first()
         assertEquals("740 15th St NW", firstSuggestion.name)
-        assertEquals(Point.fromLngLat(-77.03375, 38.89936), firstSuggestion.coordinate)
 
         val selectionResponse = runBlocking {
             addressAutofill.select(firstSuggestion)
@@ -167,6 +167,13 @@ internal class AddressAutofillIntegrationTest {
         assertEquals("United States", resultAddress.country)
         assertEquals("us", resultAddress.countryIso1)
         assertEquals("US-DC", resultAddress.countryIso2)
+
+        val autofillResult = runBlocking {
+            addressAutofill.select(firstSuggestion)
+        }
+        assertTrue(autofillResult.isValue)
+        val autofillResultValue: AddressAutofillResult = requireNotNull(autofillResult.value)
+        assertEquals(Point.fromLngLat(-77.03375, 38.89936), autofillResultValue.coordinate)
     }
 
     @Test
@@ -187,7 +194,16 @@ internal class AddressAutofillIntegrationTest {
         assertTrue(response.isValue)
 
         val results = requireNotNull(response.value)
-        assertEquals(2, results.size)
+        assertEquals(3, results.size)
+
+        val autofillResult = runBlocking {
+            results.map { suggestion ->
+                async {
+                    addressAutofill.select(suggestion)
+                }
+            }.awaitAll()
+        }.filter { result -> result.isValue }
+        assertEquals(2, autofillResult.size)
     }
 
     @Test
@@ -208,10 +224,15 @@ internal class AddressAutofillIntegrationTest {
         val response = runBlocking {
             addressAutofill.suggestions(TEST_QUERY, AddressAutofillOptions())
         }
+        assertTrue(response.isValue)
+        assertEquals(3, response.value!!.size)
 
-        assertTrue(response.isError)
-        val error = requireNotNull(response.error)
-        assertEquals(SearchRequestException("", 501), error)
+        response.value!!.map { suggestion ->
+            val selectionResult = runBlocking {
+                addressAutofill.select(suggestion)
+            }
+            assertTrue(selectionResult.isError)
+        }
     }
 
     @Test
@@ -282,7 +303,7 @@ internal class AddressAutofillIntegrationTest {
             app: Application,
             url: String,
             locationProvider: LocationProvider?
-        ): TwoStepsToOneStepSearchEngineAdapter {
+        ): AutofillSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = url,
@@ -295,8 +316,7 @@ internal class AddressAutofillIntegrationTest {
                 ),
             )
 
-            return TwoStepsToOneStepSearchEngineAdapter(
-                apiType = CoreApiType.AUTOFILL,
+            return AutofillSearchEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
             )

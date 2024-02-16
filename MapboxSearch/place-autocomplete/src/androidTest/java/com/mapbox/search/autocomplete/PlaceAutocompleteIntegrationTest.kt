@@ -13,7 +13,6 @@ import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationProvider
@@ -306,10 +305,15 @@ internal class PlaceAutocompleteIntegrationTest {
         val response = runBlocking {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
+        assertTrue(response.isValue)
+        assertEquals(3, response.value!!.size)
 
-        assertTrue(response.isError)
-        val error = requireNotNull(response.error)
-        assertEquals(SearchRequestException("", 501), error)
+        response.value!!.map { suggestion ->
+            val selectionResult = runBlocking {
+                placeAutocomplete.select(suggestion)
+            }
+            assertTrue(selectionResult.isError)
+        }
     }
 
     @Test
@@ -513,7 +517,7 @@ internal class PlaceAutocompleteIntegrationTest {
             app: Application,
             url: String,
             locationProvider: LocationProvider?
-        ): TwoStepsToOneStepSearchEngineAdapter {
+        ): PlaceAutocompleteEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = url,
@@ -526,8 +530,7 @@ internal class PlaceAutocompleteIntegrationTest {
                 ),
             )
 
-            return TwoStepsToOneStepSearchEngineAdapter(
-                apiType = ApiType.SBS,
+            return PlaceAutocompleteEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
             )
