@@ -11,11 +11,6 @@ import kotlinx.parcelize.Parcelize
 public class AddressAutofillResult internal constructor(
 
     /**
-     * [AddressAutofillSuggestion] from which this result has been resolved.
-     */
-    public val suggestion: AddressAutofillSuggestion,
-
-    /**
      * Place geographic point.
      */
     public val coordinate: Point,
@@ -27,6 +22,12 @@ public class AddressAutofillResult internal constructor(
 ) : Parcelable {
 
     /**
+     * Formatted address string
+     */
+    public val formattedAddress: String
+        get() = address.formattedAddress()
+
+    /**
      * @suppress
      */
     override fun equals(other: Any?): Boolean {
@@ -35,7 +36,6 @@ public class AddressAutofillResult internal constructor(
 
         other as AddressAutofillResult
 
-        if (suggestion != other.suggestion) return false
         if (coordinate != other.coordinate) return false
         if (address != other.address) return false
 
@@ -46,8 +46,7 @@ public class AddressAutofillResult internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = suggestion.hashCode()
-        result = 31 * result + coordinate.hashCode()
+        var result = coordinate.hashCode()
         result = 31 * result + address.hashCode()
         return result
     }
@@ -56,6 +55,6 @@ public class AddressAutofillResult internal constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "AddressAutofillResult(suggestion=$suggestion, coordinate=$coordinate, address=$address)"
+        return "AddressAutofillResult(coordinate=$coordinate, address=$address)"
     }
 }

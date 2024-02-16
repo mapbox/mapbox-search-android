@@ -28,6 +28,7 @@ internal object TypeObjectCreator {
         )
 
         listOf(
+            // TODO : create BaseSearchSuggestion somehow and pass instead of null
             AddressAutofillSuggestion("name", "formattedAddress", addressComponents, null)
         )[mode.ordinal]
     }

@@ -27,7 +27,7 @@ public class AddressAutofillSuggestion internal constructor(
     internal val address: AddressComponents,
 
     @JvmSynthetic
-    internal val underlying: BaseSearchSuggestion?
+    internal val underlying: BaseSearchSuggestion
 ) : Parcelable {
 
     /**

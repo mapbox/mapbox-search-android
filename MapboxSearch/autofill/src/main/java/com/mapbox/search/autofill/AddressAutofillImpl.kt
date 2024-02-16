@@ -84,15 +84,11 @@ internal class AddressAutofillImpl(
     ): Expected<Exception, AddressAutofillResult> {
         activityReporter.reportActivity("address-autofill-suggestion-select")
 
-        return if (suggestion.underlying == null) {
-            ExpectedFactory.createError(Exception("AddressAutofillSuggestion doesn't contain underlying suggestion"))
-         } else {
-            val baseResult = selectRaw(suggestion.underlying).value
-            if (baseResult == null) {
-                ExpectedFactory.createError(Exception("No results for suggestion $suggestion"))
-            } else {
-                resultFactory.createAddressAutofillResultOrNull(baseResult)
-            }
+        val baseResult = selectRaw(suggestion.underlying).value
+        return if (baseResult == null) {
+            ExpectedFactory.createError(Exception("No results for suggestion $suggestion"))
+        } else {
+            resultFactory.createAddressAutofillResultOrNull(baseResult)
         }
     }
 
