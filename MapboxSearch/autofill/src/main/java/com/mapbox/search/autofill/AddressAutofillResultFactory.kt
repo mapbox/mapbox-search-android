@@ -14,23 +14,10 @@ internal class AddressAutofillResultFactory {
     }
 
     private fun BaseSearchResult.toAddressAutofillResult(): AddressAutofillResult? {
-        val suggestion = this.toAddressAutofillSuggestion() ?: return null
-        return AddressAutofillResult(
-            suggestion = suggestion,
-            coordinate = this.coordinate,
-            address = suggestion.address
-        )
-    }
-
-    private fun BaseSearchResult.toAddressAutofillSuggestion(): AddressAutofillSuggestion? {
-        // Filtering incomplete results
         val autofillAddress = AddressComponents.fromCoreSdkAddress(address, metadata) ?: return null
-
-        return AddressAutofillSuggestion(
-            name = name,
-            formattedAddress = fullAddress ?: autofillAddress.formattedAddress(),
-            address = autofillAddress,
-            underlying = null,
+        return AddressAutofillResult(
+            coordinate = this.coordinate,
+            address = autofillAddress
         )
     }
 

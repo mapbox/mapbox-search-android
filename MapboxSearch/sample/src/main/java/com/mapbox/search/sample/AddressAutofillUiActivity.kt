@@ -204,7 +204,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         zipEditText.setText(address.postcode)
 
         fullAddress.isVisible = true
-        fullAddress.text = result.suggestion.formattedAddress
+        fullAddress.text = result.formattedAddress
 
         pinCorrectionNote.isVisible = true
 
