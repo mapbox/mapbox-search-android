@@ -7,10 +7,10 @@ import androidx.annotation.UiThread
 import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
@@ -20,7 +20,7 @@ import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.concurrent.checkMainThread
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
@@ -70,11 +70,11 @@ public class SearchEngineUiAdapter(
 
     /**
      * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+     * By default [LocationProvider] is provided by [LocationServiceFactory].
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    locationEngine: LocationEngine = defaultLocationEngine(),
+    locationEngine: LocationProvider? = defaultLocationProvider(),
 
     /**
      * Search history engine. Selected search results will automatically be added to the provided [HistoryDataProvider].
@@ -186,7 +186,7 @@ public class SearchEngineUiAdapter(
         }
     }
 
-    private val activityReporter: UserActivityReporter = getUserActivityReporter(searchEngine.settings.accessToken)
+    private val activityReporter: UserActivityReporter = getUserActivityReporter()
 
     init {
         val helper = ItemTouchHelper(
@@ -198,7 +198,7 @@ public class SearchEngineUiAdapter(
 
         itemsCreator = SearchResultsItemsCreator(
             context = view.context,
-            locationEngine = locationEngine
+            locationProvider = locationEngine
         )
 
         view.addActionListener(object : SearchResultsView.ActionListener {

@@ -2,8 +2,8 @@
 package com.mapbox.search.discover {
 
   public interface Discover {
-    method public default static com.mapbox.search.discover.Discover create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
-    method public default static final com.mapbox.search.discover.Discover create(String accessToken);
+    method public default static com.mapbox.search.discover.Discover create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public default static final com.mapbox.search.discover.Discover create();
     method public suspend Object? search(com.mapbox.search.discover.DiscoverQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.discover.DiscoverOptions options = DiscoverOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.discover.DiscoverResult>>> p = DiscoverOptions());
     method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.discover.DiscoverQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.discover.DiscoverOptions options, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.discover.DiscoverResult>> callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.discover.DiscoverQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.discover.DiscoverOptions options, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.discover.DiscoverResult>> callback);
@@ -17,8 +17,8 @@ package com.mapbox.search.discover {
   }
 
   public static final class Discover.Companion {
-    method public com.mapbox.search.discover.Discover create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
-    method public com.mapbox.search.discover.Discover create(String accessToken);
+    method public com.mapbox.search.discover.Discover create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public com.mapbox.search.discover.Discover create();
   }
 
   @kotlinx.parcelize.Parcelize public final class DiscoverAddress implements android.os.Parcelable {
@@ -49,7 +49,7 @@ package com.mapbox.search.discover {
   }
 
   @kotlinx.parcelize.Parcelize public final class DiscoverOptions implements android.os.Parcelable {
-    ctor public DiscoverOptions(int limit = 10, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage());
+    ctor public DiscoverOptions(int limit = 10, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>());
     method public com.mapbox.search.common.IsoLanguageCode getLanguage();
     method public int getLimit();
     property public final com.mapbox.search.common.IsoLanguageCode language;

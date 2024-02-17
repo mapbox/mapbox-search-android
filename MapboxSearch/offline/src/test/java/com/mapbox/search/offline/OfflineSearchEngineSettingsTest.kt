@@ -1,7 +1,7 @@
 package com.mapbox.search.offline
 
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.TileStore
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
@@ -62,15 +62,14 @@ internal class OfflineSearchEngineSettingsTest {
     fun `Check OfflineSearchSettings default builder`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with default values") {
-                val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                val actual = OfflineSearchEngineSettings.Builder()
+                    .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .build()
 
                 val expected = OfflineSearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -82,17 +81,16 @@ internal class OfflineSearchEngineSettingsTest {
     fun `Check OfflineSearchSettings builder with all values set`() = TestCase {
         Given("OfflineSearchSettings builder") {
             When("Build new settings with test values") {
-                val actual = OfflineSearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                val actual = OfflineSearchEngineSettings.Builder()
+                    .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .tileStore(TEST_MOCKED_TILE_STORE)
                     .tilesBaseUri(TEST_DEFAULT_ENDPOINT_URI)
                     .build()
 
                 val expected = OfflineSearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -105,10 +103,9 @@ internal class OfflineSearchEngineSettingsTest {
         Given("OfflineSearchSettings builder") {
             When("Object created with toBuilder()") {
                 val settings = OfflineSearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
                     tileStore = TEST_MOCKED_TILE_STORE,
                     tilesBaseUri = TEST_DEFAULT_ENDPOINT_URI,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", settings, settings.toBuilder().build())
@@ -118,13 +115,12 @@ internal class OfflineSearchEngineSettingsTest {
 
     private companion object {
         val TEST_DEFAULT_ENDPOINT_URI: URI = URI.create("https://cloudfront-staging.tilestream.net")
-        const val TEST_ACCESS_TOKEN = "test token"
-        val TEST_MOCKED_LOCATION_ENGINE: LocationEngine = mockk(relaxed = true)
+        val TEST_MOCKED_LOCATION_ENGINE: LocationProvider = mockk(relaxed = true)
         val TEST_MOCKED_TILE_STORE: TileStore = mockk(relaxed = true)
 
-        val LOCATION_ENGINE_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(LocationEngine::class) { mode ->
+        val LOCATION_ENGINE_OBJECT_CREATOR = CustomTypeObjectCreatorImpl(LocationProvider::class) { mode ->
             listOf(
-                mockk<LocationEngine>(relaxed = true), mockk<LocationEngine>(relaxed = true),
+                mockk<LocationProvider>(relaxed = true), mockk<LocationProvider>(relaxed = true),
             )[mode.ordinal]
         }
 

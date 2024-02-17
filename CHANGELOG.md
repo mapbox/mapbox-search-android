@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.0.0
+
+### Breaking changes
+- [CORE] Access token needs to be assigned via `MapboxOptions.accessToken` now
+
+### Mapbox dependencies
+- Search Native SDK `2.0.0-alpha.4`
+- Common SDK `24.0.0`
+- Maps SDK `11.0.0`
+- Kotlin `1.7.20`
+
 ## 1.0.0-rc.8
 
 ### New features

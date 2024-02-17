@@ -1,8 +1,11 @@
 package com.mapbox.search.sample
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,9 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.android.gestures.Utils.dpToPx
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -30,11 +34,15 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.base.location.defaultLocationProvider
+import com.mapbox.search.base.utils.extension.toPoint
+import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
@@ -71,7 +79,7 @@ import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var locationEngine: LocationEngine
+    private val locationProvider: LocationProvider? = defaultLocationProvider()
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -111,11 +119,9 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
-
         mapView = findViewById(R.id.map_view)
-        mapView.getMapboxMap().also { mapboxMap ->
-            mapboxMap.loadStyleUri(getMapStyleUri())
+        mapView.mapboxMap.also { mapboxMap ->
+            mapboxMap.loadStyle(getMapStyleUri())
 
             mapView.location.updateSettings {
                 enabled = true
@@ -123,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 
             mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                 override fun onIndicatorPositionChanged(point: Point) {
-                    mapView.getMapboxMap().setCamera(
+                    mapView.mapboxMap.setCamera(
                         CameraOptions.Builder()
                             .center(point)
                             .zoom(14.0)
@@ -161,11 +167,11 @@ class MainActivity : AppCompatActivity() {
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = apiType,
-            settings = SearchEngineSettings(getString(R.string.mapbox_access_token))
+            settings = SearchEngineSettings()
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(getString(R.string.mapbox_access_token))
+            OfflineSearchEngineSettings()
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
@@ -219,7 +225,7 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                locationEngine.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
+                locationProvider?.userDistanceTo(historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
@@ -271,6 +277,36 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
+        getLastLocation { location ->
+            if (location == null) {
+                callback(null)
+            } else {
+                val distance = DistanceCalculator.instance(latitude = location.latitude)
+                    .distance(location.toPoint(), destination)
+                callback(distance)
+            }
+        }
+    }
+
+    private fun shareIntent(searchPlace: SearchPlace): Intent {
+        val text = "${searchPlace.name}. " +
+                "Address: ${searchPlace.address?.formattedAddress(SearchAddress.FormatStyle.Short) ?: "unknown"}. " +
+                "Geo coordinate: (lat=${searchPlace.coordinate.latitude()}, lon=${searchPlace.coordinate.longitude()})"
+
+        return Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+    }
+
+    private fun geoIntent(point: Point): Intent =
+        Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
+
+    private fun Context.isPermissionGranted(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
     private fun updateOnBackPressedCallbackEnabled() {
         onBackPressedCallback.isEnabled = !searchPlaceView.isHidden() || mapMarkersManager.hasMarkers
@@ -442,9 +478,9 @@ class MainActivity : AppCompatActivity() {
 
     private class MapMarkersManager(mapView: MapView) {
 
-        private val mapboxMap = mapView.getMapboxMap()
+        private val mapboxMap = mapView.mapboxMap
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         var onMarkersChangeListener: (() -> Unit)? = null
 
@@ -498,8 +534,8 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
 
-        val MARKERS_EDGE_OFFSET = dpToPx(64).toDouble()
-        val PLACE_CARD_HEIGHT = dpToPx(300).toDouble()
+        val MARKERS_EDGE_OFFSET = dpToPx(64f).toDouble()
+        val PLACE_CARD_HEIGHT = dpToPx(300f).toDouble()
 
         val MARKERS_INSETS = EdgeInsets(
             MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET

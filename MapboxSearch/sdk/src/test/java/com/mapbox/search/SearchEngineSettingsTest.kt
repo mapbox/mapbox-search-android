@@ -1,6 +1,6 @@
 package com.mapbox.search
 
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.common.tests.CopyVerifier
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -60,13 +60,12 @@ internal class SearchEngineSettingsTest {
     fun `Check SearchEngineSettings default builder`() = TestCase {
         Given("SearchEngineSettings builder") {
             When("Build new settings with default values") {
-                val actual = SearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                val actual = SearchEngineSettings.Builder()
+                    .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .build()
 
                 val expected = SearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                 )
 
                 Then("Settings should be equal", expected, actual)
@@ -78,16 +77,15 @@ internal class SearchEngineSettingsTest {
     fun `Check SearchEngineSettings builder with all values set`() = TestCase {
         Given("SearchEngineSettings builder") {
             When("Build new settings with test values") {
-                val actual = SearchEngineSettings.Builder(TEST_ACCESS_TOKEN)
-                    .locationEngine(TEST_MOCKED_LOCATION_ENGINE)
+                val actual = SearchEngineSettings.Builder()
+                    .locationProvider(TEST_MOCKED_LOCATION_ENGINE)
                     .viewportProvider(TEST_MOCKED_VIEWPORT_PROVIDER)
                     .geocodingEndpointBaseUrl(TEST_V5_ENDPOINT)
                     .singleBoxSearchBaseUrl(TEST_SBS_ENDPOINT)
                     .build()
 
                 val expected = SearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                     geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
                     singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,
@@ -103,8 +101,7 @@ internal class SearchEngineSettingsTest {
         Given("SearchEngineSettings builder") {
             When("Object created with toBuilder()") {
                 val settings = SearchEngineSettings(
-                    accessToken = TEST_ACCESS_TOKEN,
-                    locationEngine = TEST_MOCKED_LOCATION_ENGINE,
+                    locationProvider = TEST_MOCKED_LOCATION_ENGINE,
                     viewportProvider = TEST_MOCKED_VIEWPORT_PROVIDER,
                     geocodingEndpointBaseUrl = TEST_V5_ENDPOINT,
                     singleBoxSearchBaseUrl = TEST_SBS_ENDPOINT,
@@ -116,10 +113,9 @@ internal class SearchEngineSettingsTest {
     }
 
     private companion object {
-        const val TEST_ACCESS_TOKEN = "test token"
         const val TEST_V5_ENDPOINT = "https://test-v5.mapbox.com"
         const val TEST_SBS_ENDPOINT = "https://test-sbs.mapbox.com"
-        val TEST_MOCKED_LOCATION_ENGINE: LocationEngine = mockk(relaxed = true)
+        val TEST_MOCKED_LOCATION_ENGINE: LocationProvider = mockk(relaxed = true)
         val TEST_MOCKED_VIEWPORT_PROVIDER: ViewportProvider = mockk(relaxed = true)
     }
 }

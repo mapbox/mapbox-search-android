@@ -71,7 +71,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(getString(R.string.mapbox_access_token))
+            new SearchEngineSettings()
         );
 
         final SearchOptions options = new SearchOptions.Builder()

@@ -31,9 +31,10 @@ Make sure you don't expose secret tokens and other sensitive information.
 
 For example:
 
+MapboxOptions.accessToken = myToken
 val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
   apiType = ApiType.GEOCODING,
-  settings = SearchEngineSettings(myToken)
+  settings = SearchEngineSettings()
 )
 
 val searchRequestTask = searchEngine.search(
@@ -44,9 +45,8 @@ val searchRequestTask = searchEngine.search(
 
 or 
 
-val addressAutofill = AddressAutofill.create(
-  accessToken = myToken,
-)
+MapboxOptions.accessToken = myToken
+val addressAutofill = AddressAutofill.create()
 
 val response = addressAutofill.suggestions(
   query = query,

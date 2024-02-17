@@ -1,12 +1,12 @@
 package com.mapbox.search.autofill
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.Expected
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationProvider
 
 /**
  * Main entrypoint to the Mapbox Autofill SDK. Performs forward or reverse geocoding requests to fetch addresses.
@@ -58,10 +58,8 @@ public interface AddressAutofill {
         /**
          * Creates a new instance of the [AddressAutofill].
          *
-         * @param accessToken [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
-         *
-         * @param locationEngine The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * @param locationProvider The mechanism responsible for providing location approximations to the SDK.
+         * By default [LocationProvider] is provided by [LocationServiceFactory].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
@@ -70,13 +68,11 @@ public interface AddressAutofill {
         @JvmStatic
         @JvmOverloads
         public fun create(
-            accessToken: String,
-            locationEngine: LocationEngine = defaultLocationEngine(),
+            locationProvider: LocationProvider? = defaultLocationProvider(),
         ): AddressAutofill {
             return AddressAutofillImpl.create(
-                accessToken = accessToken,
                 app = BaseSearchSdkInitializer.app,
-                locationEngine = locationEngine
+                locationProvider = locationProvider
             )
         }
     }

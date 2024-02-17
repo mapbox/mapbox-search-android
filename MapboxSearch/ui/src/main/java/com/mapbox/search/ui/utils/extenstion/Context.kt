@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
-import android.location.LocationManager
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.Px
@@ -17,14 +14,6 @@ import androidx.core.content.ContextCompat
 
 internal val Context.inputMethodManager: InputMethodManager
     get() = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-internal val Context.locationManager: LocationManager
-    get() = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-@ColorInt
-internal fun Context.getColorCompat(@ColorRes colorId: Int): Int {
-    return ContextCompat.getColor(this, colorId)
-}
 
 internal fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
     return when (id) {

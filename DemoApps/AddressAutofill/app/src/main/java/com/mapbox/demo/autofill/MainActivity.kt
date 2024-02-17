@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
         addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
 
         queryEditText = findViewById(R.id.query_text)

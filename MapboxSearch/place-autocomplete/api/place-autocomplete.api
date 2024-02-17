@@ -7,17 +7,17 @@ public final class com/mapbox/search/autocomplete/BuildConfig {
 
 public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete {
 	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
-	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
-	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static fun create ()Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
-	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
-	public final fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
-	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public final fun create ()Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public final fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;Lcom/mapbox/common/location/LocationProvider;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {
@@ -46,6 +46,14 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteAddress : and
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteAddress$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteAddress;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteAddress;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
@@ -65,6 +73,14 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions : and
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult : android/os/Parcelable {
@@ -92,6 +108,14 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult : andr
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
@@ -110,6 +134,30 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : 
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Result$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Result;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Result;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Suggestion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Suggestion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion$Underlying$Suggestion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract class com/mapbox/search/autocomplete/PlaceAutocompleteType : android/os/Parcelable {
 	public fun <init> (Lcom/mapbox/search/internal/bindgen/QueryType;)V
 }
@@ -125,11 +173,27 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Administ
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Address$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Address;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Address;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Country : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Country;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Country$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Country;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Country;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$District : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
@@ -139,11 +203,27 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Administ
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$District$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$District;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$District;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Locality : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Locality;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Locality$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Locality;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Locality;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Neighborhood : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
@@ -153,11 +233,27 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Administ
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Neighborhood$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Neighborhood;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Neighborhood;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Place : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Place;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Place$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Place;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Place;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Postcode : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
@@ -167,11 +263,27 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Administ
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Postcode$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Postcode;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Postcode;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Region : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Region;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Region$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Region;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Region;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Street : com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit {
@@ -181,10 +293,26 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Administ
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Street$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Street;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$AdministrativeUnit$Street;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Poi : com/mapbox/search/autocomplete/PlaceAutocompleteType {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$Poi;
 	public fun describeContents ()I
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/autocomplete/PlaceAutocompleteType$Poi$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$Poi;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/autocomplete/PlaceAutocompleteType$Poi;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
