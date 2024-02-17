@@ -72,8 +72,10 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            SearchEngineSettings(getString(R.string.mapbox_access_token))
+            SearchEngineSettings()
         )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")

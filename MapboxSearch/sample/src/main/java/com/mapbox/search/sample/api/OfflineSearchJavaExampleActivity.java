@@ -58,7 +58,7 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
         final TileStore tileStore = TileStore.create();
 
         searchEngine = OfflineSearchEngine.create(
-            new OfflineSearchEngineSettings(getString(R.string.mapbox_access_token), tileStore)
+            new OfflineSearchEngineSettings(tileStore)
         );
 
         searchEngine.addEngineReadyCallback(engineReadyCallback);

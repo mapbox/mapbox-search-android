@@ -1,17 +1,24 @@
 package com.mapbox.search.sample
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.Location
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -53,7 +60,9 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address_autofill)
 
-        addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
+        addressAutofill = AddressAutofill.create()
 
         queryEditText = findViewById(R.id.query_text)
         apartmentEditText = findViewById(R.id.address_apartment)
@@ -65,12 +74,13 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
         mapPin = findViewById(R.id.map_pin)
         mapView = findViewById(R.id.map)
-        mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.addOnMapIdleListener {
+        mapboxMap = mapView.mapboxMap
+
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS)
+        mapboxMap.subscribeMapIdle {
             if (ignoreNextMapIdleEvent) {
                 ignoreNextMapIdleEvent = false
-                return@addOnMapIdleListener
+                return@subscribeMapIdle
             }
 
             val mapCenter = mapboxMap.cameraState.center
@@ -89,12 +99,15 @@ class AddressAutofillUiActivity : AppCompatActivity() {
             view = searchResultsView,
             addressAutofill = addressAutofill
         )
-
-        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
-            point?.let {
-                mapView.getMapboxMap().setCamera(
+        fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
+        val locationService = LocationServiceFactory.getOrCreate()
+            .getDeviceLocationProvider(null)
+            .value
+        locationService?.getLastLocation { location ->
+            location?.toPoint()?.let {
+                mapView.mapboxMap.setCamera(
                     CameraOptions.Builder()
-                        .center(point)
+                        .center(it)
                         .zoom(9.0)
                         .build()
                 )
@@ -158,6 +171,11 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         }
     }
 
+    private fun Context.showToast(@StringRes resId: Int): Unit = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+
+    private fun Context.isPermissionGranted(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+
     private fun findAddress(point: Point) {
         lifecycleScope.launchWhenStarted {
             val response = addressAutofill.suggestions(point, AddressAutofillOptions())
@@ -199,7 +217,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         pinCorrectionNote.isVisible = true
 
         if (!fromReverseGeocoding) {
-            mapView.getMapboxMap().setCamera(
+            mapView.mapboxMap.setCamera(
                 CameraOptions.Builder()
                     .center(result.suggestion.coordinate)
                     .zoom(16.0)
@@ -221,6 +239,9 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         searchResultsView.isVisible = false
         searchResultsView.hideKeyboard()
     }
+
+    private fun View.hideKeyboard() =
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 
     private companion object {
         const val PERMISSIONS_REQUEST_LOCATION = 0

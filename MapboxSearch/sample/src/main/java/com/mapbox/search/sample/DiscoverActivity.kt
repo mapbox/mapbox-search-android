@@ -1,14 +1,23 @@
 package com.mapbox.search.sample
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.android.gestures.Utils.dpToPx
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -21,6 +30,8 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.search.base.utils.extension.toPoint
+import com.mapbox.search.common.DistanceCalculator
 import com.mapbox.search.discover.Discover
 import com.mapbox.search.discover.DiscoverAddress
 import com.mapbox.search.discover.DiscoverOptions
@@ -37,7 +48,7 @@ import java.util.UUID
 class DiscoverActivity : AppCompatActivity() {
 
     private lateinit var discover: Discover
-    private lateinit var locationEngine: LocationEngine
+    private lateinit var locationProvider: LocationProvider
 
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
@@ -48,26 +59,39 @@ class DiscoverActivity : AppCompatActivity() {
 
     private lateinit var searchPlaceView: SearchPlaceBottomSheetView
 
+    private fun defaultDeviceLocationProvider(): LocationProvider =
+        LocationServiceFactory.getOrCreate()
+            .getDeviceLocationProvider(null)
+            .value
+            ?: throw Exception("Failed to get device location provider")
+
+    private fun Context.showToast(@StringRes resId: Int): Unit = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+
+    private fun Context.isPermissionGranted(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 
-        discover = Discover.create(getString(R.string.mapbox_access_token))
-        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
+        discover = Discover.create()
+        locationProvider = defaultDeviceLocationProvider()
 
         mapView = findViewById(R.id.map_view)
         mapMarkersManager = MapMarkersManager(mapView)
-        mapView.getMapboxMap().also { mapboxMap ->
+        mapView.mapboxMap.also { mapboxMap ->
             this.mapboxMap = mapboxMap
 
-            mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+            mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
                 mapView.location.updateSettings {
                     enabled = true
                 }
 
                 mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                     override fun onIndicatorPositionChanged(point: Point) {
-                        mapView.getMapboxMap().setCamera(
+                        mapView.mapboxMap.setCamera(
                             CameraOptions.Builder()
                                 .center(point)
                                 .zoom(14.0)
@@ -82,15 +106,15 @@ class DiscoverActivity : AppCompatActivity() {
 
         searchNearby = findViewById(R.id.search_nearby)
         searchNearby.setOnClickListener {
-            locationEngine.lastKnownLocation(this) { location ->
+            locationProvider.getLastLocation { location ->
                 if (location == null) {
-                    return@lastKnownLocation
+                    return@getLastLocation
                 }
 
                 lifecycleScope.launchWhenStarted {
                     val response = discover.search(
                         query = DiscoverQuery.Category.COFFEE_SHOP_CAFE,
-                        proximity = location,
+                        proximity = location.toPoint(),
                         options = DiscoverOptions(limit = 20)
                     )
 
@@ -109,7 +133,7 @@ class DiscoverActivity : AppCompatActivity() {
             lifecycleScope.launchWhenStarted {
                 val response = discover.search(
                     query = DiscoverQuery.Category.COFFEE_SHOP_CAFE,
-                    region = mapboxMap.getCameraBoundingBox(),
+                    region = mapboxMap.getBounds().bounds.toBoundingBox(),
                     options = DiscoverOptions(limit = 20)
                 )
 
@@ -134,7 +158,7 @@ class DiscoverActivity : AppCompatActivity() {
         mapMarkersManager.onResultClickListener = { result ->
             mapMarkersManager.adjustMarkersForOpenCard()
             searchPlaceView.open(result.toSearchPlace())
-            locationEngine.userDistanceTo(this@DiscoverActivity, result.coordinate) { distance ->
+            locationProvider.userDistanceTo(result.coordinate) { distance ->
                 distance?.let { searchPlaceView.updateDistance(distance) }
             }
         }
@@ -151,10 +175,22 @@ class DiscoverActivity : AppCompatActivity() {
         }
     }
 
+    private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
+        getLastLocation { location ->
+            if (location == null) {
+                callback(null)
+            } else {
+                val distance = DistanceCalculator.instance(latitude = location.latitude)
+                    .distance(location.toPoint(), destination)
+                callback(distance)
+            }
+        }
+    }
+
     private class MapMarkersManager(mapView: MapView) {
 
-        private val annotations = mutableMapOf<Long, DiscoverResult>()
-        private val mapboxMap: MapboxMap = mapView.getMapboxMap()
+        private val annotations = mutableMapOf<String, DiscoverResult>()
+        private val mapboxMap: MapboxMap = mapView.mapboxMap
         private val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(null)
         private val pinBitmap = mapView.context.bitmapFromDrawableRes(R.drawable.red_marker)
 
@@ -168,6 +204,8 @@ class DiscoverActivity : AppCompatActivity() {
                 true
             }
         }
+
+        private fun Context.bitmapFromDrawableRes(@DrawableRes resId: Int): Bitmap = BitmapFactory.decodeResource(resources, resId)
 
         fun clearMarkers() {
             pointAnnotationManager.deleteAll()
@@ -192,7 +230,7 @@ class DiscoverActivity : AppCompatActivity() {
 
         fun showResults(results: List<DiscoverResult>) {
             clearMarkers()
-            if (results.isEmpty() || pinBitmap == null) {
+            if (results.isEmpty()) {
                 return
             }
 
@@ -219,9 +257,9 @@ class DiscoverActivity : AppCompatActivity() {
 
         const val PERMISSIONS_REQUEST_LOCATION = 0
 
-        val MARKERS_BOTTOM_OFFSET = dpToPx(176).toDouble()
-        val MARKERS_EDGE_OFFSET = dpToPx(64).toDouble()
-        val PLACE_CARD_HEIGHT = dpToPx(300).toDouble()
+        val MARKERS_BOTTOM_OFFSET = dpToPx(176f).toDouble()
+        val MARKERS_EDGE_OFFSET = dpToPx(64f).toDouble()
+        val PLACE_CARD_HEIGHT = dpToPx(300f).toDouble()
 
         val MARKERS_INSETS = EdgeInsets(
             MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, MARKERS_BOTTOM_OFFSET, MARKERS_EDGE_OFFSET

@@ -1,7 +1,7 @@
 ext {
     gradle_plugin = '7.3.1'
-    kotlin_version = '1.5.31'
-    kotlin_coroutines_version = '1.5.2'
+    kotlin_version = '1.7.20'
+    kotlin_coroutines_version = '1.6.0'
 
     min_sdk_version = 21
     target_sdk_version = 33
@@ -21,7 +21,7 @@ ext {
     material_version = '1.5.0'
 
     ktlint_version = '0.39.0'
-    okhttp_version = '4.9.0'
+    okhttp3_version = '4.9.0'
     okhttp_mock_version = '1.5.0'
 
     junit_version = '4.13.2'
@@ -41,11 +41,11 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '10.15.0'
-    common_sdk_version = '23.7.0'
+    mapbox_maps_version = '11.0.0'
+    common_sdk_version = '24.0.0'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '0.72.0'
+    search_native_version = '2.0.0-alpha.4'
 
     detekt_version = '1.19.0'
 

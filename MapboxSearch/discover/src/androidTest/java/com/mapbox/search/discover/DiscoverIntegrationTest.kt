@@ -4,18 +4,19 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
-import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
@@ -41,17 +42,18 @@ internal class DiscoverIntegrationTest {
 
     @Before
     fun setUp() {
+        MapboxOptions.accessToken = TEST_ACCESS_TOKEN
+
         mockServer = MockWebServer()
 
         val engine = createDiscoverApiSearchEngine(
             app = APP,
-            token = TEST_ACCESS_TOKEN,
             url = mockServer.url("").toString()
         )
 
         discover = DiscoverImpl(
             engine = engine,
-            activityReporter = getUserActivityReporter(TEST_ACCESS_TOKEN)
+            activityReporter = getUserActivityReporter()
         )
     }
 
@@ -334,19 +336,17 @@ internal class DiscoverIntegrationTest {
 
         fun createDiscoverApiSearchEngine(
             app: Application,
-            token: String,
             url: String
         ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    token,
-                    url,
-                    ApiType.SBS,
-                    UserAgentProvider.userAgent,
-                    null
+                    baseUrl = url,
+                    apiType = ApiType.SBS,
+                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, defaultLocationEngine()), null
+                    LocationEngineAdapter(app, defaultLocationProvider()), null
                 ),
             )
 

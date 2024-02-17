@@ -1,10 +1,12 @@
 package com.mapbox.search.ui.adapter.engines
 
 import android.content.Context
-import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.common.Cancelable
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.base.utils.extension.distanceTo
-import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchResult
@@ -20,7 +22,7 @@ import com.mapbox.search.ui.view.UiError
 internal class SearchResultsItemsCreator(
     private val context: Context,
     private val searchEntityPresentation: SearchEntityPresentation = SearchEntityPresentation(context),
-    private val locationEngine: LocationEngine,
+    private val locationProvider: LocationProvider?,
 ) {
 
     fun createForHistory(historyItems: List<Pair<HistoryRecord, Boolean>>): List<SearchResultAdapterItem> {
@@ -71,9 +73,14 @@ internal class SearchResultsItemsCreator(
             callback(createForEmptySearchResults(responseInfo))
             return AsyncOperationTask.COMPLETED
         }
-        return locationEngine.lastKnownLocationOrNull(context) { location ->
+        var cancelable: Cancelable? = null
+        val task = AsyncOperationTaskImpl<Any>()
+        task.addOnCancelledCallback {
+            cancelable?.cancel()
+        }
+        cancelable = locationProvider?.getLastLocation { location ->
             val resultItems = results.map { result ->
-                val distance = result.distanceMeters ?: location?.distanceTo(result.coordinate)
+                val distance = result.distanceMeters ?: location?.toPoint()?.distanceTo(result.coordinate)
 
                 SearchResultAdapterItem.Result(
                     title = result.name,
@@ -85,6 +92,7 @@ internal class SearchResultsItemsCreator(
             }
             callback(resultItems + SearchResultAdapterItem.MissingResultFeedback(responseInfo))
         }
+        return task
     }
 
     fun createForOfflineSearchResults(
@@ -100,9 +108,14 @@ internal class SearchResultsItemsCreator(
             )
             return AsyncOperationTask.COMPLETED
         }
-        return locationEngine.lastKnownLocationOrNull(context) { location ->
+        var cancelable: Cancelable? = null
+        val task = AsyncOperationTaskImpl<Any>()
+        task.addOnCancelledCallback {
+            cancelable?.cancel()
+        }
+        cancelable = locationProvider?.getLastLocation { location ->
             val resultItems = results.map { searchResult ->
-                val distance = searchResult.distanceMeters ?: location?.distanceTo(searchResult.coordinate)
+                val distance = searchResult.distanceMeters ?: location?.toPoint()?.distanceTo(searchResult.coordinate)
                 SearchResultAdapterItem.Result(
                     title = searchEntityPresentation.getTitle(searchResult, responseInfo.requestOptions.query),
                     subtitle = searchEntityPresentation.getDescription(searchResult),
@@ -113,6 +126,7 @@ internal class SearchResultsItemsCreator(
             }
             callback(resultItems)
         }
+        return task
     }
 
     private fun createForEmptySearchResults(responseInfo: ResponseInfo): List<SearchResultAdapterItem> = listOf(

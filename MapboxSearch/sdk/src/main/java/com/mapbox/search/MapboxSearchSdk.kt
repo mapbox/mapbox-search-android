@@ -1,12 +1,13 @@
 package com.mapbox.search
 
 import android.app.Application
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
+import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.result.SearchResultFactory
@@ -109,18 +110,14 @@ internal object MapboxSearchSdk {
         settings: SearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
     ) = createAnalyticsService(
-        application = application,
-        accessToken = settings.accessToken,
         coreSearchEngine = coreSearchEngine,
-        locationEngine = settings.locationEngine,
+        locationProvider = settings.locationProvider,
         viewportProvider = settings.viewportProvider
     )
 
     private fun createAnalyticsService(
-        application: Application,
-        accessToken: String,
         coreSearchEngine: CoreSearchEngineInterface,
-        locationEngine: LocationEngine,
+        locationProvider: LocationProvider?,
         viewportProvider: ViewportProvider?,
     ): AnalyticsServiceImpl {
         val eventJsonParser = AnalyticsEventJsonParser()
@@ -134,14 +131,13 @@ internal object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService.getOrCreate(EventsServerOptions(accessToken, UserAgentProvider.userAgent, null))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(BaseSearchSdkInitializer.sdkInformation, null))
 
         return AnalyticsServiceImpl(
-            context = application,
             eventsService = eventsService,
             eventsJsonParser = eventJsonParser,
             feedbackEventsFactory = searchFeedbackEventsFactory,
-            locationEngine = locationEngine,
+            locationProvider = locationProvider,
         )
     }
 }

@@ -1,17 +1,16 @@
 package com.mapbox.search.analytics
 
-import android.content.Context
-import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Event
 import com.mapbox.common.EventsServiceInterface
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.logger.loge
 import com.mapbox.search.base.throwDebug
-import com.mapbox.search.base.utils.extension.lastKnownLocationOrNull
+import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
@@ -21,11 +20,10 @@ import com.mapbox.search.result.isIndexableRecordSuggestion
 import java.util.concurrent.Executor
 
 internal class AnalyticsServiceImpl(
-    private val context: Context,
     private val eventsService: EventsServiceInterface,
     private val eventsJsonParser: AnalyticsEventJsonParser,
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
-    private val locationEngine: LocationEngine
+    private val locationProvider: LocationProvider?
 ) : AnalyticsService {
 
     fun createRawFeedbackEvent(
@@ -91,11 +89,11 @@ internal class AnalyticsServiceImpl(
         responseInfo: ResponseInfo,
         event: FeedbackEvent
     ) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationProvider?.getLastLocation {
             createFeedbackEvent(
                 searchResult = searchResult,
                 responseInfo = responseInfo,
-                currentLocation = it,
+                currentLocation = it?.toPoint(),
                 event = event,
                 callback = object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
@@ -115,11 +113,11 @@ internal class AnalyticsServiceImpl(
         responseInfo: ResponseInfo,
         event: FeedbackEvent
     ) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationProvider?.getLastLocation {
             createFeedbackEvent(
                 searchSuggestion = searchSuggestion,
                 responseInfo = responseInfo,
-                currentLocation = it,
+                currentLocation = it?.toPoint(),
                 event = event,
                 callback = object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
@@ -135,24 +133,24 @@ internal class AnalyticsServiceImpl(
     }
 
     override fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
-            val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(historyRecord, event, currentLocation = it)
+        locationProvider?.getLastLocation {
+            val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(historyRecord, event, currentLocation = it?.toPoint())
             sendFeedbackInternal(feedbackEvent)
         }
     }
 
     override fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
-            val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(favoriteRecord, event, currentLocation = it)
+        locationProvider?.getLastLocation {
+            val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(favoriteRecord, event, currentLocation = it?.toPoint())
             sendFeedbackInternal(feedbackEvent)
         }
     }
 
     override fun sendMissingResultFeedback(event: MissingResultFeedbackEvent) {
-        locationEngine.lastKnownLocationOrNull(context) {
+        locationProvider?.getLastLocation {
             feedbackEventsFactory.createSearchFeedbackEvent(
                 event,
-                currentLocation = it,
+                currentLocation = it?.toPoint(),
                 object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
                         sendFeedbackInternal(result)
@@ -226,9 +224,7 @@ internal class AnalyticsServiceImpl(
         if (eventValue.isValue) {
             val event = Event(eventValue.value!!, null)
             eventsService.sendEvent(event) { error ->
-                if (error != null) {
-                    loge("Unable to send event: $error")
-                }
+                loge("Unable to send event: $error")
             }
         } else {
             loge("Unable to create event from json event: ${eventValue.error}")

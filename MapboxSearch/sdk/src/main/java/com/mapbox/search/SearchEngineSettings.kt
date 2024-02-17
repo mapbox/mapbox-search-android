@@ -1,9 +1,9 @@
 package com.mapbox.search
 
 import android.Manifest
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.search.base.location.defaultLocationEngine
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationServiceFactory
+import com.mapbox.search.base.location.defaultLocationProvider
 
 /**
  * Settings used for [SearchEngine] configuration.
@@ -12,17 +12,12 @@ import com.mapbox.search.base.location.defaultLocationEngine
 public class SearchEngineSettings @JvmOverloads constructor(
 
     /**
-     * [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
-     */
-    public val accessToken: String,
-
-    /**
      * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+     * By default [LocationProvider] is provided by [LocationServiceFactory].
      * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
      * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
      */
-    public val locationEngine: LocationEngine = defaultLocationEngine(),
+    public val locationProvider: LocationProvider? = defaultLocationProvider(),
 
     /**
      * Viewport provider instance.
@@ -45,14 +40,12 @@ public class SearchEngineSettings @JvmOverloads constructor(
      */
     @JvmSynthetic
     public fun copy(
-        accessToken: String = this.accessToken,
-        locationEngine: LocationEngine = this.locationEngine,
+        locationProvider: LocationProvider? = this.locationProvider,
         viewportProvider: ViewportProvider? = this.viewportProvider,
         geocodingEndpointBaseUrl: String = this.geocodingEndpointBaseUrl,
         singleBoxSearchBaseUrl: String? = this.singleBoxSearchBaseUrl,
     ): SearchEngineSettings = SearchEngineSettings(
-        accessToken = accessToken,
-        locationEngine = locationEngine,
+        locationProvider = locationProvider,
         viewportProvider = viewportProvider,
         geocodingEndpointBaseUrl = geocodingEndpointBaseUrl,
         singleBoxSearchBaseUrl = singleBoxSearchBaseUrl,
@@ -72,8 +65,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
 
         other as SearchEngineSettings
 
-        if (accessToken != other.accessToken) return false
-        if (locationEngine != other.locationEngine) return false
+        if (locationProvider != other.locationProvider) return false
         if (viewportProvider != other.viewportProvider) return false
         if (geocodingEndpointBaseUrl != other.geocodingEndpointBaseUrl) return false
         if (singleBoxSearchBaseUrl != other.singleBoxSearchBaseUrl) return false
@@ -85,8 +77,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = accessToken.hashCode()
-        result = 31 * result + locationEngine.hashCode()
+        var result = locationProvider.hashCode()
         result = 31 * result + (viewportProvider?.hashCode() ?: 0)
         result = 31 * result + geocodingEndpointBaseUrl.hashCode()
         result = 31 * result + (singleBoxSearchBaseUrl?.hashCode() ?: 0)
@@ -98,8 +89,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
      */
     override fun toString(): String {
         return "SearchEngineSettings(" +
-                "accessToken='$accessToken', " +
-                "locationEngine=$locationEngine, " +
+                "locationProvider=$locationProvider, " +
                 "viewportProvider=$viewportProvider, " +
                 "geocodingEndpointBaseUrl='$geocodingEndpointBaseUrl', " +
                 "singleBoxSearchBaseUrl=$singleBoxSearchBaseUrl" +
@@ -109,21 +99,15 @@ public class SearchEngineSettings @JvmOverloads constructor(
     /**
      * Builder for [SearchEngineSettings].
      */
-    public class Builder(
+    public class Builder() {
 
-        /**
-         * [Mapbox Access Token](https://docs.mapbox.com/help/glossary/access-token/).
-         */
-        public var accessToken: String,
-    ) {
-
-        private var locationEngine: LocationEngine? = null
+        private var locationProvider: LocationProvider ? = null
         private var viewportProvider: ViewportProvider? = null
         private var geocodingEndpointBaseUrl: String? = null
         private var singleBoxSearchBaseUrl: String? = null
 
-        internal constructor(settings: SearchEngineSettings) : this(settings.accessToken) {
-            locationEngine = settings.locationEngine
+        internal constructor(settings: SearchEngineSettings) : this() {
+            locationProvider = settings.locationProvider
             viewportProvider = settings.viewportProvider
             geocodingEndpointBaseUrl = settings.geocodingEndpointBaseUrl
             singleBoxSearchBaseUrl = settings.singleBoxSearchBaseUrl
@@ -131,12 +115,12 @@ public class SearchEngineSettings @JvmOverloads constructor(
 
         /**
          * The mechanism responsible for providing location approximations to the SDK.
-         * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
+         * By default [LocationProvider] is provided by [LocationServiceFactory].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          */
-        public fun locationEngine(locationEngine: LocationEngine): Builder = apply {
-            this.locationEngine = locationEngine
+        public fun locationProvider(locationProvider: LocationProvider): Builder = apply {
+            this.locationProvider = locationProvider
         }
 
         /**
@@ -164,8 +148,7 @@ public class SearchEngineSettings @JvmOverloads constructor(
          * Create [SearchEngineSettings] instance from builder data.
          */
         public fun build(): SearchEngineSettings = SearchEngineSettings(
-            accessToken = accessToken,
-            locationEngine = locationEngine ?: defaultLocationEngine(),
+            locationProvider = locationProvider ?: defaultLocationProvider(),
             viewportProvider = viewportProvider,
             geocodingEndpointBaseUrl = geocodingEndpointBaseUrl ?: DEFAULT_ENDPOINT_GEOCODING,
             singleBoxSearchBaseUrl = singleBoxSearchBaseUrl,

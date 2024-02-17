@@ -255,35 +255,29 @@ package com.mapbox.search {
   }
 
   public final class SearchEngineSettings {
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com");
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine(), com.mapbox.search.ViewportProvider? viewportProvider = null);
-    ctor public SearchEngineSettings(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
-    ctor public SearchEngineSettings(String accessToken);
-    method public String getAccessToken();
+    ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
+    ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com");
+    ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public String getGeocodingEndpointBaseUrl();
-    method public com.mapbox.android.core.location.LocationEngine getLocationEngine();
+    method public com.mapbox.common.location.LocationProvider? getLocationProvider();
     method public String? getSingleBoxSearchBaseUrl();
     method public com.mapbox.search.ViewportProvider? getViewportProvider();
     method public com.mapbox.search.SearchEngineSettings.Builder toBuilder();
-    property public final String accessToken;
     property public final String geocodingEndpointBaseUrl;
-    property public final com.mapbox.android.core.location.LocationEngine locationEngine;
+    property public final com.mapbox.common.location.LocationProvider? locationProvider;
     property public final String? singleBoxSearchBaseUrl;
     property public final com.mapbox.search.ViewportProvider? viewportProvider;
     field public static final String DEFAULT_ENDPOINT_GEOCODING = "https://api.mapbox.com";
   }
 
   public static final class SearchEngineSettings.Builder {
-    ctor public SearchEngineSettings.Builder(String accessToken);
+    ctor public SearchEngineSettings.Builder();
     method public com.mapbox.search.SearchEngineSettings build();
     method public com.mapbox.search.SearchEngineSettings.Builder geocodingEndpointBaseUrl(String geocodingEndpointBaseUrl);
-    method public String getAccessToken();
-    method public com.mapbox.search.SearchEngineSettings.Builder locationEngine(com.mapbox.android.core.location.LocationEngine locationEngine);
-    method public void setAccessToken(String p);
+    method public com.mapbox.search.SearchEngineSettings.Builder locationProvider(com.mapbox.common.location.LocationProvider locationProvider);
     method public com.mapbox.search.SearchEngineSettings.Builder singleBoxSearchBaseUrl(String? singleBoxSearchBaseUrl);
     method public com.mapbox.search.SearchEngineSettings.Builder viewportProvider(com.mapbox.search.ViewportProvider? viewportProvider);
-    property public final String accessToken;
   }
 
   public interface SearchMultipleSelectionCallback {

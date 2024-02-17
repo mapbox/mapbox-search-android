@@ -46,7 +46,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            new SearchEngineSettings(getString(R.string.mapbox_access_token))
+            new SearchEngineSettings()
         );
 
         final ReverseGeoOptions options = new ReverseGeoOptions.Builder(Point.fromLngLat(2.294434, 48.858349))

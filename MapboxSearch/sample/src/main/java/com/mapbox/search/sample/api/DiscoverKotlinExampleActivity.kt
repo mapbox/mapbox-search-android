@@ -8,16 +8,15 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.discover.Discover
 import com.mapbox.search.discover.DiscoverQuery
-import com.mapbox.search.sample.R
 
 class DiscoverKotlinExampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val discover = Discover.create(
-            accessToken = getString(R.string.mapbox_access_token),
-        )
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
+        val discover = Discover.create()
 
         lifecycleScope.launchWhenCreated {
             val dcRegion = BoundingBox.fromPoints(
