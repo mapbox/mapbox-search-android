@@ -23,11 +23,8 @@ import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.result.SearchSuggestion
-// import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.createTestBaseSearchSuggestion
-// import com.mapbox.search.tests_support.createTestFavoriteRecord
 import com.mapbox.search.tests_support.createTestRequestOptions
-// import com.mapbox.search.tests_support.createTestSearchResult
 import com.mapbox.test.dsl.TestCase
 import io.mockk.Called
 import io.mockk.every

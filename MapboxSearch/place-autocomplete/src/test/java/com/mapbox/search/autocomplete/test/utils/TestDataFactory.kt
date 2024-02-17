@@ -53,14 +53,13 @@ internal val filledCoreSearchAddress: CoreSearchAddress = createCoreSearchAddres
 
 internal val testBaseRawSearchResult: BaseRawSearchResult = createTestBaseRawSearchResult(
     id = "test-id",
-    names = listOf("test-name"),
+    names = listOf("test-suggestion"),
     descriptionAddress = "test-description",
     addresses = listOf(filledCoreSearchAddress),
     fullAddress = "test-full-address",
     center = Point.fromLngLat(10.0, 15.0),
-    routablePoints = listOf(RoutablePoint(Point.fromLngLat(11.0, 16.0), "test")),
     distanceMeters = 123.0,
-    icon = "test",
+    icon = "test-suggestion",
     etaMinutes = 5.0,
     types = listOf(BaseRawResultType.ADDRESS),
     action = null,

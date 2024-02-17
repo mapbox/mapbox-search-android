@@ -4,6 +4,8 @@
 
 ### Breaking changes
 - [CORE] Access token needs to be assigned via `MapboxOptions.accessToken` now
+- [Address Autofill, Place Autocomplete] Search is a two-steps action now, i.e. it returns `Suggestion`s (without the geo coordinate) at the first step and `Result` after suggestion selection. The `coordinate` field is no longer available in `Suggestion`.
+- [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
 
 ### Mapbox dependencies
 - Search Native SDK `2.0.0-alpha.4`

@@ -1,10 +1,7 @@
 package com.mapbox.search.ui.adapter.autocomplete
 
-import android.Manifest
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import com.mapbox.common.location.LocationProvider
-import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocomplete
@@ -12,7 +9,6 @@ import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
-import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
@@ -39,17 +35,9 @@ public class PlaceAutocompleteUiAdapter(
      * Place autocomplete engine.
      */
     private val placeAutocomplete: PlaceAutocomplete,
-
-    /**
-     * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationProvider] is provided by [LocationServiceFactory].
-     * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
-     * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
-     */
-    locationEngine: LocationProvider? = defaultLocationProvider(),
 ) {
 
-    private val itemsCreator = PlaceAutocompleteItemsCreator(view.context, locationEngine)
+    private val itemsCreator = PlaceAutocompleteItemsCreator(view.context)
 
     private val searchListeners = CopyOnWriteArrayList<SearchListener>()
 

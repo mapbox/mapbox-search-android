@@ -13,13 +13,14 @@ import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseSearchResult
+import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -28,14 +29,15 @@ import java.util.concurrent.Executors
  * Temporary implementation of the [AddressAutofill] based on the two-step search.
  */
 internal class AddressAutofillImpl(
-    private val searchEngine: TwoStepsToOneStepSearchEngineAdapter,
-    private val activityReporter: UserActivityReporterInterface
+    private val autofillEngine: AutofillSearchEngine,
+    private val activityReporter: UserActivityReporterInterface,
+    private val resultFactory: AddressAutofillResultFactory = AddressAutofillResultFactory()
 ) : AddressAutofill {
 
-    override suspend fun suggestions(
+    override suspend fun reverseGeocoding(
         point: Point,
         options: AddressAutofillOptions
-    ): Expected<Exception, List<AddressAutofillSuggestion>> {
+    ): Expected<Exception, List<AddressAutofillResult>> {
         activityReporter.reportActivity("address-autofill-reverse-geocoding")
 
         val coreOptions = createCoreReverseGeoOptions(
@@ -44,8 +46,17 @@ internal class AddressAutofillImpl(
             language = options.language?.let { listOf(it.code) },
         )
 
-        return searchEngine.reverseGeocoding(coreOptions).mapValue { (results, _) ->
-            results.toAddressAutofillSuggestions()
+        return autofillEngine.search(coreOptions).mapValue { (results, _) ->
+            results.mapNotNull {
+                val expected = resultFactory.createAddressAutofillResultOrNull(it)
+                if (expected.isValue) expected.value else null
+            }
+        }.let { result ->
+            if (result.isValue && result.value.isNullOrEmpty()) {
+                ExpectedFactory.createError(Exception("No results for point $point"))
+            } else {
+                result
+            }
         }
     }
 
@@ -62,8 +73,9 @@ internal class AddressAutofillImpl(
             ignoreUR = true,
             addonAPI = mapOf("types" to "address", "streets" to "true")
         )
-        return searchEngine.searchResolveImmediately(query.query, coreOptions).mapValue {
-            it.toAddressAutofillSuggestions()
+
+        return autofillEngine.search(query.query, coreOptions).mapValue { (suggestions, _) ->
+            resultFactory.createAddressAutofillSuggestions(suggestions)
         }
     }
 
@@ -72,7 +84,28 @@ internal class AddressAutofillImpl(
     ): Expected<Exception, AddressAutofillResult> {
         activityReporter.reportActivity("address-autofill-suggestion-select")
 
-        return ExpectedFactory.createValue(AddressAutofillResult(suggestion, suggestion.address))
+        return if (suggestion.underlying == null) {
+            ExpectedFactory.createError(Exception("AddressAutofillSuggestion doesn't contain underlying suggestion"))
+         } else {
+            val baseResult = selectRaw(suggestion.underlying).value
+            if (baseResult == null) {
+                ExpectedFactory.createError(Exception("No results for suggestion $suggestion"))
+            } else {
+                resultFactory.createAddressAutofillResultOrNull(baseResult)
+            }
+        }
+    }
+
+    private suspend fun selectRaw(suggestion: BaseSearchSuggestion): Expected<Exception, BaseSearchResult> {
+        return autofillEngine.select(suggestion).flatMap {
+            when (it) {
+                is AutofillSearchEngine.SearchSelectionResponse.Result -> ExpectedFactory.createValue(it.result)
+                else -> {
+                    // Shouldn't happen because we don't allow suggestions of type Category and Query
+                    ExpectedFactory.createError(Exception("Unsupported suggestion type: $suggestion"))
+                }
+            }
+        }
     }
 
     internal companion object {
@@ -98,8 +131,7 @@ internal class AddressAutofillImpl(
                 ),
             )
 
-            val engine = TwoStepsToOneStepSearchEngineAdapter(
-                apiType = CoreApiType.AUTOFILL,
+            val engine = AutofillSearchEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
                 historyService = SearchHistoryService.STUB,
@@ -108,22 +140,8 @@ internal class AddressAutofillImpl(
             )
 
             return AddressAutofillImpl(
-                searchEngine = engine,
+                autofillEngine = engine,
                 activityReporter = getUserActivityReporter()
-            )
-        }
-
-        private fun List<BaseSearchResult>.toAddressAutofillSuggestions() = mapNotNull { it.toAddressAutofillSuggestion() }
-
-        private fun BaseSearchResult.toAddressAutofillSuggestion(): AddressAutofillSuggestion? {
-            // Filtering incomplete results
-            val autofillAddress = AddressComponents.fromCoreSdkAddress(address, metadata) ?: return null
-
-            return AddressAutofillSuggestion(
-                name = name,
-                formattedAddress = fullAddress ?: autofillAddress.formattedAddress(),
-                address = autofillAddress,
-                coordinate = coordinate,
             )
         }
     }
