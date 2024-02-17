@@ -118,10 +118,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         addressAutofillUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
-                selectSuggestion(
-                    suggestion,
-                    fromReverseGeocoding = false,
-                )
+                selectSuggestion(suggestion)
             }
 
             override fun onSuggestionsShown(suggestions: List<AddressAutofillSuggestion>) {
@@ -178,15 +175,12 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
     private fun findAddress(point: Point) {
         lifecycleScope.launchWhenStarted {
-            val response = addressAutofill.suggestions(point, AddressAutofillOptions())
-            response.onValue { suggestions ->
-                if (suggestions.isEmpty()) {
+            val response = addressAutofill.reverseGeocoding(point, AddressAutofillOptions())
+            response.onValue { result ->
+                if (result.isEmpty()) {
                     showToast(R.string.address_autofill_error_pin_correction)
                 } else {
-                    selectSuggestion(
-                        suggestions.first(),
-                        fromReverseGeocoding = true
-                    )
+                    showAddressAutofillResult(result.first(), fromReverseGeocoding = true)
                 }
             }.onError {
                 showToast(R.string.address_autofill_error_pin_correction)
@@ -194,11 +188,11 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectSuggestion(suggestion: AddressAutofillSuggestion, fromReverseGeocoding: Boolean) {
+    private fun selectSuggestion(suggestion: AddressAutofillSuggestion) {
         lifecycleScope.launchWhenStarted {
             val response = addressAutofill.select(suggestion)
             response.onValue { result ->
-                showAddressAutofillResult(result, fromReverseGeocoding)
+                showAddressAutofillResult(result, fromReverseGeocoding = false)
             }.onError {
                 showToast(R.string.address_autofill_error_select)
             }
@@ -219,7 +213,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
         if (!fromReverseGeocoding) {
             mapView.mapboxMap.setCamera(
                 CameraOptions.Builder()
-                    .center(result.suggestion.coordinate)
+                    .center(result.coordinate)
                     .zoom(16.0)
                     .build()
             )
