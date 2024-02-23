@@ -7,6 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +18,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import com.google.android.material.textfield.TextInputLayout
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
-import com.mapbox.geojson.Polygon
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
@@ -27,6 +31,8 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.search.ApiType
@@ -73,6 +79,7 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import com.mapbox.turf.TurfTransformation.circle
 import java.net.URI
 
 class MainActivity : AppCompatActivity() {
@@ -88,6 +95,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private lateinit var mapMarkersManager: MapMarkersManager
+    private lateinit var circleInputLayout: LinearLayout
+    private lateinit var circleInputText: EditText
+    private lateinit var circleInputSubmit: Button
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -119,6 +129,21 @@ class MainActivity : AppCompatActivity() {
 
         locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
+        circleInputLayout = findViewById(R.id.circleInputLayout)
+        circleInputLayout.visibility = View.INVISIBLE
+
+        circleInputText = findViewById(R.id.circleInputText)
+        circleInputSubmit = findViewById(R.id.submitCircleRadius)
+        circleInputSubmit.setOnClickListener {
+            val radius = circleInputText.text
+            Log.i("MAP-CLICK", "RADIUS is $radius")
+
+            circleInputText.setText("10")
+            circleInputLayout.visibility = View.INVISIBLE
+
+
+        }
+
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
             mapboxMap.loadStyleUri(getMapStyleUri())
@@ -141,6 +166,16 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+
+        val mapboxMap = mapView.getMapboxMap()
+        mapboxMap.addOnMapClickListener(object : OnMapClickListener {
+            override  fun onMapClick(point: Point): Boolean {
+                Log.i("MAP-CLICK", "The point $point was clicked!")
+//                val circleInputLayout = findViewById(R.id.circleInputLayout)
+                circleInputLayout.visibility = View.VISIBLE
+                return true
+            }
+        })
 
         mapMarkersManager = MapMarkersManager(mapView)
         mapMarkersManager.onMarkersChangeListener = {
@@ -184,53 +219,71 @@ class MainActivity : AppCompatActivity() {
         )
 
         // configure address tiles download
-        val regionId = "Berlin"
         val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(dataset="experimental-poi-country-mbx-small"))
 
-        val geometry = Polygon.fromLngLats(listOf(
-            listOf(
-                Point.fromLngLat(12.950797669113996, 52.70351455240879),
-                Point.fromLngLat(12.950797669113996, 52.26445634597735),
-                Point.fromLngLat(13.920354477248736, 52.26445634597735),
-                Point.fromLngLat(13.920354477248736, 52.70351455240879),
-                Point.fromLngLat(12.950797669113996, 52.70351455240879)
-            ),
-        ))
-        val loadOptions = TileRegionLoadOptions.Builder()
+        val regionIdA = "Berlin"
+        val radiusA = 20000.0
+        val geometryA = circle(Point.fromLngLat(13.395379601813858, 52.51583717815174), radiusA, 64, "meters")
+
+        val loadOptionsA = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
-            .geometry(geometry)
+            .geometry(geometryA)
+            .acceptExpired(true)
+            .build()
+
+        // configure address tiles download
+        val regionIdB = "Stuttgart"
+
+        val radiusB = 20000.0
+        val geometryB = circle(Point.fromLngLat(9.1794145145914, 48.776881341930476), radiusB, 64, "meters")
+
+        val loadOptionsB = TileRegionLoadOptions.Builder()
+            .descriptors(descriptors)
+            .geometry(geometryB)
             .acceptExpired(true)
             .build()
 
         // add index observer callback to track downloads
         offlineSearchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
             override fun onIndexChange(event: OfflineIndexChangeEvent) {
-                if ((event.regionId == regionId) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
-                    Log.i("SearchApiExample", "$event.regionId was successfully added or updated")
+                if ((event.regionId == regionIdA || event.regionId == regionIdB) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
+                    Log.i("SearchApiExample", "${event.regionId} was successfully added or updated")
                 }
             }
 
             override fun onError(event: OfflineIndexErrorEvent) {
-                Log.i("SearchApiExample", "Offline index error: $event")
+                Log.i("SearchApiExample", "Offline index error: ${event.regionId} $event")
             }
         })
 
-        // start address tiles download
-        val loadingTask = tileStore.loadTileRegion(
-            regionId,
-            loadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading address progress: $progress") },
+        // start Berlin tiles download
+        val loadingTaskA = tileStore.loadTileRegion(
+            regionIdA,
+            loadOptionsA,
+            { progress -> Log.i("SearchApiExample", "Loading Berlin progress: $progress") },
             { result ->
                 if (result.isValue) {
-                    Log.i("SearchApiExample", "Address tiles successfully loaded: ${result.value}")
+                    Log.i("SearchApiExample", "Berlin tiles successfully loaded: ${result.value}")
                 } else {
-                    Log.i("SearchApiExample", "Address tiles loading error: ${result.error}")
+                    Log.i("SearchApiExample", "Berlin tiles loading error: ${result.error}")
+                }
+            }
+        )
+        // start Stuttgart tiles download
+        val loadingTaskB = tileStore.loadTileRegion(
+            regionIdB,
+            loadOptionsB,
+            { progress -> Log.i("SearchApiExample", "Loading Stuttgart progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Stuttgart tiles successfully loaded: ${result.value}")
+                } else {
+                    Log.i("SearchApiExample", "Stuttgart tiles loading error: ${result.error}")
                 }
             }
         )
 
         // TODO: wait till all tiles will be downloaded
-
         searchEngineUiAdapter = SearchEngineUiAdapter(
             view = searchResultsView,
             searchEngine = searchEngine,
