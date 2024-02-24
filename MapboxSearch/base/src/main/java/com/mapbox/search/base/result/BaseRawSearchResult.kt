@@ -127,6 +127,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
 
 fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     id,
+    null,
     types.map { it.mapToCore() },
     names,
     languages,
