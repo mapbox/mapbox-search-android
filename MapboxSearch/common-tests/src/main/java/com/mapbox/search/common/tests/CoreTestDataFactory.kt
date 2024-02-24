@@ -164,7 +164,6 @@ fun createTestCoreSearchResult(
     serverIndex: Int? = 0,
 ) = SearchResult(
     id,
-    null,
     types,
     names,
     languages,
@@ -220,7 +219,6 @@ fun SearchResult.copy(
     serverIndex: Int? = this.serverIndex,
 ) = SearchResult(
     id,
-    null,
     types,
     names,
     languages,
