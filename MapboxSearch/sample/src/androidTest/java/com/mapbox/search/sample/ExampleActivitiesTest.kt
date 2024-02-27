@@ -5,12 +5,12 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
 import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
+import com.mapbox.search.sample.api.CategoryJavaExampleActivity
+import com.mapbox.search.sample.api.CategoryKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
 import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
-import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
-import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
 import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingJavaExampleActivity
@@ -61,9 +61,9 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
             AddressAutofillKotlinExampleActivity::class.java,
             AddressAutofillUiActivity::class.java,
 
-            DiscoverKotlinExampleActivity::class.java,
-            DiscoverJavaExampleActivity::class.java,
-            DiscoverActivity::class.java,
+            CategoryKotlinExampleActivity::class.java,
+            CategoryJavaExampleActivity::class.java,
+            CategoryActivity::class.java,
 
             PlaceAutocompleteUiActivity::class.java,
             PlaceAutocompleteKotlinExampleActivity::class.java,

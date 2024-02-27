@@ -69,8 +69,8 @@ try:
         generateLicense(licenseFile, "offline")
         licenseFile.write("\n\n#### Search Autofill module\n")
         generateLicense(licenseFile, "autofill")
-        licenseFile.write("\n\n#### Search Discover module\n")
-        generateLicense(licenseFile, "discover")
+        licenseFile.write("\n\n#### Search Category module\n")
+        generateLicense(licenseFile, "category")
         licenseFile.write("\n\n#### Search Place Autocomplete module\n")
         generateLicense(licenseFile, "place-autocomplete")
 
