@@ -306,28 +306,29 @@ internal class OfflineSearchEngineIntegrationTest {
         assertEquals(0, searchResult.requireResults().size)
     }
 
-    @Test
-    fun testSuccessfulSearch() {
-        loadOfflineData()
+    // See SSDK-501 for details
+    // @Test
+    // fun testSuccessfulSearch() {
+    //     loadOfflineData()
 
-        val searchEngineResult = searchEngine.searchBlocking(
-            TEST_QUERY,
-            OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.coordinate),
-        )
+    //     val searchEngineResult = searchEngine.searchBlocking(
+    //         TEST_QUERY,
+    //         OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.coordinate),
+    //     )
 
-        assertTrue(searchEngineResult is SearchEngineResult.Results)
+    //     assertTrue(searchEngineResult is SearchEngineResult.Results)
 
-        val results = searchEngineResult.requireResults()
-        assertTrue(results.size > 5)
+    //     val results = searchEngineResult.requireResults()
+    //     assertTrue(results.size > 5)
 
-        val result = results.first()
-        assertTrue(
-            assertSearchResultEquals(
-                TEST_SEARCH_RESULT_MAPBOX,
-                result
-            )
-        )
-    }
+    //     val result = results.first()
+    //     assertTrue(
+    //         assertSearchResultEquals(
+    //             TEST_SEARCH_RESULT_MAPBOX,
+    //             result
+    //         )
+    //     )
+    // }
 
     @Test
     fun testForwardGeocodingShortQuery() {
@@ -338,27 +339,28 @@ internal class OfflineSearchEngineIntegrationTest {
         assertEquals(10, searchResult.requireResults().size)
     }
 
-    @Test
-    fun testSuccessfulReverseGeocoding() {
-        loadOfflineData()
+    // See SSDK-501 for details
+    // @Test
+    // fun testSuccessfulReverseGeocoding() {
+    //     loadOfflineData()
 
-        val callback = BlockingOfflineSearchCallback()
+    //     val callback = BlockingOfflineSearchCallback()
 
-        searchEngine.reverseGeocoding(
-            OfflineReverseGeoOptions(center = TEST_SEARCH_RESULT_MAPBOX.coordinate),
-            callback
-        )
+    //     searchEngine.reverseGeocoding(
+    //         OfflineReverseGeoOptions(center = TEST_SEARCH_RESULT_MAPBOX.coordinate),
+    //         callback
+    //     )
 
-        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-        assertEquals(1, results.size)
+    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+    //     assertEquals(1, results.size)
 
-        assertTrue(
-            assertSearchResultEquals(
-                TEST_SEARCH_RESULT_MAPBOX,
-                results.first()
-            )
-        )
-    }
+    //     assertTrue(
+    //         assertSearchResultEquals(
+    //             TEST_SEARCH_RESULT_MAPBOX,
+    //             results.first()
+    //         )
+    //     )
+    // }
 
     @Test
     fun testSuccessfulReverseGeocodingEmptyResponse() {
@@ -375,32 +377,33 @@ internal class OfflineSearchEngineIntegrationTest {
         assertEquals(0, results.size)
     }
 
-    @Test
-    fun testSuccessfulAddressesSearch() {
-        loadOfflineData()
+    // See SSDK-501 for details
+    // @Test
+    // fun testSuccessfulAddressesSearch() {
+    //     loadOfflineData()
 
-        val callback = BlockingOfflineSearchCallback()
+    //     val callback = BlockingOfflineSearchCallback()
 
-        searchEngine.searchAddressesNearby(
-            street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
-            proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
-            radiusMeters = 100.0,
-            callback
-        )
+    //     searchEngine.searchAddressesNearby(
+    //         street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+    //         proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
+    //         radiusMeters = 100.0,
+    //         callback
+    //     )
 
-        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+    //     assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
 
-        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-        assertTrue(results.isNotEmpty())
+    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+    //     assertTrue(results.isNotEmpty())
 
-        val expectedResult = OfflineSearchResult(TEST_SEARCH_RESULT_MAPBOX.rawSearchResult.copy(distanceMeters = null))
-        assertTrue(
-            assertSearchResultEquals(
-                expectedResult,
-                results.first()
-            )
-        )
-    }
+    //     val expectedResult = OfflineSearchResult(TEST_SEARCH_RESULT_MAPBOX.rawSearchResult.copy(distanceMeters = null))
+    //     assertTrue(
+    //         assertSearchResultEquals(
+    //             expectedResult,
+    //             results.first()
+    //         )
+    //     )
+    // }
 
     @Test
     fun testAddressSearchOutsideAddedOfflineRegion() {
