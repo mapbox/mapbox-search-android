@@ -1,0 +1,140 @@
+// Signature format: 3.0
+package com.mapbox.search.category {
+
+  public interface Category {
+    method public default static com.mapbox.search.category.Category create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public default static final com.mapbox.search.category.Category create();
+    method public suspend Object? search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.category.CategoryOptions options = CategoryOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.category.CategoryResult>>> p = CategoryOptions());
+    method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.category.CategoryOptions options, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.Point proximity, com.mapbox.search.category.CategoryOptions options, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    method public suspend Object? search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.BoundingBox region, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.category.CategoryOptions options = CategoryOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.category.CategoryResult>>> p = CategoryOptions());
+    method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.BoundingBox region, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.category.CategoryOptions options, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, com.mapbox.geojson.BoundingBox region, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.category.CategoryOptions options, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    method public suspend Object? search(com.mapbox.search.category.CategoryQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.category.RouteDeviationOptions deviation = RouteDeviationOptions.DEFAULT_DEVIATION, com.mapbox.search.category.CategoryOptions options = CategoryOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.category.CategoryResult>>> p = CategoryOptions());
+    method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.category.RouteDeviationOptions deviation, com.mapbox.search.category.CategoryOptions options, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.category.CategoryQuery query, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.category.RouteDeviationOptions deviation, com.mapbox.search.category.CategoryOptions options, com.mapbox.search.common.CompletionCallback<java.util.List<com.mapbox.search.category.CategoryResult>> callback);
+    field public static final com.mapbox.search.category.Category.Companion Companion;
+  }
+
+  public static final class Category.Companion {
+    method public com.mapbox.search.category.Category create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public com.mapbox.search.category.Category create();
+  }
+
+  @kotlinx.parcelize.Parcelize public final class CategoryAddress implements android.os.Parcelable {
+    method public String? getCountry();
+    method public String? getCountryIso1();
+    method public String? getCountryIso2();
+    method public String? getDistrict();
+    method public String? getFormattedAddress();
+    method public String? getHouseNumber();
+    method public String? getLocality();
+    method public String? getNeighborhood();
+    method public String? getPlace();
+    method public String? getPostcode();
+    method public String? getRegion();
+    method public String? getStreet();
+    property public final String? country;
+    property public final String? countryIso1;
+    property public final String? countryIso2;
+    property public final String? district;
+    property public final String? formattedAddress;
+    property public final String? houseNumber;
+    property public final String? locality;
+    property public final String? neighborhood;
+    property public final String? place;
+    property public final String? postcode;
+    property public final String? region;
+    property public final String? street;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class CategoryOptions implements android.os.Parcelable {
+    ctor public CategoryOptions(int limit = 10, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>());
+    method public com.mapbox.search.common.IsoLanguageCode getLanguage();
+    method public int getLimit();
+    property public final com.mapbox.search.common.IsoLanguageCode language;
+    property public final int limit;
+  }
+
+  public abstract class CategoryQuery implements android.os.Parcelable {
+    method public abstract String getCanonicalName();
+    property public abstract String canonicalName;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class CategoryQuery.Category extends com.mapbox.search.category.CategoryQuery {
+    method public static com.mapbox.search.category.CategoryQuery.Category create(String canonicalName);
+    method public String getCanonicalName();
+    property public String canonicalName;
+    field public static final com.mapbox.search.category.CategoryQuery.Category ATM;
+    field public static final com.mapbox.search.category.CategoryQuery.Category AUTO_REPAIR_MECHANIC;
+    field public static final com.mapbox.search.category.CategoryQuery.Category BARS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category BUS_STATION;
+    field public static final com.mapbox.search.category.CategoryQuery.Category CLOTHING_STORE;
+    field public static final com.mapbox.search.category.CategoryQuery.Category COFFEE_SHOP_CAFE;
+    field public static final com.mapbox.search.category.CategoryQuery.Category.Companion Companion;
+    field public static final com.mapbox.search.category.CategoryQuery.Category EMERGENCY_ROOM;
+    field public static final com.mapbox.search.category.CategoryQuery.Category EV_CHARGING_STATION;
+    field public static final com.mapbox.search.category.CategoryQuery.Category GAS_STATION;
+    field public static final com.mapbox.search.category.CategoryQuery.Category GYM_FITNESS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category HOSPITAL;
+    field public static final com.mapbox.search.category.CategoryQuery.Category HOTEL;
+    field public static final com.mapbox.search.category.CategoryQuery.Category MOVIE_THEATERS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category MUSEUMS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category NIGHT_CLUBS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category PARKING;
+    field public static final com.mapbox.search.category.CategoryQuery.Category PARKS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category PHARMACY;
+    field public static final com.mapbox.search.category.CategoryQuery.Category RAILWAY_STATION;
+    field public static final com.mapbox.search.category.CategoryQuery.Category RESTAURANTS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category SHOPPING_MALLS;
+    field public static final com.mapbox.search.category.CategoryQuery.Category SUPERMARKET_GROCERY;
+  }
+
+  public static final class CategoryQuery.Category.Companion {
+    method public com.mapbox.search.category.CategoryQuery.Category create(String canonicalName);
+  }
+
+  @kotlinx.parcelize.Parcelize public final class CategoryResult implements android.os.Parcelable {
+    method public com.mapbox.search.category.CategoryAddress getAddress();
+    method public java.util.List<java.lang.String> getCategories();
+    method public com.mapbox.geojson.Point getCoordinate();
+    method public String? getMakiIcon();
+    method public String getName();
+    method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
+    property public final com.mapbox.search.category.CategoryAddress address;
+    property public final java.util.List<java.lang.String> categories;
+    property public final com.mapbox.geojson.Point coordinate;
+    property public final String? makiIcon;
+    property public final String name;
+    property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+  }
+
+  public abstract class RouteDeviationOptions implements android.os.Parcelable {
+    method public abstract com.mapbox.search.category.RouteDeviationOptions.SarType? getSarType();
+    property public abstract com.mapbox.search.category.RouteDeviationOptions.SarType? sarType;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class RouteDeviationOptions.SarType implements android.os.Parcelable {
+    ctor public RouteDeviationOptions.SarType(String rawName);
+    method public String getRawName();
+    property public final String rawName;
+    field public static final com.mapbox.search.category.RouteDeviationOptions.SarType.Companion Companion;
+    field public static final com.mapbox.search.category.RouteDeviationOptions.SarType ISOCHROME;
+  }
+
+  public static final class RouteDeviationOptions.SarType.Companion {
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class RouteDeviationOptions.Time extends com.mapbox.search.category.RouteDeviationOptions {
+    ctor public RouteDeviationOptions.Time(long value, java.util.concurrent.TimeUnit unit, com.mapbox.search.category.RouteDeviationOptions.SarType? sarType = com.mapbox.search.category.RouteDeviationOptions.SarType.ISOCHROME);
+    ctor public RouteDeviationOptions.Time(long value, java.util.concurrent.TimeUnit unit);
+    method public com.mapbox.search.category.RouteDeviationOptions.SarType? getSarType();
+    method public java.util.concurrent.TimeUnit getUnit();
+    method public long getValue();
+    property public com.mapbox.search.category.RouteDeviationOptions.SarType? sarType;
+    property public final java.util.concurrent.TimeUnit unit;
+    property public final long value;
+  }
+
+}
+

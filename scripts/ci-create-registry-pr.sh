@@ -44,8 +44,8 @@ cp "$INITIAL_PATH/sdk-registry-config-templates/search-offline-android.yaml" "${
 mkdir -p "${TMPDIR}/config/search-autofill-sdk"
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-autofill-android.yaml" "${TMPDIR}/config/search-autofill-sdk/${VERSION}.yaml"
 
-mkdir -p "${TMPDIR}/config/search-discover-sdk"
-cp "$INITIAL_PATH/sdk-registry-config-templates/search-discover-android.yaml" "${TMPDIR}/config/search-discover-sdk/${VERSION}.yaml"
+mkdir -p "${TMPDIR}/config/search-category-sdk"
+cp "$INITIAL_PATH/sdk-registry-config-templates/search-category-android.yaml" "${TMPDIR}/config/search-category-sdk/${VERSION}.yaml"
 
 mkdir -p "${TMPDIR}/config/search-place-autocomplete-sdk"
 cp "$INITIAL_PATH/sdk-registry-config-templates/search-place-autocomplete-android.yaml" "${TMPDIR}/config/search-place-autocomplete-sdk/${VERSION}.yaml"

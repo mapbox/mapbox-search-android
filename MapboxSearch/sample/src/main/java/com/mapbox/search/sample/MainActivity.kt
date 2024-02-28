@@ -46,12 +46,12 @@ import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
+import com.mapbox.search.sample.api.CategoryJavaExampleActivity
+import com.mapbox.search.sample.api.CategoryKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
 import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
-import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
-import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
 import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingJavaExampleActivity
@@ -359,16 +359,16 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
                 true
             }
-            R.id.open_discover_ui_example -> {
-                startActivity(Intent(this, DiscoverActivity::class.java))
+            R.id.open_category_ui_example -> {
+                startActivity(Intent(this, CategoryActivity::class.java))
                 true
             }
-            R.id.open_discover_kotlin_example -> {
-                startActivity(Intent(this, DiscoverKotlinExampleActivity::class.java))
+            R.id.open_category_kotlin_example -> {
+                startActivity(Intent(this, CategoryKotlinExampleActivity::class.java))
                 true
             }
-            R.id.open_discover_java_example -> {
-                startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
+            R.id.open_category_java_example -> {
+                startActivity(Intent(this, CategoryJavaExampleActivity::class.java))
                 true
             }
             R.id.open_place_autocomplete_ui_example -> {

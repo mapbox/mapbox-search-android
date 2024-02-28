@@ -1,0 +1,214 @@
+public final class com/mapbox/search/category/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class com/mapbox/search/category/Category {
+	public static final field Companion Lcom/mapbox/search/category/Category$Companion;
+	public static fun create ()Lcom/mapbox/search/category/Category;
+	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/category/Category;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Ljava/util/List;Lcom/mapbox/search/category/RouteDeviationOptions;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Ljava/util/List;Lcom/mapbox/search/category/RouteDeviationOptions;Lcom/mapbox/search/category/CategoryOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun search (Lcom/mapbox/search/category/CategoryQuery;Ljava/util/List;Lcom/mapbox/search/category/RouteDeviationOptions;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/category/Category$Companion {
+	public final fun create ()Lcom/mapbox/search/category/Category;
+	public final fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/category/Category;
+	public static synthetic fun create$default (Lcom/mapbox/search/category/Category$Companion;Lcom/mapbox/common/location/LocationProvider;ILjava/lang/Object;)Lcom/mapbox/search/category/Category;
+}
+
+public final class com/mapbox/search/category/Category$DefaultImpls {
+	public static fun search (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun search (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Ljava/util/List;Lcom/mapbox/search/category/RouteDeviationOptions;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static synthetic fun search$default (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static synthetic fun search$default (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static synthetic fun search$default (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun search$default (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun search$default (Lcom/mapbox/search/category/Category;Lcom/mapbox/search/category/CategoryQuery;Ljava/util/List;Lcom/mapbox/search/category/RouteDeviationOptions;Lcom/mapbox/search/category/CategoryOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/category/CategoryAddress : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getCountryIso1 ()Ljava/lang/String;
+	public final fun getCountryIso2 ()Ljava/lang/String;
+	public final fun getDistrict ()Ljava/lang/String;
+	public final fun getFormattedAddress ()Ljava/lang/String;
+	public final fun getHouseNumber ()Ljava/lang/String;
+	public final fun getLocality ()Ljava/lang/String;
+	public final fun getNeighborhood ()Ljava/lang/String;
+	public final fun getPlace ()Ljava/lang/String;
+	public final fun getPostcode ()Ljava/lang/String;
+	public final fun getRegion ()Ljava/lang/String;
+	public final fun getStreet ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/CategoryAddress$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/CategoryAddress;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/CategoryAddress;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/category/CategoryOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> ()V
+	public fun <init> (ILcom/mapbox/search/common/IsoLanguageCode;)V
+	public synthetic fun <init> (ILcom/mapbox/search/common/IsoLanguageCode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
+	public final fun getLimit ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/CategoryOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/CategoryOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/CategoryOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public abstract class com/mapbox/search/category/CategoryQuery : android/os/Parcelable {
+	public abstract fun getCanonicalName ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/category/CategoryQuery$Category : com/mapbox/search/category/CategoryQuery {
+	public static final field ATM Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field AUTO_REPAIR_MECHANIC Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field BARS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field BUS_STATION Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field CLOTHING_STORE Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field COFFEE_SHOP_CAFE Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/search/category/CategoryQuery$Category$Companion;
+	public static final field EMERGENCY_ROOM Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field EV_CHARGING_STATION Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field GAS_STATION Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field GYM_FITNESS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field HOSPITAL Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field HOTEL Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field MOVIE_THEATERS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field MUSEUMS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field NIGHT_CLUBS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field PARKING Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field PARKS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field PHARMACY Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field RAILWAY_STATION Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field RESTAURANTS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field SHOPPING_MALLS Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final field SUPERMARKET_GROCERY Lcom/mapbox/search/category/CategoryQuery$Category;
+	public static final fun create (Ljava/lang/String;)Lcom/mapbox/search/category/CategoryQuery$Category;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCanonicalName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/CategoryQuery$Category$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/search/category/CategoryQuery$Category;
+}
+
+public final class com/mapbox/search/category/CategoryQuery$Category$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/CategoryQuery$Category;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/CategoryQuery$Category;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/category/CategoryResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lcom/mapbox/search/category/CategoryAddress;
+	public final fun getCategories ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRoutablePoints ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/CategoryResult$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/CategoryResult;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/CategoryResult;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public abstract class com/mapbox/search/category/RouteDeviationOptions : android/os/Parcelable {
+	public abstract fun getSarType ()Lcom/mapbox/search/category/RouteDeviationOptions$SarType;
+}
+
+public final class com/mapbox/search/category/RouteDeviationOptions$SarType : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/search/category/RouteDeviationOptions$SarType$Companion;
+	public static final field ISOCHROME Lcom/mapbox/search/category/RouteDeviationOptions$SarType;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRawName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/RouteDeviationOptions$SarType$Companion {
+}
+
+public final class com/mapbox/search/category/RouteDeviationOptions$SarType$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/RouteDeviationOptions$SarType;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/RouteDeviationOptions$SarType;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/category/RouteDeviationOptions$Time : com/mapbox/search/category/RouteDeviationOptions {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (JLjava/util/concurrent/TimeUnit;)V
+	public fun <init> (JLjava/util/concurrent/TimeUnit;Lcom/mapbox/search/category/RouteDeviationOptions$SarType;)V
+	public synthetic fun <init> (JLjava/util/concurrent/TimeUnit;Lcom/mapbox/search/category/RouteDeviationOptions$SarType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSarType ()Lcom/mapbox/search/category/RouteDeviationOptions$SarType;
+	public final fun getUnit ()Ljava/util/concurrent/TimeUnit;
+	public final fun getValue ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/category/RouteDeviationOptions$Time$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/category/RouteDeviationOptions$Time;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/category/RouteDeviationOptions$Time;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+

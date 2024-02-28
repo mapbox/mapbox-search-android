@@ -41,9 +41,9 @@
         <activity android:name=".AddressAutofillUiActivity" />
         <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
 
-        <activity android:name=".DiscoverActivity" />
-        <activity android:name=".api.DiscoverKotlinExampleActivity" />
-        <activity android:name=".api.DiscoverJavaExampleActivity" />
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".api.CategoryKotlinExampleActivity" />
+        <activity android:name=".api.CategoryJavaExampleActivity" />
 
         <activity android:name=".PlaceAutocompleteUiActivity" />
         <activity android:name=".api.PlaceAutocompleteKotlinExampleActivity" />

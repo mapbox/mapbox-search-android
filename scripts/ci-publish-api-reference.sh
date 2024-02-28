@@ -48,8 +48,8 @@ cp -r "${INITIAL_PATH}/MapboxSearch/offline/build/dokka" "${TMPDIR}/offline/${VE
 mkdir -p "${TMPDIR}/autofill"
 cp -r "${INITIAL_PATH}/MapboxSearch/autofill/build/dokka" "${TMPDIR}/autofill/${VERSION}"
 
-mkdir -p "${TMPDIR}/discover"
-cp -r "${INITIAL_PATH}/MapboxSearch/discover/build/dokka" "${TMPDIR}/discover/${VERSION}"
+mkdir -p "${TMPDIR}/category"
+cp -r "${INITIAL_PATH}/MapboxSearch/category/build/dokka" "${TMPDIR}/category/${VERSION}"
 
 mkdir -p "${TMPDIR}/place-autocomplete"
 cp -r "${INITIAL_PATH}/MapboxSearch/place-autocomplete/build/dokka" "${TMPDIR}/place-autocomplete/${VERSION}"
