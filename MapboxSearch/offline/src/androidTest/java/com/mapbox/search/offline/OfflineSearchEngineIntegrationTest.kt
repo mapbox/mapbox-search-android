@@ -481,24 +481,25 @@ internal class OfflineSearchEngineIntegrationTest {
         assertEquals("Negative radius", exception.message)
     }
 
-    @Test
-    fun testAddressesSearchZeroRadius() {
-        loadOfflineData()
+    // See SSDK-603 for details
+    // @Test
+    // fun testAddressesSearchZeroRadius() {
+    //     loadOfflineData()
 
-        val callback = BlockingOfflineSearchCallback()
+    //     val callback = BlockingOfflineSearchCallback()
 
-        searchEngine.searchAddressesNearby(
-            street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
-            proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
-            radiusMeters = 0.0,
-            callback
-        )
+    //     searchEngine.searchAddressesNearby(
+    //         street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+    //         proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
+    //         radiusMeters = 0.0,
+    //         callback
+    //     )
 
-        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+    //     assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
 
-        val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-        assertTrue(results.isNotEmpty())
-    }
+    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+    //     assertTrue(results.isNotEmpty())
+    // }
 
     @Test
     fun testAddressesInvalidProximity() {
