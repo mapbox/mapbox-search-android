@@ -275,6 +275,7 @@ internal class BaseRawSearchResultTest {
 
         val CORE_EMPTY_SEARCH_RESULT = CoreSearchResult(
             "Empty result id",
+            null,
             listOf(ResultType.PLACE, ResultType.REGION),
             listOf("Result name"),
             listOf("Default"),
@@ -362,6 +363,7 @@ internal class BaseRawSearchResultTest {
         fun createCoreSearchResult(types: List<ResultType> = listOf(ResultType.POI)): CoreSearchResult {
             return CoreSearchResult(
                 "test poi result id",
+                null,
                 types,
                 listOf("Test filled search result"),
                 listOf("en", "fr", "de"),
