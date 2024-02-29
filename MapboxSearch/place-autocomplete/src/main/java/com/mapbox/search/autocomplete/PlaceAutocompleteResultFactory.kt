@@ -73,6 +73,8 @@ internal class PlaceAutocompleteResultFactory {
                 ?: return null
 
             return PlaceAutocompleteResult(
+                id = id,
+                mapboxId = mapboxId,
                 name = name,
                 coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },

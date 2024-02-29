@@ -186,6 +186,7 @@ package com.mapbox.search.offline {
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
     method public String getId();
+    method public String? getMapboxId();
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.offline.OfflineSearchResultType getType();
@@ -194,6 +195,7 @@ package com.mapbox.search.offline {
     property public final String? descriptionText;
     property public final Double? distanceMeters;
     property public final String id;
+    property public final String? mapboxId;
     property public final String name;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final com.mapbox.search.offline.OfflineSearchResultType type;

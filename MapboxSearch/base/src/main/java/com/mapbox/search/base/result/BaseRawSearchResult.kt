@@ -14,6 +14,7 @@ import java.util.HashMap
 @Parcelize
 data class BaseRawSearchResult(
     val id: String,
+    val mapboxId: String?,
     val types: List<BaseRawResultType>,
     val names: List<String>,
     val languages: List<String>,
@@ -99,6 +100,7 @@ data class BaseRawSearchResult(
 
 fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     id = id,
+    mapboxId = mapboxId,
     types = types.map { it.mapToBase() },
     names = names,
     languages = languages,
@@ -127,7 +129,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
 
 fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     id,
-    null,
+    mapboxId,
     types.map { it.mapToCore() },
     names,
     languages,
