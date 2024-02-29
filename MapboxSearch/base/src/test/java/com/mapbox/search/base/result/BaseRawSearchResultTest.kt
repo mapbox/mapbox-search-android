@@ -304,6 +304,7 @@ internal class BaseRawSearchResultTest {
 
         val BASE_EMPTY_SEARCH_RESULT = BaseRawSearchResult(
             id = CORE_EMPTY_SEARCH_RESULT.id,
+            mapboxId = CORE_EMPTY_SEARCH_RESULT.mapboxId,
             types = CORE_EMPTY_SEARCH_RESULT.types.map { it.mapToBase() },
             names = CORE_EMPTY_SEARCH_RESULT.names,
             languages = CORE_EMPTY_SEARCH_RESULT.languages,
@@ -334,6 +335,7 @@ internal class BaseRawSearchResultTest {
 
         val BASE_FILLED_SEARCH_RESULT = BaseRawSearchResult(
             id = CORE_FILLED_SEARCH_RESULT.id,
+            mapboxId = CORE_FILLED_SEARCH_RESULT.mapboxId,
             types = CORE_FILLED_SEARCH_RESULT.types.map { it.mapToBase() },
             names = CORE_FILLED_SEARCH_RESULT.names,
             languages = CORE_FILLED_SEARCH_RESULT.languages,

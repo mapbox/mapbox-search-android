@@ -16,6 +16,8 @@ internal class AddressAutofillResultFactory {
     private fun BaseSearchResult.toAddressAutofillResult(): AddressAutofillResult? {
         val suggestion = this.toAddressAutofillSuggestion() ?: return null
         return AddressAutofillResult(
+            id = id,
+            mapboxId = mapboxId,
             suggestion = suggestion,
             coordinate = this.coordinate,
             address = suggestion.address

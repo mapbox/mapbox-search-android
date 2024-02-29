@@ -148,12 +148,26 @@ internal class OfflineSearchEngineIntegrationTest {
             .build()
 
         val loadTilesResult = tileStore.loadTileRegionBlocking(TEST_GROUP_ID, dcLoadOptions)
-        assertTrue(loadTilesResult.isValue)
+        assertTrue(
+            "loadTilesResult should be valid",
+            loadTilesResult.isValue
+        )
 
         val tileRegion = requireNotNull(loadTilesResult.value)
-        assertEquals(TEST_GROUP_ID, tileRegion.id)
-        assertTrue(tileRegion.completedResourceCount > 0)
-        assertEquals(tileRegion.requiredResourceCount, tileRegion.completedResourceCount)
+        assertEquals(
+            "tileRegionId should be $TEST_GROUP_ID, but was ${tileRegion.id}",
+            TEST_GROUP_ID,
+            tileRegion.id
+        )
+        assertTrue(
+            "completedResourceCount should be greater than 0",
+            tileRegion.completedResourceCount > 0
+        )
+        assertEquals(
+            "requiredResourceCount (${tileRegion.requiredResourceCount}) != completedResourceCount (tileRegion.completedResourceCount)",
+            tileRegion.requiredResourceCount,
+            tileRegion.completedResourceCount
+        )
 
         val events = listener.getResultsBlocking()
         events.forEach {

@@ -98,13 +98,17 @@ package com.mapbox.search.category {
     method public com.mapbox.search.category.CategoryAddress getAddress();
     method public java.util.List<java.lang.String> getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
+    method public String getId();
     method public String? getMakiIcon();
+    method public String? getMapboxId();
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     property public final com.mapbox.search.category.CategoryAddress address;
     property public final java.util.List<java.lang.String> categories;
     property public final com.mapbox.geojson.Point coordinate;
+    property public final String id;
     property public final String? makiIcon;
+    property public final String? mapboxId;
     property public final String name;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
   }

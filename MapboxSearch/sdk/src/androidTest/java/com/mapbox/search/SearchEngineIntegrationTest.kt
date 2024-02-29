@@ -886,6 +886,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "ItFzVnwBAsSWFvXxpsTw",
+            mapboxId = "CkIKQDVkN2U0Zjk0MDIzOGY2NDY0NzM2NjNlMWQ0ZWQzOWM5NWJlYmEzMmIxYjM3NzExYTE2NDEzYzgwZjI0M2NmMmQ=",
             types = listOf(BaseRawResultType.POI),
             names = listOf("SimplexiTea"),
             center = Point.fromLngLat(-122.41721, 37.775934),
