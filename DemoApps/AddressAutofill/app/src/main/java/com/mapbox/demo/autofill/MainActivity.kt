@@ -13,7 +13,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -33,6 +34,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var addressAutofill: AddressAutofill
+    private lateinit var locationProvider: LocationProvider
 
     private lateinit var searchResultsView: SearchResultsView
     private lateinit var searchEngineUiAdapter: AddressAutofillUiAdapter
@@ -56,9 +58,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set your Access Token here if it's not already set in some other way
-        // MapboxOptions.accessToken = "<my-access-token>"
-        addressAutofill = AddressAutofill.create(getString(R.string.mapbox_access_token))
+        locationProvider = LocationServiceFactory.getOrCreate()
+            .getDeviceLocationProvider(null)
+            .value
+            ?: throw IllegalStateException("No LocationProvider found")
+
+        addressAutofill = AddressAutofill.create(locationProvider = locationProvider)
 
         queryEditText = findViewById(R.id.query_text)
         apartmentEditText = findViewById(R.id.address_apartment)
@@ -151,7 +156,7 @@ class MainActivity : AppCompatActivity() {
                 PERMISSIONS_REQUEST_LOCATION
             )
         } else {
-            LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+            locationProvider.lastKnownLocation(this) { point ->
                 point?.let {
                     mapView.getMapboxMap().setCamera(
                         CameraOptions.Builder()
