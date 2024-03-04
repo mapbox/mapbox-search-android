@@ -13,8 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
@@ -43,7 +42,7 @@ import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var locationEngine: LocationEngine
+    private lateinit var locationProvider: LocationProvider
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -62,9 +61,11 @@ class MainActivity : AppCompatActivity() {
                     mapMarkersManager.clearMarkers()
                     searchPlaceView.hide()
                 }
+
                 mapMarkersManager.hasMarkers -> {
                     mapMarkersManager.clearMarkers()
                 }
+
                 else -> {
                     if (BuildConfig.DEBUG) {
                         error("This OnBackPressedCallback should not be enabled")
@@ -82,8 +83,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
-
-        locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
 
         mapView = findViewById(R.id.map_view)
         mapView.getMapboxMap().also { mapboxMap ->
@@ -108,13 +107,16 @@ class MainActivity : AppCompatActivity() {
             isVisible = false
         }
 
+        val searchEngineSettings = SearchEngineSettings()
+        locationProvider = searchEngineSettings.locationProvider
+
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.GEOCODING,
-            settings = SearchEngineSettings(getString(R.string.mapbox_access_token))
+            settings = searchEngineSettings
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(getString(R.string.mapbox_access_token))
+            OfflineSearchEngineSettings(locationProvider = locationProvider)
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
@@ -167,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromIndexableRecord(historyRecord, distanceMeters = null))
 
-                locationEngine.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
+                locationProvider.userDistanceTo(this@MainActivity, historyRecord.coordinate) { distance ->
                     distance?.let {
                         searchPlaceView.updateDistance(distance)
                     }
@@ -266,6 +268,7 @@ class MainActivity : AppCompatActivity() {
             Configuration.UI_MODE_NIGHT_YES -> Style.DARK
             Configuration.UI_MODE_NIGHT_NO,
             Configuration.UI_MODE_NIGHT_UNDEFINED -> Style.MAPBOX_STREETS
+
             else -> error("Unknown mode: $darkMode")
         }
     }
@@ -274,7 +277,7 @@ class MainActivity : AppCompatActivity() {
 
         private val mapboxMap = mapView.getMapboxMap()
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
-        private val markers = mutableMapOf<Long, Point>()
+        private val markers = mutableMapOf<String, Point>()
 
         var onMarkersChangeListener: (() -> Unit)? = null
 
