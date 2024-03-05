@@ -10,7 +10,7 @@
 - [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
 
 ### Mapbox dependencies
-- Search Native SDK `2.0.0-alpha.4`
+- Search Native SDK `2.0.0-alpha.13`
 - Common SDK `24.0.0`
 - Maps SDK `11.0.0`
 - Kotlin `1.7.20`
