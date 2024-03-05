@@ -75,12 +75,13 @@ class MainActivity : AppCompatActivity() {
 
         mapPin = findViewById(R.id.map_pin)
         mapView = findViewById(R.id.map)
-        mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.addOnMapIdleListener {
+        mapboxMap = mapView.mapboxMap
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS)
+
+        mapboxMap.subscribeMapIdle {
             if (ignoreNextMapIdleEvent) {
                 ignoreNextMapIdleEvent = false
-                return@addOnMapIdleListener
+                return@subscribeMapIdle
             }
 
             val mapCenter = mapboxMap.cameraState.center
@@ -158,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             locationProvider.lastKnownLocation(this) { point ->
                 point?.let {
-                    mapView.getMapboxMap().setCamera(
+                    mapView.mapboxMap.setCamera(
                         CameraOptions.Builder()
                             .center(point)
                             .zoom(9.0)
@@ -216,7 +217,7 @@ class MainActivity : AppCompatActivity() {
         pinCorrectionNote.isVisible = true
 
         if (!fromReverseGeocoding) {
-            mapView.getMapboxMap().setCamera(
+            mapView.mapboxMap.setCamera(
                 CameraOptions.Builder()
                     .center(result.suggestion.coordinate)
                     .zoom(16.0)

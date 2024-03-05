@@ -85,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         mapView = findViewById(R.id.map_view)
-        mapView.getMapboxMap().also { mapboxMap ->
-            mapboxMap.loadStyleUri(getMapStyleUri())
+        mapView.mapboxMap.also { mapboxMap ->
+            mapboxMap.loadStyle(getMapStyleUri())
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
 
     private class MapMarkersManager(mapView: MapView) {
 
-        private val mapboxMap = mapView.getMapboxMap()
+        private val mapboxMap = mapView.mapboxMap
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
         private val markers = mutableMapOf<String, Point>()
 
