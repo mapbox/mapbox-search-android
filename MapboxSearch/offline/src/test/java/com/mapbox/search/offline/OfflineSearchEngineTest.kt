@@ -292,7 +292,7 @@ internal class OfflineSearchEngineTest {
     }
 
     @TestFactory
-    fun `Check error offline address search with illegal radius passed`() = TestCase {
+    fun `Check error offline address search with negative radius passed`() = TestCase {
         Given("OfflineSearchEngine with mocked dependencies") {
             When("searchAddressesNearby() called with negative radius") {
                 val testStreet = "Test street"
@@ -326,7 +326,104 @@ internal class OfflineSearchEngineTest {
 
                 Then("Passed error is correct") {
                     Assertions.assertTrue(errorSlot.captured is IllegalArgumentException)
-                    Assertions.assertEquals("Negative radius", errorSlot.captured.message)
+                    Assertions.assertEquals("Negative or zero radius: -10.0", errorSlot.captured.message)
+                }
+
+                VerifyNo("onResults() wasn't called") {
+                    callback.onResults(any(), any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
+                }
+            }
+        }
+    }
+    @TestFactory
+    fun `Check error offline address search with zero radius passed`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            When("searchAddressesNearby() called with zero radius") {
+                val testStreet = "Some test street"
+                val testRadius = 0.0
+
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+                val errorSlot = slot<Exception>()
+                every { callback.onError(capture(errorSlot)) } returns Unit
+
+                val task = searchEngine.searchAddressesNearby(
+                    street = testStreet,
+                    proximity = TEST_POINT,
+                    radiusMeters = testRadius,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyNo("CoreSearchEngine.getAddressesOffline() not called") {
+                    coreEngine.getAddressesOffline(any(), any(), any(), any())
+                }
+
+                VerifyOnce("Error passed to callback") {
+                    callback.onError(any())
+                }
+
+                Then("Passed error is correct") {
+                    Assertions.assertTrue(errorSlot.captured is IllegalArgumentException)
+                    Assertions.assertEquals("Negative or zero radius: 0.0", errorSlot.captured.message)
+                }
+
+                VerifyNo("onResults() wasn't called") {
+                    callback.onResults(any(), any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-nearby-street"))
+                }
+            }
+        }
+    }
+    @TestFactory
+    fun `Check error offline address search with invalid proximity`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            When("searchAddressesNearby() called with invalid proximity") {
+                val testStreet = "Street with proximity"
+                val testRadius = 600.0
+                val testProximity = Point.fromLngLat(181.0, 0.0)
+
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+                val errorSlot = slot<Exception>()
+                every { callback.onError(capture(errorSlot)) } returns Unit
+
+                val task = searchEngine.searchAddressesNearby(
+                    street = testStreet,
+                    proximity = testProximity,
+                    radiusMeters = testRadius,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyNo("CoreSearchEngine.getAddressesOffline() not called") {
+                    coreEngine.getAddressesOffline(any(), any(), any(), any())
+                }
+
+                VerifyOnce("Error passed to callback") {
+                    callback.onError(any())
+                }
+
+                Then("Passed error is correct") {
+                    Assertions.assertTrue(errorSlot.captured is IllegalArgumentException)
+                    Assertions.assertEquals("Invalid proximity(lon=181.0,lat=0.0)", errorSlot.captured.message)
                 }
 
                 VerifyNo("onResults() wasn't called") {
