@@ -8,6 +8,7 @@
 - [Address Autofill, Place Autocomplete] Added new fields called `id` and `mapboxId` to `AddressAutofillResult` and `PlaceAutocompleteResult`
 - [Address Autofill, Place Autocomplete] Search is a two-steps action now, i.e. it returns `Suggestion`s (without the geo coordinate) at the first step and `Result` after suggestion selection. The `coordinate` field is no longer available in `Suggestion`.
 - [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
+- [Offline search] Added bounding box filter for offline search functions
 
 ### Mapbox dependencies
 - Search Native SDK `2.0.0-alpha.13`
