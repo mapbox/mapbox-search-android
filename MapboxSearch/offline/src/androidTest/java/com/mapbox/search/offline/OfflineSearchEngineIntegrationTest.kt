@@ -11,10 +11,12 @@ import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileRegionLoadProgress
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreObserver
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
@@ -562,7 +564,67 @@ internal class OfflineSearchEngineIntegrationTest {
 
     @Test
     fun testBoundingBox() {
-        assertTrue(true)
+        loadOfflineData()
+
+        val lon = TEST_SEARCH_RESULT_MAPBOX.coordinate.longitude()
+        val lat = TEST_SEARCH_RESULT_MAPBOX.coordinate.latitude()
+
+        val bbox = BoundingBox.fromPoints(
+            Point.fromLngLat(
+                lon - 0.005,
+                lat - 0.005,
+            ),
+            Point.fromLngLat(
+                lon + 0.005,
+                lat + 0.005,
+            )
+        )
+
+        var inside = 0
+        var outside = 0
+
+        run {
+            val searchResult = searchEngine.searchBlocking(
+                TEST_QUERY,
+                OfflineSearchOptions(
+                    limit = 250,
+                ),
+            )
+
+            assertTrue(searchResult is SearchEngineResult.Results)
+            val results = searchResult.requireResults();
+            assertTrue(results.isNotEmpty())
+
+            for (res in results) {
+                if (bbox.contains(res.coordinate)) {
+                    inside++
+                } else {
+                    outside++
+                }
+            }
+
+            // We must have both inside and outside results to perform a test
+            assertTrue(inside > 0)
+            assertTrue(outside > 0)
+        }
+
+        val searchResult = searchEngine.searchBlocking(
+            TEST_QUERY,
+            OfflineSearchOptions(
+                limit = 250,
+                boundingBox = bbox
+            ),
+        )
+
+        assertTrue(searchResult is SearchEngineResult.Results)
+        val results = searchResult.requireResults();
+        assertEquals("All points inside a bbox must be preserved", inside, results.size)
+
+        for (res in results) {
+            val p = res.coordinate
+            assertTrue("Point(lon=${p.longitude()},lat=${p.latitude()}) must be in bbox `$bbox`", bbox.contains(p))
+        }
+
     }
 
     private companion object {
@@ -613,6 +675,12 @@ internal class OfflineSearchEngineIntegrationTest {
             if (distance1 == distance2) return true
             if (distance1 == null || distance2 == null) return false
             return abs(distance1 - distance2) < 10.0
+        }
+
+        fun BoundingBox.contains(p: Point): Boolean {
+            val lon = p.longitude()
+            val lat = p.latitude()
+            return west() < lon && lon < east() && south() < lat && lat < north()
         }
 
         fun assertSearchResultEquals(expected: OfflineSearchResult, actual: OfflineSearchResult): Boolean {
