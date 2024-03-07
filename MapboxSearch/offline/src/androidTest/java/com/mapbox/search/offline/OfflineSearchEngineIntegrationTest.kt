@@ -16,7 +16,6 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.mapToBase
-import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
@@ -590,7 +589,7 @@ internal class OfflineSearchEngineIntegrationTest {
             )
 
             assertTrue(searchResult is SearchEngineResult.Results)
-            val results = searchResult.requireResults();
+            val results = searchResult.requireResults()
             assertTrue(results.isNotEmpty())
 
             for (res in results) {
@@ -615,14 +614,13 @@ internal class OfflineSearchEngineIntegrationTest {
         )
 
         assertTrue(searchResult is SearchEngineResult.Results)
-        val results = searchResult.requireResults();
+        val results = searchResult.requireResults()
         assertEquals("All points inside a bbox must be preserved", inside, results.size)
 
         for (res in results) {
             val p = res.coordinate
             assertTrue("Point(lon=${p.longitude()},lat=${p.latitude()}) must be in bbox `$bbox`", bbox.contains(p))
         }
-
     }
 
     private companion object {
