@@ -174,13 +174,13 @@ class MainActivity : AppCompatActivity() {
     private fun findAddress(point: Point) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val response = addressAutofill.suggestions(point, AddressAutofillOptions())
+                val response = addressAutofill.reverseGeocoding(point, AddressAutofillOptions())
                 response.onValue { suggestions ->
                     if (suggestions.isEmpty()) {
                         showToast(R.string.address_autofill_error_pin_correction)
                     } else {
                         showAddressAutofillSuggestion(
-                            suggestions.first(),
+                            suggestions.first().suggestion,
                             fromReverseGeocoding = true
                         )
                     }
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
         if (!fromReverseGeocoding) {
             mapView.mapboxMap.setCamera(
                 CameraOptions.Builder()
-                    .center(result.suggestion.coordinate)
+                    .center(result.coordinate)
                     .zoom(16.0)
                     .build()
             )

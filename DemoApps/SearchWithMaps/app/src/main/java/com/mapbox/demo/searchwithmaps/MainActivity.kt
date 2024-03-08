@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val searchEngineSettings = SearchEngineSettings()
-        locationProvider = searchEngineSettings.locationProvider
+        locationProvider = searchEngineSettings.locationProvider ?: throw IllegalStateException("No location provider found")
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.GEOCODING,
