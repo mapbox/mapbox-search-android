@@ -11,6 +11,7 @@ import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileRegionLoadProgress
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreObserver
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
@@ -476,48 +477,150 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
 
         val exception = (callback.getResultBlocking() as SearchEngineResult.Error).e
-        assertEquals("Negative radius", exception.message)
+        assertEquals("Negative or zero radius: -100.0", exception.message)
     }
 
-    // See SSDK-603 for details
-    // @Test
-    // fun testAddressesSearchZeroRadius() {
-    //     loadOfflineData()
+     @Test
+     fun testAddressesSearchZeroRadius() {
+         loadOfflineData()
 
-    //     val callback = BlockingOfflineSearchCallback()
+         val callback = BlockingOfflineSearchCallback()
 
-    //     searchEngine.searchAddressesNearby(
-    //         street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
-    //         proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
-    //         radiusMeters = 0.0,
-    //         callback
-    //     )
+         searchEngine.searchAddressesNearby(
+             street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+             proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
+             radiusMeters = 0.0,
+             callback
+         )
 
-    //     assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+         assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
 
-    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-    //     assertTrue(results.isNotEmpty())
-    // }
+         val exception = (callback.getResultBlocking() as SearchEngineResult.Error).e
+         assertEquals("Negative or zero radius: 0.0", exception.message)
+     }
 
     @Test
     fun testAddressesInvalidProximity() {
         loadOfflineData()
 
-        val callback = BlockingOfflineSearchCallback()
+        val validLons = arrayOf(-179.9, 0.0, 179.0)
+        val validLats = arrayOf(-89.9, 0.0, 89.0)
 
-        searchEngine.searchAddressesNearby(
-            street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
-            proximity = Point.fromLngLat(300.0, 300.0),
-            radiusMeters = 1000.0,
-            callback
+        val invalidLons = arrayOf(-180.1, -180.0, 180.0, 180.1)
+        val invalidLats = arrayOf(-90.1, -90.0, 90.0, 90.1)
+
+        for (lon in validLons) {
+            for (lat in validLats) {
+                val callback = BlockingOfflineSearchCallback()
+
+                searchEngine.searchAddressesNearby(
+                    street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+                    proximity = Point.fromLngLat(lon, lat),
+                    radiusMeters = 1000.0,
+                    callback
+                )
+
+                assertTrue("Lon=$lon, lat=$lat", callback.getResultBlocking() is SearchEngineResult.Results)
+            }
+        }
+
+        for (lon in invalidLons) {
+            for (lat in validLats) {
+                val callback = BlockingOfflineSearchCallback()
+
+                searchEngine.searchAddressesNearby(
+                    street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+                    proximity = Point.fromLngLat(lon, lat),
+                    radiusMeters = 1000.0,
+                    callback
+                )
+
+                assertTrue("Lon=$lon, lat=$lat", callback.getResultBlocking() is SearchEngineResult.Error)
+                val exception = (callback.getResultBlocking() as SearchEngineResult.Error).e
+                assertEquals("Invalid proximity(lon=$lon,lat=$lat)", exception.message)
+            }
+        }
+
+        for (lon in validLons) {
+            for (lat in invalidLats) {
+                val callback = BlockingOfflineSearchCallback()
+
+                searchEngine.searchAddressesNearby(
+                    street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+                    proximity = Point.fromLngLat(lon, lat),
+                    radiusMeters = 1000.0,
+                    callback
+                )
+
+                assertTrue("Lon=$lon, lat=$lat", callback.getResultBlocking() is SearchEngineResult.Error)
+                val exception = (callback.getResultBlocking() as SearchEngineResult.Error).e
+                assertEquals("Invalid proximity(lon=$lon,lat=$lat)", exception.message)
+            }
+        }
+    }
+
+    @Test
+    fun testBoundingBox() {
+        loadOfflineData()
+
+        val lon = TEST_SEARCH_RESULT_MAPBOX.coordinate.longitude()
+        val lat = TEST_SEARCH_RESULT_MAPBOX.coordinate.latitude()
+
+        val bbox = BoundingBox.fromPoints(
+            Point.fromLngLat(
+                lon - 0.005,
+                lat - 0.005,
+            ),
+            Point.fromLngLat(
+                lon + 0.005,
+                lat + 0.005,
+            )
         )
 
-        assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+        var inside = 0
+        var outside = 0
 
-        // Probably we should get error here (related to an issue in search-sdk/#578)
-        // SSDK-603: Disabling this check until it's fixed
-        // val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-        // assertTrue(results.isEmpty())
+        run {
+            val searchResult = searchEngine.searchBlocking(
+                TEST_QUERY,
+                OfflineSearchOptions(
+                    limit = 250,
+                ),
+            )
+
+            assertTrue(searchResult is SearchEngineResult.Results)
+            val results = searchResult.requireResults()
+            assertTrue(results.isNotEmpty())
+
+            for (res in results) {
+                if (bbox.contains(res.coordinate)) {
+                    inside++
+                } else {
+                    outside++
+                }
+            }
+
+            // We must have both inside and outside results to perform a test
+            assertTrue(inside > 0)
+            assertTrue(outside > 0)
+        }
+
+        val searchResult = searchEngine.searchBlocking(
+            TEST_QUERY,
+            OfflineSearchOptions(
+                limit = 250,
+                boundingBox = bbox
+            ),
+        )
+
+        assertTrue(searchResult is SearchEngineResult.Results)
+        val results = searchResult.requireResults()
+        assertEquals("All points inside a bbox must be preserved", inside, results.size)
+
+        for (res in results) {
+            val p = res.coordinate
+            assertTrue("Point(lon=${p.longitude()},lat=${p.latitude()}) must be in bbox `$bbox`", bbox.contains(p))
+        }
     }
 
     private companion object {
@@ -568,6 +671,12 @@ internal class OfflineSearchEngineIntegrationTest {
             if (distance1 == distance2) return true
             if (distance1 == null || distance2 == null) return false
             return abs(distance1 - distance2) < 10.0
+        }
+
+        fun BoundingBox.contains(p: Point): Boolean {
+            val lon = p.longitude()
+            val lat = p.latitude()
+            return west() < lon && lon < east() && south() < lat && lat < north()
         }
 
         fun assertSearchResultEquals(expected: OfflineSearchResult, actual: OfflineSearchResult): Boolean {

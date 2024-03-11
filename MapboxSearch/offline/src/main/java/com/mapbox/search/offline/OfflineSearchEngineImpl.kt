@@ -112,10 +112,19 @@ internal class OfflineSearchEngineImpl(
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
         activityReporter.reportActivity("offline-search-engine-search-nearby-street")
-
-        if (radiusMeters < 0.0) {
+        if (radiusMeters <= 0.0) {
             executor.execute {
-                callback.onError(IllegalArgumentException("Negative radius"))
+                callback.onError(IllegalArgumentException("Negative or zero radius: $radiusMeters"))
+            }
+            return AsyncOperationTaskImpl.COMPLETED
+        }
+
+        val lon = proximity.longitude()
+        val lat = proximity.latitude()
+        if (lon <= -180.0 || lon >= 180.0 ||
+            lat <= -90.0 || lat >= 90.0) {
+            executor.execute {
+                callback.onError(IllegalArgumentException("Invalid proximity(lon=$lon,lat=$lat)"))
             }
             return AsyncOperationTaskImpl.COMPLETED
         }

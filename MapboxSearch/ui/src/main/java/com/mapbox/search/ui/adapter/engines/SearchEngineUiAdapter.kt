@@ -689,6 +689,7 @@ public class SearchEngineUiAdapter(
             proximity = proximity,
             origin = origin,
             limit = limit,
+            boundingBox = boundingBox,
         )
     }
 }

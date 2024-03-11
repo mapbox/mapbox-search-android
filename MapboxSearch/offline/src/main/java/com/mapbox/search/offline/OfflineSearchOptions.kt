@@ -1,8 +1,10 @@
 package com.mapbox.search.offline
 
 import android.os.Parcelable
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.utils.extension.mapToCore
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -27,6 +29,13 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
      * @see [OfflineSearchResult.distanceMeters]
      */
     public val origin: Point? = null,
+
+    /**
+     * Limit results to only those contained within the supplied bounding box.
+     * The bounding box cannot cross the 180th meridian (longitude +/-180.0 deg.)
+     * and North or South pole (latitude +/- 90.0 deg.).
+     */
+    public val boundingBox: BoundingBox? = null,
 ) : Parcelable {
 
     init {
@@ -52,6 +61,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         if (proximity != other.proximity) return false
         if (limit != other.limit) return false
         if (origin != other.origin) return false
+        if (boundingBox != other.boundingBox) return false
 
         return true
     }
@@ -63,6 +73,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         var result = proximity?.hashCode() ?: 0
         result = 31 * result + (limit ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
+        result = 31 * result + (boundingBox?.hashCode() ?: 0)
         return result
     }
 
@@ -70,7 +81,9 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "OfflineSearchOptions(proximity=$proximity, limit=$limit, origin=$origin)"
+        return "OfflineSearchOptions(" +
+                "proximity=$proximity, limit=$limit, origin=$origin, boundingBox=$boundingBox" +
+                ")"
     }
 
     /**
@@ -81,11 +94,13 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         private var proximity: Point? = null
         private var limit: Int? = null
         private var origin: Point? = null
+        private var boundingBox: BoundingBox? = null
 
         internal constructor(options: OfflineSearchOptions) : this() {
             proximity = options.proximity
             limit = options.limit
             origin = options.origin
+            boundingBox = options.boundingBox
         }
 
         /**
@@ -104,12 +119,18 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         public fun origin(origin: Point): Builder = apply { this.origin = origin }
 
         /**
+         * Limit results to only those contained within the supplied bounding box.
+         */
+        public fun boundingBox(boundingBox: BoundingBox): Builder = apply { this.boundingBox = boundingBox }
+
+        /**
          * Create [OfflineSearchOptions] instance from builder data.
          */
         public fun build(): OfflineSearchOptions = OfflineSearchOptions(
             proximity = proximity,
             limit = limit,
             origin = origin,
+            boundingBox = boundingBox,
         )
     }
 }
@@ -120,7 +141,7 @@ internal fun OfflineSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOpt
     origin,
     null,
     null,
-    null,
+    boundingBox?.mapToCore(),
     null,
     null,
     null,
