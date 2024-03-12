@@ -1,14 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0
+## 2.0.0-beta.3
+
+### New features
+- [Offline search] Added bounding box filter for offline search functions
+- [CORE] Added a new field called `mapboxId` to `BaseSearchResult`, `SearchResult`, `CategoryResult` and `OfflineSearchResult`
+- [Address Autofill, Place Autocomplete] Added new fields called `id` and `mapboxId` to `AddressAutofillResult` and `PlaceAutocompleteResult`
 
 ### Breaking changes
 - [CORE] Access token needs to be assigned via `MapboxOptions.accessToken` now
-- [CORE] Added a new field called `mapboxId` to `BaseSearchResult`, `SearchResult`, `CategoryResult` and `OfflineSearchResult`
-- [Address Autofill, Place Autocomplete] Added new fields called `id` and `mapboxId` to `AddressAutofillResult` and `PlaceAutocompleteResult`
+- [CORE] Renamed all Discover-related terms to Category
 - [Address Autofill, Place Autocomplete] Search is a two-steps action now, i.e. it returns `Suggestion`s (without the geo coordinate) at the first step and `Result` after suggestion selection. The `coordinate` field is no longer available in `Suggestion`.
 - [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
-- [Offline search] Added bounding box filter for offline search functions
 
 ### Mapbox dependencies
 - Search Native SDK `2.0.0-alpha.13`
