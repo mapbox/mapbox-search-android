@@ -24,6 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:imeOptions="actionDone"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,24 +67,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:textSize="16sp"
                 android:text="Precision"/>
 
             <RadioGroup
                 android:id="@+id/route_polyline_precision"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
                 <!--adding a radio button -->
                 <RadioButton
                     android:id="@+id/precision_five"
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:checked="true"
                     android:padding="4dp"
                     android:text="5"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <!--adding a radio button -->
                 <RadioButton
@@ -93,34 +96,49 @@
                     android:checked="false"
                     android:padding="4dp"
                     android:text="6"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_width="75dp" />
 
             </RadioGroup>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/pin_correction_note"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/layout_distance_travelled"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="@string/address_autofill_pin_correction_note"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_route_polyline_precision"
-            tools:visibility="visible"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/layout_route_polyline_precision">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:text="Distance"/>
+
+            <android.widget.SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:max="100" />
+
+        </LinearLayout>
 
         <com.mapbox.maps.MapView
             android:id="@+id/map"
             android:layout_width="0dp"
             android:layout_height="165dp"
-            android:layout_margin="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pin_correction_note"
+            app:layout_constraintTop_toBottomOf="@+id/layout_distance_travelled"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

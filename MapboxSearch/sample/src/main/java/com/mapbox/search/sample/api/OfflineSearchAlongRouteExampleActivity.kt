@@ -57,7 +57,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var polylinePrecisionRadioGroup: RadioGroup
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
-    private lateinit var mapMarkersManager: AnnotationsManager
+    private lateinit var mapAnnotationsManager: AnnotationsManager
 
     private var ignoreNextMapIdleEvent: Boolean = false
 
@@ -74,7 +74,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
             Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Search results: $results")
             val coordinates = results.map { it.coordinate }
-            mapMarkersManager.showMarkers(coordinates)
+            mapAnnotationsManager.showMarkers(coordinates)
 
             val items = results.map { result ->
                 SearchResultAdapterItem.Result(
@@ -117,7 +117,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         mapView = findViewById(R.id.map)
         mapboxMap = mapView.mapboxMap
-        mapMarkersManager = OfflineSearchAlongRouteExampleActivity.AnnotationsManager(mapView)
+        mapAnnotationsManager = OfflineSearchAlongRouteExampleActivity.AnnotationsManager(mapView)
 
         mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 
@@ -145,30 +145,33 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
         }
 
-        queryEditText.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+        queryEditText.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 searchRequestTask = searchEngine.searchAlongRoute(
-                    query = text.toString(),
+                    query = queryEditText.text.toString(),
                     proximity = Point.fromLngLat(-77.0274, 38.996),
-                    route = mapMarkersManager.route!!,
+                    route = mapAnnotationsManager.route!!,
                     callback = searchCallback
                 )
-            }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Nothing to do
-            }
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
 
-            override fun afterTextChanged(s: Editable) {
-                // Nothing to do
+                true
+            } else {
+                false
             }
-        })
+        }
 
-        routePolylineEditText.setOnEditorActionListener { _, actionId, _ ->
+        routePolylineEditText.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val polyline = routePolylineEditText.text.toString()
                 val route = PolylineUtils.decode(polyline, 5)
-                mapMarkersManager.showRoute(route)
+                mapAnnotationsManager.showRoute(route)
+
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+
                 true
             } else {
                 false
