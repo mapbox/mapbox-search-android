@@ -1,7 +1,7 @@
 package com.mapbox.search.autofill
 
 import android.os.Parcelable
-import com.mapbox.geojson.Point
+import com.mapbox.search.base.result.BaseSearchSuggestion
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -21,15 +21,13 @@ public class AddressAutofillSuggestion internal constructor(
     public val formattedAddress: String,
 
     /**
-     * Address geographic point.
-     */
-    public val coordinate: Point,
-
-    /**
      * @suppress
      */
     @JvmSynthetic
     internal val address: AddressComponents,
+
+    @JvmSynthetic
+    internal val underlying: BaseSearchSuggestion?
 ) : Parcelable {
 
     /**
@@ -43,7 +41,6 @@ public class AddressAutofillSuggestion internal constructor(
 
         if (name != other.name) return false
         if (formattedAddress != other.formattedAddress) return false
-        if (coordinate != other.coordinate) return false
 
         return true
     }
@@ -54,7 +51,6 @@ public class AddressAutofillSuggestion internal constructor(
     override fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + formattedAddress.hashCode()
-        result = 31 * result + coordinate.hashCode()
         return result
     }
 
@@ -64,8 +60,7 @@ public class AddressAutofillSuggestion internal constructor(
     override fun toString(): String {
         return "AddressAutofillSuggestion(" +
                 "name='$name', " +
-                "formattedAddress='$formattedAddress', " +
-                "coordinate=$coordinate" +
+                "formattedAddress='$formattedAddress'" +
                 ")"
     }
 }

@@ -216,7 +216,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenStarted {
             placeAutocomplete.select(suggestion).onValue { result ->
-                mapMarkersManager.showMarker(suggestion.coordinate)
+                mapMarkersManager.showMarker(result.coordinate)
                 searchPlaceView.open(SearchPlace.createFromPlaceAutocompleteResult(result))
                 queryEditText.hideKeyboard()
                 searchResultsView.isVisible = false

@@ -15,8 +15,6 @@ import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter.SearchSelectionResponse
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
@@ -37,7 +35,7 @@ import java.util.concurrent.Executors
 
 internal class PlaceAutocompleteImpl(
     override val accessToken: String,
-    private val searchEngine: TwoStepsToOneStepSearchEngineAdapter,
+    private val searchEngine: PlaceAutocompleteEngine,
     private val activityReporter: UserActivityReporterInterface,
     private val resultFactory: PlaceAutocompleteResultFactory = PlaceAutocompleteResultFactory()
 ) : PlaceAutocomplete, MapboxApiClient {
@@ -82,7 +80,7 @@ internal class PlaceAutocompleteImpl(
             types = generateCoreTypes(options.types),
         )
 
-        return searchEngine.reverseGeocoding(coreOptions)
+        return searchEngine.search(coreOptions)
             .mapValue { resultFactory.createPlaceAutocompleteSuggestions(it.first) }
     }
 
@@ -93,6 +91,7 @@ internal class PlaceAutocompleteImpl(
             is Underlying.Suggestion -> selectRaw(underlying.suggestion).flatMap {
                 resultFactory.createPlaceAutocompleteResultOrError(it)
             }
+
             is Underlying.Result -> resultFactory.createPlaceAutocompleteResultOrError(underlying.result)
         }
     }
@@ -100,14 +99,7 @@ internal class PlaceAutocompleteImpl(
     private suspend fun createSuggestions(
         rawSuggestions: List<BaseSearchSuggestion>
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>> {
-        // In some cases searchEngine.resolveAll() can be significantly faster than suggestions resolving one by one,
-        if (rawSuggestions.all { it.coordinate == null }) {
-            return searchEngine.resolveAll(rawSuggestions, allowCategorySuggestions = false).mapValue {
-                resultFactory.createPlaceAutocompleteSuggestions(it)
-            }
-        }
-
-        val suggestions = rawSuggestions
+        val suggestions: List<Expected<Exception, PlaceAutocompleteSuggestion>> = rawSuggestions
             .mapNotNull { suggestion ->
                 val type = when (val suggestionType = suggestion.type) {
                     is BaseSearchSuggestionType.SearchResultSuggestion -> suggestionType.types
@@ -117,21 +109,18 @@ internal class PlaceAutocompleteImpl(
                         }
                         null
                     }
+
                     is BaseSearchSuggestionType.Category,
                     is BaseSearchSuggestionType.Brand,
                     is BaseSearchSuggestionType.Query -> null
-                }?.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) } ?: return@mapNotNull null
+                }?.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) }
+                    ?: return@mapNotNull null
 
-                val coordinate = suggestion.coordinate
-                if (coordinate != null) {
-                    ExpectedFactory.createValue(
-                        resultFactory.createPlaceAutocompleteSuggestion(coordinate, type, suggestion)
+                ExpectedFactory.createValue(
+                    resultFactory.createPlaceAutocompleteSuggestion(
+                        type, suggestion
                     )
-                } else {
-                    selectRaw(suggestion).mapValue {
-                        resultFactory.createPlaceAutocompleteSuggestion(type, it)
-                    }
-                }
+                )
             }
 
         // If at least one response completed successfully, return it.
@@ -150,7 +139,7 @@ internal class PlaceAutocompleteImpl(
     private suspend fun selectRaw(suggestion: BaseSearchSuggestion): Expected<Exception, BaseSearchResult> {
         return searchEngine.select(suggestion).flatMap {
             when (it) {
-                is SearchSelectionResponse.Result -> ExpectedFactory.createValue(it.result)
+                is PlaceAutocompleteEngine.SearchSelectionResponse.Result -> ExpectedFactory.createValue(it.result)
                 else -> {
                     // Shouldn't happen because we don't allow suggestions of type Category and Query
                     ExpectedFactory.createError(Exception("Unsupported suggestion type: $suggestion"))
@@ -175,9 +164,10 @@ internal class PlaceAutocompleteImpl(
 
         private val ALL_TYPES = PlaceAutocompleteType.ALL_DECLARED_TYPES.map { it.coreType }
 
-        private val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "Place Autocomplete executor")
-        }
+        private val DEFAULT_EXECUTOR: ExecutorService =
+            Executors.newSingleThreadExecutor { runnable ->
+                Thread(runnable, "Place Autocomplete executor")
+            }
 
         fun create(
             accessToken: String,
@@ -200,8 +190,7 @@ internal class PlaceAutocompleteImpl(
                 ),
             )
 
-            val engine = TwoStepsToOneStepSearchEngineAdapter(
-                apiType = apiType,
+            val engine = PlaceAutocompleteEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
                 historyService = SearchHistoryService.STUB,

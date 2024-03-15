@@ -4,8 +4,8 @@ package com.mapbox.search.autofill {
   public interface AddressAutofill {
     method public default static com.mapbox.search.autofill.AddressAutofill create(String accessToken, com.mapbox.android.core.location.LocationEngine locationEngine = defaultLocationEngine());
     method public default static final com.mapbox.search.autofill.AddressAutofill create(String accessToken);
+    method public suspend Object? reverseGeocoding(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillResult>>> p);
     method public suspend Object? select(com.mapbox.search.autofill.AddressAutofillSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autofill.AddressAutofillResult>> p);
-    method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion>>> p);
     method public suspend Object? suggestions(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillSuggestion>>> p);
     field public static final com.mapbox.search.autofill.AddressAutofill.Companion Companion;
   }
@@ -26,20 +26,20 @@ package com.mapbox.search.autofill {
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillResult implements android.os.Parcelable {
     method public com.mapbox.search.autofill.AddressComponents getAddress();
+    method public com.mapbox.geojson.Point getCoordinate();
     method public String getId();
     method public String? getMapboxId();
     method public com.mapbox.search.autofill.AddressAutofillSuggestion getSuggestion();
     property public final com.mapbox.search.autofill.AddressComponents address;
+    property public final com.mapbox.geojson.Point coordinate;
     property public final String id;
     property public final String? mapboxId;
     property public final com.mapbox.search.autofill.AddressAutofillSuggestion suggestion;
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillSuggestion implements android.os.Parcelable {
-    method public com.mapbox.geojson.Point getCoordinate();
     method public String getFormattedAddress();
     method public String getName();
-    property public final com.mapbox.geojson.Point coordinate;
     property public final String formattedAddress;
     property public final String name;
   }

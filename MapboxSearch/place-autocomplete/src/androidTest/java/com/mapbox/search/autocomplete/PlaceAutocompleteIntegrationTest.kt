@@ -11,7 +11,6 @@ import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationEngine
@@ -178,7 +177,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "901 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestion.formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestion.coordinate)
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
         assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
@@ -306,10 +304,15 @@ internal class PlaceAutocompleteIntegrationTest {
         val response = runBlocking {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
+        assertTrue(response.isValue)
+        assertEquals(3, response.value!!.size)
 
-        assertTrue(response.isError)
-        val error = requireNotNull(response.error)
-        assertEquals(SearchRequestException("", 501), error)
+        response.value!!.map { suggestion ->
+            val selectionResult = runBlocking {
+                placeAutocomplete.select(suggestion)
+            }
+            assertTrue(selectionResult.isError)
+        }
     }
 
     @Test
@@ -341,7 +344,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         assertEquals("Starbucks", suggestions[0].name)
         assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
@@ -354,7 +356,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "901 15th St NW, Washington, District of Columbia 20005, United States of America",
             suggestions[1].formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[1].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.033568, 38.90143), "POI")
@@ -367,7 +368,6 @@ internal class PlaceAutocompleteIntegrationTest {
             "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
             suggestions[2].formattedAddress
         )
-        assertEquals(Point.fromLngLat(-77.03207, 38.899268), suggestions[2].coordinate)
         assertEquals(null, suggestions[2].routablePoints)
 
         val selectionResponse = runBlocking {
@@ -407,8 +407,7 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(3, suggestions.size)
 
         assertEquals("Starbucks", suggestions[0].name)
-        assertEquals("901 15th St NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.033568, 38.90143), suggestions[0].coordinate)
+        assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
         assertEquals(null, suggestions[0].routablePoints)
 
         val selectionResponse = runBlocking {
@@ -434,7 +433,6 @@ internal class PlaceAutocompleteIntegrationTest {
 
         assertEquals("Starbucks", suggestions[0].name)
         assertEquals("1401 New York Ave NW, Washington, District of Columbia 20005, United States of America", suggestions[0].formattedAddress)
-        assertEquals(Point.fromLngLat(-77.032161, 38.900017), suggestions[0].coordinate)
         assertEquals(
             listOf(
                 RoutablePoint(Point.fromLngLat(-77.032161, 38.900017), "POI")
@@ -519,7 +517,7 @@ internal class PlaceAutocompleteIntegrationTest {
             token: String,
             url: String,
             locationEngine: LocationEngine
-        ): TwoStepsToOneStepSearchEngineAdapter {
+        ): PlaceAutocompleteEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     token,
@@ -533,8 +531,7 @@ internal class PlaceAutocompleteIntegrationTest {
                 ),
             )
 
-            return TwoStepsToOneStepSearchEngineAdapter(
-                apiType = ApiType.SBS,
+            return PlaceAutocompleteEngine(
                 coreEngine = coreEngine,
                 requestContextProvider = SearchRequestContextProvider(app),
             )
