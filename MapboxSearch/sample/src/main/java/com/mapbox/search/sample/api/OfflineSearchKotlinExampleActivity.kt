@@ -7,6 +7,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
+import com.mapbox.geojson.utils.PolylineUtils
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.offline.OfflineIndexChangeEvent
 import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
@@ -70,10 +71,17 @@ class OfflineSearchKotlinExampleActivity : Activity() {
                 if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
                     Log.i("SearchApiExample", "$tileRegionId was successfully added or updated")
 
-                    searchRequestTask = searchEngine.search(
-                        "2011 15th Street Northwest, Washington, District of Columbia",
-                        OfflineSearchOptions(),
-                        searchCallback
+//                    searchRequestTask = searchEngine.search(
+//                        "2011 15th Street Northwest, Washington, District of Columbia",
+//                        OfflineSearchOptions(),
+//                        searchCallback
+//                    )
+
+                    searchRequestTask = searchEngine.searchAlongRoute(
+                        query = "Peets Coffee",
+                        proximity = Point.fromLngLat(-77.0274, 38.996),
+                        route = PolylineUtils.decode("{k_mFllcuMw@dBsG{D|LaOdDvNrfBgBd}BfJzjFkf@|n@AbJ~^`z@AvMfh@|h@@?|@iFvDDvSqGBsBmI", 5),
+                        callback = searchCallback
                     )
                 }
             }
