@@ -205,6 +205,16 @@ public interface OfflineSearchEngine {
         callback = callback,
     )
 
+    /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param executor executor for dispatching event, by default events are dispatched to the main thread
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
     public fun searchAlongRoute(
         query: String,
         proximity: Point,
@@ -213,6 +223,15 @@ public interface OfflineSearchEngine {
         callback: OfflineSearchCallback
     ): AsyncOperationTask
 
+    /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
     public fun searchAlongRoute(
         query: String,
         proximity: Point,
