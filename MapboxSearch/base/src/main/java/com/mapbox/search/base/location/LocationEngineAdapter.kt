@@ -19,7 +19,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-var locationEngineLocationObservationTimeout: Long? = null
+private var locationEngineObservationTimeout: Long? = null
+
+@Suppress("UNUSED")
+fun setLocationEngineLocationObservationTimeout(timeout: Long?) {
+    locationEngineObservationTimeout = timeout
+}
 
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
@@ -63,7 +68,7 @@ class LocationEngineAdapter(
     private fun startLocationListener() {
         locationProvider?.addLocationObserver(locationObserver)
 
-        locationEngineLocationObservationTimeout?.let { timeout ->
+        locationEngineObservationTimeout?.let { timeout ->
             timeoutWatcherJob?.cancel()
             timeoutWatcherJob = CoroutineScope(Job()).launch {
                 delay(timeout)
