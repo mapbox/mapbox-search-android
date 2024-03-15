@@ -164,10 +164,9 @@ internal class OfflineSearchEngineImpl(
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
         val remainingRoute = TurfMisc.lineSlice(proximity, route.last(), LineString.fromLngLats(route))
-        val coords = TurfMeasurement.bbox(remainingRoute)
+        val coords = bufferBoundingBox(TurfMeasurement.bbox(remainingRoute))
         val boundingBox = BoundingBox.fromLngLats(coords[0], coords[1], coords[2], coords[3])
 
-        // build our search options
         val options = OfflineSearchOptions(
             proximity = proximity,
             boundingBox = boundingBox,
@@ -218,6 +217,26 @@ internal class OfflineSearchEngineImpl(
             }
             onIndexChangeListeners.remove(listener)
         }
+    }
+
+    private fun bufferBoundingBox(coords: DoubleArray, percentage: Double = 5.0): DoubleArray {
+        var minLon = coords[0]
+        var minLat = coords[1]
+        var maxLon = coords[2]
+        var maxLat = coords[3]
+
+        val latHeight = maxLat - minLat
+        val lonWidth = maxLon - minLon
+
+        val latBuffer = latHeight * percentage / 100
+        val lonBuffer = lonWidth * percentage / 100
+
+        minLat -= latBuffer
+        minLon -= lonBuffer
+        maxLat += latBuffer
+        maxLon += lonBuffer
+
+        return doubleArrayOf(minLon, minLat, maxLon, maxLat)
     }
 
     private class OnIndexChangeListenerAdapter(
