@@ -88,6 +88,8 @@ dependencies {
 
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.15.0'
+
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
     testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
