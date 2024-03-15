@@ -10,6 +10,16 @@ import kotlinx.parcelize.Parcelize
 public class AddressAutofillResult internal constructor(
 
     /**
+     * Result ID
+     */
+    public val id: String,
+
+    /**
+     * Result MapboxID
+     */
+    public val mapboxId: String?,
+
+    /**
      * [AddressAutofillSuggestion] from which this result has been resolved.
      */
     public val suggestion: AddressAutofillSuggestion,
@@ -29,6 +39,8 @@ public class AddressAutofillResult internal constructor(
 
         other as AddressAutofillResult
 
+        if (id != other.id) return false
+        if (mapboxId != other.mapboxId) return false
         if (suggestion != other.suggestion) return false
         if (address != other.address) return false
 
@@ -39,7 +51,9 @@ public class AddressAutofillResult internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = suggestion.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + mapboxId.hashCode()
+        result = 31 * result + suggestion.hashCode()
         result = 31 * result + address.hashCode()
         return result
     }
@@ -48,6 +62,6 @@ public class AddressAutofillResult internal constructor(
      * @suppress
      */
     override fun toString(): String {
-        return "AddressAutofillResult(suggestion=$suggestion, address=$address)"
+        return "AddressAutofillResult(id=$id, mapboxId=$mapboxId, suggestion=$suggestion, address=$address)"
     }
 }

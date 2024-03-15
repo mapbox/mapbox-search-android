@@ -17,6 +17,7 @@ import com.mapbox.search.common.tests.createTestCoreRequestOptions
 @Suppress("LongParameterList")
 internal fun createTestBaseRawSearchResult(
     id: String = "id_test_search_result",
+    mapboxId: String? = null,
     types: List<BaseRawResultType> = listOf(BaseRawResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     languages: List<String> = listOf("def"),
@@ -43,6 +44,7 @@ internal fun createTestBaseRawSearchResult(
     etaMinutes: Double? = null,
 ) = BaseRawSearchResult(
     id = id,
+    mapboxId = mapboxId,
     types = types,
     names = names,
     languages = languages,

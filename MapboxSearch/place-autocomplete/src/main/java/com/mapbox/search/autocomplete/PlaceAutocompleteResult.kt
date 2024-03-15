@@ -15,6 +15,16 @@ import kotlinx.parcelize.Parcelize
 public class PlaceAutocompleteResult internal constructor(
 
     /**
+     * Result ID
+     */
+    public val id: String,
+
+    /**
+     * Result MapboxID
+     */
+    public val mapboxId: String?,
+
+    /**
      * Place's name.
      */
     public val name: String,
@@ -105,6 +115,8 @@ public class PlaceAutocompleteResult internal constructor(
 
         other as PlaceAutocompleteResult
 
+        if (id != other.id) return false
+        if (mapboxId != other.mapboxId) return false
         if (name != other.name) return false
         if (coordinate != other.coordinate) return false
         if (routablePoints != other.routablePoints) return false
@@ -129,7 +141,9 @@ public class PlaceAutocompleteResult internal constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        var result = name.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + mapboxId.hashCode()
+        result = 31 * result + name.hashCode()
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
@@ -153,6 +167,8 @@ public class PlaceAutocompleteResult internal constructor(
      */
     override fun toString(): String {
         return "PlaceAutocompleteResult(" +
+                "id=$id, " +
+                "mapboxId=$mapboxId, " +
                 "name='$name', " +
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +

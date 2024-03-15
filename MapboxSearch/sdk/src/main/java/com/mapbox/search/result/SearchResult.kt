@@ -34,6 +34,12 @@ public class SearchResult internal constructor(
     public val id: String = base.id
 
     /**
+     * Result MapboxID
+     */
+    public val mapboxId: String?
+        get() = base.mapboxId
+
+    /**
      * Result name.
      */
     @IgnoredOnParcel
@@ -154,6 +160,7 @@ public class SearchResult internal constructor(
 
         if (requestOptions != other.requestOptions) return false
         if (id != other.id) return false
+        if (mapboxId != other.mapboxId) return false
         if (name != other.name) return false
         if (matchingName != other.matchingName) return false
         if (descriptionText != other.descriptionText) return false
@@ -181,6 +188,7 @@ public class SearchResult internal constructor(
     override fun hashCode(): Int {
         var result = requestOptions.hashCode()
         result = 31 * result + id.hashCode()
+        result = 31 * result + mapboxId.hashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + (matchingName?.hashCode() ?: 0)
         result = 31 * result + (descriptionText?.hashCode() ?: 0)
@@ -208,6 +216,7 @@ public class SearchResult internal constructor(
         return "SearchResult(" +
                 "requestOptions=$requestOptions, " +
                 "id='$id', " +
+                "mapboxId='$mapboxId', " +
                 "name='$name', " +
                 "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +

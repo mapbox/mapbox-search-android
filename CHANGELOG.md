@@ -1,5 +1,9 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1+
+
+- [CORE] Added a new field called `mapboxId` to `BaseSearchResult`, `SearchResult`, `CategoryResult` and `OfflineSearchResult`
+
 ## 1.0.0-rc.8
 
 ### New features

@@ -782,6 +782,7 @@ package com.mapbox.search.result {
     method public String getId();
     method public com.mapbox.search.record.IndexableRecord? getIndexableRecord();
     method public String? getMakiIcon();
+    method public String? getMapboxId();
     method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
@@ -801,6 +802,7 @@ package com.mapbox.search.result {
     property public final String id;
     property public final com.mapbox.search.record.IndexableRecord? indexableRecord;
     property public final String? makiIcon;
+    property public final String? mapboxId;
     property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;

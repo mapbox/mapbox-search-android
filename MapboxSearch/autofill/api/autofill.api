@@ -33,6 +33,8 @@ public final class com/mapbox/search/autofill/AddressAutofillResult : android/os
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddress ()Lcom/mapbox/search/autofill/AddressComponents;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getSuggestion ()Lcom/mapbox/search/autofill/AddressAutofillSuggestion;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

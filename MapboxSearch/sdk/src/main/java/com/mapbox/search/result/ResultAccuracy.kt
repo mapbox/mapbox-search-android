@@ -85,5 +85,6 @@ internal fun CoreResultAccuracy.mapToPlatform(): ResultAccuracy {
         CoreResultAccuracy.INTERSECTION -> ResultAccuracy.Intersection
         CoreResultAccuracy.APPROXIMATE -> ResultAccuracy.Approximate
         CoreResultAccuracy.STREET -> ResultAccuracy.Street
+        CoreResultAccuracy.PROXIMATE -> ResultAccuracy.Approximate
     }
 }

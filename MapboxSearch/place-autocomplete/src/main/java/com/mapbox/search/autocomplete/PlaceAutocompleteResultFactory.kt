@@ -74,6 +74,8 @@ internal class PlaceAutocompleteResultFactory {
             val type = types.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) } ?: return null
 
             return PlaceAutocompleteResult(
+                id = id,
+                mapboxId = mapboxId,
                 name = name,
                 coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },

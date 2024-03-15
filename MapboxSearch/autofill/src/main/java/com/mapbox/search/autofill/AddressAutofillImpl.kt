@@ -74,7 +74,7 @@ internal class AddressAutofillImpl(
     ): Expected<Exception, AddressAutofillResult> {
         activityReporter.reportActivity("address-autofill-suggestion-select")
 
-        return ExpectedFactory.createValue(AddressAutofillResult(suggestion, suggestion.address))
+        return ExpectedFactory.createValue(AddressAutofillResult("id", null, suggestion, suggestion.address))
     }
 
     internal companion object {
