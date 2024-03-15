@@ -4,8 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -102,11 +100,8 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         val tileStore = TileStore.create()
 
-
         searchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(
-                tileStore = tileStore
-            )
+            OfflineSearchEngineSettings(tileStore = tileStore)
         )
 
         searchEngine.addEngineReadyCallback(engineReadyCallback)
@@ -272,8 +267,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 mapboxMap.cameraForCoordinates(
                     route!! + coordinates, OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS, bearing = null, pitch = null
                 )
-            }
-            else if (coordinates.size == 1) {
+            } else if (coordinates.size == 1) {
                 CameraOptions.Builder()
                     .center(coordinates.first())
                     .padding(OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS_OPEN_CARD)
@@ -312,5 +306,4 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             mapboxMap.setCamera(cameraOptions)
         }
     }
-
 }
