@@ -1150,7 +1150,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
-License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
@@ -1457,7 +1457,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
-License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
