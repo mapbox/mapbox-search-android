@@ -1,5 +1,8 @@
 package com.mapbox.search.offline
 
+import com.mapbox.geojson.BoundingBox
+import com.mapbox.geojson.Geometry
+import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -16,9 +19,16 @@ import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.turf.TurfMeasurement
+import com.mapbox.turf.TurfMisc
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 internal class OfflineSearchEngineImpl(
     override val settings: OfflineSearchEngineSettings,
@@ -144,6 +154,31 @@ internal class OfflineSearchEngineImpl(
                 )
             )
         }
+    }
+
+    override fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask {
+        val remainingRoute = TurfMisc.lineSlice(proximity, route.last(), LineString.fromLngLats(route))
+        val coords = TurfMeasurement.bbox(remainingRoute)
+        val boundingBox = BoundingBox.fromLngLats(coords[0], coords[1], coords[2], coords[3])
+
+        // build our search options
+        val options = OfflineSearchOptions(
+            proximity = proximity,
+            boundingBox = boundingBox,
+        )
+
+        return this.search(
+            query = query,
+            options = options,
+            executor = executor,
+            callback = callback
+        )
     }
 
     override fun addEngineReadyCallback(executor: Executor, callback: EngineReadyCallback) {

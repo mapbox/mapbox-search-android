@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
+import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -203,6 +204,27 @@ public interface OfflineSearchEngine {
         radiusMeters = radiusMeters,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
+    )
+
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask
+
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask = searchAlongRoute(
+        query = query,
+        proximity = proximity,
+        route = route,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback
     )
 
     /**
