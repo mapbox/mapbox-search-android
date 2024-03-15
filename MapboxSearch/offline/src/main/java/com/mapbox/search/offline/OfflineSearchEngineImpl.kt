@@ -1,7 +1,6 @@
 package com.mapbox.search.offline
 
 import com.mapbox.geojson.BoundingBox
-import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -24,11 +23,6 @@ import com.mapbox.turf.TurfMisc
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.asin
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 internal class OfflineSearchEngineImpl(
     override val settings: OfflineSearchEngineSettings,
