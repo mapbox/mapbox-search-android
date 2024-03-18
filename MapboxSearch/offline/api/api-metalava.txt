@@ -163,13 +163,16 @@ package com.mapbox.search.offline {
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public Integer? getLimit();
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder toBuilder();
+    property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final Integer? limit;
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
@@ -177,6 +180,7 @@ package com.mapbox.search.offline {
 
   public static final class OfflineSearchOptions.Builder {
     ctor public OfflineSearchOptions.Builder();
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.offline.OfflineSearchOptions build();
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder limit(int limit);
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
