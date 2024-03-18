@@ -1,5 +1,7 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.x test run
+
 ## 1.0.0-rc.8
 
 ### New features
