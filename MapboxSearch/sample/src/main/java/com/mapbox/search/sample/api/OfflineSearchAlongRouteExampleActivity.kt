@@ -8,15 +8,11 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,7 +46,6 @@ import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
-import com.mapbox.search.sample.databinding.ActivityMainBinding
 import com.mapbox.search.sample.databinding.ActivityOfflineSearchAlongRouteBinding
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
@@ -59,7 +54,6 @@ import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
-import kotlin.math.floor
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -126,8 +120,11 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         binding.distanceAlongRoute.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar,
-                                           progress: Int, fromUser: Boolean) {
+            override fun onProgressChanged(
+                seek: SeekBar,
+                progress: Int,
+                fromUser: Boolean
+            ) {
                 // do nothing
             }
 
@@ -388,7 +385,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             searchEngine.addEngineReadyCallback(engineReadyCallback)
         }
 
-        fun getSearchAlongRouteData() : LiveData<SearchAlongRoute> = searchAlongRouteData
+        fun getSearchAlongRouteData(): LiveData<SearchAlongRoute> = searchAlongRouteData
 
         fun updateSearchQuery(query: String) {
             cancelSearch()
@@ -425,7 +422,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             val currentRequest = searchAlongRouteData.value
             val route = currentRequest?.options?.route
 
-            if (route != null ) {
+            if (route != null) {
                 val proximity = if (percent > 0) {
                     val segments = route.zipWithNext()
                     val totalDistance = segments.sumOf { segment ->
@@ -499,5 +496,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     data class SearchAlongRouteOptions(
         val query: String = "",
         val proximity: Point = Point.fromLngLat(0.0, 0.0),
-        val route: List<Point> = arrayListOf())
+        val route: List<Point> = arrayListOf()
+    )
 }
