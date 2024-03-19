@@ -368,7 +368,7 @@ package com.mapbox.search.common {
   }
 
   public final class OsmIdUtils {
-    method public String fromPoiId(long poiId);
+    method public static String? fromPoiId(long poiId);
     field public static final com.mapbox.search.common.OsmIdUtils INSTANCE;
   }
 

@@ -5,7 +5,7 @@ import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.slot
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
@@ -33,10 +33,8 @@ internal class OsmIdUtilsTest {
     }
 
     @Test
-    fun `Throws IllegalArgumentException`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            OsmIdUtils.fromPoiId(12369506325519)
-        }
+    fun `Returns null for an invalid POI ID`() {
+        assertNull(OsmIdUtils.fromPoiId(12369506325519))
     }
 
     companion object {
@@ -47,14 +45,14 @@ internal class OsmIdUtilsTest {
             val arraySlot = slot<ByteArray>()
 
             every {
-                Base64.encodeToString(capture(arraySlot), Base64.DEFAULT)
+                Base64.encodeToString(capture(arraySlot), Base64.URL_SAFE)
             } answers {
                 java.util.Base64.getEncoder().encodeToString(arraySlot.captured)
             }
 
             val stringSlot = slot<String>()
             every {
-                Base64.decode(capture(stringSlot), Base64.DEFAULT)
+                Base64.decode(capture(stringSlot), Base64.URL_SAFE)
             } answers {
                 java.util.Base64.getDecoder().decode(stringSlot.captured)
             }

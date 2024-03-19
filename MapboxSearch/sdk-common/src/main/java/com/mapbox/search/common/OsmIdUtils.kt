@@ -15,19 +15,15 @@ public object OsmIdUtils {
      * Converts the supplied POI ID to a Mapbox ID
      * @param poiId POI ID to convert
      * @return [String] a Mapbox ID
-     * @throws IllegalArgumentException when the POI ID is not of type node, way, or relation
      */
-    public fun fromPoiId(poiId: Long): String {
+    @JvmStatic
+    public fun fromPoiId(poiId: Long): String? {
         val lastDigit = poiId % 10
-        val osmType = osmTypes[lastDigit.toInt()]
-
-        if (osmType != null) {
+        return osmTypes[lastDigit.toInt()]?.let { osmType ->
             val originalId = poiId / 10
             val mbxPoiId = "urn:mbxpoi-osm:$osmType$originalId"
             val bytes = mbxPoiId.toByteArray(Charsets.UTF_8)
-            return Base64.encodeToString(bytes, Base64.DEFAULT)
+            return Base64.encodeToString(bytes, Base64.URL_SAFE)
         }
-
-        throw IllegalArgumentException("Invalid POI ID $poiId")
     }
 }
