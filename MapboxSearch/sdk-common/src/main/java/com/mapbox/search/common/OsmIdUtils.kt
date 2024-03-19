@@ -25,11 +25,7 @@ public object OsmIdUtils {
             val originalId = poiId / 10
             val mbxPoiId = "urn:mbxpoi-osm:$osmType$originalId"
             val bytes = mbxPoiId.toByteArray(Charsets.UTF_8)
-
-            if (bytes != null) {
-                return Base64.encodeToString(bytes, Base64.DEFAULT)
-            }
-            return "urn:mbxpoi-osm:n123695063255"
+            return Base64.encodeToString(bytes, Base64.DEFAULT)
         }
 
         throw IllegalArgumentException("Invalid POI ID $poiId")
