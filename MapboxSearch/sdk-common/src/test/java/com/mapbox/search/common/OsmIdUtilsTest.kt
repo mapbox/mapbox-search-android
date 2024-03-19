@@ -4,11 +4,10 @@ import android.util.Base64
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.slot
-import org.junit.Before
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
 
 internal class OsmIdUtilsTest {
 
@@ -43,7 +42,7 @@ internal class OsmIdUtilsTest {
     companion object {
         @JvmStatic
         @BeforeAll
-        fun setUp(): Unit {
+        fun setUp() {
             mockkStatic(Base64::class)
             val arraySlot = slot<ByteArray>()
 
