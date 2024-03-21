@@ -206,6 +206,46 @@ public interface OfflineSearchEngine {
     )
 
     /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param executor executor for dispatching event, by default events are dispatched to the main thread
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask
+
+    /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask = searchAlongRoute(
+        query = query,
+        proximity = proximity,
+        route = route,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback
+    )
+
+    /**
      * Adds a callback to be notified when engine is ready.
      * If the engine is already ready, callback will be notified immediately.
      *
