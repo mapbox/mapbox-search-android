@@ -152,4 +152,9 @@
         android:id="@+id/open_favorites_data_provider_kt_example"
         android:title="@string/action_open_favorites_data_provider_kt_example"
         />
+
+    <item
+        android:id="@+id/open_offline_search_along_route_example"
+        android:title="@string/action_open_offline_search_along_route_example"
+        />
 </menu>

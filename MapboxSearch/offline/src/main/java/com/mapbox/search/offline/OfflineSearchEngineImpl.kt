@@ -1,5 +1,7 @@
 package com.mapbox.search.offline
 
+import com.mapbox.geojson.BoundingBox
+import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -16,6 +18,8 @@ import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.turf.TurfMeasurement
+import com.mapbox.turf.TurfMisc
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -146,6 +150,30 @@ internal class OfflineSearchEngineImpl(
         }
     }
 
+    override fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask {
+        val remainingRoute = TurfMisc.lineSlice(proximity, route.last(), LineString.fromLngLats(route))
+        val coords = bufferBoundingBox(TurfMeasurement.bbox(remainingRoute))
+        val boundingBox = BoundingBox.fromLngLats(coords[0], coords[1], coords[2], coords[3])
+
+        val options = OfflineSearchOptions(
+            proximity = proximity,
+            boundingBox = boundingBox,
+        )
+
+        return this.search(
+            query = query,
+            options = options,
+            executor = executor,
+            callback = callback
+        )
+    }
+
     override fun addEngineReadyCallback(executor: Executor, callback: EngineReadyCallback) {
         synchronized(initializationLock) {
             val result = isEngineReady
@@ -183,6 +211,26 @@ internal class OfflineSearchEngineImpl(
             }
             onIndexChangeListeners.remove(listener)
         }
+    }
+
+    private fun bufferBoundingBox(coords: DoubleArray, percentage: Double = 5.0): DoubleArray {
+        var minLon = coords[0]
+        var minLat = coords[1]
+        var maxLon = coords[2]
+        var maxLat = coords[3]
+
+        val latHeight = maxLat - minLat
+        val lonWidth = maxLon - minLon
+
+        val latBuffer = latHeight * percentage / 100
+        val lonBuffer = lonWidth * percentage / 100
+
+        minLat -= latBuffer
+        minLon -= lonBuffer
+        maxLat += latBuffer
+        maxLon += lonBuffer
+
+        return doubleArrayOf(minLon, minLat, maxLon, maxLat)
     }
 
     private class OnIndexChangeListenerAdapter(

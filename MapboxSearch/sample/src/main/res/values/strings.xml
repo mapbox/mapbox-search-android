@@ -32,9 +32,13 @@
     <string name="action_open_custom_data_provider_java_example">Open custom data provider Java example</string>
     <string name="action_open_custom_data_provider_kt_example">Open custom data provider Kotlin example</string>
 
+    <string name="action_open_offline_search_along_route_example">Open Offline Search Along Route example</string>
+
     <string name="simple_ui_toolbar_title">Mapbox search</string>
 
     <string name="query_hint">Where to?</string>
+    <string name="add_route">Add Route</string>
+    <string name="add_route_polyline_hint">Add Route Polyline</string>
 
     <string name="address_autofill_query_hint">Where to deliver?</string>
     <string name="address_autofill_address_state_hint">State</string>

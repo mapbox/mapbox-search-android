@@ -56,6 +56,7 @@ import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
 import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
+import com.mapbox.search.sample.api.OfflineSearchAlongRouteExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
@@ -425,6 +426,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_favorites_data_provider_kt_example -> {
                 startActivity(Intent(this, FavoritesDataProviderKotlinExample::class.java))
+                true
+            }
+            R.id.open_offline_search_along_route_example -> {
+                startActivity(Intent(this, OfflineSearchAlongRouteExampleActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

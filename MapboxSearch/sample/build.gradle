@@ -51,6 +51,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -86,6 +90,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
     implementation "com.mapbox.maps:android:$mapbox_maps_version"
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.15.0'
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
