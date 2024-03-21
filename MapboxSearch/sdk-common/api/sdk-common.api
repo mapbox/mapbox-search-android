@@ -404,6 +404,11 @@ public final class com/mapbox/search/common/NavigationProfile$Creator : android/
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/common/OsmIdUtils {
+	public static final field INSTANCE Lcom/mapbox/search/common/OsmIdUtils;
+	public static final fun fromPoiId (J)Ljava/lang/String;
+}
+
 public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V
