@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AddressComponents</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>autofill</span>
+            </a>
+    </div>
+    <div>
+2.0.0-location-updates-timeout-200ms    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="autofill::com.mapbox.search.autofill/AddressComponents///PointingToDeclaration//-371819804">
+  <div class="breadcrumbs"><a href="../../../index.html">autofill</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.autofill</a><span class="delimiter">/</span><span class="current">AddressComponents</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Address</span><wbr></wbr><span><span>Components</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">AddressComponents</a> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">Search result address. It's guaranteed that at least one address component is not empty.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-371819804" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1578325224%2FFunctions%2F-371819804"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-1578325224%2FFunctions%2F-371819804"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F-371819804" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1754457655%2FFunctions%2F-371819804"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-1754457655%2FFunctions%2F-371819804"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="501768629%2FProperties%2F-371819804" anchor-label="country" id="501768629%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="country.html"><span><span>country</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="501768629%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="501768629%2FProperties%2F-371819804" anchor-label="country" id="501768629%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="country.html">country</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="501768629%2FProperties%2F-371819804" anchor-label="country" id="501768629%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address country.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="894847689%2FProperties%2F-371819804" anchor-label="countryIso1" id="894847689%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="country-iso1.html"><span>country</span><wbr></wbr><span><span>Iso1</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="894847689%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="894847689%2FProperties%2F-371819804" anchor-label="countryIso1" id="894847689%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="country-iso1.html">countryIso1</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="894847689%2FProperties%2F-371819804" anchor-label="countryIso1" id="894847689%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">The country code in ISO 3166-1.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="925867496%2FProperties%2F-371819804" anchor-label="countryIso2" id="925867496%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="country-iso2.html"><span>country</span><wbr></wbr><span><span>Iso2</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="925867496%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="925867496%2FProperties%2F-371819804" anchor-label="countryIso2" id="925867496%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="country-iso2.html">countryIso2</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="925867496%2FProperties%2F-371819804" anchor-label="countryIso2" id="925867496%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">The country code and its country subdivision code in ISO 3166-2.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1851294945%2FProperties%2F-371819804" anchor-label="district" id="1851294945%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="district.html"><span><span>district</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1851294945%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="1851294945%2FProperties%2F-371819804" anchor-label="district" id="1851294945%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="district.html">district</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="1851294945%2FProperties%2F-371819804" anchor-label="district" id="1851294945%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address district.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="233083682%2FProperties%2F-371819804" anchor-label="houseNumber" id="233083682%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="house-number.html"><span>house</span><wbr></wbr><span><span>Number</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="233083682%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="233083682%2FProperties%2F-371819804" anchor-label="houseNumber" id="233083682%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="house-number.html">houseNumber</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="233083682%2FProperties%2F-371819804" anchor-label="houseNumber" id="233083682%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address house number.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="312214700%2FProperties%2F-371819804" anchor-label="locality" id="312214700%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="locality.html"><span><span>locality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="312214700%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="312214700%2FProperties%2F-371819804" anchor-label="locality" id="312214700%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="locality.html">locality</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="312214700%2FProperties%2F-371819804" anchor-label="locality" id="312214700%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address locality.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2090141599%2FProperties%2F-371819804" anchor-label="neighborhood" id="-2090141599%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="neighborhood.html"><span><span>neighborhood</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2090141599%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="-2090141599%2FProperties%2F-371819804" anchor-label="neighborhood" id="-2090141599%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="neighborhood.html">neighborhood</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-2090141599%2FProperties%2F-371819804" anchor-label="neighborhood" id="-2090141599%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address neighborhood.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1803973404%2FProperties%2F-371819804" anchor-label="place" id="-1803973404%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="place.html"><span><span>place</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1803973404%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="-1803973404%2FProperties%2F-371819804" anchor-label="place" id="-1803973404%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="place.html">place</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1803973404%2FProperties%2F-371819804" anchor-label="place" id="-1803973404%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address place.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-597438782%2FProperties%2F-371819804" anchor-label="postcode" id="-597438782%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="postcode.html"><span><span>postcode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-597438782%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="-597438782%2FProperties%2F-371819804" anchor-label="postcode" id="-597438782%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="postcode.html">postcode</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-597438782%2FProperties%2F-371819804" anchor-label="postcode" id="-597438782%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address postcode.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1306371259%2FProperties%2F-371819804" anchor-label="region" id="1306371259%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="region.html"><span><span>region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1306371259%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="1306371259%2FProperties%2F-371819804" anchor-label="region" id="1306371259%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="region.html">region</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="1306371259%2FProperties%2F-371819804" anchor-label="region" id="1306371259%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address region.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1039956620%2FProperties%2F-371819804" anchor-label="street" id="1039956620%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":autofill:dokkaHtml/release" data-filterable-set=":autofill:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="street.html"><span><span>street</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1039956620%2FProperties%2F-371819804"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":autofill:dokkaHtml/release"><a data-name="1039956620%2FProperties%2F-371819804" anchor-label="street" id="1039956620%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="street.html">street</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="1039956620%2FProperties%2F-371819804" anchor-label="street" id="1039956620%2FProperties%2F-371819804" data-filterable-set=":autofill:dokkaHtml/release"></a><p class="paragraph">Address street.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
