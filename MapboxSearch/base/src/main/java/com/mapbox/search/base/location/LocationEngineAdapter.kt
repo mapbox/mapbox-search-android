@@ -14,6 +14,18 @@ import com.mapbox.search.base.utils.LocalTimeProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+// Maximum time period for waiting for location updates (in milliseconds)
+private var locationEngineObservationTimeout: Long? = 200L
+
+@Suppress("UNUSED")
+fun setLocationEngineLocationObservationTimeout(timeout: Long?) {
+    locationEngineObservationTimeout = timeout
+}
 
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
@@ -23,11 +35,13 @@ class LocationEngineAdapter(
     private val timeProvider: TimeProvider = LocalTimeProvider(),
     private val locationPermissionChecker: (Application) -> Boolean = {
         PermissionsManager.areLocationPermissionsGranted(app)
-    }
+    },
 ) : CoreLocationProvider {
 
     @Volatile
     private var lastLocationInfo = LocationInfo(null, 0)
+
+    private var timeoutWatcherJob: Job? = null
 
     private val locationObserver = LocationObserver { locations ->
         locations.firstOrNull()?.let {
@@ -54,11 +68,21 @@ class LocationEngineAdapter(
 
     private fun startLocationListener() {
         locationProvider?.addLocationObserver(locationObserver)
+
+        locationEngineObservationTimeout?.let { timeout ->
+            timeoutWatcherJob?.cancel()
+            timeoutWatcherJob = CoroutineScope(Job()).launch {
+                delay(timeout)
+                timeoutWatcherJob = null
+                stopLocationListener()
+            }
+        }
     }
 
     private fun stopLocationListener() {
         locationProvider?.removeLocationObserver(locationObserver)
         locationCancelable?.cancel()
+        timeoutWatcherJob?.cancel()
     }
 
     override fun getLocation(): Point? {
