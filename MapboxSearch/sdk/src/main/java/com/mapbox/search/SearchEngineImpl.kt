@@ -9,6 +9,7 @@ import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.assertDebug
+import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
@@ -23,16 +24,22 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.internal.bindgen.RequestOptions
+import com.mapbox.search.internal.bindgen.ResultType
+import com.mapbox.search.internal.bindgen.SuggestAction
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import java.lang.Error
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -306,6 +313,58 @@ internal class SearchEngineImpl(
         }
     }
 
+    override fun retrieve(mapboxId: String, callback: SearchCallback): AsyncOperationTask {
+        val requestOptions = RequestOptions(
+            "",
+            "",
+            EMPTY_SEARCH_OPTIONS,
+            false,
+            false,
+            NO_SESSION_IDENTIFIER,
+        )
+        val suggestAction = when (this.apiType) {
+            ApiType.SEARCH_BOX -> {
+                SuggestAction(
+                    "retrieve",
+                    mapboxId,
+                    null,
+                    null,
+                    false
+                )
+            }
+            ApiType.SBS -> {
+                SuggestAction(
+                    "retrieve",
+                    "",
+                    null,
+                    """{"id": "$mapboxId"}""".toByteArray(),
+                    false
+                )
+            }
+            else -> {
+                throw IllegalArgumentException("Retrieve is not supported for Geocoding type")
+            }
+        }
+        val searchResult = createBlankSearchResultForRetrieve(suggestAction)
+        val baseCallback = BaseSearchCallbackAdapter(callback)
+
+        return makeRequest(baseCallback) { task ->
+            val requestId = coreEngine.retrieve(requestOptions, searchResult, OneStepRequestCallbackWrapper(
+                searchResultFactory = searchResultFactory,
+                callbackExecutor = SearchSdkMainThreadWorker.mainExecutor,
+                workerExecutor = engineExecutorService,
+                searchRequestTask = task,
+                searchRequestContext = SearchRequestContext(
+                    CoreApiType.SBS
+                ),
+                isOffline = false,
+            ))
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
+        }
+    }
+
     override fun search(
         categoryName: String,
         options: CategorySearchOptions,
@@ -391,5 +450,36 @@ internal class SearchEngineImpl(
         val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
             Thread(runnable, "SearchEngine executor")
         }
+        private const val NO_SESSION_IDENTIFIER = "<NO SESSION IDENTIFIER>"
+        private val EMPTY_SEARCH_OPTIONS = SearchOptions.Builder().build().mapToCore()
+
+        fun createBlankSearchResultForRetrieve(suggestAction: SuggestAction) = com.mapbox.search.internal.bindgen.SearchResult(
+            "",
+            "",
+            listOf(ResultType.POI),
+            listOf(),
+            listOf(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            suggestAction,
+            null,
+        )
     }
 }
