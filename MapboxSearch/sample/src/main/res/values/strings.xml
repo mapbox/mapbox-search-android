@@ -40,6 +40,11 @@
     <string name="add_route">Add Route</string>
     <string name="add_route_polyline_hint">Add Route Polyline</string>
     <string name="position_along_route">Position along route</string>
+    <string-array name="routes">
+        <item>Baltimore, MD to Richmond, VA</item>
+        <item>Bethesda, MD to College Park, MD</item>
+        <item>US Capitol to Falls Church, MD</item>
+    </string-array>
 
     <string name="address_autofill_query_hint">Where to deliver?</string>
     <string name="address_autofill_address_state_hint">State</string>

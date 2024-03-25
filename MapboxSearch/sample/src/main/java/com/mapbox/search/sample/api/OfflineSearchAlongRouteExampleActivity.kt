@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -89,6 +90,10 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             )
         )
 
+        val routes = resources.getStringArray(R.array.routes)
+        val arrayAdapter = ArrayAdapter(this, R.layout.route_dropdown_item, routes)
+        binding.routesAutoComplete.setAdapter(arrayAdapter)
+
         fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
         val locationService = LocationServiceFactory.getOrCreate()
             .getDeviceLocationProvider(null)
@@ -115,15 +120,15 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
         }
 
-        binding.routePolyline.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.updateRoute(binding.routePolyline.text.toString())
-                v.hideKeyboard()
-                true
-            } else {
-                false
-            }
-        }
+//        binding.routePolyline.setOnEditorActionListener { v, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                viewModel.updateRoute(binding.routePolyline.text.toString())
+//                v.hideKeyboard()
+//                true
+//            } else {
+//                false
+//            }
+//        }
 
         binding.distanceAlongRoute.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
