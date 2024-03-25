@@ -20,9 +20,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mapbox.android.gestures.Utils
+import com.mapbox.bindgen.Value
+import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.common.location.Location
 import com.mapbox.common.location.LocationServiceFactory
+import com.mapbox.geojson.BoundingBox
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.utils.PolylineUtils
@@ -47,6 +52,7 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 import com.mapbox.search.sample.databinding.ActivityOfflineSearchAlongRouteBinding
+import com.mapbox.search.sample.util.GeometryGenerator
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultAdapterItem
@@ -54,6 +60,7 @@ import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
+import java.net.URI
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -377,9 +384,34 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         init {
             val tileStore = TileStore.create()
+            val tileRegionId = "Washington DC"
+            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+            val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+            val tileGeometry = GeometryGenerator.generateCircle(washingtonDc, 150.0)
+
+            val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
+                .descriptors(tileDescriptors)
+                .geometry(tileGeometry)
+                .acceptExpired(true)
+                .build()
+
+            tileStore.loadTileRegion(
+                tileRegionId,
+                tileRegionLoadOptions,
+                { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+                { result ->
+                    if (result.isValue) {
+                        Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                    } else {
+                        Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
+                    }
+                }
+            )
 
             searchEngine = OfflineSearchEngine.create(
-                OfflineSearchEngineSettings(tileStore = tileStore)
+                OfflineSearchEngineSettings(
+                    tileStore = tileStore
+                ),
             )
 
             searchEngine.addEngineReadyCallback(engineReadyCallback)
