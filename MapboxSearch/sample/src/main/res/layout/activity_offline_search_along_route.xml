@@ -50,63 +50,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/layout_route_polyline_precision"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/route_polyline">
-
-            <TextView
-                android:id="@+id/label_route_polyline_precision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Precision"
-                android:textSize="16sp" />
-
-            <RadioGroup
-                android:id="@+id/route_polyline_precision"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <!--adding a radio button -->
-                <RadioButton
-                    android:id="@+id/precision_five"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:checked="true"
-                    android:padding="4dp"
-                    android:text="5"
-                    android:textSize="18sp" />
-
-                <!--adding a radio button -->
-                <RadioButton
-                    android:id="@+id/precision_six"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:checked="false"
-                    android:padding="4dp"
-                    android:text="6"
-                    android:textSize="18sp" />
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/layout_distance_travelled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_route_polyline_precision">
+            app:layout_constraintTop_toBottomOf="@+id/route_polyline">
 
             <TextView
                 android:layout_width="wrap_content"
