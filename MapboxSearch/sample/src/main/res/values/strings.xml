@@ -39,6 +39,7 @@
     <string name="query_hint">Where to?</string>
     <string name="add_route">Add Route</string>
     <string name="add_route_polyline_hint">Add Route Polyline</string>
+    <string name="position_along_route">Position along route</string>
 
     <string name="address_autofill_query_hint">Where to deliver?</string>
     <string name="address_autofill_address_state_hint">State</string>
