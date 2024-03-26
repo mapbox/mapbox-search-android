@@ -207,14 +207,14 @@ public interface SearchEngine {
 
     /**
      * Function to retrieve the details for a given mapboxId. The callback will be invoked with
-     * a [SearchResult] on successful execution.
-     *
-     * Note that this method is only supported for a SearchEngine with [ApiType.SBS].
+     * a [SearchResult] on successful execution. This method is only supported for a SearchEngine
+     * with [ApiType.SBS].
      *
      * @param mapboxId for the item to retrieve details for
      * @param executor [Executor] used for events dispatching, default is the main thread
      * @param callback used to receive the [SearchResult] on successful execution
      * @return [AsyncOperationTask] object representing pending completion of the request
+     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SBS]
      */
     public fun retrieve(
         mapboxId: String,
