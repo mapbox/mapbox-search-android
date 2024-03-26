@@ -330,7 +330,7 @@ internal class SearchEngineImpl(
                 )
             }
             else -> {
-                throw UnsupportedOperationException("Retrieve is not supported for API type GEOCODING")
+                throw UnsupportedOperationException("Retrieve is not supported for $apiType API type")
             }
         }
         val searchResult = createBlankSearchResultForRetrieve(suggestAction)
