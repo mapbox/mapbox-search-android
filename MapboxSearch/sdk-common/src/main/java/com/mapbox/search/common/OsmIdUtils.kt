@@ -14,7 +14,7 @@ public object OsmIdUtils {
     /**
      * Converts the supplied POI ID to a Mapbox ID
      * @param poiId POI ID to convert
-     * @return [String] a Mapbox ID
+     * @return [String] a Mapbox ID or null if unable to convert
      */
     @JvmStatic
     public fun fromPoiId(poiId: Long): String? {
@@ -26,4 +26,11 @@ public object OsmIdUtils {
             return Base64.encodeToString(bytes, Base64.URL_SAFE or Base64.NO_WRAP)
         }
     }
+
+    /**
+     * Convers the supplied POI ID to a Mapbox Id
+     * @param poiId POI ID to convert
+     * @return [String] a Mapbox ID or null if unable to convert
+     */
+    public fun fromPoiId(poiId: String): String? = try { fromPoiId(poiId.toLong()) } catch (e: NumberFormatException) { null }
 }
