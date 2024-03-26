@@ -172,15 +172,6 @@ internal class PlaceAutocompleteIntegrationTest {
         assertEquals(3, suggestions.size)
 
         val suggestion = suggestions.first()
-        assertEquals("Starbucks", suggestion.name)
-        assertEquals(
-            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
-            suggestion.formattedAddress
-        )
-        assertEquals("restaurant", suggestion.makiIcon)
-        assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
-        assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
-
         val selectResponse = runBlocking {
             placeAutocomplete.select(suggestion)
         }
@@ -227,16 +218,6 @@ internal class PlaceAutocompleteIntegrationTest {
         )
         assertEquals(listOf(ImageInfo("https://test.com/img-primary.jpg", 300, 350)), result.primaryPhotos)
         assertEquals(listOf(ImageInfo("https://test.com/img-other.jpg", 150, 350)), result.otherPhotos)
-
-        assertEquals(
-            "Virginia, United States",
-            suggestions[1].formattedAddress
-        )
-
-        assertEquals(
-            "Arlington, Virginia, United States",
-            suggestions[2].formattedAddress
-        )
     }
 
     @Test
@@ -250,8 +231,8 @@ internal class PlaceAutocompleteIntegrationTest {
                         val body = String(request.body.readByteArray())
                         when (val id = JSONObject(body).getString("id")) {
                             "suggestion-id-1" -> createSuccessfulResponse("retrieve_successful_1.json")
-                            "suggestion-id-2" -> createSuccessfulResponse("retrieve_successful_2.json")
-                            "suggestion-id-3" -> MockResponse().setResponseCode(500)
+                            "suggestion-id-2" -> MockResponse().setResponseCode(500)
+                            "suggestion-id-3" -> createSuccessfulResponse("retrieve_successful_3.json")
                             else -> error("Unknown suggestion id: $id")
                         }
                     }
@@ -267,17 +248,42 @@ internal class PlaceAutocompleteIntegrationTest {
         assertTrue(response.isValue)
 
         val suggestions = requireNotNull(response.value)
-        assertEquals(2, suggestions.size)
+        assertEquals(3, suggestions.size)
 
-        assertEquals(
-            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
-            suggestions[0].formattedAddress
-        )
+        val selectResp1 = runBlocking {
+            placeAutocomplete.select(suggestions[0])
+        }
+        assertTrue(selectResp1.isValue)
 
-        assertEquals(
-            "Virginia, United States",
-            suggestions[1].formattedAddress
-        )
+        val result1 = selectResp1.value!!
+        assertEquals("Starbucks", result1.name)
+        assertEquals(Point.fromLngLat(-77.033568, 38.90143), result1.coordinate)
+        assertEquals(null, result1.routablePoints)
+        assertEquals("restaurant", result1.makiIcon)
+        assertEquals(PlaceAutocompleteType.Poi, result1.type)
+        assertEquals(listOf("food", "food and drink", "coffee shop"), result1.categories)
+
+        val selectResp2 = runBlocking {
+            placeAutocomplete.select(suggestions[1])
+        }
+
+        // Second call has server error
+        assertTrue(selectResp2.isError)
+
+        val selectResp3 = runBlocking {
+            placeAutocomplete.select(suggestions[2])
+        }
+
+        // Previous call was with server error, verify we can fetch results  after error disappeared
+        assertTrue(selectResp3.isValue)
+
+        val result3 = selectResp3.value!!
+        assertEquals("Washington Golf and Country Club", result3.name)
+        assertEquals(Point.fromLngLat(-77.118094, 38.912398), result3.coordinate)
+        assertEquals(null, result3.routablePoints)
+        assertEquals("marker", result3.makiIcon)
+        assertEquals(PlaceAutocompleteType.AdministrativeUnit.Neighborhood, result3.type)
+        assertEquals(null, result3.categories)
     }
 
     @Test
