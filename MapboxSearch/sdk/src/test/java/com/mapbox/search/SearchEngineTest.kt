@@ -56,7 +56,9 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
+import junit.framework.TestCase.assertEquals
 import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
@@ -773,6 +775,174 @@ internal class SearchEngineTest {
         }
     }
 
+    @TestFactory
+    fun `Check successful retrieval by Mapbox ID`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val slotRequestOptions = slot<CoreRequestOptions>()
+            val slotSearchResult = slot<CoreSearchResult>()
+            val slotSearchCallback = slot<CoreSearchCallback>()
+
+            every {
+                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+            } answers {
+                slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
+            }
+
+            When("Retrieve called") {
+                val callback = spyk<SearchResultCallback>(object : SearchResultCallback {
+                    override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {}
+                    override fun onError(e: Exception) {}
+                })
+
+                val task = searchEngine.retrieve(
+                    mapboxId = "random mapbox id",
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                Verify("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                Verify("CoreSearchEngine.retrieve() called") {
+                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                }
+
+                Verify("Results passed to callback") {
+                    callback.onResult(
+                        any<SearchResult>(),
+                        any<ResponseInfo>()
+                    )
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check onError is called when retrieve fails`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val slotRequestOptions = slot<CoreRequestOptions>()
+            val slotSearchResult = slot<CoreSearchResult>()
+            val slotSearchCallback = slot<CoreSearchCallback>()
+
+            every {
+                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+            } answers {
+                slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
+                TEST_REQUEST_ID
+            }
+
+            When("Retrieve called") {
+                val callback = spyk<SearchResultCallback>(object : SearchResultCallback {
+                    override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {}
+                    override fun onError(e: Exception) {}
+                })
+
+                val task = searchEngine.retrieve(
+                    mapboxId = "random mapbox id",
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                Verify("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                Verify("CoreSearchEngine.retrieve() called") {
+                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                }
+
+                Verify("Results passed to callback") {
+                    callback.onError(
+                        any<Exception>()
+                    )
+                }
+
+                VerifyNo("Result callback is not called") {
+                    callback.onResult(any(), any())
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check onError is called when retrieve succeeds but no result is found`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val mapboxId = "a mapbox id"
+            val slotRequestOptions = slot<CoreRequestOptions>()
+            val slotSearchResult = slot<CoreSearchResult>()
+            val slotSearchCallback = slot<CoreSearchCallback>()
+
+            every {
+                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+            } answers {
+                slotSearchCallback.captured.run(TEST_SUCCESSFUL_EMPTY_CORE_RESPONSE)
+                TEST_REQUEST_ID
+            }
+
+            When("Retrieve called") {
+                val callback = spyk<SearchResultCallback>(object : SearchResultCallback {
+                    override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {}
+                    override fun onError(e: Exception) {}
+                })
+
+                val task = searchEngine.retrieve(
+                    mapboxId = mapboxId,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                Verify("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                Verify("CoreSearchEngine.retrieve() called") {
+                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                }
+
+                Assertions.assertEquals(
+                    "retrieve",
+                    slotSearchResult.captured.action?.endpoint,
+                )
+                Assertions.assertEquals(
+                    """{"id":"$mapboxId"}""",
+                    slotSearchResult.captured.action?.body?.toString(Charsets.UTF_8),
+                )
+                Assertions.assertEquals("", slotSearchResult.captured.action?.path)
+                Assertions.assertNull(slotSearchResult.captured.action?.query)
+
+                Verify("Results passed to callback") {
+                    callback.onError(
+                        SearchRequestException("Not found", 404)
+                    )
+                }
+
+                VerifyNo("Result callback is not called") {
+                    callback.onResult(any(), any())
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+            }
+        }
+    }
+
     private companion object {
 
         const val TEST_REQUEST_ID = 1L
@@ -819,6 +989,12 @@ internal class SearchEngineTest {
         val TEST_SUCCESSFUL_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
             TEST_REQUEST_OPTIONS.mapToCore(),
             listOf(TEST_CORE_SEARCH_RESULT),
+            TEST_RESPONSE_UUID
+        )
+
+        val TEST_SUCCESSFUL_EMPTY_CORE_RESPONSE = createTestCoreSearchResponseSuccess(
+            TEST_REQUEST_OPTIONS.mapToCore(),
+            listOf(),
             TEST_RESPONSE_UUID
         )
 

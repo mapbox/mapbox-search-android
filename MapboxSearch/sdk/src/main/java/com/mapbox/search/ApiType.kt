@@ -18,7 +18,6 @@ public enum class ApiType {
      */
     @Reserved(Flags.SBS)
     SBS,
-
 }
 
 @JvmSynthetic
