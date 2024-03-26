@@ -40,7 +40,7 @@ import java.util.concurrent.Executor
  *   request will be executed and [result][SearchResult] will be passed to [SearchSelectionCallback.onResult];
  *       - For [category suggestion][SearchSuggestionType.Category] additional network request
  *   will be executed and [list of results][SearchResult] will be passed to [SearchSelectionCallback.onResults];
-- For [brand suggestion][SearchSuggestionType.Brand] additional network request
+ *       - For [brand suggestion][SearchSuggestionType.Brand] additional network request
  *   will be executed and [list of results][SearchResult] will be passed to [SearchSelectionCallback.onResults];
  *       - For [query suggestion][SearchSuggestionType.Query] additional network request will be
  *   executed and another [list of suggestions][SearchSuggestion] will be passed to [SearchSelectionCallback.onSuggestions].
