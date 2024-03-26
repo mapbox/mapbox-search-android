@@ -33,11 +33,6 @@ public class SearchEngineSettings @JvmOverloads constructor(
      * Single Box Search endpoint URL.
      */
     public val singleBoxSearchBaseUrl: String? = null,
-
-    /**
-     * SearchBox API end point URL
-     */
-    public val searchBoxEndpointUrl: String? = null,
 ) {
 
     /**
