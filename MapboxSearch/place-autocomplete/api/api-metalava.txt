@@ -67,7 +67,9 @@ package com.mapbox.search.autocomplete {
     method public com.mapbox.geojson.Point getCoordinate();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
+    method public String getId();
     method public String? getMakiIcon();
+    method public String? getMapboxId();
     method public String getName();
     method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
@@ -83,7 +85,9 @@ package com.mapbox.search.autocomplete {
     property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final Double? etaMinutes;
+    property public final String id;
     property public final String? makiIcon;
+    property public final String? mapboxId;
     property public final String name;
     property public final com.mapbox.search.common.metadata.OpenHours? openHours;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
@@ -97,7 +101,6 @@ package com.mapbox.search.autocomplete {
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteSuggestion implements android.os.Parcelable {
     method public java.util.List<java.lang.String>? getCategories();
-    method public com.mapbox.geojson.Point getCoordinate();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
     method public String? getFormattedAddress();
@@ -106,7 +109,6 @@ package com.mapbox.search.autocomplete {
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
     property public final java.util.List<java.lang.String>? categories;
-    property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final Double? etaMinutes;
     property public final String? formattedAddress;

@@ -2,7 +2,6 @@ package com.mapbox.search.autocomplete
 
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
 import com.mapbox.search.base.mapToPlatform
@@ -14,7 +13,6 @@ import com.mapbox.search.base.utils.extension.nullIfEmpty
 internal class PlaceAutocompleteResultFactory {
 
     fun createPlaceAutocompleteSuggestion(
-        coordinate: Point,
         type: PlaceAutocompleteType,
         suggestion: BaseSearchSuggestion,
     ): PlaceAutocompleteSuggestion {
@@ -22,7 +20,6 @@ internal class PlaceAutocompleteResultFactory {
             PlaceAutocompleteSuggestion(
                 name = name,
                 formattedAddress = formattedAddress(),
-                coordinate = coordinate,
                 routablePoints = suggestion.routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
@@ -42,7 +39,6 @@ internal class PlaceAutocompleteResultFactory {
             PlaceAutocompleteSuggestion(
                 name = name,
                 formattedAddress = formattedAddress(),
-                coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
@@ -55,6 +51,7 @@ internal class PlaceAutocompleteResultFactory {
     }
 
     fun createPlaceAutocompleteSuggestions(results: List<BaseSearchResult>): List<PlaceAutocompleteSuggestion> {
+//        throw IllegalStateException(results.toString())
         return results.mapNotNull { result ->
             val type = result.types.firstNotNullOfOrNull {
                 PlaceAutocompleteType.createFromBaseType(it)
@@ -66,14 +63,18 @@ internal class PlaceAutocompleteResultFactory {
     fun createPlaceAutocompleteResultOrError(result: BaseSearchResult): Expected<Exception, PlaceAutocompleteResult> {
         return createPlaceAutocompleteResult(result)?.let {
             ExpectedFactory.createValue(it)
-        } ?: ExpectedFactory.createError(Exception("Unable to create PlaceAutocompleteResult from $result"))
+        }
+            ?: ExpectedFactory.createError(Exception("Unable to create PlaceAutocompleteResult from $result"))
     }
 
     private fun createPlaceAutocompleteResult(result: BaseSearchResult): PlaceAutocompleteResult? {
         with(result) {
-            val type = types.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) } ?: return null
+            val type = types.firstNotNullOfOrNull { PlaceAutocompleteType.createFromBaseType(it) }
+                ?: return null
 
             return PlaceAutocompleteResult(
+                id = id,
+                mapboxId = mapboxId,
                 name = name,
                 coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },

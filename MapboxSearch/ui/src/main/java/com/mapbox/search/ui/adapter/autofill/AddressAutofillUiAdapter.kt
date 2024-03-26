@@ -1,10 +1,7 @@
 package com.mapbox.search.ui.adapter.autofill
 
-import android.Manifest
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import com.mapbox.android.core.location.LocationEngine
-import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.AddressAutofillSuggestion
@@ -12,7 +9,6 @@ import com.mapbox.search.autofill.Query
 import com.mapbox.search.base.MapboxApiClient
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
-import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
@@ -39,17 +35,9 @@ public class AddressAutofillUiAdapter(
      * Address autofill engine.
      */
     private val addressAutofill: AddressAutofill,
-
-    /**
-     * The mechanism responsible for providing location approximations to the SDK.
-     * By default [LocationEngine] is retrieved from [LocationEngineProvider.getBestLocationEngine].
-     * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
-     * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
-     */
-    locationEngine: LocationEngine = defaultLocationEngine(),
 ) {
 
-    private val itemsCreator = AutofillItemsCreator(view.context, locationEngine)
+    private val itemsCreator = AutofillItemsCreator(view.context)
     private val searchListeners = CopyOnWriteArrayList<SearchListener>()
 
     @Volatile

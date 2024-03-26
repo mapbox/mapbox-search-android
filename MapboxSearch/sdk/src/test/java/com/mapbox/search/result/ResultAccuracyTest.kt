@@ -29,6 +29,7 @@ internal class ResultAccuracyTest {
                         CoreResultAccuracy.INTERSECTION -> ResultAccuracy.Intersection
                         CoreResultAccuracy.APPROXIMATE -> ResultAccuracy.Approximate
                         CoreResultAccuracy.STREET -> ResultAccuracy.Street
+                        CoreResultAccuracy.PROXIMATE -> ResultAccuracy.Approximate
                     }
 
                     Then("Mapped value should be $platform", platform, accuracy.mapToPlatform())

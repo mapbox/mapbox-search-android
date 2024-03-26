@@ -43,6 +43,12 @@ public class OfflineSearchResult internal constructor(
         get() = rawSearchResult.id
 
     /**
+     * Result MapboxID
+     */
+    public val mapboxId: String?
+        get() = rawSearchResult.mapboxId
+
+    /**
      * Search result name.
      */
     public val name: String
@@ -111,6 +117,7 @@ public class OfflineSearchResult internal constructor(
     override fun toString(): String {
         return "OfflineSearchResult(" +
                 "id='$id', " +
+                "mapboxId='$mapboxId', " +
                 "name='$name', " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +

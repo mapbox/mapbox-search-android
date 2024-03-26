@@ -23,7 +23,8 @@ internal class AddressAutofillResultTest {
         ToStringVerifier(
             clazz = AddressAutofillResult::class,
             objectsFactory = ReflectionObjectsFactory(
-                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS
+                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS +
+                        TypeObjectCreator.SUGGESTION_CREATOR
             )
         ).verify()
     }

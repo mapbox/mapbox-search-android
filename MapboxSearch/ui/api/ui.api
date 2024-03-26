@@ -6,8 +6,7 @@ public final class com/mapbox/search/ui/BuildConfig {
 }
 
 public final class com/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter {
-	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autocomplete/PlaceAutocomplete;)V
 	public final fun addSearchListener (Lcom/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter$SearchListener;)V
 	public final fun removeSearchListener (Lcom/mapbox/search/ui/adapter/autocomplete/PlaceAutocompleteUiAdapter$SearchListener;)V
 	public final fun search (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -25,8 +24,7 @@ public abstract interface class com/mapbox/search/ui/adapter/autocomplete/PlaceA
 }
 
 public final class com/mapbox/search/ui/adapter/autofill/AddressAutofillUiAdapter {
-	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autofill/AddressAutofill;Lcom/mapbox/android/core/location/LocationEngine;)V
-	public synthetic fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autofill/AddressAutofill;Lcom/mapbox/android/core/location/LocationEngine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/search/ui/view/SearchResultsView;Lcom/mapbox/search/autofill/AddressAutofill;)V
 	public final fun addSearchListener (Lcom/mapbox/search/ui/adapter/autofill/AddressAutofillUiAdapter$SearchListener;)V
 	public final fun removeSearchListener (Lcom/mapbox/search/ui/adapter/autofill/AddressAutofillUiAdapter$SearchListener;)V
 	public final fun search (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

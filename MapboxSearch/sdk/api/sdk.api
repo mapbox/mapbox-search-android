@@ -864,6 +864,7 @@ public final class com/mapbox/search/result/SearchResult : android/os/Parcelable
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIndexableRecord ()Lcom/mapbox/search/record/IndexableRecord;
 	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getMatchingName ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;

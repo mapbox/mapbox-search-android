@@ -20,9 +20,8 @@ internal class PlaceAutocompleteResultFactoryTest {
     @Test
     fun `test create PlaceAutocompleteSuggestion from base suggestion`() {
         val baseSuggestion = createTestBaseSearchSuggestion(testBaseRawSearchSuggestionWithCoordinates)
-        val coordinate = testBaseRawSearchSuggestionWithCoordinates.center!!
         val type = PlaceAutocompleteType.AdministrativeUnit.Address
-        val suggestion = factory.createPlaceAutocompleteSuggestion(coordinate, type, baseSuggestion)
+        val suggestion = factory.createPlaceAutocompleteSuggestion(type, baseSuggestion)
         compare(testBaseRawSearchSuggestionWithCoordinates, suggestion)
     }
 
@@ -52,7 +51,6 @@ internal class PlaceAutocompleteResultFactoryTest {
     private fun compare(baseResult: BaseRawSearchResult, suggestion: PlaceAutocompleteSuggestion) {
         assertEquals(baseResult.names.first(), suggestion.name)
         assertEquals(baseResult.fullAddress, suggestion.formattedAddress)
-        assertEquals(baseResult.center, suggestion.coordinate)
         assertEquals(baseResult.routablePoints, suggestion.routablePoints?.map { it.mapToCore() })
         assertEquals(baseResult.icon, suggestion.makiIcon)
         assertEquals(baseResult.distanceMeters, suggestion.distanceMeters)

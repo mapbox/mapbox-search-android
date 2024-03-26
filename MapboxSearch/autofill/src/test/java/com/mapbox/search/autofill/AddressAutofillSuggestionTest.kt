@@ -23,9 +23,10 @@ internal class AddressAutofillSuggestionTest {
         ToStringVerifier(
             clazz = AddressAutofillSuggestion::class,
             objectsFactory = ReflectionObjectsFactory(
-                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS
+                extraCreators = CommonSdkTypeObjectCreators.ALL_CREATORS +
+                        TypeObjectCreator.SUGGESTION_CREATOR
             ),
-            ignoredProperties = listOf("address"),
+            ignoredProperties = listOf("address", "underlying"),
         ).verify()
     }
 }

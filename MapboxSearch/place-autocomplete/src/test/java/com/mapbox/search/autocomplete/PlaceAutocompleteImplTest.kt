@@ -10,7 +10,6 @@ import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.core.createCoreReverseGeoOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
-import com.mapbox.search.base.engine.TwoStepsToOneStepSearchEngineAdapter
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.utils.extension.mapToCore
@@ -33,7 +32,7 @@ import org.junit.jupiter.api.Test
 
 internal class PlaceAutocompleteImplTest {
 
-    private lateinit var searchEngine: TwoStepsToOneStepSearchEngineAdapter
+    private lateinit var searchEngine: PlaceAutocompleteEngine
     private lateinit var activityReporter: UserActivityReporterInterface
     private lateinit var resultFactory: PlaceAutocompleteResultFactory
     private lateinit var placeAutocomplete: PlaceAutocomplete
@@ -51,15 +50,11 @@ internal class PlaceAutocompleteImplTest {
             resultFactory = resultFactory
         )
 
-        coEvery { searchEngine.searchResolveImmediately(any(), any()) } answers {
-            ExpectedFactory.createValue(emptyList())
-        }
-
         coEvery { searchEngine.search(any(), any()) } answers {
             ExpectedFactory.createValue(emptyList<BaseSearchSuggestion>() to mockk())
         }
 
-        coEvery { searchEngine.reverseGeocoding(any()) } answers {
+        coEvery { searchEngine.search(any()) } answers {
             ExpectedFactory.createValue(emptyList<BaseSearchResult>() to mockk())
         }
     }
@@ -70,10 +65,6 @@ internal class PlaceAutocompleteImplTest {
             ExpectedFactory.createValue(TEST_BASE_SUGGESTIONS to mockk())
         }
 
-        coEvery { searchEngine.resolveAll(any(), any()) } answers {
-            ExpectedFactory.createValue(TEST_BASE_RESULTS)
-        }
-
         val response = runBlocking {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
@@ -81,8 +72,6 @@ internal class PlaceAutocompleteImplTest {
         assertEquals(TEST_AUTOCOMPLETE_SUGGESTIONS, response.value)
 
         coVerify(exactly = 1) { searchEngine.search(eq(TEST_QUERY), any()) }
-        coVerify(exactly = 1) { searchEngine.resolveAll(eq(TEST_BASE_SUGGESTIONS), eq(false)) }
-        verify(exactly = 1) { resultFactory.createPlaceAutocompleteSuggestions(listOf(testBaseResult)) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-forward-geocoding")) }
     }
 
@@ -170,7 +159,7 @@ internal class PlaceAutocompleteImplTest {
 
     @Test
     fun `check correct returned data for reverse geocoding request`() {
-        coEvery { searchEngine.reverseGeocoding(any()) } answers {
+        coEvery { searchEngine.search(any()) } answers {
             ExpectedFactory.createValue(TEST_BASE_RESULTS to mockk())
         }
 
@@ -180,7 +169,7 @@ internal class PlaceAutocompleteImplTest {
 
         assertEquals(TEST_AUTOCOMPLETE_SUGGESTIONS, response.value)
 
-        coVerify(exactly = 1) { searchEngine.reverseGeocoding(any()) }
+        coVerify(exactly = 1) { searchEngine.search(any()) }
         verify(exactly = 1) { resultFactory.createPlaceAutocompleteSuggestions(listOf(testBaseResult)) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
@@ -188,7 +177,7 @@ internal class PlaceAutocompleteImplTest {
     @Test
     fun `check correct returned error for forward reverse request`() {
         val error = Exception()
-        coEvery { searchEngine.reverseGeocoding(any()) } answers {
+        coEvery { searchEngine.search(any()) } answers {
             ExpectedFactory.createError(error)
         }
 
@@ -198,7 +187,7 @@ internal class PlaceAutocompleteImplTest {
 
         assertSame(error, response.error)
 
-        coVerify(exactly = 1) { searchEngine.reverseGeocoding(any()) }
+        coVerify(exactly = 1) { searchEngine.search(any()) }
         verify(exactly = 0) { resultFactory.createPlaceAutocompleteSuggestions(any()) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
@@ -225,14 +214,14 @@ internal class PlaceAutocompleteImplTest {
         )
 
         runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
-        coVerify { searchEngine.reverseGeocoding(coreOptions) }
+        coVerify { searchEngine.search(coreOptions) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
 
     @Test
     fun `check request types for reverse geocoding request with administrativeUnits = null`() {
         val slotOptions = slot<CoreReverseGeoOptions>()
-        coEvery { searchEngine.reverseGeocoding(capture(slotOptions)) } answers {
+        coEvery { searchEngine.search(capture(slotOptions)) } answers {
             ExpectedFactory.createValue(emptyList<BaseSearchResult>() to mockk())
         }
 
@@ -248,7 +237,7 @@ internal class PlaceAutocompleteImplTest {
     @Test
     fun `check request types for reverse geocoding request with empty administrativeUnits`() {
         val slotOptions = slot<CoreReverseGeoOptions>()
-        coEvery { searchEngine.reverseGeocoding(capture(slotOptions)) } answers {
+        coEvery { searchEngine.search(capture(slotOptions)) } answers {
             ExpectedFactory.createValue(emptyList<BaseSearchResult>() to mockk())
         }
 
@@ -269,8 +258,7 @@ internal class PlaceAutocompleteImplTest {
 
         assertEquals(TEST_AUTOCOMPLETE_RESULT, response.value)
 
-        coVerify(exactly = 0) { searchEngine.select(any()) }
-        coVerify(exactly = 0) { searchEngine.resolveAll(any(), any()) }
+        coVerify(exactly = 0) { searchEngine.select(any<BaseSearchSuggestion>()) }
         verify(exactly = 1) { resultFactory.createPlaceAutocompleteResultOrError(eq(testBaseResult)) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-suggestion-select")) }
     }

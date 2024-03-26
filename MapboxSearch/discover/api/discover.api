@@ -121,7 +121,9 @@ public final class com/mapbox/search/discover/DiscoverResult : android/os/Parcel
 	public final fun getAddress ()Lcom/mapbox/search/discover/DiscoverAddress;
 	public final fun getCategories ()Ljava/util/List;
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getId ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRoutablePoints ()Ljava/util/List;
 	public fun hashCode ()I

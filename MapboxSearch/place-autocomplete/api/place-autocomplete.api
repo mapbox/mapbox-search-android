@@ -77,7 +77,9 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteResult : andr
 	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
+	public final fun getId ()Ljava/lang/String;
 	public final fun getMakiIcon ()Ljava/lang/String;
+	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
@@ -97,7 +99,6 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : 
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCategories ()Ljava/util/List;
-	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getFormattedAddress ()Ljava/lang/String;

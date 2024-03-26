@@ -1,5 +1,7 @@
-package com.mapbox.search.base.engine
+package com.mapbox.search.autocomplete
 
+import android.app.Application
+import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.search.base.BaseResponseInfo
@@ -9,11 +11,18 @@ import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.assertDebug
-import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreReverseGeoOptions
+import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.engine.BaseSearchEngine
+import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
+import com.mapbox.search.base.engine.TwoStepsBatchRequestCallbackWrapper
+import com.mapbox.search.base.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.base.failDebug
+import com.mapbox.search.base.location.LocationEngineAdapter
+import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
@@ -21,95 +30,31 @@ import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
-import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
-import com.mapbox.search.base.utils.extension.suspendFlatMap
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-/*
-Search Engine that turns 2-step API into 1-step API by resolving all the suggestions during search call.
-Currently used for the Address Autofill and Place Autocomplete use cases.
-
-TODO can be optimised by implementing [OneStepRequestCallbackWrapper] and [TwoStepsRequestCallbackWrapper]
-using coroutines and removing extra executors
- */
-class TwoStepsToOneStepSearchEngineAdapter(
-    private val apiType: CoreApiType,
+internal class PlaceAutocompleteEngine(
     private val coreEngine: CoreSearchEngineInterface,
     private val requestContextProvider: SearchRequestContextProvider,
     private val historyService: SearchHistoryService = SearchHistoryService.STUB,
-    private val searchResultFactory: SearchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY),
+    private val searchResultFactory: SearchResultFactory = SearchResultFactory(
+        IndexableRecordResolver.EMPTY
+    ),
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
+    private val apiType: ApiType = ApiType.SBS
 ) : BaseSearchEngine() {
 
-    suspend fun reverseGeocoding(
-        options: CoreReverseGeoOptions
-    ): Expected<Exception, Pair<List<BaseSearchResult>, BaseResponseInfo>> {
-        return suspendCancellableCoroutine { continuation ->
-            val task = reverseGeocoding(options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchCallback {
-                override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
-                    continuation.resumeWith(
-                        Result.success(ExpectedFactory.createValue(results to responseInfo))
-                    )
-                }
-
-                override fun onError(e: Exception) {
-                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                }
-            })
-
-            continuation.invokeOnCancellation {
-                task.cancel()
-            }
-        }
-    }
-
-    private fun reverseGeocoding(
-        options: CoreReverseGeoOptions,
-        executor: Executor,
-        callback: BaseSearchCallback,
-    ): AsyncOperationTask {
-        return makeRequest(callback) { task ->
-            val requestContext = requestContextProvider.provide(apiType)
-            val requestId = coreEngine.reverseGeocoding(
-                options,
-                OneStepRequestCallbackWrapper(
-                    searchResultFactory = searchResultFactory,
-                    callbackExecutor = executor,
-                    workerExecutor = engineExecutorService,
-                    searchRequestTask = task,
-                    searchRequestContext = requestContext,
-                    isOffline = false,
-                )
-            )
-            task.addOnCancelledCallback {
-                coreEngine.cancel(requestId)
-            }
-        }
-    }
-
-    suspend fun searchResolveImmediately(
-        query: String,
-        options: CoreSearchOptions,
-        allowCategorySuggestions: Boolean = true
-    ): Expected<Exception, List<BaseSearchResult>> {
-        return search(query = query, options = options).suspendFlatMap { (suggestions, _) ->
-            resolveAll(suggestions, allowCategorySuggestions)
-        }
-    }
-
-    private fun search(
+    fun search(
         query: String,
         options: CoreSearchOptions,
         executor: Executor,
@@ -138,29 +83,19 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    suspend fun search(
-        query: String,
-        options: CoreSearchOptions
-    ): Expected<Exception, Pair<List<BaseSearchSuggestion>, BaseResponseInfo>> {
+    suspend fun search(query: String, options: CoreSearchOptions): Expected<Exception, Pair<List<BaseSearchSuggestion>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
-            val task = search(
-                query,
-                options,
-                SearchSdkMainThreadWorker.mainExecutor,
-                object : BaseSearchSuggestionsCallback {
-                    override fun onSuggestions(
-                        suggestions: List<BaseSearchSuggestion>,
-                        responseInfo: BaseResponseInfo
-                    ) {
-                        continuation.resumeWith(
-                            Result.success(ExpectedFactory.createValue(suggestions to responseInfo))
-                        )
-                    }
+            val task = search(query, options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchSuggestionsCallback {
+                override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
+                    continuation.resumeWith(
+                        Result.success(ExpectedFactory.createValue(suggestions to responseInfo))
+                    )
+                }
 
-                    override fun onError(e: Exception) {
-                        continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                    }
-                })
+                override fun onError(e: Exception) {
+                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
+                }
+            })
 
             continuation.invokeOnCancellation {
                 task.cancel()
@@ -168,7 +103,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private fun select(
+    fun select(
         suggestion: BaseSearchSuggestion,
         executor: Executor,
         callback: BaseSearchSelectionCallback,
@@ -200,7 +135,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
             }
             is BaseGeocodingCompatSearchSuggestion,
             is BaseIndexableRecordSearchSuggestion -> {
-                val errorMsg = "Unsupported suggestion type: $suggestion"
+                val errorMsg = "Unsupported in Autofill suggestion type: $suggestion"
                 failDebug { errorMsg }
                 executor.execute {
                     callback.onError(Exception(errorMsg))
@@ -215,28 +150,13 @@ class TwoStepsToOneStepSearchEngineAdapter(
             val task = select(suggestion, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchSelectionCallback {
                 override fun onSuggestions(suggestions: List<BaseSearchSuggestion>, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(
-                            ExpectedFactory.createValue(
-                                SearchSelectionResponse.Suggestions(
-                                    suggestions,
-                                    responseInfo
-                                )
-                            )
-                        )
+                        Result.success(ExpectedFactory.createValue(SearchSelectionResponse.Suggestions(suggestions, responseInfo)))
                     )
                 }
 
                 override fun onResult(suggestion: BaseSearchSuggestion, result: BaseSearchResult, responseInfo: BaseResponseInfo) {
                     continuation.resumeWith(
-                        Result.success(
-                            ExpectedFactory.createValue(
-                                SearchSelectionResponse.Result(
-                                    suggestion,
-                                    result,
-                                    responseInfo
-                                )
-                            )
-                        )
+                        Result.success(ExpectedFactory.createValue(SearchSelectionResponse.Result(suggestion, result, responseInfo)))
                     )
                 }
 
@@ -246,15 +166,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
                     responseInfo: BaseResponseInfo
                 ) {
                     continuation.resumeWith(
-                        Result.success(
-                            ExpectedFactory.createValue(
-                                SearchSelectionResponse.Results(
-                                    suggestion,
-                                    results,
-                                    responseInfo
-                                )
-                            )
-                        )
+                        Result.success(ExpectedFactory.createValue(SearchSelectionResponse.Results(suggestion, results, responseInfo)))
                     )
                 }
 
@@ -269,7 +181,7 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private fun selectBatch(
+    fun select(
         suggestions: List<BaseSearchSuggestion>,
         executor: Executor,
         callback: BaseSearchMultipleSelectionCallback,
@@ -335,29 +247,24 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    private suspend fun selectBatch(
-        suggestions: List<BaseSearchSuggestion>
-    ): Expected<Exception, Triple<List<BaseSearchSuggestion>, List<BaseSearchResult>, BaseResponseInfo>> {
+    suspend fun select(suggestions: List<BaseSearchSuggestion>): Expected<Exception, Triple<List<BaseSearchSuggestion>, List<BaseSearchResult>, BaseResponseInfo>> {
         return suspendCancellableCoroutine { continuation ->
-            val task = selectBatch(
-                suggestions,
-                SearchSdkMainThreadWorker.mainExecutor,
-                object : BaseSearchMultipleSelectionCallback {
-                    override fun onResult(
-                        suggestions: List<BaseSearchSuggestion>,
-                        results: List<BaseSearchResult>,
-                        responseInfo: BaseResponseInfo
-                    ) {
-                        continuation.resumeWith(
-                            Result.success(ExpectedFactory.createValue(Triple(suggestions, results, responseInfo)))
-                        )
-                    }
+            val task = select(suggestions, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchMultipleSelectionCallback {
 
-                    override fun onError(e: Exception) {
-                        continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
-                    }
+                override fun onResult(
+                    suggestions: List<BaseSearchSuggestion>,
+                    results: List<BaseSearchResult>,
+                    responseInfo: BaseResponseInfo
+                ) {
+                    continuation.resumeWith(
+                        Result.success(ExpectedFactory.createValue(Triple(suggestions, results, responseInfo)))
+                    )
                 }
-            )
+
+                override fun onError(e: Exception) {
+                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
+                }
+            })
 
             continuation.invokeOnCancellation {
                 task.cancel()
@@ -365,63 +272,46 @@ class TwoStepsToOneStepSearchEngineAdapter(
         }
     }
 
-    suspend fun resolveAll(
-        suggestions: List<BaseSearchSuggestion>,
-        allowCategorySuggestions: Boolean,
-    ): Expected<Exception, List<BaseSearchResult>> {
-        return when {
-            suggestions.isEmpty() -> {
-                ExpectedFactory.createValue(emptyList())
+    fun search(
+        options: CoreReverseGeoOptions,
+        executor: Executor,
+        callback: BaseSearchCallback,
+    ): AsyncOperationTask {
+        return makeRequest(callback) { task ->
+            val requestContext = requestContextProvider.provide(apiType)
+            val requestId = coreEngine.reverseGeocoding(
+                options,
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
             }
-            suggestions.all { it.isBatchResolveSupported } -> {
-                selectBatch(suggestions).mapValue { (_, results, _) -> results }
-            }
-            else -> {
-                coroutineScope {
-                    val deferredSuggestions: List<Deferred<Expected<Exception, SearchSelectionResponse>>> = suggestions
-                        .filter {
-                            when (it.type) {
-                                // Filtering in order to avoid infinite recursion
-                                // because of some specific suggestions like "Did you mean recursion?"
-                                is BaseSearchSuggestionType.Query -> false
-                                is BaseSearchSuggestionType.Category -> allowCategorySuggestions
-                                else -> true
-                            }
-                        }
-                        .map { suggestion ->
-                            async { select(suggestion) }
-                        }
+        }
+    }
 
-                    val responses: List<Expected<Exception, List<BaseSearchResult>>> = deferredSuggestions
-                        .map { deferred ->
-                            deferred.await().suspendFlatMap { response ->
-                                when (response) {
-                                    is SearchSelectionResponse.Suggestions -> {
-                                        resolveAll(response.suggestions, allowCategorySuggestions)
-                                    }
-                                    is SearchSelectionResponse.Result -> {
-                                        ExpectedFactory.createValue(listOf(response.result))
-                                    }
-                                    is SearchSelectionResponse.Results -> {
-                                        ExpectedFactory.createValue(response.results)
-                                    }
-                                }
-                            }
-                        }
-
-                    // If at least one response completed successfully, return it.
-                    if (responses.isNotEmpty() && responses.all { it.isError }) {
-                        responses.first()
-                    } else {
-                        responses.asSequence()
-                            .mapNotNull { it.value }
-                            .flatten()
-                            .toList()
-                            .let {
-                                ExpectedFactory.createValue(it)
-                            }
-                    }
+    suspend fun search(options: CoreReverseGeoOptions): Expected<Exception, Pair<List<BaseSearchResult>, BaseResponseInfo>> {
+        return suspendCancellableCoroutine { continuation ->
+            val task = search(options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchCallback {
+                override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
+                    continuation.resumeWith(
+                        Result.success(ExpectedFactory.createValue(results to responseInfo))
+                    )
                 }
+
+                override fun onError(e: Exception) {
+                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                task.cancel()
             }
         }
     }
@@ -446,9 +336,36 @@ class TwoStepsToOneStepSearchEngineAdapter(
         ) : SearchSelectionResponse()
     }
 
-    private companion object {
-        val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
-            Thread(runnable, "TwoStepsToOneStepSearchEngine executor")
+    companion object {
+
+        private val DEFAULT_EXECUTOR: ExecutorService =
+            Executors.newSingleThreadExecutor { runnable ->
+                Thread(runnable, "AddressAutofill executor")
+            }
+
+        fun create(
+            accessToken: String,
+            app: Application,
+            locationEngine: LocationEngine,
+        ): BaseSearchEngine {
+            val coreEngine = CoreSearchEngine(
+                CoreEngineOptions(
+                    accessToken = accessToken,
+                    baseUrl = null,
+                    ApiType.SBS,
+                    UserAgentProvider.userAgent,
+                    null
+                ),
+                WrapperLocationProvider(
+                    LocationEngineAdapter(app, locationEngine),
+                    null
+                ),
+            )
+
+            return PlaceAutocompleteEngine(
+                coreEngine = coreEngine,
+                requestContextProvider = SearchRequestContextProvider(app),
+            )
         }
     }
 }

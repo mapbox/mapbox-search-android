@@ -138,6 +138,7 @@ fun createTestCoreSearchResponseCancelled(
 @Suppress("LongParameterList")
 fun createTestCoreSearchResult(
     id: String = "id_test_core_search_result",
+    mapboxId: String? = null,
     types: List<ResultType> = listOf(ResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     languages: List<String> = listOf("default"),
@@ -164,6 +165,7 @@ fun createTestCoreSearchResult(
     serverIndex: Int? = 0,
 ) = SearchResult(
     id,
+    mapboxId,
     types,
     names,
     languages,
@@ -193,6 +195,7 @@ fun createTestCoreSearchResult(
 @Suppress("LongParameterList")
 fun SearchResult.copy(
     id: String = this.id,
+    mapboxId: String? = this.mapboxId,
     types: List<ResultType> = this.types,
     names: List<String> = this.names,
     languages: List<String> = this.languages,
@@ -219,6 +222,7 @@ fun SearchResult.copy(
     serverIndex: Int? = this.serverIndex,
 ) = SearchResult(
     id,
+    mapboxId,
     types,
     names,
     languages,

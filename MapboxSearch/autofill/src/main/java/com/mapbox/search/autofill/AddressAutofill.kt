@@ -20,10 +20,10 @@ public interface AddressAutofill {
      * @param options Request options.
      * @return Result of the search request, one of error or value.
      */
-    public suspend fun suggestions(
+    public suspend fun reverseGeocoding(
         point: Point,
         options: AddressAutofillOptions
-    ): Expected<Exception, List<AddressAutofillSuggestion>>
+    ): Expected<Exception, List<AddressAutofillResult>>
 
     /**
      * Performs forward geocoding request.
