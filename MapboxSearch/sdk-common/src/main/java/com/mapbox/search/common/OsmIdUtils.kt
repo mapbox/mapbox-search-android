@@ -23,7 +23,7 @@ public object OsmIdUtils {
             val originalId = poiId / 10
             val mbxPoiId = "urn:mbxpoi-osm:$osmType$originalId"
             val bytes = mbxPoiId.toByteArray(Charsets.UTF_8)
-            return Base64.encodeToString(bytes, Base64.URL_SAFE)
+            return Base64.encodeToString(bytes, Base64.URL_SAFE or Base64.NO_WRAP)
         }
     }
 }
