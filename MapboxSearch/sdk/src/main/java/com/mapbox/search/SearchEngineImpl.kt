@@ -342,7 +342,7 @@ internal class SearchEngineImpl(
                 )
             }
             else -> {
-                throw IllegalArgumentException("Retrieve is not supported for Geocoding type")
+                throw UnsupportedOperationException("Retrieve is not supported for API type GEOCODING")
             }
         }
         val searchResult = createBlankSearchResultForRetrieve(suggestAction)
