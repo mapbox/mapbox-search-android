@@ -1,10 +1,8 @@
 package com.mapbox.search.ui.adapter.engines
 
 import android.Manifest
-import android.util.Log
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
-import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,10 +12,8 @@ import com.mapbox.common.ReachabilityInterface
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
-import com.mapbox.search.SearchResultCallback
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.ServiceProvider
@@ -26,7 +22,6 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.logger.logd
-import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
@@ -326,11 +321,6 @@ public class SearchEngineUiAdapter(
                 }
             }
         }
-    }
-
-    public fun showDetails(mapboxId: String, callback: SearchResultCallback) {
-        searchQuery = "mapboxId"
-        searchEngine.retrieve(mapboxId, callback)
     }
 
     private fun onHistoryRecordRemoved(adapterPosition: Int, record: HistoryRecord) {
