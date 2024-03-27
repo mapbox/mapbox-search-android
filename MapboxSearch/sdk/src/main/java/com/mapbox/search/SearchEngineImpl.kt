@@ -29,14 +29,13 @@ import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
-import com.mapbox.search.internal.bindgen.RequestOptions
-import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.internal.bindgen.SuggestAction
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.utils.search.RetrieveUtils.EMPTY_REQUEST_OPTIONS
+import com.mapbox.search.utils.search.RetrieveUtils.createSearchResultForRetrieve
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -311,33 +310,11 @@ internal class SearchEngineImpl(
     }
 
     override fun retrieve(mapboxId: String, executor: Executor, callback: SearchResultCallback): AsyncOperationTask {
-        val requestOptions = RequestOptions(
-            "",
-            "",
-            EMPTY_SEARCH_OPTIONS,
-            false,
-            false,
-            NO_SESSION_IDENTIFIER,
-        )
-        val suggestAction = when (this.apiType) {
-            ApiType.SBS -> {
-                SuggestAction(
-                    "retrieve",
-                    "",
-                    null,
-                    """{"id":"$mapboxId"}""".toByteArray(),
-                    false
-                )
-            }
-            else -> {
-                throw UnsupportedOperationException("Retrieve is not supported for $apiType API type")
-            }
-        }
-        val searchResult = createBlankSearchResultForRetrieve(suggestAction)
+        val searchResult = createSearchResultForRetrieve(this.apiType, mapboxId)
         val baseCallback = BaseSearchCallbackAdapter(callback)
 
         return makeRequest(baseCallback) { task ->
-            val requestId = coreEngine.retrieve(requestOptions, searchResult, OneStepRequestCallbackWrapper(
+            val requestId = coreEngine.retrieve(EMPTY_REQUEST_OPTIONS, searchResult, OneStepRequestCallbackWrapper(
                 searchResultFactory = searchResultFactory,
                 callbackExecutor = executor,
                 workerExecutor = engineExecutorService,
@@ -438,37 +415,5 @@ internal class SearchEngineImpl(
         val DEFAULT_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
             Thread(runnable, "SearchEngine executor")
         }
-        private const val NO_SESSION_IDENTIFIER = "<NO SESSION IDENTIFIER>"
-        private val EMPTY_SEARCH_OPTIONS = SearchOptions.Builder().build().mapToCore()
-
-        // none of the parameters seem to have any importance, only the SuggestAction
-        fun createBlankSearchResultForRetrieve(suggestAction: SuggestAction) = com.mapbox.search.internal.bindgen.SearchResult(
-            "",
-            "",
-            listOf(ResultType.POI),
-            listOf(),
-            listOf(),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0,
-            suggestAction,
-            null,
-        )
     }
 }
