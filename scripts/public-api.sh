@@ -25,7 +25,7 @@ if [ "$1" = "--check" ]; then
   ./gradlew :ui:checkApi
   ./gradlew :offline:checkApi
   ./gradlew :autofill:checkApi
-  ./gradlew :category:checkApi
+  ./gradlew :discover:checkApi
   ./gradlew :place-autocomplete:checkApi
 
   mkdir -p ./ui/build/temp/
@@ -43,7 +43,7 @@ if [ "$1" = "--update" ]; then
   ./gradlew :ui:updateApi
   ./gradlew :offline:updateApi
   ./gradlew :autofill:updateApi
-  ./gradlew :category:updateApi
+  ./gradlew :discover:updateApi
   ./gradlew :place-autocomplete:updateApi
 
   ./gradlew :ui:generatePublicXml
