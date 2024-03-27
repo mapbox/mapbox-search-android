@@ -28,9 +28,10 @@ public object OsmIdUtils {
     }
 
     /**
-     * Convers the supplied POI ID to a Mapbox Id
+     * Converts the supplied POI ID to a Mapbox Id
      * @param poiId POI ID to convert
      * @return [String] a Mapbox ID or null if unable to convert
      */
+    @JvmStatic
     public fun fromPoiId(poiId: String): String? = try { fromPoiId(poiId.toLong()) } catch (e: NumberFormatException) { null }
 }
