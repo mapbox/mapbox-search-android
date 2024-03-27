@@ -8,7 +8,7 @@ import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.result.SearchResult
 
-internal class SearchResultCallbackAdapter(private val callback: SearchResultCallback): BaseSearchCallback {
+internal class SearchResultCallbackAdapter(private val callback: SearchResultCallback) : BaseSearchCallback {
 
     override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) =
         if (results.isNotEmpty()) {
@@ -21,5 +21,4 @@ internal class SearchResultCallbackAdapter(private val callback: SearchResultCal
     override fun onError(e: Exception) {
         callback.onError(e)
     }
-
 }
