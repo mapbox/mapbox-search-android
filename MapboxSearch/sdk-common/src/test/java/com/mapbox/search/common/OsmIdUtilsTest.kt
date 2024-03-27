@@ -37,6 +37,23 @@ internal class OsmIdUtilsTest {
         assertNull(OsmIdUtils.fromPoiId(12369506325519))
     }
 
+    @Test
+    fun `Returns null for an invalid string`() {
+        assertNull(OsmIdUtils.fromPoiId("invalid id"))
+    }
+
+    @Test
+    fun `Returns null for an invalid string POI ID`() {
+        assertNull(OsmIdUtils.fromPoiId("12369506325519"))
+    }
+
+    @Test
+    fun `Convert relation String POID ID to OSM ID`() {
+        // urn:mbxpoi-osm:r123695063255
+        val expected = "dXJuOm1ieHBvaS1vc206cjEyMzY5NTA2MzI1NQ=="
+        assertEquals(expected, OsmIdUtils.fromPoiId("1236950632554"))
+    }
+
     companion object {
         @JvmStatic
         @BeforeAll
@@ -45,14 +62,14 @@ internal class OsmIdUtilsTest {
             val arraySlot = slot<ByteArray>()
 
             every {
-                Base64.encodeToString(capture(arraySlot), Base64.URL_SAFE)
+                Base64.encodeToString(capture(arraySlot), Base64.URL_SAFE or Base64.NO_WRAP)
             } answers {
                 java.util.Base64.getEncoder().encodeToString(arraySlot.captured)
             }
 
             val stringSlot = slot<String>()
             every {
-                Base64.decode(capture(stringSlot), Base64.URL_SAFE)
+                Base64.decode(capture(stringSlot), Base64.URL_SAFE or Base64.NO_WRAP)
             } answers {
                 java.util.Base64.getDecoder().decode(stringSlot.captured)
             }

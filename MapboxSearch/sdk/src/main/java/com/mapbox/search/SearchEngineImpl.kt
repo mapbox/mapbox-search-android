@@ -4,6 +4,7 @@ import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSuggestionsCallbackAdapter
+import com.mapbox.search.adapter.SearchResultCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
@@ -23,6 +24,7 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
@@ -33,6 +35,8 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.utils.search.RetrieveUtils.EMPTY_REQUEST_OPTIONS
+import com.mapbox.search.utils.search.RetrieveUtils.createSearchResultForRetrieve
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -302,6 +306,27 @@ internal class SearchEngineImpl(
                     requestOptions = suggestion.requestOptions.mapToBase()
                 )
                 completeSearchResultSelection(suggestion, SearchResult(baseSearchResult))
+            }
+        }
+    }
+
+    override fun retrieve(mapboxId: String, executor: Executor, callback: SearchResultCallback): AsyncOperationTask {
+        val searchResult = createSearchResultForRetrieve(this.apiType, mapboxId)
+        val baseCallback = SearchResultCallbackAdapter(callback)
+
+        return makeRequest(baseCallback) { task ->
+            val requestId = coreEngine.retrieve(EMPTY_REQUEST_OPTIONS, searchResult, OneStepRequestCallbackWrapper(
+                searchResultFactory = searchResultFactory,
+                callbackExecutor = executor,
+                workerExecutor = engineExecutorService,
+                searchRequestTask = task,
+                searchRequestContext = SearchRequestContext(
+                    this.apiType.mapToCore()
+                ),
+                isOffline = false,
+            ))
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
             }
         }
     }

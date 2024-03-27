@@ -224,6 +224,8 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchEngineSettings getSettings();
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
+    method public com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, com.mapbox.search.SearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
@@ -369,6 +371,11 @@ package com.mapbox.search {
   }
 
   public final class SearchOptionsKt {
+  }
+
+  public interface SearchResultCallback {
+    method public void onError(Exception e);
+    method public void onResult(com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {

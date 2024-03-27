@@ -643,7 +643,7 @@ public class SearchEngineUiAdapter(
         public fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo)
 
         /**
-         Called when a user when a user selects one of the currently displayed [OfflineSearchResult]s.
+        Called when a user when a user selects one of the currently displayed [OfflineSearchResult]s.
          *
          * @param searchResult Search result.
          * @param responseInfo Search response and request information.
