@@ -4,6 +4,7 @@ import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSuggestionsCallbackAdapter
+import com.mapbox.search.adapter.SearchResultCallbackAdapter
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
@@ -311,7 +312,7 @@ internal class SearchEngineImpl(
 
     override fun retrieve(mapboxId: String, executor: Executor, callback: SearchResultCallback): AsyncOperationTask {
         val searchResult = createSearchResultForRetrieve(this.apiType, mapboxId)
-        val baseCallback = BaseSearchCallbackAdapter(callback)
+        val baseCallback = SearchResultCallbackAdapter(callback)
 
         return makeRequest(baseCallback) { task ->
             val requestId = coreEngine.retrieve(EMPTY_REQUEST_OPTIONS, searchResult, OneStepRequestCallbackWrapper(

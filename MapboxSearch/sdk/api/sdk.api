@@ -476,13 +476,9 @@ public final class com/mapbox/search/SearchOptions$Creator : android/os/Parcelab
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
-public abstract interface class com/mapbox/search/SearchResultCallback : com/mapbox/search/SearchCallback {
+public abstract interface class com/mapbox/search/SearchResultCallback {
+	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
-	public abstract fun onResults (Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
-}
-
-public final class com/mapbox/search/SearchResultCallback$DefaultImpls {
-	public static fun onResults (Lcom/mapbox/search/SearchResultCallback;Ljava/util/List;Lcom/mapbox/search/ResponseInfo;)V
 }
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {

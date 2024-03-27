@@ -1,6 +1,5 @@
 package com.mapbox.search
 
-import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.result.SearchResult
 
 /**
@@ -25,7 +24,7 @@ public interface SearchCallback {
 /**
  * Search callback for when only one response is expected
  */
-public interface SearchResultCallback : SearchCallback {
+public interface SearchResultCallback {
 
     /**
      * Called when the result is ready.
@@ -34,11 +33,9 @@ public interface SearchResultCallback : SearchCallback {
      */
     public fun onResult(result: SearchResult, responseInfo: ResponseInfo)
 
-    override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo): Unit =
-        if (results.isNotEmpty()) {
-            onResult(results.first(), responseInfo)
-        } else {
-            // this should not happen, the server should have returned a 404
-            onError(SearchRequestException("Not found", 404))
-        }
+    /**
+     * Called in case if error occurred during request.
+     * @param e Exception, occurred during request.
+     */
+    public fun onError(e: Exception)
 }

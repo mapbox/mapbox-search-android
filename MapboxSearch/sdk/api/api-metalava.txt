@@ -367,9 +367,9 @@ package com.mapbox.search {
   public final class SearchOptionsKt {
   }
 
-  public interface SearchResultCallback extends com.mapbox.search.SearchCallback {
+  public interface SearchResultCallback {
+    method public void onError(Exception e);
     method public void onResult(com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
-    method public default void onResults(java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {
