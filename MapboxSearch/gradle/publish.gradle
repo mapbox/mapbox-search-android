@@ -61,7 +61,7 @@ sdkNameMap["sdk"] = "search-sdk"
 sdkNameMap["ui"] = "search-ui-sdk"
 sdkNameMap["offline"] = "search-offline-sdk"
 sdkNameMap["autofill"] = "search-autofill-sdk"
-sdkNameMap["category"] = "search-category-sdk"
+sdkNameMap["discover"] = "search-discover-sdk"
 sdkNameMap["place-autocomplete"] = "search-place-autocomplete-sdk"
 
 registry {

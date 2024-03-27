@@ -3,9 +3,9 @@
     <string name="action_address_autofill_ui_example">Open address autofill UI example</string>
     <string name="action_address_autofill_example">Open address autofill example</string>
 
-    <string name="action_category_ui_example">Open Category UI example</string>
-    <string name="action_category_kotlin_example">Open Category Kotlin example</string>
-    <string name="action_category_java_example">Open Category Java example</string>
+    <string name="action_discover_ui_example">Open Discover UI example</string>
+    <string name="action_discover_kotlin_example">Open Discover Kotlin example</string>
+    <string name="action_discover_java_example">Open Discover Java example</string>
 
     <string name="action_place_autocomplete_ui_example">Open Place Autocomplete UI example</string>
     <string name="action_place_autocomplete_kotlin_example">Open Place Autocomplete Kotlin example</string>
@@ -49,9 +49,9 @@
     <string name="address_autofill_error_pin_correction">Unable to locate selected coordinate</string>
     <string name="address_autofill_error_select">Unable to resolve selected suggestion</string>
 
-    <string name="category_search_nearby">Search for cafes nearby</string>
-    <string name="category_search_in_area">Search for cafes in selected area</string>
-    <string name="category_search_error">Error happened during search request</string>
+    <string name="discover_search_nearby">Search for cafes nearby</string>
+    <string name="discover_search_in_area">Search for cafes in selected area</string>
+    <string name="discover_search_error">Error happened during search request</string>
 
     <string name="place_autocomplete_query_hint">Search for places</string>
     <string name="place_autocomplete_reverse_geocoding_error_message">Unable to locate selected coordinate</string>

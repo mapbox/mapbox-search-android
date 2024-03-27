@@ -12,7 +12,7 @@ pushd MapboxSearch/
 ./gradlew :offline:ktlintFormat
 ./gradlew :sdk-common:ktlintFormat
 ./gradlew :autofill:ktlintFormat
-./gradlew :category:ktlintFormat
+./gradlew :discover:ktlintFormat
 ./gradlew :place-autocomplete:ktlintFormat
 ./gradlew :sample:ktlintFormat
 
@@ -22,7 +22,7 @@ pushd MapboxSearch/
 ./gradlew :offline:lint
 ./gradlew :sdk-common:lint
 ./gradlew :autofill:lint
-./gradlew :category:lint
+./gradlew :discover:lint
 ./gradlew :place-autocomplete:lint
 ./gradlew :sample:lint
 
@@ -38,7 +38,7 @@ pushd MapboxSearch/
 ./gradlew :offline:testReleaseUnitTest
 ./gradlew :sdk-common:testReleaseUnitTest
 ./gradlew :autofill:testReleaseUnitTest
-./gradlew :category:testReleaseUnitTest
+./gradlew :discover:testReleaseUnitTest
 ./gradlew :place-autocomplete:testReleaseUnitTest
 
 # Check only whether PIT setup doesn't fail.

@@ -12,7 +12,7 @@ pushd MapboxSearch/
 ./gradlew :ui:mapboxSDKRegistryUpload
 ./gradlew :offline:mapboxSDKRegistryUpload
 ./gradlew :autofill:mapboxSDKRegistryUpload
-./gradlew :category:mapboxSDKRegistryUpload
+./gradlew :discover:mapboxSDKRegistryUpload
 ./gradlew :place-autocomplete:mapboxSDKRegistryUpload
 
 popd
