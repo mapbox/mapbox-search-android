@@ -20,7 +20,7 @@ public interface AddressAutofill {
      * @param options Request options.
      * @return Result of the search request, one of error or value.
      */
-    public suspend fun reverseGeocoding(
+    public suspend fun reverse(
         point: Point,
         options: AddressAutofillOptions
     ): Expected<Exception, List<AddressAutofillResult>>

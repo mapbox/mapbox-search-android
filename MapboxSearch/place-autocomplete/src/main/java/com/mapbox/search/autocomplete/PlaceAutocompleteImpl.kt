@@ -66,7 +66,7 @@ internal class PlaceAutocompleteImpl(
         }
     }
 
-    override suspend fun suggestions(
+    override suspend fun reverse(
         point: Point,
         options: PlaceAutocompleteOptions
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>> {

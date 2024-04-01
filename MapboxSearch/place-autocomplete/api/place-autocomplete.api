@@ -9,8 +9,8 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
 	public static fun create (Ljava/lang/String;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public static fun create (Ljava/lang/String;Lcom/mapbox/android/core/location/LocationEngine;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public abstract fun reverse (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -21,7 +21,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {
-	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun reverse$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

@@ -8,7 +8,7 @@
 
 ### Breaking changes
 - [Address Autofill, Place Autocomplete] Search is now a two-step action. It returns `Suggestions` (without the geo coordinate and routable points) at the first step and `Result` (with the geo coordinate and routable points) after the suggestion is selected. Thus, the `coordinate` field is no longer available in `Suggestion`.
-- [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
+- [Address Autofill, Place Autocomplete] Added a separate function `reverse` for coordinate-based searches.
 
 
 
