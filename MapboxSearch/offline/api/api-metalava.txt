@@ -103,6 +103,8 @@ package com.mapbox.search.offline {
     method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method public com.mapbox.search.common.AsyncOperationTask retrieve(com.mapbox.geojson.Feature feature, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchResultCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask retrieve(com.mapbox.geojson.Feature feature, com.mapbox.search.offline.OfflineSearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.offline.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.offline.OfflineReverseGeoOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.offline.OfflineSearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
@@ -205,6 +207,11 @@ package com.mapbox.search.offline {
     property public final String name;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final com.mapbox.search.offline.OfflineSearchResultType type;
+  }
+
+  public interface OfflineSearchResultCallback {
+    method public void onError(Exception e);
+    method public void onResult(com.mapbox.search.offline.OfflineSearchResult result, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
   }
 
   public enum OfflineSearchResultType {
