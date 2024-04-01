@@ -90,7 +90,7 @@ internal class OfflineSearchResultCallbackAdapterTest {
 
             When("Best match is NOT found") {
 
-                callback.onResults(listOf(TEST_OFFLINE_BAD_SEARCH_RESULT_DISTANCE), TEST_RESPONSE_INFO)
+                callback.onResults(listOf(TEST_OFFLINE_BAD_SEARCH_RESULT_NAME), TEST_RESPONSE_INFO)
 
                 Then("The best result is found") {
                     assertEquals(TEST_FEATURE_AS_RESULT.id, searchResultSlot.captured.id)
