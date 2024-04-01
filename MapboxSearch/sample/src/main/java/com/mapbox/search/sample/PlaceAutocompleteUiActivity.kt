@@ -196,7 +196,7 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launchWhenStarted {
-            val response = placeAutocomplete.suggestions(point, PlaceAutocompleteOptions(types = types))
+            val response = placeAutocomplete.reverse(point, PlaceAutocompleteOptions(types = types))
             response.onValue { suggestions ->
                 if (suggestions.isEmpty()) {
                     showToast(R.string.place_autocomplete_reverse_geocoding_error_message)

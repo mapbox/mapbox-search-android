@@ -111,7 +111,7 @@ internal class PlaceAutocompleteIntegrationTest {
         mockServer.enqueue(MockResponse().setResponseCode(500))
 
         runBlocking {
-            placeAutocomplete.suggestions(TEST_LOCATION, TEST_OPTIONS)
+            placeAutocomplete.reverse(TEST_LOCATION, TEST_OPTIONS)
         }
 
         val request = mockServer.takeRequest()

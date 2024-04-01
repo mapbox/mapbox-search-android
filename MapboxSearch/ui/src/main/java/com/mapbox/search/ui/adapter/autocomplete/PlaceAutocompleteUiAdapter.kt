@@ -172,7 +172,7 @@ public class PlaceAutocompleteUiAdapter(
         /**
          * Called when the [PlaceAutocompleteSuggestion]s are received and displayed on the [view].
          * @param suggestions List of [PlaceAutocompleteSuggestion] shown.
-         * @see PlaceAutocomplete.suggestions
+         * @see PlaceAutocomplete.reverse
          */
         public fun onSuggestionsShown(suggestions: List<PlaceAutocompleteSuggestion>)
 
@@ -193,7 +193,7 @@ public class PlaceAutocompleteUiAdapter(
          * When this happens, error information is displayed on the [view].
          *
          * @param e Exception, occurred during the request.
-         * @see PlaceAutocomplete.suggestions
+         * @see PlaceAutocomplete.reverse
          */
         public fun onError(e: Exception)
     }
