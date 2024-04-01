@@ -7,8 +7,10 @@ import com.mapbox.search.base.result.BaseSearchResult
 internal class OfflineSearchCallbackAdapter(private val callback: OfflineSearchCallback) : BaseSearchCallback {
     override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
         callback.onResults(
-            results.map { OfflineSearchResult(it.rawSearchResult) },
-            OfflineResponseInfo(responseInfo.requestOptions.core.mapToOfflineSdkType())
+            results = results
+                .filter { it.name.isNotBlank() }
+                .map { OfflineSearchResult(it.rawSearchResult) },
+            responseInfo = OfflineResponseInfo(responseInfo.requestOptions.core.mapToOfflineSdkType())
         )
     }
 
