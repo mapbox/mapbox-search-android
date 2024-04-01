@@ -38,8 +38,10 @@ package com.mapbox.search.autofill {
   }
 
   @kotlinx.parcelize.Parcelize public final class AddressAutofillSuggestion implements android.os.Parcelable {
+    method public com.mapbox.geojson.Point? getCoordinate();
     method public String getFormattedAddress();
     method public String getName();
+    property public final com.mapbox.geojson.Point? coordinate;
     property public final String formattedAddress;
     property public final String name;
   }
