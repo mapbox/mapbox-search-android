@@ -4,6 +4,7 @@
 
 ### New features
 - [CORE] We have added support for Mapbox IDs in search results. A new field called mapboxId is added to BaseSearchResult, SearchResult, CategoryResult, and OfflineSearchResult. Mapbox ID is stable, and developers can store it for lookup purposes.
+- [Offline search] We have added POI (Points of Interest) support to offline search. Developers can now use POIs in offline search in addition to Addresses and Places. 
 - [Offline search] We have added a bounding box filter for offline search. Developers can now use the bounding box to limit the searchable area in the offline mode, increasing search response time for offline queries.
 
 ### Breaking changes
