@@ -7,6 +7,9 @@
 
 ### Breaking changes
 - [CORE] Undo renaming of all Discover-related terms to Category
+- [Address Autofill, Place Autocomplete] Added a separate function `reverse` for coordinate-based searches.
+
+
 
 ## 2.0.0-beta.4
 
@@ -19,14 +22,15 @@
 ### Breaking changes
 - [CORE] Access token needs to be assigned via `MapboxOptions.accessToken` now
 - [CORE] Renamed all Discover-related terms to Category
-- [Address Autofill, Place Autocomplete] Search is a two-steps action now, i.e. it returns `Suggestion`s (without the geo coordinate) at the first step and `Result` after suggestion selection. The `coordinate` field is no longer available in `Suggestion`.
-- [Address Autofill] `suggestions()` is renamed to `reverseGeocoding()`
+- [Address Autofill, Place Autocomplete] Search is now a two-step action. It returns `Suggestions` (without the geo coordinate and routable points) at the first step and `Result` (with the geo coordinate and routable points) after the suggestion is selected. Thus, the `coordinate` field is no longer available in `Suggestion`.
 
 ### Mapbox dependencies
 - Search Native SDK `2.0.0-alpha.13`
 - Common SDK `24.0.0`
 - Maps SDK `11.0.0`
 - Kotlin `1.7.20`
+
+
 
 ## 1.0.0-rc.8
 
