@@ -275,7 +275,7 @@ internal class PlaceAutocompleteImplTest {
         const val TEST_QUERY = "Test query"
 
         val TEST_BASE_SUGGESTIONS: List<BaseSearchSuggestion> = listOf(
-            createTestBaseSearchSuggestion(testBaseRawSearchSuggestionWithoutCoordinates)
+            createTestBaseSearchSuggestion(testBaseRawSearchSuggestionWithoutCoordinates.copy(center = Point.fromLngLat(10.0, 15.0)))
         )
 
         val TEST_BASE_RESULTS: List<BaseSearchResult> = listOf(testBaseResult)
