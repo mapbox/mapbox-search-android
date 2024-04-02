@@ -31,6 +31,7 @@ internal class AddressAutofillResultFactory {
         return AddressAutofillSuggestion(
             name = name,
             formattedAddress = fullAddress ?: autofillAddress.formattedAddress(),
+            coordinate = coordinate,
             address = autofillAddress,
             underlying = null,
         )
@@ -46,6 +47,7 @@ internal class AddressAutofillResultFactory {
         return AddressAutofillSuggestion(
             name = name,
             formattedAddress = fullAddress ?: autofillAddress.formattedAddress(),
+            coordinate = coordinate,
             address = autofillAddress,
             underlying = this
         )

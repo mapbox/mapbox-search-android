@@ -34,7 +34,7 @@ internal class AddressAutofillImpl(
     private val resultFactory: AddressAutofillResultFactory = AddressAutofillResultFactory()
 ) : AddressAutofill {
 
-    override suspend fun reverseGeocoding(
+    override suspend fun reverse(
         point: Point,
         options: AddressAutofillOptions
     ): Expected<Exception, List<AddressAutofillResult>> {

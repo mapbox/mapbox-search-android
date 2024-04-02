@@ -175,7 +175,7 @@ class AddressAutofillUiActivity : AppCompatActivity() {
 
     private fun findAddress(point: Point) {
         lifecycleScope.launchWhenStarted {
-            val response = addressAutofill.reverseGeocoding(point, AddressAutofillOptions())
+            val response = addressAutofill.reverse(point, AddressAutofillOptions())
             response.onValue { result ->
                 if (result.isEmpty()) {
                     showToast(R.string.address_autofill_error_pin_correction)
