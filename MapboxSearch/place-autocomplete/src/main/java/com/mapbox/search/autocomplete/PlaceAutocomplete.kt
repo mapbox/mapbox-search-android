@@ -38,7 +38,7 @@ public interface PlaceAutocomplete {
      * @param options Request options.
      * @return Result of the search request, one of error or value.
      */
-    public suspend fun suggestions(
+    public suspend fun reverse(
         point: Point,
         options: PlaceAutocompleteOptions = PlaceAutocompleteOptions()
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>>

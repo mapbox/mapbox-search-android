@@ -2,7 +2,7 @@ public abstract interface class com/mapbox/search/autofill/AddressAutofill {
 	public static final field Companion Lcom/mapbox/search/autofill/AddressAutofill$Companion;
 	public static fun create ()Lcom/mapbox/search/autofill/AddressAutofill;
 	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autofill/AddressAutofill;
-	public abstract fun reverseGeocoding (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun reverse (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun select (Lcom/mapbox/search/autofill/AddressAutofillSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Lcom/mapbox/search/autofill/Query;Lcom/mapbox/search/autofill/AddressAutofillOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

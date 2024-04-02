@@ -163,7 +163,7 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val response = runBlocking {
-            placeAutocomplete.suggestions(TEST_POINT)
+            placeAutocomplete.reverse(TEST_POINT)
         }
 
         assertEquals(TEST_AUTOCOMPLETE_SUGGESTIONS, response.value)
@@ -181,7 +181,7 @@ internal class PlaceAutocompleteImplTest {
         }
 
         val response = runBlocking {
-            placeAutocomplete.suggestions(TEST_POINT)
+            placeAutocomplete.reverse(TEST_POINT)
         }
 
         assertSame(error, response.error)
@@ -212,7 +212,7 @@ internal class PlaceAutocompleteImplTest {
             types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.STREET),
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
+        runBlocking { placeAutocomplete.reverse(TEST_POINT, options) }
         coVerify { searchEngine.search(coreOptions) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-reverse-geocoding")) }
     }
@@ -228,7 +228,7 @@ internal class PlaceAutocompleteImplTest {
             types = null
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
+        runBlocking { placeAutocomplete.reverse(TEST_POINT, options) }
 
         assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
@@ -244,7 +244,7 @@ internal class PlaceAutocompleteImplTest {
             types = emptyList()
         )
 
-        runBlocking { placeAutocomplete.suggestions(TEST_POINT, options) }
+        runBlocking { placeAutocomplete.reverse(TEST_POINT, options) }
 
         assertEquals(ALL_TYPES, slotOptions.captured.types)
     }
