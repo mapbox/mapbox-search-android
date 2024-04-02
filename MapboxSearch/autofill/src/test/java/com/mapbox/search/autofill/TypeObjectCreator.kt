@@ -1,5 +1,6 @@
 package com.mapbox.search.autofill
 
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.createTestResultMetadata
@@ -28,7 +29,13 @@ internal object TypeObjectCreator {
         )
 
         listOf(
-            AddressAutofillSuggestion("name", "formattedAddress", addressComponents, null)
+            AddressAutofillSuggestion(
+                name = "name",
+                formattedAddress = "formattedAddress",
+                coordinate = Point.fromLngLat(10.0, 15.0),
+                address = addressComponents,
+                underlying = null
+            )
         )[mode.ordinal]
     }
 }
