@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0-beta.5
+## 2.0.0
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID
@@ -9,14 +9,17 @@
 - [CORE] Undo renaming of all Discover-related terms to Category
 - [Address Autofill, Place Autocomplete] Added a separate function `reverse` for coordinate-based searches.
 
+### Bug fixes
+- [Offline search] Don't return results with the empty name
+
 
 
 ## 2.0.0-beta.4
 
 ### New features
-- [Offline search] Offline Search Along Route
-- [Offline search] Added bounding box filter for offline search functions
-- [CORE] Added a new field called `mapboxId` to `BaseSearchResult`, `SearchResult`, `CategoryResult` and `OfflineSearchResult`
+- [Offline search] We have added POI (Points of Interest) support to offline search. Developers can now use POIs in offline search in addition to Addresses and Places.
+- [Offline search] We have added a bounding box filter for offline search. Developers can now use the bounding box to limit the searchable area in the offline mode, increasing search response time for offline queries.
+- [CORE] We have added support for Mapbox IDs in search results. A new field called mapboxId is added to BaseSearchResult, SearchResult, CategoryResult, and OfflineSearchResult. Mapbox ID is stable, and developers can store it for lookup purposes.
 - [Address Autofill, Place Autocomplete] Added new fields called `id` and `mapboxId` to `AddressAutofillResult` and `PlaceAutocompleteResult`
 
 ### Breaking changes
