@@ -356,6 +356,7 @@ public interface OfflineSearchEngine {
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
+         * @param language an ISO 639-1 language code
          */
         @JvmStatic
         @JvmOverloads
@@ -373,6 +374,7 @@ public interface OfflineSearchEngine {
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
+         * @param language an ISO 639-1 language code
          */
         @JvmStatic
         @JvmOverloads
