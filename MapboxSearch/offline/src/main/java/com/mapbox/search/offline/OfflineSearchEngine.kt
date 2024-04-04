@@ -301,8 +301,17 @@ public interface OfflineSearchEngine {
      * Companion object.
      */
     public companion object {
+
+        private val REGEX_LANGUAGE_CODE = "^[a-z]{2}\$".toRegex(RegexOption.IGNORE_CASE)
+
         private fun buildDatasetName(dataset: String, language: String?): String =
-            language?.let { "$dataset|$it" } ?: dataset
+            language?.let {
+                if (!REGEX_LANGUAGE_CODE.matches(it)) {
+                    throw IllegalArgumentException("Language should be an ISO 639-1 code")
+                }
+
+                "$dataset|${it.lowercase()}"
+            } ?: dataset
 
         /**
          * Creates a new instance of [OfflineSearchEngine].
