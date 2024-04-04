@@ -301,6 +301,8 @@ public interface OfflineSearchEngine {
      * Companion object.
      */
     public companion object {
+        private fun buildDatasetName(dataset: String, language: String?): String =
+            language?.let { "$dataset|$it" } ?: dataset
 
         /**
          * Creates a new instance of [OfflineSearchEngine].
@@ -360,8 +362,9 @@ public interface OfflineSearchEngine {
         public fun createTilesetDescriptor(
             dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createTilesetDescriptor(dataset, version)
+            return CoreSearchEngine.createTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
 
         /**
@@ -376,8 +379,9 @@ public interface OfflineSearchEngine {
         public fun createPlacesTilesetDescriptor(
             dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createPlacesTilesetDescriptor(dataset, version)
+            return CoreSearchEngine.createPlacesTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
     }
 }
