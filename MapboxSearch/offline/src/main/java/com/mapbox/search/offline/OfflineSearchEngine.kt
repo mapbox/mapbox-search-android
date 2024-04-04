@@ -310,7 +310,7 @@ public interface OfflineSearchEngine {
                     throw IllegalArgumentException("Language should be an ISO 639-1 code")
                 }
 
-                "$dataset|${it.lowercase()}"
+                "${dataset}_${it.lowercase()}"
             } ?: dataset
 
         /**
