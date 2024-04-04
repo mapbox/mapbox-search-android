@@ -4,6 +4,7 @@
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID
+- [Offline search] Add optional `language` parameter to OfflineSearchEngine.createTilesetDescriptor and OfflineSearchEngine.createPlacesTilesetDescriptor functions.
 
 ### Breaking changes
 - [CORE] Undo renaming of all Discover-related terms to Category
