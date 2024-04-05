@@ -5,7 +5,7 @@ android:
 
 packages:
   android:
-    - category
+    - discover
 
 bundles:
-  android: category-all
+  android: discover-all

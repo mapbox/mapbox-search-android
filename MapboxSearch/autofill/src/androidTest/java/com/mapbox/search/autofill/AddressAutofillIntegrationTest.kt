@@ -97,7 +97,7 @@ internal class AddressAutofillIntegrationTest {
         val point = Point.fromLngLat(-77.03398187174899, 38.8999032596197)
 
         runBlocking {
-            addressAutofill.reverseGeocoding(point, options)
+            addressAutofill.reverse(point, options)
         }
 
         val request = mockServer.takeRequest()

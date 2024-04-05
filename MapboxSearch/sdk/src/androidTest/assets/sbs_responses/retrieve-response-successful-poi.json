@@ -1,0 +1,80 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -122.0803684,
+          37.4216191
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "feature_name": "Google Cafe",
+        "matching_name": "Google Cafe",
+        "highlighted_name": "Google Cafe",
+        "description": "Mountain View, 94043, United States",
+        "place_name": "Google Cafe, Mountain View, 94043, United States",
+        "id": "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0",
+        "place_type": [
+          "poi"
+        ],
+        "context": [
+          {
+            "layer": "postcode",
+            "mapbox_id": "dXJuOm1ieHBsYzpFcHp1N0E",
+            "localized_layer": "postcode",
+            "name": "94043"
+          },
+          {
+            "layer": "place",
+            "mapbox_id": "dXJuOm1ieHBsYzpEVUFvN0E",
+            "localized_layer": "place",
+            "name": "Mountain View"
+          },
+          {
+            "layer": "country",
+            "mapbox_id": "",
+            "localized_layer": "country",
+            "name": "United States"
+          }
+        ],
+        "maki": "restaurant",
+        "poi_category": [
+          "food",
+          "food and drink",
+          "restaurant"
+        ],
+        "poi_category_ids": [
+          "food",
+          "food_and_drink",
+          "restaurant"
+        ],
+        "internal_id": "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0",
+        "external_ids": {
+          "id_osm": "n11365172584",
+          "mbx_poi": "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
+        },
+        "mapbox_id": "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0",
+        "metadata": {
+          "iso_3166_1": "US",
+          "iso_3166_2": "US-CA"
+        },
+        "routable_points": [
+          {
+            "name": "POI",
+            "coordinates": [
+              -122.0803684,
+              37.4216191
+            ]
+          }
+        ],
+        "operational_status": "active"
+      }
+    }
+  ],
+  "attribution": "© 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "",
+  "response_uuid": "00000000-0000-0000-0000-000000000000"
+}

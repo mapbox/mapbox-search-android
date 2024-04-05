@@ -20,6 +20,7 @@ internal class PlaceAutocompleteResultFactory {
             PlaceAutocompleteSuggestion(
                 name = name,
                 formattedAddress = formattedAddress(),
+                coordinate = coordinate,
                 routablePoints = suggestion.routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
@@ -39,6 +40,7 @@ internal class PlaceAutocompleteResultFactory {
             PlaceAutocompleteSuggestion(
                 name = name,
                 formattedAddress = formattedAddress(),
+                coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,

@@ -4,9 +4,9 @@ package com.mapbox.search.autocomplete {
   public interface PlaceAutocomplete {
     method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public default static final com.mapbox.search.autocomplete.PlaceAutocomplete create();
+    method public suspend Object? reverse(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
     method public suspend Object? select(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autocomplete.PlaceAutocompleteResult>> p);
     method public suspend Object? suggestions(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
-    method public suspend Object? suggestions(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
     field public static final com.mapbox.search.autocomplete.PlaceAutocomplete.Companion Companion;
   }
 
@@ -101,6 +101,7 @@ package com.mapbox.search.autocomplete {
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteSuggestion implements android.os.Parcelable {
     method public java.util.List<java.lang.String>? getCategories();
+    method public com.mapbox.geojson.Point? getCoordinate();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
     method public String? getFormattedAddress();
@@ -109,6 +110,7 @@ package com.mapbox.search.autocomplete {
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
     property public final java.util.List<java.lang.String>? categories;
+    property public final com.mapbox.geojson.Point? coordinate;
     property public final Double? distanceMeters;
     property public final Double? etaMinutes;
     property public final String? formattedAddress;

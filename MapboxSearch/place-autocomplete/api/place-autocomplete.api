@@ -9,8 +9,8 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
 	public static fun create ()Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public abstract fun reverse (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun suggestions (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -21,7 +21,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {
-	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun reverse$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun suggestions$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete;Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
@@ -123,6 +123,7 @@ public final class com/mapbox/search/autocomplete/PlaceAutocompleteSuggestion : 
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCategories ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
 	public final fun getFormattedAddress ()Ljava/lang/String;

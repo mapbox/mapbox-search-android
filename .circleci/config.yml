@@ -69,7 +69,7 @@ commands:
             ./gradlew :offline:lint
             ./gradlew :sdk-common:lint
             ./gradlew :autofill:lint
-            ./gradlew :category:lint
+            ./gradlew :discover:lint
             ./gradlew :place-autocomplete:lint
             ./gradlew :sample:lint
             ./gradlew :base:ktlint
@@ -78,7 +78,7 @@ commands:
             ./gradlew :offline:ktlint
             ./gradlew :sdk-common:ktlint
             ./gradlew :autofill:ktlint
-            ./gradlew :category:ktlint
+            ./gradlew :discover:ktlint
             ./gradlew :place-autocomplete:ktlint
             ./gradlew :sample:ktlint
             ./gradlew detektAll
@@ -139,7 +139,7 @@ commands:
             ./gradlew :offline:testDebugUnitTest -Pcoverage
             ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
             ./gradlew :autofill:testDebugUnitTest -Pcoverage
-            ./gradlew :category:testDebugUnitTest -Pcoverage
+            ./gradlew :discover:testDebugUnitTest -Pcoverage
             ./gradlew :place-autocomplete:testDebugUnitTest -Pcoverage
 
   store-results:
@@ -261,7 +261,7 @@ jobs:
       - store-results:
           module_target: "autofill"
       - store-results:
-          module_target: "category"
+          module_target: "discover"
       - store-results:
           module_target: "place-autocomplete"
 #      Fails with "Too long with no output (exceeded 10m0s): context deadline exceeded"
@@ -292,8 +292,8 @@ jobs:
           module_name: "offline"
           archives_base_name: "offline"
       - run-firebase-instrumentation:
-          module_name: "category"
-          archives_base_name: "category"
+          module_name: "discover"
+          archives_base_name: "discover"
       - run-firebase-instrumentation:
           module_name: "place-autocomplete"
           archives_base_name: "place-autocomplete"

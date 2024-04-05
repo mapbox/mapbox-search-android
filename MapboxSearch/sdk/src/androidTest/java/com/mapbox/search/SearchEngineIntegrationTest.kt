@@ -41,6 +41,7 @@ import com.mapbox.search.result.isIndexableRecordSuggestion
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.result.record
 import com.mapbox.search.tests_support.BlockingCompletionCallback
+import com.mapbox.search.tests_support.BlockingSearchResultCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
@@ -1245,6 +1246,39 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestions = callback.getResultBlocking().requireSuggestions()
         assertTrue(suggestions.isNotEmpty())
         assertEquals("fr", suggestions.first().metadata?.countryIso1)
+    }
+
+    @Test
+    fun testSuccessfulRetrieveCallForSBS() {
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SBS, searchEngineSettings)
+
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful-poi.json"))
+
+        val mapboxId = "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
+        val callback = BlockingSearchResultCallback()
+
+        searchEngine.retrieve(mapboxId, callback)
+
+        val result = callback.getResultBlocking()
+        assertTrue(result is SearchResult)
+
+        val searchResult = result as SearchResult
+        assertEquals(mapboxId, searchResult.mapboxId)
+    }
+
+    @Test
+    fun testUnsuccessfulRetrieveCall() {
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SBS, searchEngineSettings)
+
+        mockServer.enqueue(MockResponse().setResponseCode(404))
+
+        val mapboxId = "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
+        val callback = BlockingSearchResultCallback()
+
+        searchEngine.retrieve(mapboxId, callback)
+
+        val result = callback.getResultBlocking()
+        assertTrue(result is Exception)
     }
 
     @After

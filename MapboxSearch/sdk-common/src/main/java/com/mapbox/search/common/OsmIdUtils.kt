@@ -14,7 +14,7 @@ public object OsmIdUtils {
     /**
      * Converts the supplied POI ID to a Mapbox ID
      * @param poiId POI ID to convert
-     * @return [String] a Mapbox ID
+     * @return [String] a Mapbox ID or null if unable to convert
      */
     @JvmStatic
     public fun fromPoiId(poiId: Long): String? {
@@ -23,7 +23,15 @@ public object OsmIdUtils {
             val originalId = poiId / 10
             val mbxPoiId = "urn:mbxpoi-osm:$osmType$originalId"
             val bytes = mbxPoiId.toByteArray(Charsets.UTF_8)
-            return Base64.encodeToString(bytes, Base64.URL_SAFE)
+            return Base64.encodeToString(bytes, Base64.URL_SAFE or Base64.NO_WRAP)
         }
     }
+
+    /**
+     * Converts the supplied POI ID to a Mapbox Id
+     * @param poiId POI ID to convert
+     * @return [String] a Mapbox ID or null if unable to convert
+     */
+    @JvmStatic
+    public fun fromPoiId(poiId: String): String? = try { fromPoiId(poiId.toLong()) } catch (e: NumberFormatException) { null }
 }
