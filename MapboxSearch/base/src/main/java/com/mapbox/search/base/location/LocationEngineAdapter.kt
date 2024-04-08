@@ -19,14 +19,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-// Maximum time period for waiting for location updates (in milliseconds)
-private var locationEngineObservationTimeout: Long? = 1000L
-
-@Suppress("UNUSED")
-fun setLocationEngineLocationObservationTimeout(timeout: Long?) {
-    locationEngineObservationTimeout = timeout
-}
-
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
 class LocationEngineAdapter(
@@ -35,7 +27,7 @@ class LocationEngineAdapter(
     private val timeProvider: TimeProvider = LocalTimeProvider(),
     private val locationPermissionChecker: (Application) -> Boolean = {
         PermissionsManager.areLocationPermissionsGranted(app)
-    }
+    },
 ) : CoreLocationProvider {
 
     @Volatile
@@ -69,20 +61,19 @@ class LocationEngineAdapter(
     private fun startLocationListener() {
         locationProvider?.addLocationObserver(locationObserver)
 
-        locationEngineObservationTimeout?.let { timeout ->
-            timeoutWatcherJob?.cancel()
-            timeoutWatcherJob = CoroutineScope(Job()).launch {
-                delay(timeout)
-                timeoutWatcherJob = null
-                stopLocationListener()
-            }
+        timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = CoroutineScope(Job()).launch {
+            delay(LOCATION_OBSERVATION_TIMEOUT)
+            stopLocationListener()
         }
     }
 
     private fun stopLocationListener() {
         locationProvider?.removeLocationObserver(locationObserver)
         locationCancelable?.cancel()
+        locationCancelable = null
         timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = null
     }
 
     override fun getLocation(): Point? {
@@ -90,7 +81,7 @@ class LocationEngineAdapter(
             return null
         }
 
-        if (lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
+        if (timeoutWatcherJob == null && lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
             startLocationListener()
         }
         return lastLocationInfo.point
@@ -108,5 +99,6 @@ class LocationEngineAdapter(
 
     private companion object {
         private const val LOCATION_CACHE_TIME_MS = 30_000L
+        private const val LOCATION_OBSERVATION_TIMEOUT = 1_000L
     }
 }
