@@ -14,6 +14,10 @@ import com.mapbox.search.base.utils.LocalTimeProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
@@ -23,11 +27,13 @@ class LocationEngineAdapter(
     private val timeProvider: TimeProvider = LocalTimeProvider(),
     private val locationPermissionChecker: (Application) -> Boolean = {
         PermissionsManager.areLocationPermissionsGranted(app)
-    }
+    },
 ) : CoreLocationProvider {
 
     @Volatile
     private var lastLocationInfo = LocationInfo(null, 0)
+
+    private var timeoutWatcherJob: Job? = null
 
     private val locationObserver = LocationObserver { locations ->
         locations.firstOrNull()?.let {
@@ -54,11 +60,20 @@ class LocationEngineAdapter(
 
     private fun startLocationListener() {
         locationProvider?.addLocationObserver(locationObserver)
+
+        timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = CoroutineScope(Job()).launch {
+            delay(LOCATION_OBSERVATION_TIMEOUT)
+            stopLocationListener()
+        }
     }
 
     private fun stopLocationListener() {
         locationProvider?.removeLocationObserver(locationObserver)
         locationCancelable?.cancel()
+        locationCancelable = null
+        timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = null
     }
 
     override fun getLocation(): Point? {
@@ -66,7 +81,7 @@ class LocationEngineAdapter(
             return null
         }
 
-        if (lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
+        if (timeoutWatcherJob == null && lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
             startLocationListener()
         }
         return lastLocationInfo.point
@@ -84,5 +99,6 @@ class LocationEngineAdapter(
 
     private companion object {
         private const val LOCATION_CACHE_TIME_MS = 30_000L
+        private const val LOCATION_OBSERVATION_TIMEOUT = 1_000L
     }
 }
