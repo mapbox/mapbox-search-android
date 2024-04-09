@@ -16,6 +16,10 @@ import com.mapbox.search.base.utils.LocalTimeProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // Suppressed because we check permission but lint can't detekt it
 @SuppressLint("MissingPermission")
@@ -25,18 +29,17 @@ class LocationEngineAdapter(
     private val timeProvider: TimeProvider = LocalTimeProvider(),
     private val locationPermissionChecker: (Application) -> Boolean = {
         PermissionsManager.areLocationPermissionsGranted(app)
-    }
+    },
 ) : CoreLocationProvider {
 
     @Volatile
     private var lastLocationInfo = LocationInfo(null, 0)
 
-    private val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
-        override fun onSuccess(result: LocationEngineResult?) {
-            result?.lastLocation?.let {
-                lastLocationInfo = LocationInfo(it.toPoint(), timeProvider.currentTimeMillis())
-            }
-            stopLocationListener()
+    private var timeoutWatcherJob: Job? = null
+
+    private val locationObserver = LocationObserver { locations ->
+        locations.firstOrNull()?.let {
+            lastLocationInfo = LocationInfo(it.toPoint(), timeProvider.currentTimeMillis())
         }
 
         override fun onFailure(exception: Exception) {
@@ -67,19 +70,21 @@ class LocationEngineAdapter(
     }
 
     private fun startLocationListener() {
-        try {
-            val request = LocationEngineRequest.Builder(DEFAULT_MIN_TIME_MS)
-                .setDisplacement(DEFAULT_MIN_DISTANCE_METERS)
-                .build()
+        locationProvider?.addLocationObserver(locationObserver)
 
-            locationEngine.requestLocationUpdates(request, locationEngineCallback, Looper.getMainLooper())
-        } catch (e: Exception) {
-            loge("Error during location request: ${e.message}")
+        timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = CoroutineScope(Job()).launch {
+            delay(LOCATION_OBSERVATION_TIMEOUT)
+            stopLocationListener()
         }
     }
 
     private fun stopLocationListener() {
-        locationEngine.removeLocationUpdates(locationEngineCallback)
+        locationProvider?.removeLocationObserver(locationObserver)
+        locationCancelable?.cancel()
+        locationCancelable = null
+        timeoutWatcherJob?.cancel()
+        timeoutWatcherJob = null
     }
 
     override fun getLocation(): Point? {
@@ -87,7 +92,7 @@ class LocationEngineAdapter(
             return null
         }
 
-        if (lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
+        if (timeoutWatcherJob == null && lastLocationInfo.timestamp + LOCATION_CACHE_TIME_MS <= timeProvider.currentTimeMillis()) {
             startLocationListener()
         }
         return lastLocationInfo.point
@@ -107,5 +112,6 @@ class LocationEngineAdapter(
         private const val DEFAULT_MIN_TIME_MS = 0L
         private const val DEFAULT_MIN_DISTANCE_METERS = 0.0f
         private const val LOCATION_CACHE_TIME_MS = 30_000L
+        private const val LOCATION_OBSERVATION_TIMEOUT = 1_000L
     }
 }
