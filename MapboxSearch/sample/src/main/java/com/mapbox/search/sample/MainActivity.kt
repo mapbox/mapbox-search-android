@@ -424,11 +424,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
                 true
             }
-            R.id.open_category_search_kt_example -> {
+            R.id.open_discover_search_kt_example -> {
                 startActivity(Intent(this, CategorySearchKotlinExampleActivity::class.java))
                 true
             }
-            R.id.open_category_search_java_example -> {
+            R.id.open_discover_search_java_example -> {
                 startActivity(Intent(this, CategorySearchJavaExampleActivity::class.java))
                 true
             }

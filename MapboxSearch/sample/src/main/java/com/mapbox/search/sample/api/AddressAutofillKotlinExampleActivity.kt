@@ -1,20 +1,19 @@
 package com.mapbox.search.sample.api
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillOptions
 import com.mapbox.search.autofill.Query
+import com.mapbox.search.sample.R
 
-class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
+class AddressAutofillKotlinExampleActivity : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_address_autofill_example
 
     private lateinit var addressAutofill: AddressAutofill
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun startExample() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         addressAutofill = AddressAutofill.create()
@@ -35,18 +34,19 @@ class AddressAutofillKotlinExampleActivity : AppCompatActivity() {
                     // Supposing that a user has selected (clicked in UI) the first suggestion
                     val selectedSuggestion = suggestions.first()
 
-                    Log.i("SearchApiExample", "Selecting first suggestion...")
+                    logI("SearchApiExample", "Selecting first suggestion...")
 
                     val selectionResponse = addressAutofill.select(selectedSuggestion)
                     selectionResponse.onValue { result ->
-                        Log.i("SearchApiExample", "Autofill result: $result")
+                        logI("SearchApiExample", "Autofill result", result)
                     }.onError { e ->
-                        Log.i("SearchApiExample", "An error occurred during selection", e)
+                        logE("SearchApiExample", "An error occurred during selection", e)
                     }
                 }
             } else {
-                Log.i("SearchApiExample", "Autofill suggestions error", response.error)
+                logE("SearchApiExample", "Autofill suggestions error", response.error)
             }
+            onFinished()
         }
     }
 }

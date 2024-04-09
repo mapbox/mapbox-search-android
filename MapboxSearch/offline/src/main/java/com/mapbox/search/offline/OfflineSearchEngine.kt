@@ -335,6 +335,17 @@ public interface OfflineSearchEngine {
      */
     public companion object {
 
+        private val REGEX_LANGUAGE_CODE = "^[a-z]{2}\$".toRegex(RegexOption.IGNORE_CASE)
+
+        private fun buildDatasetName(dataset: String, language: String?): String =
+            language?.let {
+                if (!REGEX_LANGUAGE_CODE.matches(it)) {
+                    throw IllegalArgumentException("Language should be an ISO 639-1 code")
+                }
+
+                "${dataset}_${it.lowercase()}"
+            } ?: dataset
+
         /**
          * Creates a new instance of [OfflineSearchEngine].
          * @param settings [OfflineSearchEngine] settings.
@@ -387,14 +398,16 @@ public interface OfflineSearchEngine {
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
+         * @param language an ISO 639-1 language code
          */
         @JvmStatic
         @JvmOverloads
         public fun createTilesetDescriptor(
             dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createTilesetDescriptor(dataset, version)
+            return CoreSearchEngine.createTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
 
         /**
@@ -403,14 +416,16 @@ public interface OfflineSearchEngine {
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
+         * @param language an ISO 639-1 language code
          */
         @JvmStatic
         @JvmOverloads
         public fun createPlacesTilesetDescriptor(
             dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createPlacesTilesetDescriptor(dataset, version)
+            return CoreSearchEngine.createPlacesTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
     }
 }

@@ -1,19 +1,17 @@
 package com.mapbox.search.sample.api
 
-import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.discover.Discover
 import com.mapbox.search.discover.DiscoverQuery
+import com.mapbox.search.sample.R
 
-class DiscoverKotlinExampleActivity : AppCompatActivity() {
+class DiscoverKotlinExampleActivity : BaseKotlinExampleActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val titleResId: Int = R.string.action_discover_kotlin_example
 
+    override fun startExample() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         val discover = Discover.create()
@@ -30,9 +28,11 @@ class DiscoverKotlinExampleActivity : AppCompatActivity() {
             )
 
             response.onValue { results ->
-                Log.i("SearchApiExample", "Discover results: $results")
+                logI("SearchApiExample", "Discover results", results)
+                onFinished()
             }.onError { e ->
-                Log.i("SearchApiExample", "Discover error", e)
+                logE("SearchApiExample", "Discover error", e)
+                onFinished()
             }
         }
     }
