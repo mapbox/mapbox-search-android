@@ -24,8 +24,8 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
 
     override val titleResId: Int = R.string.action_open_custom_data_provider_kt_example
 
-    private lateinit var searchEngine: SearchEngine
-    private lateinit var registerProviderTask: AsyncOperationTask
+    private var searchEngine: SearchEngine? = null
+    private var registerProviderTask: AsyncOperationTask? = null
     private var searchRequestTask: AsyncOperationTask? = null
 
     private val customDataProvider = InMemoryDataProvider(
@@ -43,7 +43,7 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
                 logI("SearchApiExample", "No suggestions found", suggestions)
             } else {
                 logI("SearchApiExample", "Search suggestions: ${prettify(suggestions)}\nSelecting first suggestion...")
-                searchRequestTask = searchEngine.select(suggestions.first(), this)
+                searchRequestTask = searchEngine?.select(suggestions.first(), this)
             }
             onFinished()
         }
@@ -80,12 +80,12 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
         )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")
-        registerProviderTask = searchEngine.registerDataProvider(
+        registerProviderTask = searchEngine?.registerDataProvider(
             dataProvider = customDataProvider,
             callback = object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {
                     logI("SearchApiExample", "CustomDataProvider is registered")
-                    searchRequestTask = searchEngine.search(
+                    searchRequestTask = searchEngine?.search(
                         "Underdog",
                         SearchOptions(
                             proximity = Point.fromLngLat(27.574862357961212, 53.88998973246244),
@@ -103,17 +103,17 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
     }
 
     override fun onDestroy() {
-        registerProviderTask.cancel()
+        registerProviderTask?.cancel()
         searchRequestTask?.cancel()
-        searchEngine.unregisterDataProvider(
+        searchEngine?.unregisterDataProvider(
             dataProvider = customDataProvider,
             callback = object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {
-                    Log.i("SearchApiExample", "CustomDataProvider is unregistered")
+                    logI("SearchApiExample", "CustomDataProvider is unregistered")
                 }
 
                 override fun onError(e: Exception) {
-                    Log.i("SearchApiExample", "Error during unregistering", e)
+                    logE("SearchApiExample", "Error during unregistering", e)
                 }
             }
         )
