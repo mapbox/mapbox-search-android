@@ -1,11 +1,11 @@
 package com.mapbox.search.sample.util
 
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.PI
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 object GeometryGenerator {
 

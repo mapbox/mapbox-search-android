@@ -21,6 +21,7 @@
         android:inputType="text"
         android:minHeight="?actionBarSize"
         android:paddingHorizontal="16dp"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:inputType="text"
-                tools:text="Choose route"/>
+                android:hint="Select a Route" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/routesTextInputLayout">
@@ -115,6 +117,20 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_query_options" />
 
+    <TextView
+        android:id="@+id/no_results_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_query_options"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:text="@string/no_results_found"
+        android:textSize="22sp"
+        />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -125,6 +141,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_query_options" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

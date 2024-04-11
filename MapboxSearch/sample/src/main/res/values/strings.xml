@@ -45,6 +45,7 @@
         <item>Bethesda, MD to College Park, MD</item>
         <item>US Capitol to Falls Church, MD</item>
     </string-array>
+    <string name="no_results_found">No Results Found</string>
 
     <string name="address_autofill_query_hint">Where to deliver?</string>
     <string name="address_autofill_address_state_hint">State</string>
