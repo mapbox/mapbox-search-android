@@ -49,7 +49,6 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 import com.mapbox.search.sample.databinding.ActivityOfflineSearchAlongRouteBinding
-import com.mapbox.search.sample.util.GeometryGenerator
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultAdapterItem
@@ -57,6 +56,7 @@ import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
+import com.mapbox.turf.TurfTransformation
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -454,7 +454,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             val tileRegionId = "Washington DC"
             val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main", language = "en"))
             val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
-            val tileGeometry = GeometryGenerator.generateCircle(washingtonDc, 200.0)
+            val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS )
 
             val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
                 .descriptors(tileDescriptors)
