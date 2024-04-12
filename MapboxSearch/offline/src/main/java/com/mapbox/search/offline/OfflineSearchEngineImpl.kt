@@ -1,6 +1,7 @@
 package com.mapbox.search.offline
 
 import com.mapbox.geojson.BoundingBox
+import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -172,6 +173,44 @@ internal class OfflineSearchEngineImpl(
             executor = executor,
             callback = callback
         )
+    }
+
+    override fun retrieve(
+        feature: Feature,
+        executor: Executor,
+        callback: OfflineSearchResultCallback
+    ): AsyncOperationTask {
+        val name = feature.getStringProperty("name")
+
+        val searchOptions = when (val geometry = feature.geometry()) {
+            is Point -> {
+                OfflineSearchOptions(
+                    origin = geometry,
+                    proximity = geometry
+                )
+            }
+            else -> {
+                val coords = TurfMeasurement.bbox(geometry)
+                OfflineSearchOptions(
+                    origin = TurfMeasurement.center(feature).geometry() as Point,
+                    boundingBox = BoundingBox.fromLngLats(coords[0], coords[1], coords[2], coords[3])
+                )
+            }
+        }
+
+        return makeRequest(OfflineSearchResultCallbackAdapter(feature, callback)) { request ->
+            coreEngine.searchOffline(
+                name, emptyList(), searchOptions.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    isOffline = true,
+                )
+            )
+        }
     }
 
     override fun addEngineReadyCallback(executor: Executor, callback: EngineReadyCallback) {
