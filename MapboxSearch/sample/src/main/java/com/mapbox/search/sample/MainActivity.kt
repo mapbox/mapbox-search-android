@@ -146,22 +146,20 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        mapView.mapboxMap.addOnMapClickListener(object : OnMapClickListener {
-            override fun onMapClick(point: Point): Boolean {
-                val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+        mapView.mapboxMap.addOnMapClickListener { point ->
+            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 
-                mapView.mapboxMap.queryRenderedFeatures(
-                    RenderedQueryGeometry(screenCoords),
-                    RenderedQueryOptions(listOf("poi-label"), null)
-                ) {
-                    it.value?.first()?.queriedFeature.let { queriedFeature ->
-                        queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
-                    }
+            mapView.mapboxMap.queryRenderedFeatures(
+                RenderedQueryGeometry(screenCoords),
+                RenderedQueryOptions(listOf("poi-label"), null)
+            ) {
+                it.value?.first()?.queriedFeature.let { queriedFeature ->
+                    queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
                 }
-
-                return true
             }
-        })
+
+            true
+        }
 
         mapMarkersManager = MapMarkersManager(mapView)
         mapMarkersManager.onMarkersChangeListener = {
