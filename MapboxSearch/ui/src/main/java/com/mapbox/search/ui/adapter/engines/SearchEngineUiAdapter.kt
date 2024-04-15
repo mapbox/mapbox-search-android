@@ -337,6 +337,11 @@ public class SearchEngineUiAdapter(
         }
     }
 
+    /**
+     * Given a [Feature], via a map click event, performs a retrieve call.
+     * @param feature to retrieve from search
+     */
+    @UiThread
     public fun select(
         feature: Feature
     ) {
