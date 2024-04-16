@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
+    android:theme="@style/Theme.MaterialComponents.DayNight"
     tools:context=".api.OfflineSearchAlongRouteExampleActivity">
 
     <EditText
@@ -20,6 +21,7 @@
         android:inputType="text"
         android:minHeight="?actionBarSize"
         android:paddingHorizontal="16dp"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,82 +39,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/query_text">
 
-        <EditText
-            android:id="@+id/route_polyline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_route_polyline_hint"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/layout_route_polyline_precision"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/routesTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/route_polyline">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            <TextView
-                android:id="@+id/label_route_polyline_precision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Precision"
-                android:textSize="16sp" />
-
-            <RadioGroup
-                android:id="@+id/route_polyline_precision"
+            <AutoCompleteTextView
+                android:id="@+id/routesAutoComplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:inputType="text"
+                android:hint="Select a Route" />
 
-                <!--adding a radio button -->
-                <RadioButton
-                    android:id="@+id/precision_five"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:checked="true"
-                    android:padding="4dp"
-                    android:text="5"
-                    android:textSize="18sp" />
-
-                <!--adding a radio button -->
-                <RadioButton
-                    android:id="@+id/precision_six"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:checked="false"
-                    android:padding="4dp"
-                    android:text="6"
-                    android:textSize="18sp" />
-
-            </RadioGroup>
-
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/layout_distance_travelled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_route_polyline_precision">
+            app:layout_constraintTop_toBottomOf="@+id/routesTextInputLayout">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Distance"
+                android:text="@string/position_along_route"
                 android:textSize="16sp" />
 
             <android.widget.SeekBar
@@ -156,6 +117,20 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_query_options" />
 
+    <TextView
+        android:id="@+id/no_results_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_query_options"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:text="@string/no_results_found"
+        android:textSize="22sp"
+        />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -166,6 +141,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_query_options" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
