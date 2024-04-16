@@ -1,5 +1,6 @@
 package com.mapbox.search.offline
 
+import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -567,6 +568,52 @@ internal class OfflineSearchEngineTest {
         }
     }
 
+    @TestFactory
+    fun `Check successful retrieve`() = TestCase {
+        Given("Feature from map click event") {
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
+                slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+            }
+
+            When("Retrieve is called") {
+                val callback = mockk<OfflineSearchResultCallback>(relaxed = true)
+
+                val task = searchEngine.retrieve(
+                    feature = TEST_RETRIEVE_FEATURE,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyOnce("CoreSearchEngine.searchOffline() called") {
+                    coreEngine.searchOffline(
+                        eq(TEST_RETRIEVE_FEATURE.getStringProperty("name")),
+                        eq(emptyList()),
+                        eq(OfflineSearchOptions(
+                            origin = TEST_RETRIEVE_FEATURE.geometry() as Point,
+                            proximity = TEST_RETRIEVE_FEATURE.geometry() as Point,
+                        ).mapToCore()),
+                        slotSearchCallback.captured
+                    )
+                }
+
+                VerifyOnce("Results passed to callback") {
+                    callback.onResult(any(), any())
+                }
+
+                VerifyNo("onError() wasn't called") {
+                    callback.onError(any())
+                }
+            }
+        }
+    }
+
     private companion object {
 
         const val TEST_QUERY = "Minsk"
@@ -600,6 +647,31 @@ internal class OfflineSearchEngineTest {
         val TEST_SEARCH_RESULT = OfflineSearchResult(
             rawSearchResult = TEST_RETRIEVED_CORE_SEARCH_RESULT.mapToBase(),
         )
+
+        val TEST_RETRIEVE_FEATURE = Feature.fromJson("""
+                {
+                    "type": "Feature",
+                    "id": "132494314",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -77.2214842,
+                            39.0468692
+                        ]
+                    },
+                    "properties": {
+                        "class": "park_like",
+                        "iso_3166_2": "US-MD",
+                        "name_script": "Latin",
+                        "filterrank": 1,
+                        "type": "Nature Reserve",
+                        "sizerank": 14,
+                        "name": "Adventure Conservation Park",
+                        "iso_3166_1": "US",
+                        "maki": "park"
+                    }
+                }
+            """.trimIndent())!!
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
         @BeforeAll
