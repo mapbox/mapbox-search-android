@@ -116,6 +116,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         }
 
         binding.routesAutoComplete.setOnItemClickListener { _, view, position, _ ->
+            // these are the route polylines and correspond to the drop down items defined in strings.xml -> "position_along_route"
             val routePolylines = listOf(
                 "}~xnFfbrrMrQq@~AvnArjKnpDjzDzfJphVf{U~k\\vhSdeIt_IzI~]ikAjuEfNh_A`kLvvUzlDp`E~jSzgIrlDp|Hbqp@jy\\~uKzmKtiKvaB`vJghB~cWfvBrbo@yzKrij@{j@xwElaDphEkfErvAkw@bMzFqRn^gB{AZm@",
                 "{f}lFzopuMmFjKlCnBhJuDuDup@mUmc@d@c`@qjA{@aX`CeFiBwHqs@ug@ge@wDwLbDsvC{Pog@}BgWjEer@kBal@lFih@a[_tB?k[`Geq@Iug@mPy}BCqk@nMml@rJqRhEwBxxAfVte@nDvaAra@pWdBd@sE",
