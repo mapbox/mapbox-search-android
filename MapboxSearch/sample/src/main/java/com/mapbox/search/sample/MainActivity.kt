@@ -24,10 +24,13 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.search.ApiType
@@ -140,6 +143,21 @@ class MainActivity : AppCompatActivity() {
                     mapView.location.removeOnIndicatorPositionChangedListener(this)
                 }
             })
+        }
+
+        mapView.mapboxMap.addOnMapClickListener { point ->
+            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+
+            mapView.mapboxMap.queryRenderedFeatures(
+                RenderedQueryGeometry(screenCoords),
+                RenderedQueryOptions(listOf("poi-label"), null)
+            ) {
+                it.value?.first()?.queriedFeature.let { queriedFeature ->
+                    queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
+                }
+            }
+
+            true
         }
 
         mapMarkersManager = MapMarkersManager(mapView)

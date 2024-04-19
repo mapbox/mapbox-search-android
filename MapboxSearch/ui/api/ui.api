@@ -47,6 +47,7 @@ public final class com/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter {
 	public final fun search (Ljava/lang/String;)V
 	public final fun search (Ljava/lang/String;Lcom/mapbox/search/SearchOptions;)V
 	public static synthetic fun search$default (Lcom/mapbox/search/ui/adapter/engines/SearchEngineUiAdapter;Ljava/lang/String;Lcom/mapbox/search/SearchOptions;ILjava/lang/Object;)V
+	public final fun select (Lcom/mapbox/geojson/Feature;)V
 	public final fun setSearchMode (Lcom/mapbox/search/ui/view/SearchMode;)V
 }
 
