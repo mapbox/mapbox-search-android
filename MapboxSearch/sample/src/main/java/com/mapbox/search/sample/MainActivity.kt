@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.OFFLINE
+        searchEngineUiAdapter.searchMode = SearchMode.AUTO
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
