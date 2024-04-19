@@ -8,18 +8,20 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mapbox.android.gestures.Utils
+import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.common.location.Location
 import com.mapbox.common.location.LocationServiceFactory
@@ -54,6 +56,7 @@ import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
+import com.mapbox.turf.TurfTransformation
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -72,7 +75,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         mapView = binding.map
         mapboxMap = mapView.mapboxMap
-        mapAnnotationsManager = OfflineSearchAlongRouteExampleActivity.AnnotationsManager(mapView)
+        mapAnnotationsManager = AnnotationsManager(mapView)
 
         mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 
@@ -81,6 +84,10 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 commonConfiguration = CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL)
             )
         )
+
+        val routes = resources.getStringArray(R.array.routes)
+        val arrayAdapter = ArrayAdapter(this, R.layout.route_dropdown_item, routes)
+        binding.routesAutoComplete.setAdapter(arrayAdapter)
 
         fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
         val locationService = LocationServiceFactory.getOrCreate()
@@ -108,14 +115,19 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
         }
 
-        binding.routePolyline.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.updateRoute(binding.routePolyline.text.toString())
-                v.hideKeyboard()
-                true
-            } else {
-                false
-            }
+        binding.routesAutoComplete.setOnItemClickListener { _, view, position, _ ->
+            // these are the route polylines and correspond to the drop down items defined in strings.xml -> "routes"
+            val routePolylines = listOf(
+                "}~xnFfbrrMrQq@~AvnArjKnpDjzDzfJphVf{U~k\\vhSdeIt_IzI~]ikAjuEfNh_A`kLvvUzlDp`E~jSzgIrlDp|Hbqp@jy\\~uKzmKtiKvaB`vJghB~cWfvBrbo@yzKrij@{j@xwElaDphEkfErvAkw@bMzFqRn^gB{AZm@",
+                "{f}lFzopuMmFjKlCnBhJuDuDup@mUmc@d@c`@qjA{@aX`CeFiBwHqs@ug@ge@wDwLbDsvC{Pog@}BgWjEer@kBal@lFih@a[_tB?k[`Geq@Iug@mPy}BCqk@nMml@rJqRhEwBxxAfVte@nDvaAra@pWdBd@sE",
+                "a{jlFft_uMyLlLhE}@h@rf@sBlLdArdEmK|SnEvLlFhj@BbLqD`K_[hIeG~Je@tc@dK|e@iIzg@bI`w@fG|IrYtRjVhtAr^~^nObb@b@r}@m]dzA}JxX_FjAyCh]dNlSjHnVrKjQ"
+            )
+            val polyline = routePolylines[position]
+            val selectedRoute = PolylineUtils.decode(polyline, 5)
+            val pointAlongRoute = selectedRoute.first()
+            binding.distanceAlongRoute.progress = 0
+            viewModel.updateRoute(selectedRoute, pointAlongRoute)
+            view.hideKeyboard()
         }
 
         binding.distanceAlongRoute.setOnSeekBarChangeListener(object :
@@ -133,7 +145,28 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seek: SeekBar) {
-                viewModel.updateDistanceAlongRoute(seek.progress)
+                val percent = seek.progress
+                val route = mapAnnotationsManager.route
+
+                if (route != null) {
+                    val proximity = if (percent > 0) {
+                        val segments = route.zipWithNext()
+                        val totalDistance = segments.sumOf { segment ->
+                            TurfMeasurement.distance(segment.first, segment.second)
+                        }
+                        val distanceTravelled = totalDistance * (percent / 100.0)
+                        TurfMisc.lineSliceAlong(
+                            LineString.fromLngLats(route),
+                            0.0,
+                            distanceTravelled,
+                            TurfConstants.UNIT_KILOMETERS
+                        ).coordinates().last()
+                    } else {
+                        route.first()
+                    }
+
+                    viewModel.updateProximity(proximity)
+                }
             }
         })
 
@@ -152,54 +185,93 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getSearchAlongRouteData().observe(this, Observer { searchAlongRoute ->
-            Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Search results: $searchAlongRoute")
+        viewModel.searchOptionsData.observe(this, Observer {
+            handleOnSearchOptionsUpdated(it)
+        })
 
-            val (state, options, results) = searchAlongRoute
+        viewModel.uiStateData.observe(this, Observer { uiState ->
 
-            if (options.route.isNotEmpty()) {
-                binding.distanceAlongRoute.isEnabled = options.route.isNotEmpty()
-                mapAnnotationsManager.showRoute(options.route, options.proximity)
-            } else {
-                mapAnnotationsManager.clearRoute()
-            }
-
-            when (state) {
-                State.IDLE -> {
-                    binding.searchResultsView.isVisible = false
-                    binding.progressBar.isVisible = false
+            when (uiState) {
+                is UiState.Ready -> {
+                    handleOnReady()
                 }
 
-                State.RUNNING -> {
-                    binding.searchResultsView.isVisible = false
-                    binding.progressBar.isVisible = true
+                is UiState.Searching -> {
+                    handleOnSearching()
                 }
 
-                State.DONE -> {
-                    val coordinates = results!!.map { it.coordinate }
-                    mapAnnotationsManager.showMarkers(coordinates)
-
-                    val items = results.map { result ->
-                        SearchResultAdapterItem.Result(
-                            title = result.name,
-                            subtitle = null,
-                            distanceMeters = null,
-                            drawable = com.mapbox.search.ui.R.drawable.mapbox_search_sdk_ic_search_result_address,
-                            payload = result
-                        )
-                    }
-
-                    binding.searchResultsView.setAdapterItems(items)
-
-                    binding.progressBar.isVisible = false
-                    binding.searchResultsView.isVisible = true
+                is UiState.Success -> {
+                    handleOnSuccess(uiState)
                 }
 
-                State.ERROR -> {
-                    Toast.makeText(this, "Error: Unable to perform search", Toast.LENGTH_LONG).show()
+                is UiState.Error -> {
+                    Toast.makeText(this, "Error: ${uiState.message}", Toast.LENGTH_LONG).show()
                 }
             }
         })
+    }
+
+    private fun handleOnReady() {
+        binding.searchResultsView.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.noResultsText.isVisible = false
+        binding.queryText.isEnabled = true
+        Toast.makeText(this, "Offline search is ready", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleOnSearching() {
+        binding.searchResultsView.isVisible = false
+        binding.noResultsText.isVisible = false
+        binding.progressBar.isVisible = true
+    }
+
+    private fun handleOnSuccess(uiState: UiState.Success) = if (uiState.searchResults.isEmpty()) {
+        displayNoResults()
+    } else {
+        displayResults(uiState.searchResults)
+    }
+
+    private fun handleOnSearchOptionsUpdated(options: SearchAlongRouteOptions) {
+        mapAnnotationsManager.clearAll()
+
+        if (options.route.isNotEmpty()) {
+            mapAnnotationsManager.showRoute(options.route, options.proximity)
+            binding.distanceAlongRoute.isEnabled = true
+        }
+    }
+
+    private fun displayResults(searchResults: List<OfflineSearchResult>) {
+        val coordinates = searchResults.map { it.coordinate }
+        mapAnnotationsManager.showMarkers(coordinates)
+
+        val items = searchResults.map { result ->
+            val title = result.name
+            val subtitle = if (result.descriptionText?.isNotBlank() == true) {
+                result.descriptionText
+            } else {
+                result.address.toString()
+            }
+
+            SearchResultAdapterItem.Result(
+                title = title,
+                subtitle = subtitle,
+                distanceMeters = result.distanceMeters,
+                drawable = com.mapbox.search.ui.R.drawable.mapbox_search_sdk_ic_search_result_address,
+                payload = result
+            )
+        }
+
+        binding.searchResultsView.setAdapterItems(items)
+
+        binding.progressBar.isVisible = false
+        binding.noResultsText.isVisible = false
+        binding.searchResultsView.isVisible = true
+    }
+
+    private fun displayNoResults() {
+        binding.progressBar.isVisible = false
+        binding.searchResultsView.isVisible = false
+        binding.noResultsText.isVisible = true
     }
 
     private fun Context.isPermissionGranted(permission: String): Boolean =
@@ -295,17 +367,17 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
             if (route != null) {
                 mapboxMap.cameraForCoordinates(
-                    route!! + coordinates, OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS, bearing = null, pitch = null
+                    route!! + coordinates, MARKERS_INSETS, bearing = null, pitch = null
                 )
             } else if (coordinates.size == 1) {
                 CameraOptions.Builder()
                     .center(coordinates.first())
-                    .padding(OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS_OPEN_CARD)
+                    .padding(MARKERS_INSETS_OPEN_CARD)
                     .zoom(14.0)
                     .build()
             } else {
                 mapboxMap.cameraForCoordinates(
-                    coordinates, OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS, bearing = null, pitch = null
+                    coordinates, MARKERS_INSETS, bearing = null, pitch = null
                 )
             }.also {
                 mapboxMap.setCamera(it)
@@ -342,121 +414,101 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
 
             val cameraOptions = mapboxMap.cameraForCoordinates(
-                route, OfflineSearchAlongRouteExampleActivity.MARKERS_INSETS, bearing = null, pitch = null
+                route, MARKERS_INSETS, bearing = null, pitch = null
             )
             mapboxMap.setCamera(cameraOptions)
         }
     }
 
     class SearchAlongRouteViewModel() : ViewModel() {
-        private val searchAlongRouteData = MutableLiveData<SearchAlongRoute>()
+        val uiStateData = MediatorLiveData<UiState>()
+        val offlineSearchData = MutableLiveData(OfflineSearchState())
+        val searchOptionsData = MutableLiveData<SearchAlongRouteOptions>()
         private val searchEngine: OfflineSearchEngine
         private var searchRequestTask: AsyncOperationTask? = null
 
-        private val engineReadyCallback = object : OfflineSearchEngine.EngineReadyCallback {
-            override fun onEngineReady() {
-                Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Engine is ready")
-            }
-        }
-
         private val searchCallback = object : OfflineSearchCallback {
-
             override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                val currentSar = searchAlongRouteData.value
-                searchAlongRouteData.value = SearchAlongRoute(
-                    state = State.DONE,
-                    options = currentSar!!.options,
-                    results = results
-                )
+                uiStateData.value = UiState.Success(results)
             }
 
             override fun onError(e: Exception) {
-                Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Search error", e)
+                uiStateData.value = UiState.Error("Search failed with message ${e.message}")
             }
         }
 
         init {
-            val tileStore = TileStore.create()
+            uiStateData.addSource(offlineSearchData) { offlineSearchState ->
+                when (offlineSearchState) {
+                    OfflineSearchState(failed = true) -> uiStateData.value = UiState.Error("Failed to initialize Offline Search")
+                    OfflineSearchState(tilesLoaded = true, searchEngineReady = true, failed = false) -> uiStateData.value = UiState.Ready
+                }
+            }
 
-            searchEngine = OfflineSearchEngine.create(
-                OfflineSearchEngineSettings(tileStore = tileStore)
+            uiStateData.addSource(searchOptionsData) { searchOptions ->
+                updateSearchAlongRouteOptions(searchOptions)?.let {
+                    uiStateData.value = it
+                }
+            }
+
+            val tileStore = TileStore.create()
+            val tileRegionId = "Washington DC"
+            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main", language = "en"))
+            val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+            val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS)
+
+            val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
+                .descriptors(tileDescriptors)
+                .geometry(tileGeometry)
+                .acceptExpired(true)
+                .build()
+
+            tileStore.loadTileRegion(
+                tileRegionId,
+                tileRegionLoadOptions,
+                { progress -> Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Loading progress: $progress") },
+                { result ->
+                    val currentOfflineSearchState = offlineSearchData.value
+
+                    val newOfflineSearchState = if (result.isValue) {
+                        currentOfflineSearchState?.copy(tilesLoaded = true)
+                    } else {
+                        currentOfflineSearchState?.copy(failed = true)
+                    }
+
+                    offlineSearchData.postValue(newOfflineSearchState)
+                }
             )
 
-            searchEngine.addEngineReadyCallback(engineReadyCallback)
-        }
+            searchEngine = OfflineSearchEngine.create(
+                OfflineSearchEngineSettings(
+                    tileStore = tileStore
+                ),
+            )
 
-        fun getSearchAlongRouteData(): LiveData<SearchAlongRoute> = searchAlongRouteData
+            searchEngine.addEngineReadyCallback(object : OfflineSearchEngine.EngineReadyCallback {
+                override fun onEngineReady() {
+                    val offlineSearchState = offlineSearchData.value
+                    offlineSearchData.postValue(offlineSearchState?.copy(searchEngineReady = true))
+                }
+            })
+        }
 
         fun updateSearchQuery(query: String) {
-            cancelSearch()
-
-            val currentRequest = searchAlongRouteData.value
-            val newSearchOptions = currentRequest?.options?.copy(query = query) ?: SearchAlongRouteOptions(query = query)
-
-            runSearch(newSearchOptions)
-
-            searchAlongRouteData.value = SearchAlongRoute(state = State.RUNNING, options = newSearchOptions)
+            val currentRequest = searchOptionsData.value
+            searchOptionsData.value = currentRequest?.copy(query = query) ?: SearchAlongRouteOptions(query = query)
         }
 
-        fun updateRoute(polyline: String, precision: Int = 5) {
-            cancelSearch()
-
-            val route = PolylineUtils.decode(polyline, precision)
-
-            val currentRequest = searchAlongRouteData.value
-            val newSearchOptions = currentRequest?.options?.copy(route = route) ?: SearchAlongRouteOptions(route = route)
-
-            var state = State.IDLE
-
-            if (newSearchOptions.query.isNotBlank()) {
-                runSearch(newSearchOptions)
-                state = State.RUNNING
-            }
-
-            searchAlongRouteData.value = SearchAlongRoute(state = state, options = newSearchOptions)
-        }
-
-        fun updateDistanceAlongRoute(percent: Int) {
-            cancelSearch()
-
-            val currentRequest = searchAlongRouteData.value
-            val route = currentRequest?.options?.route
-
-            if (route != null) {
-                val proximity = if (percent > 0) {
-                    val segments = route.zipWithNext()
-                    val totalDistance = segments.sumOf { segment ->
-                        TurfMeasurement.distance(segment.first, segment.second)
-                    }
-                    val distanceTravelled = totalDistance * (percent / 100.0)
-                    TurfMisc.lineSliceAlong(
-                        LineString.fromLngLats(route),
-                        0.0,
-                        distanceTravelled,
-                        TurfConstants.UNIT_KILOMETERS
-                    ).coordinates().last()
-                } else {
-                    route.first()
-                }
-
-                updateProximity(proximity)
-            }
+        fun updateRoute(route: List<Point>, pointAlongRoute: Point) {
+            val currentRequest = searchOptionsData.value
+            searchOptionsData.value = currentRequest?.copy(route = route, proximity = pointAlongRoute) ?: SearchAlongRouteOptions(route = route, proximity = pointAlongRoute)
         }
 
         fun updateProximity(proximity: Point) {
             cancelSearch()
 
-            val currentRequest = searchAlongRouteData.value
-            val newSearchOptions = currentRequest?.options?.copy(proximity = proximity) ?: SearchAlongRouteOptions(proximity = proximity)
-
-            var state = State.IDLE
-
-            if (newSearchOptions.query.isNotBlank()) {
-                runSearch(newSearchOptions)
-                state = State.RUNNING
-            }
-
-            searchAlongRouteData.value = SearchAlongRoute(state = state, options = newSearchOptions)
+            val currentRequest = searchOptionsData.value
+            searchOptionsData.value = currentRequest?.copy(proximity = proximity) ?: SearchAlongRouteOptions(proximity = proximity)
         }
 
         private fun runSearch(options: SearchAlongRouteOptions) {
@@ -481,16 +533,34 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 searchRequestTask!!.cancel()
             }
         }
+
+        private fun updateSearchAlongRouteOptions(options: SearchAlongRouteOptions): UiState? {
+            cancelSearch()
+
+            return if (options.query.isNotBlank()) {
+                runSearch(options)
+                UiState.Searching(options)
+            } else {
+                null
+            }
+        }
     }
 
-    enum class State {
-        IDLE, RUNNING, DONE, ERROR
+    sealed class UiState {
+
+        object Ready : UiState()
+
+        data class Searching(val searchOptions: SearchAlongRouteOptions) : UiState()
+
+        data class Success(val searchResults: List<OfflineSearchResult>) : UiState()
+
+        data class Error(val message: String) : UiState()
     }
 
-    data class SearchAlongRoute(
-        val state: State = State.IDLE,
-        val options: SearchAlongRouteOptions = SearchAlongRouteOptions(),
-        val results: List<OfflineSearchResult>? = null
+    data class OfflineSearchState(
+        val tilesLoaded: Boolean = false,
+        val searchEngineReady: Boolean = false,
+        val failed: Boolean = false
     )
 
     data class SearchAlongRouteOptions(
