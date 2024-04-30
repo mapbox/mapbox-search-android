@@ -677,6 +677,10 @@ package com.mapbox.search.result {
     field public static final com.mapbox.search.result.ResultAccuracy.Point INSTANCE;
   }
 
+  @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Proximate extends com.mapbox.search.result.ResultAccuracy {
+    field public static final com.mapbox.search.result.ResultAccuracy.Proximate INSTANCE;
+  }
+
   @kotlinx.parcelize.Parcelize public static final class ResultAccuracy.Rooftop extends com.mapbox.search.result.ResultAccuracy {
     field public static final com.mapbox.search.result.ResultAccuracy.Rooftop INSTANCE;
   }

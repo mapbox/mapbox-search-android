@@ -54,6 +54,12 @@ public abstract class ResultAccuracy : Parcelable {
      */
     @Parcelize
     public object Street : ResultAccuracy()
+
+    /**
+     * Result is a known address point but does not intersect a known rooftop/parcel
+     */
+    @Parcelize
+    public object Proximate : ResultAccuracy()
 }
 
 @JvmSynthetic
@@ -66,6 +72,7 @@ internal fun ResultAccuracy.mapToCore(): CoreResultAccuracy? {
         is ResultAccuracy.Intersection -> CoreResultAccuracy.INTERSECTION
         is ResultAccuracy.Approximate -> CoreResultAccuracy.APPROXIMATE
         is ResultAccuracy.Street -> CoreResultAccuracy.STREET
+        is ResultAccuracy.Proximate -> CoreResultAccuracy.PROXIMATE
         else -> {
             failDebug {
                 "Unprocessed accuracy type: $this"
@@ -85,5 +92,6 @@ internal fun CoreResultAccuracy.mapToPlatform(): ResultAccuracy {
         CoreResultAccuracy.INTERSECTION -> ResultAccuracy.Intersection
         CoreResultAccuracy.APPROXIMATE -> ResultAccuracy.Approximate
         CoreResultAccuracy.STREET -> ResultAccuracy.Street
+        CoreResultAccuracy.PROXIMATE -> ResultAccuracy.Proximate
     }
 }

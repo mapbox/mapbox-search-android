@@ -927,6 +927,21 @@ public final class com/mapbox/search/result/ResultAccuracy$Point$Creator : andro
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/result/ResultAccuracy$Proximate : com/mapbox/search/result/ResultAccuracy {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Proximate;
+	public fun describeContents ()I
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/result/ResultAccuracy$Proximate$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/result/ResultAccuracy$Proximate;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/result/ResultAccuracy$Proximate;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/result/ResultAccuracy$Rooftop : com/mapbox/search/result/ResultAccuracy {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field INSTANCE Lcom/mapbox/search/result/ResultAccuracy$Rooftop;
