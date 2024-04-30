@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0-beta.5
+## 2.0.0-rc.1
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID
