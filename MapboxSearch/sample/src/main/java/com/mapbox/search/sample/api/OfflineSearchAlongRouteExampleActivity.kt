@@ -20,6 +20,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.mapbox.android.gestures.Utils
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
@@ -57,10 +58,7 @@ import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
 import com.mapbox.turf.TurfTransformation
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
