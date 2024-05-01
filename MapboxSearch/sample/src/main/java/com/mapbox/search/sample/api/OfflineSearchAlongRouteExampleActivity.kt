@@ -20,6 +20,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.mapbox.android.gestures.Utils
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
@@ -57,6 +58,7 @@ import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
 import com.mapbox.turf.TurfTransformation
+import kotlinx.coroutines.launch
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -468,15 +470,17 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 tileRegionLoadOptions,
                 { progress -> Log.i(OfflineSearchAlongRouteExampleActivity::javaClass.name, "Loading progress: $progress") },
                 { result ->
-                    val currentOfflineSearchState = offlineSearchData.value
+                    viewModelScope.launch {
+                        val currentOfflineSearchState = offlineSearchData.value
 
-                    val newOfflineSearchState = if (result.isValue) {
-                        currentOfflineSearchState?.copy(tilesLoaded = true)
-                    } else {
-                        currentOfflineSearchState?.copy(failed = true)
+                        val newOfflineSearchState = if (result.isValue) {
+                            currentOfflineSearchState?.copy(tilesLoaded = true)
+                        } else {
+                            currentOfflineSearchState?.copy(failed = true)
+                        }
+
+                        offlineSearchData.value = newOfflineSearchState
                     }
-
-                    offlineSearchData.postValue(newOfflineSearchState)
                 }
             )
 
@@ -488,8 +492,10 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
             searchEngine.addEngineReadyCallback(object : OfflineSearchEngine.EngineReadyCallback {
                 override fun onEngineReady() {
-                    val offlineSearchState = offlineSearchData.value
-                    offlineSearchData.postValue(offlineSearchState?.copy(searchEngineReady = true))
+                    viewModelScope.launch {
+                        val offlineSearchState = offlineSearchData.value
+                        offlineSearchData.postValue(offlineSearchState?.copy(searchEngineReady = true))
+                    }
                 }
             })
         }

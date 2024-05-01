@@ -1,5 +1,5 @@
 ext {
-    gradle_plugin = '7.3.1'
+    gradle_plugin = '7.4.2'
     kotlin_version = '1.7.20'
     kotlin_coroutines_version = '1.6.0'
 
@@ -42,10 +42,10 @@ ext {
     pitest_version = '1.6.7'
 
     mapbox_maps_version = '11.0.0'
-    common_sdk_version = '24.0.0'
+    common_sdk_version = '24.4.0-beta.2'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '2.0.0-alpha.13'
+    search_native_version = '2.0.0-beta.18'
 
     detekt_version = '1.19.0'
 

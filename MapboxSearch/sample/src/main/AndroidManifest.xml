@@ -5,6 +5,7 @@
     package="com.mapbox.search.sample"
     >
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -68,7 +69,7 @@
         <activity android:name=".api.FavoritesDataProviderJavaExample" />
         <activity android:name=".api.JapanSearchJavaExampleActivity" />
         <activity android:name=".api.JapanSearchKotlinExampleActivity" />
-        <activity android:name=".api.OfflineSearchAlongRouteExampleActivity" android:exported="true" />
+        <activity android:name=".api.OfflineSearchAlongRouteExampleActivity" />
 
     </application>
 
