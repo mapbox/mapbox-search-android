@@ -20,6 +20,7 @@ data class BaseRawSearchResult(
     val languages: List<String>,
     val addresses: List<BaseSearchAddress>?,
     val descriptionAddress: String?,
+    val matchingName: String?,
     val fullAddress: String?,
     val distanceMeters: Double?,
     val center: Point?,
@@ -49,16 +50,12 @@ data class BaseRawSearchResult(
     @IgnoredOnParcel
     val type: BaseRawResultType = types.firstOrNull() ?: BaseRawResultType.UNKNOWN
 
-    // TODO FIXME search native should parse "poi_category_ids" and provide it to platforms
     @IgnoredOnParcel
     val categoryCanonicalName: String? by lazy(LazyThreadSafetyMode.NONE) {
-        externalIDs?.get("federated")?.let { value ->
-            if (value.startsWith(CATEGORY_CANONICAL_NAME_PREFIX) && value.length > CATEGORY_CANONICAL_NAME_PREFIX.length) {
-                value.removePrefix(CATEGORY_CANONICAL_NAME_PREFIX)
-            } else {
-                null
-            }
-        } ?: categories?.firstOrNull()?.lowercase() ?: "cafe"
+        categoryIds?.firstOrNull { it.isNotEmpty() } ?: extractFederatedValue(
+            externalIDs,
+            CATEGORY_CANONICAL_NAME_PREFIX,
+        )
     }
 
     @IgnoredOnParcel
@@ -109,6 +106,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     languages = languages,
     addresses = addresses?.map { it.mapToBaseSearchAddress() },
     descriptionAddress = descrAddress,
+    matchingName = matchingName,
     fullAddress = fullAddress,
     distanceMeters = distance,
     center = center,
@@ -137,7 +135,7 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     languages,
     addresses?.map { it.mapToCore() },
     descriptionAddress,
-    null,   /* matchingName */
+    matchingName,
     fullAddress,
     distanceMeters,
     etaMinutes,

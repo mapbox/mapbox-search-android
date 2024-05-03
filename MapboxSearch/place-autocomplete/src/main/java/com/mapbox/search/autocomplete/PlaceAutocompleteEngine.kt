@@ -6,7 +6,6 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
-import com.mapbox.search.base.BaseSearchMultipleSelectionCallback
 import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
@@ -19,30 +18,23 @@ import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
-import com.mapbox.search.base.engine.TwoStepsBatchRequestCallbackWrapper
 import com.mapbox.search.base.engine.TwoStepsRequestCallbackWrapper
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
-import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
-import com.mapbox.search.base.utils.extension.suspendFlatMap
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -186,60 +178,46 @@ internal class PlaceAutocompleteEngine(
         }
     }
 
-    suspend fun resolveAll(
-        suggestions: List<BaseSearchSuggestion>,
-        allowCategorySuggestions: Boolean,
-    ): Expected<Exception, List<BaseSearchResult>> {
-        return when {
-            suggestions.isEmpty() -> {
-                ExpectedFactory.createValue(emptyList())
+    fun search(
+        options: CoreReverseGeoOptions,
+        executor: Executor,
+        callback: BaseSearchCallback,
+    ): AsyncOperationTask {
+        return makeRequest(callback) { task ->
+            val requestContext = requestContextProvider.provide(apiType)
+            val requestId = coreEngine.reverseGeocoding(
+                options,
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
             }
-            else -> {
-                coroutineScope {
-                    val deferredSuggestions: List<Deferred<Expected<Exception, SearchSelectionResponse>>> = suggestions
-                        .filter {
-                            when (it.type) {
-                                // Filtering in order to avoid infinite recursion
-                                // because of some specific suggestions like "Did you mean recursion?"
-                                is BaseSearchSuggestionType.Query -> false
-                                is BaseSearchSuggestionType.Category -> allowCategorySuggestions
-                                else -> true
-                            }
-                        }
-                        .map { suggestion ->
-                            async { select(suggestion) }
-                        }
+        }
+    }
 
-                    val responses: List<Expected<Exception, List<BaseSearchResult>>> = deferredSuggestions
-                        .map { deferred ->
-                            deferred.await().suspendFlatMap { response ->
-                                when (response) {
-                                    is SearchSelectionResponse.Suggestions -> {
-                                        resolveAll(response.suggestions, allowCategorySuggestions)
-                                    }
-                                    is SearchSelectionResponse.Result -> {
-                                        ExpectedFactory.createValue(listOf(response.result))
-                                    }
-                                    is SearchSelectionResponse.Results -> {
-                                        ExpectedFactory.createValue(response.results)
-                                    }
-                                }
-                            }
-                        }
-
-                    // If at least one response completed successfully, return it.
-                    if (responses.isNotEmpty() && responses.all { it.isError }) {
-                        responses.first()
-                    } else {
-                        responses.asSequence()
-                            .mapNotNull { it.value }
-                            .flatten()
-                            .toList()
-                            .let {
-                                ExpectedFactory.createValue(it)
-                            }
-                    }
+    suspend fun search(options: CoreReverseGeoOptions): Expected<Exception, Pair<List<BaseSearchResult>, BaseResponseInfo>> {
+        return suspendCancellableCoroutine { continuation ->
+            val task = search(options, SearchSdkMainThreadWorker.mainExecutor, object : BaseSearchCallback {
+                override fun onResults(results: List<BaseSearchResult>, responseInfo: BaseResponseInfo) {
+                    continuation.resumeWith(
+                        Result.success(ExpectedFactory.createValue(results to responseInfo))
+                    )
                 }
+
+                override fun onError(e: Exception) {
+                    continuation.resumeWith(Result.success(ExpectedFactory.createError(e)))
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                task.cancel()
             }
         }
     }

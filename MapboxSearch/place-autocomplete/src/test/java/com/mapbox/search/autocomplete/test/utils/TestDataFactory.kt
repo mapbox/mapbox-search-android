@@ -66,6 +66,7 @@ internal val testBaseRawSearchResult: BaseRawSearchResult = createTestBaseRawSea
     action = null,
     etaMinutes = 5.0
 )
+
 internal val testBaseResult: BaseServerSearchResultImpl = BaseServerSearchResultImpl(
     types = listOf(BaseSearchResultType.ADDRESS),
     rawSearchResult = testBaseRawSearchResult,
@@ -117,6 +118,7 @@ internal fun createTestBaseRawSearchResult(
     languages: List<String> = listOf("def"),
     addresses: List<CoreSearchAddress>? = null,
     descriptionAddress: String? = null,
+    matchingName: String? = null,
     fullAddress: String? = null,
     distanceMeters: Double? = null,
     center: Point? = null,
@@ -145,6 +147,7 @@ internal fun createTestBaseRawSearchResult(
     descriptionAddress = descriptionAddress,
     fullAddress = fullAddress,
     distanceMeters = distanceMeters,
+    matchingName = matchingName,
     center = center,
     accuracy = accuracy,
     routablePoints = routablePoints?.map { it.mapToCore() },

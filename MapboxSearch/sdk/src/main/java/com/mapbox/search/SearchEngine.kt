@@ -161,60 +161,16 @@ public interface SearchEngine {
         callback: SearchSelectionCallback,
     ): AsyncOperationTask
 
-    /**
-     * Function to select multiple suggestions at once.
-     * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
-     *
-     * Note that all the search suggestions must originate from the same search request and only certain suggestions
-     * can be used in the batch selection, to check if a [SearchSuggestion] can be passed to this function,
-     * call [SearchSuggestion.isBatchResolveSupported].
-     * With the current implementation, only POI and indexable record suggestions support batch resolving.
-     * All the suggestions that can't be used in batch resolving will be filtered.
-     *
-     * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
-     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
-     * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
-     * @return [AsyncOperationTask] object representing pending completion of the request.
-     */
-    public fun select(
-        suggestions: List<SearchSuggestion>,
-        executor: Executor,
-        callback: SearchMultipleSelectionCallback,
-    ): AsyncOperationTask
-
-    /**
-     * Function to select multiple suggestions at once.
-     * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
-     *
-     * Note that all the search suggestions must originate from the same search request and only certain suggestions
-     * can be used in the batch selection, to check if a [SearchSuggestion] can be passed to this function,
-     * call [SearchSuggestion.isBatchResolveSupported].
-     * With the current implementation, only POI and indexable record suggestions support batch resolving.
-     * All the suggestions that can't be used in batch resolving will be filtered.
-     *
-     * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
-     * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
-     * @return [AsyncOperationTask] object representing pending completion of the request.
-     */
-    public fun select(
-        suggestions: List<SearchSuggestion>,
-        callback: SearchMultipleSelectionCallback,
-    ): AsyncOperationTask = select(
-        suggestions = suggestions,
-        executor = SearchSdkMainThreadWorker.mainExecutor,
-        callback = callback,
-    )
-
-    /**
+     /**
      * Function to retrieve the details for a given mapboxId. The callback will be invoked with
      * a [SearchResult] on successful execution. This method is only supported for a SearchEngine
-     * with [ApiType.SBS].
+     * with [ApiType.SearchBox].
      *
      * @param mapboxId for the item to retrieve details for
      * @param executor [Executor] used for events dispatching, default is the main thread
      * @param callback used to receive the [SearchResult] on successful execution
      * @return [AsyncOperationTask] object representing pending completion of the request
-     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SBS]
+     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SearchBox]
      */
     public fun retrieve(
         mapboxId: String,
@@ -226,7 +182,7 @@ public interface SearchEngine {
      * Function to retrieve the details for a given mapboxId that dispatches events using the
      * main executor. The callback will be invoked with a [SearchResult] on successful execution.
      *
-     * Note that this method is only supported for a SearchEngine with [ApiType.SBS].
+     * Note that this method is only supported for a SearchEngine with [ApiType.SearchBox].
      *
      * @param mapboxId for the item to retrieve details for
      * @param callback used to receive the [SearchResult] on successful execution

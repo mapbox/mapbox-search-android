@@ -23,6 +23,7 @@ internal fun createTestBaseRawSearchResult(
     languages: List<String> = listOf("def"),
     addresses: List<BaseSearchAddress>? = null,
     descriptionAddress: String? = null,
+    matchingName: String? = null,
     fullAddress: String? = null,
     distanceMeters: Double? = null,
     center: Point? = null,
@@ -49,8 +50,9 @@ internal fun createTestBaseRawSearchResult(
     languages = languages,
     addresses = addresses,
     descriptionAddress = descriptionAddress,
-    fullAddress = fullAddress,
     distanceMeters = distanceMeters,
+    matchingName = matchingName,
+    fullAddress = fullAddress,
     center = center,
     accuracy = accuracy,
     routablePoints = routablePoints,
@@ -72,7 +74,7 @@ internal fun createTestBaseRawSearchResult(
 @Suppress("LongParameterList")
 internal fun createTestBaseRequestOptions(
     core: CoreRequestOptions = createTestCoreRequestOptions(),
-    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SEARCH_BOX),
+    requestContext: SearchRequestContext = SearchRequestContext(CoreApiType.SBS),
 ) = BaseRequestOptions(
     core = core,
     requestContext = requestContext

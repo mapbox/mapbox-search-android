@@ -11,7 +11,7 @@ internal object Constants {
     val TEST_USER_LOCATION: Point = Point.fromLngLat(-122.084000, 37.421998)
 
     object Assets {
-        const val MINSK_SUGGESTIONS_ASSET: String = "suggestions-successful-minsk.json"
+        const val MINSK_SUGGESTIONS_ASSET: String = "suggestions-successful.json"
         const val MINSK_REGION_SUGGESTIONS_ASSET: String = "suggestions-successful-minsk-region.json"
         const val EMPTY_SUGGESTIONS_ASSET: String = "suggestions-successful-empty-results.json"
         const val RANELAGH_SUGGESTIONS_ASSET: String = "suggestions-successful-ranelagh.json"

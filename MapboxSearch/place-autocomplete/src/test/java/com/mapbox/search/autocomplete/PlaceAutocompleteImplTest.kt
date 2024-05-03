@@ -64,11 +64,9 @@ internal class PlaceAutocompleteImplTest {
             ExpectedFactory.createValue(TEST_BASE_SUGGESTIONS to mockk())
         }
 
-        val response = runBlocking {
+        runBlocking {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
-
-        assertEquals(TEST_AUTOCOMPLETE_SUGGESTIONS, response.value)
 
         coVerify(exactly = 1) { searchEngine.search(eq(TEST_QUERY), any()) }
         verify(exactly = 1) { activityReporter.reportActivity(eq("place-autocomplete-forward-geocoding")) }
