@@ -12,8 +12,8 @@ internal class RetrieveUtilsTest {
         Given("a Mapbox ID") {
             val mapboxId = "Random Mapbox ID"
 
-            When("ApiType is ${ApiType.SBS}") {
-                val searchResult = RetrieveUtils.createSearchResultForRetrieve(ApiType.SBS, mapboxId)
+            When("ApiType is ${ApiType.SearchBox}") {
+                val searchResult = RetrieveUtils.createSearchResultForRetrieve(ApiType.SearchBox, mapboxId)
                 Then("the SearchResult.SuggestAction.endpoint should be retrieve", "retrieve", searchResult.action?.endpoint)
                 Then("the SearchResult.SuggestAction.path should be blank", "", searchResult.action?.path)
                 Then("the SearchResult.SuggestAction.body should be JSON", """{"id":"$mapboxId"}""", searchResult.action?.body?.toString(Charsets.UTF_8))
@@ -21,9 +21,9 @@ internal class RetrieveUtilsTest {
                 Then("the SearchResult.SuggestAction.path should be false", false, searchResult.action?.multiRetrievable)
             }
 
-            When("ApiType is ${ApiType.GEOCODING}") {
+            When("ApiType is ${ApiType.Geocoding}") {
                 Then("throw an UnsupportedOperationException") {
-                    assertThrows<UnsupportedOperationException> { RetrieveUtils.createSearchResultForRetrieve(ApiType.GEOCODING, mapboxId) }
+                    assertThrows<UnsupportedOperationException> { RetrieveUtils.createSearchResultForRetrieve(ApiType.Geocoding, mapboxId) }
                 }
             }
         }

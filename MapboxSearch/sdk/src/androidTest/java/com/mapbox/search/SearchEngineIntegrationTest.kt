@@ -6,6 +6,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.result.BaseServerSearchSuggestion
+import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -29,20 +32,25 @@ import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.isIndexableRecordSuggestion
+import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.result.record
 import com.mapbox.search.tests_support.BlockingSearchResultCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback
 import com.mapbox.search.tests_support.BlockingSearchSelectionCallback.SearchEngineResult
 import com.mapbox.search.tests_support.EmptySearchSuggestionsCallback
+import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
 import com.mapbox.search.tests_support.createHistoryRecord
 import com.mapbox.search.tests_support.createSearchEngineWithBuiltInDataProvidersBlocking
+import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.tests_support.createTestHistoryRecord
+import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.search.tests_support.record.clearBlocking
 import com.mapbox.search.tests_support.record.getAllBlocking
 import com.mapbox.search.tests_support.record.getSizeBlocking
@@ -709,16 +717,56 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testCategorySuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-category.json"))
-        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-category-cafe.json"))
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-only-categories.json"))
 
-        val response = searchEngine.searchBlocking(TEST_QUERY)
-        val suggestions = response.requireSuggestions()
+        val callback = BlockingSearchSelectionCallback()
+        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, types = listOf(QueryType.CATEGORY))
+        searchEngine.search(TEST_QUERY, options, callback)
 
-        val suggestion = suggestions[0]
-        assertEquals("Cafe", suggestion.name)
-        assertEquals(SearchSuggestionType.Category("cafe"), suggestion.type)
-        assertEquals(listOf("Cafe"), suggestion.categories)
+        val res = callback.getResultBlocking()
+        assertTrue(res is SearchEngineResult.Suggestions)
+        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
+
+        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
+            id = "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
+            types = listOf(BaseRawResultType.CATEGORY),
+            names = listOf("Cafe"),
+            languages = listOf("en"),
+            addresses = listOf(SearchAddress()),
+            categories = listOf("Cafe"),
+            descriptionAddress = "Category",
+            fullAddress = null,
+            matchingName = "Cafe",
+            icon = "restaurant",
+            externalIDs = mapOf("federated" to "category.cafe"),
+            action = BaseSuggestAction(
+                endpoint = "retrieve",
+                path = "",
+                query = null,
+                body = "{\"id\":\"category-test-id\"}".toByteArray(),
+            ),
+        )
+
+        val expectedSearchSuggestion = BaseServerSearchSuggestion(
+            baseRawCategorySuggestion,
+            TEST_REQUEST_OPTIONS.run {
+                copy(
+                    options = options.copy(
+                        types = listOf(QueryType.CATEGORY)
+                    ),
+                    requestContext = requestContext.copy(
+                        responseUuid = "be35d556-9e14-4303-be15-57497c331348"
+                    ),
+                )
+            }.mapToBase()
+        ).mapToPlatform()
+        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
+
+        assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)
+        assertEquals(SearchSuggestionType.Category("internet_cafe"), suggestions[1].type)
+
+        assertNotNull(res.responseInfo.coreSearchResponse)
+        assertTrue(res.responseInfo.isReproducible)
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
 
@@ -1046,7 +1094,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testSuccessfulRetrieveCallForSBS() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.SBS, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SearchBox, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful-poi.json"))
 
@@ -1064,7 +1112,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testUnsuccessfulRetrieveCall() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.SBS, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SearchBox, searchEngineSettings)
 
         mockServer.enqueue(MockResponse().setResponseCode(404))
 

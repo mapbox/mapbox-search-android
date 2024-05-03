@@ -94,12 +94,6 @@ public class TestActivity : AppCompatActivity() {
             isVisible = false
         }
 
-//        val apiType = if (BuildConfig.ENABLE_SBS) {
-//            ApiType.SBS
-//        } else {
-//            ApiType.GEOCODING
-//        }
-
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.SearchBox,
             settings = SearchEngineSettings(

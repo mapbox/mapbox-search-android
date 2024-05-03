@@ -56,7 +56,6 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
-import junit.framework.TestCase.assertEquals
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -589,11 +588,13 @@ internal class SearchEngineTest {
             every { coreEngine.onSelected(capture(slotRequestOptions), capture(slotSearchResult)) } returns Unit
 
             val indexableRecordCallbackSlot = slot<(Result<BaseIndexableRecord>) -> Unit>()
-            every { indexableRecordResolver.resolve(
-                FavoritesDataProvider.PROVIDER_NAME,
-                TEST_USER_LAYER_RECORD_ID,
-                any(),
-                capture(indexableRecordCallbackSlot))
+            every {
+                indexableRecordResolver.resolve(
+                    FavoritesDataProvider.PROVIDER_NAME,
+                    TEST_USER_LAYER_RECORD_ID,
+                    any(),
+                    capture(indexableRecordCallbackSlot)
+                )
             } answers {
                 indexableRecordCallbackSlot.captured(Result.success(TEST_FAVORITE_RECORD.mapToBase()))
                 AsyncOperationTaskImpl.COMPLETED
@@ -722,44 +723,6 @@ internal class SearchEngineTest {
 
                 VerifyNo("Callback is not called") {
                     callback.onSuggestions(any(), any())
-                    callback.onResult(any(), any(), any())
-                    callback.onError(any())
-                }
-
-                VerifyOnce("Core cancel() is called with correct request id") {
-                    coreEngine.cancel(TEST_REQUEST_ID)
-                }
-
-                VerifyOnce("User activity reported") {
-                    activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `Check search multiple-suggestions selection cancellation initiated by user`() = TestCase {
-        Given("SearchEngine with mocked dependencies") {
-            every {
-                coreEngine.retrieveBucket(any(), any(), any())
-            } answers {
-                TEST_REQUEST_ID
-            }
-
-            When("Selection task cancelled by user") {
-                val callback = mockk<SearchMultipleSelectionCallback>(relaxed = true)
-
-                val task = searchEngine.select(
-                    suggestions = listOf(TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform()),
-                    executor = executor,
-                    callback = callback,
-                )
-
-                task.cancel()
-
-                Then("Task is marked as cancelled", true, task.isCancelled)
-
-                VerifyNo("Callback is not called") {
                     callback.onResult(any(), any(), any())
                     callback.onError(any())
                 }
