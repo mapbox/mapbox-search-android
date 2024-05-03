@@ -1,38 +1,50 @@
 package com.mapbox.search.sample
 
-import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.mapbox.android.gestures.Utils.dpToPx
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.common.location.LocationProvider
+import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
-import com.mapbox.maps.RenderedQueryGeometry
-import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.Style
+import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.annotationAnchor
+import com.mapbox.maps.viewannotation.geometry
+import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
@@ -40,6 +52,8 @@ import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.common.DistanceCalculator
+import com.mapbox.search.offline.OfflineIndexChangeEvent
+import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -48,31 +62,6 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
-import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
-import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
-import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
-import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
-import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
-import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
-import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
-import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
-import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingJavaExampleActivity
-import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingKotlinExampleActivity
-import com.mapbox.search.sample.api.ForwardGeocodingJavaExampleActivity
-import com.mapbox.search.sample.api.ForwardGeocodingKotlinExampleActivity
-import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
-import com.mapbox.search.sample.api.HistoryDataProviderKotlinExample
-import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
-import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
-import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
-import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
-import com.mapbox.search.sample.api.OfflineSearchAlongRouteExampleActivity
-import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
-import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
-import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
-import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
-import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
@@ -80,8 +69,13 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfTransformation.circle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class TileDownloadUiActivity : AppCompatActivity() {
 
     private val locationProvider: LocationProvider? = defaultLocationProvider()
 
@@ -93,12 +87,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchPlaceView: SearchPlaceBottomSheetView
 
     private lateinit var mapView: MapView
+    private lateinit var viewAnnotationManager: ViewAnnotationManager
     private lateinit var mapMarkersManager: MapMarkersManager
+
+    private lateinit var offlineSearchEngine: OfflineSearchEngine
+    private lateinit var tileStore: TileStore
+
+    private lateinit var circleInputLayout: LinearLayout
+    private lateinit var circleInputText: EditText
+    private lateinit var circleCenterPoint: EditText
+    private lateinit var circleInputSubmit: Button
+    private lateinit var searchTypeSwitch: SwitchCompat
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             when {
-                !searchPlaceView.isHidden() -> {
+                searchPlaceView.isHidden().not() -> {
                     mapMarkersManager.clearMarkers()
                     searchPlaceView.hide()
                 }
@@ -106,10 +110,6 @@ class MainActivity : AppCompatActivity() {
                     mapMarkersManager.clearMarkers()
                 }
                 else -> {
-                    if (BuildConfig.DEBUG) {
-                        error("This OnBackPressedCallback should not be enabled")
-                    }
-                    Log.i("SearchApiExample", "This OnBackPressedCallback should not be enabled")
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
@@ -119,9 +119,94 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_tiles)
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
+        circleInputLayout = findViewById(R.id.circleInputLayout)
+        circleInputLayout.visibility = View.INVISIBLE
+
+        circleInputText = findViewById(R.id.circleInputText)
+        circleCenterPoint = findViewById(R.id.circleCenterPoint)
+        circleInputSubmit = findViewById(R.id.submitCircleRadius)
+        circleInputSubmit.setOnClickListener {
+            val rawRadius = circleInputText.text.toString()
+            Log.i("MAP-CLICK", "RADIUS is '$rawRadius'")
+
+            circleInputLayout.visibility = View.INVISIBLE
+            circleInputText.setText(R.string.default_radius)
+
+            val radius = rawRadius.toIntOrNull()
+            val centerText = circleCenterPoint.text.toString()
+            val lonAndLat = centerText.split("|")
+            val lon = lonAndLat.getOrNull(0)?.toDouble()
+            val lat = lonAndLat.getOrNull(1)?.toDouble()
+            if (radius == null || radius == 0) {
+                Log.w("MAP-CLICK", "Can't parse radius, '$rawRadius'")
+            } else if (lon == null || lat == null) {
+                Log.w("MAP-CLICK", "Can't parse lon & lat, original point is '$centerText'")
+            } else lifecycleScope.launch(Dispatchers.IO) {
+                val centerPoint = Point.fromLngLat(lon, lat)
+
+                mapView.viewAnnotationManager.addViewAnnotation(
+                    // Specify the layout resource id
+                    resId = R.layout.index_region_center,
+                    // Set any view annotation options
+                    options = viewAnnotationOptions {
+                        annotationAnchor { anchor(ViewAnnotationAnchor.CENTER) }
+                        allowOverlap(true)
+                        geometry(centerPoint)
+                    }
+                )
+
+                val downloadViewAnnotation = mapView.viewAnnotationManager.addViewAnnotation(
+                    // Specify the layout resource id
+                    resId = R.layout.index_region_progress,
+                    // Set any view annotation options
+                    options = viewAnnotationOptions {
+                        annotationAnchor { anchor(ViewAnnotationAnchor.BOTTOM) }
+                        allowOverlap(true)
+                        geometry(centerPoint)
+                    }
+                )
+
+                val viewGroup = (downloadViewAnnotation as ViewGroup)
+                val downloadProgress = viewGroup[0] as TextView
+
+                val geometry = circle(
+                    centerPoint, radius.toDouble(), 64,
+                    TurfConstants.UNIT_KILOMETRES
+                )
+                // Create an instance of the Annotation API and get the polygon manager.
+                val annotationApi = mapView.annotations
+                val polygonAnnotationManager = annotationApi.createPolygonAnnotationManager()
+
+                // Set options for the resulting fill layer.
+                val polygonAnnotationOptions: PolygonAnnotationOptions = PolygonAnnotationOptions()
+                    .withGeometry(geometry)
+                    // Style the polygon that will be added to the map.
+                    .withFillColor("#ee4e8b")
+                    .withFillOpacity(0.6)
+                // Add the resulting polygon to the map.
+                polygonAnnotationManager.create(polygonAnnotationOptions)
+
+                loadRegion(centerPoint, geometry, radius, downloadProgress)
+            }
+        }
+
+        searchTypeSwitch = findViewById(R.id.searchTypeSwitch)
+        val tapHelpText = findViewById<TextView>(R.id.tapHelpText)
+        searchTypeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                searchEngineUiAdapter.searchMode = SearchMode.ONLINE
+                tapHelpText.alpha = 0.0F
+                circleInputLayout.visibility = View.INVISIBLE
+            } else {
+                searchEngineUiAdapter.searchMode = SearchMode.OFFLINE
+                tapHelpText.alpha = 1.0F
+                circleInputText.setText(R.string.default_radius)
+            }
+        }
 
         mapView = findViewById(R.id.map_view)
         mapView.mapboxMap.also { mapboxMap ->
@@ -133,10 +218,11 @@ class MainActivity : AppCompatActivity() {
 
             mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                 override fun onIndicatorPositionChanged(point: Point) {
+                    val defaultLocation = Point.fromLngLat(13.404832349386826, 52.51908033891081)
                     mapView.mapboxMap.setCamera(
                         CameraOptions.Builder()
-                            .center(point)
-                            .zoom(14.0)
+                            .center(defaultLocation)
+                            .zoom(11.0)
                             .build()
                     )
 
@@ -144,21 +230,20 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+        viewAnnotationManager = mapView.viewAnnotationManager
 
-        mapView.mapboxMap.addOnMapClickListener { point ->
-            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
-
-            mapView.mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(screenCoords),
-                RenderedQueryOptions(listOf("poi-label"), null)
-            ) {
-                it.value?.first()?.queriedFeature.let { queriedFeature ->
-                    queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
+        mapView.mapboxMap.addOnMapClickListener(object : OnMapClickListener {
+            override fun onMapClick(point: Point): Boolean {
+                Log.i("MAP-CLICK", "The point $point was clicked!")
+                if (searchTypeSwitch.isChecked) {
+                    return true
                 }
+                circleInputLayout.visibility = View.VISIBLE
+                val pointStr = "${point.longitude()}|${point.latitude()}"
+                circleCenterPoint.setText(pointStr)
+                return true
             }
-
-            true
-        }
+        })
 
         mapMarkersManager = MapMarkersManager(mapView)
         mapMarkersManager.onMarkersChangeListener = {
@@ -169,6 +254,11 @@ class MainActivity : AppCompatActivity() {
         toolbar.apply {
             title = getString(R.string.simple_ui_toolbar_title)
             setSupportActionBar(this)
+        }
+        toolbar.setTitle(R.string.action_tile_download_ui_example)
+        toolbar.setNavigationIcon(R.drawable.mapbox_search_sdk_close_drawable)
+        toolbar.setNavigationOnClickListener {
+            this.finish()
         }
 
         val apiType = if (BuildConfig.ENABLE_SBS) {
@@ -189,8 +279,24 @@ class MainActivity : AppCompatActivity() {
             settings = SearchEngineSettings()
         )
 
-        val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings()
+        // we need to create custom tilestore to manually handle tile region options
+        tileStore = TileStore.create()
+
+        // Remove previously download regions
+        tileStore.getAllTileRegions {
+            val regions = it.value
+            if (regions != null) {
+                for (region in regions) {
+                    tileStore.removeTileRegion(region.id)
+                }
+            }
+        }
+
+        // create an engine and bind it with tilestore
+        offlineSearchEngine = OfflineSearchEngine.create(
+            OfflineSearchEngineSettings(
+                tileStore = tileStore,
+            )
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
@@ -199,7 +305,7 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+        searchEngineUiAdapter.searchMode = SearchMode.ONLINE
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
@@ -231,13 +337,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+                Log.i("OFFLINE", "Got offline results")
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromOfflineSearchResult(searchResult))
                 mapMarkersManager.showMarker(searchResult.coordinate)
             }
 
             override fun onError(e: Exception) {
-                Toast.makeText(applicationContext, "Error happened: $e", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TileDownloadUiActivity, "Error happened: $e", Toast.LENGTH_SHORT).show()
             }
 
             override fun onHistoryItemClick(historyRecord: HistoryRecord) {
@@ -251,6 +358,18 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 mapMarkersManager.showMarker(historyRecord.coordinate)
+            }
+
+            private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
+                getLastLocation { location ->
+                    if (location == null) {
+                        callback(null)
+                    } else {
+                        val distance = DistanceCalculator.instance(latitude = location.latitude)
+                            .distance(location.toPoint(), destination)
+                        callback(distance)
+                    }
+                }
             }
 
             override fun onPopulateQueryClick(suggestion: SearchSuggestion, responseInfo: ResponseInfo) {
@@ -272,40 +391,12 @@ class MainActivity : AppCompatActivity() {
             searchPlaceView.hide()
         }
 
-        searchPlaceView.addOnNavigateClickListener { searchPlace ->
-            startActivity(geoIntent(searchPlace.coordinate))
-        }
-
         searchPlaceView.addOnShareClickListener { searchPlace ->
             startActivity(shareIntent(searchPlace))
         }
 
-        searchPlaceView.addOnFeedbackClickListener { _, _ ->
-            // Not implemented
-        }
-
         searchPlaceView.addOnBottomSheetStateChangedListener { _, _ ->
             updateOnBackPressedCallbackEnabled()
-        }
-
-        if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                PERMISSIONS_REQUEST_LOCATION
-            )
-        }
-    }
-
-    private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
-        getLastLocation { location ->
-            if (location == null) {
-                callback(null)
-            } else {
-                val distance = DistanceCalculator.instance(latitude = location.latitude)
-                    .distance(location.toPoint(), destination)
-                callback(distance)
-            }
         }
     }
 
@@ -321,14 +412,65 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun geoIntent(point: Point): Intent =
-        Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
+    private fun loadRegion(centerPoint: Point, geometry: Geometry, radiusKm: Int, downloadProgress: TextView) {
+        // configure address tiles download
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
-    private fun Context.isPermissionGranted(permission: String): Boolean =
-        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+        val loadOptions = TileRegionLoadOptions
+            .Builder()
+            .descriptors(descriptors)
+            .geometry(geometry)
+            .acceptExpired(true)
+            .build()
+
+        val regionId = createRegionId(centerPoint, radiusKm)
+        Log.i("SearchApiExample", "Loading regions: $regionId")
+
+        // add index observer callback to track downloads
+        offlineSearchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
+            override fun onIndexChange(event: OfflineIndexChangeEvent) {
+                if ((event.regionId == regionId) && (event.type == OfflineIndexChangeEvent.EventType.ADD || event.type == OfflineIndexChangeEvent.EventType.UPDATE)) {
+                    Log.i("SearchApiExample", "${event.regionId} was successfully added or updated")
+                }
+            }
+
+            override fun onError(event: OfflineIndexErrorEvent) {
+                Log.i("SearchApiExample", "Offline index error: ${event.regionId} $event")
+            }
+        })
+
+        // start tiles download
+        tileStore.loadTileRegion(
+            regionId,
+            loadOptions,
+            { progress ->
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val donePercent = (progress.completedResourceSize.toDouble() / progress.requiredResourceCount.toDouble()).toInt()
+                    Log.i("SearchApiExample", "Loading $regionId, done: $donePercent progress: $progress")
+                    downloadProgress.text = getString(R.string.downloaded_pc_text, donePercent)
+                }
+            },
+            { result ->
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val msg: String
+                    if (result.isValue) {
+                        msg = "Region '$regionId' was downloaded"
+                        downloadProgress.text = getString(R.string.downloaded_100pc)
+                        delay(2000)
+                        downloadProgress.text = ""
+                    } else {
+                        msg = "Error download region '$regionId', err: ${result.error}"
+                    }
+                    Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+                }
+            }
+        )
+    }
+
+    private fun createRegionId(point: Point, radius: Int) = "${point.longitude()}-${point.latitude()}-$radius"
 
     private fun updateOnBackPressedCallbackEnabled() {
-        onBackPressedCallback.isEnabled = !searchPlaceView.isHidden() || mapMarkersManager.hasMarkers
+        onBackPressedCallback.isEnabled = searchPlaceView.isHidden().not() || mapMarkersManager.hasMarkers
     }
 
     private fun closeSearchView() {
@@ -337,7 +479,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_activity_options_menu, menu)
+        menuInflater.inflate(R.menu.simple_ui_activity_options_menu, menu)
 
         val searchActionView = menu.findItem(R.id.action_search)
         searchActionView.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -355,143 +497,24 @@ class MainActivity : AppCompatActivity() {
 
         searchView = searchActionView.actionView as SearchView
         searchView.queryHint = getString(R.string.query_hint)
+        searchView.setOnSearchClickListener {
+            Log.i("SEARCH-CLICK", "WAS CLICKED!")
+            circleInputLayout.visibility = View.INVISIBLE
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                val proximity = mapView.mapboxMap.cameraState.center
+                Log.i("MAP-VIEW", "MAP bounds: $proximity")
+
                 searchEngineUiAdapter.search(newText)
                 return false
             }
         })
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.open_tile_download_ui_example -> {
-                startActivity(Intent(this, TileDownloadUiActivity::class.java))
-                true
-            }
-            R.id.open_address_autofill_ui_example -> {
-                startActivity(Intent(this, AddressAutofillUiActivity::class.java))
-                true
-            }
-            R.id.open_address_autofill_example -> {
-                startActivity(Intent(this, AddressAutofillKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_ui_example -> {
-                startActivity(Intent(this, DiscoverActivity::class.java))
-                true
-            }
-            R.id.open_discover_kotlin_example -> {
-                startActivity(Intent(this, DiscoverKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_java_example -> {
-                startActivity(Intent(this, DiscoverJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_place_autocomplete_ui_example -> {
-                startActivity(Intent(this, PlaceAutocompleteUiActivity::class.java))
-                true
-            }
-            R.id.open_place_autocomplete_kotlin_example -> {
-                startActivity(Intent(this, PlaceAutocompleteKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_custom_data_provider_kt_example -> {
-                startActivity(Intent(this, CustomIndexableDataProviderKotlinExample::class.java))
-                true
-            }
-            R.id.open_custom_data_provider_java_example -> {
-                startActivity(Intent(this, CustomIndexableDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.custom_theme_example -> {
-                startActivity(Intent(this, CustomThemeActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_kt_example -> {
-                startActivity(Intent(this, ForwardGeocodingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_java_example -> {
-                startActivity(Intent(this, ForwardGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_kt_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_java_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_reverse_geocoding_kt_example -> {
-                startActivity(Intent(this, ReverseGeocodingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_reverse_geocoding_java_example -> {
-                startActivity(Intent(this, ReverseGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_japan_search_kt_example -> {
-                startActivity(Intent(this, JapanSearchKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_japan_search_java_example -> {
-                startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_search_kt_example -> {
-                startActivity(Intent(this, CategorySearchKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_discover_search_java_example -> {
-                startActivity(Intent(this, CategorySearchJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_offline_search_java_example -> {
-                startActivity(Intent(this, OfflineSearchJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_offline_search_kt_example -> {
-                startActivity(Intent(this, OfflineSearchKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_offline_reverse_geocoding_java_example -> {
-                startActivity(Intent(this, OfflineReverseGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_offline_reverse_geocoding_kt_example -> {
-                startActivity(Intent(this, OfflineReverseGeocodingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_history_data_provider_java_example -> {
-                startActivity(Intent(this, HistoryDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.open_history_data_provider_kt_example -> {
-                startActivity(Intent(this, HistoryDataProviderKotlinExample::class.java))
-                true
-            }
-            R.id.open_favorites_data_provider_java_example -> {
-                startActivity(Intent(this, FavoritesDataProviderJavaExample::class.java))
-                true
-            }
-            R.id.open_favorites_data_provider_kt_example -> {
-                startActivity(Intent(this, FavoritesDataProviderKotlinExample::class.java))
-                true
-            }
-            R.id.open_offline_search_along_route_example -> {
-                startActivity(Intent(this, OfflineSearchAlongRouteExampleActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun getMapStyleUri(): String {
@@ -543,14 +566,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (coordinates.size == 1) {
-                CameraOptions.Builder()
+                CameraOptions
+                    .Builder()
                     .center(coordinates.first())
                     .padding(MARKERS_INSETS_OPEN_CARD)
                     .zoom(14.0)
                     .build()
             } else {
                 mapboxMap.cameraForCoordinates(
-                    coordinates, MARKERS_INSETS, bearing = null, pitch = null
+                    coordinates = coordinates,
+                    coordinatesPadding = MARKERS_INSETS,
+                    bearing = null,
+                    pitch = null
                 )
             }.also {
                 mapboxMap.setCamera(it)
@@ -571,7 +598,5 @@ class MainActivity : AppCompatActivity() {
         val MARKERS_INSETS_OPEN_CARD = EdgeInsets(
             MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, PLACE_CARD_HEIGHT, MARKERS_EDGE_OFFSET
         )
-
-        const val PERMISSIONS_REQUEST_LOCATION = 0
     }
 }

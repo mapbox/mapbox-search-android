@@ -4,6 +4,11 @@
     >
 
     <item
+        android:id="@+id/open_tile_download_ui_example"
+        android:title="@string/action_tile_download_ui_example"
+        />
+
+    <item
         android:id="@+id/open_address_autofill_ui_example"
         android:title="@string/action_address_autofill_ui_example"
         />
