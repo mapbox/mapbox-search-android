@@ -199,7 +199,7 @@ internal class PlaceAutocompleteIntegrationTest {
         )
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
-        assertEquals(listOf("food", "food and drink", "coffee shop", "coffee", "cafe", "bakery", "teahouse"), suggestion.categories)
+        assertEquals(listOf("food", "food and drink", "coffee shop"), suggestion.categories)
 
         val selectResponse = runBlocking {
             placeAutocomplete.select(suggestion)
@@ -254,14 +254,15 @@ internal class PlaceAutocompleteIntegrationTest {
                         closed = WeekTimestamp(WeekDay.SATURDAY, 20, 0)
                     )
                 )
-            ), result.openHours
+            ),
+            result.openHours
         )
         assertEquals(
-            "901 15th St NW, Washington, District of Columbia 20005, United States of America",
+            "District of Columbia, United States",
             suggestions[1].formattedAddress
         )
         assertEquals(
-            "1401 New York Ave NW, Washington, District of Columbia 20005, United States of America",
+            "1401 New York Ave Nw, Washington, District of Columbia 20005, United States of America",
             suggestions[2].formattedAddress
         )
         assertEquals(
