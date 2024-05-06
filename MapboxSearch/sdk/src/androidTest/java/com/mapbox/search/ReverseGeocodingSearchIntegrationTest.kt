@@ -11,6 +11,7 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.WeekDay
@@ -173,23 +174,23 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 "historic site",
                 "tourist attraction",
                 "monument"
-            ), searchResult.categories
+            ),
+            searchResult.categories
         )
         assertEquals("marker", searchResult.makiIcon)
         // TODO FIXME Search Native should parse accuracy
         assertEquals(null, searchResult.accuracy)
         assertEquals(listOf(SearchResultType.POI), searchResult.types)
         assertEquals(null, searchResult.etaMinutes)
+
         assertEquals(
             SearchResultMetadata(
-                // TODO FIXME parse "photos"
-                metadata = hashMapOf("photos" to "[{\"width\":50,\"height\":50,\"url\":\"https://test.com/img1.jpg\"},{\"width\":150,\"height\":150,\"url\":\"https://test.com/img2.jpg\"}]"),
                 reviewCount = 141783,
                 phone = "+33 123 45 67 89",
                 website = "https://www.toureiffel.paris/",
                 averageRating = 5.0,
                 description = "Famous symbol of France",
-                primaryPhotos = null,
+                primaryPhotos = listOf(ImageInfo(url ="https://test.com/img1.jpg", width=50, height=50), ImageInfo(url ="https://test.com/img2.jpg", width=150, height=150)),
                 otherPhotos = null,
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
