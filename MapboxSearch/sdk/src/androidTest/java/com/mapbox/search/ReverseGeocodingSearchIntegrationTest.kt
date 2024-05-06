@@ -190,7 +190,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 website = "https://www.toureiffel.paris/",
                 averageRating = 5.0,
                 description = "Famous symbol of France",
-                primaryPhotos = listOf(ImageInfo(url ="https://test.com/img1.jpg", width=50, height=50), ImageInfo(url ="https://test.com/img2.jpg", width=150, height=150)),
+                primaryPhotos = listOf(ImageInfo(url = "https://test.com/img1.jpg", width = 50, height = 50), ImageInfo(url = "https://test.com/img2.jpg", width = 150, height = 150)),
                 otherPhotos = null,
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
