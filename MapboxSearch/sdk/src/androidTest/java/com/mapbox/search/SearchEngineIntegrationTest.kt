@@ -694,165 +694,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(0, historyDataProvider.getSizeBlocking())
     }
 
-    // TODO FIXME recursive
-//    @Test
-//    fun testRecursiveQuerySelection() {
-//        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-with-recursive.json"))
-//        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-with-recursive.json"))
-//
-//        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
-//        val response = searchEngine.searchBlocking(TEST_QUERY, options)
-//
-//        val suggestions = response.requireSuggestions()
-//        assertEquals(2, suggestions.size)
-//
-//        val suggestion = suggestions.first()
-//        assertEquals("Did you mean recursion?", suggestion.name)
-//        assertEquals("Make a new search", suggestion.descriptionText)
-//        assertEquals(SearchSuggestionType.Query, suggestion.type)
-//
-//        val selectionResponse = searchEngine.selectBlocking(suggestion)
-//        assertTrue(selectionResponse.isSuggestions)
-//    }
-
-    @Test
-    fun testCategorySuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-only-categories.json"))
-
-        val callback = BlockingSearchSelectionCallback()
-        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, types = listOf(QueryType.CATEGORY))
-        searchEngine.search(TEST_QUERY, options, callback)
-
-        val res = callback.getResultBlocking()
-        assertTrue(res is SearchEngineResult.Suggestions)
-        val suggestions = (res as SearchEngineResult.Suggestions).suggestions
-
-        val baseRawCategorySuggestion = createTestBaseRawSearchResult(
-            id = "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
-            types = listOf(BaseRawResultType.CATEGORY),
-            names = listOf("Cafe"),
-            languages = listOf("en"),
-            addresses = listOf(SearchAddress()),
-            categories = listOf("Cafe"),
-            descriptionAddress = "Category",
-            fullAddress = null,
-            matchingName = "Cafe",
-            icon = "restaurant",
-            externalIDs = mapOf("federated" to "category.cafe"),
-            action = BaseSuggestAction(
-                endpoint = "retrieve",
-                path = "",
-                query = null,
-                body = "{\"id\":\"category-test-id\"}".toByteArray(),
-            ),
-        )
-
-        val expectedSearchSuggestion = BaseServerSearchSuggestion(
-            baseRawCategorySuggestion,
-            TEST_REQUEST_OPTIONS.run {
-                copy(
-                    options = options.copy(
-                        types = listOf(QueryType.CATEGORY)
-                    ),
-                    requestContext = requestContext.copy(
-                        responseUuid = "be35d556-9e14-4303-be15-57497c331348"
-                    ),
-                )
-            }.mapToBase()
-        ).mapToPlatform()
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchSuggestion, suggestions.first()))
-
-        assertEquals(SearchSuggestionType.Category("cafe"), suggestions[0].type)
-        assertEquals(SearchSuggestionType.Category("internet_cafe"), suggestions[1].type)
-
-        assertNotNull(res.responseInfo.coreSearchResponse)
-        assertTrue(res.responseInfo.isReproducible)
-
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-successful-category-cafe.json"))
-
-        callback.reset()
-        searchEngine.select(suggestions.first(), callback)
-
-        val selectionResult = callback.getResultBlocking() as SearchEngineResult.Results
-        val categoryResults = selectionResult.results
-
-        val baseRawSearchResult = createTestBaseRawSearchResult(
-            id = "ItFzVnwBAsSWFvXxpsTw",
-            mapboxId = "CkIKQDVkN2U0Zjk0MDIzOGY2NDY0NzM2NjNlMWQ0ZWQzOWM5NWJlYmEzMmIxYjM3NzExYTE2NDEzYzgwZjI0M2NmMmQ=",
-            types = listOf(BaseRawResultType.POI),
-            names = listOf("SimplexiTea"),
-            center = Point.fromLngLat(-122.41721, 37.775934),
-            accuracy = ResultAccuracy.Point,
-            languages = listOf("def"),
-            addresses = listOf(SearchAddress(
-                country = "United States of America",
-                houseNumber = "12",
-                neighborhood = "South of Market",
-                place = "San Francisco",
-                postcode = "94103",
-                region = "California",
-                street = "10th St",
-            )),
-            fullAddress = "12 10th St, San Francisco, California 94103, United States of America",
-            categories = listOf(
-                "food",
-                "food and drink",
-                "coffee shop",
-                "coffee",
-                "cafe",
-                "bubble tea",
-            ),
-            descriptionAddress = "12 10th St, San Francisco, California 94103, United States of America",
-            matchingName = "SimplexiTea",
-            icon = "restaurant",
-            externalIDs = mapOf(
-                "mbx_poi" to "category-result-id-1",
-                "federated" to "category-result-id-1-federated",
-            ),
-            distanceMeters = 1.2674344310855685E7,
-        )
-
-        val expectedSearchResult = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
-            baseRawSearchResult,
-            TEST_REQUEST_OPTIONS.run {
-                copy(
-                    options = options.copy(
-                        types = listOf(QueryType.CATEGORY)
-                    ),
-                    requestContext = requestContext.copy(
-                        responseUuid = "730bb97b-b30f-4e54-9772-8af2d4e0edf0"
-                    ),
-                )
-            }
-        )
-
-        assertTrue(compareSearchResultWithServerSearchResult(expectedSearchResult, categoryResults.first()))
-
-        assertEquals(categoryResults.size, 3)
-
-        assertNotNull(selectionResult.responseInfo.coreSearchResponse)
-        assertFalse(selectionResult.responseInfo.isReproducible)
-    }
-
-    @Test
-    fun testBrandSuggestionSelection() {
-        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-brand.json"))
-        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-category-cafe.json"))
-
-        val response = searchEngine.searchBlocking(TEST_QUERY)
-        val suggestions = response.requireSuggestions()
-        assertEquals(1, suggestions.size)
-
-        val suggestion = suggestions.first()
-        assertEquals("Starbucks", suggestion.name)
-        assertEquals(SearchSuggestionType.Brand("Starbucks", "test-external-id"), suggestion.type)
-
-        val selectionResponse = searchEngine.selectBlocking(suggestion)
-        assertTrue(selectionResponse.isResults)
-        assertEquals(3, selectionResponse.requireResults().size)
-    }
-
     @Test
     fun testSuccessfulIncorrectResponse() {
         mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful-incorrect.json"))
@@ -1093,24 +934,6 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
-    fun testSuccessfulRetrieveCallForSBS() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.SearchBox, searchEngineSettings)
-
-        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-response-successful-poi.json"))
-
-        val mapboxId = "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
-        val callback = BlockingSearchResultCallback()
-
-        searchEngine.retrieve(mapboxId, callback)
-
-        val result = callback.getResultBlocking()
-        assertTrue(result is SearchResult)
-
-        val searchResult = result as SearchResult
-        assertEquals(mapboxId, searchResult.mapboxId)
-    }
-
-    @Test
     fun testUnsuccessfulRetrieveCall() {
         searchEngine = SearchEngine.createSearchEngine(ApiType.SearchBox, searchEngineSettings)
 
@@ -1133,7 +956,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     private companion object {
 
-        const val TEST_QUERY = "Washington"
+        const val TEST_QUERY = "Minsk"
         const val TEST_ACCESS_TOKEN = "pk.test"
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
         val TEST_ORIGIN_LOCATION: Point = Point.fromLngLat(10.1, 11.12345)
