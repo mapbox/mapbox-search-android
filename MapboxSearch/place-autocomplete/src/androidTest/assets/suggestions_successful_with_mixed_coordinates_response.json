@@ -31,6 +31,17 @@
           "name": "15th st nw"
         }
       },
+      "coordinates": {
+        "latitude": 38.895037,
+        "longitude": -77.036543,
+        "routable_points": [
+          {
+            "name": "default",
+            "latitude": 38.89981619552106,
+            "longitude": -77.03364137957142
+          }
+        ]
+      },
       "language": "en",
       "maki": "marker",
       "poi_category": [
