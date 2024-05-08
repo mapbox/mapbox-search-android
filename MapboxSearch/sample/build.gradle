@@ -15,7 +15,13 @@ if (mapboxApiToken == null) {
     throw new Exception("API token is not specified.")
 }
 
-def enableSBS = project.hasProperty('ENABLE_SBS') or System.getenv('ENABLE_SBS') != null
+def enableSBS = true
+
+if (project.hasProperty('ENABLE_SBS')) {
+    enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
+} else if (System.getenv('ENABLE_SBS') != null) {
+    enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+}
 
 android {
     compileSdkVersion compile_sdk_version
