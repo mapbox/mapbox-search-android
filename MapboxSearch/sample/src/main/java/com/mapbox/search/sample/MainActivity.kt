@@ -139,19 +139,26 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        mapView.mapboxMap.addOnMapClickListener { point ->
-            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+        // only support for ApiType.SBS
+        if (BuildConfig.ENABLE_SBS) {
+            mapView.mapboxMap.addOnMapClickListener { point ->
+                val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 
-            mapView.mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(screenCoords),
-                RenderedQueryOptions(listOf("poi-label"), null)
-            ) {
-                it.value?.first()?.queriedFeature.let { queriedFeature ->
-                    queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
+                mapView.mapboxMap.queryRenderedFeatures(
+                    RenderedQueryGeometry(screenCoords),
+                    RenderedQueryOptions(listOf("poi-label"), null)
+                ) {
+                    it.value?.firstOrNull()?.queriedFeature.let { queriedFeature ->
+                        queriedFeature?.feature?.let { feature ->
+                            searchEngineUiAdapter.select(
+                                feature
+                            )
+                        }
+                    }
                 }
-            }
 
-            true
+                true
+            }
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
