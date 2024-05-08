@@ -659,6 +659,7 @@ internal class OfflineSearchEngineIntegrationTest {
             serverIndex = null,
         )
 
+        // assumes an accuracy of approximately 10 meters
         const val DOUBLE_COMPARISON_EPS = 0.0001
 
         fun Double.approximatelyEquals(other: Double) = abs(this - other) < DOUBLE_COMPARISON_EPS
