@@ -663,7 +663,7 @@ internal class OfflineSearchEngineIntegrationTest {
 
         fun Double.approximatelyEquals(other: Double) = abs(this - other) < DOUBLE_COMPARISON_EPS
 
-        fun Point?.approximatelyEquals(other: Point?, delta: Double = DOUBLE_COMPARISON_EPS): Boolean {
+        fun Point?.approximatelyEquals(other: Point?): Boolean {
             if (this == other) return true
             if (this == null || other == null) return false
             return latitude().approximatelyEquals(other.latitude()) && longitude().approximatelyEquals(other.longitude())
