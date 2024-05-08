@@ -21,7 +21,6 @@ import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createCoreSearchAddressCountry
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreSearchResult
-import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback.SearchEngineResult
