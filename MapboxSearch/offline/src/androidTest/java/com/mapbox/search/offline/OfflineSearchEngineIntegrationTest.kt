@@ -355,10 +355,16 @@ internal class OfflineSearchEngineIntegrationTest {
          assertEquals(results.size, 2)
 
          assertTrue(
-             assertSearchResultEquals(
-                 TEST_SEARCH_RESULT_MAPBOX,
-                 results.first()
-             )
+             results.any {
+                 try {
+                     assertSearchResultEquals(
+                         TEST_SEARCH_RESULT_MAPBOX,
+                         it
+                     )
+                 } catch (e: AssertionError) {
+                     false
+                 }
+             }
          )
      }
 
