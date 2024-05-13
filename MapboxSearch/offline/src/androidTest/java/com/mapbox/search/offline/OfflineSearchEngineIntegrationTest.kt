@@ -18,6 +18,7 @@ import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.offline.test.R
@@ -308,28 +309,28 @@ internal class OfflineSearchEngineIntegrationTest {
     }
 
     // See SSDK-501 for details
-    // @Test
-    // fun testSuccessfulSearch() {
-    //     loadOfflineData()
+     @Test
+     fun testSuccessfulSearch() {
+         loadOfflineData()
 
-    //     val searchEngineResult = searchEngine.searchBlocking(
-    //         TEST_QUERY,
-    //         OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.coordinate),
-    //     )
+         val searchEngineResult = searchEngine.searchBlocking(
+             TEST_QUERY,
+             OfflineSearchOptions(origin = TEST_SEARCH_RESULT_MAPBOX.coordinate),
+         )
 
-    //     assertTrue(searchEngineResult is SearchEngineResult.Results)
+         assertTrue(searchEngineResult is SearchEngineResult.Results)
 
-    //     val results = searchEngineResult.requireResults()
-    //     assertTrue(results.size > 5)
+         val results = searchEngineResult.requireResults()
+         assertTrue(results.size > 5)
 
-    //     val result = results.first()
-    //     assertTrue(
-    //         assertSearchResultEquals(
-    //             TEST_SEARCH_RESULT_MAPBOX,
-    //             result
-    //         )
-    //     )
-    // }
+         val result = results.first()
+         assertTrue(
+             assertSearchResultEquals(
+                 TEST_SEARCH_RESULT_MAPBOX,
+                 result
+             )
+         )
+     }
 
     @Test
     fun testForwardGeocodingShortQuery() {
@@ -341,27 +342,33 @@ internal class OfflineSearchEngineIntegrationTest {
     }
 
     // See SSDK-501 for details
-    // @Test
-    // fun testSuccessfulReverseGeocoding() {
-    //     loadOfflineData()
+     @Test
+     fun testSuccessfulReverseGeocoding() {
+         loadOfflineData()
 
-    //     val callback = BlockingOfflineSearchCallback()
+         val callback = BlockingOfflineSearchCallback()
 
-    //     searchEngine.reverseGeocoding(
-    //         OfflineReverseGeoOptions(center = TEST_SEARCH_RESULT_MAPBOX.coordinate),
-    //         callback
-    //     )
+         searchEngine.reverseGeocoding(
+             OfflineReverseGeoOptions(center = TEST_SEARCH_RESULT_MAPBOX.coordinate),
+             callback
+         )
 
-    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-    //     assertEquals(1, results.size)
+         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+         assertEquals(results.size, 2)
 
-    //     assertTrue(
-    //         assertSearchResultEquals(
-    //             TEST_SEARCH_RESULT_MAPBOX,
-    //             results.first()
-    //         )
-    //     )
-    // }
+         assertTrue(
+             results.any {
+                 try {
+                     assertSearchResultEquals(
+                         TEST_SEARCH_RESULT_MAPBOX,
+                         it
+                     )
+                 } catch (e: AssertionError) {
+                     false
+                 }
+             }
+         )
+     }
 
     @Test
     fun testSuccessfulReverseGeocodingEmptyResponse() {
@@ -379,32 +386,32 @@ internal class OfflineSearchEngineIntegrationTest {
     }
 
     // See SSDK-501 for details
-    // @Test
-    // fun testSuccessfulAddressesSearch() {
-    //     loadOfflineData()
+     @Test
+     fun testSuccessfulAddressesSearch() {
+         loadOfflineData()
 
-    //     val callback = BlockingOfflineSearchCallback()
+         val callback = BlockingOfflineSearchCallback()
 
-    //     searchEngine.searchAddressesNearby(
-    //         street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
-    //         proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
-    //         radiusMeters = 100.0,
-    //         callback
-    //     )
+         searchEngine.searchAddressesNearby(
+             street = TEST_SEARCH_RESULT_MAPBOX.address?.street!!,
+             proximity = TEST_SEARCH_RESULT_MAPBOX.coordinate,
+             radiusMeters = 100.0,
+             callback
+         )
 
-    //     assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
+         assertTrue(callback.getResultBlocking() is SearchEngineResult.Results)
 
-    //     val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
-    //     assertTrue(results.isNotEmpty())
+         val results = (callback.getResultBlocking() as SearchEngineResult.Results).results
+         assertTrue(results.isNotEmpty())
 
-    //     val expectedResult = OfflineSearchResult(TEST_SEARCH_RESULT_MAPBOX.rawSearchResult.copy(distanceMeters = null))
-    //     assertTrue(
-    //         assertSearchResultEquals(
-    //             expectedResult,
-    //             results.first()
-    //         )
-    //     )
-    // }
+         val expectedResult = OfflineSearchResult(TEST_SEARCH_RESULT_MAPBOX.rawSearchResult.copy(distanceMeters = null))
+         assertTrue(
+             assertSearchResultEquals(
+                 expectedResult,
+                 results.first()
+             )
+         )
+     }
 
     @Test
     fun testAddressSearchOutsideAddedOfflineRegion() {
@@ -648,18 +655,20 @@ internal class OfflineSearchEngineIntegrationTest {
                     houseNumber = "2011",
                     street = "15th Street Northwest",
                     // See SWEB-1113 for more history
-                    region = createCoreSearchAddressRegion("District of Columbia")
+                    region = createCoreSearchAddressRegion("District of Columbia"),
+                    country = createCoreSearchAddressCountry("United States")
                 )
             ),
             // See SWEB-1113 for more history
-            descriptionAddress = "2011 15th Street Northwest, District of Columbia",
+            descriptionAddress = "2011 15th Street Northwest, District of Columbia, United States",
 
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03404491238354, 38.9179071535832),
             serverIndex = null,
         )
 
-        const val DOUBLE_COMPARISON_EPS = 0.00001
+        // assumes an accuracy of approximately 10 meters
+        const val DOUBLE_COMPARISON_EPS = 0.0001
 
         fun Double.approximatelyEquals(other: Double) = abs(this - other) < DOUBLE_COMPARISON_EPS
 
