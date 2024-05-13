@@ -494,7 +494,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 override fun onEngineReady() {
                     viewModelScope.launch {
                         val offlineSearchState = offlineSearchData.value
-                        offlineSearchData.postValue(offlineSearchState?.copy(searchEngineReady = true))
+                        offlineSearchData.value = offlineSearchState?.copy(searchEngineReady = true)
                     }
                 }
             })
