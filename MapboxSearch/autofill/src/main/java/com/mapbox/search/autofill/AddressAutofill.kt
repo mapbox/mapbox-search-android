@@ -62,6 +62,7 @@ public interface AddressAutofill {
          * By default [LocationProvider] is provided by [LocationServiceFactory].
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
+         * @param locationObservationTimeout to be used in LocationEngineAdapter. null - default value
          *
          * @return a new instance instance of [AddressAutofill].
          */
@@ -69,10 +70,12 @@ public interface AddressAutofill {
         @JvmOverloads
         public fun create(
             locationProvider: LocationProvider? = defaultLocationProvider(),
+            locationObservationTimeout: Long? = null
         ): AddressAutofill {
             return AddressAutofillImpl.create(
                 app = BaseSearchSdkInitializer.app,
-                locationProvider = locationProvider
+                locationProvider = locationProvider,
+                locationObservationTimeout = locationObservationTimeout,
             )
         }
     }

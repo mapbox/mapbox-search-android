@@ -9,6 +9,8 @@ class WrapperLocationProvider(
     private val viewportProvider: (() -> CoreBoundingBox?)?
 ) : CoreLocationProvider {
 
+    fun getLocationProvider() = locationProvider
+
     override fun getLocation(): Point? {
         return locationProvider?.location
     }

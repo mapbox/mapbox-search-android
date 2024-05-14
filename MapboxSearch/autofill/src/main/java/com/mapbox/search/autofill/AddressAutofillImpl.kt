@@ -86,7 +86,7 @@ internal class AddressAutofillImpl(
 
         return if (suggestion.underlying == null) {
             ExpectedFactory.createError(Exception("AddressAutofillSuggestion doesn't contain underlying suggestion"))
-         } else {
+        } else {
             val baseResult = selectRaw(suggestion.underlying).value
             if (baseResult == null) {
                 ExpectedFactory.createError(Exception("No results for suggestion $suggestion"))
@@ -117,6 +117,7 @@ internal class AddressAutofillImpl(
         fun create(
             app: Application,
             locationProvider: LocationProvider?,
+            locationObservationTimeout: Long?,
         ): AddressAutofillImpl {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
@@ -126,7 +127,7 @@ internal class AddressAutofillImpl(
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(
-                    LocationEngineAdapter(app, locationProvider),
+                    LocationEngineAdapter(app, locationProvider).apply { if (locationObservationTimeout != null) setObservationTimeout(locationObservationTimeout) },
                     null
                 ),
             )

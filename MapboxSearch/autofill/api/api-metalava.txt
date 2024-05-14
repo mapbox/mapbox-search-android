@@ -2,7 +2,8 @@
 package com.mapbox.search.autofill {
 
   public interface AddressAutofill {
-    method public default static com.mapbox.search.autofill.AddressAutofill create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public default static com.mapbox.search.autofill.AddressAutofill create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), Long? locationObservationTimeout = null);
+    method public default static final com.mapbox.search.autofill.AddressAutofill create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public default static final com.mapbox.search.autofill.AddressAutofill create();
     method public suspend Object? reverse(com.mapbox.geojson.Point point, com.mapbox.search.autofill.AddressAutofillOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autofill.AddressAutofillResult>>> p);
     method public suspend Object? select(com.mapbox.search.autofill.AddressAutofillSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autofill.AddressAutofillResult>> p);
@@ -11,6 +12,7 @@ package com.mapbox.search.autofill {
   }
 
   public static final class AddressAutofill.Companion {
+    method public com.mapbox.search.autofill.AddressAutofill create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), Long? locationObservationTimeout = null);
     method public com.mapbox.search.autofill.AddressAutofill create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public com.mapbox.search.autofill.AddressAutofill create();
   }
