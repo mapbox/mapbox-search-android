@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SearchListener</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../../index.html">
+                    <span>ui</span>
+            </a>
+    </div>
+    <div>
+2.0.0-configurable-location-timeout    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="ui::com.mapbox.search.ui.adapter.engines/SearchEngineUiAdapter.SearchListener///PointingToDeclaration//-1368162426">
+  <div class="breadcrumbs"><a href="../../../../index.html">ui</a><span class="delimiter">/</span><a href="../../index.html">com.mapbox.search.ui.adapter.engines</a><span class="delimiter">/</span><a href="../index.html">SearchEngineUiAdapter</a><span class="delimiter">/</span><span class="current">SearchListener</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Search</span><wbr></wbr><span><span>Listener</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">SearchListener</a></div><p class="paragraph">Search results view listener.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1238213216%2FFunctions%2F-1368162426" anchor-label="onError" id="-1238213216%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-error.html"><span>on</span><wbr></wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1238213216%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-error.html"><span class="token function">onError</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">e<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when error occurs during the search request, i.e. when one of <span data-unresolved-link="com.mapbox.search/SearchSuggestionsCallback/onError/#java.lang.Exception/PointingToDeclaration/">SearchSuggestionsCallback.onError</span>, <span data-unresolved-link="com.mapbox.search/SearchSelectionCallback/onError/#java.lang.Exception/PointingToDeclaration/">SearchSelectionCallback.onError</span>, <span data-unresolved-link="com.mapbox.search.offline/OfflineSearchCallback/onError/#java.lang.Exception/PointingToDeclaration/">OfflineSearchCallback.onError</span> callbacks called. When this happens, error information is displayed on the <span data-unresolved-link="com.mapbox.search.ui.adapter.engines/SearchEngineUiAdapter/view/#/PointingToDeclaration/">view</span>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1044530332%2FFunctions%2F-1368162426" anchor-label="onFeedbackItemClick" id="1044530332%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-feedback-item-click.html"><span>on</span><wbr></wbr><span>Feedback</span><wbr></wbr><span>Item</span><wbr></wbr><span><span>Click</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1044530332%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-feedback-item-click.html"><span class="token function">onFeedbackItemClick</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when &quot;Missing result&quot; button is clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2052812942%2FFunctions%2F-1368162426" anchor-label="onHistoryItemClick" id="2052812942%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-history-item-click.html"><span>on</span><wbr></wbr><span>History</span><wbr></wbr><span>Item</span><wbr></wbr><span><span>Click</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2052812942%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-history-item-click.html"><span class="token function">onHistoryItemClick</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">historyRecord<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.record/HistoryRecord///PointingToDeclaration/">HistoryRecord</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when a history item is clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="581613693%2FFunctions%2F-1368162426" anchor-label="onOfflineSearchResultSelected" id="581613693%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-offline-search-result-selected.html"><span>on</span><wbr></wbr><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span>Result</span><wbr></wbr><span><span>Selected</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="581613693%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-offline-search-result-selected.html"><span class="token function">onOfflineSearchResultSelected</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">searchResult<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.offline/OfflineSearchResult///PointingToDeclaration/">OfflineSearchResult</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.offline/OfflineResponseInfo///PointingToDeclaration/">OfflineResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when a user when a user selects one of the currently displayed <span data-unresolved-link="com.mapbox.search.offline/OfflineSearchResult///PointingToDeclaration/">OfflineSearchResult</span>s.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2120611342%2FFunctions%2F-1368162426" anchor-label="onOfflineSearchResultsShown" id="2120611342%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-offline-search-results-shown.html"><span>on</span><wbr></wbr><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span>Results</span><wbr></wbr><span><span>Shown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2120611342%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-offline-search-results-shown.html"><span class="token function">onOfflineSearchResultsShown</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">results<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.offline/OfflineSearchResult///PointingToDeclaration/">OfflineSearchResult</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.offline/OfflineResponseInfo///PointingToDeclaration/">OfflineResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when offline search results shown, i.e. when <span data-unresolved-link="com.mapbox.search.offline/OfflineSearchCallback/onResults/#kotlin.collections.List[com.mapbox.search.offline.OfflineSearchResult]#com.mapbox.search.offline.OfflineResponseInfo/PointingToDeclaration/">OfflineSearchCallback.onResults</span> callback called.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1000339260%2FFunctions%2F-1368162426" anchor-label="onPopulateQueryClick" id="-1000339260%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-populate-query-click.html"><span>on</span><wbr></wbr><span>Populate</span><wbr></wbr><span>Query</span><wbr></wbr><span><span>Click</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1000339260%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-populate-query-click.html"><span class="token function">onPopulateQueryClick</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">suggestion<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">SearchSuggestion</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when search suggestion's &quot;Populate query&quot; button is clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-894037657%2FFunctions%2F-1368162426" anchor-label="onSearchResultSelected" id="-894037657%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-search-result-selected.html"><span>on</span><wbr></wbr><span>Search</span><wbr></wbr><span>Result</span><wbr></wbr><span><span>Selected</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-894037657%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-search-result-selected.html"><span class="token function">onSearchResultSelected</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">searchResult<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.result/SearchResult///PointingToDeclaration/">SearchResult</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when a user retrieves <span data-unresolved-link="com.mapbox.search.result/SearchResult///PointingToDeclaration/">SearchResult</span> from one of currently displayed on the <span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">view</span>s (i.e. when <span data-unresolved-link="com.mapbox.search/SearchSelectionCallback/onResult/#com.mapbox.search.result.SearchSuggestion#com.mapbox.search.result.SearchResult#com.mapbox.search.ResponseInfo/PointingToDeclaration/">SearchSelectionCallback.onResult</span> callback is called) or when the user selects one of the currently displayed <span data-unresolved-link="com.mapbox.search.result/SearchResult///PointingToDeclaration/">SearchResult</span>'s.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1684676928%2FFunctions%2F-1368162426" anchor-label="onSearchResultsShown" id="1684676928%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-search-results-shown.html"><span>on</span><wbr></wbr><span>Search</span><wbr></wbr><span>Results</span><wbr></wbr><span><span>Shown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1684676928%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-search-results-shown.html"><span class="token function">onSearchResultsShown</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">suggestion<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">SearchSuggestion</span><span class="token punctuation">, </span></span><span class="parameter ">results<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.result/SearchResult///PointingToDeclaration/">SearchResult</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when multiple search results displayed on the <span data-unresolved-link="com.mapbox.search.ui.adapter.engines/SearchEngineUiAdapter/view/#/PointingToDeclaration/">view</span>. This happens when <span data-unresolved-link="com.mapbox.search/SearchSelectionCallback/onResults/#com.mapbox.search.result.SearchSuggestion#kotlin.collections.List[com.mapbox.search.result.SearchResult]#com.mapbox.search.ResponseInfo/PointingToDeclaration/">SearchSelectionCallback.onResults</span> callback called.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1425047059%2FFunctions%2F-1368162426" anchor-label="onSuggestionSelected" id="-1425047059%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-suggestion-selected.html"><span>on</span><wbr></wbr><span>Suggestion</span><wbr></wbr><span><span>Selected</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1425047059%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-suggestion-selected.html"><span class="token function">onSuggestionSelected</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">searchSuggestion<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">SearchSuggestion</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Called when a suggestion is clicked. This allows listeners to get a chance to process click on their own. <a href="../../../com.mapbox.search.ui.view/-search-results-view/index.html">SearchResultsView</a> will not process the click if this function returns true. If multiple listeners are registered and any of them has processed the click, all the remaining listeners will not be invoked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1906243298%2FFunctions%2F-1368162426" anchor-label="onSuggestionsShown" id="-1906243298%2FFunctions%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-suggestions-shown.html"><span>on</span><wbr></wbr><span>Suggestions</span><wbr></wbr><span><span>Shown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1906243298%2FFunctions%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-suggestions-shown.html"><span class="token function">onSuggestionsShown</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">suggestions<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">SearchSuggestion</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when the suggestions are received and displayed on the <span data-unresolved-link="com.mapbox.search.ui.adapter.engines/SearchEngineUiAdapter/view/#/PointingToDeclaration/">view</span>. This happens when <span data-unresolved-link="com.mapbox.search/SearchSuggestionsCallback/onSuggestions/#kotlin.collections.List[com.mapbox.search.result.SearchSuggestion]#com.mapbox.search.ResponseInfo/PointingToDeclaration/">SearchSuggestionsCallback.onSuggestions</span> callback called.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
