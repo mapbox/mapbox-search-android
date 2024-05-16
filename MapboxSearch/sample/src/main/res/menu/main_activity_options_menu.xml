@@ -19,6 +19,11 @@
         />
 
     <item
+        android:id="@+id/open_offline_search_along_route_example"
+        android:title="@string/action_open_offline_search_along_route_example"
+        />
+
+    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
         android:title=""
@@ -103,17 +108,13 @@
                 android:id="@+id/open_favorites_data_provider_kt_example"
                 android:title="@string/action_open_favorites_data_provider_kt_example"
                 />
-
-            <item
-                android:id="@+id/open_offline_search_along_route_example"
-                android:title="@string/action_open_offline_search_along_route_example"
-                />
         </menu>
     </item>
 
     <item
         android:id="@+id/java_examples"
         android:title="@string/java_examples"
+        android:visible="false"
         >
 
         <menu>

@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.common.AsyncOperationTask
@@ -11,40 +9,45 @@ import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.sample.R
 import java.util.UUID
 
-class FavoritesDataProviderKotlinExample : AppCompatActivity() {
+class FavoritesDataProviderKotlinExample : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_open_favorites_data_provider_kt_example
 
     private val favoritesDataProvider = ServiceProvider.INSTANCE.favoritesDataProvider()
 
-    private lateinit var task: AsyncOperationTask
+    private var task: AsyncOperationTask? = null
 
     private val retrieveFavoritesCallback: CompletionCallback<List<FavoriteRecord>> =
         object : CompletionCallback<List<FavoriteRecord>> {
             override fun onComplete(result: List<FavoriteRecord>) {
-                Log.i("SearchApiExample", "Favorite records: $result")
+                logI("SearchApiExample", "Favorite records:", result)
+                onFinished()
             }
 
             override fun onError(e: Exception) {
-                Log.i("SearchApiExample", "Unable to retrieve favorite records", e)
+                logI("SearchApiExample", "Unable to retrieve favorite records", e)
+                onFinished()
             }
         }
 
     private val addFavoriteCallback: CompletionCallback<Unit> = object : CompletionCallback<Unit> {
         override fun onComplete(result: Unit) {
-            Log.i("SearchApiExample", "Favorite record added")
+            logI("SearchApiExample", "Favorite record added")
             task = favoritesDataProvider.getAll(retrieveFavoritesCallback)
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Unable to add a new favorite record", e)
+            logI("SearchApiExample", "Unable to add a new favorite record", e)
         }
     }
 
     private val onDataChangedListener: OnDataChangedListener<FavoriteRecord> =
         object : OnDataChangedListener<FavoriteRecord> {
             override fun onDataChanged(newData: List<FavoriteRecord>) {
-                Log.i("SearchApiExample", "Favorites data changed. New data: $newData")
+                logI("SearchApiExample", "Favorites data changed. New data:", newData)
             }
         }
 
@@ -52,7 +55,9 @@ class FavoritesDataProviderKotlinExample : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         favoritesDataProvider.addOnDataChangedListener(onDataChangedListener)
+    }
 
+    override fun startExample() {
         val newFavorite = FavoriteRecord(
             id = UUID.randomUUID().toString(),
             name = "Paris Eiffel Tower",
@@ -71,7 +76,7 @@ class FavoritesDataProviderKotlinExample : AppCompatActivity() {
 
     override fun onDestroy() {
         favoritesDataProvider.removeOnDataChangedListener(onDataChangedListener)
-        task.cancel()
+        task?.cancel()
         super.onDestroy()
     }
 }
