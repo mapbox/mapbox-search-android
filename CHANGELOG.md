@@ -4,7 +4,9 @@
 
 ### New features
 - Location observer timeout can be configured now
-
+- Updated default sample activity to default to `ApiType.SBS`
+- Fixed a synchronization issue in `OfflineSearchAlongRouteExampleActivity`
+- Fixed a bug in the default sample activity that crashed the activity when clicking on the map
 
 
 ## 2.0.0
