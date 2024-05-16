@@ -67,6 +67,14 @@ package com.mapbox.search.ui.adapter.engines {
 
 }
 
+package com.mapbox.search.ui.adapter.location {
+
+  public final class LocationObservationTimeoutSetterKt {
+    method public static void setLocationObservationTimeout(Long? timeout);
+  }
+
+}
+
 package com.mapbox.search.ui.utils {
 
   public final class ThemePatcherKt {
