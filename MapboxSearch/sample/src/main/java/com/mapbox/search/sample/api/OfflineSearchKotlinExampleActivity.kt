@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
@@ -19,33 +17,38 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 
-class OfflineSearchKotlinExampleActivity : Activity() {
+class OfflineSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_open_offline_search_kt_example
 
     private lateinit var searchEngine: OfflineSearchEngine
-    private lateinit var tilesLoadingTask: Cancelable
+    private var tilesLoadingTask: Cancelable? = null
     private var searchRequestTask: AsyncOperationTask? = null
+
+    private val tileStore = TileStore.create()
+    private lateinit var tileRegionLoadOptions: TileRegionLoadOptions
+    private val tileRegionId = "Washington DC"
 
     private val engineReadyCallback = object : OfflineSearchEngine.EngineReadyCallback {
         override fun onEngineReady() {
-            Log.i("SearchApiExample", "Engine is ready")
+            logI("SearchApiExample", "Engine is ready")
         }
     }
 
     private val searchCallback = object : OfflineSearchCallback {
 
         override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-            Log.i("SearchApiExample", "Search results: $results")
+            logI("SearchApiExample", "Search results:", results)
+            onFinished()
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Search error", e)
+            logI("SearchApiExample", "Search error", e)
+            onFinished()
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val tileStore = TileStore.create()
 
         searchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
@@ -58,10 +61,10 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
         val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
 
-        val tileRegionId = "Washington DC"
         val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
 
-        val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
+        tileRegionLoadOptions = TileRegionLoadOptions
+            .Builder()
             .descriptors(descriptors)
             .geometry(dcLocation)
             .acceptExpired(true)
@@ -70,7 +73,7 @@ class OfflineSearchKotlinExampleActivity : Activity() {
         searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
             override fun onIndexChange(event: OfflineIndexChangeEvent) {
                 if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
-                    Log.i("SearchApiExample", "$tileRegionId was successfully added or updated")
+                    logI("SearchApiExample", "$tileRegionId was successfully added or updated")
 
                     searchRequestTask = searchEngine.search(
                         "2011 15th Street Northwest, Washington, District of Columbia",
@@ -81,21 +84,23 @@ class OfflineSearchKotlinExampleActivity : Activity() {
             }
 
             override fun onError(event: OfflineIndexErrorEvent) {
-                Log.i("SearchApiExample", "Offline index error: $event")
+                logI("SearchApiExample", "Offline index error: $event")
+                onFinished()
             }
         })
+    }
 
-        Log.i("SearchApiExample", "Loading tiles...")
-
+    override fun startExample() {
+        logI("SearchApiExample", "Loading tiles...")
         tilesLoadingTask = tileStore.loadTileRegion(
             tileRegionId,
             tileRegionLoadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+            { progress -> logI("SearchApiExample", "Loading progress: $progress") },
             { result ->
                 if (result.isValue) {
-                    Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                    logI("SearchApiExample", "Tiles successfully loaded: ${result.value}")
                 } else {
-                    Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
+                    logI("SearchApiExample", "Tiles loading error: ${result.error}")
                 }
             }
         )
@@ -103,7 +108,7 @@ class OfflineSearchKotlinExampleActivity : Activity() {
 
     override fun onDestroy() {
         searchEngine.removeEngineReadyCallback(engineReadyCallback)
-        tilesLoadingTask.cancel()
+        tilesLoadingTask?.cancel()
         searchRequestTask?.cancel()
         super.onDestroy()
     }

@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
@@ -13,23 +11,27 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
 
-class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
+class ReverseGeocodingKotlinExampleActivity : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_open_reverse_geocoding_kt_example
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var searchRequestTask: AsyncOperationTask
+    private var searchRequestTask: AsyncOperationTask? = null
 
     private val searchCallback = object : SearchCallback {
 
         override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
             if (results.isEmpty()) {
-                Log.i("SearchApiExample", "No reverse geocoding results")
+                logI("SearchApiExample", "No reverse geocoding results")
             } else {
-                Log.i("SearchApiExample", "Reverse geocoding results: $results")
+                logI("SearchApiExample", "Reverse geocoding results:", results)
             }
+            onFinished()
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Reverse geocoding error", e)
+            logI("SearchApiExample", "Reverse geocoding error", e)
+            onFinished()
         }
     }
 
@@ -39,7 +41,9 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
+    }
 
+    override fun startExample() {
         val options = ReverseGeoOptions(
             center = Point.fromLngLat(2.294434, 48.858349),
             limit = 1
@@ -48,7 +52,7 @@ class ReverseGeocodingKotlinExampleActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        searchRequestTask.cancel()
+        searchRequestTask?.cancel()
         super.onDestroy()
     }
 }

@@ -41,11 +41,11 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
             if (suggestions.isEmpty()) {
                 logI("SearchApiExample", "No suggestions found", suggestions)
+                onFinished()
             } else {
                 logI("SearchApiExample", "Search suggestions: ${prettify(suggestions)}\nSelecting first suggestion...")
                 searchRequestTask = searchEngine?.select(suggestions.first(), this)
             }
-            onFinished()
         }
 
         override fun onResult(
