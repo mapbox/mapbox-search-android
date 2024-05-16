@@ -1,8 +1,13 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0
+## 2.1.0
 
-## 2.0.0-rc.1
+### New features
+- Location observer timeout can be configured now
+
+
+
+## 2.0.0
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID
