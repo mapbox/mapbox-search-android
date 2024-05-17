@@ -1,8 +1,15 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0
+## 2.1.0
 
-## 2.0.0-rc.1
+### New features
+- Location observer timeout can be configured now
+- Updated default sample activity to default to `ApiType.SBS`
+- Fixed a synchronization issue in `OfflineSearchAlongRouteExampleActivity`
+- Fixed a bug in the default sample activity that crashed the activity when clicking on the map
+
+
+## 2.0.0
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID
