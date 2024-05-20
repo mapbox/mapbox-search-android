@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature"
+    },
+    {
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -77.031342,
+          38.897361
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Maison Kayser",
+        "mapbox_id": "CkIKQDQ0MzBmNmJkMTY5N2VlZmMyZjQ4MDZhYjQzMzdjMmI4ODliNmI4MzI0YzlhNTU4NzE0MDMyMGM2ZmNkNThhMjc=",
+        "feature_type": "poi",
+        "address": "1345 F St NW North side of F between 13th and 14th Streets",
+        "full_address": "1345 F St NW North side of F between 13th and 14th Streets, Washington, District of Columbia 20005, United States of America",
+        "place_formatted": "Washington, District of Columbia 20005, United States of America"
+      }
+    }
+  ],
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}

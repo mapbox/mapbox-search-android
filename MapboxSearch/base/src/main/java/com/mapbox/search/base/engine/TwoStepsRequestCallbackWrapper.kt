@@ -20,6 +20,7 @@ import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.base.throwDebug
+import com.mapbox.search.base.utils.InternalIgnorableException
 import com.mapbox.search.base.utils.extension.toPlatformHttpException
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.SearchCancellationException
@@ -184,8 +185,10 @@ class TwoStepsRequestCallbackWrapper(
                         ) {
                             if (it.isFailure) {
                                 val e = it.exceptionOrNull()
-                                throwDebug(e) {
-                                    "Can't create suggestions ${response.results}: ${e?.message}"
+                                if (e !is InternalIgnorableException) {
+                                    throwDebug(e) {
+                                        "Can't create suggestions ${response.results}: ${e?.message}"
+                                    }
                                 }
                             }
 

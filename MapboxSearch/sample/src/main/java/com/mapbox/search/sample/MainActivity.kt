@@ -178,7 +178,9 @@ class MainActivity : AppCompatActivity() {
             setSupportActionBar(this)
         }
 
-        val apiType = if (BuildConfig.ENABLE_SBS) {
+        val apiType = if (BuildConfig.ENABLE_SEARCH_BOX) {
+            ApiType.SEARCH_BOX
+        } else if (BuildConfig.ENABLE_SBS) {
             ApiType.SBS
         } else {
             ApiType.GEOCODING

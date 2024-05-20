@@ -6,6 +6,7 @@ import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.InternalIgnorableException
 import com.mapbox.search.common.AsyncOperationTask
 import java.util.concurrent.Executor
 
@@ -85,8 +86,16 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 }
             }
             CoreApiType.SEARCH_BOX -> {
-                callback(Result.failure(Exception("Search Box is not supported yet")))
-                return AsyncOperationTaskImpl.COMPLETED
+                if (searchResult.action == null) {
+                    if (searchResult.type == BaseRawResultType.QUERY) {
+                        callback(Result.failure(InternalIgnorableException("Skipping query suggestion without action")))
+                        return AsyncOperationTaskImpl.COMPLETED
+                    } else if (searchResult.type != BaseRawResultType.USER_RECORD) {
+                        failDebug { "Can't create search suggestion from. ${debugInfo()}" }
+                        callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
+                        return AsyncOperationTaskImpl.COMPLETED
+                    }
+                }
             }
         }
 

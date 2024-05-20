@@ -15,12 +15,25 @@ if (mapboxApiToken == null) {
     throw new Exception("API token is not specified.")
 }
 
-def enableSBS = true
+def enableSBS = null
+def enableSearchBox = null
 
-if (project.hasProperty('ENABLE_SBS')) {
-    enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
-} else if (System.getenv('ENABLE_SBS') != null) {
-    enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+if (project.hasProperty('ENABLE_SEARCH_BOX')) {
+    enableSearchBox = Boolean.valueOf(project.property('ENABLE_SEARCH_BOX'))
+} else if (System.getenv('ENABLE_SEARCH_BOX') != null) {
+    enableSearchBox = Boolean.valueOf(System.getenv('ENABLE_SEARCH_BOX'))
+}
+
+if (enableSearchBox == null) {
+    if (project.hasProperty('ENABLE_SBS')) {
+        enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
+    } else if (System.getenv('ENABLE_SBS') != null) {
+        enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+    }
+
+    enableSearchBox = false
+} else {
+    enableSBS = false
 }
 
 android {
@@ -29,6 +42,7 @@ android {
     defaultConfig {
         buildConfigField "boolean", "COVERAGE_ENABLED", "${project.hasProperty('coverage')}"
         buildConfigField "boolean", "ENABLE_SBS", "${enableSBS}"
+        buildConfigField "boolean", "ENABLE_SEARCH_BOX", "${enableSearchBox}"
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         applicationId "com.mapbox.search.sample"
