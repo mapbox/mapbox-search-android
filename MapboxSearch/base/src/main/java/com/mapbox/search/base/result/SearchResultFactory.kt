@@ -124,7 +124,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    CoreApiType.SBS, CoreApiType.AUTOFILL -> {
+                    CoreApiType.SEARCH_BOX, CoreApiType.SBS, CoreApiType.AUTOFILL -> {
                         if (searchResult.types.isValidMultiType()) {
                             val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                             callback(Result.success(value))
@@ -135,10 +135,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                             AsyncOperationTaskImpl.COMPLETED
                         }
                     }
-                    CoreApiType.SEARCH_BOX -> {
-                        // TODO Support Search Box
-                        error("Unsupported api type SEARCH_BOX")
-                    }
+                    else -> error("Unsupported API type: $apiType")
                 }
             }
             BaseRawResultType.BRAND -> {

@@ -873,7 +873,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testGeocodingCzechAddressFormatting() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.Geocoding, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions-successful-czech.json"))
 
@@ -931,7 +931,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testMetadataForGeocodingAPI() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.Geocoding, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.GEOCODING, searchEngineSettings)
 
         mockServer.enqueue(createSuccessfulResponse("geocoding_responses/suggestions.json"))
 
@@ -945,7 +945,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
     @Test
     fun testUnsuccessfulRetrieveCall() {
-        searchEngine = SearchEngine.createSearchEngine(ApiType.SearchBox, searchEngineSettings)
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SEARCH_BOX, searchEngineSettings)
 
         mockServer.enqueue(MockResponse().setResponseCode(404))
 
