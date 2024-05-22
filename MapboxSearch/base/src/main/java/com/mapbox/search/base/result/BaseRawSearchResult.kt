@@ -71,6 +71,7 @@ data class BaseRawSearchResult(
     val extractedBrandName: String?
         get() = brand?.firstOrNull { it.isNotEmpty() } ?: names.firstOrNull { it.isNotEmpty() }
 
+    // TODO If there is a brand result it will fail for SEARCH_BOX as extractedBrandId is null (as brandId is null and externalIDs is null)
     @IgnoredOnParcel
     val isValidBrandType: Boolean
         get() = type == BaseRawResultType.BRAND &&

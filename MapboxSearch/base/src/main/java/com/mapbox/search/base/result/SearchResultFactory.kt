@@ -86,7 +86,16 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 }
             }
             CoreApiType.SEARCH_BOX -> {
-                if (searchResult.action == null) {
+                if (searchResult.type == BaseRawResultType.BRAND) {
+                    val result = if (searchResult.isValidBrandType) {
+                        val value = BaseServerSearchSuggestion(searchResult, requestOptions)
+                        Result.success(value)
+                    } else {
+                        Result.failure(InternalIgnorableException("Skipping invalid BRAND search result"))
+                    }
+                    callback(result)
+                    return AsyncOperationTaskImpl.COMPLETED
+                } else if (searchResult.action == null) {
                     if (searchResult.type == BaseRawResultType.QUERY) {
                         callback(Result.failure(InternalIgnorableException("Skipping query suggestion without action")))
                         return AsyncOperationTaskImpl.COMPLETED
