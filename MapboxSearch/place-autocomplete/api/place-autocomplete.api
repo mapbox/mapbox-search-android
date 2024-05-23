@@ -9,6 +9,7 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 	public static final field Companion Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;
 	public static fun create ()Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public static fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static fun create (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/internal/bindgen/ApiType;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public abstract fun reverse (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun select (Lcom/mapbox/search/autocomplete/PlaceAutocompleteSuggestion;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suggestions (Ljava/lang/String;Lcom/mapbox/geojson/BoundingBox;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/autocomplete/PlaceAutocompleteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -17,7 +18,8 @@ public abstract interface class com/mapbox/search/autocomplete/PlaceAutocomplete
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$Companion {
 	public final fun create ()Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 	public final fun create (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
-	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;Lcom/mapbox/common/location/LocationProvider;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public final fun create (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/internal/bindgen/ApiType;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
+	public static synthetic fun create$default (Lcom/mapbox/search/autocomplete/PlaceAutocomplete$Companion;Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/internal/bindgen/ApiType;ILjava/lang/Object;)Lcom/mapbox/search/autocomplete/PlaceAutocomplete;
 }
 
 public final class com/mapbox/search/autocomplete/PlaceAutocomplete$DefaultImpls {

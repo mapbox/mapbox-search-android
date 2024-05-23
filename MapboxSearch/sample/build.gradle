@@ -24,7 +24,7 @@ if (project.hasProperty('ENABLE_SEARCH_BOX')) {
     enableSearchBox = Boolean.valueOf(System.getenv('ENABLE_SEARCH_BOX'))
 }
 
-if (enableSearchBox == null) {
+if (enableSearchBox != true) {
     if (project.hasProperty('ENABLE_SBS')) {
         enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
     } else if (System.getenv('ENABLE_SBS') != null) {
