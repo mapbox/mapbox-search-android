@@ -175,7 +175,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         assertEquals(
             listOf(
                 RoutablePoint(
-                    Point.fromLngLat(2.2944810097939197, 48.85836931442563),
+                    Point.fromLngLat(2.29448100979392, 48.85836931442563),
                     "default"
                 )
             ),
