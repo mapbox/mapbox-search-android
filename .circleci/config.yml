@@ -159,7 +159,7 @@ commands:
           command: |
             gcloud firebase test android run \
             	--type robo --app MapboxSearch/sample/build/outputs/apk/release/sample-release.apk \
-            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=panther,version=33,locale=en,orientation=portrait \
             	--device model=Nexus6,version=24,locale=en,orientation=portrait \
             	--timeout 900s \
             	--project mapbox-search-android
