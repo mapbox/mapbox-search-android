@@ -26,6 +26,7 @@ import com.mapbox.search.autofill.AddressAutofillResult
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
 import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter
+import com.mapbox.search.ui.adapter.location.setLocationObservationTimeout
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
@@ -57,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setLocationObservationTimeout(5_000L)
 
         locationProvider = LocationServiceFactory.getOrCreate()
             .getDeviceLocationProvider(null)
@@ -174,7 +177,7 @@ class MainActivity : AppCompatActivity() {
     private fun findAddress(point: Point) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val response = addressAutofill.reverseGeocoding(point, AddressAutofillOptions())
+                val response = addressAutofill.reverse(point, AddressAutofillOptions())
                 response.onValue { suggestions ->
                     if (suggestions.isEmpty()) {
                         showToast(R.string.address_autofill_error_pin_correction)
