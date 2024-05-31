@@ -83,6 +83,16 @@ commands:
             ./gradlew :sample:ktlint
             ./gradlew detektAll
 
+  verify-demo-apps:
+    steps:
+      - run:
+          name: Verify Demo Apps
+          command: |
+            cd DemoApps/AddressAutofill
+            ./gradlew :app:lint
+            cd ../SearchWithMaps
+            ./gradlew :app:lint
+
   check-license:
     steps:
       - run:
@@ -232,6 +242,7 @@ jobs:
       - read-workspace
       - check-license
       - verify-codebase
+      - verify-demo-apps
       - check-public-api
       - check-public-documentation
 
