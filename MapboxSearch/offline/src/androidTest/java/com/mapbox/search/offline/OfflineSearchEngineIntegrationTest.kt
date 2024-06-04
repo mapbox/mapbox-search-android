@@ -655,7 +655,7 @@ internal class OfflineSearchEngineIntegrationTest {
                     houseNumber = "2011",
                     street = "15th Street Northwest",
                     // See SWEB-1113 for more history
-                    region = createCoreSearchAddressRegion("District of Columbia"),
+                    region = createCoreSearchAddressRegion("Washington"),
                     country = createCoreSearchAddressCountry("United States")
                 )
             ),
