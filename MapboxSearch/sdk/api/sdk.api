@@ -399,14 +399,6 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/SearchOptions$Builder;
 }
 
-public final class com/mapbox/search/SearchOptions$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/SearchOptions;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/search/SearchOptions;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
 public abstract interface class com/mapbox/search/SearchResultCallback {
 	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
