@@ -660,7 +660,7 @@ internal class OfflineSearchEngineIntegrationTest {
                 )
             ),
             // See SWEB-1113 for more history
-            descriptionAddress = "2011 15th Street Northwest, District of Columbia, United States",
+            descriptionAddress = "2011 15th Street Northwest, Washington, United States",
 
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03404491238354, 38.9179071535832),
