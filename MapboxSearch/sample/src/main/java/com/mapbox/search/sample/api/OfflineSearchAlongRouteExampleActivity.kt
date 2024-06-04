@@ -15,16 +15,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.savedstate.SavedStateRegistryOwner
+import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.gestures.Utils
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.common.location.Location
-import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.utils.PolylineUtils
@@ -32,7 +36,6 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
@@ -49,6 +52,7 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 import com.mapbox.search.sample.databinding.ActivityOfflineSearchAlongRouteBinding
+import com.mapbox.search.sample.lastKnownLocation
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultAdapterItem
@@ -57,6 +61,7 @@ import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
 import com.mapbox.turf.TurfTransformation
+import kotlinx.coroutines.launch
 
 class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
@@ -68,16 +73,14 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOfflineSearchAlongRouteBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[SearchAlongRouteViewModel::class.java]
+        viewModel = SearchAlongRouteViewModel.provideFactory(getString(R.string.mapbox_access_token), this).create(SearchAlongRouteViewModel::class.java)
         setContentView(binding.root)
 
         binding.distanceAlongRoute.isEnabled = false
 
         mapView = binding.map
-        mapboxMap = mapView.mapboxMap
+        mapboxMap = mapView.getMapboxMap()
         mapAnnotationsManager = AnnotationsManager(mapView)
-
-        mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 
         binding.searchResultsView.initialize(
             SearchResultsView.Configuration(
@@ -90,18 +93,17 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         binding.routesAutoComplete.setAdapter(arrayAdapter)
 
         fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
-        val locationService = LocationServiceFactory.getOrCreate()
-            .getDeviceLocationProvider(null)
-            .value
-        locationService?.getLastLocation { location ->
-            location?.toPoint()?.let {
-                mapView.mapboxMap.setCamera(
+
+        LocationEngineProvider.getBestLocationEngine(applicationContext).lastKnownLocation(this) { point ->
+            point?.let {
+                mapView.getMapboxMap().setCamera(
                     CameraOptions.Builder()
-                        .center(it)
+                        .center(point)
                         .zoom(9.0)
                         .build()
                 )
-                viewModel.updateProximity(it)
+
+                viewModel.updateProximity(point)
             }
         }
 
@@ -297,7 +299,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
     private class AnnotationsManager(mapView: MapView) {
 
-        private val mapboxMap = mapView.mapboxMap
+        private val mapboxMap = mapView.getMapboxMap()
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(
             AnnotationConfig(
                 layerId = "markers"
@@ -362,7 +364,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                     .withCircleStrokeColor("#ffffff")
 
                 val annotation = circleAnnotationManager.create(circleAnnotationOptions)
-                markers[annotation.id] = annotation
+                markers[annotation.id.toString()] = annotation
             }
 
             if (route != null) {
@@ -397,7 +399,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             val polylineAnnotationOptions: PolylineAnnotationOptions = PolylineAnnotationOptions()
                 .withPoints(route)
                 .withLineColor("#007bff")
-                .withLineBorderColor("#0056b3")
                 .withLineWidth(5.0)
 
             polylineAnnotationManager.create(polylineAnnotationOptions)
@@ -420,7 +421,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         }
     }
 
-    class SearchAlongRouteViewModel() : ViewModel() {
+    class SearchAlongRouteViewModel(private val mapboxAccessToken: String) : ViewModel() {
         val uiStateData = MediatorLiveData<UiState>()
         val offlineSearchData = MutableLiveData(OfflineSearchState())
         val searchOptionsData = MutableLiveData<SearchAlongRouteOptions>()
@@ -453,7 +454,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
             val tileStore = TileStore.create()
             val tileRegionId = "Washington DC"
-            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main", language = "en"))
+            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main"))
             val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
             val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS)
 
@@ -482,6 +483,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
             searchEngine = OfflineSearchEngine.create(
                 OfflineSearchEngineSettings(
+                    accessToken = mapboxAccessToken,
                     tileStore = tileStore
                 ),
             )
@@ -546,7 +548,25 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 null
             }
         }
-    }
+
+        companion object {
+            fun provideFactory(
+                mapboxAccessToken: String,
+                owner: SavedStateRegistryOwner,
+                defaultArgs: Bundle? = null,
+            ): AbstractSavedStateViewModelFactory =
+                object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+                    @Suppress("UNCHECKED_CAST")
+                    override fun <T : ViewModel> create(
+                        key: String,
+                        modelClass: Class<T>,
+                        handle: SavedStateHandle
+                    ): T {
+                        return SearchAlongRouteViewModel(mapboxAccessToken) as T
+                    }
+                }
+        }
+}
 
     sealed class UiState {
 

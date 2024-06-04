@@ -14,7 +14,9 @@ class DiscoverKotlinExampleActivity : BaseKotlinExampleActivity() {
     override fun startExample() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
-        val discover = Discover.create()
+        val discover = Discover.create(
+            accessToken = getString(R.string.mapbox_access_token),
+        )
 
         lifecycleScope.launchWhenCreated {
             val dcRegion = BoundingBox.fromPoints(

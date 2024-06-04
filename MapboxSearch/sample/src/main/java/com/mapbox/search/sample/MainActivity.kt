@@ -141,19 +141,17 @@ class MainActivity : AppCompatActivity() {
 
         // only support for ApiType.SBS
         if (BuildConfig.ENABLE_SBS) {
-            mapView.mapboxMap.addOnMapClickListener { point ->
-                val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+            mapView.getMapboxMap().addOnMapClickListener { point ->
+                val screenCoords = mapView.getMapboxMap().pixelForCoordinate(point)
 
-                mapView.mapboxMap.queryRenderedFeatures(
+                mapView.getMapboxMap().queryRenderedFeatures(
                     RenderedQueryGeometry(screenCoords),
                     RenderedQueryOptions(listOf("poi-label"), null)
                 ) {
-                    it.value?.firstOrNull()?.queriedFeature.let { queriedFeature ->
-                        queriedFeature?.feature?.let { feature ->
-                            searchEngineUiAdapter.select(
-                                feature
-                            )
-                        }
+                    it.value?.firstOrNull()?.feature?.let { feature ->
+                        searchEngineUiAdapter.select(
+                            feature
+                        )
                     }
                 }
 

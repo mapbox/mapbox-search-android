@@ -11,8 +11,6 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
-import com.mapbox.common.location.LocationProvider
-import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Feature
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine

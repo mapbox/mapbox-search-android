@@ -12,7 +12,9 @@ class PlaceAutocompleteKotlinExampleActivity : BaseKotlinExampleActivity() {
     override fun startExample() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
-        val placeAutocomplete = PlaceAutocomplete.create()
+        val placeAutocomplete = PlaceAutocomplete.create(
+            getString(R.string.mapbox_access_token)
+        )
 
         lifecycleScope.launchWhenCreated {
             val response = placeAutocomplete.suggestions(

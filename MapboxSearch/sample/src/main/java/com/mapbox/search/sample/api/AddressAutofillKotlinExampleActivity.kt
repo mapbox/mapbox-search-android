@@ -16,7 +16,9 @@ class AddressAutofillKotlinExampleActivity : BaseKotlinExampleActivity() {
     override fun startExample() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
-        addressAutofill = AddressAutofill.create()
+        addressAutofill = AddressAutofill.create(
+            accessToken = getString(R.string.mapbox_access_token),
+        )
 
         lifecycleScope.launchWhenCreated {
             val query = Query.create("740 15th St NW, Washington") ?: return@launchWhenCreated
