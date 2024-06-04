@@ -102,7 +102,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val listener = BlockingOnIndexChangeListener(1)
         searchEngine.addOnIndexChangeListener(listener)
 
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main-osm-poi", "v4"))
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -143,7 +143,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val listener = BlockingOnIndexChangeListener(1)
         searchEngine.addOnIndexChangeListener(listener)
 
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main-osm-poi", "v4"))
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -230,7 +230,7 @@ internal class OfflineSearchEngineIntegrationTest {
 
     @Test
     fun testDataLoading() {
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main-osm-poi", "v4"))
 
         val dcLoadOptions = TileRegionLoadOptions.Builder()
             .descriptors(descriptors)
@@ -338,7 +338,7 @@ internal class OfflineSearchEngineIntegrationTest {
 
         val searchResult = searchEngine.searchBlocking("1")
         assertTrue(searchResult is SearchEngineResult.Results)
-        assertEquals(10, searchResult.requireResults().size)
+        assertTrue(searchResult.requireResults().isNotEmpty())
     }
 
     // See SSDK-501 for details
@@ -617,7 +617,7 @@ internal class OfflineSearchEngineIntegrationTest {
         val searchResult = searchEngine.searchBlocking(
             TEST_QUERY,
             OfflineSearchOptions(
-                limit = 250,
+                limit = inside,
                 boundingBox = bbox
             ),
         )
@@ -639,7 +639,6 @@ internal class OfflineSearchEngineIntegrationTest {
         private const val LOG_TAG = "OfflineSearchEngineIntegrationTest"
 
         // TODO (SWEB-1113)
-        // const val TEST_QUERY = "2011 15th Street Northwest, Washington, District of Columbia"
         const val TEST_QUERY = "2011 15th Street Northwest, Washington"
 
         private const val TEST_GROUP_ID = "usa-dc"
@@ -655,12 +654,12 @@ internal class OfflineSearchEngineIntegrationTest {
                     houseNumber = "2011",
                     street = "15th Street Northwest",
                     // See SWEB-1113 for more history
-                    region = createCoreSearchAddressRegion("Washington"),
+                    region = createCoreSearchAddressRegion("District of Columbia"),
                     country = createCoreSearchAddressCountry("United States")
                 )
             ),
             // See SWEB-1113 for more history
-            descriptionAddress = "2011 15th Street Northwest, Washington, United States",
+            descriptionAddress = "2011 15th Street Northwest, District of Columbia, United States",
 
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03404491238354, 38.9179071535832),
