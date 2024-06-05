@@ -32,6 +32,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.search.ApiType
 import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.autocomplete.PlaceAutocompleteOptions
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
@@ -67,12 +68,10 @@ class PlaceAutocompleteUiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_autocomplete)
 
-        val apiType = if (BuildConfig.ENABLE_SEARCH_BOX) {
-            CoreApiType.SEARCH_BOX
-        } else if (BuildConfig.ENABLE_SBS) {
-            CoreApiType.SBS
-        } else {
-            CoreApiType.GEOCODING
+        val apiType = when (BuildConfig.API_TYPE ?: ApiType.SEARCH_BOX) {
+            ApiType.GEOCODING -> CoreApiType.GEOCODING
+            ApiType.SBS -> CoreApiType.SBS
+            ApiType.SEARCH_BOX -> CoreApiType.SEARCH_BOX
         }
 
         // Set your Access Token here if it's not already set in some other way

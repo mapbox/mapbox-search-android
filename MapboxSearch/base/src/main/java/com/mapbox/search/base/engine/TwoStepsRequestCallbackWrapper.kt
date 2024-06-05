@@ -228,17 +228,17 @@ class TwoStepsRequestCallbackWrapper(
                         }
                     }
                 }
+            } catch (_: InternalIgnorableException) {
+                // This is intentional
             } catch (e: Exception) {
-                if (e !is InternalIgnorableException) {
-                    tasks.forEach { it.cancel() }
+                tasks.forEach { it.cancel() }
 
-                    if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
-                        searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                            onError(e)
-                        }
-                    } else {
-                        throw e
+                if (!searchRequestTask.isCancelled && !searchRequestTask.callbackActionExecuted) {
+                    searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                        onError(e)
                     }
+                } else {
+                    throw e
                 }
             }
         }

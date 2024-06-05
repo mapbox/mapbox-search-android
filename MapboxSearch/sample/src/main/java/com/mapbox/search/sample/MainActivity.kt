@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // only support for ApiType.SBS
-        if (BuildConfig.ENABLE_SBS) {
+        if (BuildConfig.API_TYPE == ApiType.SBS) {
             mapView.mapboxMap.addOnMapClickListener { point ->
                 val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 
@@ -178,14 +178,6 @@ class MainActivity : AppCompatActivity() {
             setSupportActionBar(this)
         }
 
-        val apiType = if (BuildConfig.ENABLE_SEARCH_BOX) {
-            ApiType.SEARCH_BOX
-        } else if (BuildConfig.ENABLE_SBS) {
-            ApiType.SBS
-        } else {
-            ApiType.GEOCODING
-        }
-
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
                 SearchResultsView.Configuration(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
@@ -194,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = apiType,
+            apiType = BuildConfig.API_TYPE,
             settings = SearchEngineSettings()
         )
 
