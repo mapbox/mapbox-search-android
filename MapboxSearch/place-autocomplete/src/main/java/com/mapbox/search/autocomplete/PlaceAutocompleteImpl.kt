@@ -27,6 +27,7 @@ import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.suspendFlatMap
+import com.mapbox.search.internal.bindgen.ApiType
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.ExecutorService
@@ -94,7 +95,7 @@ internal class PlaceAutocompleteImpl(
         }
     }
 
-    private suspend fun createSuggestions(
+    private fun createSuggestions(
         rawSuggestions: List<BaseSearchSuggestion>
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>> {
         val suggestions: List<Expected<Exception, PlaceAutocompleteSuggestion>> = rawSuggestions
@@ -170,7 +171,7 @@ internal class PlaceAutocompleteImpl(
         fun create(
             app: Application,
             locationProvider: LocationProvider?,
-            apiType: CoreApiType = CoreApiType.SEARCH_BOX,
+            apiType: ApiType = CoreApiType.SEARCH_BOX,
         ): PlaceAutocompleteImpl {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(

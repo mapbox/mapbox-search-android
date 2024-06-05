@@ -2,7 +2,7 @@
 package com.mapbox.search.autocomplete {
 
   public interface PlaceAutocomplete {
-    method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), error.NonExistentClass apiType = CoreApiType.SEARCH_BOX);
+    method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.internal.bindgen.ApiType apiType = CoreApiType.SEARCH_BOX);
     method public default static final com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public default static final com.mapbox.search.autocomplete.PlaceAutocomplete create();
     method public suspend Object? reverse(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
@@ -12,7 +12,7 @@ package com.mapbox.search.autocomplete {
   }
 
   public static final class PlaceAutocomplete.Companion {
-    method public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), error.NonExistentClass apiType = CoreApiType.SEARCH_BOX);
+    method public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.internal.bindgen.ApiType apiType = CoreApiType.SEARCH_BOX);
     method public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
     method public com.mapbox.search.autocomplete.PlaceAutocomplete create();
   }
@@ -123,7 +123,7 @@ package com.mapbox.search.autocomplete {
   }
 
   public abstract class PlaceAutocompleteType implements android.os.Parcelable {
-    ctor public PlaceAutocompleteType(@kotlin.jvm.JvmSynthetic error.NonExistentClass coreType);
+    ctor public PlaceAutocompleteType(@kotlin.jvm.JvmSynthetic com.mapbox.search.internal.bindgen.QueryType coreType);
   }
 
   public abstract static class PlaceAutocompleteType.AdministrativeUnit extends com.mapbox.search.autocomplete.PlaceAutocompleteType {
