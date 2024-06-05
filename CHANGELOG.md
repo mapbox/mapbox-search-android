@@ -2,6 +2,9 @@
 
 ## 2.2.0-rc.1
 
+### New features
+- Adding support for [`ApiType.SEARCH_BOX`](https://docs.mapbox.com/api/search/search-box/) 
+
 ### Mapbox dependencies
 - Search Native SDK `2.1.0`
 - Common SDK `24.4.0`
