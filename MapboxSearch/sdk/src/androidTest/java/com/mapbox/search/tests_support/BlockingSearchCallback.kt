@@ -31,7 +31,17 @@ internal class BlockingSearchCallback : SearchCallback {
 
     sealed class SearchEngineResult {
 
+        val isResults: Boolean
+            get() = this is Results
+
+        val isError: Boolean
+            get() = this is Error
+
         fun requireResults() = (this as Results).results
+
+        fun requireResultPair() = (this as Results).run { results to responseInfo }
+
+        fun requireError() = (this as Error).e
 
         data class Results(val results: List<SearchResult>, val responseInfo: ResponseInfo) : SearchEngineResult()
         data class Error(val e: Exception) : SearchEngineResult()

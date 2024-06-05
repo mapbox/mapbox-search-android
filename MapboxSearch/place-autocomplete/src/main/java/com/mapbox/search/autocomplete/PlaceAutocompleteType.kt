@@ -3,6 +3,7 @@ package com.mapbox.search.autocomplete
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreQueryType
 import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.internal.bindgen.QueryType
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -10,7 +11,7 @@ import kotlinx.parcelize.Parcelize
  */
 public abstract class PlaceAutocompleteType constructor(
     @JvmSynthetic
-    internal val coreType: CoreQueryType,
+    internal val coreType: QueryType,
 ) : Parcelable {
 
     /**

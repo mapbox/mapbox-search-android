@@ -4,6 +4,7 @@ package com.mapbox.search {
   public enum ApiType {
     enum_constant public static final com.mapbox.search.ApiType GEOCODING;
     enum_constant public static final com.mapbox.search.ApiType SBS;
+    enum_constant public static final com.mapbox.search.ApiType SEARCH_BOX;
   }
 
   public final class ApiTypeKt {
@@ -257,15 +258,18 @@ package com.mapbox.search {
   }
 
   public final class SearchEngineSettings {
+    ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null, String? baseUrl = null);
     ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com", String? singleBoxSearchBaseUrl = null);
     ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String geocodingEndpointBaseUrl = "https://api.mapbox.com");
     ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null);
     ctor public SearchEngineSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public String? getBaseUrl();
     method public String getGeocodingEndpointBaseUrl();
     method public com.mapbox.common.location.LocationProvider? getLocationProvider();
     method public String? getSingleBoxSearchBaseUrl();
     method public com.mapbox.search.ViewportProvider? getViewportProvider();
     method public com.mapbox.search.SearchEngineSettings.Builder toBuilder();
+    property public final String? baseUrl;
     property public final String geocodingEndpointBaseUrl;
     property public final com.mapbox.common.location.LocationProvider? locationProvider;
     property public final String? singleBoxSearchBaseUrl;
@@ -275,6 +279,7 @@ package com.mapbox.search {
 
   public static final class SearchEngineSettings.Builder {
     ctor public SearchEngineSettings.Builder();
+    method public com.mapbox.search.SearchEngineSettings.Builder baseUrl(String? baseUrl);
     method public com.mapbox.search.SearchEngineSettings build();
     method public com.mapbox.search.SearchEngineSettings.Builder geocodingEndpointBaseUrl(String geocodingEndpointBaseUrl);
     method public com.mapbox.search.SearchEngineSettings.Builder locationProvider(com.mapbox.common.location.LocationProvider locationProvider);
