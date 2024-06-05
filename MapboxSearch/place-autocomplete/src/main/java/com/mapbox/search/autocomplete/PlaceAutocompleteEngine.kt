@@ -52,7 +52,7 @@ internal class PlaceAutocompleteEngine(
         IndexableRecordResolver.EMPTY
     ),
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
-    private val apiType: ApiType = ApiType.SBS
+    private val apiType: ApiType = ApiType.SEARCH_BOX
 ) : BaseSearchEngine() {
 
     fun search(
@@ -351,7 +351,7 @@ internal class PlaceAutocompleteEngine(
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
-                    apiType = CoreApiType.SBS,
+                    apiType = CoreApiType.SEARCH_BOX,
                     sdkInformation = BaseSearchSdkInitializer.sdkInformation,
                     eventsUrl = null,
                 ),

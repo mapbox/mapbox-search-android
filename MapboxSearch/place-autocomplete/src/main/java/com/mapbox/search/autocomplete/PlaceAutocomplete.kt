@@ -70,7 +70,7 @@ public interface PlaceAutocomplete {
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
-         * @param apiType to be used. Default is [CoreApiType.SBS]
+         * @param apiType to be used. Default is [CoreApiType.SEARCH_BOX]
          *
          * @return a new instance instance of [PlaceAutocomplete].
          */
@@ -78,7 +78,7 @@ public interface PlaceAutocomplete {
         @JvmOverloads
         public fun create(
             locationProvider: LocationProvider? = defaultLocationProvider(),
-            apiType: CoreApiType = CoreApiType.SBS,
+            apiType: CoreApiType = CoreApiType.SEARCH_BOX,
         ): PlaceAutocomplete {
             return PlaceAutocompleteImpl.create(
                 app = BaseSearchSdkInitializer.app,

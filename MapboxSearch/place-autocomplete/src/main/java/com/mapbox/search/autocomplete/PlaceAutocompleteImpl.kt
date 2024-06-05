@@ -170,7 +170,7 @@ internal class PlaceAutocompleteImpl(
         fun create(
             app: Application,
             locationProvider: LocationProvider?,
-            apiType: CoreApiType = CoreApiType.SBS,
+            apiType: CoreApiType = CoreApiType.SEARCH_BOX,
         ): PlaceAutocompleteImpl {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(

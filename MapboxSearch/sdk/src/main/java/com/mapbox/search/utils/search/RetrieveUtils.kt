@@ -29,7 +29,7 @@ internal object RetrieveUtils {
      *  @param apiType [ApiType] that this request is for
      *  @param mapboxId the ID of the POI to retrieve
      *  @return [SearchResult] that with a [SuggestAction] for retrieve
-     *  @throws [UnsupportedOperationException] when the [ApiType] is anything but [ApiType.SBS]
+     *  @throws [UnsupportedOperationException] when the [ApiType] is anything but [ApiType.SBS] or [ApiType.SEARCH_BOX]
      */
     fun createSearchResultForRetrieve(apiType: ApiType, mapboxId: String): SearchResult {
         val suggestAction = when (apiType) {
