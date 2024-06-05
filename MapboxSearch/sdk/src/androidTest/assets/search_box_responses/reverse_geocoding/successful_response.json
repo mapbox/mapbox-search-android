@@ -1,0 +1,403 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.294481,
+          48.85837
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Eiffel Tower",
+        "mapbox_id": "test-id",
+        "feature_type": "poi",
+        "address": "5 Avenue Anatole France",
+        "full_address": "5 Avenue Anatole France, 75007 Paris, France",
+        "place_formatted": "75007 Paris, France",
+        "context": {
+          "country": {
+            "name": "France",
+            "country_code": "FR",
+            "country_code_alpha_3": "FRA"
+          },
+          "postcode": {
+            "name": "75007"
+          },
+          "place": {
+            "name": "Paris"
+          },
+          "locality": {
+            "name": "7th arrondissement of Paris"
+          },
+          "neighborhood": {
+            "name": "Gros-Caillou"
+          },
+          "address": {
+            "name": "Hamp De Mars",
+            "address_number": "Hamp",
+            "street_name": "De Mars"
+          },
+          "street": {
+            "name": "av. anatole france"
+          }
+        },
+        "coordinates": {
+          "latitude": 48.85837,
+          "longitude": 2.294481,
+          "routable_points": [
+            {
+              "name": "default",
+              "latitude": 48.85836931442563,
+              "longitude": 2.29448100979392
+            }
+          ]
+        },
+        "maki": "marker",
+        "poi_category": [
+          "historic site",
+          "tourist attraction",
+          "monument"
+        ],
+        "poi_category_ids": [
+          "historic_site",
+          "tourist_attraction",
+          "monument"
+        ],
+        "external_ids": {
+          "tripadvisor": "23789983"
+        },
+        "metadata": {
+          "average_rating": 5,
+          "photos": [
+            {
+              "width": 50,
+              "height": 50,
+              "url": "https://test.com/img1.jpg"
+            },
+            {
+              "width": 150,
+              "height": 150,
+              "url": "https://test.com/img2.jpg"
+            }
+          ],
+          "review_count": 141783,
+          "phone": "+33 123 45 67 89",
+          "website": "https://www.toureiffel.paris/",
+          "detailed_description": "Famous symbol of France",
+          "open_hours": {
+            "open_type": "Scheduled",
+            "open_periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 0,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.29449905431968,
+          48.8582602
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "5 Avenue Anatole France",
+        "mapbox_id": "dXJuOm1ieGFkcjo3YzlkMzcwNC04Y2VkLTQwMjItOWE5MS0zNWQ4ZjkxNjk0MmY",
+        "feature_type": "address",
+        "address": "5 Avenue Anatole France",
+        "full_address": "5 Avenue Anatole France, 75007 Paris, France",
+        "place_formatted": "75007 Paris, France",
+        "context": {
+          "country": {
+            "id": "dXJuOm1ieHBsYzpJazA",
+            "name": "France",
+            "country_code": "FR",
+            "country_code_alpha_3": "FRA"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpBbGd1VFE",
+            "name": "75007"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpEYVJO",
+            "name": "Paris"
+          },
+          "locality": {
+            "id": "dXJuOm1ieHBsYzpCT3BO",
+            "name": "7th arrondissement of Paris"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpBY1ZzVFE",
+            "name": "Gros-Caillou"
+          },
+          "address": {
+            "id": "dXJuOm1ieGFkcjo3YzlkMzcwNC04Y2VkLTQwMjItOWE5MS0zNWQ4ZjkxNjk0MmY",
+            "name": "5 Avenue Anatole France",
+            "address_number": "5",
+            "street_name": "Avenue Anatole France"
+          },
+          "street": {
+            "name": "Avenue Anatole France"
+          }
+        },
+        "coordinates": {
+          "latitude": 48.8582602,
+          "longitude": 2.29449905431968,
+          "accuracy": "rooftop",
+          "routable_points": [
+            {
+              "name": "default",
+              "latitude": 48.857962,
+              "longitude": 2.295421
+            }
+          ]
+        },
+        "language": "en",
+        "maki": "marker",
+        "external_ids": {},
+        "metadata": {}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.294464,
+          48.858353
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Eiffel Tower",
+        "mapbox_id": "CkIKQDA5ZTBjZTg0YjExZjc4Yzc2ZjIzYWY2Njk0NjljMTJmNzQyZTk0OTA1ZDQ3ZDAzYWNiNGYzYTVmNDllMGY3NTE=",
+        "feature_type": "poi",
+        "address": "5 Avenue",
+        "full_address": "5 Avenue, 75007 Paris, France",
+        "place_formatted": "75007 Paris, France",
+        "context": {
+          "country": {
+            "name": "France",
+            "country_code": "FR",
+            "country_code_alpha_3": "FRA"
+          },
+          "postcode": {
+            "name": "75007"
+          },
+          "place": {
+            "name": "Paris"
+          },
+          "locality": {
+            "name": "7th arrondissement of Paris"
+          },
+          "neighborhood": {
+            "name": "Gros-Caillou"
+          },
+          "address": {
+            "name": "5 Avenue",
+            "address_number": "5",
+            "street_name": "Avenue"
+          },
+          "street": {
+            "name": "avenue"
+          }
+        },
+        "coordinates": {
+          "latitude": 48.858353,
+          "longitude": 2.294464,
+          "routable_points": [
+            {
+              "name": "default",
+              "latitude": 48.85836906814936,
+              "longitude": 2.29446377045501
+            }
+          ]
+        },
+        "maki": "marker",
+        "poi_category": [
+          "viewpoint",
+          "tourist attraction"
+        ],
+        "poi_category_ids": [
+          "viewpoint",
+          "tourist_attraction"
+        ],
+        "external_ids": {
+          "tripadvisor": "188151",
+          "foursquare": "51a2445e5019c80b56934c75"
+        },
+        "metadata": {
+          "review_count": 141783,
+          "phone": "+33 892 70 12 39",
+          "website": "https://www.toureiffel.paris/",
+          "average_rating": 4.5,
+          "detailed_description": "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride.",
+          "photos": [
+            {
+              "width": 50,
+              "height": 50,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-t/1a/9e/7f/9d/eiffeltoren.jpg"
+            },
+            {
+              "width": 150,
+              "height": 150,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-l/1a/9e/7f/9d/eiffeltoren.jpg"
+            },
+            {
+              "width": 138,
+              "height": 205,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-f/1a/9e/7f/9d/eiffeltoren.jpg"
+            },
+            {
+              "width": 302,
+              "height": 450,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-s/1a/9e/7f/9d/eiffeltoren.jpg"
+            },
+            {
+              "width": 1172,
+              "height": 1744,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-o/1a/9e/7f/9d/eiffeltoren.jpg"
+            }
+          ],
+          "open_hours": {
+            "open_type": "Scheduled",
+            "open_periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 0,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 1,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 1,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 2,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 2,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 3,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 3,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 4,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 4,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 5,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 5,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              },
+              {
+                "open": {
+                  "day": 6,
+                  "time": {
+                    "hour": 9,
+                    "minute": 0
+                  }
+                },
+                "close": {
+                  "day": 6,
+                  "time": {
+                    "hour": 23,
+                    "minute": 45
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}

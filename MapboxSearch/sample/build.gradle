@@ -15,12 +15,34 @@ if (mapboxApiToken == null) {
     throw new Exception("API token is not specified.")
 }
 
-def enableSBS = true
+def apiType = null
+def apiTypeString = null
 
-if (project.hasProperty('ENABLE_SBS')) {
-    enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
-} else if (System.getenv('ENABLE_SBS') != null) {
-    enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+if (project.hasProperty('API_TYPE')) {
+    apiTypeString = String.valueOf(project.property('API_TYPE'))
+} else if (System.getenv('API_TYPE') != null) {
+    apiTypeString = String.valueOf(System.getenv('ENABLE_SEARCH_BOX'))
+}
+
+if (apiTypeString == "SEARCH_BOX") {
+    apiType = "com.mapbox.search.ApiType.SEARCH_BOX"
+} else if (apiTypeString == "SBS") {
+    apiType = "com.mapbox.search.ApiType.SBS"
+} else if (apiTypeString == "GEOCODING") {
+    apiType = "com.mapbox.search.ApiType.GEOCODING"
+} else {
+    def enableSBS = false
+    if (project.hasProperty('ENABLE_SBS')) {
+        enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
+    } else if (System.getenv('ENABLE_SBS') != null) {
+        enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+    }
+
+    if (enableSBS) {
+        apiType = "com.mapbox.search.ApiType.SBS"
+    } else {
+        apiType = "com.mapbox.search.ApiType.SEARCH_BOX"
+    }
 }
 
 android {
@@ -28,7 +50,7 @@ android {
 
     defaultConfig {
         buildConfigField "boolean", "COVERAGE_ENABLED", "${project.hasProperty('coverage')}"
-        buildConfigField "boolean", "ENABLE_SBS", "${enableSBS}"
+        buildConfigField "com.mapbox.search.ApiType", "API_TYPE", apiType
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         applicationId "com.mapbox.search.sample"

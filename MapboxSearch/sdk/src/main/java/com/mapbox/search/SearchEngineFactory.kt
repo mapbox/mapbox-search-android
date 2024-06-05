@@ -85,9 +85,10 @@ internal class SearchEngineFactory {
         apiType: ApiType,
         settings: SearchEngineSettings
     ): CoreSearchEngineInterface {
-        val baseUrl = when (apiType) {
+        val baseUrl = settings.baseUrl ?: when (apiType) {
             ApiType.GEOCODING -> settings.geocodingEndpointBaseUrl
             ApiType.SBS -> settings.singleBoxSearchBaseUrl
+            else -> null
         }
 
         // Workaround for sync location provider in test environment.

@@ -1,6 +1,9 @@
 package com.mapbox.search.tests_support
 
+import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
+import com.mapbox.search.CategorySearchOptions
+import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngine.Companion.createSearchEngineWithBuiltInDataProviders
 import com.mapbox.search.SearchEngineSettings
@@ -29,6 +32,30 @@ internal fun SearchEngine.selectBlocking(
 ): BlockingSearchSelectionCallback.SearchEngineResult {
     val callback = BlockingSearchSelectionCallback()
     select(suggestion, options, executor, callback)
+    return callback.getResultBlocking()
+}
+
+internal fun SearchEngine.categorySearchBlocking(
+    categoryName: String,
+    options: CategorySearchOptions = CategorySearchOptions(),
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+): BlockingSearchCallback.SearchEngineResult {
+    val callback = BlockingSearchCallback()
+    search(categoryName, options, executor, callback)
+    return callback.getResultBlocking()
+}
+
+internal fun SearchEngine.reverseBlocking(
+    point: Point,
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+) = reverseBlocking(ReverseGeoOptions(point), executor)
+
+internal fun SearchEngine.reverseBlocking(
+    options: ReverseGeoOptions,
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+): BlockingSearchCallback.SearchEngineResult {
+    val callback = BlockingSearchCallback()
+    search(options, executor, callback)
     return callback.getResultBlocking()
 }
 
