@@ -21,7 +21,7 @@ def apiTypeString = null
 if (project.hasProperty('API_TYPE')) {
     apiTypeString = String.valueOf(project.property('API_TYPE'))
 } else if (System.getenv('API_TYPE') != null) {
-    apiTypeString = String.valueOf(System.getenv('ENABLE_SEARCH_BOX'))
+    apiTypeString = String.valueOf(System.getenv('API_TYPE'))
 }
 
 if (apiTypeString == "SEARCH_BOX") {
