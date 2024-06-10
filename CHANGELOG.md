@@ -1,5 +1,8 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.2.0
+
+
 ## 2.2.0-rc.1
 
 ### New features
