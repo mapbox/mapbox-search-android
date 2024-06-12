@@ -1,5 +1,19 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.3.0
+
+### New features
+
+* [Offline search] Offline Search Along Route
+* [Offline search] Added bounding box filter for offline search functions
+* [Online search] Add method to retrieve a POI by Mapbox ID
+* [UI] Added supports to select a single map feature to support map click events
+
+### Mapbox dependencies
+- Search Native SDK `1.0.8`
+- Common SDK `23.10.1`
+- Mapbox Maps `10.18.1`
+
 ## 1.2.0
 
 ### New features

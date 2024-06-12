@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
@@ -19,14 +17,15 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.R
-import java.util.ArrayList
 import java.util.UUID
 import java.util.concurrent.Executor
 
-class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
+class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
 
-    private lateinit var searchEngine: SearchEngine
-    private lateinit var registerProviderTask: AsyncOperationTask
+    override val titleResId: Int = R.string.action_open_custom_data_provider_kt_example
+
+    private var searchEngine: SearchEngine? = null
+    private var registerProviderTask: AsyncOperationTask? = null
     private var searchRequestTask: AsyncOperationTask? = null
 
     private val customDataProvider = InMemoryDataProvider(
@@ -41,10 +40,11 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
 
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
             if (suggestions.isEmpty()) {
-                Log.i("SearchApiExample", "No suggestions found")
+                logI("SearchApiExample", "No suggestions found", suggestions)
+                onFinished()
             } else {
-                Log.i("SearchApiExample", "Search suggestions: $suggestions.\nSelecting first suggestion...")
-                searchRequestTask = searchEngine.select(suggestions.first(), this)
+                logI("SearchApiExample", "Search suggestions: ${prettify(suggestions)}\nSelecting first suggestion...")
+                searchRequestTask = searchEngine?.select(suggestions.first(), this)
             }
         }
 
@@ -53,7 +53,8 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             result: SearchResult,
             responseInfo: ResponseInfo
         ) {
-            Log.i("SearchApiExample", "Search result: $result")
+            logI("SearchApiExample", "Search result", result)
+            onFinished()
         }
 
         override fun onResults(
@@ -61,28 +62,30 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         ) {
-            Log.i("SearchApiExample", "Category search results: $results")
+            logI("SearchApiExample", "Category search results", results)
+            onFinished()
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Search error", e)
+            logE("SearchApiExample", "Search error", e)
+            onFinished()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun startExample() {
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings(getString(R.string.mapbox_access_token))
         )
 
         Log.i("SearchApiExample", "Start CustomDataProvider registering...")
-        registerProviderTask = searchEngine.registerDataProvider(
+        registerProviderTask = searchEngine?.registerDataProvider(
             dataProvider = customDataProvider,
             callback = object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {
-                    Log.i("SearchApiExample", "CustomDataProvider is registered")
-                    searchRequestTask = searchEngine.search(
+                    logI("SearchApiExample", "CustomDataProvider is registered")
+                    searchRequestTask = searchEngine?.search(
                         "Underdog",
                         SearchOptions(
                             proximity = Point.fromLngLat(27.574862357961212, 53.88998973246244),
@@ -92,24 +95,25 @@ class CustomIndexableDataProviderKotlinExample : AppCompatActivity() {
                 }
 
                 override fun onError(e: Exception) {
-                    Log.i("SearchApiExample", "Error during registering", e)
+                    logE("SearchApiExample", "Error during registering", e)
+                    onFinished()
                 }
             }
         )
     }
 
     override fun onDestroy() {
-        registerProviderTask.cancel()
+        registerProviderTask?.cancel()
         searchRequestTask?.cancel()
-        searchEngine.unregisterDataProvider(
+        searchEngine?.unregisterDataProvider(
             dataProvider = customDataProvider,
             callback = object : CompletionCallback<Unit> {
                 override fun onComplete(result: Unit) {
-                    Log.i("SearchApiExample", "CustomDataProvider is unregistered")
+                    logI("SearchApiExample", "CustomDataProvider is unregistered")
                 }
 
                 override fun onError(e: Exception) {
-                    Log.i("SearchApiExample", "Error during unregistering", e)
+                    logE("SearchApiExample", "Error during unregistering", e)
                 }
             }
         )

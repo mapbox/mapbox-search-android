@@ -104,12 +104,16 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun getSettings ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
 	public abstract fun removeOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public abstract fun retrieve (Lcom/mapbox/geojson/Feature;Lcom/mapbox/search/offline/OfflineSearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieve (Lcom/mapbox/geojson/Feature;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -128,9 +132,11 @@ public final class com/mapbox/search/offline/OfflineSearchEngine$Companion {
 public final class com/mapbox/search/offline/OfflineSearchEngine$DefaultImpls {
 	public static fun addEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
 	public static fun addOnIndexChangeListener (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
+	public static fun retrieve (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/geojson/Feature;Lcom/mapbox/search/offline/OfflineSearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun reverseGeocoding (Lcom/mapbox/search/offline/OfflineSearchEngine;Lcom/mapbox/search/offline/OfflineReverseGeoOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun searchAddressesNearby (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun searchAlongRoute (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback {
@@ -215,6 +221,11 @@ public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Pa
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public abstract interface class com/mapbox/search/offline/OfflineSearchResultCallback {
+	public abstract fun onError (Ljava/lang/Exception;)V
+	public abstract fun onResult (Lcom/mapbox/search/offline/OfflineSearchResult;Lcom/mapbox/search/offline/OfflineResponseInfo;)V
 }
 
 public final class com/mapbox/search/offline/OfflineSearchResultType : java/lang/Enum {

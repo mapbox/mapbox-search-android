@@ -1,19 +1,19 @@
 package com.mapbox.search.sample.api
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mapbox.search.autocomplete.PlaceAutocomplete
 import com.mapbox.search.sample.R
 
-class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
+class PlaceAutocompleteKotlinExampleActivity : BaseKotlinExampleActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val titleResId: Int = R.string.action_place_autocomplete_kotlin_example
 
+    override fun startExample() {
+        // Set your Access Token here if it's not already set in some other way
+        // MapboxOptions.accessToken = "<my-access-token>"
         val placeAutocomplete = PlaceAutocomplete.create(
-            accessToken = getString(R.string.mapbox_access_token),
+            getString(R.string.mapbox_access_token)
         )
 
         lifecycleScope.launchWhenCreated {
@@ -30,18 +30,19 @@ class PlaceAutocompleteKotlinExampleActivity : AppCompatActivity() {
                     // Supposing that a user has selected (clicked in UI) the first suggestion
                     val selectedSuggestion = suggestions.first()
 
-                    Log.i("SearchApiExample", "Selecting first suggestion...")
+                    logI("SearchApiExample", "Selecting first suggestion...")
 
                     val selectionResponse = placeAutocomplete.select(selectedSuggestion)
                     selectionResponse.onValue { result ->
-                        Log.i("SearchApiExample", "Place Autocomplete result: $result")
+                        logI("SearchApiExample", "Place Autocomplete result", result)
                     }.onError { e ->
-                        Log.i("SearchApiExample", "An error occurred during selection", e)
+                        logE("SearchApiExample", "An error occurred during selection", e)
                     }
                 }
             } else {
-                Log.i("SearchApiExample", "Place Autocomplete error", response.error)
+                logE("SearchApiExample", "Place Autocomplete error", response.error)
             }
+            onFinished()
         }
     }
 }

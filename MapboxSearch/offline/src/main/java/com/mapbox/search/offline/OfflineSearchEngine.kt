@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
+import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -204,6 +205,78 @@ public interface OfflineSearchEngine {
         radiusMeters = radiusMeters,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,
+    )
+
+    /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param executor executor for dispatching event, by default events are dispatched to the main thread
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask
+
+    /**
+     * Performs a search along the supplied [route].
+     *
+     * @param query the search query
+     * @param proximity coordinate along the route
+     * @param route list of points that make up route line
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask = searchAlongRoute(
+        query = query,
+        proximity = proximity,
+        route = route,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback
+    )
+
+    /**
+     * Function to retrieve the details for a given mapboxId. The callback will be invoked with
+     * a [OfflineSearchResult] on successful execution.
+     *
+     * @param mapboxId for the item to retrieve details for
+     * @param executor [Executor] used for events dispatching, default is the main thread
+     * @param callback used to receive the [OfflineSearchResult] on successful execution
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     */
+    public fun retrieve(
+        feature: Feature,
+        executor: Executor,
+        callback: OfflineSearchResultCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Function to retrieve the details for a given mapboxId that dispatches events using the
+     * main executor. The callback will be invoked with a [OfflineSearchResult] on successful execution.
+     *     *
+     * @param mapboxId for the item to retrieve details for
+     * @param callback used to receive the [OfflineSearchResult] on successful execution
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     */
+    public fun retrieve(
+        feature: Feature,
+        callback: OfflineSearchResultCallback
+    ): AsyncOperationTask = retrieve(
+        feature = feature,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback
     )
 
     /**

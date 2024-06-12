@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
-        android:title=""
-        app:iconTint="?colorPrimary"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView"
-        />
-
-    <item
         android:id="@+id/open_address_autofill_ui_example"
         android:title="@string/action_address_autofill_ui_example"
-        />
-
-    <item
-        android:id="@+id/open_address_autofill_example"
-        android:title="@string/action_address_autofill_example"
         />
 
     <item
@@ -29,127 +14,171 @@
         />
 
     <item
-        android:id="@+id/open_discover_kotlin_example"
-        android:title="@string/action_discover_kotlin_example"
-        />
-
-    <item
-        android:id="@+id/open_discover_java_example"
-        android:title="@string/action_discover_java_example"
-        />
-
-    <item
         android:id="@+id/open_place_autocomplete_ui_example"
         android:title="@string/action_place_autocomplete_ui_example"
         />
 
     <item
-        android:id="@+id/open_place_autocomplete_kotlin_example"
-        android:title="@string/action_place_autocomplete_kotlin_example"
+        android:id="@+id/open_offline_search_along_route_example"
+        android:title="@string/action_open_offline_search_along_route_example"
         />
 
     <item
-        android:id="@+id/open_custom_data_provider_kt_example"
-        android:title="@string/action_open_custom_data_provider_kt_example"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title=""
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:iconTint="?colorPrimary"
+        app:showAsAction="always|collapseActionView"
         />
 
     <item
-        android:id="@+id/open_custom_data_provider_java_example"
-        android:title="@string/action_open_custom_data_provider_java_example"
-        />
+        android:id="@+id/kotlin_examples"
+        android:title="@string/kotlin_examples"
+        >
+
+        <menu>
+
+            <item
+                android:id="@+id/open_discover_kotlin_example"
+                android:title="@string/action_discover_kotlin_example"
+                />
+
+            <item
+                android:id="@+id/open_place_autocomplete_kotlin_example"
+                android:title="@string/action_place_autocomplete_kotlin_example"
+                />
+
+            <item
+                android:id="@+id/open_address_autofill_example"
+                android:title="@string/action_address_autofill_example"
+                />
+
+            <item
+                android:id="@+id/open_custom_data_provider_kt_example"
+                android:title="@string/action_open_custom_data_provider_kt_example"
+                />
+
+            <item
+                android:id="@+id/custom_theme_example"
+                android:title="@string/action_open_custom_theme_example"
+                />
+
+            <item
+                android:id="@+id/open_forward_geocoding_kt_example"
+                android:title="@string/action_open_forward_geocoding_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_forward_geocoding_batch_resolving_kt_example"
+                android:title="@string/action_open_forward_geocoding_batch_resolving_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_reverse_geocoding_kt_example"
+                android:title="@string/action_open_reverse_geocoding_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_discover_search_kt_example"
+                android:title="@string/action_open_discover_search_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_offline_search_kt_example"
+                android:title="@string/action_open_offline_search_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_offline_reverse_geocoding_kt_example"
+                android:title="@string/action_open_offline_reverse_geocoding_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_japan_search_kt_example"
+                android:title="@string/action_open_japan_search_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_history_data_provider_kt_example"
+                android:title="@string/action_open_history_data_provider_kt_example"
+                />
+
+            <item
+                android:id="@+id/open_favorites_data_provider_kt_example"
+                android:title="@string/action_open_favorites_data_provider_kt_example"
+                />
+        </menu>
+    </item>
 
     <item
-        android:id="@+id/custom_theme_example"
-        android:title="@string/action_open_custom_theme_example"
-        />
+        android:id="@+id/java_examples"
+        android:title="@string/java_examples"
+        android:visible="false"
+        >
 
-    <item
-        android:id="@+id/open_forward_geocoding_kt_example"
-        android:title="@string/action_open_forward_geocoding_kt_example"
-        />
+        <menu>
 
-    <item
-        android:id="@+id/open_forward_geocoding_java_example"
-        android:title="@string/action_open_forward_geocoding_java_example"
-        />
+            <item
+                android:id="@+id/open_discover_java_example"
+                android:title="@string/action_discover_java_example"
+                />
 
-    <item
-        android:id="@+id/open_forward_geocoding_batch_resolving_kt_example"
-        android:title="@string/action_open_forward_geocoding_batch_resolving_kt_example"
-        />
+            <item
+                android:id="@+id/open_custom_data_provider_java_example"
+                android:title="@string/action_open_custom_data_provider_java_example"
+                />
 
-    <item
-        android:id="@+id/open_forward_geocoding_batch_resolving_java_example"
-        android:title="@string/action_open_forward_geocoding_batch_resolving_java_example"
-        />
+            <item
+                android:id="@+id/open_forward_geocoding_java_example"
+                android:title="@string/action_open_forward_geocoding_java_example"
+                />
 
-    <item
-        android:id="@+id/open_reverse_geocoding_kt_example"
-        android:title="@string/action_open_reverse_geocoding_kt_example"
-        />
 
-    <item
-        android:id="@+id/open_reverse_geocoding_java_example"
-        android:title="@string/action_open_reverse_geocoding_java_example"
-        />
+            <item
+                android:id="@+id/open_forward_geocoding_batch_resolving_java_example"
+                android:title="@string/action_open_forward_geocoding_batch_resolving_java_example"
+                />
 
-    <item
-        android:id="@+id/open_category_search_kt_example"
-        android:title="@string/action_open_category_search_kt_example"
-        />
 
-    <item
-        android:id="@+id/open_category_search_java_example"
-        android:title="@string/action_open_category_search_java_example"
-        />
+            <item
+                android:id="@+id/open_reverse_geocoding_java_example"
+                android:title="@string/action_open_reverse_geocoding_java_example"
+                />
 
-    <item
-        android:id="@+id/open_offline_search_java_example"
-        android:title="@string/action_open_offline_search_java_example"
-        />
+            <item
+                android:id="@+id/open_discover_search_java_example"
+                android:title="@string/action_open_discover_search_java_example"
+                />
 
-    <item
-        android:id="@+id/open_offline_search_kt_example"
-        android:title="@string/action_open_offline_search_kt_example"
-        />
+            <item
+                android:id="@+id/open_offline_search_java_example"
+                android:title="@string/action_open_offline_search_java_example"
+                />
 
-    <item
-        android:id="@+id/open_offline_reverse_geocoding_java_example"
-        android:title="@string/action_open_offline_reverse_geocoding_java_example"
-        />
 
-    <item
-        android:id="@+id/open_offline_reverse_geocoding_kt_example"
-        android:title="@string/action_open_offline_reverse_geocoding_kt_example"
-        />
+            <item
+                android:id="@+id/open_offline_reverse_geocoding_java_example"
+                android:title="@string/action_open_offline_reverse_geocoding_java_example"
+                />
 
-    <item
-        android:id="@+id/open_japan_search_java_example"
-        android:title="@string/action_open_japan_search_java_example"
-        />
+            <item
+                android:id="@+id/open_japan_search_java_example"
+                android:title="@string/action_open_japan_search_java_example"
+                />
 
-    <item
-        android:id="@+id/open_japan_search_kt_example"
-        android:title="@string/action_open_japan_search_kt_example"
-        />
+            <item
+                android:id="@+id/open_history_data_provider_java_example"
+                android:title="@string/action_open_history_data_provider_java_example"
+                />
 
-    <item
-        android:id="@+id/open_history_data_provider_java_example"
-        android:title="@string/action_open_history_data_provider_java_example"
-        />
+            <item
+                android:id="@+id/open_favorites_data_provider_java_example"
+                android:title="@string/action_open_favorites_data_provider_java_example"
+                />
 
-    <item
-        android:id="@+id/open_history_data_provider_kt_example"
-        android:title="@string/action_open_history_data_provider_kt_example"
-        />
+        </menu>
 
-    <item
-        android:id="@+id/open_favorites_data_provider_java_example"
-        android:title="@string/action_open_favorites_data_provider_java_example"
-        />
+    </item>
 
-    <item
-        android:id="@+id/open_favorites_data_provider_kt_example"
-        android:title="@string/action_open_favorites_data_provider_kt_example"
-        />
 </menu>

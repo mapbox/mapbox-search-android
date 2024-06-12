@@ -20,10 +20,13 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.search.ApiType
@@ -56,6 +59,7 @@ import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
 import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
+import com.mapbox.search.sample.api.OfflineSearchAlongRouteExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
@@ -133,6 +137,26 @@ class MainActivity : AppCompatActivity() {
                     mapView.location.removeOnIndicatorPositionChangedListener(this)
                 }
             })
+        }
+
+        // only support for ApiType.SBS
+        if (BuildConfig.ENABLE_SBS) {
+            mapView.getMapboxMap().addOnMapClickListener { point ->
+                val screenCoords = mapView.getMapboxMap().pixelForCoordinate(point)
+
+                mapView.getMapboxMap().queryRenderedFeatures(
+                    RenderedQueryGeometry(screenCoords),
+                    RenderedQueryOptions(listOf("poi-label"), null)
+                ) {
+                    it.value?.firstOrNull()?.feature?.let { feature ->
+                        searchEngineUiAdapter.select(
+                            feature
+                        )
+                    }
+                }
+
+                true
+            }
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
@@ -387,11 +411,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, JapanSearchJavaExampleActivity::class.java))
                 true
             }
-            R.id.open_category_search_kt_example -> {
+            R.id.open_discover_search_kt_example -> {
                 startActivity(Intent(this, CategorySearchKotlinExampleActivity::class.java))
                 true
             }
-            R.id.open_category_search_java_example -> {
+            R.id.open_discover_search_java_example -> {
                 startActivity(Intent(this, CategorySearchJavaExampleActivity::class.java))
                 true
             }
@@ -425,6 +449,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_favorites_data_provider_kt_example -> {
                 startActivity(Intent(this, FavoritesDataProviderKotlinExample::class.java))
+                true
+            }
+            R.id.open_offline_search_along_route_example -> {
+                startActivity(Intent(this, OfflineSearchAlongRouteExampleActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

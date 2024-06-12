@@ -1,5 +1,6 @@
 package com.mapbox.search.sample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
@@ -47,6 +49,13 @@ class CustomThemeActivity : AppCompatActivity() {
         toolbar = findViewById<Toolbar>(R.id.toolbar).apply {
             title = getString(R.string.simple_ui_toolbar_title)
             setSupportActionBar(this)
+            ResourcesCompat
+                .getDrawable(resources, R.drawable.mapbox_search_sdk_close_drawable, theme)
+                ?.let { drawable ->
+                    drawable.setTint(Color.parseColor("#4F6530"))
+                    setNavigationIcon(drawable)
+                    setNavigationOnClickListener { this@CustomThemeActivity.finish() }
+                }
         }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {

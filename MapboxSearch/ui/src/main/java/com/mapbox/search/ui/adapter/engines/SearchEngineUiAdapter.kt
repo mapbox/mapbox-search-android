@@ -11,9 +11,11 @@ import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.common.ReachabilityFactory
 import com.mapbox.common.ReachabilityInterface
+import com.mapbox.geojson.Feature
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
+import com.mapbox.search.SearchResultCallback
 import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.ServiceProvider
@@ -25,6 +27,7 @@ import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.throwDebug
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.common.OsmIdUtils
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.UserActivityReporter
@@ -33,6 +36,7 @@ import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
+import com.mapbox.search.offline.OfflineSearchResultCallback
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
@@ -125,7 +129,7 @@ public class SearchEngineUiAdapter(
             retrySearchRequest()
         }
 
-    private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback {
+    private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback, SearchResultCallback {
 
         override fun onSuggestions(
             suggestions: List<SearchSuggestion>,
@@ -158,6 +162,10 @@ public class SearchEngineUiAdapter(
             }
         }
 
+        override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {
+            searchListeners.forEach { it.onSearchResultSelected(result, responseInfo) }
+        }
+
         override fun onError(e: Exception) {
             if (searchQuery.isNotEmpty()) {
                 showError(UiError.createFromException(e))
@@ -166,7 +174,7 @@ public class SearchEngineUiAdapter(
         }
     }
 
-    private val offlineSearchCallback = object : OfflineSearchCallback {
+    private val offlineSearchCallback = object : OfflineSearchCallback, OfflineSearchResultCallback {
 
         override fun onResults(
             results: List<OfflineSearchResult>,
@@ -175,6 +183,12 @@ public class SearchEngineUiAdapter(
             if (searchQuery.isNotEmpty()) {
                 showResults(results, responseInfo)
                 searchListeners.forEach { it.onOfflineSearchResultsShown(results, responseInfo) }
+            }
+        }
+
+        override fun onResult(result: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
+            searchListeners.forEach {
+                it.onOfflineSearchResultSelected(result, responseInfo)
             }
         }
 
@@ -319,6 +333,27 @@ public class SearchEngineUiAdapter(
                         offlineSearchCallback
                     )
                 }
+            }
+        }
+    }
+
+    /**
+     * Given a [Feature], via a map click event, performs a retrieve call.
+     * @param feature to retrieve from search
+     */
+    @UiThread
+    public fun select(
+        feature: Feature
+    ) {
+        checkMainThread()
+
+        when (isOnlineSearch) {
+            true -> {
+                val mapboxId = feature.id()?.let { OsmIdUtils.fromPoiId(it) }
+                searchEngine.retrieve(mapboxId!!, searchCallback)
+            }
+            false -> {
+                offlineSearchEngine.retrieve(feature, offlineSearchCallback)
             }
         }
     }
@@ -643,7 +678,7 @@ public class SearchEngineUiAdapter(
         public fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo)
 
         /**
-         Called when a user when a user selects one of the currently displayed [OfflineSearchResult]s.
+        Called when a user when a user selects one of the currently displayed [OfflineSearchResult]s.
          *
          * @param searchResult Search result.
          * @param responseInfo Search response and request information.

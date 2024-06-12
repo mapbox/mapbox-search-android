@@ -367,6 +367,12 @@ package com.mapbox.search.common {
   public static final class NavigationProfile.Companion {
   }
 
+  public final class OsmIdUtils {
+    method public static String? fromPoiId(long poiId);
+    method public static String? fromPoiId(String poiId);
+    field public static final com.mapbox.search.common.OsmIdUtils INSTANCE;
+  }
+
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
     ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
     method public String getName();

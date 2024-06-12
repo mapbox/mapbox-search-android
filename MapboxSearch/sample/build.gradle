@@ -15,7 +15,13 @@ if (mapboxApiToken == null) {
     throw new Exception("API token is not specified.")
 }
 
-def enableSBS = project.hasProperty('ENABLE_SBS') or System.getenv('ENABLE_SBS') != null
+def enableSBS = true
+
+if (project.hasProperty('ENABLE_SBS')) {
+    enableSBS = Boolean.valueOf(project.property('ENABLE_SBS'))
+} else if (System.getenv('ENABLE_SBS') != null) {
+    enableSBS = Boolean.valueOf(System.getenv('ENABLE_SBS'))
+}
 
 android {
     compileSdkVersion compile_sdk_version
@@ -51,6 +57,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -82,10 +92,12 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_runtime_ktx_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
     implementation "com.mapbox.maps:android:$mapbox_maps_version"
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.15.0'
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 

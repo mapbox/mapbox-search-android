@@ -242,6 +242,8 @@ public abstract interface class com/mapbox/search/SearchEngine {
 	public abstract fun getSettings ()Lcom/mapbox/search/SearchEngineSettings;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieve (Ljava/lang/String;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieve (Ljava/lang/String;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
@@ -272,6 +274,7 @@ public final class com/mapbox/search/SearchEngine$Companion {
 
 public final class com/mapbox/search/SearchEngine$DefaultImpls {
 	public static fun registerDataProvider (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun retrieve (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchOptions;Lcom/mapbox/search/SearchSuggestionsCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
@@ -394,6 +397,11 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun types ([Lcom/mapbox/search/QueryType;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/SearchOptions$Builder;
+}
+
+public abstract interface class com/mapbox/search/SearchResultCallback {
+	public abstract fun onError (Ljava/lang/Exception;)V
+	public abstract fun onResult (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;)V
 }
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
