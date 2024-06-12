@@ -270,7 +270,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
     private fun populateFavoriteButtonInfo(
         searchPlace: SearchPlace,
         overriddenAddedToFavorite: Boolean = searchPlace.record is FavoriteRecord,
-        animate: Boolean = true,
+        animate: Boolean = false,
         onFavoriteAdded: ((FavoriteRecord) -> Unit)? = null
     ) {
         val populateButton = { text: Int, icon: Int, listener: OnClickListener? ->
