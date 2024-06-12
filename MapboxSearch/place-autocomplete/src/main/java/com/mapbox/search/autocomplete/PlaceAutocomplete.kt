@@ -6,7 +6,6 @@ import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.location.defaultLocationEngine
 
