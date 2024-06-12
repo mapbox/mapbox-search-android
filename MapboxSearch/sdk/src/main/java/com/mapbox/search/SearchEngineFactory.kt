@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.StubCompletionCallback
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreLocationProvider
@@ -98,7 +99,7 @@ internal class SearchEngineFactory {
         } else {
             WrapperLocationProvider(
                 LocationEngineAdapter(
-                    BaseSearchSdkInitializer.app,
+                    BaseSearchSdkInitializerImpl.app,
                     settings.locationEngine
                 )
             ) {

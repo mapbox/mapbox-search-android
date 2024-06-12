@@ -7,6 +7,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.defaultLocationEngine
 import com.mapbox.search.common.AsyncOperationTask
@@ -212,7 +213,7 @@ public interface Discover {
         ): Discover {
             val engine = DiscoverSearchEngine.create(
                 accessToken,
-                BaseSearchSdkInitializer.app,
+                BaseSearchSdkInitializerImpl.app,
                 locationEngine
             )
 
