@@ -1,5 +1,11 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.2.1
+
+### Bug fixes
+- Fixes [#197](https://github.com/mapbox/mapbox-search-android/issues/197) clicking a "Recent Search" that is a favorite doesn't show as a favorite in the `SearchPlaceBottomSheetView`
+
+
 ## 2.2.0
 
 
