@@ -3,7 +3,6 @@ package com.mapbox.search.base.location
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.geojson.BoundingBox
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import kotlin.math.abs
 import kotlin.math.log2
