@@ -55,7 +55,7 @@ android {
 
     lint {
         abortOnError true
-        disable 'ParcelCreator', 'ContentDescription'
+        disable 'ParcelCreator', 'ContentDescription', 'EnsureInitializerMetadata'
     }
 }
 

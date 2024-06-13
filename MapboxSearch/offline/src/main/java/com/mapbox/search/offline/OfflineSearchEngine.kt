@@ -7,7 +7,7 @@ import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -343,7 +343,7 @@ public interface OfflineSearchEngine {
          */
         @JvmStatic
         public fun create(settings: OfflineSearchEngineSettings): OfflineSearchEngine {
-            val app = BaseSearchSdkInitializer.appContext as Application
+            val app = BaseSearchSdkInitializerImpl.appContext as Application
 
             with(settings) {
                 tileStore.setOption(

@@ -3,13 +3,13 @@ package com.mapbox.search.base.location
 import android.content.Context
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.geojson.BoundingBox
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import kotlin.math.abs
 import kotlin.math.log2
 import kotlin.math.max
 import kotlin.math.min
 
-fun defaultLocationEngine(context: Context = BaseSearchSdkInitializer.app) =
+fun defaultLocationEngine(context: Context = BaseSearchSdkInitializerImpl.app) =
     LocationEngineProvider.getBestLocationEngine(context)
 
 fun calculateMapZoom(bbox: BoundingBox): Float {
