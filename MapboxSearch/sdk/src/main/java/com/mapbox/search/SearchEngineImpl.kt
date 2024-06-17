@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchSelectionCallbackAdapter
@@ -53,6 +54,10 @@ internal class SearchEngineImpl(
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
     private val indexableDataProvidersRegistry: IndexableDataProvidersRegistry,
 ) : BaseSearchEngine(), SearchEngine {
+
+    init {
+        BaseMapboxInitializer.init(MapboxSearchSdkInitializerImpl::class.java)
+    }
 
     override fun search(
         query: String,
