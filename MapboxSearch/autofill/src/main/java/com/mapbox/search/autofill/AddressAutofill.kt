@@ -5,7 +5,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.location.defaultLocationProvider
 
