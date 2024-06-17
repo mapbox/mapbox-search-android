@@ -7,7 +7,6 @@ import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion.Underlying
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -24,6 +23,7 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.suspendFlatMap
@@ -177,7 +177,7 @@ internal class PlaceAutocompleteImpl(
                 CoreEngineOptions(
                     baseUrl = null,
                     apiType = apiType,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(
