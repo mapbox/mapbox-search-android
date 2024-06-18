@@ -77,6 +77,12 @@ package com.mapbox.search.ui.adapter.location {
 
 package com.mapbox.search.ui.utils {
 
+  public final class Debouncer {
+    ctor public Debouncer(long delayMillis);
+    method public void cancel();
+    method public void debounce(kotlin.jvm.functions.Function0<kotlin.Unit> action);
+  }
+
   public final class ThemePatcherKt {
   }
 

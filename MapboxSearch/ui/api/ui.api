@@ -68,6 +68,12 @@ public final class com/mapbox/search/ui/adapter/location/LocationObservationTime
 	public static final fun setLocationObservationTimeout (Ljava/lang/Long;)V
 }
 
+public final class com/mapbox/search/ui/utils/Debouncer {
+	public fun <init> (J)V
+	public final fun cancel ()V
+	public final fun debounce (Lkotlin/jvm/functions/Function0;)V
+}
+
 public final class com/mapbox/search/ui/view/CommonSearchViewConfiguration : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
