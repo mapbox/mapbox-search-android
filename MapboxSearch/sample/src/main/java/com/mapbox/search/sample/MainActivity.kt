@@ -81,12 +81,14 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfTransformation
 
 class MainActivity : AppCompatActivity() {
 
     private val locationProvider: LocationProvider? = defaultLocationProvider()
 
-    private val debouncer = Debouncer(300L);
+    private val debouncer = Debouncer(300L)
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
