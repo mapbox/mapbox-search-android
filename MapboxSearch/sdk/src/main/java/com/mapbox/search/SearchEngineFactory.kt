@@ -1,7 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.search.analytics.AnalyticsService
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.StubCompletionCallback
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreLocationProvider
@@ -10,6 +10,7 @@ import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -98,7 +99,7 @@ internal class SearchEngineFactory {
         } else {
             WrapperLocationProvider(
                 LocationEngineAdapter(
-                    BaseSearchSdkInitializer.app,
+                    BaseSearchSdkInitializerImpl.app,
                     settings.locationProvider
                 )
             ) {
@@ -110,7 +111,7 @@ internal class SearchEngineFactory {
             CoreEngineOptions(
                 baseUrl = baseUrl,
                 apiType = apiType.mapToCore(),
-                sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                sdkInformation = UserAgentProvider.sdkInformation(),
                 eventsUrl = null,
             ),
             coreLocationProvider

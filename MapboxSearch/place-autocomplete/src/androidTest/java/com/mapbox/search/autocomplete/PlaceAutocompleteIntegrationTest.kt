@@ -8,7 +8,6 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
@@ -16,6 +15,7 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationProvider
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
@@ -522,7 +522,7 @@ internal class PlaceAutocompleteIntegrationTest {
                 CoreEngineOptions(
                     baseUrl = url,
                     apiType = ApiType.SBS,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(

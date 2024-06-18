@@ -7,7 +7,7 @@ import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -18,6 +18,7 @@ import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -353,7 +354,8 @@ public interface OfflineSearchEngine {
          */
         @JvmStatic
         public fun create(settings: OfflineSearchEngineSettings): OfflineSearchEngine {
-            val app = BaseSearchSdkInitializer.appContext as Application
+            val app = BaseSearchSdkInitializerImpl
+                .appContext as Application
 
             with(settings) {
                 tileStore.setOption(
@@ -367,7 +369,7 @@ public interface OfflineSearchEngine {
                 CoreEngineOptions(
                     baseUrl = null,
                     apiType = CoreApiType.SBS,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(
