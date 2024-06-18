@@ -95,6 +95,7 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
 
     androidTestImplementation project(":common-tests")
     androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
