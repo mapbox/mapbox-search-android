@@ -81,8 +81,6 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
-import com.mapbox.turf.TurfConstants
-import com.mapbox.turf.TurfTransformation
 
 class MainActivity : AppCompatActivity() {
 
