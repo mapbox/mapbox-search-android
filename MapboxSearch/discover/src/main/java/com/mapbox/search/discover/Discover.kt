@@ -6,7 +6,7 @@ import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.common.AsyncOperationTask
@@ -208,7 +208,7 @@ public interface Discover {
             locationProvider: LocationProvider? = defaultLocationProvider(),
         ): Discover {
             val engine = DiscoverSearchEngine.create(
-                BaseSearchSdkInitializer.app,
+                BaseSearchSdkInitializerImpl.app,
                 locationProvider
             )
 

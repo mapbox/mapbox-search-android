@@ -7,7 +7,6 @@ import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.BaseSearchSelectionCallback
 import com.mapbox.search.base.BaseSearchSuggestionsCallback
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -33,6 +32,7 @@ import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.ApiType
@@ -255,7 +255,7 @@ internal class AutofillSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
                     apiType = apiType,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(

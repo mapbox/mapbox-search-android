@@ -7,7 +7,6 @@ import com.mapbox.bindgen.ExpectedFactory.createValue
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreEngineOptions
 import com.mapbox.search.base.core.CoreSearchEngine
@@ -21,6 +20,7 @@ import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -107,7 +107,7 @@ internal class DiscoverSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
                     apiType = API_TYPE,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(

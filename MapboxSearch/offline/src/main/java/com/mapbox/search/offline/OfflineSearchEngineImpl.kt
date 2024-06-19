@@ -1,9 +1,11 @@
 package com.mapbox.search.offline
 
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreOfflineIndexObserver
@@ -44,6 +46,8 @@ internal class OfflineSearchEngineImpl(
     private var isEngineReady: Boolean = true
 
     init {
+        BaseMapboxInitializer.init(BaseSearchSdkInitializerImpl::class.java)
+
         coreEngine.setTileStore(settings.tileStore) {
             synchronized(initializationLock) {
                 isEngineReady = true
