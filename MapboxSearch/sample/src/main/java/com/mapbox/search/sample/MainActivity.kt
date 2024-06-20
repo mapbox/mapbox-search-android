@@ -77,6 +77,7 @@ import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
+import com.mapbox.search.ui.utils.Debouncer
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchMode
@@ -89,6 +90,8 @@ import com.mapbox.turf.TurfTransformation
 class MainActivity : AppCompatActivity() {
 
     private val locationProvider: LocationProvider? = defaultLocationProvider()
+
+    private val debouncer = Debouncer(300L)
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -403,7 +406,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchEngineUiAdapter.search(newText)
+                debouncer.debounce {
+                    searchEngineUiAdapter.search(newText)
+                }
                 return false
             }
         })
