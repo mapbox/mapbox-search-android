@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity() {
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = BuildConfig.API_TYPE,
-            settings = SearchEngineSettings(baseUrl = "https://cloudfront-staging.tilestream.net")
+            settings = SearchEngineSettings(/* baseUrl = Staging URL */)
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
