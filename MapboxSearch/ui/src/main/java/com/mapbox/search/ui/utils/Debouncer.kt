@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 /**
@@ -21,7 +22,10 @@ public class Debouncer(private val delayMillis: Long) {
         job?.cancel()
         job = CoroutineScope(Dispatchers.Main).launch {
             delay(delayMillis)
-            action()
+
+            if (isActive) {
+                action()
+            }
         }
     }
 
