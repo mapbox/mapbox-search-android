@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity() {
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = BuildConfig.API_TYPE,
-            settings = SearchEngineSettings()
+            settings = SearchEngineSettings(baseUrl = "https://cloudfront-staging.tilestream.net")
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
@@ -266,6 +266,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
+                searchResult.metadata?.children.let { Log.i("SampleApiExample", it.toString()) }
                 searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
                 mapMarkersManager.showMarker(searchResult.coordinate)
             }

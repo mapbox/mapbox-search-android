@@ -1,6 +1,10 @@
 package com.mapbox.search
 
 import android.os.Parcelable
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
@@ -111,6 +115,11 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val countryIso2: String? = coreMetadata.data["iso_3166_2"]
 
+    @IgnoredOnParcel
+    public val children: List<ChildMetadata> = extraData["children"]?.let { GsonBuilder().registerTypeAdapter(
+        Point::class.java, ChildMetadata.PointDeserializer()
+    ).create().fromJson(it, childMetadataListType) } ?: emptyList()
+
     internal constructor(
         metadata: HashMap<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -179,5 +188,9 @@ public class SearchResultMetadata internal constructor(
                 "countryIso1=$countryIso1, " +
                 "countryIso2=$countryIso2" +
                 ")"
+    }
+
+    internal companion object {
+        internal val childMetadataListType = object : TypeToken<List<ChildMetadata>>() {}.type
     }
 }
