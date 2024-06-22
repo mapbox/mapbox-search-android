@@ -1,13 +1,10 @@
 package com.mapbox.search
 
 import android.os.Parcelable
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.ParkingData
@@ -116,9 +113,7 @@ public class SearchResultMetadata internal constructor(
     public val countryIso2: String? = coreMetadata.data["iso_3166_2"]
 
     @IgnoredOnParcel
-    public val children: List<ChildMetadata> = extraData["children"]?.let { GsonBuilder().registerTypeAdapter(
-        Point::class.java, ChildMetadata.PointDeserializer()
-    ).create().fromJson(it, childMetadataListType) } ?: emptyList()
+    public val children: List<ChildMetadata>? = coreMetadata.children?.map { it.mapToPlatform() }
 
     internal constructor(
         metadata: HashMap<String, String> = HashMap(),
@@ -131,6 +126,7 @@ public class SearchResultMetadata internal constructor(
         otherPhotos: List<ImageInfo>? = null,
         openHours: OpenHours? = null,
         parking: ParkingData? = null,
+        children: List<ChildMetadata>? = null,
         cpsJson: String? = null,
     ) : this(
         CoreResultMetadata(
@@ -144,6 +140,7 @@ public class SearchResultMetadata internal constructor(
             otherPhotos?.map { it.mapToCore() },
             cpsJson,
             parking?.mapToCore(),
+            children?.map { it.mapToCore() },
             metadata
         )
     )
@@ -188,9 +185,5 @@ public class SearchResultMetadata internal constructor(
                 "countryIso1=$countryIso1, " +
                 "countryIso2=$countryIso2" +
                 ")"
-    }
-
-    internal companion object {
-        internal val childMetadataListType = object : TypeToken<List<ChildMetadata>>() {}.type
     }
 }

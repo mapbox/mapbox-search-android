@@ -72,6 +72,7 @@ fun createCoreResultMetadata(
     otherPhoto: List<CoreImageInfo>? = null,
     cpsJson: String? = null,
     parking: CoreParkingData? = null,
+    children: List<CoreChildMetadata>? = null,
     data: HashMap<String, String>
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount,
@@ -84,5 +85,6 @@ fun createCoreResultMetadata(
     otherPhoto,
     cpsJson,
     parking,
+    children,
     data
 )

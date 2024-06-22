@@ -33,3 +33,4 @@ typealias CoreOfflineIndexObserver = com.mapbox.search.internal.bindgen.OfflineI
 typealias CoreResultAccuracy = com.mapbox.search.internal.bindgen.ResultAccuracy
 typealias CoreSearchResponseError = com.mapbox.search.internal.bindgen.Error
 typealias CoreSearchResponseErrorType = com.mapbox.search.internal.bindgen.Error.Type
+typealias CoreChildMetadata = com.mapbox.search.internal.bindgen.ChildMetadata
