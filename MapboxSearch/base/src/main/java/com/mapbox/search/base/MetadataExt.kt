@@ -1,11 +1,13 @@
 package com.mapbox.search.base
 
+import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.base.core.CoreImageInfo
 import com.mapbox.search.base.core.CoreOpenHours
 import com.mapbox.search.base.core.CoreOpenMode
 import com.mapbox.search.base.core.CoreOpenPeriod
 import com.mapbox.search.base.core.CoreParkingData
 import com.mapbox.search.base.utils.printableName
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -64,6 +66,20 @@ fun CoreParkingData.mapToPlatform() = ParkingData(
 fun ParkingData.mapToCore() = CoreParkingData(
     totalCapacity,
     reservedForDisabilities
+)
+
+fun CoreChildMetadata.mapToPlatform() = ChildMetadata(
+    mapboxId,
+    name,
+    category,
+    coordinates
+)
+
+fun ChildMetadata.mapToCore() = CoreChildMetadata(
+    category,
+    coordinates,
+    mapboxId,
+    name
 )
 
 fun weekDayFromCore(dayCode: Byte): WeekDay {

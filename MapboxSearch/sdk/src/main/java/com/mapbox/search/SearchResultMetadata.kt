@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.ParkingData
@@ -111,6 +112,9 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val countryIso2: String? = coreMetadata.data["iso_3166_2"]
 
+    @IgnoredOnParcel
+    public val children: List<ChildMetadata>? = coreMetadata.children?.map { it.mapToPlatform() }
+
     internal constructor(
         metadata: HashMap<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -122,6 +126,7 @@ public class SearchResultMetadata internal constructor(
         otherPhotos: List<ImageInfo>? = null,
         openHours: OpenHours? = null,
         parking: ParkingData? = null,
+        children: List<ChildMetadata>? = null,
         cpsJson: String? = null,
     ) : this(
         CoreResultMetadata(
@@ -135,6 +140,7 @@ public class SearchResultMetadata internal constructor(
             otherPhotos?.map { it.mapToCore() },
             cpsJson,
             parking?.mapToCore(),
+            children?.map { it.mapToCore() },
             metadata
         )
     )
