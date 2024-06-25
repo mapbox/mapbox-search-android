@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.3.0-rc.1
+
+### New features
+- Updating SDK Intitialization
+- Adding Debouncing to Sample Application
+- feat(sample): loading offline tiles for sample activity
+- fix(sample): Adding cleanup to the debouncer
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.0-rc.1`
+- Common SDK `v24.5.0-rc.1`
+
 ## 2.3.0-beta.1
 
 ### Mapbox dependencies
