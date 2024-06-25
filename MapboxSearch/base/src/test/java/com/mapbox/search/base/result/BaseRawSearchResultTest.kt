@@ -402,6 +402,7 @@ internal class BaseRawSearchResultTest {
                     null,
                     null,
                     null,
+                    null,
                     hashMapOf()
                 ),
                 hashMapOf("external id 1" to "123", "external id 2" to "456", "external id 3" to "789"),
