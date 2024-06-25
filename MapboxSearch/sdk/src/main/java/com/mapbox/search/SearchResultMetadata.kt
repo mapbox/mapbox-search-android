@@ -112,6 +112,9 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val countryIso2: String? = coreMetadata.data["iso_3166_2"]
 
+    /**
+     * TODO
+     */
     @IgnoredOnParcel
     public val children: List<ChildMetadata>? = coreMetadata.children?.map { it.mapToPlatform() }
 

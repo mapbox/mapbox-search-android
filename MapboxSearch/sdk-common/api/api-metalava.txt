@@ -430,6 +430,18 @@ package com.mapbox.search.common.concurrent {
 
 package com.mapbox.search.common.metadata {
 
+  @kotlinx.parcelize.Parcelize public final class ChildMetadata implements android.os.Parcelable {
+    ctor public ChildMetadata(String mapboxId, String name, String category, com.mapbox.geojson.Point coordinates);
+    method public String getCategory();
+    method public com.mapbox.geojson.Point getCoordinates();
+    method public String getMapboxId();
+    method public String getName();
+    property public final String category;
+    property public final com.mapbox.geojson.Point coordinates;
+    property public final String mapboxId;
+    property public final String name;
+  }
+
   @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
     ctor public ImageInfo(String url, @Px int width, @Px int height);
     method public int getHeight();

@@ -325,5 +325,5 @@ fun createTestResultMetadata(
     parking: ParkingData? = null,
     data: HashMap<String, String>
 ): ResultMetadata = ResultMetadata(
-    reviewCount, phone, website, avRating, description, openHours, primaryPhoto, otherPhoto, cpsJson, parking, data
+    reviewCount, phone, website, avRating, description, openHours, primaryPhoto, otherPhoto, cpsJson, parking, null, data
 )

@@ -516,6 +516,7 @@ internal class HistoryDataProviderTest {
                 null,
                 null,
                 null,
+                null,
                 hashMapOf()
             ),
         )

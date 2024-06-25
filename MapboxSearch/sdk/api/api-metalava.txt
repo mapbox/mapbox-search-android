@@ -379,6 +379,7 @@ package com.mapbox.search {
 
   @kotlinx.parcelize.Parcelize public final class SearchResultMetadata implements android.os.Parcelable {
     method public Double? getAverageRating();
+    method public java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? getChildren();
     method public String? getCountryIso1();
     method public String? getCountryIso2();
     method public String? getCpsJson();
@@ -392,6 +393,7 @@ package com.mapbox.search {
     method public Integer? getReviewCount();
     method public String? getWebsite();
     property public final Double? averageRating;
+    property public final java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? children;
     property public final String? countryIso1;
     property public final String? countryIso2;
     property public final String? cpsJson;

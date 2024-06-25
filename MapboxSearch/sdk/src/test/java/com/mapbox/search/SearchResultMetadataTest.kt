@@ -68,6 +68,7 @@ internal class SearchResultMetadataTest {
                 testOtherPhotos.map { it.mapToCore() },
                 testCpsJson,
                 testParking.mapToCore(),
+                null,
                 spyMetaMap
             )
             val spyCoreMeta = spyk(originalCoreMeta)

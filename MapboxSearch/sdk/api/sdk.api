@@ -490,6 +490,7 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
+	public final fun getChildren ()Ljava/util/List;
 	public final fun getCountryIso1 ()Ljava/lang/String;
 	public final fun getCountryIso2 ()Ljava/lang/String;
 	public final fun getCpsJson ()Ljava/lang/String;
