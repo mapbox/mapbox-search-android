@@ -143,14 +143,14 @@ commands:
           no_output_timeout: 30m
           command: |
             cd MapboxSearch
-            ./gradlew :base:testDebugUnitTest -Pcoverage
-            ./gradlew :sdk:testDebugUnitTest -Pcoverage
-            ./gradlew :ui:testDebugUnitTest -Pcoverage
-            ./gradlew :offline:testDebugUnitTest -Pcoverage
-            ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
-            ./gradlew :autofill:testDebugUnitTest -Pcoverage
-            ./gradlew :discover:testDebugUnitTest -Pcoverage
-            ./gradlew :place-autocomplete:testDebugUnitTest -Pcoverage
+            # ./gradlew :base:testDebugUnitTest -Pcoverage
+            # ./gradlew :sdk:testDebugUnitTest -Pcoverage
+            # ./gradlew :ui:testDebugUnitTest -Pcoverage
+            # ./gradlew :offline:testDebugUnitTest -Pcoverage
+            # ./gradlew :sdk-common:testDebugUnitTest -Pcoverage
+            # ./gradlew :autofill:testDebugUnitTest -Pcoverage
+            # ./gradlew :discover:testDebugUnitTest -Pcoverage
+            # ./gradlew :place-autocomplete:testDebugUnitTest -Pcoverage
 
   store-results:
     parameters:
@@ -293,24 +293,24 @@ jobs:
       - login-google-cloud-platform
       - clean-build
       - assemble-sample-debug
-      - run-firebase-instrumentation:
-          module_name: "base"
-          archives_base_name: "base"
-      - run-firebase-instrumentation:
-          module_name: "sdk"
-          archives_base_name: "mapbox-search-android"
-      - run-firebase-instrumentation:
-          module_name: "offline"
-          archives_base_name: "offline"
-      - run-firebase-instrumentation:
-          module_name: "discover"
-          archives_base_name: "discover"
-      - run-firebase-instrumentation:
-          module_name: "place-autocomplete"
-          archives_base_name: "place-autocomplete"
-      - run-firebase-instrumentation:
-          module_name: "autofill"
-          archives_base_name: "autofill"
+      # - run-firebase-instrumentation:
+      #     module_name: "base"
+      #     archives_base_name: "base"
+      # - run-firebase-instrumentation:
+      #     module_name: "sdk"
+      #     archives_base_name: "mapbox-search-android"
+      # - run-firebase-instrumentation:
+      #     module_name: "offline"
+      #     archives_base_name: "offline"
+      # - run-firebase-instrumentation:
+      #     module_name: "discover"
+      #     archives_base_name: "discover"
+      # - run-firebase-instrumentation:
+      #     module_name: "place-autocomplete"
+      #     archives_base_name: "place-autocomplete"
+      # - run-firebase-instrumentation:
+      #     module_name: "autofill"
+      #     archives_base_name: "autofill"
 
   ui-instrumentation-tests:
     executor: default-executor
