@@ -24,10 +24,11 @@ public class ChildMetadata(
      * @suppress
      */
     override fun toString(): String {
-        return "ChildMetadata(\n  mapboxId='$mapboxId',\n" +
-                "  name='$name', \n" +
-                "  category: '$category',\n" +
-                "  coordinates: '$coordinates'\n" +
+        return "ChildMetadata(" +
+                "mapboxId=$mapboxId, " +
+                "name=$name, " +
+                "category=$category" +
+                "coordinates=$coordinates" +
                 ")"
     }
 }

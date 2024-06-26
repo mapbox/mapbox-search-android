@@ -186,7 +186,8 @@ public class SearchResultMetadata internal constructor(
                 "parking=$parking, " +
                 "cpsJson=$cpsJson, " +
                 "countryIso1=$countryIso1, " +
-                "countryIso2=$countryIso2" +
+                "countryIso2=$countryIso2, " +
+                "children=$children" +
                 ")"
     }
 }

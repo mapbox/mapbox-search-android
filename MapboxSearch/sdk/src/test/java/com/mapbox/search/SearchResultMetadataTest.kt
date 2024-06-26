@@ -1,7 +1,10 @@
 package com.mapbox.search
 
+import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.mapToCore
+import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -57,19 +60,28 @@ internal class SearchResultMetadataTest {
             )
             val testCpsJson = "{\"raw\":{\"distance\":89,\"id\":\"Parkopedia_336981\",\"lan\":51.50715,\"locationReference\":{},\"lon\":-0.129003,\"phone\":\"020 7823 4567\"}}"
 
+            val children: List<CoreChildMetadata> = listOf(
+                CoreChildMetadata(
+                    mapboxId = "mapboxId",
+                    name = "name",
+                    category = "category",
+                    coordinates = Point.fromLngLat(0.0, 1.1),
+                )
+            )
+
             val originalCoreMeta = CoreResultMetadata(
-                243,
-                "+7 939 32 12",
-                "www.test.com",
-                3.4,
-                "Description of test dummy",
-                testOpenHours.mapToCore(),
-                testPrimaryPhotos.map { it.mapToCore() },
-                testOtherPhotos.map { it.mapToCore() },
-                testCpsJson,
-                testParking.mapToCore(),
-                null,
-                spyMetaMap
+                reviewCount = 243,
+                phone = "+7 939 32 12",
+                website = "www.test.com",
+                avRating = 3.4,
+                description = "Description of test dummy",
+                openHours = testOpenHours.mapToCore(),
+                primaryPhoto = testPrimaryPhotos.map { it.mapToCore() },
+                otherPhoto = testOtherPhotos.map { it.mapToCore() },
+                cpsJson = testCpsJson,
+                parking = testParking.mapToCore(),
+                children = children,
+                data = spyMetaMap
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -187,7 +199,8 @@ internal class SearchResultMetadataTest {
 
             When("toString() called") {
                 val value = metadata.toString()
-                Then("Value should be as expected",
+                Then(
+                    "Value should be as expected",
                     "SearchResultMetadata(" +
                             "extraData=${originalCoreMeta.data}, " +
                             "reviewCount=${originalCoreMeta.reviewCount}, " +
@@ -201,7 +214,8 @@ internal class SearchResultMetadataTest {
                             "parking=$testParking, " +
                             "cpsJson=$testCpsJson, " +
                             "countryIso1=$testIso1Value, " +
-                            "countryIso2=$testIso2Value" +
+                            "countryIso2=$testIso2Value, " +
+                            "children=${children.map { it.mapToPlatform() }}" +
                             ")",
                     value
                 )
