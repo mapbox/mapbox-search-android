@@ -1,5 +1,11 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.3.0
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.0`
+- Common SDK `v24.5.0`
+
 ## 2.3.0-rc.1
 
 ### New features
