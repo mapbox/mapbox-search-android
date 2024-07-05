@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# git pre-commit hook to format code before committing
+# install this script by doing the following: cp scripts/pre-commit .git/hooks/pre-commit
+
+git stash -q --keep-index
+
+pushd MapboxSearch/
+
+subprojects=(
+    "base"
+    "sdk"
+    "ui"
+    "offline"
+    "sdk-common"
+    "autofill"
+    "discover"
+    "place-autocomplete"
+    "sample"
+)
+
+for project in "${subprojects[@]}"; do
+    ./gradlew --quiet ":$project:ktlintFormat"
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        git stash pop -q
+        exit 1
+    fi
+done
+
+popd
+
+CHANGED_FILES=$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')
+
+if [ -n "$CHANGED_FILES" ]; then
+    echo "$CHANGED_FILES" | while read -r file; do
+        if [ -f "$file" ]; then
+            git add "$file"
+        fi
+    done
+fi
+
+git stash pop -q
