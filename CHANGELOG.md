@@ -1,5 +1,15 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 1.4.0
+
+### Bug fixes
+
+- Fix session token behavior when making subsequent suggest calls (Search Native SDK `1.4.0`)
+
+### Mapbox dependencies
+
+- Search Native SDK `1.4.0`
+
 ## 1.3.0
 
 ### New features
