@@ -116,6 +116,21 @@ public class SearchOptions @JvmOverloads public constructor(
      * Threshold specified in meters.
      */
     public val indexableRecordsDistanceThresholdMeters: Double? = null,
+
+    /**
+     * Besides the basic metadata attributes, developers can request additional
+     * attributes by setting attribute_sets parameter with attribute set values,
+     * for example &attribute_sets=basic,photos,visit.
+     * The requested metadata will be provided in metadata object in the response.
+     */
+    public val attributeSets: List<String>? = null,
+
+    /**
+     * 	Returns features that are defined differently by audiences that belong to various regional,
+     * 	cultural, or political groups. Available worldviews are: ar,cn,in,jp,ma,ru,tr,us. If
+     * 	worldview is not set, the us worldview boundaries are returned by default.
+     */
+    public val worldview: String?,
 ) : Parcelable {
 
     init {
@@ -144,6 +159,8 @@ public class SearchOptions @JvmOverloads public constructor(
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
+        attributeSets: List<String>? = this.attributeSets,
+        worldview: String? = this.worldview,
     ): SearchOptions {
         return SearchOptions(
             proximity = proximity,
@@ -160,6 +177,8 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            attributeSets = attributeSets,
+            worldview = worldview,
         )
     }
 
@@ -193,6 +212,8 @@ public class SearchOptions @JvmOverloads public constructor(
         if (unsafeParameters != other.unsafeParameters) return false
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
+        if (attributeSets != other.attributeSets) return false
+        if (attributeSets != other.attributeSets) return false
 
         return true
     }
@@ -215,6 +236,8 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
+        result = 31 * result + (attributeSets?.hashCode() ?: 0)
+        result = 31 * result + (attributeSets?.hashCode() ?: 0)
         return result
     }
 
@@ -237,6 +260,8 @@ public class SearchOptions @JvmOverloads public constructor(
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
+                "attributeSet=$attributeSets" +
+                "worldview=$attributeSets" +
                 ")"
     }
 
@@ -260,6 +285,8 @@ public class SearchOptions @JvmOverloads public constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
+        private var attributeSet: List<String>? = null
+        private var worldview: String? = null
 
         internal constructor(options: SearchOptions) : this() {
             proximity = options.proximity
@@ -276,6 +303,8 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = options.unsafeParameters
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
+            attributeSet = options.attributeSets
+            worldview = options.worldview
         }
 
         /**
@@ -395,6 +424,20 @@ public class SearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * Besides the basic metadata attributes, developers can request additional
+         * attributes by setting attribute_sets parameter with attribute set values,
+         * for example &attribute_sets=basic,photos,visit.
+         * The requested metadata will be provided in metadata object in the response.
+         */
+        public fun attributeSet(attributeSet: List<String>?): Builder = apply {
+            this.attributeSet = attributeSet
+        }
+
+        public fun worldview(worldview: String?): Builder = apply {
+            this.worldview = worldview
+        }
+
+        /**
          * Create [SearchOptions] instance from builder data.
          */
         public fun build(): SearchOptions = SearchOptions(
@@ -412,6 +455,8 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            attributeSets = attributeSet,
+            worldview = worldview
         )
     }
 }
@@ -449,6 +494,9 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
     unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
+    attributeSets?.map { it },
+    worldview,
+    null,
 )
 
 @JvmSynthetic
@@ -480,4 +528,6 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     unsafeParameters = addonAPI,
     ignoreIndexableRecords = ignoreUR,
     indexableRecordsDistanceThresholdMeters = urDistanceThreshold,
+    attributeSets = attributeSets?.map { it },
+    worldview = worldview
 )

@@ -2,6 +2,7 @@ package com.mapbox.search.common.metadata
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.Objects
 
 /**
  * Availability information for the POI.
@@ -31,11 +32,16 @@ public abstract class OpenHours internal constructor() : Parcelable {
      */
     @Parcelize
     public class Scheduled(
-
         /**
          * Non-empty list of time periods, when POI is opened.
          */
-        public val periods: List<OpenPeriod>
+        public val periods: List<OpenPeriod>,
+
+        /**
+         * Array of strings representing the opening hours for each day of the week,
+         * Monday being the first day of week.
+         */
+        public val weekdayText: List<String>?,
     ) : OpenHours() {
 
         init {
@@ -52,6 +58,7 @@ public abstract class OpenHours internal constructor() : Parcelable {
             other as Scheduled
 
             if (periods != other.periods) return false
+            if (weekdayText != other.weekdayText) return false
 
             return true
         }
@@ -60,7 +67,7 @@ public abstract class OpenHours internal constructor() : Parcelable {
          * @suppress
          */
         override fun hashCode(): Int {
-            return periods.hashCode()
+            return Objects.hash(periods, weekdayText)
         }
 
         /**

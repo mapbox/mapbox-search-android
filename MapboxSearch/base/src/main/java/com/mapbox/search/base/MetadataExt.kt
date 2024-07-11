@@ -27,16 +27,20 @@ fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
             }
             null
         } else {
-            OpenHours.Scheduled(periods = periods)
+            OpenHours.Scheduled(periods = periods, weekdayText = weekdayText)
         }
     }
 }
 
 fun OpenHours.mapToCore() = when (this) {
-    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList())
-    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList())
-    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList())
-    is OpenHours.Scheduled -> CoreOpenHours(CoreOpenMode.SCHEDULED, periods.map { it.mapToCore() })
+    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList(), emptyList())
+    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList(), emptyList())
+    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList(), emptyList())
+    is OpenHours.Scheduled -> CoreOpenHours(
+        CoreOpenMode.SCHEDULED,
+        periods.map { it.mapToCore() },
+        weekdayText,
+    )
     else -> error("Unknown OpenHours subclass: ${javaClass.printableName}.")
 }
 
@@ -69,7 +73,7 @@ fun ParkingData.mapToCore() = CoreParkingData(
 )
 
 fun CoreChildMetadata.mapToPlatform() = ChildMetadata(
-    mapboxId,
+    mapbox_id,
     name,
     category,
     coordinates
