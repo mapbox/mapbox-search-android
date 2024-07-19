@@ -42,6 +42,8 @@ public abstract class OpenHours internal constructor() : Parcelable {
          * Monday being the first day of week.
          */
         public val weekdayText: List<String>?,
+
+        public val note: String?,
     ) : OpenHours() {
 
         init {
@@ -59,6 +61,7 @@ public abstract class OpenHours internal constructor() : Parcelable {
 
             if (periods != other.periods) return false
             if (weekdayText != other.weekdayText) return false
+            if (note != other.note) return false
 
             return true
         }
@@ -67,14 +70,14 @@ public abstract class OpenHours internal constructor() : Parcelable {
          * @suppress
          */
         override fun hashCode(): Int {
-            return Objects.hash(periods, weekdayText)
+            return Objects.hash(periods, weekdayText, note)
         }
 
         /**
          * @suppress
          */
         override fun toString(): String {
-            return "Scheduled(periods=$periods)"
+            return "Scheduled(periods=$periods, weekdayText=$weekdayText, note=$note)"
         }
     }
 }

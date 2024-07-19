@@ -42,7 +42,10 @@ fun createCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    null,
+    null,
+    null,
 )
 
 fun createCoreReverseGeoOptions(
@@ -86,5 +89,8 @@ fun createCoreResultMetadata(
     cpsJson,
     parking,
     children,
-    data
+    data,
+    false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false, null, null, null, null,
+    null, null, false, false, null, null
 )

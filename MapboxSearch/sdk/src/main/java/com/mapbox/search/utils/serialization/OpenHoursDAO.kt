@@ -26,7 +26,7 @@ internal class OpenHoursDAO(
                 if (validPeriods.isNullOrEmpty()) {
                     error("OpenHours.periods must not be empty")
                 } else {
-                    OpenHours.Scheduled(periods = validPeriods)
+                    OpenHours.Scheduled(periods = validPeriods, weekdayText = null, note = null)
                 }
             }
         }

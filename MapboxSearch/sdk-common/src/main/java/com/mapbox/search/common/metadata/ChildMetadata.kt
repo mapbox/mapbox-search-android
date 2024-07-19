@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 public class ChildMetadata(
-    public val mapboxId: String?,
+    public val mapboxId: String,
     public val name: String?,
     public val category: String?,
     public val coordinates: Point?

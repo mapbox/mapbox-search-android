@@ -63,7 +63,10 @@ fun createTestCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    emptyList(),
+    null,
+    null,
 )
 
 @Suppress("LongParameterList")
@@ -312,6 +315,32 @@ fun createTestCoreRoutablePoint(
     point, name
 )
 
+/*
+this.wheelchairAccessible = wheelchairAccessible;
+        this.delivery = delivery;
+        this.driveThrough = driveThrough;
+        this.reservable = reservable;
+        this.parkingAvailable = parkingAvailable;
+        this.valetParking = valetParking;
+        this.streetParking = streetParking;
+        this.servesBreakfast = servesBreakfast;
+        this.servesBrunch = servesBrunch;
+        this.servesDinner = servesDinner;
+        this.servesLunch = servesLunch;
+        this.servesWine = servesWine;
+        this.servesBeer = servesBeer;
+        this.takeout = takeout;
+        this.facebookId = facebookId;
+        this.fax = fax;
+        this.email = email;
+        this.instagram = instagram;
+        this.twitter = twitter;
+        this.priceLevel = priceLevel;
+        this.servesVegan = servesVegan;
+        this.servesVegetarian = servesVegetarian;
+        this.rating = rating;
+        this.popularity = popularity;
+ */
 fun createTestResultMetadata(
     reviewCount: Int? = null,
     phone: String? = null,
@@ -325,5 +354,29 @@ fun createTestResultMetadata(
     parking: ParkingData? = null,
     data: HashMap<String, String>
 ): ResultMetadata = ResultMetadata(
-    reviewCount, phone, website, avRating, description, openHours, primaryPhoto, otherPhoto, cpsJson, parking, null, data
+    reviewCount, phone, website, avRating, description, openHours, primaryPhoto, otherPhoto, cpsJson, parking, null, data,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    false,
+    false,
+    null,
+    null,
 )

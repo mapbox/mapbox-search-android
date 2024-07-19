@@ -130,7 +130,7 @@ public class SearchOptions @JvmOverloads public constructor(
      * 	cultural, or political groups. Available worldviews are: ar,cn,in,jp,ma,ru,tr,us. If
      * 	worldview is not set, the us worldview boundaries are returned by default.
      */
-    public val worldview: String?,
+    public val worldview: String? = null,
 ) : Parcelable {
 
     init {
