@@ -81,7 +81,31 @@ internal class SearchResultMetadataTest {
                 cpsJson = testCpsJson,
                 parking = testParking.mapToCore(),
                 children = children,
-                data = spyMetaMap
+                data = spyMetaMap,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 

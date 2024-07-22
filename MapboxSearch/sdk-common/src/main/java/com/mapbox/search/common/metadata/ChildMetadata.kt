@@ -5,12 +5,12 @@ import com.mapbox.geojson.Point
 import kotlinx.parcelize.Parcelize
 
 /**
- * TODO
+ * Metqdata for children (ie. sub destinations) for POIs.
  *
- * @property mapboxId TODO description goes here.
- * @property name TODO description goes here.
- * @property category TODO description goes here.
- * @property coordinates TODO description goes here.
+ * @property mapboxId Mapbox stable identifier
+ * @property name of the child POI
+ * @property category id of the POI
+ * @property coordinates of the POI
  */
 @Parcelize
 public class ChildMetadata(

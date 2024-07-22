@@ -38,12 +38,15 @@ public abstract class OpenHours internal constructor() : Parcelable {
         public val periods: List<OpenPeriod>,
 
         /**
-         * Array of strings representing the opening hours for each day of the week,
+         * Array of strings representing the opening hours for each day of the week.
          * Monday being the first day of week.
          */
-        public val weekdayText: List<String>?,
+        public val weekdayText: List<String>? = null,
 
-        public val note: String?,
+        /**
+         * A short comment showing applicable restrictions or specifications.
+         */
+        public val note: String? = null,
     ) : OpenHours() {
 
         init {

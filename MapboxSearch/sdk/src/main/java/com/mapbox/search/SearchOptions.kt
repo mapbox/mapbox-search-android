@@ -127,8 +127,8 @@ public class SearchOptions @JvmOverloads public constructor(
 
     /**
      * 	Returns features that are defined differently by audiences that belong to various regional,
-     * 	cultural, or political groups. Available worldviews are: ar,cn,in,jp,ma,ru,tr,us. If
-     * 	worldview is not set, the us worldview boundaries are returned by default.
+     * 	cultural, or political groups. Available worldviews are: ar, cn, in, jp, ma, ru, tr, us. If
+     * 	worldview is not set, the "us" worldview boundaries are returned by default.
      */
     public val worldview: String? = null,
 ) : Parcelable {

@@ -118,6 +118,78 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val children: List<ChildMetadata>? = coreMetadata.children?.map { it.mapToPlatform() }
 
+    @IgnoredOnParcel
+    public val wheelchairAccessible: Boolean? = coreMetadata.wheelchairAccessible
+
+    @IgnoredOnParcel
+    public val delivery: Boolean? = coreMetadata.delivery
+
+    @IgnoredOnParcel
+    public val driveThrough: Boolean? = coreMetadata.driveThrough
+
+    @IgnoredOnParcel
+    public val reservable: Boolean? = coreMetadata.reservable
+
+    @IgnoredOnParcel
+    public val parkingAvailable: Boolean? = coreMetadata.parkingAvailable
+
+    @IgnoredOnParcel
+    public val valetParking: Boolean? = coreMetadata.parkingAvailable
+
+    @IgnoredOnParcel
+    public val streetParking: Boolean? = coreMetadata.streetParking
+
+    @IgnoredOnParcel
+    public val servesBreakfast: Boolean? = coreMetadata.servesBreakfast
+
+    @IgnoredOnParcel
+    public val servesBrunch: Boolean? = coreMetadata.servesBrunch
+
+    @IgnoredOnParcel
+    public val servesDinner: Boolean? = coreMetadata.servesDinner
+
+    @IgnoredOnParcel
+    public val servesLunch: Boolean? = coreMetadata.servesLunch
+
+    @IgnoredOnParcel
+    public val servesWine: Boolean? = coreMetadata.servesWine
+
+    @IgnoredOnParcel
+    public val servesBeer: Boolean? = coreMetadata.servesBeer
+
+    @IgnoredOnParcel
+    public val takeout: Boolean? = coreMetadata.takeout
+
+    @IgnoredOnParcel
+    public val facebookId: String? = coreMetadata.facebookId
+
+    @IgnoredOnParcel
+    public val fax: String? = coreMetadata.fax
+
+    @IgnoredOnParcel
+    public val email: String? = coreMetadata.email
+
+    @IgnoredOnParcel
+    public val instagram: String? = coreMetadata.instagram
+
+    @IgnoredOnParcel
+    public val twitter: String? = coreMetadata.twitter
+
+    @IgnoredOnParcel
+    public val priceLevel: String? = coreMetadata.priceLevel
+
+    @IgnoredOnParcel
+    public val servesVegan: Boolean? = coreMetadata.servesVegan
+
+    @IgnoredOnParcel
+    public val servesVegetarian: Boolean? = coreMetadata.servesVegetarian
+
+    @IgnoredOnParcel
+    public val rating: Float? = coreMetadata.rating
+
+    @IgnoredOnParcel
+    public val popularity: Float? = coreMetadata.popularity
+
     internal constructor(
         metadata: HashMap<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -131,6 +203,30 @@ public class SearchResultMetadata internal constructor(
         parking: ParkingData? = null,
         children: List<ChildMetadata>? = null,
         cpsJson: String? = null,
+        wheelchairAccessible: Boolean? = null,
+        delivery: Boolean? = null,
+        driveThrough: Boolean? = null,
+        reservable: Boolean? = null,
+        parkingAvailable: Boolean? = null,
+        valetParking: Boolean? = null,
+        streetParking: Boolean? = null,
+        servesBreakfast: Boolean? = null,
+        servesBrunch: Boolean? = null,
+        servesDinner: Boolean? = null,
+        servesLunch: Boolean? = null,
+        servesWine: Boolean? = null,
+        servesBeer: Boolean? = null,
+        takeout: Boolean? = null,
+        facebookId: String? = null,
+        fax: String? = null,
+        email: String? = null,
+        instagram: String? = null,
+        twitter: String? = null,
+        priceLevel: String? = null,
+        servesVegan: Boolean? = null,
+        servesVegetarian: Boolean? = null,
+        rating: Float? = null,
+        popularity: Float? = null,
     ) : this(
         CoreResultMetadata(
             reviewCount,
@@ -145,30 +241,30 @@ public class SearchResultMetadata internal constructor(
             parking?.mapToCore(),
             children?.map { it.mapToCore() },
             metadata,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            false,
-            false,
-            null,
-            null,
+            wheelchairAccessible,
+            delivery,
+            driveThrough,
+            reservable,
+            parkingAvailable,
+            valetParking,
+            streetParking,
+            servesBreakfast,
+            servesBrunch,
+            servesDinner,
+            servesLunch,
+            servesWine,
+            servesBeer,
+            takeout,
+            facebookId,
+            fax,
+            email,
+            instagram,
+            twitter,
+            priceLevel,
+            servesVegan,
+            servesVegetarian,
+            rating,
+            popularity,
         )
     )
 
@@ -212,6 +308,30 @@ public class SearchResultMetadata internal constructor(
                 "countryIso1=$countryIso1, " +
                 "countryIso2=$countryIso2, " +
                 "children=$children" +
+                "wheelchairAccessible=$wheelchairAccessible" +
+                "delivery=$delivery" +
+                "driveThrough=$driveThrough" +
+                "reservable=$reservable" +
+                "parkingAvailable=$parkingAvailable" +
+                "valetParking=$valetParking" +
+                "streetParking=$streetParking" +
+                "servesBreakfast=$servesBreakfast" +
+                "servesBrunch=$servesBrunch" +
+                "servesDinner=$servesDinner" +
+                "servesLunch=$servesLunch" +
+                "servesWine=$servesWine" +
+                "servesBeer=$servesBeer" +
+                "takeout=$takeout" +
+                "facebookId=$facebookId" +
+                "fax=$fax" +
+                "email=$email" +
+                "instagram=$instagram" +
+                "twitter=$twitter" +
+                "priceLevel=$priceLevel" +
+                "servesVegan=$servesVegan" +
+                "servesVegetarian=$servesVegetarian" +
+                "rating=$rating" +
+                "popularity=$popularity" +
                 ")"
     }
 }
