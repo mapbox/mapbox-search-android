@@ -240,6 +240,30 @@ internal class SearchResultMetadataTest {
                             "countryIso1=$testIso1Value, " +
                             "countryIso2=$testIso2Value, " +
                             "children=${children.map { it.mapToPlatform() }}" +
+                            "wheelchairAccessible=$originalCoreMeta.wheelchairAccessible" +
+                            "delivery=$originalCoreMeta.delivery" +
+                            "driveThrough=$originalCoreMeta.driveThrough" +
+                            "reservable=$originalCoreMeta.reservable" +
+                            "parkingAvailable=$originalCoreMeta.parkingAvailable" +
+                            "valetParking=$originalCoreMeta.valetParking" +
+                            "streetParking=$originalCoreMeta.streetParking" +
+                            "servesBreakfast=$originalCoreMeta.servesBreakfast" +
+                            "servesBrunch=$originalCoreMeta.servesBrunch" +
+                            "servesDinner=$originalCoreMeta.servesDinner" +
+                            "servesLunch=$originalCoreMeta.servesLunch" +
+                            "servesWine=$originalCoreMeta.servesWine" +
+                            "servesBeer=$originalCoreMeta.servesBeer" +
+                            "takeout=$originalCoreMeta.takeout" +
+                            "facebookId=$originalCoreMeta.facebookId" +
+                            "fax=$originalCoreMeta.fax" +
+                            "email=$originalCoreMeta.email" +
+                            "instagram=$originalCoreMeta.instagram" +
+                            "twitter=$originalCoreMeta.twitter" +
+                            "priceLevel=$originalCoreMeta.priceLevel" +
+                            "servesVegan=$originalCoreMeta.servesVegan" +
+                            "servesVegetarian=$originalCoreMeta.servesVegetarian" +
+                            "rating=$originalCoreMeta.rating" +
+                            "popularity=$originalCoreMeta.popularity" +
                             ")",
                     value
                 )
