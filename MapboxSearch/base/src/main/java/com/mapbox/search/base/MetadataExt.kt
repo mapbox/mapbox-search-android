@@ -33,9 +33,9 @@ fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
 }
 
 fun OpenHours.mapToCore() = when (this) {
-    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList(), emptyList(), null)
-    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList(), emptyList(), null)
-    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList(), emptyList(), null)
+    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList(), null, null)
+    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList(), null, null)
+    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList(), null, null)
     is OpenHours.Scheduled -> CoreOpenHours(
         CoreOpenMode.SCHEDULED,
         periods.map { it.mapToCore() },

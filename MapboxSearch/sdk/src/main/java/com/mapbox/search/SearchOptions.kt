@@ -213,7 +213,7 @@ public class SearchOptions @JvmOverloads public constructor(
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
         if (attributeSets != other.attributeSets) return false
-        if (attributeSets != other.attributeSets) return false
+        if (worldview != other.worldview) return false
 
         return true
     }
@@ -237,7 +237,7 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
         result = 31 * result + (attributeSets?.hashCode() ?: 0)
-        result = 31 * result + (attributeSets?.hashCode() ?: 0)
+        result = 31 * result + (worldview?.hashCode() ?: 0)
         return result
     }
 
@@ -260,8 +260,8 @@ public class SearchOptions @JvmOverloads public constructor(
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
-                "attributeSet=$attributeSets" +
-                "worldview=$attributeSets" +
+                "attributeSets=$attributeSets" +
+                "worldview=$worldview" +
                 ")"
     }
 

@@ -65,7 +65,7 @@ fun createTestCoreSearchOptions(
     sarType,
     timeDeviation,
     addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
-    emptyList(),
+    null,
     null,
     null,
 )
