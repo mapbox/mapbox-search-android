@@ -302,6 +302,8 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null, java.util.List<java.lang.String>? attributeSets = null, String? worldview = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null, java.util.List<java.lang.String>? attributeSets = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
@@ -316,6 +318,7 @@ package com.mapbox.search {
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public java.util.List<java.lang.String>? getAttributeSets();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public Boolean? getFuzzyMatch();
@@ -330,7 +333,9 @@ package com.mapbox.search {
     method public com.mapbox.search.RouteOptions? getRouteOptions();
     method public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
+    method public String? getWorldview();
     method public com.mapbox.search.SearchOptions.Builder toBuilder();
+    property public final java.util.List<java.lang.String>? attributeSets;
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final Boolean? fuzzyMatch;
@@ -345,10 +350,12 @@ package com.mapbox.search {
     property public final com.mapbox.search.RouteOptions? routeOptions;
     property public final java.util.List<com.mapbox.search.QueryType>? types;
     property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
+    property public final String? worldview;
   }
 
   public static final class SearchOptions.Builder {
     ctor public SearchOptions.Builder();
+    method public com.mapbox.search.SearchOptions.Builder attributeSet(java.util.List<java.lang.String>? attributeSet);
     method public com.mapbox.search.SearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.SearchOptions build();
     method public com.mapbox.search.SearchOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
@@ -367,6 +374,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchOptions.Builder types(com.mapbox.search.QueryType... types);
     method public com.mapbox.search.SearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
     method public com.mapbox.search.SearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
+    method public com.mapbox.search.SearchOptions.Builder worldview(String? worldview);
   }
 
   public final class SearchOptionsKt {
@@ -383,29 +391,77 @@ package com.mapbox.search {
     method public String? getCountryIso1();
     method public String? getCountryIso2();
     method public String? getCpsJson();
+    method public Boolean? getDelivery();
     method public String? getDescription();
+    method public Boolean? getDriveThrough();
+    method public String? getEmail();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
+    method public String? getFacebookId();
+    method public String? getFax();
+    method public String? getInstagram();
     method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
     method public com.mapbox.search.common.metadata.ParkingData? getParking();
+    method public Boolean? getParkingAvailable();
     method public String? getPhone();
+    method public Float? getPopularity();
+    method public String? getPriceLevel();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
+    method public Float? getRating();
+    method public Boolean? getReservable();
     method public Integer? getReviewCount();
+    method public Boolean? getServesBeer();
+    method public Boolean? getServesBreakfast();
+    method public Boolean? getServesBrunch();
+    method public Boolean? getServesDinner();
+    method public Boolean? getServesLunch();
+    method public Boolean? getServesVegan();
+    method public Boolean? getServesVegetarian();
+    method public Boolean? getServesWine();
+    method public Boolean? getStreetParking();
+    method public Boolean? getTakeout();
+    method public String? getTwitter();
+    method public Boolean? getValetParking();
     method public String? getWebsite();
+    method public Boolean? getWheelchairAccessible();
     property public final Double? averageRating;
     property public final java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? children;
     property public final String? countryIso1;
     property public final String? countryIso2;
     property public final String? cpsJson;
+    property public final Boolean? delivery;
     property public final String? description;
+    property public final Boolean? driveThrough;
+    property public final String? email;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
+    property public final String? facebookId;
+    property public final String? fax;
+    property public final String? instagram;
     property public final com.mapbox.search.common.metadata.OpenHours? openHours;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
     property public final com.mapbox.search.common.metadata.ParkingData? parking;
+    property public final Boolean? parkingAvailable;
     property public final String? phone;
+    property public final Float? popularity;
+    property public final String? priceLevel;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
+    property public final Float? rating;
+    property public final Boolean? reservable;
     property public final Integer? reviewCount;
+    property public final Boolean? servesBeer;
+    property public final Boolean? servesBreakfast;
+    property public final Boolean? servesBrunch;
+    property public final Boolean? servesDinner;
+    property public final Boolean? servesLunch;
+    property public final Boolean? servesVegan;
+    property public final Boolean? servesVegetarian;
+    property public final Boolean? servesWine;
+    property public final Boolean? streetParking;
+    property public final Boolean? takeout;
+    property public final String? twitter;
+    property public final Boolean? valetParking;
     property public final String? website;
+    property public final Boolean? wheelchairAccessible;
   }
 
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
