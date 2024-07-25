@@ -433,6 +433,11 @@ public class SearchOptions @JvmOverloads public constructor(
             this.attributeSet = attributeSet
         }
 
+        /**
+         * 	Returns features that are defined differently by audiences that belong to various regional,
+         * 	cultural, or political groups. Available worldviews are: ar, cn, in, jp, ma, ru, tr, us. If
+         * 	worldview is not set, the "us" worldview boundaries are returned by default.
+         */
         public fun worldview(worldview: String?): Builder = apply {
             this.worldview = worldview
         }

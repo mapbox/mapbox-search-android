@@ -113,80 +113,154 @@ public class SearchResultMetadata internal constructor(
     public val countryIso2: String? = coreMetadata.data["iso_3166_2"]
 
     /**
-     * TODO
+     * Child metadata for POI.
      */
     @IgnoredOnParcel
     public val children: List<ChildMetadata>? = coreMetadata.children?.map { it.mapToPlatform() }
 
+    /**
+     * Indicates whether the location is accessible by wheelchair.
+     */
     @IgnoredOnParcel
     public val wheelchairAccessible: Boolean? = coreMetadata.wheelchairAccessible
 
+    /**
+     * Indicates whether the location offers delivery services
+     */
     @IgnoredOnParcel
     public val delivery: Boolean? = coreMetadata.delivery
 
+    /**
+     * Indicates whether the location has a drive-through service.
+     */
     @IgnoredOnParcel
     public val driveThrough: Boolean? = coreMetadata.driveThrough
 
+    /**
+     * Indicates whether the location accepts reservations.
+     */
     @IgnoredOnParcel
     public val reservable: Boolean? = coreMetadata.reservable
 
+    /**
+     * Indicates whether parking is available at the location.
+     */
     @IgnoredOnParcel
     public val parkingAvailable: Boolean? = coreMetadata.parkingAvailable
 
+    /**
+     * Indicates whether valet parking services are offered.
+     */
     @IgnoredOnParcel
     public val valetParking: Boolean? = coreMetadata.valetParking
 
+    /**
+     * Indicates the availability of street parking near the location.
+     */
     @IgnoredOnParcel
     public val streetParking: Boolean? = coreMetadata.streetParking
 
+    /**
+     * Indicates whether breakfast is served.
+     */
     @IgnoredOnParcel
     public val servesBreakfast: Boolean? = coreMetadata.servesBreakfast
 
+    /**
+     * Indicates whether brunch is served.
+     */
     @IgnoredOnParcel
     public val servesBrunch: Boolean? = coreMetadata.servesBrunch
 
+    /**
+     * Indicates whether dinner is served.
+     */
     @IgnoredOnParcel
     public val servesDinner: Boolean? = coreMetadata.servesDinner
 
+    /**
+     * Indicates whether lunch is served.
+     */
     @IgnoredOnParcel
     public val servesLunch: Boolean? = coreMetadata.servesLunch
 
+    /**
+     * Indicates whether wine is served.
+     */
     @IgnoredOnParcel
     public val servesWine: Boolean? = coreMetadata.servesWine
 
+    /**
+     * Indicates whether beer is served.
+     */
     @IgnoredOnParcel
     public val servesBeer: Boolean? = coreMetadata.servesBeer
 
+    /**
+     * Indicates whether takeout services are available.
+     */
     @IgnoredOnParcel
     public val takeout: Boolean? = coreMetadata.takeout
 
+    /**
+     * The Facebook ID associated with the feature.
+     */
     @IgnoredOnParcel
     public val facebookId: String? = coreMetadata.facebookId
 
+    /**
+     * The fax number associated with the location.
+     */
     @IgnoredOnParcel
     public val fax: String? = coreMetadata.fax
 
+    /**
+     * The email address associated with the location.
+     */
     @IgnoredOnParcel
     public val email: String? = coreMetadata.email
 
+    /**
+     * The Instagram handle associated with the location.
+     */
     @IgnoredOnParcel
     public val instagram: String? = coreMetadata.instagram
 
+    /**
+     * The Twitter handle associated with the location.
+     */
     @IgnoredOnParcel
     public val twitter: String? = coreMetadata.twitter
 
+    /**
+     * The price level of the location, represented by a string including dollar signs.
+     * The values scale from Cheap "$" to Most Expensive "$$$$".
+     */
     @IgnoredOnParcel
     public val priceLevel: String? = coreMetadata.priceLevel
 
+    /**
+     * Indicates whether vegan diet options are available.
+     */
     @IgnoredOnParcel
     public val servesVegan: Boolean? = coreMetadata.servesVegan
 
+    /**
+     * Indicates whether vegetarian diet options are available.
+     */
     @IgnoredOnParcel
     public val servesVegetarian: Boolean? = coreMetadata.servesVegetarian
 
+    /**
+     * The average rating of the location, on a scale from 1 to 5.
+     */
     @IgnoredOnParcel
     public val rating: Float? = coreMetadata.rating
 
+    /**
+     * A popularity score for the location, calculated based on user engagement and review counts.
+     * The value scales from 0 to 1, 1 being the most popular.
+     */
     @IgnoredOnParcel
     public val popularity: Float? = coreMetadata.popularity
 
