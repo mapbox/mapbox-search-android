@@ -134,7 +134,7 @@ public class SearchResultMetadata internal constructor(
     public val parkingAvailable: Boolean? = coreMetadata.parkingAvailable
 
     @IgnoredOnParcel
-    public val valetParking: Boolean? = coreMetadata.parkingAvailable
+    public val valetParking: Boolean? = coreMetadata.valetParking
 
     @IgnoredOnParcel
     public val streetParking: Boolean? = coreMetadata.streetParking

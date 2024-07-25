@@ -82,30 +82,30 @@ internal class SearchResultMetadataTest {
                 parking = testParking.mapToCore(),
                 children = children,
                 data = spyMetaMap,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                wheelchairAccessible = true,
+                delivery = true,
+                driveThrough = true,
+                reservable = true,
+                parkingAvailable = true,
+                valetParking = true,
+                streetParking = true,
+                servesBreakfast = true,
+                servesBrunch = true,
+                servesDinner = null,
+                servesLunch = true,
+                servesWine = true,
+                servesBeer = true,
+                takeout = true,
+                facebookId = "the-facebook",
+                fax = "+7 939 32 12",
+                email = "the-email@example.com",
+                instagram = "the-instagram",
+                twitter = "the-twitter",
+                priceLevel = "$",
+                servesVegan = true,
+                servesVegetarian = true,
+                rating = 5.0f,
+                popularity = 0.5f
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -158,6 +158,102 @@ internal class SearchResultMetadataTest {
 
                 Verify("CoreResultMetadata.data.get(\"iso_3166_2\") called") {
                     spyMetaMap["iso_3166_2"]
+                }
+
+                Verify("CoreResultMetadata.getWheelchairAccessible() called") {
+                    spyCoreMeta.wheelchairAccessible
+                }
+
+                Verify("CoreResultMetadata.getDelivery() called") {
+                    spyCoreMeta.delivery
+                }
+
+                Verify("CoreResultMetadata.getDriveThrough() called") {
+                    spyCoreMeta.driveThrough
+                }
+
+                Verify("CoreResultMetadata.getReservable() called") {
+                    spyCoreMeta.reservable
+                }
+
+                Verify("CoreResultMetadata.getParkingAvailable() called") {
+                    spyCoreMeta.parkingAvailable
+                }
+
+                Verify("CoreResultMetadata.getValetParking() called") {
+                    spyCoreMeta.valetParking
+                }
+
+                Verify("CoreResultMetadata.getStreetParking() called") {
+                    spyCoreMeta.streetParking
+                }
+
+                Verify("CoreResultMetadata.getServesBreakfast() called") {
+                    spyCoreMeta.servesBreakfast
+                }
+
+                Verify("CoreResultMetadata.getServesBrunch() called") {
+                    spyCoreMeta.servesBrunch
+                }
+
+                Verify("CoreResultMetadata.getServesDinner() called") {
+                    spyCoreMeta.servesDinner
+                }
+
+                Verify("CoreResultMetadata.getServesLunch() called") {
+                    spyCoreMeta.servesLunch
+                }
+
+                Verify("CoreResultMetadata.getServesWine() called") {
+                    spyCoreMeta.servesWine
+                }
+
+                Verify("CoreResultMetadata.getServesBeer() called") {
+                    spyCoreMeta.servesBeer
+                }
+
+                Verify("CoreResultMetadata.getTakeout() called") {
+                    spyCoreMeta.takeout
+                }
+
+                Verify("CoreResultMetadata.getFacebookId() called") {
+                    spyCoreMeta.facebookId
+                }
+
+                Verify("CoreResultMetadata.getFax() called") {
+                    spyCoreMeta.fax
+                }
+
+                Verify("CoreResultMetadata.getEmail() called") {
+                    spyCoreMeta.email
+                }
+
+                Verify("CoreResultMetadata.getInstagram() called") {
+                    spyCoreMeta.instagram
+                }
+
+                Verify("CoreResultMetadata.getTwitter() called") {
+                    spyCoreMeta.twitter
+                }
+
+                Verify("CoreResultMetadata.getPriceLevel() called") {
+                    spyCoreMeta.priceLevel
+                }
+
+                Verify("CoreResultMetadata.getServiceVegan() called") {
+                    spyCoreMeta.servesVegan
+                }
+
+                Verify("CoreResultMetadata.getServesVegetarian() called") {
+                    spyCoreMeta.servesVegetarian
+                }
+
+                Verify("CoreResultMetadata.getRating() called") {
+                    spyCoreMeta.rating
+                }
+
+                Verify("CoreResultMetadata.getPopularity() called") {
+                    spyCoreMeta.popularity
                 }
             }
 
@@ -219,6 +315,150 @@ internal class SearchResultMetadataTest {
 
             When("countryIso2 accessed") {
                 Then("Returned data should be equal to initially provided", testIso2Value, metadata.countryIso2)
+            }
+
+            When("wheelchairAccessible accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.wheelchairAccessible, metadata.wheelchairAccessible)
+                }
+            }
+
+             When("delivery accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.delivery, metadata.delivery)
+                 }
+            }
+
+             When("driveThrough accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.driveThrough, metadata.driveThrough)
+                 }
+            }
+
+             When("reservable accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.reservable, metadata.reservable)
+                 }
+            }
+
+             When("parkingAvailable accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.parkingAvailable, metadata.parkingAvailable)
+                 }
+            }
+
+             When("valetParking accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.valetParking, metadata.valetParking)
+                 }
+            }
+
+             When("streetParking accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.streetParking, metadata.streetParking)
+                 }
+            }
+
+             When("servesBreakfast accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesBreakfast, metadata.servesBreakfast)
+                 }
+            }
+
+             When("servesBrunch accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesBrunch, metadata.servesBrunch)
+                 }
+            }
+
+             When("servesDinner accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesDinner, metadata.servesDinner)
+                 }
+            }
+
+             When("servesLunch accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesLunch, metadata.servesLunch)
+                 }
+            }
+
+             When("servesWine accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesWine, metadata.servesWine)
+                 }
+            }
+
+             When("servesBeer accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesBeer, metadata.servesBeer)
+                 }
+            }
+
+             When("takeout accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.takeout, metadata.takeout)
+                 }
+            }
+
+             When("facebookId accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.facebookId, metadata.facebookId)
+                 }
+            }
+
+             When("fax accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.fax, metadata.fax)
+                 }
+            }
+
+             When("email accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.email, metadata.email)
+                 }
+            }
+
+             When("instagram accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.instagram, metadata.instagram)
+                 }
+            }
+
+             When("twitter accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.twitter, metadata.twitter)
+                 }
+            }
+
+             When("priceLevel accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.priceLevel, metadata.priceLevel)
+                 }
+            }
+
+             When("serviceVegan accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesVegan, metadata.servesVegan)
+                 }
+            }
+
+             When("servesVegetarian accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.servesVegetarian, metadata.servesVegetarian)
+                 }
+            }
+
+             When("rating accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.rating, metadata.rating)
+                 }
+            }
+
+             When("popularity accessed") {
+                 Then("Returned data should be as original") {
+                     assertEquals(originalCoreMeta.popularity, metadata.popularity)
+                 }
             }
 
             When("toString() called") {
