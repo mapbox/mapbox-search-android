@@ -177,7 +177,8 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 website = "https://www.toureiffel.paris/",
                 averageRating = 4.5,
                 description = "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride.",
-                primaryPhotos = listOf(
+                primaryPhotos = null,
+                otherPhotos = listOf(
                     ImageInfo(
                         url = "http://media-cdn.tripadvisor.com/media/photo-t/1b/15/a3/a1/c-emeric-livinec-sete.jpg",
                         width = 50,
@@ -194,7 +195,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                         height = 2000
                     )
                 ),
-                otherPhotos = null,
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
                         OpenPeriod(
