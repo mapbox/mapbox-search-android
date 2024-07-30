@@ -126,14 +126,6 @@ class TwoStepsRequestCallbackWrapper(
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         (this as BaseSearchSelectionCallback).onResults(suggestion, results, responseInfo)
                     }
-                } else if (suggestion != null && responseResult.isEmpty()) {
-                    val error = IOException(
-                        "No result"
-                    )
-
-                    searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
-                        onError(error)
-                    }
                 } else if (suggestion != null &&
                     responseResult.size == 1 &&
                     searchResultFactory.isResolvedSearchResult(responseResult.first().mapToBase())
