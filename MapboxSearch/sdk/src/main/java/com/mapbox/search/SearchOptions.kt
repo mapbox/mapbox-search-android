@@ -123,14 +123,7 @@ public class SearchOptions @JvmOverloads public constructor(
      * for example &attribute_sets=basic,photos,visit.
      * The requested metadata will be provided in metadata object in the response.
      */
-    public val attributeSets: List<String>? = null,
-
-    /**
-     * 	Returns features that are defined differently by audiences that belong to various regional,
-     * 	cultural, or political groups. Available worldviews are: ar, cn, in, jp, ma, ru, tr, us. If
-     * 	worldview is not set, the "us" worldview boundaries are returned by default.
-     */
-    public val worldview: String? = null,
+    public val attributeSets: List<AttributeSet>? = null,
 ) : Parcelable {
 
     init {
@@ -159,8 +152,7 @@ public class SearchOptions @JvmOverloads public constructor(
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
-        attributeSets: List<String>? = this.attributeSets,
-        worldview: String? = this.worldview,
+        attributeSets: List<AttributeSet>? = this.attributeSets,
     ): SearchOptions {
         return SearchOptions(
             proximity = proximity,
@@ -178,7 +170,6 @@ public class SearchOptions @JvmOverloads public constructor(
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             attributeSets = attributeSets,
-            worldview = worldview,
         )
     }
 
@@ -213,7 +204,6 @@ public class SearchOptions @JvmOverloads public constructor(
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
         if (attributeSets != other.attributeSets) return false
-        if (worldview != other.worldview) return false
 
         return true
     }
@@ -237,7 +227,6 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
         result = 31 * result + (attributeSets?.hashCode() ?: 0)
-        result = 31 * result + (worldview?.hashCode() ?: 0)
         return result
     }
 
@@ -261,7 +250,6 @@ public class SearchOptions @JvmOverloads public constructor(
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
                 "attributeSets=$attributeSets" +
-                "worldview=$worldview" +
                 ")"
     }
 
@@ -285,8 +273,7 @@ public class SearchOptions @JvmOverloads public constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
-        private var attributeSet: List<String>? = null
-        private var worldview: String? = null
+        private var attributeSet: List<AttributeSet>? = null
 
         internal constructor(options: SearchOptions) : this() {
             proximity = options.proximity
@@ -304,7 +291,6 @@ public class SearchOptions @JvmOverloads public constructor(
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
             attributeSet = options.attributeSets
-            worldview = options.worldview
         }
 
         /**
@@ -429,17 +415,8 @@ public class SearchOptions @JvmOverloads public constructor(
          * for example &attribute_sets=basic,photos,visit.
          * The requested metadata will be provided in metadata object in the response.
          */
-        public fun attributeSet(attributeSet: List<String>?): Builder = apply {
+        public fun attributeSet(attributeSet: List<AttributeSet>?): Builder = apply {
             this.attributeSet = attributeSet
-        }
-
-        /**
-         * 	Returns features that are defined differently by audiences that belong to various regional,
-         * 	cultural, or political groups. Available worldviews are: ar, cn, in, jp, ma, ru, tr, us. If
-         * 	worldview is not set, the "us" worldview boundaries are returned by default.
-         */
-        public fun worldview(worldview: String?): Builder = apply {
-            this.worldview = worldview
         }
 
         /**
@@ -460,8 +437,7 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
-            attributeSets = attributeSet,
-            worldview = worldview
+            attributeSets = attributeSet
         )
     }
 }
@@ -499,9 +475,7 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
     unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
-    attributeSets?.map { it },
-    worldview,
-    null,
+    attributeSets?.map { it.mapToCore() }
 )
 
 @JvmSynthetic
@@ -533,6 +507,5 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     unsafeParameters = addonAPI,
     ignoreIndexableRecords = ignoreUR,
     indexableRecordsDistanceThresholdMeters = urDistanceThreshold,
-    attributeSets = attributeSets?.map { it },
-    worldview = worldview
+    attributeSets = attributeSets?.map { it.mapToPlatform() },
 )

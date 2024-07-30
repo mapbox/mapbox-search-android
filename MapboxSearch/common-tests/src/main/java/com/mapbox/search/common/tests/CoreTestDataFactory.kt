@@ -65,9 +65,7 @@ fun createTestCoreSearchOptions(
     sarType,
     timeDeviation,
     addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
-    null,
-    null,
-    null,
+    null
 )
 
 @Suppress("LongParameterList")
