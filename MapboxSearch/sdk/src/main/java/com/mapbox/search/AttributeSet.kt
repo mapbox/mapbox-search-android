@@ -2,6 +2,9 @@ package com.mapbox.search
 
 import com.mapbox.search.base.core.CoreAttributeSet
 
+/**
+ * Besides the basic metadata attributes described above, developers can request additional attributes.
+ */
 public enum class AttributeSet {
     /**
      * Essential information about a location such as name, address and coordinates. This is the default value for attribute_sets parameter, and will be provided when attribute_sets is not provided in the request.
