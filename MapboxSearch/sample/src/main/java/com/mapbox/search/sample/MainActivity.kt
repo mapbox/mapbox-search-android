@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // only support for ApiType.SBS
-        if (BuildConfig.API_TYPE == ApiType.SBS) {
+        if (BuildConfig.API_TYPE == ApiType.SBS || BuildConfig.API_TYPE == ApiType.SEARCH_BOX) {
             mapView.mapboxMap.addOnMapClickListener { point ->
                 val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 

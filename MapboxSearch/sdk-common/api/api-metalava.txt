@@ -430,6 +430,18 @@ package com.mapbox.search.common.concurrent {
 
 package com.mapbox.search.common.metadata {
 
+  @kotlinx.parcelize.Parcelize public final class ChildMetadata implements android.os.Parcelable {
+    ctor public ChildMetadata(String mapboxId, String? name, String? category, com.mapbox.geojson.Point? coordinates);
+    method public String? getCategory();
+    method public com.mapbox.geojson.Point? getCoordinates();
+    method public String getMapboxId();
+    method public String? getName();
+    property public final String? category;
+    property public final com.mapbox.geojson.Point? coordinates;
+    property public final String mapboxId;
+    property public final String? name;
+  }
+
   @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
     ctor public ImageInfo(String url, @Px int width, @Px int height);
     method public int getHeight();
@@ -452,9 +464,13 @@ package com.mapbox.search.common.metadata {
   }
 
   @kotlinx.parcelize.Parcelize public static final class OpenHours.Scheduled extends com.mapbox.search.common.metadata.OpenHours {
-    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.common.metadata.OpenPeriod> periods);
+    ctor public OpenHours.Scheduled(java.util.List<com.mapbox.search.common.metadata.OpenPeriod> periods, java.util.List<java.lang.String>? weekdayText = null, String? note = null);
+    method public String? getNote();
     method public java.util.List<com.mapbox.search.common.metadata.OpenPeriod> getPeriods();
+    method public java.util.List<java.lang.String>? getWeekdayText();
+    property public final String? note;
     property public final java.util.List<com.mapbox.search.common.metadata.OpenPeriod> periods;
+    property public final java.util.List<java.lang.String>? weekdayText;
   }
 
   @kotlinx.parcelize.Parcelize public static final class OpenHours.TemporaryClosed extends com.mapbox.search.common.metadata.OpenHours {

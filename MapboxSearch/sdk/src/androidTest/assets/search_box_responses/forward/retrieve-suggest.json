@@ -89,22 +89,15 @@
             }
           ],
           "open_hours": {
-            "open_type": "Scheduled",
-            "open_periods": [
+            "periods": [
               {
                 "open": {
                   "day": 5,
-                  "time": {
-                    "hour": 7,
-                    "minute": 0
-                  }
+                  "time": "0700"
                 },
                 "close": {
                   "day": 5,
-                  "time": {
-                    "hour": 20,
-                    "minute": 0
-                  }
+                  "time": "2000"
                 }
               }
             ]

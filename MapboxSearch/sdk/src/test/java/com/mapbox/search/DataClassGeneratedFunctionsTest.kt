@@ -3,10 +3,12 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
+import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -33,7 +35,7 @@ import org.junit.jupiter.api.TestFactory
 internal class DataClassGeneratedFunctionsTest {
 
     private val reflectionObjectFactory = ReflectionObjectsFactory(
-        extraCreators = SdkCustomTypeObjectCreators.ALL_CREATORS
+        extraCreators = SdkCustomTypeObjectCreators.ALL_CREATORS,
     )
 
     @TestFactory
@@ -90,7 +92,8 @@ internal class DataClassGeneratedFunctionsTest {
                 Given("${clazz.java.simpleName} class") {
                     When("${clazz.java.simpleName} class") {
                         Then("equals() and hashCode() functions should use every declared property") {
-                            EqualsVerifier.forClass(clazz.java)
+                            EqualsVerifier
+                                .forClass(clazz.java)
                                 .withPrefabValues(
                                     Point::class.java,
                                     Point.fromLngLat(2.0, 5.0),
@@ -132,7 +135,38 @@ internal class DataClassGeneratedFunctionsTest {
         Given("SearchResultMetadata class") {
             When("SearchResultMetadata class") {
                 Then("equals() and hashCode() functions should use every declared property") {
-                    EqualsVerifier.forClass(SearchResultMetadata::class.java)
+                    EqualsVerifier
+                        .forClass(SearchResultMetadata::class.java)
+                        .withPrefabValues(
+                            CoreChildMetadata::class.java,
+                            CoreChildMetadata(
+                                mapboxId = "mapboxId_1",
+                                name = "name_1",
+                                category = "category_1",
+                                coordinates = Point.fromLngLat(1.0, 0.0),
+                            ),
+                            CoreChildMetadata(
+                                mapboxId = "mapboxId_2",
+                                name = "name_2",
+                                category = "category_2",
+                                coordinates = Point.fromLngLat(2.0, 0.0),
+                            ),
+                        )
+                        .withPrefabValues(
+                            ChildMetadata::class.java,
+                            ChildMetadata(
+                                mapboxId = "mapboxId_1",
+                                name = "name_1",
+                                category = "category_1",
+                                coordinates = Point.fromLngLat(1.0, 0.0),
+                            ),
+                            ChildMetadata(
+                                mapboxId = "mapboxId_2",
+                                name = "name_2",
+                                category = "category_2",
+                                coordinates = Point.fromLngLat(2.0, 0.0),
+                            ),
+                        )
                         .withOnlyTheseFields("coreMetadata")
                         .verify()
                 }

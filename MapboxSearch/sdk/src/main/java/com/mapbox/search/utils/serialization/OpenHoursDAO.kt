@@ -5,7 +5,9 @@ import com.mapbox.search.common.metadata.OpenHours
 
 internal class OpenHoursDAO(
     @SerializedName("mode") val mode: OpenModeDAO? = null,
-    @SerializedName("periods") val periods: List<OpenPeriodDAO>? = null
+    @SerializedName("periods") val periods: List<OpenPeriodDAO>? = null,
+    @SerializedName("weekdayText") val weekdayText: List<String>? = null,
+    @SerializedName("note") val note: String? = null,
 ) : DataAccessObject<OpenHours?> {
 
     override val isValid: Boolean
@@ -26,7 +28,7 @@ internal class OpenHoursDAO(
                 if (validPeriods.isNullOrEmpty()) {
                     error("OpenHours.periods must not be empty")
                 } else {
-                    OpenHours.Scheduled(periods = validPeriods)
+                    OpenHours.Scheduled(periods = validPeriods, weekdayText = weekdayText, note = note)
                 }
             }
         }
@@ -36,12 +38,20 @@ internal class OpenHoursDAO(
 
         fun create(type: OpenHours?): OpenHoursDAO? {
             type ?: return null
-            return with(type) {
-                val periods = (this as? OpenHours.Scheduled)?.periods ?: emptyList()
-                OpenHoursDAO(
-                    mode = OpenModeDAO.create(this),
-                    periods = periods.map { OpenPeriodDAO.create(it) }
-                )
+            return when (type) {
+                is OpenHours.Scheduled -> {
+                    OpenHoursDAO(
+                        mode = OpenModeDAO.create(type),
+                        periods = type.periods.map { OpenPeriodDAO.create(it) },
+                        weekdayText = type.weekdayText,
+                        note = type.note,
+                    )
+                }
+                else -> {
+                    OpenHoursDAO(
+                        mode = OpenModeDAO.create(type),
+                    )
+                }
             }
         }
     }

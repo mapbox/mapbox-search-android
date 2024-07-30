@@ -33,12 +33,21 @@ internal object RetrieveUtils {
      */
     fun createSearchResultForRetrieve(apiType: ApiType, mapboxId: String): SearchResult {
         val suggestAction = when (apiType) {
-            ApiType.SBS, ApiType.SEARCH_BOX -> {
+            ApiType.SBS -> {
                 SuggestAction(
                     "retrieve",
                     "",
                     null,
                     """{"id":"$mapboxId"}""".toByteArray(),
+                    false
+                )
+            }
+            ApiType.SEARCH_BOX -> {
+                SuggestAction(
+                    "retrieve",
+                    mapboxId,
+                    null,
+                    null,
                     false
                 )
             }

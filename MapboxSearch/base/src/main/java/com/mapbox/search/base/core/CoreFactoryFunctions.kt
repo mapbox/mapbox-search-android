@@ -1,6 +1,7 @@
 package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
@@ -24,6 +25,7 @@ fun createCoreSearchOptions(
     route: List<Point>? = null,
     sarType: String? = null,
     timeDeviation: Double? = null,
+    attributeSets: List<AttributeSet>? = null,
     addonAPI: Map<String, String>? = null,
 ): CoreSearchOptions = CoreSearchOptions(
     proximity,
@@ -42,7 +44,8 @@ fun createCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    attributeSets
 )
 
 fun createCoreReverseGeoOptions(
@@ -72,7 +75,32 @@ fun createCoreResultMetadata(
     otherPhoto: List<CoreImageInfo>? = null,
     cpsJson: String? = null,
     parking: CoreParkingData? = null,
-    data: HashMap<String, String>
+    children: List<CoreChildMetadata>? = null,
+    data: HashMap<String, String>,
+    wheelchairAccessible: Boolean? = null,
+    delivery: Boolean? = null,
+    driveThrough: Boolean? = null,
+    reservable: Boolean? = null,
+    parkingAvailable: Boolean? = null,
+    valetParking: Boolean? = null,
+    streetParking: Boolean? = null,
+    servesBreakfast: Boolean? = null,
+    servesBrunch: Boolean? = null,
+    servesDinner: Boolean? = null,
+    servesLunch: Boolean? = null,
+    servesWine: Boolean? = null,
+    servesBeer: Boolean? = null,
+    takeout: Boolean? = null,
+    facebookId: String? = null,
+    fax: String? = null,
+    email: String? = null,
+    instagram: String? = null,
+    twitter: String? = null,
+    priceLevel: String? = null,
+    servesVegan: Boolean? = null,
+    servesVegetarian: Boolean? = null,
+    rating: Float? = null,
+    popularity: Float? = null,
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount,
     phone,
@@ -84,5 +112,30 @@ fun createCoreResultMetadata(
     otherPhoto,
     cpsJson,
     parking,
-    data
+    children,
+    data,
+    wheelchairAccessible,
+    delivery,
+    driveThrough,
+    reservable,
+    parkingAvailable,
+    valetParking,
+    streetParking,
+    servesBreakfast,
+    servesBrunch,
+    servesDinner,
+    servesLunch,
+    servesWine,
+    servesBeer,
+    takeout,
+    facebookId,
+    fax,
+    email,
+    instagram,
+    twitter,
+    priceLevel,
+    servesVegan,
+    servesVegetarian,
+    rating,
+    popularity,
 )

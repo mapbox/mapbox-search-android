@@ -476,6 +476,26 @@ public final class com/mapbox/search/common/concurrent/SearchSdkMainThreadWorker
 	public final fun setDelegate (Lcom/mapbox/search/common/concurrent/MainThreadWorker;)V
 }
 
+public final class com/mapbox/search/common/metadata/ChildMetadata : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/geojson/Point;)V
+	public fun describeContents ()I
+	public final fun getCategory ()Ljava/lang/String;
+	public final fun getCoordinates ()Lcom/mapbox/geojson/Point;
+	public final fun getMapboxId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/metadata/ChildMetadata$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/metadata/ChildMetadata;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/ChildMetadata;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/metadata/ImageInfo : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;II)V
@@ -532,10 +552,13 @@ public final class com/mapbox/search/common/metadata/OpenHours$PermanentlyClosed
 
 public final class com/mapbox/search/common/metadata/OpenHours$Scheduled : com/mapbox/search/common/metadata/OpenHours {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/util/List;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNote ()Ljava/lang/String;
 	public final fun getPeriods ()Ljava/util/List;
+	public final fun getWeekdayText ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
