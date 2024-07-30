@@ -88,22 +88,15 @@
           "website": "https://www.toureiffel.paris/",
           "detailed_description": "Famous symbol of France",
           "open_hours": {
-            "open_type": "Scheduled",
-            "open_periods": [
+            "periods": [
               {
                 "open": {
                   "day": 0,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 0,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               }
             ]
@@ -279,118 +272,75 @@
             }
           ],
           "open_hours": {
-            "open_type": "Scheduled",
-            "open_periods": [
+            "periods": [
               {
                 "open": {
                   "day": 0,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 0,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 1,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 1,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 2,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 2,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 3,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 3,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 4,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 4,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 5,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 5,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               },
               {
                 "open": {
                   "day": 6,
-                  "time": {
-                    "hour": 9,
-                    "minute": 0
-                  }
+                  "time": "0900"
                 },
                 "close": {
                   "day": 6,
-                  "time": {
-                    "hour": 23,
-                    "minute": 45
-                  }
+                  "time": "2345"
                 }
               }
             ]
