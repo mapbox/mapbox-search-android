@@ -1,6 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.4.0-rc.2
+
+### Bug fixes
+- Updating to the version of Common SDK `v24.6.0-rc.1`
+
+### Mapbox dependencies
+- Common SDK `v24.6.0-rc.1`
+
 ## 2.4.0-rc.1
+
+### New features
 - Adding support for `AttributeSet`s when performing a retrieve
 - Adding additional fields to `SearchResultMetaData`
 
