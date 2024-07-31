@@ -1,0 +1,209 @@
+{
+  "suggestions": [
+    {
+      "feature_name": "Shoreline West",
+      "matching_name": "Shoreline West",
+      "highlighted_name": "Shoreline West",
+      "description": "Mountain View, California, United States",
+      "result_type": [
+        "neighborhood"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "CpFn_eC9-YJ2kRbeAziwkjSBxukgMC8jGM2Ky2sXIOZ9kAD6ekm-EuyIns8p9v4irNv7q42Zg3bE6k3XuY_uJGnwVN_82KTmJ_IQuNTeceJte1P5ZUpQn5nYN1f_QZcoelntr4fr6kUdTUBiIIZog4Amfz1vEfiQTfOlMva6QwTRwq-a4QZoxM75efjaaXsHSfdpNT8hY3v-Em9hhPI0dPWy19RD-IFAe8KYe-NQ9s9i5BCpaeWnECuuYjxWcw-a5VqF5kUB04Pd_pw8Xj7dqbSxTgIAanVwxgk2W8gqcgzYwo-OhhdO-YN9a1gudn8Cpg-gUZj00cw3h5nxsDUrt5Fd8vxkiO3NItBMDgyvExVaN7pVLUgtSaTwDM2XYJIQo-7wZRze7DEbmky4WSxLEtdg7YXOFhk4tqeDaQxm-QRsXiIoSfzz9Dh98TtttjNV0t6CaPHODB5BNiOPHr4RlpRXfjgx2nqXyKSYu_7z1HpsdtzcaOG1hgI8PodteqJaJXCZXJuKpPkgCui6-j6Fxw5zYMJXsMW1u4vn1PgcxEKcIIVrNQKt9fdu7k8ZVp1sgTt6JTu5nDwEmTzUfUHbxFuBHdlKTVMFaM01GMH0Kma5W-1rR0nAsipa26QGVtCP3apupuki9EjqKjX-lTmR0U9rqxXEW5O7auFOwv0TxVgVUnV8sCnCL9tqrZsABPwuM0sqCn7OYuxPn0TYcK2pkcWYsOdFEB9ibPCRcelUUA2yuBo-akQ-kIJ4hqH6JATPehULO2f0M0KF6jBAJrl1b5yly6QpUY_ejsfhByjg3bXxf3phYiRAZM0_yZu00GJbViAZ2ODet04Fy7Cbr7gbqnluh8CO7MKj8DbZa3vKWsGAG-j7LBQdTviLprCQGZ6_ys5SyK_Gc5Ce_RsgEfoGQvHn6fn1Ts_bc86sPx9DDMYPbHnVvS_PY3trwZQ0kRdM1vP-cdyCQlE_T77cVSDNcvxyeMub-d8dtvHLXLKPgv06Ppmeq-WahVfCt9QX30gEnGm6j7SgWNZ2VFA7Ou7ESXhUYvIHA8YBTE5sP-aEUbwKxgabsztbVzF-NtMa131xtPPLx9KKH1eLi47aeujliKJaALmVX3MZEVVSQ8xQHCs6kM2EbPk1Oqm5ZVo8i-ogZ-hCsBBaIP2DZRCMatSWh22LXuRZrmKh-Fz7BaVKR4Uw639gSsOKsIRqhG74Xlac0095UxG2pkSioG_r_2gAkb_inOO7LeJ-4XI08XKjUq3-MOED6HIAVQbqLGqWYMoxm-DgjuJi3pNChSe2aJFdgsOdi4FoqH3kbdQqN0ikvomQ1P_6zWW8nVPTU5Oa944YwEwBjm2ByoZEsho5DXhYQL4b5g-f8Pv7Yp9mSSkdyW18RUKaoVQXqLaho5F1cu5Cimodp4piHLefICXSZOPXmKiyEQP1SMoIvoDQImmE2qY0-sr-QUeF-QwOVc2o1CtCy5UGd9h3bbZhq9VRqSCtoSqHs-wEvV32Qfn-CB8ZdmnEJmC9XBHmpsXqsX73M9KfUQ2u0uyBR3B855beF-iW-gxBcFEA4o3ZfZX6sz7q4FvH1ttB-dOx1jM2-iPJ0k_JXG5xGbrxy9fLrvqpEveartqU3jXpRzsAG0PNoKF4tXDTp3SjrZ5lRrkF_ZrRr7q3nFzYKQEYFnj1sgYFhgrszUHMcZlL7wy1_OwE41J-_ME4sKFWCK8-O7UoKS_DEV-Fqnmf3GSseJauatw5rMj2KtXQDpRu0weG6dxde_bZ8-cbSai4WHdzIUZsOI4rBwKIextgG3ikjdufuqyyvRy2qDa11if86A-a7ixTkyvaCdvsVqmK7eiTNMtkM3WwaorbwRpGYnEBpTUjkbAFgOvvCyWERG6Ut3c7GoDtslMhyXW3OXj0X7CeDSaMg0ckkolfCL6rodg7iBIyydCyhpeN-HGjerjS730UVwL0b3i-peBAO5DPETJOf6ThBGqkaiKX-OX3jS0NANr54dhkEmhT8Agsc6MijEm4kVRaCPWIUh0a-pfphmU3jXPJD4zIRW-JYr7nH6NaN3fBDQW4oaoT94epAYrsaJSeMB5HJteNcVbPeo4zhHgTCJ8izvvQCGI-B_c2N-WrVir47ClxGX0O9w6j_8xQYmlJSJLBX3IgqWQGYfLu-rd2daTdKHf1W-50BYHO-48ITnNuxWLjg0_JaNw3uQGhXcWv1lRJWdi5uUXNoW2fzjgixYySBo5YHYbuktEGyNptmXRxwtd8exvIuQIQwB08NkuuoHB_qKEF7d6Yp7y_x7TkdUkmW6ahdC2YAy4D0v1Ce45RIlWKnGyQH-o05UTy3NaWBOeYMi62Iy-8m04apivuJ0TNG6WC8jUYRU-j3sK5ZSFsNSOXthalkdEU2KxjxUxCworVEWA4TLkicWB1TKpROex_NavmMxbRKABbdBAanxI3CD9p7dlAjC0CV3HQ8O4Y8qUaCqgZVSLS8liMK2tGPa9Y2kPVY_Fh491iWSEXPl0pHQb_57gCyZSNnMJmiSjYETl5TXWrLO-Rc19icMkwGqRb-nqnpop4bLKx72O7Xm9xwz8z1G5OuazQ_9bxkiOwBE6W-Q55ZsFpMdoufWxA9bWXnui8FWGTTOIpIdxjKJQh7L-7E9OEsxKmn11du52dOW2WYNc73RDtu8iRI7tuak_lSZoyCqs54JTfKNoyoe6st7U75XQobasfMxrdEGxB6d2W8Z7aI2IDI3tm0Vd8cXASYxuE6E11F2ql33hsVsUsRgr4ctE2QE-PLM6mhVJd_qVt64hE7xhQwiweHpZrHC9FdVWAhlCM2ciS59X43IX2CLGNnFi3P-1CU602w_1B44Q="
+        },
+        "multi_retrievable": false
+      },
+      "distance": 3700,
+      "maki": "marker",
+      "internal_id": "42GAgLzUzPSMpPyijPz8FAA=.Y2OAgOTEotzUPAA=.LY2xDsJACIZ9lOZmB4cuunZ2atTR0DtsSa5gOBrTGF_SJ5JLZSDh--Dnu9vqHaIsbLqGU7gwGaamNzAsYR8URxJ20UGmhygTOE1UTCma8x7YoOkyqPcas7p_Zojo8lwBEDdXwlflUixKqurYHtqDoyzRk63-9omRxmkQnURSDZ9EMRNjc8Ni7iElxVK25TrceZkH1P81zDU6fH4=",
+      "mapbox_id": "dXJuOm1ieHBsYzpJc3RNN0E",
+      "context": [
+        {
+          "layer": "postcode",
+          "mapbox_id": "dXJuOm1ieHBsYzpFcHlPN0E",
+          "localized_layer": "postcode",
+          "name": "94040"
+        },
+        {
+          "layer": "place",
+          "mapbox_id": "dXJuOm1ieHBsYzpEVUFvN0E",
+          "localized_layer": "place",
+          "name": "Mountain View"
+        },
+        {
+          "layer": "district",
+          "mapbox_id": "dXJuOm1ieHBsYzpBVHVtN0E",
+          "localized_layer": "district",
+          "name": "Santa Clara County"
+        },
+        {
+          "layer": "region",
+          "mapbox_id": "dXJuOm1ieHBsYzpCbVRz",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "mapbox_id": "dXJuOm1ieHBsYzpJdXc",
+          "localized_layer": "country",
+          "name": "United States"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "us",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "North Shoreline Boulevard",
+      "matching_name": "North Shoreline Boulevard",
+      "highlighted_name": "North Shoreline Boulevard",
+      "description": "Mountain View, California 94043, United States",
+      "result_type": [
+        "street"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "CpHn_eC_9cM_W8ibCVu7iaRa0X13ipk1EpYSpmr_-nyzMin2tq9OxSGMHgoMHUYmEgndb4g_GG5g0bV4aMkq4f7Nrltk5jcMxMSTOQEgpUm71KmUSSw6riH3TnPbojMbKoS6D-jxogs7rhxgGzF5P7Xgp1AtCSmwU6O-GB6u2ZFSmI96_9pMDlG9RUrFbTeApyqWMVYgBw2JMHeT8dxEFKf9FCEFkcLtjT89hd5y7LhzrZw7miGMIxr6qZmBXJ1nHgWUdqIZr5LQJuei0SRSJ5IRQ1LAATwYiZvVYA9CiWhgUlAu7eeKRxB7dM7sOnUuv_ptXrZM6UKGM0MK8Mo5qNNFk0nLQPoGktK7k4rylWzHu7wnDoEWgt8u0yGSYODmq71INh1JgJoZOxzl_hJokvfkQJ_40Rud_Cj-acKMbS0YFQCe89-ukypZOzWjZT8dxruunCCKpqfuvH6uASpk-Wfq9zgmOjwxOTXUCIG5ZdxTk4wrCYk0T8FbgT5A3FR_G4hvSqyFcraMWfQpH_fX9IwEKJYsYs-7Pge4T0N8rt_qGNYMjgdP3XK7D1-Yonnu9JIgmc0ZvM1HCS2R5N49ACVx4NEM245N7VjonmlmpeClcv_v_ha3j58eQtJSHJfIWR-zY7hxVz8D9Cf-ai0xjvtTUIJITHLQNw77ELlC7xsgym1HN_eH-3XE8tLFIBQNK-KBKIbZ_Zz0Ii-m8lzpA5Pz5C8d8asTyCkheNS5X7qNS0SvLkgsPWpP2LaCmZen4Ek5rg7AelURDOYwpt7AwdjLbB173gCItd6yi6-yqYcVbVUgQjAl_8XbVMq3maSZy1HdQEhi-gLvoqY0KMIMF9S-qdNkbIAjKmYUAzrDkieew7lz3C3UGI--J4MC_4MTUe1TuazVQyDVwaRW0wvuTwIRdu-09CaVkVQq5_w9YDhw83bPbal3WHgZfP9iJnu4LPfTIc-K3-_WBGakLLm96IXlP8mAtwZO71jSAlmMidbUD8Gh02C5rXKYO_-Tr1GIc_RXvTg3VhiSc2kdJy8BCU5WBuQC0aibjzIfIwjoiQ4Y6xuEZ1LiLvaklNu4MgGZ-XUjqOlfCjjQuOyzkgl3STGjO-IcFUdZieQ8s6q4WnxpDbmi7KXdh7pnHweyOITsoYQIFqqsTo_2b_dyk7IglVgMmRpsEhRC0q3iqKNSBJ2rlbk2YJ2dLqSyxuPudkDkGcZrFcreVmZXS-x6M2s_hygHe24e3PnuAwAnSnXWA62gHJ1LHusjQ6aN2OqQltNmMY5-ZDXbMcKWHPe15sVsZCDBxfDhQFeNRd3ydY_n7YYtRCAp91XuZL-fCeojCrj_3BFYM_yO4AK9AXwFclrTwaceQ7-8Di66zoFPe_bgRbCYdA0m98mQZ1xE5bLP9uQZvJj18AxSgnq1RvIgIiTKfpwWQHrbloXGaWLFdSrKUkBC7h4jxQhCcukHqSuv4zYPg8zOD0R0TXSInIkKzslWV8oRIDaFZoljmAE2wT4hzn8KXyQw0pfJgPEzAdcQr7K1GekMCWwOO2qyj6ovfZlxy1owhtRLLhikSnud3JNFw-6vKoZknPpWON-FjDJm5mTZgIRkEy7YR5zVFJ-1XADQJ2kE52FlbeapVmeBFen7g3MK4k101-445pGe4NVDpkjxW2wXTzp7ogSJHtwvZL_ye0RE0ATih2_Ee08R6gHlp-3hcKZWV9HrRhcJariGufGEU3dFBZeofBtL3cNdg4eIB9xHvK4HB2WXcnLDUy8DzAMTs3dB8zzCE6udp6bDThOpinb9GL6Fdp8UzvPlw5UN-k5tPRTYjJd7wtTZBrF7IS-CuoJ1AYnyZQdfxeb78cFhJSkRI75WZ4vKM3pzRG79121qV1WXT9Cv2CFQpbWoMdpscQS6_ZWEkfTYiSeH2OI3_z9sZ_KjmY5FtcOwDhPy-LEcMiGWnP9hQpWNnw_6tNXkWzxLKSRwkTjeLTnxpmei49DEO3HMtyWLZ8cvYh8bQb6o3fbRCnhbSo3vM5wbSmkTtkm1SLESY_cZr7_-olfece8fzfCfMQv3zq3q5nvCfthwjck0-RqHwCYtg5AQQFMTpWD7T1mTtiAKvsF_cnrl3RSbQ7qcGwzKQ6IC5EWFogSar7K1pLzekn8TVz2Zq8yXPmqRZB6d1CxeIIP9Kdcm9u6eYKmAw-F0jdeKBJ4n9U3Gfj-aJvdyr-PHicse4f0PH15HfeRhetxzPnOzuuA8yOhOAIBwtWfandQfYAYKj_UWEkW-oJ_Pq4gDwqZc6cQMTAl7o_MO010HOBz78rQDq_hYDo-Se40tWcZznV8chr0bP2etlywKEVGxp8pLfMhgG6raJsopp1nZ_DzIwyBSY6JCHipx5f4bM-hffgWmdOfcJAcRbM32-ot_NgDntm4XDeSyiKEItM6pWsBgOdunh7WSBkCKgVHLRi9PdElYOcPuPSojXVHtCC06r4xB-biE5bloG0bHfELkIOoezItsoUZMQF9yKQzfT5FKZ9ivlqB-P6ZuTBE1PaBpZPrGJv24EbmicY95TD8P77-DrxgpIyrSSen4SFz7RYxVF1nVuVmoZ9vgtnLHtfnZhcaxw-TEqou4L5HxZXZjfwmzfMGHWN0jAUc3kOfJMA4Mbn6YiRMCEKxiDFYleGEX-nPJot8ixv1s9LdMnUi7U0XqAwqw84xBk63XYHPfgDpF8hhQyYVqUezfb6jwSEAdX-feUFOWVElcMQJP6ykox1oH7Xk3nsOwCgIyZMkOOa93dIrnWN3zPQ_2rIL89HEZQBJ7ufppFRnN-Et8T1gqVQYIi2AopjJelWW18LA1nzXphzcSsk71eHXCunvSSy8Q1QSpSZv2ahZ1K3-hmwaHCck7dzgjuIq-0oVBqxrzWhew8rQHEEf2EI9KlpXgPg=="
+        },
+        "multi_retrievable": false
+      },
+      "distance": 1100,
+      "maki": "marker",
+      "internal_id": "Y2OAgOKSotTUEgA=.Y2OAgOTEotzUPAA=.PY0xCgJBDEU9yjC1haCNllprs2grcSa6gTGRTFZZxBN7CTMopgjkvfD_e_KdZ0wysOkYV3HPZJhDZ2BY4zQqXkjYxQYKnUWZwGmmakrJnHfABmFTQH23mNH9rUBCl9sGgDgcCB-NS7UkuanlYraYOyqSPNlat1-MdOlPor1IdrITtT6sYay9KLqHnBVr_auu8UKMYS1DwTto_n0debieUH-xcG2d8fUB",
+      "mapbox_id": "dXJuOm1ieGFkci1zdHI6NTcxZDFmZTEtOTY3NC00ZjQ2LWFhOTUtYTAwYWNlOWQ1OTY0",
+      "context": [
+        {
+          "layer": "neighborhood",
+          "mapbox_id": "dXJuOm1ieHBsYzpHanJzN0E",
+          "localized_layer": "neighborhood",
+          "name": "North Bayshore"
+        },
+        {
+          "layer": "postcode",
+          "mapbox_id": "dXJuOm1ieHBsYzpFcHp1N0E",
+          "localized_layer": "postcode",
+          "name": "94043"
+        },
+        {
+          "layer": "place",
+          "mapbox_id": "dXJuOm1ieHBsYzpEVUFvN0E",
+          "localized_layer": "place",
+          "name": "Mountain View"
+        },
+        {
+          "layer": "district",
+          "mapbox_id": "dXJuOm1ieHBsYzpBVHVtN0E",
+          "localized_layer": "district",
+          "name": "Santa Clara County"
+        },
+        {
+          "layer": "region",
+          "mapbox_id": "dXJuOm1ieHBsYzpCbVRz",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "mapbox_id": "dXJuOm1ieHBsYzpJdXc",
+          "localized_layer": "country",
+          "name": "United States"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "us",
+        "iso_3166_2": "US-CA"
+      }
+    },
+    {
+      "feature_name": "Shoreline Park & Lake",
+      "matching_name": "Shoreline Park & Lake",
+      "highlighted_name": "Shoreline Park & Lake",
+      "description": "3160 N Shoreline Blvd, Mountain View, California 94043, United States",
+      "result_type": [
+        "poi"
+      ],
+      "language": "en",
+      "action": {
+        "endpoint": "retrieve",
+        "method": "POST",
+        "body": {
+          "id": "0pHhHtg99dvERPVaPQHIcuxbhU6DmBbksGE8ha2j7uTswE4P_U8NWe0bUuvwkNhJgyWSnWDgtWCs0EUI_FG1_ShMKglakthOLUR3xlAsQqHmMu3BkVzqnYp5hZE7GEcumZutc_XsZTwPVFndbMwTMDvnMysqWAAnXgowqWTMqufVj_a1-9J4xMY_4mm-o0LWFg0TnoHwoKCrq_0SgxugLRoSs82C-4FwA9YTWZA_rYv4nYU4bhddTrzQQFC94BBNUTFYwPLaFhQwotIfrl_obMQlKcfBwG5mBc432_gnTR_Fgphhyzp1tAX04wPyDaZB8HbIDV1qkCMU8kh4fPNdlR9IBT7gjUv6cnvbIG2mJ2r8XR7jQWucHqH_bvmKR4H91RWE9_kkVx2HC0MkFsc19F5ZySfC3Abo27jckpFUFz6UaMUbGDpks1WfTeB-AGF1PGrU5aIp1akTKt_xS4Tr_Je4-mPsaNJ-obd9yHGMc_1B66cfIJxWkRx2bcoDH6gzpOZZuBCoFY3ID7e0Hmuphvf_DZrgnxRk0dG94kwHm07XmZIRhrwysQjZQZdXARJWx9E9j1E12-Y4sfyjxwz1tsc0q5fGWaZiFc5uR8uAQMzsSojnFwFdAC5WBN4fJncsCt7BbDaTLA4W8bQBgrloMxejNz8X__BlllPRakX7FYccSxrXxdv2uuOnRA9lvQwzpKz3qcoJpSvjA6r2eLcM0pER-OGqzvN6dKs82MT-wlGVe4veQi6VQWuniC8Ih3lL0jVoOmAwHF_YzbPOosFgsvmSmtJqilGuq3EfgmqCUM4sphheqis1aa19-hKOCAWPmSWuOqAJtq2tzvCSGZMwoMkN4vWgrw2jMW4lBQoKdtCqrfZxyLQFWMb0Iwc76LNyikNzKaHfh8cJ-mBamSqUguIl0xbV1VYqwp4Hk9f0498UD7iP-tGmjW6kvDzPCO9xlz728sbZF9mAdQV2rTxYmM6HYW8bra5n_tV0LZpYiX0_ZIiwmEC_u7aqs307ZdxgBIknPvOiEcMfGbgcAtPdbxfFKXE9rhc2sgggFpSFyECYcwk9rgXAnasl2MMS1X15tHKKx8oOP1eLi47aeulqCONaELmlV7AZkVpieMHQDK06kM1TK3gsTZX-UoQb69Wh14934xqZMFVSVh2NKhTkaKEMXhTYjnyh8Fj7BWNJR4Uw639miXGxUsPqfXuqg-zjYU95UhGwqUaioE_k_2gA0bvqnEMIXbSIswQAxneYFWP8tdeDXqtxJ2dRMRxnG8Cwhues13SCV255nqIdLNZJzbTdZJbpb_P47rISTaQSHctHUOJsct_TKICmPxbzSUKW_P0ttG1h5NaldbW_LQhNNHVaUwaWrB1QY54GKdICMo2lWwEVw3vrO_g-gSiMBfSmgmcJLngU4ONddkNe0xqZAnK2oQjlw4s9_Ouw--B_kxfdk2ThxTEh_eCu7_Kcx6wTIcJC4jDpNXyOFhm3sbKXEn4IoDVZcbFYdaxDeK9cqhWePE-Bzb_YFB-Vc3F4YdHQ0sEaiyzwSQXv0SHGOGoPwC_Xe6UjqfjAiRKWPdJvG-rf9mCaKvR1GDNTSsy7jlfooRVeLKKLzZZo6RN3pC0J-UcnocZ6P0kYou43n9soQcPJzHlKnoUhUEMaXwgPUBBpBdgtbJI-r8SL6LaL-0Oh421u-Zm0RnVRW8YmgDnkoGfAok67KeREtSYzJHIyMBa3P-WSxvkHoKdErZyF3inyYfR17aSUl6wq5EkOmB9ndZID0aDqC6Quh_x5q5rOoNY66WzUhAO7PC1RO9szFjq4fD0g5WCGvRTbCZiK1rvEklrWEX5vuuLppGnWJUPeMftJaxOOJTtZKF6uAgj6AayL1jZrboJfgDUd5mmFk_3xZS2NiUnYDjL1IEd118QYP7C7n1H6um9l0JMrusbG8lETRANvTc1-a8gYGCp37OEwdTCDJGj3vkAggSLMP8ofgjBaGbFNAzS59PutfcLLSycJQ14MsVlYClOqZhzciJJ1kHSG1sUSn6qAoupPCHBpYJBIx7yM4Xk4I6yJWrHSBfjuENg7Wc2oU9ge3Isfo4QxabioUbcTgWZMbCrfE6PFjlpCsl902SxChvXF_zqwf3Q3Uv5GxdI8To9vD8ptlrfOXCzZ58c-2S7BDto15oGjHhCKUpwTES3GgezmyPAXIgID0pvExRn0uCdSppn1o_R9r3NVMqPgVHWPcCTbIIjfGn9Y21CVm5iVwHytT81MvI1kCqeykEElwmhCkSTrg8-aZs-q0Bb__rspML0QOWx4h9Q5cdMbRND4aC0PPSYItuUrcGYhlx3QKeC7O1-SHM41Cz7onRxIAQt0QLzAY-AlTuX5yqc5ZCQBGiehIObRCazOtZS0bMidCeQ9O5vzMKpLzSEjZjorAHjFVjoTlh9O5e-AiXtptHFNXzSKYbX_IkRuthQPtwVjSK6RHXXKHOvG_mBbMR2j94hcIw85RcVJZJgEzQ5_35e-2jdVeZmsg6NBdlBD2ERb9lAt5TYg-2PFJOVFPuC00AD-BAy4cOwoCUYWdVOOHmlvfujtrAbkU7Ykn4iVgzH1Hpz_X1uMphr7abUYHLxZ8bYf0ztuHDrYLb77LcVM7NEtImGWYRYAVnDu6owx7QyA0haiVfVJ0qsv1ngyaweV5D76xgQY0ljjlOdLRe1kcO9MvNzUYE_-14fpneWs8HaN4cq3jUKjZ2L2ciGbr5NdBquQZaTd1-B0L6U2Rx-t5_efcdKl4Snx5xCpSzIII-RopWAVa31FvwkCd6Oa1dNFbIXzLZgiy2d_1nN6SXUPZ3xeVOSCp2a-AWuAtgCi8l5Gr1lvDxvT9gkJif6A_uM2ahX3YAKFOlKmsWz_p7wqvf0IblkLeDtOoTC_76eTYzVC-NIT5upSDXr0C61YEGlLA4uizrIkst8zd6NNkMCUCH0oSVix6izVb_y-Yxzdm2doIFDofKGuMosFafZXeqocD5CzSMWamBUC30fzhwjFTUNdFAW-rwQUoTWQAGM="
+        },
+        "multi_retrievable": true
+      },
+      "distance": 1200,
+      "maki": "cinema",
+      "category": [
+        "entertainment",
+        "theme park"
+      ],
+      "category_ids": [
+        "entertainment",
+        "theme_park"
+      ],
+      "internal_id": "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9k6RkU8NUU3NTS2PTZMsks2QLS7NE0xQjAA==",
+      "external_ids": {
+        "foursquare": "4bc51e575935c9b6c896a5d2",
+        "safegraph": "222-228@5vh-b8n-mp9",
+        "mbx_poi": "dXJuOm1ieHBvaToyYmVhNzE2MS0wMDM0LTQ3OGMtYjhjNi1kNWU0MWRjMjY3OTE"
+      },
+      "mapbox_id": "dXJuOm1ieHBvaToyYmVhNzE2MS0wMDM0LTQ3OGMtYjhjNi1kNWU0MWRjMjY3OTE",
+      "context": [
+        {
+          "layer": "address",
+          "localized_layer": "address",
+          "name": "3160 N Shoreline Blvd"
+        },
+        {
+          "layer": "street",
+          "localized_layer": "street",
+          "name": "n shoreline blvd"
+        },
+        {
+          "layer": "postcode",
+          "mapbox_id": "dXJuOm1ieHBsYzpFcHp1N0E",
+          "localized_layer": "postcode",
+          "name": "94043"
+        },
+        {
+          "layer": "neighborhood",
+          "mapbox_id": "dXJuOm1ieHBsYzpHanJzN0E",
+          "localized_layer": "neighborhood",
+          "name": "North Bayshore"
+        },
+        {
+          "layer": "place",
+          "mapbox_id": "dXJuOm1ieHBsYzpEVUFvN0E",
+          "localized_layer": "place",
+          "name": "Mountain View"
+        },
+        {
+          "layer": "region",
+          "localized_layer": "region",
+          "name": "California"
+        },
+        {
+          "layer": "country",
+          "localized_layer": "country",
+          "name": "United States"
+        }
+      ],
+      "metadata": {
+        "iso_3166_1": "US",
+        "iso_3166_2": "US-CA"
+      }
+    }
+  ],
+  "attribution": "© 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "version": "402:ce31a6077170d052bf3236c45f63abf02db4b542",
+  "response_uuid": "75cd4ef4-afcb-471f-a7f1-f53b10947139",
+  "response_id": "dvCsu_xXi66rMTotPSVuv-BpZZ9hSm0IUTDrnXFEl9dA61bL3JBUSyJ3cOJG5i1hslxcGBHqVzKQpIUfHrig-MNO4g8hJchcMoYP"
+}
