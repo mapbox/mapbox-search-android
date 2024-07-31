@@ -24,6 +24,7 @@ import com.mapbox.search.base.utils.InternalIgnorableException
 import com.mapbox.search.base.utils.extension.toPlatformHttpException
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.SearchCancellationException
+import com.mapbox.search.common.SearchRequestException
 import java.io.IOException
 import java.util.concurrent.Executor
 
@@ -125,6 +126,14 @@ class TwoStepsRequestCallbackWrapper(
                     }
                     searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
                         (this as BaseSearchSelectionCallback).onResults(suggestion, results, responseInfo)
+                    }
+                } else if (suggestion != null && responseResult.isEmpty()) {
+                    val error = SearchRequestException(
+                        "No result found", 404
+                    )
+
+                    searchRequestTask.markExecutedAndRunOnCallback(callbackExecutor) {
+                        onError(error)
                     }
                 } else if (suggestion != null &&
                     responseResult.size == 1 &&
