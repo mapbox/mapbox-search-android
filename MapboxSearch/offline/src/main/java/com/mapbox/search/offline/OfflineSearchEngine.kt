@@ -130,6 +130,45 @@ public interface OfflineSearchEngine {
     )
 
     /**
+     * Performs forward geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param query Search query.
+     * @param options Search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback The callback to handle search result.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchCategory(
+        categoryId: String,
+        options: OfflineSearchOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Performs forward geocoding search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param query Search query.
+     * @param options Search options.
+     * @param callback The callback to handle search result on the main thread.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    public fun searchCategory(
+        categoryId: String,
+        options: OfflineSearchOptions,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask = searchCategory(
+        categoryId = categoryId,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
      * Performs reverse geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
      * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
@@ -361,14 +400,14 @@ public interface OfflineSearchEngine {
                 tileStore.setOption(
                     TileStoreOptions.MAPBOX_APIURL,
                     TileDataDomain.SEARCH,
-                    Value.valueOf(tilesBaseUri.toString())
+                    Value.valueOf("https://search-sdk-offline-staging.tilestream.net")
                 )
             }
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
-                    apiType = CoreApiType.SBS,
+                    apiType = CoreApiType.SEARCH_BOX,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),

@@ -91,6 +91,31 @@ internal class OfflineSearchEngineImpl(
         }
     }
 
+    override fun searchCategory(
+        categoryId: String,
+        options: OfflineSearchOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask {
+        logd("searchCategory($categoryId, $options) called")
+
+        activityReporter.reportActivity("offline-search-engine-forward-geocoding")
+
+        return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
+            coreEngine.searchOffline(
+                "", listOf(categoryId), options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    isOffline = true,
+                )
+            )
+        }
+    }
+
     override fun reverseGeocoding(
         options: OfflineReverseGeoOptions,
         executor: Executor,

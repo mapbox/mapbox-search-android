@@ -22,8 +22,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.mapbox.android.gestures.Utils
+import com.mapbox.bindgen.Value
+import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
+import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.location.Location
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.LineString
@@ -207,6 +210,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 }
 
                 is UiState.Error -> {
+                    Log.e("OfflineSAR", uiState.message)
                     Toast.makeText(this, "Error: ${uiState.message}", Toast.LENGTH_LONG).show()
                 }
             }
@@ -454,10 +458,11 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
 
             val tileStore = TileStore.create()
+            tileStore.setOption(TileStoreOptions.MAPBOX_APIURL, TileDataDomain.SEARCH, Value("https://search-sdk-offline-staging.tilestream.net"))
             val tileRegionId = "Washington DC"
-            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main", language = "en"))
+            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("experimental-poi-cat-alias", "v5"))
             val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
-            val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS)
+            val tileGeometry = TurfTransformation.circle(washingtonDc, 50.0, 32, TurfConstants.UNIT_KILOMETERS)
 
             val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
                 .descriptors(tileDescriptors)
@@ -526,8 +531,8 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                     callback = searchCallback
                 )
             } else {
-                searchEngine.search(
-                    query = options.query,
+                searchEngine.searchCategory(
+                    categoryId = options.query,
                     options = OfflineSearchOptions(),
                     callback = searchCallback
                 )

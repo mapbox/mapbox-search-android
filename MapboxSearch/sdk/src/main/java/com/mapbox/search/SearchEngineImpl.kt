@@ -31,12 +31,13 @@ import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.internal.bindgen.AttributeSet
+import com.mapbox.search.internal.bindgen.DetailsOptions
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
-import com.mapbox.search.utils.search.RetrieveUtils.EMPTY_REQUEST_OPTIONS
 import com.mapbox.search.utils.search.RetrieveUtils.createSearchResultForRetrieve
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -320,7 +321,8 @@ internal class SearchEngineImpl(
         val baseCallback = SearchResultCallbackAdapter(callback)
 
         return makeRequest(baseCallback) { task ->
-            val requestId = coreEngine.retrieve(EMPTY_REQUEST_OPTIONS, searchResult, OneStepRequestCallbackWrapper(
+            val requestId = coreEngine.retrieveDetails("dXJuOm1ieHBvaTplYWEwZGQyYS0xZGE3LTQwOWEtOGYyZC0wYmU2MDhlYzQxZTc", DetailsOptions(
+                listOf(AttributeSet.VENUE), null, null, null), OneStepRequestCallbackWrapper(
                 searchResultFactory = searchResultFactory,
                 callbackExecutor = executor,
                 workerExecutor = engineExecutorService,

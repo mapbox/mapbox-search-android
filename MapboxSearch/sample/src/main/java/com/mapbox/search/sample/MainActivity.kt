@@ -19,11 +19,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.mapbox.android.gestures.Utils.dpToPx
+import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
+import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
+import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
+import com.mapbox.geojson.utils.PolylineUtils
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
@@ -38,11 +42,15 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.SearchNavigationOptions
+import com.mapbox.search.SearchOptions
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.utils.extension.toPoint
 import com.mapbox.search.common.DistanceCalculator
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -86,6 +94,8 @@ import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
+import java.util.concurrent.TimeUnit
+import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
 
@@ -203,13 +213,15 @@ class MainActivity : AppCompatActivity() {
             settings = SearchEngineSettings()
         )
 
+        tileStore.setOption(TileStoreOptions.MAPBOX_APIURL, TileDataDomain.SEARCH, Value("https://search-sdk-offline-staging.tilestream.net"))
+
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
                 tileStore = tileStore
             )
         )
 
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("experimental-poi-cat-alias", "v5"))
         val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
         val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
 
@@ -408,7 +420,20 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 debouncer.debounce {
-                    searchEngineUiAdapter.search(newText)
+                    val route = PolylineUtils.decode("}~xnFfbrrMrQq@~AvnArjKnpDjzDzfJphVf{U~k\\vhSdeIt_IzI~]ikAjuEfNh_A`kLvvUzlDp`E~jSzgIrlDp|Hbqp@jy\\~uKzmKtiKvaB`vJghB~cWfvBrbo@yzKrij@{j@xwElaDphEkfErvAkw@bMzFqRn^gB{AZm@", 5)
+
+                    searchEngineUiAdapter.search(
+                        newText,
+                        SearchOptions(
+                            origin = route[floor(route.size / 2.0).toInt()],
+                            proximity = route[floor(route.size / 2.0).toInt()],
+                            navigationOptions = SearchNavigationOptions(NavigationProfile.DRIVING),
+                            routeOptions = RouteOptions(
+                                route = route,
+                                deviation = RouteOptions.Deviation.Time(value = 15, unit = TimeUnit.MINUTES)
+                            )
+                        )
+                    )
                 }
                 return false
             }
