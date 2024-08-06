@@ -74,6 +74,7 @@ import com.mapbox.turf.TurfTransformation.circle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.net.URI
 
 class TileDownloadUiActivity : AppCompatActivity() {
 
@@ -220,7 +221,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
 
             mapView.location.addOnIndicatorPositionChangedListener(object : OnIndicatorPositionChangedListener {
                 override fun onIndicatorPositionChanged(point: Point) {
-                    val defaultLocation = Point.fromLngLat(13.404832349386826, 52.51908033891081)
+                    val defaultLocation = Point.fromLngLat(20.891886819316884,52.219398854046815)
                     mapView.mapboxMap.setCamera(
                         CameraOptions.Builder()
                             .center(defaultLocation)
@@ -293,6 +294,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
         offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
                 tileStore = tileStore,
+                tilesBaseUri = URI.create("https://search-sdk-offline-staging.tilestream.net"),
             )
         )
 
@@ -414,7 +416,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
 
     private fun loadRegion(centerPoint: Point, geometry: Geometry, radiusKm: Int, downloadProgress: TextView) {
         // configure address tiles download
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("experimental-poi-cat-alias", "v5"))
 
         val loadOptions = TileRegionLoadOptions
             .Builder()
