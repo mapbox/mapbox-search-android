@@ -43,8 +43,10 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
     }
 
     protected fun logI(tag: String, message: String, result: Any? = null) {
-        Log.i(tag, message.addToLog())
-        result?.let { res -> printObjectToLog(res) }
+        logTextView.post {
+            Log.i(tag, message.addToLog())
+            result?.let { res -> printObjectToLog(res) }
+        }
     }
 
     protected fun logE(tag: String, message: String, error: Throwable? = null) {

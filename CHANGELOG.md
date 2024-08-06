@@ -1,8 +1,89 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.0.0
+## 2.4.0-rc.2
 
-## 2.0.0-rc.1
+### Bug fixes
+- Updating to the version of Common SDK `v24.6.0-rc.1`
+
+### Mapbox dependencies
+- Common SDK `v24.6.0-rc.1`
+
+## 2.4.0-rc.1
+
+### New features
+- Adding support for `AttributeSet`s when performing a retrieve
+- Adding additional fields to `SearchResultMetaData`
+
+### Mapbox dependencies
+- Search Native SDK `2.3.0-rc.4`
+- Common SDK `v24.6.0-rc1`
+
+## 2.3.1
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.1`
+- Common SDK `v24.5.0`
+
+### 💫️ Other
+- Performance improvements for short queries for offline search
+
+## 2.3.0
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.0`
+- Common SDK `v24.5.0`
+
+## 2.3.0-rc.1
+
+### New features
+- Updating SDK Intitialization
+- Adding Debouncing to Sample Application
+- feat(sample): loading offline tiles for sample activity
+- fix(sample): Adding cleanup to the debouncer
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.0-rc.1`
+- Common SDK `v24.5.0-rc.1`
+
+## 2.3.0-beta.1
+
+### Mapbox dependencies
+- Search Native SDK `v2.2.0-beta.1`
+- Common SDK `v24.5.0-beta.4`
+
+## 2.2.1
+
+### Bug fixes
+- Fixes [#197](https://github.com/mapbox/mapbox-search-android/issues/197) clicking a "Recent Search" that is a favorite doesn't show as a favorite in the `SearchPlaceBottomSheetView`
+
+## 2.2.0
+
+### New features
+- Adding support for [ApiType.SEARCH_BOX](https://docs.mapbox.com/api/search/search-box/)
+
+### Mapbox dependencies
+- Search Native SDK `v2.1.0`
+- Common SDK `v24.4.0`
+
+## 2.2.0-rc.1
+
+### New features
+- Adding support for [`ApiType.SEARCH_BOX`](https://docs.mapbox.com/api/search/search-box/) 
+
+### Mapbox dependencies
+- Search Native SDK `2.1.0`
+- Common SDK `24.4.0`
+
+## 2.1.0
+
+### New features
+- Location observer timeout can be configured now
+- Updated default sample activity to default to `ApiType.SBS`
+- Fixed a synchronization issue in `OfflineSearchAlongRouteExampleActivity`
+- Fixed a bug in the default sample activity that crashed the activity when clicking on the map
+
+
+## 2.0.0
 
 ### New features
 - [Online search] Add method to retrieve a POI by Mapbox ID

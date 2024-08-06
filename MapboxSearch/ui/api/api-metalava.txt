@@ -67,7 +67,21 @@ package com.mapbox.search.ui.adapter.engines {
 
 }
 
+package com.mapbox.search.ui.adapter.location {
+
+  public final class LocationObservationTimeoutSetterKt {
+    method public static void setLocationObservationTimeout(Long? timeout);
+  }
+
+}
+
 package com.mapbox.search.ui.utils {
+
+  public final class Debouncer {
+    ctor public Debouncer(long delayMillis);
+    method public void cancel();
+    method public void debounce(kotlin.jvm.functions.Function0<kotlin.Unit> action);
+  }
 
   public final class ThemePatcherKt {
   }

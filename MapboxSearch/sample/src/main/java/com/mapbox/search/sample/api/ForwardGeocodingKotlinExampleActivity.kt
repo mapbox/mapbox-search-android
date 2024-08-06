@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -11,19 +9,23 @@ import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.sample.R
 
-class ForwardGeocodingKotlinExampleActivity : Activity() {
+class ForwardGeocodingKotlinExampleActivity : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_open_forward_geocoding_kt_example
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var searchRequestTask: AsyncOperationTask
+    private var searchRequestTask: AsyncOperationTask? = null
 
     private val searchCallback = object : SearchSelectionCallback {
 
         override fun onSuggestions(suggestions: List<SearchSuggestion>, responseInfo: ResponseInfo) {
             if (suggestions.isEmpty()) {
-                Log.i("SearchApiExample", "No suggestions found")
+                logI("SearchApiExample", "No suggestions found")
+                onFinished()
             } else {
-                Log.i("SearchApiExample", "Search suggestions: $suggestions.\nSelecting first suggestion...")
+                logI("SearchApiExample", "Search suggestions: ${prettify(suggestions)}.\n\n\nSelecting first suggestion...")
                 searchRequestTask = searchEngine.select(suggestions.first(), this)
             }
         }
@@ -33,7 +35,8 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
             result: SearchResult,
             responseInfo: ResponseInfo
         ) {
-            Log.i("SearchApiExample", "Search result: $result")
+            logI("SearchApiExample", "Search result:", result)
+            onFinished()
         }
 
         override fun onResults(
@@ -41,11 +44,13 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         ) {
-            Log.i("SearchApiExample", "Category search results: $results")
+            logI("SearchApiExample", "Category search results:", results)
+            onFinished()
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Search error", e)
+            logI("SearchApiExample", "Search error", e)
+            onFinished()
         }
     }
 
@@ -57,7 +62,9 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings()
         )
+    }
 
+    override fun startExample() {
         searchRequestTask = searchEngine.search(
             "Paris Eiffel Tower",
             SearchOptions(limit = 5),
@@ -66,7 +73,7 @@ class ForwardGeocodingKotlinExampleActivity : Activity() {
     }
 
     override fun onDestroy() {
-        searchRequestTask.cancel()
+        searchRequestTask?.cancel()
         super.onDestroy()
     }
 }

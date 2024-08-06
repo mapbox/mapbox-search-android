@@ -1,8 +1,18 @@
 public final class com/mapbox/search/ApiType : java/lang/Enum {
 	public static final field GEOCODING Lcom/mapbox/search/ApiType;
 	public static final field SBS Lcom/mapbox/search/ApiType;
+	public static final field SEARCH_BOX Lcom/mapbox/search/ApiType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/ApiType;
 	public static fun values ()[Lcom/mapbox/search/ApiType;
+}
+
+public final class com/mapbox/search/AttributeSet : java/lang/Enum {
+	public static final field BASIC Lcom/mapbox/search/AttributeSet;
+	public static final field PHOTOS Lcom/mapbox/search/AttributeSet;
+	public static final field VENUE Lcom/mapbox/search/AttributeSet;
+	public static final field VISIT Lcom/mapbox/search/AttributeSet;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/AttributeSet;
+	public static fun values ()[Lcom/mapbox/search/AttributeSet;
 }
 
 public final class com/mapbox/search/BuildConfig {
@@ -355,10 +365,12 @@ public final class com/mapbox/search/SearchEngineSettings {
 	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;)V
 	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;)V
 	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
+	public fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchEngineSettings;Lcom/mapbox/common/location/LocationProvider;Lcom/mapbox/search/ViewportProvider;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/SearchEngineSettings;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getGeocodingEndpointBaseUrl ()Ljava/lang/String;
 	public final fun getLocationProvider ()Lcom/mapbox/common/location/LocationProvider;
 	public final fun getSingleBoxSearchBaseUrl ()Ljava/lang/String;
@@ -370,6 +382,7 @@ public final class com/mapbox/search/SearchEngineSettings {
 
 public final class com/mapbox/search/SearchEngineSettings$Builder {
 	public fun <init> ()V
+	public final fun baseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun build ()Lcom/mapbox/search/SearchEngineSettings;
 	public final fun geocodingEndpointBaseUrl (Ljava/lang/String;)Lcom/mapbox/search/SearchEngineSettings$Builder;
 	public final fun locationProvider (Lcom/mapbox/common/location/LocationProvider;)Lcom/mapbox/search/SearchEngineSettings$Builder;
@@ -421,11 +434,13 @@ public final class com/mapbox/search/SearchOptions : android/os/Parcelable {
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;Z)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)V
-	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)Lcom/mapbox/search/SearchOptions;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/SearchOptions;
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;)Lcom/mapbox/search/SearchOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/search/SearchOptions;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttributeSets ()Ljava/util/List;
 	public final fun getBoundingBox ()Lcom/mapbox/geojson/BoundingBox;
 	public final fun getCountries ()Ljava/util/List;
 	public final fun getFuzzyMatch ()Ljava/lang/Boolean;
@@ -448,6 +463,7 @@ public final class com/mapbox/search/SearchOptions : android/os/Parcelable {
 
 public final class com/mapbox/search/SearchOptions$Builder {
 	public fun <init> ()V
+	public final fun attributeSet (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun build ()Lcom/mapbox/search/SearchOptions;
 	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
@@ -483,21 +499,47 @@ public abstract interface class com/mapbox/search/SearchResultCallback {
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public synthetic fun <init> (Ljava/util/HashMap;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
+	public final fun getChildren ()Ljava/util/List;
 	public final fun getCountryIso1 ()Ljava/lang/String;
 	public final fun getCountryIso2 ()Ljava/lang/String;
 	public final fun getCpsJson ()Ljava/lang/String;
+	public final fun getDelivery ()Ljava/lang/Boolean;
 	public final fun getDescription ()Ljava/lang/String;
+	public final fun getDriveThrough ()Ljava/lang/Boolean;
+	public final fun getEmail ()Ljava/lang/String;
 	public final fun getExtraData ()Ljava/util/Map;
+	public final fun getFacebookId ()Ljava/lang/String;
+	public final fun getFax ()Ljava/lang/String;
+	public final fun getInstagram ()Ljava/lang/String;
 	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
 	public final fun getParking ()Lcom/mapbox/search/common/metadata/ParkingData;
+	public final fun getParkingAvailable ()Ljava/lang/Boolean;
 	public final fun getPhone ()Ljava/lang/String;
+	public final fun getPopularity ()Ljava/lang/Float;
+	public final fun getPriceLevel ()Ljava/lang/String;
 	public final fun getPrimaryPhotos ()Ljava/util/List;
+	public final fun getRating ()Ljava/lang/Float;
+	public final fun getReservable ()Ljava/lang/Boolean;
 	public final fun getReviewCount ()Ljava/lang/Integer;
+	public final fun getServesBeer ()Ljava/lang/Boolean;
+	public final fun getServesBreakfast ()Ljava/lang/Boolean;
+	public final fun getServesBrunch ()Ljava/lang/Boolean;
+	public final fun getServesDinner ()Ljava/lang/Boolean;
+	public final fun getServesLunch ()Ljava/lang/Boolean;
+	public final fun getServesVegan ()Ljava/lang/Boolean;
+	public final fun getServesVegetarian ()Ljava/lang/Boolean;
+	public final fun getServesWine ()Ljava/lang/Boolean;
+	public final fun getStreetParking ()Ljava/lang/Boolean;
+	public final fun getTakeout ()Ljava/lang/Boolean;
+	public final fun getTwitter ()Ljava/lang/String;
+	public final fun getValetParking ()Ljava/lang/Boolean;
 	public final fun getWebsite ()Ljava/lang/String;
+	public final fun getWheelchairAccessible ()Ljava/lang/Boolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V

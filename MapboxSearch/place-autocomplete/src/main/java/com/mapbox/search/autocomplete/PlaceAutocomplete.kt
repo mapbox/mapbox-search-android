@@ -6,8 +6,10 @@ import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.BaseSearchSdkInitializer
+import com.mapbox.search.base.BaseSearchSdkInitializerImpl
+import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.location.defaultLocationProvider
+import com.mapbox.search.internal.bindgen.ApiType
 
 /**
  * Main entrypoint to the Mapbox Place Autocomplete SDK.
@@ -69,16 +71,20 @@ public interface PlaceAutocomplete {
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
+         * @param apiType to be used. Default is [ApiType.SEARCH_BOX]
+         *
          * @return a new instance instance of [PlaceAutocomplete].
          */
         @JvmStatic
         @JvmOverloads
         public fun create(
             locationProvider: LocationProvider? = defaultLocationProvider(),
+            apiType: ApiType = CoreApiType.SEARCH_BOX,
         ): PlaceAutocomplete {
             return PlaceAutocompleteImpl.create(
-                app = BaseSearchSdkInitializer.app,
-                locationProvider = locationProvider
+                app = BaseSearchSdkInitializerImpl.app,
+                locationProvider = locationProvider,
+                apiType = apiType
             )
         }
     }

@@ -7,7 +7,6 @@ import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.result.SearchResultFactory
@@ -131,7 +130,7 @@ internal object MapboxSearchSdk {
             formattedTimeProvider = formattedTimeProvider,
         )
 
-        val eventsService = EventsService.getOrCreate(EventsServerOptions(BaseSearchSdkInitializer.sdkInformation, null))
+        val eventsService = EventsService.getOrCreate(EventsServerOptions(UserAgentProvider.sdkInformation(), null))
 
         return AnalyticsServiceImpl(
             eventsService = eventsService,

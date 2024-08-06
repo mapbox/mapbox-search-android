@@ -1,11 +1,13 @@
 package com.mapbox.search.base
 
+import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.base.core.CoreImageInfo
 import com.mapbox.search.base.core.CoreOpenHours
 import com.mapbox.search.base.core.CoreOpenMode
 import com.mapbox.search.base.core.CoreOpenPeriod
 import com.mapbox.search.base.core.CoreParkingData
 import com.mapbox.search.base.utils.printableName
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -25,16 +27,21 @@ fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
             }
             null
         } else {
-            OpenHours.Scheduled(periods = periods)
+            OpenHours.Scheduled(periods = periods, weekdayText = weekdayText, note)
         }
     }
 }
 
 fun OpenHours.mapToCore() = when (this) {
-    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList())
-    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList())
-    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList())
-    is OpenHours.Scheduled -> CoreOpenHours(CoreOpenMode.SCHEDULED, periods.map { it.mapToCore() })
+    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList(), null, null)
+    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList(), null, null)
+    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList(), null, null)
+    is OpenHours.Scheduled -> CoreOpenHours(
+        CoreOpenMode.SCHEDULED,
+        periods.map { it.mapToCore() },
+        weekdayText,
+        note
+    )
     else -> error("Unknown OpenHours subclass: ${javaClass.printableName}.")
 }
 
@@ -64,6 +71,20 @@ fun CoreParkingData.mapToPlatform() = ParkingData(
 fun ParkingData.mapToCore() = CoreParkingData(
     totalCapacity,
     reservedForDisabilities
+)
+
+fun CoreChildMetadata.mapToPlatform() = ChildMetadata(
+    mapboxId,
+    name,
+    category,
+    coordinates
+)
+
+fun ChildMetadata.mapToCore() = CoreChildMetadata(
+    category,
+    coordinates,
+    mapboxId,
+    name
 )
 
 fun weekDayFromCore(dayCode: Byte): WeekDay {

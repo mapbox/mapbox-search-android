@@ -736,6 +736,25 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testNoResultSearchSelection() {
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/suggestions-successful-random.json"))
+
+        var callback = BlockingSearchSelectionCallback()
+        searchEngine.search(TEST_QUERY, SearchOptions(), callback)
+
+        val suggestResponse = callback.getResultBlocking()
+        val suggestions = (suggestResponse as SearchEngineResult.Suggestions).suggestions
+
+        mockServer.enqueue(createSuccessfulResponse("sbs_responses/retrieve-no-results.json"))
+
+        callback = BlockingSearchSelectionCallback()
+        searchEngine.select(suggestions.first(), callback)
+
+        val selectResponse = callback.getResultBlocking()
+        assertTrue(selectResponse is SearchEngineResult.Error && selectResponse.e is SearchRequestException && selectResponse.e.code == 404)
+    }
+
+    @Test
     fun testSuccessfulSuggestionSelectionWithTurnedOffAddToHistoryLogic() {
         val blockingCompletionCallback = BlockingCompletionCallback<List<HistoryRecord>>()
         historyDataProvider.getAll(blockingCompletionCallback)

@@ -1,8 +1,6 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.search.CategorySearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
@@ -10,24 +8,29 @@ import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.sample.R
 
-class CategorySearchKotlinExampleActivity : AppCompatActivity() {
+class CategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
+
+    override val titleResId: Int = R.string.action_discover_kotlin_example
 
     private lateinit var searchEngine: SearchEngine
-    private lateinit var searchRequestTask: AsyncOperationTask
+    private var searchRequestTask: AsyncOperationTask? = null
 
     private val searchCallback: SearchCallback = object : SearchCallback {
 
         override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
             if (results.isEmpty()) {
-                Log.i("SearchApiExample", "No category search results")
+                logI("SearchApiExample", "No category search results")
             } else {
-                Log.i("SearchApiExample", "Category search results: $results")
+                logI("SearchApiExample", "Category search results:", results)
             }
+            onFinished()
         }
 
         override fun onError(e: Exception) {
-            Log.i("SearchApiExample", "Search error", e)
+            logI("SearchApiExample", "Search error", e)
+            onFinished()
         }
     }
 
@@ -39,7 +42,9 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             SearchEngineSettings()
         )
+    }
 
+    override fun startExample() {
         searchRequestTask = searchEngine.search(
             "cafe",
             CategorySearchOptions(limit = 1),
@@ -48,7 +53,7 @@ class CategorySearchKotlinExampleActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        searchRequestTask.cancel()
+        searchRequestTask?.cancel()
         super.onDestroy()
     }
 }

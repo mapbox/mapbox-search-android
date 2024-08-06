@@ -7,7 +7,6 @@ import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion.Underlying
-import com.mapbox.search.base.BaseSearchSdkInitializer
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
@@ -24,9 +23,11 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.SearchResultFactory
+import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.suspendFlatMap
+import com.mapbox.search.internal.bindgen.ApiType
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.ExecutorService
@@ -94,7 +95,7 @@ internal class PlaceAutocompleteImpl(
         }
     }
 
-    private suspend fun createSuggestions(
+    private fun createSuggestions(
         rawSuggestions: List<BaseSearchSuggestion>
     ): Expected<Exception, List<PlaceAutocompleteSuggestion>> {
         val suggestions: List<Expected<Exception, PlaceAutocompleteSuggestion>> = rawSuggestions
@@ -170,14 +171,13 @@ internal class PlaceAutocompleteImpl(
         fun create(
             app: Application,
             locationProvider: LocationProvider?,
+            apiType: ApiType = CoreApiType.SEARCH_BOX,
         ): PlaceAutocompleteImpl {
-            val apiType = CoreApiType.SBS
-
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
                     baseUrl = null,
                     apiType = apiType,
-                    sdkInformation = BaseSearchSdkInitializer.sdkInformation,
+                    sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
                 ),
                 WrapperLocationProvider(

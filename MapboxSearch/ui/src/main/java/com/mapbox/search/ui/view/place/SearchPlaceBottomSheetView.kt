@@ -273,44 +273,66 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
         animate: Boolean = false,
         onFavoriteAdded: ((FavoriteRecord) -> Unit)? = null
     ) {
+        val populateButton = { text: Int, icon: Int, listener: OnClickListener? ->
+            favoriteButton.setText(text, animate)
+            favoriteButton.setIcon(icon, animate)
+            favoriteButton.setOnClickListener(listener)
+        }
+
         if (overriddenAddedToFavorite) {
-            Triple(
+            populateButton(
                 R.string.mapbox_search_sdk_place_card_added_to_favorites,
                 R.drawable.mapbox_search_sdk_ic_added_to_favorites,
                 null
             )
         } else {
-            val listener: (View) -> Unit = {
-                if (addFavoriteTask == null || addFavoriteTask?.isCancelled == true) {
-                    val newFavorite = searchPlace.toUserFavorite()
-                    addFavoriteTask = favoritesDataProvider.upsert(
-                        newFavorite,
-                        object : CompletionCallback<Unit> {
-                            override fun onComplete(result: Unit) {
-                                onFavoriteAdded?.invoke(newFavorite)
-                                onSearchPlaceAddedToFavoritesListeners.forEach {
-                                    it.onSearchPlaceAddedToFavorites(searchPlace, newFavorite)
-                                }
-                            }
+            favoritesDataProvider.get(searchPlace.id, object : CompletionCallback<FavoriteRecord?> {
+                override fun onComplete(result: FavoriteRecord?) {
+                    if (result != null) {
+                        populateButton(
+                            R.string.mapbox_search_sdk_place_card_added_to_favorites,
+                            R.drawable.mapbox_search_sdk_ic_added_to_favorites,
+                            null
+                        )
+                    } else {
+                        val listener: (View) -> Unit = {
+                            if (addFavoriteTask == null || addFavoriteTask?.isCancelled == true) {
+                                val newFavorite = searchPlace.toUserFavorite()
+                                addFavoriteTask = favoritesDataProvider.upsert(
+                                    newFavorite,
+                                    object : CompletionCallback<Unit> {
+                                        override fun onComplete(result: Unit) {
+                                            onFavoriteAdded?.invoke(newFavorite)
+                                            onSearchPlaceAddedToFavoritesListeners.forEach {
+                                                it.onSearchPlaceAddedToFavorites(searchPlace, newFavorite)
+                                            }
+                                        }
 
-                            override fun onError(e: Exception) {
-                                // Shouldn't happen with favorites
-                                throwDebug(e) {
-                                    "Unable to add favorite: ${e.message}"
-                                }
+                                        override fun onError(e: Exception) {
+                                            // Shouldn't happen with favorites
+                                            throwDebug(e) {
+                                                "Unable to add favorite: ${e.message}"
+                                            }
+                                        }
+                                    })
                             }
-                        })
+                        }
+
+                        populateButton(
+                            R.string.mapbox_search_sdk_place_card_add_to_favorites,
+                            R.drawable.mapbox_search_sdk_ic_add_favorite,
+                            listener
+                        )
+                    }
                 }
-            }
-            Triple(
-                R.string.mapbox_search_sdk_place_card_add_to_favorites,
-                R.drawable.mapbox_search_sdk_ic_add_favorite,
-                listener
-            )
-        }.let { (text, icon, onClickListener) ->
-            favoriteButton.setText(text, animate)
-            favoriteButton.setIcon(icon, animate)
-            favoriteButton.setOnClickListener(onClickListener)
+
+                override fun onError(e: Exception) {
+                    // should not happen
+                    throwDebug(e) {
+                        "Unable to determine if favorite: ${e.message}"
+                    }
+                }
+            })
         }
     }
 

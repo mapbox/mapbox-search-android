@@ -19,6 +19,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.mapbox.android.gestures.Utils.dpToPx
+import com.mapbox.common.Cancelable
+import com.mapbox.common.TileRegionLoadOptions
+import com.mapbox.common.TileStore
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -74,16 +77,21 @@ import com.mapbox.search.sample.api.PlaceAutocompleteKotlinExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
+import com.mapbox.search.ui.utils.Debouncer
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfTransformation
 
 class MainActivity : AppCompatActivity() {
 
     private val locationProvider: LocationProvider? = defaultLocationProvider()
+
+    private val debouncer = Debouncer(300L)
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchView: SearchView
@@ -94,6 +102,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private lateinit var mapMarkersManager: MapMarkersManager
+
+    private lateinit var tileRegionLoadOptions: TileRegionLoadOptions
+    private val tileStore = TileStore.create()
+    private val tileRegionId = "Washington DC"
+    private var tilesLoadingTask: Cancelable? = null
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -145,19 +158,26 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        mapView.mapboxMap.addOnMapClickListener { point ->
-            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+        // only support for ApiType.SBS
+        if (BuildConfig.API_TYPE == ApiType.SBS || BuildConfig.API_TYPE == ApiType.SEARCH_BOX) {
+            mapView.mapboxMap.addOnMapClickListener { point ->
+                val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 
-            mapView.mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(screenCoords),
-                RenderedQueryOptions(listOf("poi-label"), null)
-            ) {
-                it.value?.first()?.queriedFeature.let { queriedFeature ->
-                    queriedFeature?.feature?.let { feature -> searchEngineUiAdapter.select(feature) }
+                mapView.mapboxMap.queryRenderedFeatures(
+                    RenderedQueryGeometry(screenCoords),
+                    RenderedQueryOptions(listOf("poi-label"), null)
+                ) {
+                    it.value?.firstOrNull()?.queriedFeature.let { queriedFeature ->
+                        queriedFeature?.feature?.let { feature ->
+                            searchEngineUiAdapter.select(
+                                feature
+                            )
+                        }
+                    }
                 }
-            }
 
-            true
+                true
+            }
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
@@ -171,12 +191,6 @@ class MainActivity : AppCompatActivity() {
             setSupportActionBar(this)
         }
 
-        val apiType = if (BuildConfig.ENABLE_SBS) {
-            ApiType.SBS
-        } else {
-            ApiType.GEOCODING
-        }
-
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
                 SearchResultsView.Configuration(CommonSearchViewConfiguration(DistanceUnitType.IMPERIAL))
@@ -185,12 +199,38 @@ class MainActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = apiType,
+            apiType = BuildConfig.API_TYPE,
             settings = SearchEngineSettings()
         )
 
         val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings()
+            OfflineSearchEngineSettings(
+                tileStore = tileStore
+            )
+        )
+
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
+        val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
+
+        tileRegionLoadOptions = TileRegionLoadOptions
+            .Builder()
+            .descriptors(descriptors)
+            .geometry(tileGeometry)
+            .acceptExpired(true)
+            .build()
+
+        tilesLoadingTask = tileStore.loadTileRegion(
+            tileRegionId,
+            tileRegionLoadOptions,
+            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+            { result ->
+                if (result.isValue) {
+                    Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                } else {
+                    Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
+                }
+            }
         )
 
         searchEngineUiAdapter = SearchEngineUiAdapter(
@@ -297,6 +337,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        debouncer.cancel()
+        tilesLoadingTask?.cancel()
+    }
+
     private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
         getLastLocation { location ->
             if (location == null) {
@@ -361,7 +407,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchEngineUiAdapter.search(newText)
+                debouncer.debounce {
+                    searchEngineUiAdapter.search(newText)
+                }
                 return false
             }
         })

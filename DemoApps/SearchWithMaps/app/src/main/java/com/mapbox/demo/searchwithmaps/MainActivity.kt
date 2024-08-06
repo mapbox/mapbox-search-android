@@ -34,6 +34,7 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter
+import com.mapbox.search.ui.adapter.location.setLocationObservationTimeout
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setLocationObservationTimeout(5_000L)
+
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         mapView = findViewById(R.id.map_view)
@@ -111,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         locationProvider = searchEngineSettings.locationProvider ?: throw IllegalStateException("No location provider found")
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = ApiType.GEOCODING,
+            apiType = ApiType.SEARCH_BOX,
             settings = searchEngineSettings
         )
 
