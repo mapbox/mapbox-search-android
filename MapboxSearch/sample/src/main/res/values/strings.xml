@@ -72,7 +72,7 @@
     <string name="offline">Offline</string>
     <string name="online">Online</string>
     <string name="tap_a_point_on_map_to_start_download">Tap a point on map to start download</string>
-    <string name="downloaded_pc_text">Downloaded %d%%</string>
+    <string name="downloaded_pc_text">Downloaded %s%%</string>
     <string name="downloaded_100pc">Downloaded 100%</string>
     <string name="radius_from_center_in_km">Radius from center in KM</string>
     <string name="default_radius">10</string>

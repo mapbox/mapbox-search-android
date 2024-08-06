@@ -99,6 +99,8 @@ class TileDownloadUiActivity : AppCompatActivity() {
     private lateinit var circleInputSubmit: Button
     private lateinit var searchTypeSwitch: SwitchCompat
 
+    private var searchBeginTm: Long = 0
+
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             when {
@@ -261,11 +263,6 @@ class TileDownloadUiActivity : AppCompatActivity() {
             this.finish()
         }
 
-        val apiType = if (BuildConfig.ENABLE_SBS) {
-            ApiType.SBS
-        } else {
-            ApiType.GEOCODING
-        }
 
         searchResultsView = findViewById<SearchResultsView>(R.id.search_results_view).apply {
             initialize(
@@ -275,7 +272,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
         }
 
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            apiType = apiType,
+            apiType = ApiType.SBS,
             settings = SearchEngineSettings()
         )
 
@@ -323,7 +320,10 @@ class TileDownloadUiActivity : AppCompatActivity() {
             }
 
             override fun onOfflineSearchResultsShown(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-                // Nothing to do
+                val dur = System.currentTimeMillis() - searchBeginTm
+                lifecycleScope.launch(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, "Done search in $dur ms", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onSuggestionSelected(searchSuggestion: SearchSuggestion): Boolean {
@@ -445,7 +445,8 @@ class TileDownloadUiActivity : AppCompatActivity() {
             loadOptions,
             { progress ->
                 lifecycleScope.launch(Dispatchers.Main) {
-                    val donePercent = (progress.completedResourceSize.toDouble() / progress.requiredResourceCount.toDouble()).toInt()
+                    val done = (progress.completedResourceCount.toDouble() / progress.requiredResourceCount.toDouble() * 10000.0).toInt()
+                    val donePercent = "${done / 100}.${done % 100}"
                     Log.i("SearchApiExample", "Loading $regionId, done: $donePercent progress: $progress")
                     downloadProgress.text = getString(R.string.downloaded_pc_text, donePercent)
                 }
@@ -510,6 +511,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
                 val proximity = mapView.mapboxMap.cameraState.center
                 Log.i("MAP-VIEW", "MAP bounds: $proximity")
 
+                searchBeginTm = System.currentTimeMillis()
                 searchEngineUiAdapter.search(newText)
                 return false
             }
