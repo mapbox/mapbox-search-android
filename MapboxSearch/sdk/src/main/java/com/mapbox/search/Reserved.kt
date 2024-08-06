@@ -14,5 +14,10 @@ internal annotation class Reserved(vararg val flags: Flags) {
          * Functionality related to [Single Box Search][ApiType.SBS].
          */
         SBS,
+
+        /**
+         * Functionality related to [Search Box Search][ApiType.SEARCH_BOX].
+         */
+        SEARCH_BOX,
     }
 }

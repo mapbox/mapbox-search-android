@@ -1,6 +1,7 @@
 package com.mapbox.search
 
 import com.mapbox.search.Reserved.Flags.SBS
+import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreQueryType
 import com.mapbox.search.base.failDebug
 
@@ -47,9 +48,9 @@ public enum class QueryType {
     /**
      * Street query type.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     STREET,
 
     /**
@@ -65,9 +66,9 @@ public enum class QueryType {
     /**
      * Category query type.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     CATEGORY,
 }
 

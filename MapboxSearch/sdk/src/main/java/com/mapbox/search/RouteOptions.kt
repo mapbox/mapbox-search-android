@@ -3,6 +3,7 @@ package com.mapbox.search
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
+import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.utils.printableName
 import kotlinx.parcelize.Parcelize
 import java.util.concurrent.TimeUnit
@@ -11,12 +12,12 @@ import kotlin.math.floor
 /**
  * Options to configure Route for search along the route functionality.
  *
- * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+ * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
  *
  * @param route route to search across; please note, at least 2 points should be provided.
  * @param deviation option describing maximum detour from route.
  */
-@Reserved(SBS)
+@Reserved(SBS, SEARCH_BOX)
 @Parcelize
 public class RouteOptions(
     public val route: List<Point>,
@@ -73,9 +74,9 @@ public class RouteOptions(
     /**
      * Option describing maximum detour from route.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public abstract class Deviation internal constructor() : Parcelable {
 
         /**
@@ -86,11 +87,11 @@ public class RouteOptions(
         /**
          * Type of Search-Along-the-Route algorithm.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          *
          * @property rawName raw name of SAR type, accepted by backend.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         @Parcelize
         public class SarType(public val rawName: String) : Parcelable {
 
@@ -138,13 +139,13 @@ public class RouteOptions(
         /**
          * Maximum detour in time from route.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          *
          * @param value deviation time value.
          * @param unit deviation time unit.
          * @param sarType algorithm of deviation calculation.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         @Parcelize
         public class Time @JvmOverloads public constructor(
             public val value: Long,

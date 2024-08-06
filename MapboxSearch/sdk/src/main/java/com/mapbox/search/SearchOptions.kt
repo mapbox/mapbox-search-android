@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
+import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.RouteOptions.Deviation.SarType
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreSearchOptions
@@ -74,25 +75,25 @@ public class SearchOptions @JvmOverloads public constructor(
     /**
      * Point for ETA calculation from it to search result.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val origin: Point? = null,
 
     /**
      * Navigation options used for proper calculation of ETA and results ranking.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val navigationOptions: SearchNavigationOptions? = null,
 
     /**
      * Options to configure Route for search along the route functionality.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val routeOptions: RouteOptions? = null,
 
     /**
@@ -359,17 +360,17 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Point for ETA calculation from it to search result.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         public fun origin(origin: Point): Builder = apply { this.origin = origin }
 
         /**
          * Navigation options used for proper calculation of ETA and results ranking.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         public fun navigationOptions(navigationOptions: SearchNavigationOptions): Builder = apply {
             this.navigationOptions = navigationOptions
         }
@@ -377,9 +378,9 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Options to configure Route for search along the route functionality.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         public fun routeOptions(routeOptions: RouteOptions): Builder = apply { this.routeOptions = routeOptions }
 
         /**
