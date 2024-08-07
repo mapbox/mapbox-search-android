@@ -86,6 +86,7 @@ import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
+import java.net.URI
 
 class MainActivity : AppCompatActivity() {
 
@@ -205,11 +206,12 @@ class MainActivity : AppCompatActivity() {
 
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                tileStore = tileStore
+                tileStore = tileStore,
+                tilesBaseUri = URI.create("https://search-sdk-offline-staging.tilestream.net")
             )
         )
 
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor(dataset="experimental-poi-cat-alias"))
         val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
         val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
 
@@ -239,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             offlineSearchEngine = offlineSearchEngine,
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+        searchEngineUiAdapter.searchMode = SearchMode.OFFLINE
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
