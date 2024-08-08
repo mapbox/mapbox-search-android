@@ -70,7 +70,7 @@
         <activity android:name=".api.JapanSearchJavaExampleActivity" />
         <activity android:name=".api.JapanSearchKotlinExampleActivity" />
         <activity android:name=".api.OfflineSearchAlongRouteExampleActivity" />
-
+        <activity android:name=".api.DynamicUserDataExampleActivity" android:exported="true" />
     </application>
 
 </manifest>
