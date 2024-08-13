@@ -409,6 +409,5 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = Core
     routeOptions?.route,
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
-    null,
+    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
 )

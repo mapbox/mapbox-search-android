@@ -51,7 +51,6 @@ internal class SearchOptionsTest {
                     unsafeParameters = null,
                     ignoreIndexableRecords = false,
                     indexableRecordsDistanceThresholdMeters = null,
-                    attributeSets = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -79,7 +78,6 @@ internal class SearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(50.0)
-                    .attributeSet(listOf(AttributeSet.BASIC))
                     .build()
 
                 val expectedOptions = SearchOptions(
@@ -96,8 +94,7 @@ internal class SearchOptionsTest {
                     routeOptions = TEST_ROUTE_OPTIONS,
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
-                    indexableRecordsDistanceThresholdMeters = 50.0,
-                    attributeSets = listOf(AttributeSet.BASIC)
+                    indexableRecordsDistanceThresholdMeters = 50.0
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -125,7 +122,6 @@ internal class SearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(100.123)
-                    .attributeSet(listOf(AttributeSet.BASIC, AttributeSet.PHOTOS, AttributeSet.VISIT, AttributeSet.VENUE))
                     .build()
 
                 val expectedOptions = SearchOptions(
@@ -142,8 +138,7 @@ internal class SearchOptionsTest {
                     routeOptions = TEST_ROUTE_OPTIONS,
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
-                    indexableRecordsDistanceThresholdMeters = 100.123,
-                    attributeSets = listOf(AttributeSet.BASIC, AttributeSet.PHOTOS, AttributeSet.VISIT, AttributeSet.VENUE)
+                    indexableRecordsDistanceThresholdMeters = 100.123
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -186,7 +181,6 @@ internal class SearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(15.0)
-                    .attributeSet(listOf(AttributeSet.BASIC, AttributeSet.PHOTOS))
                     .build()
 
                 val actualOptions = originalOptions.mapToCore()
@@ -235,8 +229,7 @@ internal class SearchOptionsTest {
                     routeOptions = TEST_ROUTE_OPTIONS,
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
-                    indexableRecordsDistanceThresholdMeters = 11.0,
-                    attributeSets = listOf(AttributeSet.VENUE)
+                    indexableRecordsDistanceThresholdMeters = 11.0
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())

@@ -44,8 +44,7 @@ fun createCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
-    attributeSets
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
 )
 
 fun createCoreReverseGeoOptions(
