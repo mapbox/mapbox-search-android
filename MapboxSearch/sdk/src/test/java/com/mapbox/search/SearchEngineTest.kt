@@ -596,7 +596,7 @@ internal class SearchEngineTest {
                     attributeSets = AttributeSet.values().toList()
                 )
 
-                val task = searchEngine.select(
+                searchEngine.select(
                     suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = options,
                     executor = executor,
@@ -625,7 +625,7 @@ internal class SearchEngineTest {
                     attributeSets = listOf(AttributeSet.BASIC, AttributeSet.VENUE)
                 )
 
-                val task = searchEngine.select(
+                searchEngine.select(
                     suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = options,
                     executor = executor,
@@ -654,7 +654,7 @@ internal class SearchEngineTest {
                     attributeSets = listOf(AttributeSet.PHOTOS)
                 )
 
-                val task = searchEngine.select(
+                searchEngine.select(
                     suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
                     options = options,
                     executor = executor,
