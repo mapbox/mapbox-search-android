@@ -2,7 +2,7 @@
 
 ## 2.4.0-rc.3
 
-### Bug fixes
+### New features
 - Aligning `SearchOptions` to Search Native SDK
 - Adding `List<AttributeSet>` to `SelectOptions` to support retrieving distinct attribute sets on SEARCH_BOX retrieve calls
 
