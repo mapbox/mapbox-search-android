@@ -753,7 +753,7 @@ internal class SearchEngineTest {
 
             val slotRetrieveSearchCallback = slot<CoreSearchCallback>()
             every {
-                coreEngine.retrieve(any(), any(), capture(slotRetrieveSearchCallback))
+                coreEngine.retrieve(any(), any(), any(), capture(slotRetrieveSearchCallback))
             } answers {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
                 TEST_REQUEST_ID
