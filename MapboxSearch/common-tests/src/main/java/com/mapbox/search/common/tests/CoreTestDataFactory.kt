@@ -2,7 +2,6 @@ package com.mapbox.search.common.tests
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
-import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.ConnectionError
 import com.mapbox.search.internal.bindgen.HttpError
 import com.mapbox.search.internal.bindgen.ImageInfo
@@ -48,7 +47,6 @@ fun createTestCoreSearchOptions(
     sarType: String? = null,
     timeDeviation: Double? = null,
     addonAPI: Map<String, String>? = null,
-    attributeSets: List<AttributeSet>? = null,
 ): SearchOptions = SearchOptions(
     proximity,
     origin,

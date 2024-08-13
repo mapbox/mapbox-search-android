@@ -1,7 +1,6 @@
 package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
@@ -25,7 +24,6 @@ fun createCoreSearchOptions(
     route: List<Point>? = null,
     sarType: String? = null,
     timeDeviation: Double? = null,
-    attributeSets: List<AttributeSet>? = null,
     addonAPI: Map<String, String>? = null,
 ): CoreSearchOptions = CoreSearchOptions(
     proximity,
