@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>OfflineSearchResult</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>offline</span>
+            </a>
+    </div>
+    <div>
+2.4.0-rc.3    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="offline::com.mapbox.search.offline/OfflineSearchResult///PointingToDeclaration//-2088540605">
+  <div class="breadcrumbs"><a href="../../../index.html">offline</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.offline</a><span class="delimiter">/</span><span class="current">OfflineSearchResult</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Result</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">OfflineSearchResult</a> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">Result returned by the offline search engine.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-2088540605" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1578325224%2FFunctions%2F-2088540605"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-1578325224%2FFunctions%2F-2088540605"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F-2088540605" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1754457655%2FFunctions%2F-2088540605"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-1754457655%2FFunctions%2F-2088540605"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-833171344%2FProperties%2F-2088540605" anchor-label="address" id="-833171344%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="address.html"><span><span>address</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-833171344%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-833171344%2FProperties%2F-2088540605" anchor-label="address" id="-833171344%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="address.html">address</a><span class="token operator">: </span><a href="../-offline-search-address/index.html">OfflineSearchAddress</a><span class="token operator">?</span></div><div class="brief "><a data-name="-833171344%2FProperties%2F-2088540605" anchor-label="address" id="-833171344%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result address.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="605327806%2FProperties%2F-2088540605" anchor-label="coordinate" id="605327806%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="coordinate.html"><span><span>coordinate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="605327806%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="605327806%2FProperties%2F-2088540605" anchor-label="coordinate" id="605327806%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="coordinate.html">coordinate</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span></div><div class="brief "><a data-name="605327806%2FProperties%2F-2088540605" anchor-label="coordinate" id="605327806%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result coordinate.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1456762811%2FProperties%2F-2088540605" anchor-label="descriptionText" id="1456762811%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="description-text.html"><span>description</span><wbr></wbr><span><span>Text</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1456762811%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="1456762811%2FProperties%2F-2088540605" anchor-label="descriptionText" id="1456762811%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="description-text.html">descriptionText</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="1456762811%2FProperties%2F-2088540605" anchor-label="descriptionText" id="1456762811%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result description.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="329904695%2FProperties%2F-2088540605" anchor-label="distanceMeters" id="329904695%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="distance-meters.html"><span>distance</span><wbr></wbr><span><span>Meters</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="329904695%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="329904695%2FProperties%2F-2088540605" anchor-label="distanceMeters" id="329904695%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="distance-meters.html">distanceMeters</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><a data-name="329904695%2FProperties%2F-2088540605" anchor-label="distanceMeters" id="329904695%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Distance in meters from search result's <a href="coordinate.html">coordinate</a> to the origin point specified in <a href="../-offline-search-options/origin.html">OfflineSearchOptions.origin</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="413421691%2FProperties%2F-2088540605" anchor-label="id" id="413421691%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="413421691%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="413421691%2FProperties%2F-2088540605" anchor-label="id" id="413421691%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="id.html">id</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="413421691%2FProperties%2F-2088540605" anchor-label="id" id="413421691%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result id.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1706332492%2FProperties%2F-2088540605" anchor-label="mapboxId" id="1706332492%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="mapbox-id.html"><span>mapbox</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1706332492%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="1706332492%2FProperties%2F-2088540605" anchor-label="mapboxId" id="1706332492%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="mapbox-id.html">mapboxId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="1706332492%2FProperties%2F-2088540605" anchor-label="mapboxId" id="1706332492%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Result MapboxID</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1232443701%2FProperties%2F-2088540605" anchor-label="name" id="-1232443701%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1232443701%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-1232443701%2FProperties%2F-2088540605" anchor-label="name" id="-1232443701%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-1232443701%2FProperties%2F-2088540605" anchor-label="name" id="-1232443701%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result name.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2031408221%2FProperties%2F-2088540605" anchor-label="routablePoints" id="2031408221%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="routable-points.html"><span>routable</span><wbr></wbr><span><span>Points</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2031408221%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="2031408221%2FProperties%2F-2088540605" anchor-label="routablePoints" id="2031408221%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="routable-points.html">routablePoints</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.common/RoutablePoint///PointingToDeclaration/">RoutablePoint</span><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><a data-name="2031408221%2FProperties%2F-2088540605" anchor-label="routablePoints" id="2031408221%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">List of points near <a href="coordinate.html">coordinate</a>, that represents entries to associated building.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-302668548%2FProperties%2F-2088540605" anchor-label="type" id="-302668548%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="type.html"><span><span>type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-302668548%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-302668548%2FProperties%2F-2088540605" anchor-label="type" id="-302668548%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="type.html">type</a><span class="token operator">: </span><a href="../-offline-search-result-type/index.html">OfflineSearchResultType</a></div><div class="brief "><a data-name="-302668548%2FProperties%2F-2088540605" anchor-label="type" id="-302668548%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search result type.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
