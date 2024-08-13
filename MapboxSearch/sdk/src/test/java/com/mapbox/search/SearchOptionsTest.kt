@@ -2,7 +2,6 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreAttributeSet
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -202,8 +201,7 @@ internal class SearchOptionsTest {
                     route = TEST_ROUTE_OPTIONS.route,
                     sarType = "isochrone",
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
-                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
-                    attributeSets = listOf(CoreAttributeSet.BASIC, CoreAttributeSet.PHOTOS)
+                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS)
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
