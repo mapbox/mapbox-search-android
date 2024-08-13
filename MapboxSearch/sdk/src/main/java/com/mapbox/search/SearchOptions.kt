@@ -117,14 +117,6 @@ public class SearchOptions @JvmOverloads public constructor(
      * Threshold specified in meters.
      */
     public val indexableRecordsDistanceThresholdMeters: Double? = null,
-
-    /**
-     * Besides the basic metadata attributes, developers can request additional
-     * attributes by setting attribute_sets parameter with attribute set values,
-     * for example &attribute_sets=basic,photos,visit.
-     * The requested metadata will be provided in metadata object in the response.
-     */
-    public val attributeSets: List<AttributeSet>? = null,
 ) : Parcelable {
 
     init {
@@ -153,7 +145,6 @@ public class SearchOptions @JvmOverloads public constructor(
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
-        attributeSets: List<AttributeSet>? = this.attributeSets,
     ): SearchOptions {
         return SearchOptions(
             proximity = proximity,
@@ -170,7 +161,6 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
-            attributeSets = attributeSets,
         )
     }
 
@@ -204,7 +194,6 @@ public class SearchOptions @JvmOverloads public constructor(
         if (unsafeParameters != other.unsafeParameters) return false
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
-        if (attributeSets != other.attributeSets) return false
 
         return true
     }
@@ -227,7 +216,6 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
-        result = 31 * result + (attributeSets?.hashCode() ?: 0)
         return result
     }
 
@@ -250,7 +238,6 @@ public class SearchOptions @JvmOverloads public constructor(
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
-                "attributeSets=$attributeSets" +
                 ")"
     }
 
@@ -291,7 +278,6 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = options.unsafeParameters
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
-            attributeSet = options.attributeSets
         }
 
         /**
@@ -411,16 +397,6 @@ public class SearchOptions @JvmOverloads public constructor(
         }
 
         /**
-         * Besides the basic metadata attributes, developers can request additional
-         * attributes by setting attribute_sets parameter with attribute set values,
-         * for example &attribute_sets=basic,photos,visit.
-         * The requested metadata will be provided in metadata object in the response.
-         */
-        public fun attributeSet(attributeSet: List<AttributeSet>?): Builder = apply {
-            this.attributeSet = attributeSet
-        }
-
-        /**
          * Create [SearchOptions] instance from builder data.
          */
         public fun build(): SearchOptions = SearchOptions(
@@ -438,7 +414,6 @@ public class SearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
-            attributeSets = attributeSet
         )
     }
 }
@@ -475,8 +450,7 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     routeOptions?.route,
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
-    attributeSets?.map { it.mapToCore() }
+    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
 )
 
 @JvmSynthetic
@@ -507,6 +481,5 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     } else null,
     unsafeParameters = addonAPI,
     ignoreIndexableRecords = ignoreUR,
-    indexableRecordsDistanceThresholdMeters = urDistanceThreshold,
-    attributeSets = attributeSets?.map { it.mapToPlatform() },
+    indexableRecordsDistanceThresholdMeters = urDistanceThreshold
 )
