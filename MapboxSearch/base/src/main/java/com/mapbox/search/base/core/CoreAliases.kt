@@ -35,3 +35,4 @@ typealias CoreSearchResponseError = com.mapbox.search.internal.bindgen.Error
 typealias CoreSearchResponseErrorType = com.mapbox.search.internal.bindgen.Error.Type
 typealias CoreChildMetadata = com.mapbox.search.internal.bindgen.ResultChildMetadata
 typealias CoreAttributeSet = com.mapbox.search.internal.bindgen.AttributeSet
+typealias CoreRetrieveOptions = com.mapbox.search.internal.bindgen.RetrieveOptions

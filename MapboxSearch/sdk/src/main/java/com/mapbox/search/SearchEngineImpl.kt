@@ -286,6 +286,7 @@ internal class SearchEngineImpl(
                     val requestId = coreEngine.retrieve(
                         coreRequestOptions,
                         base.rawSearchResult.mapToCore(),
+                        options.mapToCore(),
                         TwoStepsRequestCallbackWrapper(
                             apiType = apiType.mapToCore(),
                             coreEngine = coreEngine,

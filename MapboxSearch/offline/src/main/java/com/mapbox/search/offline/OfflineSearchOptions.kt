@@ -147,7 +147,7 @@ internal fun OfflineSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOpt
     null,
     limit,
     null,
-    null,
+    false,
     null,
     null,
     null,

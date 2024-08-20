@@ -497,7 +497,7 @@ internal class SearchEngineTest {
 
             val slotRetrieveSearchCallback = slot<CoreSearchCallback>()
             every {
-                coreEngine.retrieve(any(), any(), capture(slotRetrieveSearchCallback))
+                coreEngine.retrieve(any(), any(), any(), capture(slotRetrieveSearchCallback))
             } answers {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
                 TEST_REQUEST_ID
@@ -520,7 +520,7 @@ internal class SearchEngineTest {
                 )
 
                 Verify("CoreSearchEngine.retrieve() Called") {
-                    coreEngine.retrieve(any(), any(), any())
+                    coreEngine.retrieve(any(), any(), any(), any())
                 }
 
                 Then("Task is executed", true, task.isDone)
@@ -576,6 +576,93 @@ internal class SearchEngineTest {
 
                 VerifyOnce("User activity reported") {
                     activityReporter.reportActivity(eq("search-engine-forward-geocoding-selection"))
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check successful search selection with all attribute sets`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every {
+                coreEngine.retrieve(any(), any(), any(), any())
+            } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Suggestion selected") {
+                val callback = mockk<SearchSelectionCallback>(relaxed = true)
+                val options = SelectOptions(
+                    attributeSets = AttributeSet.values().toList()
+                )
+
+                searchEngine.select(
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    options = options,
+                    executor = executor,
+                    callback = callback,
+                )
+
+                Verify("CoreSearchEngine.retrieve() Called") {
+                    coreEngine.retrieve(any(), any(), options.mapToCore(), any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check successful search selection with subset of attribute sets`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every {
+                coreEngine.retrieve(any(), any(), any(), any())
+            } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Suggestion selected") {
+                val callback = mockk<SearchSelectionCallback>(relaxed = true)
+                val options = SelectOptions(
+                    attributeSets = listOf(AttributeSet.BASIC, AttributeSet.VENUE)
+                )
+
+                searchEngine.select(
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    options = options,
+                    executor = executor,
+                    callback = callback,
+                )
+
+                Verify("CoreSearchEngine.retrieve() Called") {
+                    coreEngine.retrieve(any(), any(), options.mapToCore(), any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check successful search selection with one attribute sets`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            every {
+                coreEngine.retrieve(any(), any(), any(), any())
+            } answers {
+                TEST_REQUEST_ID
+            }
+
+            When("Suggestion selected") {
+                val callback = mockk<SearchSelectionCallback>(relaxed = true)
+                val options = SelectOptions(
+                    attributeSets = listOf(AttributeSet.PHOTOS)
+                )
+
+                searchEngine.select(
+                    suggestion = TEST_SBS_SERVER_SEARCH_SUGGESTION.mapToPlatform(),
+                    options = options,
+                    executor = executor,
+                    callback = callback,
+                )
+
+                Verify("CoreSearchEngine.retrieve() Called") {
+                    coreEngine.retrieve(any(), any(), options.mapToCore(), any())
                 }
             }
         }
@@ -666,7 +753,7 @@ internal class SearchEngineTest {
 
             val slotRetrieveSearchCallback = slot<CoreSearchCallback>()
             every {
-                coreEngine.retrieve(any(), any(), capture(slotRetrieveSearchCallback))
+                coreEngine.retrieve(any(), any(), any(), capture(slotRetrieveSearchCallback))
             } answers {
                 slotRetrieveSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
                 TEST_REQUEST_ID
@@ -701,7 +788,7 @@ internal class SearchEngineTest {
     fun `Check search selection cancellation initiated by user`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
             every {
-                coreEngine.retrieve(any(), any(), any())
+                coreEngine.retrieve(any(), any(), any(), any())
             } answers {
                 TEST_REQUEST_ID
             }

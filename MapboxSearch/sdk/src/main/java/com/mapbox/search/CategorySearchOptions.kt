@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
+import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.safeCompareTo
@@ -63,27 +64,27 @@ public class CategorySearchOptions @JvmOverloads public constructor(
     /**
      * Point for alternative search ranking logic, that is turned on if [navigationProfile] is specified.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      *
      * @see navigationProfile
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val origin: Point? = null,
 
     /**
      * Type of movement. Used to alter search ranking logic: the faster you can walk/drive from the [origin] to the search result, the higher search result rank.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val navigationProfile: NavigationProfile? = null,
 
     /**
      * Options to configure Route for search along the route functionality.
      *
-     * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
      */
-    @Reserved(SBS)
+    @Reserved(SBS, SEARCH_BOX)
     public val routeOptions: RouteOptions? = null,
 
     /**
@@ -408,6 +409,5 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = Core
     routeOptions?.route,
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
-    null,
+    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
 )

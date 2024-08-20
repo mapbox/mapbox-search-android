@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.4.0
+
+### Mapbox dependencies
+- Search Native SDK `2.3.0`
+
+## 2.4.0-rc.3
+
+### New features
+- Aligning `SearchOptions` to Search Native SDK
+- Adding `List<AttributeSet>` to `SelectOptions` to support retrieving distinct attribute sets on SEARCH_BOX retrieve calls
+
+### Mapbox dependencies
+- Search Native SDK `2.3.0-rc.3`
+- Common SDK `v24.6.0`
+
 ## 2.4.0-rc.2
 
 ### Bug fixes
