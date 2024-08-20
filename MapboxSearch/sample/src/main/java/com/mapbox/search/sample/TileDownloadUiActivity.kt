@@ -416,7 +416,7 @@ class TileDownloadUiActivity : AppCompatActivity() {
 
     private fun loadRegion(centerPoint: Point, geometry: Geometry, radiusKm: Int, downloadProgress: TextView) {
         // configure address tiles download
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("experimental-poi-cat-alias", "v8"))
+        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("experimental-poi-cat-alias", "v9"))
 
         val loadOptions = TileRegionLoadOptions
             .Builder()
