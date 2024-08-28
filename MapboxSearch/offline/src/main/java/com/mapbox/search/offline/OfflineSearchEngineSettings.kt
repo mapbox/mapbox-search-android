@@ -134,6 +134,7 @@ public class OfflineSearchEngineSettings @JvmOverloads constructor(
     internal companion object {
 
         val DEFAULT_ENDPOINT_URI: URI = URI.create("https://api.mapbox.com")
+        const val OLD_DEFAULT_DATASET = "mbx-main"
         const val DEFAULT_DATASET = "mbx-gen2"
         const val DEFAULT_VERSION = ""
 
