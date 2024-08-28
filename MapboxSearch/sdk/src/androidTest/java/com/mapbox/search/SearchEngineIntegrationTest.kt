@@ -314,7 +314,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                     reviewCount = it,
                     phone = "+1 650-965-2048-$it",
                     website = "https://www.test-meta-$it.com",
-                    rating = 4.0f,
+                    averageRating = 4.0,
                     description = "Starbucks, Mountain View",
                     primaryPhotos = emptyList(),
                     otherPhotos = null,
@@ -669,7 +669,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 reviewCount = 17,
                 phone = "+1 650-965-2048",
                 website = "https://www.starbucks.com/store-locator/store/7373/shoreline-pear-1380-pear-avenue-mountain-view-ca-940431360-us",
-                rating = 4.0f,
+                averageRating = 4.0,
                 description = "Starbucks, Mountain View",
                 primaryPhotos = listOf(
                     ImageInfo(

@@ -218,7 +218,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 reviewCount = 12,
                 phone = "+1 650-564-9255",
                 website = "https://www.starbucks.com/store-locator/store/11148",
-                rating = 3.5f,
+                averageRating = 3.5,
                 description = null,
                 primaryPhotos = listOf(
                     ImageInfo(
