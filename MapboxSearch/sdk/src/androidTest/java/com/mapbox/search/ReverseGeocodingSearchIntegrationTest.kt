@@ -175,7 +175,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 reviewCount = 140247,
                 phone = "+33 (0)8 92 70 12 39",
                 website = "https://www.toureiffel.paris/",
-                averageRating = 4.5,
+                rating = 4.5f,
                 description = "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride.",
                 primaryPhotos = listOf(
                     ImageInfo(

@@ -298,7 +298,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                     reviewCount = it,
                     phone = "+1 650-965-2048-$it",
                     website = "https://www.test-meta-$it.com",
-                    averageRating = 4.0,
+                    rating = 4.0f,
                     description = "Starbucks, Mountain View",
                     primaryPhotos = emptyList(),
                     otherPhotos = null,
@@ -654,7 +654,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             assertEquals("+123 456 789", phone)
             assertEquals("https://www.test.com", website)
             assertEquals(35, reviewCount)
-            assertEquals(4.0, averageRating)
+            assertEquals(4.0, rating)
             assertEquals(
                 OpenHours.Scheduled(
                     periods = listOf(
