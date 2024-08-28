@@ -409,14 +409,6 @@ public interface OfflineSearchEngine {
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
-            if (dataset == OfflineSearchEngineSettings.OLD_DEFAULT_DATASET) {
-                return CoreSearchEngine.createTilesetDescriptor(
-                    buildDatasetName(
-                        OfflineSearchEngineSettings.DEFAULT_DATASET,
-                        language
-                    ), version
-                )
-            }
             return CoreSearchEngine.createTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
 
@@ -435,14 +427,6 @@ public interface OfflineSearchEngine {
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
-            if (dataset == OfflineSearchEngineSettings.OLD_DEFAULT_DATASET) {
-                return CoreSearchEngine.createPlacesTilesetDescriptor(
-                    buildDatasetName(
-                        OfflineSearchEngineSettings.DEFAULT_DATASET,
-                        language
-                    ), version
-                )
-            }
             return CoreSearchEngine.createPlacesTilesetDescriptor(buildDatasetName(dataset, language), version)
         }
     }
