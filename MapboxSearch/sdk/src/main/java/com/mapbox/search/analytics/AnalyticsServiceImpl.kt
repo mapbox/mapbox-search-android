@@ -87,7 +87,8 @@ internal class AnalyticsServiceImpl(
     override fun sendFeedback(
         searchResult: SearchResult,
         responseInfo: ResponseInfo,
-        event: FeedbackEvent
+        event: FeedbackEvent,
+        callback: CompletionCallback<Unit>?
     ) {
         locationProvider?.getLastLocation {
             createFeedbackEvent(
@@ -97,11 +98,12 @@ internal class AnalyticsServiceImpl(
                 event = event,
                 callback = object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
-                        sendFeedbackInternal(result)
+                        sendFeedbackInternal(result, callback)
                     }
 
                     override fun onError(e: Exception) {
                         loge("Unable to send event $event: ${e.message}")
+                        callback?.onError(e)
                     }
                 }
             )
@@ -111,7 +113,8 @@ internal class AnalyticsServiceImpl(
     override fun sendFeedback(
         searchSuggestion: SearchSuggestion,
         responseInfo: ResponseInfo,
-        event: FeedbackEvent
+        event: FeedbackEvent,
+        callback: CompletionCallback<Unit>?
     ) {
         locationProvider?.getLastLocation {
             createFeedbackEvent(
@@ -121,7 +124,7 @@ internal class AnalyticsServiceImpl(
                 event = event,
                 callback = object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
-                        sendFeedbackInternal(result)
+                        sendFeedbackInternal(result, callback)
                     }
 
                     override fun onError(e: Exception) {
@@ -132,28 +135,28 @@ internal class AnalyticsServiceImpl(
         }
     }
 
-    override fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent) {
+    override fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>?) {
         locationProvider?.getLastLocation {
             val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(historyRecord, event, currentLocation = it?.toPoint())
-            sendFeedbackInternal(feedbackEvent)
+            sendFeedbackInternal(feedbackEvent, callback)
         }
     }
 
-    override fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent) {
+    override fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>?) {
         locationProvider?.getLastLocation {
             val feedbackEvent = feedbackEventsFactory.createSearchFeedbackEvent(favoriteRecord, event, currentLocation = it?.toPoint())
-            sendFeedbackInternal(feedbackEvent)
+            sendFeedbackInternal(feedbackEvent, callback)
         }
     }
 
-    override fun sendMissingResultFeedback(event: MissingResultFeedbackEvent) {
+    override fun sendMissingResultFeedback(event: MissingResultFeedbackEvent, callback: CompletionCallback<Unit>?) {
         locationProvider?.getLastLocation {
             feedbackEventsFactory.createSearchFeedbackEvent(
                 event,
                 currentLocation = it?.toPoint(),
                 object : CompletionCallback<SearchFeedbackEvent> {
                     override fun onComplete(result: SearchFeedbackEvent) {
-                        sendFeedbackInternal(result)
+                        sendFeedbackInternal(result, callback)
                     }
 
                     override fun onError(e: Exception) {
@@ -164,7 +167,7 @@ internal class AnalyticsServiceImpl(
         }
     }
 
-    private fun sendFeedbackInternal(feedbackEvent: SearchFeedbackEvent) {
+    private fun sendFeedbackInternal(feedbackEvent: SearchFeedbackEvent, callback: CompletionCallback<Unit>?) {
         try {
             check(feedbackEvent.isValid) {
                 "Event is not valid $feedbackEvent"
@@ -172,7 +175,9 @@ internal class AnalyticsServiceImpl(
             val jsonEvent = eventsJsonParser.serialize(feedbackEvent)
             sendEventJson(jsonEvent)
             logd("Feedback event: $feedbackEvent")
+            callback?.onComplete(Unit)
         } catch (e: Exception) {
+            callback?.onError(e)
             throwDebug(e) { "Unable to send event: $feedbackEvent: ${e.message}" }
         }
     }
