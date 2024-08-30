@@ -1,5 +1,10 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## Unrelease
+
+### New features
+- Adding Builder class to `SearchResultMetadata` class
+
 ## 2.4.0
 
 ### Mapbox dependencies
