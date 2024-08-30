@@ -1,10 +1,10 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.5.0
+## 2.5.0-beta.1
 
 ### Mapbox dependencies
-- Search Native SDK `2.4.0`
-- Common SDK `v24.6.0`
+- Search Native SDK `v2.5.0-beta.1`
+- Common SDK `v24.7.0-beta.1`
 
 ### ✨ New Features
 - Introduced aliases translations and other improvements for offline category search
@@ -14,6 +14,8 @@
 
 ### 💫️ Other
 - Deprecating `avRating` field
+- Error handling for old datasets loading
+- Upgrading MapboxCommon to v24.7.0-beta.1
 
 ## 2.4.0
 
