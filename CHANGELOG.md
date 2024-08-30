@@ -1,5 +1,11 @@
 # Changelog for the Mapbox Search SDK for Android
 
+
+## Unreleased
+
+### New features
+- Adding Builder class to `SearchResultMetadata` class
+
 ## 2.5.0-beta.1
 
 ### Mapbox dependencies
@@ -16,6 +22,7 @@
 - Deprecating `avRating` field
 - Error handling for old datasets loading
 - Upgrading MapboxCommon to v24.7.0-beta.1
+
 
 ## 2.4.0
 

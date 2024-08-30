@@ -3,6 +3,7 @@ package com.mapbox.search.common.metadata
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import kotlinx.parcelize.Parcelize
+import java.util.Objects
 
 /**
  * Metadata for children (ie. sub destinations) for POIs.
@@ -31,4 +32,24 @@ public class ChildMetadata(
                 "coordinates=$coordinates" +
                 ")"
     }
+
+    /**
+     * @suppress
+     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ChildMetadata) return false
+
+        if (mapboxId != other.mapboxId) return false
+        if (name != other.name) return false
+        if (category != other.category) return false
+        if (coordinates != other.coordinates) return false
+
+        return true
+    }
+
+    /**
+     * @suppress
+     */
+    override fun hashCode(): Int = Objects.hash(mapboxId, name, category, coordinates)
 }
