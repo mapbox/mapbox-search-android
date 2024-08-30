@@ -559,10 +559,22 @@ internal class SearchResultMetadataTest {
             val popularity = 0.5f
 
             When("a SearchResultMeta object is created") {
-                val searchResultMetadata = SearchResultMetadata.Builder().reviewCount(reviewCount).phone(phone).website(website).averageRating(avRating).description(description).openHours(openHours).primaryPhotos(primaryPhoto).otherPhotos(otherPhoto)
-                    .cpsJson(cpsJson).parking(parking).children(children).metadata(data).wheelchairAccessible(wheelchairAccessible).delivery(delivery).driveThrough(driveThrough).reservable(reservable).parkingAvailable(parkingAvailable)
-                    .valetParking(valetParking).streetParking(streetParking).servesBreakfast(servesBreakfast).servesBrunch(servesBrunch).servesDinner(servesDinner).servesLunch(servesLunch).servesWine(servesWine).servesBeer(servesBeer)
-                    .takeout(takeout).facebookId(facebookId).fax(fax).email(email).instagram(instagram).twitter(twitter).priceLevel(priceLevel).servesVegan(servesVegan).servesVegetarian(servesVegetarian).rating(rating).popularity(popularity).build()
+                val searchResultMetadata =
+                    SearchResultMetadata.Builder().reviewCount(reviewCount).phone(phone)
+                        .website(website).averageRating(avRating).description(description)
+                        .openHours(openHours).primaryPhotos(primaryPhoto).otherPhotos(otherPhoto)
+                        .cpsJson(cpsJson).parking(parking).children(children).metadata(data)
+                        .wheelchairAccessible(wheelchairAccessible).delivery(delivery)
+                        .driveThrough(driveThrough).reservable(reservable)
+                        .parkingAvailable(parkingAvailable)
+                        .valetParking(valetParking).streetParking(streetParking)
+                        .servesBreakfast(servesBreakfast).servesBrunch(servesBrunch)
+                        .servesDinner(servesDinner).servesLunch(servesLunch).servesWine(servesWine)
+                        .servesBeer(servesBeer)
+                        .takeout(takeout).facebookId(facebookId).fax(fax).email(email)
+                        .instagram(instagram).twitter(twitter).priceLevel(priceLevel)
+                        .servesVegan(servesVegan).servesVegetarian(servesVegetarian).rating(rating)
+                        .popularity(popularity).build()
 
                 Then("all properties should be set") {
                     assertEquals(searchResultMetadata.reviewCount, reviewCount)
