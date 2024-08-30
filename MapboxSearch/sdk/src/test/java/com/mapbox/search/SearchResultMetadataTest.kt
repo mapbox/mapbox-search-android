@@ -5,6 +5,7 @@ import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -512,6 +513,94 @@ internal class SearchResultMetadataTest {
             When("Get original core metadata") {
                 Then("Value should be the same") {
                     assertSame(spyCoreMeta, metadata.coreMetadata)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check SearchResultMetadata Builder`() = TestCase {
+        Given("the following search result metadata properties") {
+            val reviewCount = 243
+            val phone = "+7 939 32 12"
+            val website = "www.test.com"
+            val avRating = 3.4
+            val description = "Description of test dummy"
+            val openHours = OpenHours.AlwaysOpen
+            val primaryPhoto = listOf<ImageInfo>()
+            val otherPhoto = listOf<ImageInfo>()
+            val cpsJson = "testCpsJson"
+            val parking = ParkingData(1, 1)
+            val children = listOf<ChildMetadata>()
+            val data = mapOf<String, String>()
+            val wheelchairAccessible = true
+            val delivery = true
+            val driveThrough = true
+            val reservable = true
+            val parkingAvailable = true
+            val valetParking = true
+            val streetParking = true
+            val servesBreakfast = true
+            val servesBrunch = true
+            val servesDinner = true
+            val servesLunch = true
+            val servesWine = true
+            val servesBeer = true
+            val takeout = true
+            val facebookId = "the-facebook"
+            val fax = "+7 939 32 12"
+            val email = "the-email@example.com"
+            val instagram = "the-instagram"
+            val twitter = "the-twitter"
+            val priceLevel = "$"
+            val servesVegan = true
+            val servesVegetarian = true
+            val rating = 5.0f
+            val popularity = 0.5f
+
+            When("a SearchResultMeta object is created") {
+                val searchResultMetadata = SearchResultMetadata.Builder().reviewCount(reviewCount).phone(phone).website(website).averageRating(avRating).description(description).openHours(openHours).primaryPhotos(primaryPhoto).otherPhotos(otherPhoto)
+                    .cpsJson(cpsJson).parking(parking).children(children).metadata(data).wheelchairAccessible(wheelchairAccessible).delivery(delivery).driveThrough(driveThrough).reservable(reservable).parkingAvailable(parkingAvailable)
+                    .valetParking(valetParking).streetParking(streetParking).servesBreakfast(servesBreakfast).servesBrunch(servesBrunch).servesDinner(servesDinner).servesLunch(servesLunch).servesWine(servesWine).servesBeer(servesBeer)
+                    .takeout(takeout).facebookId(facebookId).fax(fax).email(email).instagram(instagram).twitter(twitter).priceLevel(priceLevel).servesVegan(servesVegan).servesVegetarian(servesVegetarian).rating(rating).popularity(popularity).build()
+
+                Then("all properties should be set") {
+                    assertEquals(searchResultMetadata.reviewCount, reviewCount)
+                    assertEquals(searchResultMetadata.phone, phone)
+                    assertEquals(searchResultMetadata.website, website)
+                    assertEquals(searchResultMetadata.averageRating, avRating)
+                    assertEquals(searchResultMetadata.description, description)
+                    assertEquals(searchResultMetadata.openHours, openHours)
+                    assertEquals(searchResultMetadata.primaryPhotos, primaryPhoto)
+                    assertEquals(searchResultMetadata.otherPhotos, otherPhoto)
+                    assertEquals(searchResultMetadata.cpsJson, cpsJson)
+                    assertEquals(searchResultMetadata.parking, parking)
+                    assertEquals(searchResultMetadata.children, children)
+                    assertEquals(searchResultMetadata.extraData, data)
+                    assertEquals(searchResultMetadata.wheelchairAccessible, wheelchairAccessible)
+                    assertEquals(searchResultMetadata.delivery, delivery)
+                    assertEquals(searchResultMetadata.driveThrough, driveThrough)
+                    assertEquals(searchResultMetadata.reservable, reservable)
+                    assertEquals(searchResultMetadata.parkingAvailable, parkingAvailable)
+                    assertEquals(searchResultMetadata.valetParking, valetParking)
+                    assertEquals(searchResultMetadata.streetParking, streetParking)
+                    assertEquals(searchResultMetadata.servesBreakfast, servesBreakfast)
+                    assertEquals(searchResultMetadata.servesBrunch, servesBrunch)
+                    assertEquals(searchResultMetadata.servesDinner, servesDinner)
+                    assertEquals(searchResultMetadata.servesLunch, servesLunch)
+                    assertEquals(searchResultMetadata.servesWine, servesWine)
+                    assertEquals(searchResultMetadata.servesBeer, servesBeer)
+                    assertEquals(searchResultMetadata.takeout, takeout)
+                    assertEquals(searchResultMetadata.facebookId, facebookId)
+                    assertEquals(searchResultMetadata.fax, fax)
+                    assertEquals(searchResultMetadata.email, email)
+                    assertEquals(searchResultMetadata.instagram, instagram)
+                    assertEquals(searchResultMetadata.twitter, twitter)
+                    assertEquals(searchResultMetadata.priceLevel, priceLevel)
+                    assertEquals(searchResultMetadata.servesVegan, servesVegan)
+                    assertEquals(searchResultMetadata.servesVegetarian, servesVegetarian)
+                    assertEquals(searchResultMetadata.rating, rating)
+                    assertEquals(searchResultMetadata.popularity, popularity)
                 }
             }
         }
