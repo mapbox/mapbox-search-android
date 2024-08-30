@@ -1,9 +1,28 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## Unrelease
+
+## Unreleased
 
 ### New features
 - Adding Builder class to `SearchResultMetadata` class
+
+## 2.5.0-beta.1
+
+### Mapbox dependencies
+- Search Native SDK `v2.5.0-beta.1`
+- Common SDK `v24.7.0-beta.1`
+
+### ✨ New Features
+- Introduced aliases translations and other improvements for offline category search
+
+### ⚠️ Breaking changes
+- This version of search-sdk is not binary compatible with old index and vice versa, old search-sdk is not compatible with new index
+
+### 💫️ Other
+- Deprecating `avRating` field
+- Error handling for old datasets loading
+- Upgrading MapboxCommon to v24.7.0-beta.1
+
 
 ## 2.4.0
 

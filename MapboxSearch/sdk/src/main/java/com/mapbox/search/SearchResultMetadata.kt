@@ -50,7 +50,7 @@ public class SearchResultMetadata internal constructor(
     public val website: String? = coreMetadata.website
 
     /**
-     * Average rating, associated with the search result.
+     * [Deprecated] Average rating, associated with the search result. Use `rating` instead. This will be removed in v3.0.0
      * Available only for resolved [com.mapbox.search.result.SearchResult].
      */
     @IgnoredOnParcel

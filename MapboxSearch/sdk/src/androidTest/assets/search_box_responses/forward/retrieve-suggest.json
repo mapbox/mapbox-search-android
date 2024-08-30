@@ -73,7 +73,7 @@
           "review_count": 35,
           "phone": "+123 456 789",
           "website": "https://www.test.com",
-          "average_rating": 4.0,
+          "rating": 4.0,
           "primary_photo":[
             {
               "width":300,

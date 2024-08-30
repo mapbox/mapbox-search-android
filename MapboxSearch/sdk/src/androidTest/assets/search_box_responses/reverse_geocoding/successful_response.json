@@ -70,7 +70,7 @@
           "tripadvisor": "23789983"
         },
         "metadata": {
-          "average_rating": 5,
+          "rating": 5,
           "photos": [
             {
               "width": 50,
@@ -242,7 +242,7 @@
           "review_count": 141783,
           "phone": "+33 892 70 12 39",
           "website": "https://www.toureiffel.paris/",
-          "average_rating": 4.5,
+          "rating": 4.5,
           "detailed_description": "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride.",
           "photos": [
             {
