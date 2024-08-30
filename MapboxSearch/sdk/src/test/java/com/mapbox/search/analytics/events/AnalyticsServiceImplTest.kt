@@ -81,44 +81,52 @@ internal class AnalyticsServiceImplTest {
         } returns TEST_SERIALIZED_FEEDBACK_EVENT_RAW
     }
 
-//    @TestFactory
-//    fun `Send feedback for SearchSuggestion with valid data`() = TestCase {
-//        Given("AnalyticsService with mocked dependencies") {
-//            val searchSuggestion = SearchSuggestion(createTestBaseSearchSuggestion())
-//
-//            val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
-//            every {
-//                feedbackEventsFactory.createSearchFeedbackEvent(
-//                    baseRawSearchResult = searchSuggestion.base.rawSearchResult,
-//                    requestOptions = searchSuggestion.requestOptions,
-//                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
-//                    currentLocation = TEST_LOCATION,
-//                    isReproducible = true,
-//                    event = TEST_FEEDBACK_EVENT,
-//                    isCached = any(),
-//                    callback = capture(callbackSlot),
-//                )
-//            } answers {
-//                callbackSlot.captured.onComplete(validMockedFeedbackEvent)
-//            }
-//
-//            When("Sending feedback for search suggestion with valid data") {
-//                analyticsServiceImpl.sendFeedback(
-//                    searchSuggestion,
-//                    TEST_RESPONSE_INFO,
-//                    TEST_FEEDBACK_EVENT
-//                )
-//
-//                VerifyOnce("Event serialized") {
-//                    eventsJsonParser.serialize(validMockedFeedbackEvent)
-//                }
-//
-//                VerifyOnce("Event sent") {
-//                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
-//                }
-//            }
-//        }
-//    }
+    @TestFactory
+    fun `Send feedback for SearchSuggestion with valid data`() = TestCase {
+        Given("AnalyticsService with mocked dependencies") {
+            val searchSuggestion = SearchSuggestion(createTestBaseSearchSuggestion())
+
+            val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
+
+            val mockConsumerCallback = mockk<CompletionCallback<Unit>>(relaxed = true)
+
+            every {
+                feedbackEventsFactory.createSearchFeedbackEvent(
+                    baseRawSearchResult = searchSuggestion.base.rawSearchResult,
+                    requestOptions = searchSuggestion.requestOptions,
+                    searchResponse = TEST_RESPONSE_INFO.coreSearchResponse,
+                    currentLocation = TEST_LOCATION,
+                    isReproducible = true,
+                    event = TEST_FEEDBACK_EVENT,
+                    isCached = any(),
+                    callback = capture(callbackSlot),
+                )
+            } answers {
+                callbackSlot.captured.onComplete(validMockedFeedbackEvent)
+            }
+
+            When("Sending feedback for search suggestion with valid data") {
+                analyticsServiceImpl.sendFeedback(
+                    searchSuggestion,
+                    TEST_RESPONSE_INFO,
+                    TEST_FEEDBACK_EVENT,
+                    mockConsumerCallback
+                )
+
+                VerifyOnce("Event serialized") {
+                    eventsJsonParser.serialize(validMockedFeedbackEvent)
+                }
+
+                VerifyOnce("Event sent") {
+                    eventsService.sendEvent(TEST_SERIALIZED_FEEDBACK_EVENT, any())
+                }
+
+                Verify("Consumer callback was called") {
+                    mockConsumerCallback.onComplete(Unit)
+                }
+            }
+        }
+    }
 
     @TestFactory
     fun `Send feedback for SearchSuggestion with invalid data`() = TestCase {
@@ -127,6 +135,7 @@ internal class AnalyticsServiceImplTest {
             val mockedFeedbackEvent = mockk<SearchFeedbackEvent>()
 
             val callbackSlot = slot<CompletionCallback<SearchFeedbackEvent>>()
+            val mockConsumerCallback = mockk<CompletionCallback<Unit>>(relaxed = true)
 
             every {
                 feedbackEventsFactory.createSearchFeedbackEvent(
@@ -149,12 +158,14 @@ internal class AnalyticsServiceImplTest {
                     analyticsServiceImpl.sendFeedback(
                         searchSuggestion,
                         TEST_RESPONSE_INFO,
-                        TEST_FEEDBACK_EVENT
+                        TEST_FEEDBACK_EVENT,
+                        mockConsumerCallback
                     )
                     throw IllegalStateException("Some illegal state") // This error should be thrown by sendFeedback.
                 }
 
                 Verify("Events service wasn't called") { eventsService wasNot Called }
+                Verify("Consumer callback was called") { mockConsumerCallback.onError(any()) }
 
                 if (BuildConfig.DEBUG) {
                     Then("IllegalStateException was thrown") {

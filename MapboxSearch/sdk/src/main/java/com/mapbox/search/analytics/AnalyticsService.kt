@@ -1,6 +1,7 @@
 package com.mapbox.search.analytics
 
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
@@ -17,7 +18,7 @@ public interface AnalyticsService {
      * @param responseInfo search context, associated with provided *searchResult*.
      * @param event extra information for feedback, provided by user.
      */
-    public fun sendFeedback(searchResult: SearchResult, responseInfo: ResponseInfo, event: FeedbackEvent)
+    public fun sendFeedback(searchResult: SearchResult, responseInfo: ResponseInfo, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
     /**
      * Sends feedback event to analytics.
@@ -25,25 +26,25 @@ public interface AnalyticsService {
      * @param responseInfo search context, associated with provided *searchSuggestion*.
      * @param event extra information for feedback, provided by user.
      */
-    public fun sendFeedback(searchSuggestion: SearchSuggestion, responseInfo: ResponseInfo, event: FeedbackEvent)
+    public fun sendFeedback(searchSuggestion: SearchSuggestion, responseInfo: ResponseInfo, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
     /**
      * Sends feedback event to analytics.
      * @param historyRecord history record, for which feedback is given.
      * @param event extra information for feedback, provided by user.
      */
-    public fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent)
+    public fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
     /**
      * Sends feedback event to analytics.
      * @param favoriteRecord favorite record, for which feedback is given.
      * @param event extra information for feedback, provided by user.
      */
-    public fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent)
+    public fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
     /**
      * Sends missing result feedback event to analytics.
      * @param event extra information for feedback, provided by user.
      */
-    public fun sendMissingResultFeedback(event: MissingResultFeedbackEvent)
+    public fun sendMissingResultFeedback(event: MissingResultFeedbackEvent, callback: CompletionCallback<Unit>? = null)
 }
