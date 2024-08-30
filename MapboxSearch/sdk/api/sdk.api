@@ -496,7 +496,7 @@ public abstract interface class com/mapbox/search/SearchResultCallback {
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Ljava/util/HashMap;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
@@ -540,6 +540,47 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/SearchResultMetadata$Builder {
+	public fun <init> ()V
+	public final fun averageRating (Ljava/lang/Double;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun build ()Lcom/mapbox/search/SearchResultMetadata;
+	public final fun children (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun cpsJson (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun delivery (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun description (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun driveThrough (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun email (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun facebookId (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun fax (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun instagram (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun metadata (Ljava/util/Map;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun openHours (Lcom/mapbox/search/common/metadata/OpenHours;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun otherPhotos (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun parking (Lcom/mapbox/search/common/metadata/ParkingData;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun parkingAvailable (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun phone (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun popularity (Ljava/lang/Float;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun priceLevel (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun primaryPhotos (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun rating (Ljava/lang/Float;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun reservable (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun reviewCount (Ljava/lang/Integer;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesBeer (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesBreakfast (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesBrunch (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesDinner (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesLunch (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesVegan (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesVegetarian (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun servesWine (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun streetParking (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun takeout (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun twitter (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun valetParking (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun website (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun wheelchairAccessible (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 }
 
 public final class com/mapbox/search/SearchResultMetadata$Creator : android/os/Parcelable$Creator {
