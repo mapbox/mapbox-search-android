@@ -23,6 +23,7 @@
 - Error handling for old datasets loading
 - Upgrading MapboxCommon to v24.7.0-beta.1
 
+
 ## 2.4.0
 
 ### Mapbox dependencies

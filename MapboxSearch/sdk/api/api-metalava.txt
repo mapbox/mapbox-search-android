@@ -466,6 +466,47 @@ package com.mapbox.search {
     property public final Boolean? wheelchairAccessible;
   }
 
+  public static final class SearchResultMetadata.Builder {
+    ctor public SearchResultMetadata.Builder();
+    method public com.mapbox.search.SearchResultMetadata.Builder averageRating(Double? averageRating);
+    method public com.mapbox.search.SearchResultMetadata build();
+    method public com.mapbox.search.SearchResultMetadata.Builder children(java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? children);
+    method public com.mapbox.search.SearchResultMetadata.Builder cpsJson(String? cpsJson);
+    method public com.mapbox.search.SearchResultMetadata.Builder delivery(Boolean? delivery);
+    method public com.mapbox.search.SearchResultMetadata.Builder description(String? description);
+    method public com.mapbox.search.SearchResultMetadata.Builder driveThrough(Boolean? driveThrough);
+    method public com.mapbox.search.SearchResultMetadata.Builder email(String? email);
+    method public com.mapbox.search.SearchResultMetadata.Builder facebookId(String? facebookId);
+    method public com.mapbox.search.SearchResultMetadata.Builder fax(String? fax);
+    method public com.mapbox.search.SearchResultMetadata.Builder instagram(String? instagram);
+    method public com.mapbox.search.SearchResultMetadata.Builder metadata(java.util.Map<java.lang.String,java.lang.String> metadata);
+    method public com.mapbox.search.SearchResultMetadata.Builder openHours(com.mapbox.search.common.metadata.OpenHours? openHours);
+    method public com.mapbox.search.SearchResultMetadata.Builder otherPhotos(java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos);
+    method public com.mapbox.search.SearchResultMetadata.Builder parking(com.mapbox.search.common.metadata.ParkingData? parking);
+    method public com.mapbox.search.SearchResultMetadata.Builder parkingAvailable(Boolean? parkingAvailable);
+    method public com.mapbox.search.SearchResultMetadata.Builder phone(String? phone);
+    method public com.mapbox.search.SearchResultMetadata.Builder popularity(Float? popularity);
+    method public com.mapbox.search.SearchResultMetadata.Builder priceLevel(String? priceLevel);
+    method public com.mapbox.search.SearchResultMetadata.Builder primaryPhotos(java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos);
+    method public com.mapbox.search.SearchResultMetadata.Builder rating(Float? rating);
+    method public com.mapbox.search.SearchResultMetadata.Builder reservable(Boolean? reservable);
+    method public com.mapbox.search.SearchResultMetadata.Builder reviewCount(Integer? reviewCount);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesBeer(Boolean? servesBeer);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesBreakfast(Boolean? servesBreakfast);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesBrunch(Boolean? servesBrunch);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesDinner(Boolean? servesDinner);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesLunch(Boolean? servesLunch);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesVegan(Boolean? servesVegan);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesVegetarian(Boolean? servesVegetarian);
+    method public com.mapbox.search.SearchResultMetadata.Builder servesWine(Boolean? servesWine);
+    method public com.mapbox.search.SearchResultMetadata.Builder streetParking(Boolean? streetParking);
+    method public com.mapbox.search.SearchResultMetadata.Builder takeout(Boolean? takeout);
+    method public com.mapbox.search.SearchResultMetadata.Builder twitter(String? twitter);
+    method public com.mapbox.search.SearchResultMetadata.Builder valetParking(Boolean? valetParking);
+    method public com.mapbox.search.SearchResultMetadata.Builder website(String? website);
+    method public com.mapbox.search.SearchResultMetadata.Builder wheelchairAccessible(Boolean? wheelchairAccessible);
+  }
+
   public interface SearchSelectionCallback extends com.mapbox.search.SearchSuggestionsCallback {
     method public void onResult(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.result.SearchResult result, com.mapbox.search.ResponseInfo responseInfo);
     method public void onResults(com.mapbox.search.result.SearchSuggestion suggestion, java.util.List<com.mapbox.search.result.SearchResult> results, com.mapbox.search.ResponseInfo responseInfo);

@@ -265,7 +265,7 @@ public class SearchResultMetadata internal constructor(
     public val popularity: Float? = coreMetadata.popularity
 
     internal constructor(
-        metadata: HashMap<String, String> = HashMap(),
+        metadata: Map<String, String> = HashMap(),
         reviewCount: Int? = null,
         phone: String? = null,
         website: String? = null,
@@ -314,7 +314,7 @@ public class SearchResultMetadata internal constructor(
             cpsJson,
             parking?.mapToCore(),
             children?.map { it.mapToCore() },
-            metadata,
+            HashMap(metadata),
             wheelchairAccessible,
             delivery,
             driveThrough,
@@ -407,5 +407,344 @@ public class SearchResultMetadata internal constructor(
                 "rating=$rating, " +
                 "popularity=$popularity" +
                 ")"
+    }
+
+    /**
+     * Builder for creating instances of [SearchResultMetadata].
+     */
+    public class Builder {
+        private var metadata: Map<String, String> = HashMap<String, String>()
+        private var reviewCount: Int? = null
+        private var phone: String? = null
+        private var website: String? = null
+        private var averageRating: Double? = null
+        private var description: String? = null
+        private var primaryPhotos: List<ImageInfo>? = null
+        private var otherPhotos: List<ImageInfo>? = null
+        private var openHours: OpenHours? = null
+        private var parking: ParkingData? = null
+        private var children: List<ChildMetadata>? = null
+        private var cpsJson: String? = null
+        private var wheelchairAccessible: Boolean? = null
+        private var delivery: Boolean? = null
+        private var driveThrough: Boolean? = null
+        private var reservable: Boolean? = null
+        private var parkingAvailable: Boolean? = null
+        private var valetParking: Boolean? = null
+        private var streetParking: Boolean? = null
+        private var servesBreakfast: Boolean? = null
+        private var servesBrunch: Boolean? = null
+        private var servesDinner: Boolean? = null
+        private var servesLunch: Boolean? = null
+        private var servesWine: Boolean? = null
+        private var servesBeer: Boolean? = null
+        private var takeout: Boolean? = null
+        private var facebookId: String? = null
+        private var fax: String? = null
+        private var email: String? = null
+        private var instagram: String? = null
+        private var twitter: String? = null
+        private var priceLevel: String? = null
+        private var servesVegan: Boolean? = null
+        private var servesVegetarian: Boolean? = null
+        private var rating: Float? = null
+        private var popularity: Float? = null
+
+        /**
+         * Sets the metadata for the search result.
+         * @param metadata metadata.
+         * @return The builder instance.
+         */
+        public fun metadata(metadata: Map<String, String>): Builder = apply { this.metadata = metadata }
+
+        /**
+         * Sets the review count for the search result.
+         * @param reviewCount The number of reviews.
+         * @return The builder instance.
+         */
+        public fun reviewCount(reviewCount: Int?): Builder = apply { this.reviewCount = reviewCount }
+
+        /**
+         * Sets the phone number associated with the search result.
+         * @param phone The phone number.
+         * @return The builder instance.
+         */
+        public fun phone(phone: String?): Builder = apply { this.phone = phone }
+
+        /**
+         * Sets the website associated with the search result.
+         * @param website The website URL.
+         * @return The builder instance.
+         */
+        public fun website(website: String?): Builder = apply { this.website = website }
+
+        /**
+         * Sets the average rating for the search result.
+         * @param averageRating The average rating.
+         * @return The builder instance.
+         */
+        public fun averageRating(averageRating: Double?): Builder = apply { this.averageRating = averageRating }
+
+        /**
+         * Sets the description of the search result.
+         * @param description The description text.
+         * @return The builder instance.
+         */
+        public fun description(description: String?): Builder = apply { this.description = description }
+
+        /**
+         * Sets the list of primary photos associated with the search result.
+         * @param primaryPhotos The list of primary photos.
+         * @return The builder instance.
+         */
+        public fun primaryPhotos(primaryPhotos: List<ImageInfo>?): Builder = apply { this.primaryPhotos = primaryPhotos }
+
+        /**
+         * Sets the list of other (non-primary) photos associated with the search result.
+         * @param otherPhotos The list of other photos.
+         * @return The builder instance.
+         */
+        public fun otherPhotos(otherPhotos: List<ImageInfo>?): Builder = apply { this.otherPhotos = otherPhotos }
+
+        /**
+         * Sets the open hours information for the search result.
+         * @param openHours The open hours information.
+         * @return The builder instance.
+         */
+        public fun openHours(openHours: OpenHours?): Builder = apply { this.openHours = openHours }
+
+        /**
+         * Sets the parking information for the search result.
+         * @param parking The parking information.
+         * @return The builder instance.
+         */
+        public fun parking(parking: ParkingData?): Builder = apply { this.parking = parking }
+
+        /**
+         * Sets the child metadata for points of interest associated with the search result.
+         * @param children The list of child metadata.
+         * @return The builder instance.
+         */
+        public fun children(children: List<ChildMetadata>?): Builder = apply { this.children = children }
+
+        /**
+         * Sets the CPS-specific metadata as a JSON string.
+         * @param cpsJson The CPS metadata in JSON format.
+         * @return The builder instance.
+         */
+        public fun cpsJson(cpsJson: String?): Builder = apply { this.cpsJson = cpsJson }
+
+        /**
+         * Sets whether the location is wheelchair accessible.
+         * @param wheelchairAccessible True if wheelchair accessible, otherwise false.
+         * @return The builder instance.
+         */
+        public fun wheelchairAccessible(wheelchairAccessible: Boolean?): Builder = apply { this.wheelchairAccessible = wheelchairAccessible }
+
+        /**
+         * Sets whether the location offers delivery services.
+         * @param delivery True if delivery is offered, otherwise false.
+         * @return The builder instance.
+         */
+        public fun delivery(delivery: Boolean?): Builder = apply { this.delivery = delivery }
+
+        /**
+         * Sets whether the location has a drive-through service.
+         * @param driveThrough True if drive-through is available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun driveThrough(driveThrough: Boolean?): Builder = apply { this.driveThrough = driveThrough }
+
+        /**
+         * Sets whether the location accepts reservations.
+         * @param reservable True if reservations are accepted, otherwise false.
+         * @return The builder instance.
+         */
+        public fun reservable(reservable: Boolean?): Builder = apply { this.reservable = reservable }
+
+        /**
+         * Sets whether parking is available at the location.
+         * @param parkingAvailable True if parking is available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun parkingAvailable(parkingAvailable: Boolean?): Builder = apply { this.parkingAvailable = parkingAvailable }
+
+        /**
+         * Sets whether valet parking is available at the location.
+         * @param valetParking True if valet parking is available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun valetParking(valetParking: Boolean?): Builder = apply { this.valetParking = valetParking }
+
+        /**
+         * Sets whether street parking is available near the location.
+         * @param streetParking True if street parking is available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun streetParking(streetParking: Boolean?): Builder = apply { this.streetParking = streetParking }
+
+        /**
+         * Sets whether the location serves breakfast.
+         * @param servesBreakfast True if breakfast is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesBreakfast(servesBreakfast: Boolean?): Builder = apply { this.servesBreakfast = servesBreakfast }
+
+        /**
+         * Sets whether the location serves brunch.
+         * @param servesBrunch True if brunch is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesBrunch(servesBrunch: Boolean?): Builder = apply { this.servesBrunch = servesBrunch }
+
+        /**
+         * Sets whether the location serves dinner.
+         * @param servesDinner True if dinner is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesDinner(servesDinner: Boolean?): Builder = apply { this.servesDinner = servesDinner }
+
+        /**
+         * Sets whether the location serves lunch.
+         * @param servesLunch True if lunch is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesLunch(servesLunch: Boolean?): Builder = apply { this.servesLunch = servesLunch }
+
+        /**
+         * Sets whether the location serves wine.
+         * @param servesWine True if wine is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesWine(servesWine: Boolean?): Builder = apply { this.servesWine = servesWine }
+
+        /**
+         * Sets whether the location serves beer.
+         * @param servesBeer True if beer is served, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesBeer(servesBeer: Boolean?): Builder = apply { this.servesBeer = servesBeer }
+
+        /**
+         * Sets whether takeout services are available at the location.
+         * @param takeout True if takeout is available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun takeout(takeout: Boolean?): Builder = apply { this.takeout = takeout }
+
+        /**
+         * Sets the Facebook ID associated with the location.
+         * @param facebookId The Facebook ID.
+         * @return The builder instance.
+         */
+        public fun facebookId(facebookId: String?): Builder = apply { this.facebookId = facebookId }
+
+        /**
+         * Sets the fax number associated with the location.
+         * @param fax The fax number.
+         * @return The builder instance.
+         */
+        public fun fax(fax: String?): Builder = apply { this.fax = fax }
+
+        /**
+         * Sets the email address associated with the location.
+         * @param email The email address.
+         * @return The builder instance.
+         */
+        public fun email(email: String?): Builder = apply { this.email = email }
+
+        /**
+         * Sets the Instagram handle associated with the location.
+         * @param instagram The Instagram handle.
+         * @return The builder instance.
+         */
+        public fun instagram(instagram: String?): Builder = apply { this.instagram = instagram }
+
+        /**
+         * Sets the Twitter handle associated with the location.
+         * @param twitter The Twitter handle.
+         * @return The builder instance.
+         */
+        public fun twitter(twitter: String?): Builder = apply { this.twitter = twitter }
+
+        /**
+         * Sets the price level of the location.
+         * @param priceLevel The price level, represented by a string of dollar signs ("$" to "$$$$").
+         * @return The builder instance.
+         */
+        public fun priceLevel(priceLevel: String?): Builder = apply { this.priceLevel = priceLevel }
+
+        /**
+         * Sets whether vegan options are available at the location.
+         * @param servesVegan True if vegan options are available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesVegan(servesVegan: Boolean?): Builder = apply { this.servesVegan = servesVegan }
+
+        /**
+         * Sets whether vegetarian options are available at the location.
+         * @param servesVegetarian True if vegetarian options are available, otherwise false.
+         * @return The builder instance.
+         */
+        public fun servesVegetarian(servesVegetarian: Boolean?): Builder = apply { this.servesVegetarian = servesVegetarian }
+
+        /**
+         * Sets the rating of the location, on a scale from 1 to 5.
+         * @param rating The rating.
+         * @return The builder instance.
+         */
+        public fun rating(rating: Float?): Builder = apply { this.rating = rating }
+
+        /**
+         * Sets the popularity score of the location, scaled from 0 to 1.
+         * @param popularity The popularity score.
+         * @return The builder instance.
+         */
+        public fun popularity(popularity: Float?): Builder = apply { this.popularity = popularity }
+
+        /**
+         * Builds an instance of [SearchResultMetadata] using the provided values.
+         * @return A new instance of [SearchResultMetadata].
+         */
+        public fun build(): SearchResultMetadata {
+            return SearchResultMetadata(
+                metadata = metadata,
+                reviewCount = reviewCount,
+                phone = phone,
+                website = website,
+                averageRating = averageRating,
+                description = description,
+                primaryPhotos = primaryPhotos,
+                otherPhotos = otherPhotos,
+                openHours = openHours,
+                parking = parking,
+                children = children,
+                cpsJson = cpsJson,
+                wheelchairAccessible = wheelchairAccessible,
+                delivery = delivery,
+                driveThrough = driveThrough,
+                reservable = reservable,
+                parkingAvailable = parkingAvailable,
+                valetParking = valetParking,
+                streetParking = streetParking,
+                servesBreakfast = servesBreakfast,
+                servesBrunch = servesBrunch,
+                servesDinner = servesDinner,
+                servesLunch = servesLunch,
+                servesWine = servesWine,
+                servesBeer = servesBeer,
+                takeout = takeout,
+                facebookId = facebookId,
+                fax = fax,
+                email = email,
+                instagram = instagram,
+                twitter = twitter,
+                priceLevel = priceLevel,
+                servesVegan = servesVegan,
+                servesVegetarian = servesVegetarian,
+                rating = rating,
+                popularity = popularity
+            )
+        }
     }
 }

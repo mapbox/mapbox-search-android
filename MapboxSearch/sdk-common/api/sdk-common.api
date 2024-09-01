@@ -480,10 +480,12 @@ public final class com/mapbox/search/common/metadata/ChildMetadata : android/os/
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/geojson/Point;)V
 	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCategory ()Ljava/lang/String;
 	public final fun getCoordinates ()Lcom/mapbox/geojson/Point;
 	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
