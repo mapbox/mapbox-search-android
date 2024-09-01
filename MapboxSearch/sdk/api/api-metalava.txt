@@ -508,11 +508,11 @@ package com.mapbox.search {
 package com.mapbox.search.analytics {
 
   public interface AnalyticsService {
-    method public void sendFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
-    method public void sendFeedback(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event);
-    method public void sendFeedback(com.mapbox.search.record.HistoryRecord historyRecord, com.mapbox.search.analytics.FeedbackEvent event);
-    method public void sendFeedback(com.mapbox.search.record.FavoriteRecord favoriteRecord, com.mapbox.search.analytics.FeedbackEvent event);
-    method public void sendMissingResultFeedback(com.mapbox.search.analytics.MissingResultFeedbackEvent event);
+    method public void sendFeedback(com.mapbox.search.result.SearchResult searchResult, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event, com.mapbox.search.common.CompletionCallback<kotlin.Unit>? callback = null);
+    method public void sendFeedback(com.mapbox.search.result.SearchSuggestion searchSuggestion, com.mapbox.search.ResponseInfo responseInfo, com.mapbox.search.analytics.FeedbackEvent event, com.mapbox.search.common.CompletionCallback<kotlin.Unit>? callback = null);
+    method public void sendFeedback(com.mapbox.search.record.HistoryRecord historyRecord, com.mapbox.search.analytics.FeedbackEvent event, com.mapbox.search.common.CompletionCallback<kotlin.Unit>? callback = null);
+    method public void sendFeedback(com.mapbox.search.record.FavoriteRecord favoriteRecord, com.mapbox.search.analytics.FeedbackEvent event, com.mapbox.search.common.CompletionCallback<kotlin.Unit>? callback = null);
+    method public void sendMissingResultFeedback(com.mapbox.search.analytics.MissingResultFeedbackEvent event, com.mapbox.search.common.CompletionCallback<kotlin.Unit>? callback = null);
   }
 
   public final class FeedbackEvent {
