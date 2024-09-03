@@ -1,10 +1,10 @@
 # Changelog for the Mapbox Search SDK for Android
 
-
 ## Unreleased
 
 ### New features
 - Adding Builder class to `SearchResultMetadata` class
+- Adding `CompletionCallback<Unit>` to the `AnalyticsService` methods
 
 ## 2.5.0-beta.1
 

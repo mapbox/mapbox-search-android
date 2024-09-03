@@ -639,11 +639,19 @@ public abstract interface class com/mapbox/search/ViewportProvider {
 }
 
 public abstract interface class com/mapbox/search/analytics/AnalyticsService {
-	public abstract fun sendFeedback (Lcom/mapbox/search/record/FavoriteRecord;Lcom/mapbox/search/analytics/FeedbackEvent;)V
-	public abstract fun sendFeedback (Lcom/mapbox/search/record/HistoryRecord;Lcom/mapbox/search/analytics/FeedbackEvent;)V
-	public abstract fun sendFeedback (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;)V
-	public abstract fun sendFeedback (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;)V
-	public abstract fun sendMissingResultFeedback (Lcom/mapbox/search/analytics/MissingResultFeedbackEvent;)V
+	public abstract fun sendFeedback (Lcom/mapbox/search/record/FavoriteRecord;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;)V
+	public abstract fun sendFeedback (Lcom/mapbox/search/record/HistoryRecord;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;)V
+	public abstract fun sendFeedback (Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;)V
+	public abstract fun sendFeedback (Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;)V
+	public abstract fun sendMissingResultFeedback (Lcom/mapbox/search/analytics/MissingResultFeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;)V
+}
+
+public final class com/mapbox/search/analytics/AnalyticsService$DefaultImpls {
+	public static synthetic fun sendFeedback$default (Lcom/mapbox/search/analytics/AnalyticsService;Lcom/mapbox/search/record/FavoriteRecord;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)V
+	public static synthetic fun sendFeedback$default (Lcom/mapbox/search/analytics/AnalyticsService;Lcom/mapbox/search/record/HistoryRecord;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)V
+	public static synthetic fun sendFeedback$default (Lcom/mapbox/search/analytics/AnalyticsService;Lcom/mapbox/search/result/SearchResult;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)V
+	public static synthetic fun sendFeedback$default (Lcom/mapbox/search/analytics/AnalyticsService;Lcom/mapbox/search/result/SearchSuggestion;Lcom/mapbox/search/ResponseInfo;Lcom/mapbox/search/analytics/FeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)V
+	public static synthetic fun sendMissingResultFeedback$default (Lcom/mapbox/search/analytics/AnalyticsService;Lcom/mapbox/search/analytics/MissingResultFeedbackEvent;Lcom/mapbox/search/common/CompletionCallback;ILjava/lang/Object;)V
 }
 
 public final class com/mapbox/search/analytics/FeedbackEvent {
