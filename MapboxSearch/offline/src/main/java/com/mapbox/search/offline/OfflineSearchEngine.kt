@@ -7,6 +7,8 @@ import com.mapbox.common.TileStoreOptions
 import com.mapbox.common.TilesetDescriptor
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.search.IndexableDataProviderManager
+import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -15,8 +17,6 @@ import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
-import com.mapbox.search.base.record.IndexableRecordResolver
-import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
@@ -31,7 +31,7 @@ import java.util.concurrent.Executor
  * The API of this class is temporary and subject to change.
  * Tiles loading functionality is available to selected customers only. Contact our team, to get early preview.
  */
-public interface OfflineSearchEngine {
+public interface OfflineSearchEngine : IndexableDataProviderManager {
 
     /**
      * Interface definition for a callback to be invoked when the [OfflineSearchEngine] is ready for use.
@@ -383,7 +383,7 @@ public interface OfflineSearchEngine {
                 AndroidScreenOrientationProvider(app)
             )
 
-            val searchResultFactory = SearchResultFactory(IndexableRecordResolver.EMPTY)
+            val searchResultFactory = MapboxSearchSdk.searchResultFactory
 
             return OfflineSearchEngineImpl(
                 settings = settings,
@@ -391,6 +391,7 @@ public interface OfflineSearchEngine {
                 activityReporter = getUserActivityReporter(),
                 requestContextProvider = requestContextProvider,
                 searchResultFactory = searchResultFactory,
+                indexableDataProvidersRegistry = MapboxSearchSdk.indexableDataProvidersRegistry
             )
         }
 

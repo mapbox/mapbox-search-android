@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal data class AppMetadata(
+public data class AppMetadata(
     @SerializedName("name") var name: String? = null,
     @SerializedName("version") var version: String? = null,
     @SerializedName("userId") var userId: String? = null,

@@ -27,7 +27,7 @@ import com.mapbox.search.utils.bitmap.BitmapEncodeOptions
 import com.mapbox.search.utils.bitmap.encodeBase64
 import java.util.TreeMap
 
-internal class SearchFeedbackEventsFactory(
+public class SearchFeedbackEventsFactory(
     private val providedUserAgent: String,
     private val viewportProvider: ViewportProvider?,
     private val uuidProvider: UUIDProvider,
@@ -38,7 +38,7 @@ internal class SearchFeedbackEventsFactory(
 ) {
 
     @SuppressLint("WrongConstant")
-    fun createSearchFeedbackEvent(
+    public fun createSearchFeedbackEvent(
         event: MissingResultFeedbackEvent,
         currentLocation: Point?,
         callback: CompletionCallback<SearchFeedbackEvent>
@@ -61,7 +61,7 @@ internal class SearchFeedbackEventsFactory(
         )
     }
 
-    fun createSearchFeedbackEvent(
+    public fun createSearchFeedbackEvent(
         record: IndexableRecord,
         event: FeedbackEvent,
         currentLocation: Point?,
@@ -92,7 +92,7 @@ internal class SearchFeedbackEventsFactory(
         }
     }
 
-    fun createSearchFeedbackEvent(
+    public fun createSearchFeedbackEvent(
         baseRawSearchResult: BaseRawSearchResult?,
         requestOptions: RequestOptions,
         searchResponse: BaseSearchResponse?,

@@ -23,6 +23,8 @@ public enum class OfflineSearchResultType {
      * Individual residential or business addresses.
      */
     ADDRESS,
+
+    USER_RECORD,
 }
 
 @JvmSynthetic
@@ -31,6 +33,7 @@ internal fun BaseRawResultType.tryMapToOfflineSdkType(): OfflineSearchResultType
         BaseRawResultType.PLACE -> OfflineSearchResultType.PLACE
         BaseRawResultType.STREET -> OfflineSearchResultType.STREET
         BaseRawResultType.ADDRESS -> OfflineSearchResultType.ADDRESS
+        BaseRawResultType.USER_RECORD -> OfflineSearchResultType.USER_RECORD
         else -> null
     }
 }

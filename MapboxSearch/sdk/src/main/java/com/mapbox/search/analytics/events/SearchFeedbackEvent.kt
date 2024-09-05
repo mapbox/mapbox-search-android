@@ -3,7 +3,7 @@ package com.mapbox.search.analytics.events
 import com.google.gson.annotations.SerializedName
 
 // https://github.com/mapbox/event-schema/blob/master/lib/base-schemas/search.feedback.js
-internal data class SearchFeedbackEvent(
+public data class SearchFeedbackEvent(
     @SerializedName("event")
     var event: String? = null,
 
@@ -121,7 +121,7 @@ internal data class SearchFeedbackEvent(
                 resultIndex != null && selectedItemName != null && event == EVENT_NAME &&
                 appMetadata?.isValid != false && queryString != null
 
-    companion object {
-        const val EVENT_NAME = "search.feedback"
+    public companion object {
+        public const val EVENT_NAME: String = "search.feedback"
     }
 }

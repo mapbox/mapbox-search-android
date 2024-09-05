@@ -7,22 +7,21 @@ import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
 import java.util.concurrent.Executor
 
-internal interface IndexableDataProvidersRegistry {
-
-    fun <R : IndexableRecord> preregister(
+public interface IndexableDataProvidersRegistry {
+    public fun <R : IndexableRecord> preregister(
         dataProvider: IndexableDataProvider<R>,
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask
 
-    fun <R : IndexableRecord> register(
+    public fun <R : IndexableRecord> register(
         dataProvider: IndexableDataProvider<R>,
         searchEngine: CoreSearchEngineInterface,
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask
 
-    fun <R : IndexableRecord> unregister(
+    public fun <R : IndexableRecord> unregister(
         dataProvider: IndexableDataProvider<R>,
         searchEngine: CoreSearchEngineInterface,
         executor: Executor,

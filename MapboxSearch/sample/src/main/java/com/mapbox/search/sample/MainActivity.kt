@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -32,7 +34,9 @@ import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -40,16 +44,24 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.utils.extension.toPoint
+import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.DistanceCalculator
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.record.IndexableDataProvider
+import com.mapbox.search.record.IndexableDataProviderEngine
+import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
@@ -86,6 +98,8 @@ import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
+import java.util.UUID
+import java.util.concurrent.Executor
 
 class MainActivity : AppCompatActivity() {
 
@@ -107,6 +121,27 @@ class MainActivity : AppCompatActivity() {
     private val tileStore = TileStore.create()
     private val tileRegionId = "Washington DC"
     private var tilesLoadingTask: Cancelable? = null
+
+    private val customDataProvider = InMemoryDataProvider(
+        records = listOf(
+            createRecord("Custom User Record #1", Point.fromLngLat(
+                -77.01345075849513,
+                38.889966341103104),
+                listOf(
+                    Point.fromLngLat(-77.04730852417978, 38.90441882114379),
+                    Point.fromLngLat(-77.02453747528648, 38.91910826019327),
+                    Point.fromLngLat(-76.99483554515201, 38.91046894203774),
+                    Point.fromLngLat(-77.04730852417978, 38.90441882114379))),
+            createRecord("Custom User Record #2", Point.fromLngLat(
+                -77.11345075849513,
+                38.989966341103106
+            )),
+            createRecord("Custom User Record #3", Point.fromLngLat(
+                -76.01345075849513,
+                38.7899663411031
+            )),
+        )
+    )
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -209,6 +244,32 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        searchEngine.registerDataProvider(
+            dataProvider = customDataProvider,
+            callback = object : CompletionCallback<Unit> {
+                override fun onComplete(result: Unit) {
+                    Log.i("SearchApiExample", "CustomDataProvider is registered")
+                }
+
+                override fun onError(e: Exception) {
+                    Log.e("SearchApiExample", "Error during registering", e)
+                }
+            }
+        )
+
+        offlineSearchEngine.registerDataProvider(
+            dataProvider = customDataProvider,
+            callback = object : CompletionCallback<Unit> {
+                override fun onComplete(result: Unit) {
+                    Log.i("SearchApiExample", "CustomDataProvider is registered")
+                }
+
+                override fun onError(e: Exception) {
+                    Log.e("SearchApiExample", "Error during registering", e)
+                }
+            }
+        )
+
         val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
         val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
         val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
@@ -267,7 +328,15 @@ class MainActivity : AppCompatActivity() {
             override fun onSearchResultSelected(searchResult: SearchResult, responseInfo: ResponseInfo) {
                 closeSearchView()
                 searchPlaceView.open(SearchPlace.createFromSearchResult(searchResult, responseInfo))
-                mapMarkersManager.showMarker(searchResult.coordinate)
+
+                searchResult.indexableRecord?.let {
+                    val customUserRecord = it as CustomUserRecord
+                    if (customUserRecord.trail?.isEmpty() == false) {
+                        mapMarkersManager.showTrail(customUserRecord.trail)
+                    } else {
+                        mapMarkersManager.showMarker(searchResult.coordinate)
+                    }
+                } ?: mapMarkersManager.showMarker(searchResult.coordinate)
             }
 
             override fun onOfflineSearchResultSelected(searchResult: OfflineSearchResult, responseInfo: OfflineResponseInfo) {
@@ -551,7 +620,11 @@ class MainActivity : AppCompatActivity() {
 
         private val mapboxMap = mapView.mapboxMap
         private val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(null)
+        private val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
         private val markers = mutableMapOf<String, Point>()
+
+        var trail: List<Point>? = null
+            private set
 
         var onMarkersChangeListener: (() -> Unit)? = null
 
@@ -559,6 +632,9 @@ class MainActivity : AppCompatActivity() {
             get() = markers.isNotEmpty()
 
         fun clearMarkers() {
+            polylineAnnotationManager.deleteAll()
+            trail = null
+
             markers.clear()
             circleAnnotationManager.deleteAll()
         }
@@ -601,6 +677,44 @@ class MainActivity : AppCompatActivity() {
             }
             onMarkersChangeListener?.invoke()
         }
+
+        fun showTrail(trail: List<Point>) {
+            if (trail.isEmpty()) {
+                return
+            }
+
+            clearMarkers()
+
+            this.trail = trail
+
+            val polylineAnnotationOptions: PolylineAnnotationOptions = PolylineAnnotationOptions()
+                .withPoints(trail)
+                .withLineColor("#007bff")
+                .withLineBorderColor("#0056b3")
+                .withLineWidth(5.0)
+
+            polylineAnnotationManager.create(polylineAnnotationOptions)
+
+            val cameraOptions = mapboxMap.cameraForCoordinates(
+                trail, MARKERS_INSETS, bearing = null, pitch = null
+            )
+            mapboxMap.setCamera(cameraOptions)
+        }
+    }
+
+    private fun createRecord(name: String, coordinate: Point, trail: List<Point>? = null): IndexableRecord {
+        return CustomUserRecord(
+            id = UUID.randomUUID().toString(),
+            name = name,
+            descriptionText = "A randomly generated place",
+            categories = emptyList(),
+            coordinate = coordinate,
+            address = null,
+            makiIcon = null,
+            metadata = null,
+            routablePoints = null,
+            trail = trail
+        )
     }
 
     private companion object {
@@ -617,5 +731,149 @@ class MainActivity : AppCompatActivity() {
         )
 
         const val PERMISSIONS_REQUEST_LOCATION = 0
+    }
+
+    private class InMemoryDataProvider<R : IndexableRecord>(records: List<R>) :
+        IndexableDataProvider<R> {
+
+        private val dataProviderEngines: MutableList<IndexableDataProviderEngine> = mutableListOf()
+        private val records: MutableMap<String, R> = mutableMapOf()
+
+        override val dataProviderName: String = "SAMPLE_APP_CUSTOM_DATA_PROVIDER"
+        override val priority: Int = 200
+
+        init {
+            this.records.putAll(records.map { it.id to it })
+        }
+
+        override fun registerIndexableDataProviderEngine(
+            dataProviderEngine: IndexableDataProviderEngine,
+            executor: Executor,
+            callback: CompletionCallback<Unit>
+        ): AsyncOperationTask {
+            dataProviderEngine.upsertAll(records.values.toList())
+            dataProviderEngines.add(dataProviderEngine)
+            executor.execute {
+                callback.onComplete(Unit)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun unregisterIndexableDataProviderEngine(
+            dataProviderEngine: IndexableDataProviderEngine,
+            executor: Executor,
+            callback: CompletionCallback<Boolean>
+        ): AsyncOperationTask {
+            val isRemoved = dataProviderEngines.remove(dataProviderEngine)
+            if (isRemoved) {
+                dataProviderEngine.clear()
+            }
+            executor.execute {
+                callback.onComplete(isRemoved)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override operator fun get(
+            id: String,
+            executor: Executor,
+            callback: CompletionCallback<in R?>
+        ): AsyncOperationTask {
+            executor.execute {
+                callback.onComplete(records[id])
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): AsyncOperationTask {
+            executor.execute {
+                callback.onComplete(ArrayList(records.values))
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun contains(
+            id: String,
+            executor: Executor,
+            callback: CompletionCallback<Boolean>
+        ): AsyncOperationTask {
+            executor.execute {
+                callback.onComplete(records[id] != null)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun upsert(record: R, executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
+            dataProviderEngines.forEach {
+                it.upsert(record)
+            }
+            records[record.id] = record
+            executor.execute {
+                callback.onComplete(Unit)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun upsertAll(
+            records: List<R>,
+            executor: Executor,
+            callback: CompletionCallback<Unit>
+        ): AsyncOperationTask {
+            dataProviderEngines.forEach {
+                it.upsertAll(records)
+            }
+            for (record in records) {
+                this.records[record.id] = record
+            }
+            executor.execute {
+                callback.onComplete(Unit)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
+            dataProviderEngines.forEach {
+                it.remove(id)
+            }
+            val isRemoved = records.remove(id) != null
+            executor.execute {
+                callback.onComplete(isRemoved)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+
+        override fun clear(executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
+            dataProviderEngines.forEach {
+                it.clear()
+            }
+            records.clear()
+            executor.execute {
+                callback.onComplete(Unit)
+            }
+            return AsyncOperationTask.COMPLETED
+        }
+    }
+
+    class CustomUserRecord(
+        override val id: String,
+        override val name: String,
+        override val descriptionText: String,
+        override val categories: List<String>,
+        override val coordinate: Point,
+        override val address: SearchAddress?,
+        override val makiIcon: String?,
+        override val metadata: SearchResultMetadata?,
+        override val routablePoints: List<RoutablePoint>?,
+        override val indexTokens: List<String> = emptyList(),
+        override val type: SearchResultType = SearchResultType.POI,
+        val trail: List<Point>? = null
+    ) : IndexableRecord, Parcelable {
+        override fun describeContents(): Int {
+            TODO("Not yet implemented")
+        }
+
+        override fun writeToParcel(p0: Parcel, p1: Int) {
+            TODO("Not yet implemented")
+        }
     }
 }

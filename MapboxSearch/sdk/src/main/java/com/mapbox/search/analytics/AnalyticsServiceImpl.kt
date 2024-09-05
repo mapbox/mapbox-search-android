@@ -19,14 +19,14 @@ import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.isIndexableRecordSuggestion
 import java.util.concurrent.Executor
 
-internal class AnalyticsServiceImpl(
+public class AnalyticsServiceImpl(
     private val eventsService: EventsServiceInterface,
     private val eventsJsonParser: AnalyticsEventJsonParser,
     private val feedbackEventsFactory: SearchFeedbackEventsFactory,
     private val locationProvider: LocationProvider?
 ) : AnalyticsService {
 
-    fun createRawFeedbackEvent(
+    public fun createRawFeedbackEvent(
         searchResult: SearchResult,
         responseInfo: ResponseInfo,
         executor: Executor,
@@ -55,7 +55,7 @@ internal class AnalyticsServiceImpl(
         )
     }
 
-    fun createRawFeedbackEvent(
+    public fun createRawFeedbackEvent(
         searchSuggestion: SearchSuggestion,
         responseInfo: ResponseInfo,
         executor: Executor,

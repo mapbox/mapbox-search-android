@@ -5,6 +5,7 @@ import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.analytics.AnalyticsEventJsonParser
+import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.analytics.AnalyticsServiceImpl
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.base.SearchRequestContextProvider
@@ -33,19 +34,19 @@ import com.mapbox.search.utils.file.InternalFileSystem
 import com.mapbox.search.utils.loader.DataLoader
 import com.mapbox.search.utils.loader.InternalDataLoader
 
-internal object MapboxSearchSdk {
+public object MapboxSearchSdk {
 
-    lateinit var searchRequestContextProvider: SearchRequestContextProvider
-    lateinit var searchResultFactory: SearchResultFactory
+    public lateinit var searchRequestContextProvider: SearchRequestContextProvider
+    public lateinit var searchResultFactory: SearchResultFactory
     private lateinit var timeProvider: TimeProvider
     private lateinit var formattedTimeProvider: FormattedTimeProvider
     private lateinit var uuidProvider: UUIDProvider
 
-    lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
+    public lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistry
 
     private lateinit var application: Application
 
-    fun initialize(
+    public fun initialize(
         application: Application,
         timeProvider: TimeProvider = LocalTimeProvider(),
         formattedTimeProvider: FormattedTimeProvider = FormattedTimeProviderImpl(timeProvider),
@@ -82,7 +83,7 @@ internal object MapboxSearchSdk {
             favoritesDataProvider = favoritesDataProvider,
         )
 
-        searchResultFactory = SearchResultFactory(indexableDataProvidersRegistry)
+        searchResultFactory = SearchResultFactory(indexableDataProvidersRegistry as IndexableDataProvidersRegistryImpl)
 
         preregisterDefaultDataProviders(
             historyDataProvider, favoritesDataProvider
@@ -105,10 +106,10 @@ internal object MapboxSearchSdk {
         )
     }
 
-    fun createAnalyticsService(
+    public fun createAnalyticsService(
         settings: SearchEngineSettings,
         coreSearchEngine: CoreSearchEngineInterface,
-    ) = createAnalyticsService(
+    ): AnalyticsService = createAnalyticsService(
         coreSearchEngine = coreSearchEngine,
         locationProvider = settings.locationProvider,
         viewportProvider = settings.viewportProvider

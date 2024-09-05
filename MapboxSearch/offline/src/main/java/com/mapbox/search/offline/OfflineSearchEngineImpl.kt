@@ -5,6 +5,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.search.IndexableDataProvidersRegistry
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -16,11 +17,14 @@ import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
+import com.mapbox.search.record.IndexableDataProvider
+import com.mapbox.search.record.IndexableRecord
 import com.mapbox.turf.TurfMeasurement
 import com.mapbox.turf.TurfMisc
 import java.util.concurrent.Executor
@@ -34,6 +38,7 @@ internal class OfflineSearchEngineImpl(
     private val requestContextProvider: SearchRequestContextProvider,
     private val searchResultFactory: SearchResultFactory,
     private val engineExecutorService: ExecutorService = DEFAULT_EXECUTOR,
+    private val indexableDataProvidersRegistry: IndexableDataProvidersRegistry,
 ) : BaseSearchEngine(), OfflineSearchEngine {
 
     private val initializationLock = Any()
@@ -254,6 +259,32 @@ internal class OfflineSearchEngineImpl(
             }
             onIndexChangeListeners.remove(listener)
         }
+    }
+
+    override fun <R : IndexableRecord> registerDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask {
+        return indexableDataProvidersRegistry.register(
+            dataProvider = dataProvider,
+            searchEngine = coreEngine,
+            executor = executor,
+            callback = callback,
+        )
+    }
+
+    override fun <R : IndexableRecord> unregisterDataProvider(
+        dataProvider: IndexableDataProvider<R>,
+        executor: Executor,
+        callback: CompletionCallback<Unit>
+    ): AsyncOperationTask {
+        return indexableDataProvidersRegistry.unregister(
+            dataProvider = dataProvider,
+            searchEngine = coreEngine,
+            executor = executor,
+            callback = callback,
+        )
     }
 
     private fun bufferBoundingBox(coords: DoubleArray, percentage: Double = 5.0): DoubleArray {

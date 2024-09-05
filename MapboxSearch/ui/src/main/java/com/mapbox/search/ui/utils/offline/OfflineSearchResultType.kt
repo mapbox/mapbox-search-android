@@ -9,5 +9,6 @@ internal fun OfflineSearchResultType.mapToSdkSearchResultType(): SearchResultTyp
         OfflineSearchResultType.PLACE -> SearchResultType.PLACE
         OfflineSearchResultType.STREET -> SearchResultType.STREET
         OfflineSearchResultType.ADDRESS -> SearchResultType.ADDRESS
+        OfflineSearchResultType.USER_RECORD -> SearchResultType.PLACE
     }
 }
