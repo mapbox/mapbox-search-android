@@ -122,6 +122,9 @@ dependencies {
     implementation "com.mapbox.maps:android:$mapbox_maps_version"
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.15.0'
 
+    implementation 'com.google.android.gms:play-services-cronet:18.1.0'
+    implementation 'org.chromium.net:cronet-api:119.6045.31'
+
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
