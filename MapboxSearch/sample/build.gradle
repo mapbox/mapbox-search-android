@@ -137,4 +137,7 @@ dependencies {
     androidTestImplementation "com.adevinta.android:barista:$barista_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     androidTestImplementation "junit:junit:$junit_version"
+
+    androidTestImplementation 'com.google.android.gms:play-services-cronet:18.1.0'
+    androidTestImplementation 'org.chromium.net:cronet-api:119.6045.31'
 }
