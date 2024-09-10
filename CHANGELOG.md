@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.5.0-beta.2
+
 ### New features
 - Adding Builder class to `SearchResultMetadata` class
 - Adding `CompletionCallback<Unit>` to the `AnalyticsService` methods
