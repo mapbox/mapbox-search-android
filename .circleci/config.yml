@@ -182,9 +182,9 @@ commands:
           command: |
             gcloud firebase test android run \
             	--type instrumentation --app MapboxSearch/sample/build/outputs/apk/debug/sample-debug.apk --test MapboxSearch/sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk \
-            	--device model=redfin,version=30,locale=en,orientation=portrait \
+            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=24,locale=en,orientation=portrait \
-            	--timeout 1200s \
+            	--timeout 900s \
             	--project mapbox-search-android
 
   run-firebase-instrumentation:
@@ -204,9 +204,9 @@ commands:
             ./gradlew :<< parameters.module_name >>:assembleDebugAndroidTest -Pcoverage
             gcloud firebase test android run \
               --type instrumentation --app sample/build/outputs/apk/debug/sample-debug.apk --test << parameters.module_name >>/build/outputs/apk/androidTest/debug/<< parameters.archives_base_name >>-debug-androidTest.apk --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull /sdcard --results-dir=$CIRCLE_BUILD_NUM \
-              --device model=redfin,version=30,locale=en,orientation=portrait \
+              --device model=Pixel2,version=30,locale=en,orientation=portrait \
               --device model=Nexus6,version=24,locale=en,orientation=portrait \
-              --timeout 1200s \
+              --timeout 900s \
               --project mapbox-search-android
 
 #-------------------------------
