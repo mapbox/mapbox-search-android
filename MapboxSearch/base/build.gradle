@@ -73,9 +73,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
 
-    implementation 'com.google.android.gms:play-services-cronet:18.1.0'
-    implementation 'org.chromium.net:cronet-api:119.6045.31'
-
     ktlint "com.pinterest:ktlint:$ktlint_version"
 
     testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
@@ -93,6 +90,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     androidTestImplementation project(":common-tests")
-    androidTestImplementation 'com.google.android.gms:play-services-cronet:18.1.0'
-    androidTestImplementation 'org.chromium.net:cronet-api:119.6045.31'
 }

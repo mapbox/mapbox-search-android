@@ -182,7 +182,7 @@ commands:
           command: |
             gcloud firebase test android run \
             	--type instrumentation --app MapboxSearch/sample/build/outputs/apk/debug/sample-debug.apk --test MapboxSearch/sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk \
-            	--device model=Pixel2,version=30,locale=en,orientation=portrait \
+            	--device model=Pixel3,version=30,locale=en,orientation=portrait \
             	--device model=Nexus6,version=24,locale=en,orientation=portrait \
             	--timeout 900s \
             	--project mapbox-search-android
