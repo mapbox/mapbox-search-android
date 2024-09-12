@@ -538,6 +538,7 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getWebsite ()Ljava/lang/String;
 	public final fun getWheelchairAccessible ()Ljava/lang/Boolean;
 	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
