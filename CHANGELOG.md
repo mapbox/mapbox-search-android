@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 2.5.0-rc.1
+
+### New features
+- Adding a `toBuilder` method to `SearchResultMetadata` class
+
+### Mapbox dependencies
+- Search Native SDK `v2.5.0-rc.1`
+- Common SDK `v24.7.0-rc.1
+
 ## 2.5.0-beta.2
 
 ### New features
