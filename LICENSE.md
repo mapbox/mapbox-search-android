@@ -174,11 +174,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-Mapbox Search Android uses portions of the Cronet.  
-License: [Chromium and built-in dependencies](https://storage.cloud.google.com/chromium-cronet/android/119.0.6045.31/Release/cronet/LICENSE)
-
-===========================================================================
-
 Mapbox Search Android uses portions of the Experimental annotation.  
 URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -300,26 +295,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Search Android uses portions of the Parcelize Runtime.  
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)  
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the play-services-base.  
-License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the play-services-basement.  
-License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the play-services-cronet.  
-License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
-
-===========================================================================
-
-Mapbox Search Android uses portions of the play-services-tasks.  
-License: [Android Software Development Kit License](https://developer.android.com/studio/terms.html)
 
 ===========================================================================
 
