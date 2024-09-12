@@ -343,6 +343,51 @@ public class SearchResultMetadata internal constructor(
     )
 
     /**
+     * Creates a [SearchResultMetadata.Builder] from this instance.
+     *
+     * @return [SearchResultMetadata.Builder] a builder from this instance
+     */
+    public fun toBuilder(): Builder {
+        return Builder()
+            .metadata(extraData)
+            .reviewCount(reviewCount)
+            .phone(phone)
+            .website(website)
+            .averageRating(averageRating)
+            .description(description)
+            .primaryPhotos(primaryPhotos)
+            .otherPhotos(otherPhotos)
+            .openHours(openHours)
+            .parking(parking)
+            .children(children)
+            .cpsJson(cpsJson)
+            .wheelchairAccessible(wheelchairAccessible)
+            .delivery(delivery)
+            .driveThrough(driveThrough)
+            .reservable(reservable)
+            .parkingAvailable(parkingAvailable)
+            .valetParking(valetParking)
+            .streetParking(streetParking)
+            .servesBreakfast(servesBreakfast)
+            .servesBrunch(servesBrunch)
+            .servesDinner(servesDinner)
+            .servesLunch(servesLunch)
+            .servesWine(servesWine)
+            .servesBeer(servesBeer)
+            .takeout(takeout)
+            .facebookId(facebookId)
+            .fax(fax)
+            .email(email)
+            .instagram(instagram)
+            .twitter(twitter)
+            .priceLevel(priceLevel)
+            .servesVegan(servesVegan)
+            .servesVegetarian(servesVegetarian)
+            .rating(rating)
+            .popularity(popularity)
+    }
+
+    /**
      * @suppress
      */
     override fun equals(other: Any?): Boolean {

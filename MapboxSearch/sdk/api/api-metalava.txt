@@ -426,6 +426,7 @@ package com.mapbox.search {
     method public Boolean? getValetParking();
     method public String? getWebsite();
     method public Boolean? getWheelchairAccessible();
+    method public com.mapbox.search.SearchResultMetadata.Builder toBuilder();
     property public final Double? averageRating;
     property public final java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? children;
     property public final String? countryIso1;
