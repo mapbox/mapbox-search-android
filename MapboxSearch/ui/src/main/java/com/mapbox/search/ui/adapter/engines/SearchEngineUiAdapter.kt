@@ -12,7 +12,10 @@ import com.mapbox.common.ReachabilityInterface
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.ReverseGeoOptions
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchResultCallback
@@ -32,6 +35,7 @@ import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.internal.bindgen.UserActivityReporter
 import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineReverseGeoOptions
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchOptions
@@ -129,7 +133,7 @@ public class SearchEngineUiAdapter(
             retrySearchRequest()
         }
 
-    private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback, SearchResultCallback {
+    private val searchCallback = object : SearchSuggestionsCallback, SearchSelectionCallback, SearchResultCallback, SearchCallback {
 
         override fun onSuggestions(
             suggestions: List<SearchSuggestion>,
@@ -164,6 +168,11 @@ public class SearchEngineUiAdapter(
 
         override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {
             searchListeners.forEach { it.onSearchResultSelected(result, responseInfo) }
+        }
+
+        override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+            showResults(results, responseInfo)
+            searchListeners.forEach { it.onSearchResultsShown(null, results, responseInfo) }
         }
 
         override fun onError(e: Exception) {
@@ -354,6 +363,23 @@ public class SearchEngineUiAdapter(
             }
             false -> {
                 offlineSearchEngine.retrieve(feature, offlineSearchCallback)
+            }
+        }
+    }
+
+    @UiThread
+    public fun reverse(
+        coords: Point,
+        options: ReverseGeoOptions = ReverseGeoOptions(center = coords)
+    ) {
+        checkMainThread()
+
+        when (isOnlineSearch) {
+            true -> {
+                searchEngine.search(options, searchCallback)
+            }
+            false -> {
+                offlineSearchEngine.reverseGeocoding(OfflineReverseGeoOptions(coords), offlineSearchCallback)
             }
         }
     }
@@ -636,7 +662,7 @@ public class SearchEngineUiAdapter(
          * @see SearchSelectionCallback.onResults
          */
         public fun onSearchResultsShown(
-            suggestion: SearchSuggestion,
+            suggestion: SearchSuggestion?,
             results: List<SearchResult>,
             responseInfo: ResponseInfo
         )

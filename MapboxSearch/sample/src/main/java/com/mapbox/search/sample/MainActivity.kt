@@ -36,7 +36,6 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -158,26 +157,28 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        // only support for ApiType.SBS
-        if (BuildConfig.API_TYPE == ApiType.SBS || BuildConfig.API_TYPE == ApiType.SEARCH_BOX) {
-            mapView.mapboxMap.addOnMapClickListener { point ->
-                val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
+        mapView.mapboxMap.addOnMapClickListener { point ->
+            val screenCoords = mapView.mapboxMap.pixelForCoordinate(point)
 
-                mapView.mapboxMap.queryRenderedFeatures(
-                    RenderedQueryGeometry(screenCoords),
-                    RenderedQueryOptions(listOf("poi-label"), null)
-                ) {
-                    it.value?.firstOrNull()?.queriedFeature.let { queriedFeature ->
-                        queriedFeature?.feature?.let { feature ->
-                            searchEngineUiAdapter.select(
-                                feature
-                            )
-                        }
+            mapView.mapboxMap.queryRenderedFeatures(
+                RenderedQueryGeometry(screenCoords),
+                RenderedQueryOptions(listOf("poi-label"), null)
+            ) {
+                val queriedFeatures = it.value?.filter { f -> f.queriedFeature.feature.id()?.isNotEmpty() == true }
+
+                when {
+                    queriedFeatures.isNullOrEmpty() -> {
+                        searchEngineUiAdapter.reverse(point)
+                    }
+                    else -> {
+                        searchEngineUiAdapter.select(
+                            queriedFeatures.first().queriedFeature.feature
+                        )
                     }
                 }
-
-                true
             }
+
+            true
         }
 
         mapMarkersManager = MapMarkersManager(mapView)
@@ -248,7 +249,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSearchResultsShown(
-                suggestion: SearchSuggestion,
+                suggestion: SearchSuggestion?,
                 results: List<SearchResult>,
                 responseInfo: ResponseInfo
             ) {
