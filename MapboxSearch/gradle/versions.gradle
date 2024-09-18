@@ -46,6 +46,7 @@ ext {
     common_sdk_version = '24.7.0-rc.1'
     mapbox_base_version = '0.8.0'
 
+    // TODO: align with main
     search_native_version = '0.1.0-MATCH-CTX-SNAPSHOT'
 
     detekt_version = '1.19.0'
