@@ -84,7 +84,7 @@
           "review_count": 79,
           "phone": "+1 202-842-3180",
           "website": "http://devonblakelydc.com",
-          "average_rating": 4.5,
+          "rating": 4.5,
           "primary_photo": [
             {
               "width": 50,
@@ -357,7 +357,7 @@
           "review_count": 59,
           "phone": "+1 202-770-2200",
           "website": "http://maisonkayserusa.com",
-          "average_rating": 4,
+          "rating": 4,
           "primary_photo": [
             {
               "width": 50,

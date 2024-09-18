@@ -455,7 +455,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
             val tileStore = TileStore.create()
             val tileRegionId = "Washington DC"
-            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-main", language = "en"))
+            val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-gen2", language = "en"))
             val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
             val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS)
 
