@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame"
+    tools:visibility="visible"
+    >
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:mapbox_logoGravity="bottom"
+        >
+
+    </com.mapbox.maps.MapView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:theme="@style/ToolbarTheme"
+        tools:menu="@menu/simple_ui_activity_options_menu"
+        />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/search_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        >
+
+        <com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
+            android:id="@+id/search_place_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="@dimen/search_card_elevation"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/searchTypeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:textOff="@string/offline"
+                android:textOn="@string/online"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tapHelpText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:showText="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tapHelpText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:text="@string/tap_a_point_on_map_to_start_download"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/searchTypeSwitch"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/circleInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:background="#00F6F5F5"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+            <EditText
+                android:id="@+id/circleCenterPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F3EDED"
+                android:clickable="false"
+                android:enabled="true"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                tools:ignore="LabelFor"
+                />
+
+            <EditText
+                android:id="@+id/circleInputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F3EDED"
+                android:clickable="false"
+                android:enabled="true"
+                android:hint="@string/radius_from_center_in_km"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:text="@string/default_radius"
+                android:textAlignment="center"
+                android:visibility="visible"
+                />
+
+            <Button
+                android:id="@+id/submitCircleRadius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/set_km_radius_and_download"
+                android:visibility="visible"
+                />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.mapbox.search.ui.view.SearchResultsView
+        android:id="@+id/search_results_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:clipToPadding="false"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        android:visibility="gone"
+        />
+
+</FrameLayout>

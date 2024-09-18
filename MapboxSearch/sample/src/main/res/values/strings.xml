@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="action_address_autofill_ui_example">Address autofill UI example</string>
+    <string name="action_tile_download_ui_example">Tile Download UI</string>
+
+    <string name="action_address_autofill_ui_example">Address autofill UI</string>
     <string name="action_address_autofill_example">Address autofill</string>
 
     <string name="action_discover_ui_example">Discover UI</string>
@@ -67,4 +69,12 @@
     <string name="kotlin_examples">Kotlin Examples</string>
     <string name="start">Start</string>
     <string name="working">Working…</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+    <string name="tap_a_point_on_map_to_start_download">Tap a point on map to start download</string>
+    <string name="downloaded_pc_text">Downloaded %s%%</string>
+    <string name="downloaded_100pc">Downloaded 100%</string>
+    <string name="radius_from_center_in_km">Radius from center in KM</string>
+    <string name="default_radius">10</string>
+    <string name="set_km_radius_and_download">Set km radius and download</string>
 </resources>

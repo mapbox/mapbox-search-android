@@ -39,6 +39,8 @@
             android:windowSoftInputMode="adjustNothing"
             />
 
+        <activity android:name=".TileDownloadUiActivity" />
+
         <activity android:name=".AddressAutofillUiActivity" />
         <activity android:name=".api.AddressAutofillKotlinExampleActivity" />
 
