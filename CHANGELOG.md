@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 2.5.0
+
+### Bug fixes
+- Fixed a copy and paste issue in the documentation for the `OfflineSearchEngine.retrieve` method
+
+### Mapbox dependencies
+- Search Native SDK `v2.5.0`
+- Common SDK `v24.7.0`
+
 ## 2.5.0-rc.2
 
 ### New features
