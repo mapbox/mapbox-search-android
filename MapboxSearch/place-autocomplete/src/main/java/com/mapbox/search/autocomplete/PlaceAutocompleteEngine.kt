@@ -350,10 +350,10 @@ internal class PlaceAutocompleteEngine(
         ): BaseSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
-                    apiType = CoreApiType.SEARCH_BOX,
-                    sdkInformation = UserAgentProvider.sdkInformation(),
-                    eventsUrl = null,
+                    null,
+                    CoreApiType.SEARCH_BOX,
+                    UserAgentProvider.sdkInformation(),
+                    null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

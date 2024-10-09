@@ -123,12 +123,12 @@ internal fun RequestOptions.mapToCore() = CoreRequestOptions(
 internal fun RequestOptions.mapToBase(): BaseRequestOptions {
     return BaseRequestOptions(
         core = CoreRequestOptions(
-            query = query,
-            endpoint = endpoint,
-            options = options.mapToCore(),
-            proximityRewritten = proximityRewritten,
-            originRewritten = originRewritten,
-            sessionID = sessionID,
+            query,
+            endpoint,
+            options.mapToCore(),
+            proximityRewritten,
+            originRewritten,
+            sessionID,
         ),
         requestContext = requestContext
     )

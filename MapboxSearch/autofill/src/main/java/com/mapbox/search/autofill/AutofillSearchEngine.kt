@@ -253,10 +253,10 @@ internal class AutofillSearchEngine(
         ): AutofillSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
-                    apiType = apiType,
-                    sdkInformation = UserAgentProvider.sdkInformation(),
-                    eventsUrl = null,
+                    null,
+                    apiType,
+                    UserAgentProvider.sdkInformation(),
+                    null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

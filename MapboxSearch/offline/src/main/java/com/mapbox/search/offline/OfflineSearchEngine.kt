@@ -368,10 +368,10 @@ public interface OfflineSearchEngine {
 
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
-                    apiType = CoreApiType.SBS,
-                    sdkInformation = UserAgentProvider.sdkInformation(),
-                    eventsUrl = null,
+                    null,
+                    CoreApiType.SBS,
+                    UserAgentProvider.sdkInformation(),
+                    null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, settings.locationProvider),

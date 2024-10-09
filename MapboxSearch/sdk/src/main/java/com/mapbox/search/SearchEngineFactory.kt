@@ -109,10 +109,10 @@ internal class SearchEngineFactory {
 
         return CoreSearchEngine(
             CoreEngineOptions(
-                baseUrl = baseUrl,
-                apiType = apiType.mapToCore(),
-                sdkInformation = UserAgentProvider.sdkInformation(),
-                eventsUrl = null,
+                baseUrl,
+                apiType.mapToCore(),
+                UserAgentProvider.sdkInformation(),
+                null,
             ),
             coreLocationProvider
         )

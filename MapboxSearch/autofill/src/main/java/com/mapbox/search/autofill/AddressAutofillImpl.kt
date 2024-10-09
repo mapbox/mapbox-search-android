@@ -120,10 +120,10 @@ internal class AddressAutofillImpl(
         ): AddressAutofillImpl {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
-                    apiType = CoreApiType.AUTOFILL,
-                    sdkInformation = UserAgentProvider.sdkInformation(),
-                    eventsUrl = null,
+                    null,
+                    CoreApiType.AUTOFILL,
+                    UserAgentProvider.sdkInformation(),
+                    null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

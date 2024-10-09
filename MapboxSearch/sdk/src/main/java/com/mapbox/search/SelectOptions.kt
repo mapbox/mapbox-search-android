@@ -64,5 +64,5 @@ public class SelectOptions public constructor(
 
 @JvmSynthetic
 internal fun SelectOptions.mapToCore(): CoreRetrieveOptions = CoreRetrieveOptions(
-    attributeSets = attributeSets?.map { it.mapToCore() }
+    attributeSets?.map { it.mapToCore() }
 )

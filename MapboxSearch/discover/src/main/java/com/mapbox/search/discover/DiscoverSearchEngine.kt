@@ -105,10 +105,10 @@ internal class DiscoverSearchEngine(
         ): DiscoverSearchEngine {
             val coreEngine = CoreSearchEngine(
                 CoreEngineOptions(
-                    baseUrl = null,
-                    apiType = API_TYPE,
-                    sdkInformation = UserAgentProvider.sdkInformation(),
-                    eventsUrl = null,
+                    null,
+                    API_TYPE,
+                    UserAgentProvider.sdkInformation(),
+                    null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider), null
