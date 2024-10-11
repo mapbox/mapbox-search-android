@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 2.5.1
+
+### Bug fixes
+- Passing `language` parameter on subsequent `retrieve` calls for SearchBox
+
+### Mapbox dependencies
+- Search Native SDK `v2.5.1`
+
 ## 2.5.0
 
 ### Bug fixes
