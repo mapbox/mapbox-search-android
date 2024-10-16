@@ -586,20 +586,28 @@ class MainActivity : AppCompatActivity() {
                 markers[annotation.id] = coordinate
             }
 
+            val onOptionsReadyCallback: (CameraOptions) -> Unit = {
+                mapboxMap.setCamera(it)
+                onMarkersChangeListener?.invoke()
+            }
+
             if (coordinates.size == 1) {
-                CameraOptions.Builder()
+                val options = CameraOptions.Builder()
                     .center(coordinates.first())
                     .padding(MARKERS_INSETS_OPEN_CARD)
                     .zoom(14.0)
                     .build()
+                onOptionsReadyCallback(options)
             } else {
                 mapboxMap.cameraForCoordinates(
-                    coordinates, MARKERS_INSETS, bearing = null, pitch = null
+                    coordinates,
+                    CameraOptions.Builder().build(),
+                    MARKERS_INSETS,
+                    null,
+                    null,
+                    onOptionsReadyCallback,
                 )
-            }.also {
-                mapboxMap.setCamera(it)
             }
-            onMarkersChangeListener?.invoke()
         }
     }
 
