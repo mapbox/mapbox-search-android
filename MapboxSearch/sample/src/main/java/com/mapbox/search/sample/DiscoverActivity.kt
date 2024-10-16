@@ -214,18 +214,20 @@ class DiscoverActivity : AppCompatActivity() {
 
         fun adjustMarkersForOpenCard() {
             val coordinates = annotations.values.map { it.coordinate }
-            val cameraOptions = mapboxMap.cameraForCoordinates(
-                coordinates, MARKERS_INSETS_OPEN_CARD, bearing = null, pitch = null
-            )
-            mapboxMap.setCamera(cameraOptions)
+            mapboxMap.cameraForCoordinates(
+                coordinates, CameraOptions.Builder().build(), MARKERS_INSETS_OPEN_CARD, null, null
+            ) {
+                mapboxMap.setCamera(it)
+            }
         }
 
         fun adjustMarkersForClosedCard() {
             val coordinates = annotations.values.map { it.coordinate }
-            val cameraOptions = mapboxMap.cameraForCoordinates(
-                coordinates, MARKERS_INSETS, bearing = null, pitch = null
-            )
-            mapboxMap.setCamera(cameraOptions)
+            mapboxMap.cameraForCoordinates(
+                coordinates, CameraOptions.Builder().build(), MARKERS_INSETS, null, null
+            ) {
+                mapboxMap.setCamera(it)
+            }
         }
 
         fun showResults(results: List<DiscoverResult>) {
@@ -246,10 +248,11 @@ class DiscoverActivity : AppCompatActivity() {
                 coordinates.add(result.coordinate)
             }
 
-            val cameraOptions = mapboxMap.cameraForCoordinates(
-                coordinates, MARKERS_INSETS, bearing = null, pitch = null
-            )
-            mapboxMap.setCamera(cameraOptions)
+            mapboxMap.cameraForCoordinates(
+                coordinates, CameraOptions.Builder().build(), MARKERS_INSETS, null, null
+            ) {
+                mapboxMap.setCamera(it)
+            }
         }
     }
 

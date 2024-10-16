@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 2.6.0-beta.1
+
+### Mapbox dependencies
+- Search Native SDK `v2.6.0-beta.2`
+- Common SDK `v24.8.0-beta.1`
+
 ## 2.5.1
 
 ### Bug fixes

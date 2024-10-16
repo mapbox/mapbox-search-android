@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -187,12 +186,11 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.searchOptionsData.observe(this, Observer {
+        viewModel.searchOptionsData.observe(this) {
             handleOnSearchOptionsUpdated(it)
-        })
+        }
 
-        viewModel.uiStateData.observe(this, Observer { uiState ->
-
+        viewModel.uiStateData.observe(this) { uiState ->
             when (uiState) {
                 is UiState.Ready -> {
                     handleOnReady()
@@ -210,7 +208,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error: ${uiState.message}", Toast.LENGTH_LONG).show()
                 }
             }
-        })
+        }
     }
 
     private fun handleOnReady() {
@@ -367,24 +365,39 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 markers[annotation.id] = annotation
             }
 
+            val onOptionsReadyCallback: (CameraOptions) -> Unit = {
+                mapboxMap.setCamera(it)
+                onMarkersChangeListener?.invoke()
+            }
+
+            val emptyCameraOptions = CameraOptions.Builder().build()
             if (route != null) {
                 mapboxMap.cameraForCoordinates(
-                    route!! + coordinates, MARKERS_INSETS, bearing = null, pitch = null
+                    route!! + coordinates,
+                    emptyCameraOptions,
+                    MARKERS_INSETS,
+                    null,
+                    null,
+                    onOptionsReadyCallback,
                 )
             } else if (coordinates.size == 1) {
-                CameraOptions.Builder()
+                val options = CameraOptions.Builder()
                     .center(coordinates.first())
                     .padding(MARKERS_INSETS_OPEN_CARD)
                     .zoom(14.0)
                     .build()
+
+                onOptionsReadyCallback(options)
             } else {
                 mapboxMap.cameraForCoordinates(
-                    coordinates, MARKERS_INSETS, bearing = null, pitch = null
+                    coordinates,
+                    emptyCameraOptions,
+                    MARKERS_INSETS,
+                    null,
+                    null,
+                    onOptionsReadyCallback,
                 )
-            }.also {
-                mapboxMap.setCamera(it)
             }
-            onMarkersChangeListener?.invoke()
         }
 
         fun showRoute(route: List<Point>, par: Point? = null) {
@@ -415,14 +428,15 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 pointAlongRoute = circleAnnotationManager.create(circleAnnotationOptions)
             }
 
-            val cameraOptions = mapboxMap.cameraForCoordinates(
-                route, MARKERS_INSETS, bearing = null, pitch = null
-            )
-            mapboxMap.setCamera(cameraOptions)
+            mapboxMap.cameraForCoordinates(
+                route, CameraOptions.Builder().build(), MARKERS_INSETS, null, null,
+            ) {
+                mapboxMap.setCamera(it)
+            }
         }
     }
 
-    class SearchAlongRouteViewModel() : ViewModel() {
+    class SearchAlongRouteViewModel : ViewModel() {
         val uiStateData = MediatorLiveData<UiState>()
         val offlineSearchData = MutableLiveData(OfflineSearchState())
         val searchOptionsData = MutableLiveData<SearchAlongRouteOptions>()
