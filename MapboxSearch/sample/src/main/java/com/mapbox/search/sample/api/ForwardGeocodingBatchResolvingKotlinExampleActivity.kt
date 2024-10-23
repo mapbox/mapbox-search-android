@@ -1,6 +1,7 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
+import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -27,6 +28,7 @@ class ForwardGeocodingBatchResolvingKotlinExampleActivity : BaseKotlinExampleAct
                 onFinished()
             } else {
                 logI("SearchApiExample", "Search suggestions: $suggestions. \n\n\nSelecting...")
+                @Suppress("DEPRECATION")
                 searchRequestTask = searchEngine.select(suggestions, this)
             }
         }
@@ -70,6 +72,7 @@ class ForwardGeocodingBatchResolvingKotlinExampleActivity : BaseKotlinExampleAct
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SEARCH_BOX,
             SearchEngineSettings()
         )
     }

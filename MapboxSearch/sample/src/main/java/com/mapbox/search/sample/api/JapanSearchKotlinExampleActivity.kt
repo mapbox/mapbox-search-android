@@ -63,7 +63,7 @@ class JapanSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-            ApiType.SBS,
+            ApiType.SEARCH_BOX,
             SearchEngineSettings()
         )
     }

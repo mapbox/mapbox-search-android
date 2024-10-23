@@ -33,6 +33,7 @@ internal object RetrieveUtils {
      */
     fun createSearchResultForRetrieve(apiType: ApiType, mapboxId: String): SearchResult {
         val suggestAction = when (apiType) {
+            @Suppress("DEPRECATION")
             ApiType.SBS -> {
                 SuggestAction(
                     "retrieve",

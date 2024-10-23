@@ -68,7 +68,7 @@ import java.util.concurrent.Executor
  * Contains only forward-geocoding related functionality tests.
  * See [CategorySearchTest], [ReverseGeocodingSearchTest] for more tests.
  */
-@Suppress("LargeClass")
+@Suppress("LargeClass", "DEPRECATION")
 internal class SearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface

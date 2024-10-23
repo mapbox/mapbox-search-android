@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Other
+- The `SearchEngine.createSearchEngine()` and `SearchEngine.createSearchEngineWithBuiltInDataProviders()` functions, which do not accept `ApiType` as a parameter, have been deprecated. Please use functions that explicitly accept an `ApiType` instead.
+- The `SearchEngine.select()` function, which allows selecting multiple suggestions, has been deprecated. From now on, you should select only one search suggestion at a time.
+- The `ApiType.SBS` has been deprecated. Please use other `ApiType` values that better suit your use case.
+- The `PlaceAutocomplete.create(LocationProvider?, ApiType)` function has been deprecated. Please use the function with the default api type.
+
+### Mapbox dependencies
+- Search Native SDK `2.6.0-beta.2`
+- Common SDK `24.8.0-beta.1`
+
+
+
 ## 2.6.0-beta.1
 
 ### Mapbox dependencies

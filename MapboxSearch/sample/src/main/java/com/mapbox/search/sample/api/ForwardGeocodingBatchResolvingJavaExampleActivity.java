@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapbox.search.ApiType;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
@@ -71,6 +72,7 @@ public class ForwardGeocodingBatchResolvingJavaExampleActivity extends AppCompat
         super.onCreate(savedInstanceState);
 
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SEARCH_BOX,
             new SearchEngineSettings()
         );
 

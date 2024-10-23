@@ -93,12 +93,22 @@ internal class SearchEngineImpl(
         }
     }
 
+    @Deprecated("Consider making a selection of only one Search Suggestion")
     override fun select(
         suggestions: List<SearchSuggestion>,
         executor: Executor,
         callback: SearchMultipleSelectionCallback
     ): AsyncOperationTask {
         activityReporter.reportActivity("search-engine-forward-geocoding-selection")
+
+        if (apiType == ApiType.SEARCH_BOX) {
+            executor.execute {
+                callback.onError(
+                    UnsupportedOperationException("Not supported for SEARCH_BOX api type")
+                )
+            }
+            return AsyncOperationTaskImpl.COMPLETED
+        }
 
         require(suggestions.isNotEmpty()) {
             "No suggestions were provided! Please, provide at least 1 suggestion."

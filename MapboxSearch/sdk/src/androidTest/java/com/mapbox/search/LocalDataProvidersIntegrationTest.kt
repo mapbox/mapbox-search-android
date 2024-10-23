@@ -25,6 +25,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
+@Suppress("DEPRECATION")
 internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

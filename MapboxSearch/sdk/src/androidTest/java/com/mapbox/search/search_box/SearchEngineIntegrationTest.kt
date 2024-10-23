@@ -1,5 +1,7 @@
 package com.mapbox.search.search_box
 
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
@@ -956,6 +958,26 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val result = callback.getResultBlocking()
         assertTrue(result is Exception)
+    }
+
+    @Test
+    fun testBatchSelectionFails() {
+        LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+        assertTrue(suggestionsResponse.isSuggestions)
+        val suggestions = suggestionsResponse.requireSuggestions()
+
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val selectionResult = searchEngine.selectBlocking(suggestions)
+        assertTrue(selectionResult.isError)
+
+        with(selectionResult.requireError()) {
+            assertTrue(this is UnsupportedOperationException)
+            assertEquals(message, "Not supported for SEARCH_BOX api type")
+        }
     }
 
     @After

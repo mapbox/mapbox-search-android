@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Point;
+import com.mapbox.search.ApiType;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.ReverseGeoOptions;
 import com.mapbox.search.SearchCallback;
@@ -46,6 +47,7 @@ public class ReverseGeocodingJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SEARCH_BOX,
             new SearchEngineSettings()
         );
 

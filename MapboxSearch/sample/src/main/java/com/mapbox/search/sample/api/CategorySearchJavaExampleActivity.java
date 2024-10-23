@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapbox.search.ApiType;
 import com.mapbox.search.CategorySearchOptions;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchCallback;
@@ -45,6 +46,7 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final SearchEngine searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SEARCH_BOX,
             new SearchEngineSettings()
         );
 

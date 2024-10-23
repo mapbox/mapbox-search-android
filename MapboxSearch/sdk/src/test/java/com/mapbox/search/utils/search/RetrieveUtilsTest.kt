@@ -12,6 +12,7 @@ internal class RetrieveUtilsTest {
         Given("a Mapbox ID") {
             val mapboxId = "Random Mapbox ID"
 
+            @Suppress("DEPRECATION")
             When("ApiType is ${ApiType.SBS}") {
                 val searchResult = RetrieveUtils.createSearchResultForRetrieve(ApiType.SBS, mapboxId)
                 Then("the SearchResult.SuggestAction.endpoint should be retrieve", "retrieve", searchResult.action?.endpoint)

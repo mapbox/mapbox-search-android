@@ -83,7 +83,7 @@ import java.util.concurrent.TimeUnit
  * Contains only forward-geocoding related functionality tests.
  * See [CategorySearchIntegrationTest], [ReverseGeocodingSearchIntegrationTest] for more tests.
  */
-@Suppress("LargeClass")
+@Suppress("LargeClass", "DEPRECATION")
 internal class SearchEngineIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

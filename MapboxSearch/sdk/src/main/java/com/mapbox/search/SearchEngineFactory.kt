@@ -88,6 +88,7 @@ internal class SearchEngineFactory {
     ): CoreSearchEngineInterface {
         val baseUrl = settings.baseUrl ?: when (apiType) {
             ApiType.GEOCODING -> settings.geocodingEndpointBaseUrl
+            @Suppress("DEPRECATION")
             ApiType.SBS -> settings.singleBoxSearchBaseUrl
             else -> null
         }

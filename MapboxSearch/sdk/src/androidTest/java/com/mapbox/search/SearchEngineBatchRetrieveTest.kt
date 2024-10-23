@@ -24,6 +24,7 @@ import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.Executor
 
+@Suppress("DEPRECATION")
 internal class SearchEngineBatchRetrieveTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer
