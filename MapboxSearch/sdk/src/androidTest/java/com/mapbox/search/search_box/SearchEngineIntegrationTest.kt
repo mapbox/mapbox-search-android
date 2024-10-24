@@ -232,7 +232,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("suggestion-id-1", suggestion.id)
         assertEquals("Washington", suggestion.name)
         assertEquals(
-            "Washington, District of Columbia 20036, United States of America",
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             suggestion.descriptionText
         )
         assertEquals(
@@ -567,11 +567,11 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         assertEquals(
-            "San Francisco, California 94102, United States of America",
+            "150 Van Ness, San Francisco, California 94102, United States of America",
             suggestion.descriptionText
         )
         assertEquals(
-            "San Francisco, California 94102, United States of America",
+            "150 Van Ness, San Francisco, California 94102, United States of America",
             searchResult.descriptionText
         )
         assertNotEquals(
@@ -615,7 +615,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("test-id", searchResult.id)
         assertEquals("Washington", searchResult.name)
         assertEquals(
-            "Washington, District of Columbia 20036, United States of America",
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             searchResult.descriptionText
         )
         assertEquals(
@@ -849,7 +849,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals("Legerova 15", suggestion.name)
         assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
-        assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
+        assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.descriptionText)
     }
 
     @Test

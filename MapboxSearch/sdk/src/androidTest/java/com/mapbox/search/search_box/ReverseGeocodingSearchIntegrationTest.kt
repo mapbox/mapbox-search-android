@@ -154,7 +154,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         val searchResult = results.first()
         assertEquals("test-id", searchResult.id)
         assertEquals("Eiffel Tower", searchResult.name)
-        assertEquals("75007 Paris, France", searchResult.descriptionText)
+        assertEquals("5 Avenue Anatole France, 75007 Paris, France", searchResult.descriptionText)
         assertEquals(
             SearchAddress(
                 // TODO FIXME incorrect parsing
