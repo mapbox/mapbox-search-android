@@ -1,5 +1,7 @@
 package com.mapbox.search.search_box
 
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
@@ -230,7 +232,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("suggestion-id-1", suggestion.id)
         assertEquals("Washington", suggestion.name)
         assertEquals(
-            "Washington, District of Columbia 20036, United States of America",
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             suggestion.descriptionText
         )
         assertEquals(
@@ -565,11 +567,11 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         assertEquals(
-            "San Francisco, California 94102, United States of America",
+            "150 Van Ness, San Francisco, California 94102, United States of America",
             suggestion.descriptionText
         )
         assertEquals(
-            "San Francisco, California 94102, United States of America",
+            "150 Van Ness, San Francisco, California 94102, United States of America",
             searchResult.descriptionText
         )
         assertNotEquals(
@@ -613,7 +615,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("test-id", searchResult.id)
         assertEquals("Washington", searchResult.name)
         assertEquals(
-            "Washington, District of Columbia 20036, United States of America",
+            "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             searchResult.descriptionText
         )
         assertEquals(
@@ -847,7 +849,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         assertEquals("Legerova 15", suggestion.name)
         assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.fullAddress)
-        assertEquals("12000 Praha, Praha, Česko", suggestion.descriptionText)
+        assertEquals("Legerova 15, 12000 Praha, Praha, Česko", suggestion.descriptionText)
     }
 
     @Test
@@ -956,6 +958,26 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val result = callback.getResultBlocking()
         assertTrue(result is Exception)
+    }
+
+    @Test
+    fun testBatchSelectionFails() {
+        LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY, SearchOptions())
+        assertTrue(suggestionsResponse.isSuggestions)
+        val suggestions = suggestionsResponse.requireSuggestions()
+
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val selectionResult = searchEngine.selectBlocking(suggestions)
+        assertTrue(selectionResult.isError)
+
+        with(selectionResult.requireError()) {
+            assertTrue(this is UnsupportedOperationException)
+            assertEquals(message, "Not supported for SEARCH_BOX api type")
+        }
     }
 
     @After

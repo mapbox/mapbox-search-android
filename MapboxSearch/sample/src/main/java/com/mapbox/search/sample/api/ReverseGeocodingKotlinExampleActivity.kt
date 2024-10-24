@@ -2,6 +2,7 @@ package com.mapbox.search.sample.api
 
 import android.os.Bundle
 import com.mapbox.geojson.Point
+import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchCallback
@@ -41,6 +42,7 @@ class ReverseGeocodingKotlinExampleActivity : BaseKotlinExampleActivity() {
         // Set your Access Token here if it's not already set in some other way
         // MapboxOptions.accessToken = "<my-access-token>"
         searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
+            ApiType.SEARCH_BOX,
             SearchEngineSettings()
         )
     }

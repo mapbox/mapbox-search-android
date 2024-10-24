@@ -7,7 +7,6 @@ import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
-import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.internal.bindgen.ApiType
 
@@ -71,15 +70,36 @@ public interface PlaceAutocomplete {
          * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
          * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
          *
+         * @return a new instance instance of [PlaceAutocomplete].
+         */
+        @JvmStatic
+        public fun create(
+            locationProvider: LocationProvider? = defaultLocationProvider(),
+        ): PlaceAutocomplete {
+            return PlaceAutocompleteImpl.create(
+                app = BaseSearchSdkInitializerImpl.app,
+                locationProvider = locationProvider,
+                apiType = ApiType.SEARCH_BOX,
+            )
+        }
+
+        /**
+         * Creates a new instance of the [PlaceAutocomplete]. Deprecated, use a function with default Api Type.
+         *
+         * @param locationProvider The mechanism responsible for providing location approximations to the SDK.
+         * By default [LocationProvider] is provided by [LocationServiceFactory].
+         * Note that this class requires [Manifest.permission.ACCESS_COARSE_LOCATION] or
+         * [Manifest.permission.ACCESS_FINE_LOCATION] to work properly.
+         *
          * @param apiType to be used. Default is [ApiType.SEARCH_BOX]
          *
          * @return a new instance instance of [PlaceAutocomplete].
          */
         @JvmStatic
-        @JvmOverloads
+        @Deprecated("Use a function with default Api Type", ReplaceWith("create()"))
         public fun create(
             locationProvider: LocationProvider? = defaultLocationProvider(),
-            apiType: ApiType = CoreApiType.SEARCH_BOX,
+            apiType: ApiType,
         ): PlaceAutocomplete {
             return PlaceAutocompleteImpl.create(
                 app = BaseSearchSdkInitializerImpl.app,

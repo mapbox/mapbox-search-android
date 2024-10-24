@@ -3,7 +3,7 @@ package com.mapbox.search {
 
   public enum ApiType {
     enum_constant public static final com.mapbox.search.ApiType GEOCODING;
-    enum_constant public static final com.mapbox.search.ApiType SBS;
+    enum_constant @Deprecated public static final com.mapbox.search.ApiType SBS;
     enum_constant public static final com.mapbox.search.ApiType SEARCH_BOX;
   }
 
@@ -222,11 +222,11 @@ package com.mapbox.search {
   }
 
   public interface SearchEngine {
-    method public default static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
+    method @Deprecated public default static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     method public default static com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
-    method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
-    method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
-    method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
+    method @Deprecated public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
+    method @Deprecated public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
+    method @Deprecated public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
     method public default static com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public default static final com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
@@ -246,8 +246,8 @@ package com.mapbox.search {
     method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, com.mapbox.search.SearchSelectionCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SelectOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSelectionCallback callback);
-    method public com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
-    method public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method @Deprecated public com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, java.util.concurrent.Executor executor, com.mapbox.search.SearchMultipleSelectionCallback callback);
+    method @Deprecated public default com.mapbox.search.common.AsyncOperationTask select(java.util.List<com.mapbox.search.result.SearchSuggestion> suggestions, com.mapbox.search.SearchMultipleSelectionCallback callback);
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask unregisterDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     property public abstract com.mapbox.search.analytics.AnalyticsService analyticsService;
@@ -257,11 +257,11 @@ package com.mapbox.search {
   }
 
   public static final class SearchEngine.Companion {
-    method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
+    method @Deprecated public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.SearchEngineSettings settings);
     method public com.mapbox.search.SearchEngine createSearchEngine(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);
-    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
-    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
-    method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
+    method @Deprecated public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
+    method @Deprecated public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
+    method @Deprecated public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.SearchEngineSettings settings);
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback = com.mapbox.search.base.StubCompletionCallback());
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings, java.util.concurrent.Executor executor = SearchSdkMainThreadWorker.mainExecutor);
     method public com.mapbox.search.SearchEngine createSearchEngineWithBuiltInDataProviders(com.mapbox.search.ApiType apiType, com.mapbox.search.SearchEngineSettings settings);

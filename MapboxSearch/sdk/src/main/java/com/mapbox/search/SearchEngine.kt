@@ -162,6 +162,8 @@ public interface SearchEngine {
     ): AsyncOperationTask
 
     /**
+     * Deprecated, consider making a selection of only one Search Suggestion.
+     *
      * Function to select multiple suggestions at once.
      * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
      *
@@ -171,11 +173,16 @@ public interface SearchEngine {
      * With the current implementation, only POI and indexable record suggestions support batch resolving.
      * All the suggestions that can't be used in batch resolving will be filtered.
      *
+     * Please note that this function is not supported for [ApiType.SEARCH_BOX].
+     * If this [SearchEngine] was created with [ApiType.SEARCH_BOX],
+     * the [SearchMultipleSelectionCallback.onError] will be triggered immediately.
+     *
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates.
      * @return [AsyncOperationTask] object representing pending completion of the request.
      */
+    @Deprecated("Consider making a selection of only one Search Suggestion")
     public fun select(
         suggestions: List<SearchSuggestion>,
         executor: Executor,
@@ -183,6 +190,8 @@ public interface SearchEngine {
     ): AsyncOperationTask
 
     /**
+     * Deprecated, consider making a selection of only one Search Suggestion.
+     *
      * Function to select multiple suggestions at once.
      * Unlike [select], resolving always ends up returning list of [SearchResult] and can't return new suggestions.
      *
@@ -192,10 +201,16 @@ public interface SearchEngine {
      * With the current implementation, only POI and indexable record suggestions support batch resolving.
      * All the suggestions that can't be used in batch resolving will be filtered.
      *
+     * Please note that this function is not supported for [ApiType.SEARCH_BOX].
+     * If this [SearchEngine] was created with [ApiType.SEARCH_BOX],
+     * the [SearchMultipleSelectionCallback.onError] will be triggered immediately.
+     *
      * @param suggestions Search suggestions to resolve. Suggestions that don't support batch resolving will be filtered.
      * @param callback The callback to retrieve [SearchResult] with resolved coordinates. Events are dispatched on the main thread.
      * @return [AsyncOperationTask] object representing pending completion of the request.
      */
+    @Deprecated("Consider making a selection of only one Search Suggestion")
+    @Suppress("DEPRECATION")
     public fun select(
         suggestions: List<SearchSuggestion>,
         callback: SearchMultipleSelectionCallback,
@@ -208,13 +223,13 @@ public interface SearchEngine {
     /**
      * Function to retrieve the details for a given mapboxId. The callback will be invoked with
      * a [SearchResult] on successful execution. This method is only supported for a SearchEngine
-     * with [ApiType.SBS].
+     * with [ApiType.SEARCH_BOX] or [ApiType.SBS].
      *
      * @param mapboxId for the item to retrieve details for
      * @param executor [Executor] used for events dispatching, default is the main thread
      * @param callback used to receive the [SearchResult] on successful execution
      * @return [AsyncOperationTask] object representing pending completion of the request
-     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SBS]
+     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SEARCH_BOX] or [ApiType.SBS]
      */
     public fun retrieve(
         mapboxId: String,
@@ -226,7 +241,7 @@ public interface SearchEngine {
      * Function to retrieve the details for a given mapboxId that dispatches events using the
      * main executor. The callback will be invoked with a [SearchResult] on successful execution.
      *
-     * Note that this method is only supported for a SearchEngine with [ApiType.SBS].
+     * Note that this method is only supported for a SearchEngine with [ApiType.SEARCH_BOX] or [ApiType.SBS].
      *
      * @param mapboxId for the item to retrieve details for
      * @param callback used to receive the [SearchResult] on successful execution
@@ -372,14 +387,26 @@ public interface SearchEngine {
     public companion object {
 
         /**
-         * Creates a new instance of the [SearchEngine] with a default [ApiType].
+         * Deprecated, use a function that takes [ApiType] as a parameter.
+         *
+         * Creates a new instance of the [SearchEngine] with [ApiType.GEOCODING] api type.
          * A new instance doesn't have any [IndexableDataProvider] registered by default.
+         *
+         * Note: The [ApiType.GEOCODING] API type is supported in compatibility mode. For example,
+         * the Geocoding v5 API will align with Search Box response types.
+         *
+         * Additionally, please note that Points of Interest (POI) data will be removed
+         * from the Geocoding v5 API on December 20, 2024.
+         *
+         * For more information, visit [Geocoding v5 API page](https://docs.mapbox.com/api/search/geocoding-v5/).
          *
          * @param settings [SearchEngine] settings.
          *
          * @return a new instance instance of [SearchEngine].
          * @see createSearchEngineWithBuiltInDataProviders
+         * @see <a href="https://docs.mapbox.com/api/search/geocoding-v5/">Geocoding v5 API</a>
          */
+        @Deprecated("Specify ApiType explicitly", ReplaceWith("createSearchEngine(apiType = , settings = )"))
         @JvmStatic
         public fun createSearchEngine(settings: SearchEngineSettings): SearchEngine {
             return createSearchEngine(ApiType.GEOCODING, settings)
@@ -403,9 +430,19 @@ public interface SearchEngine {
         }
 
         /**
-         * Creates a new instance of the [SearchEngine] with a default [ApiType] and default data providers (
+         * Deprecated, use a function that takes [ApiType] as a parameter.
+         *
+         * Creates a new instance of the [SearchEngine] with [ApiType.GEOCODING] api type and default data providers (
          * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
          * registered by default.
+         *
+         * Note: The [ApiType.GEOCODING] API type is supported in compatibility mode. For example,
+         * the Geocoding v5 API will align with Search Box response types.
+         *
+         * Additionally, please note that Points of Interest (POI) data will be removed
+         * from the Geocoding v5 API on December 20, 2024.
+         *
+         * For more information, visit [Geocoding v5 API page](https://docs.mapbox.com/api/search/geocoding-v5/).
          *
          * @param settings [SearchEngine] settings.
          * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
@@ -413,7 +450,9 @@ public interface SearchEngine {
          *
          * @return a new instance of [SearchEngine].
          * @see createSearchEngine
+         * @see <a href="https://docs.mapbox.com/api/search/geocoding-v5/">Geocoding v5 API</a>
          */
+        @Deprecated("Specify ApiType explicitly", ReplaceWith("createSearchEngineWithBuiltInDataProviders(apiType = , settings = )"))
         @JvmOverloads
         @JvmStatic
         public fun createSearchEngineWithBuiltInDataProviders(

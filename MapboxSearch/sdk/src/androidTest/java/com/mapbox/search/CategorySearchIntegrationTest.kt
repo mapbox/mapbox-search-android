@@ -65,7 +65,7 @@ import java.util.concurrent.TimeUnit
  * Contains only category search related functionality tests.
  * See [ReverseGeocodingSearchIntegrationTest], [SearchEngineIntegrationTest] for more tests.
  */
-@Suppress("LargeClass")
+@Suppress("LargeClass", "DEPRECATION")
 internal class CategorySearchIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

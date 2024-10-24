@@ -59,6 +59,7 @@ import java.util.concurrent.Executor
  * Contains only reverse-geocoding related functionality tests.
  * See [CategorySearchIntegrationTest], [SearchEngineIntegrationTest] for more tests.
  */
+@Suppress("DEPRECATION")
 internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

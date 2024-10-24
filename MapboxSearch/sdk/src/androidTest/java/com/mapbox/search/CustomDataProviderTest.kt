@@ -39,6 +39,7 @@ import org.junit.Test
 import java.util.Locale
 import java.util.concurrent.Executor
 
+@Suppress("DEPRECATION")
 internal class CustomDataProviderTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

@@ -35,6 +35,16 @@ internal fun SearchEngine.selectBlocking(
     return callback.getResultBlocking()
 }
 
+internal fun SearchEngine.selectBlocking(
+    suggestions: List<SearchSuggestion>,
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+): BlockingSearchSelectionCallback.SearchEngineResult {
+    val callback = BlockingSearchSelectionCallback()
+    @Suppress("DEPRECATION")
+    select(suggestions, executor, callback)
+    return callback.getResultBlocking()
+}
+
 internal fun SearchEngine.categorySearchBlocking(
     categoryName: String,
     options: CategorySearchOptions = CategorySearchOptions(),

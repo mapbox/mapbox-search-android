@@ -48,6 +48,9 @@ internal class BlockingSearchSelectionCallback :
         val isSuggestions: Boolean
             get() = this is Suggestions
 
+        val isError: Boolean
+            get() = this is Error
+
         fun requireSuggestions() = (this as Suggestions).suggestions
 
         fun requireSuggestionsAndInfo() = (this as Suggestions).suggestions to this.responseInfo

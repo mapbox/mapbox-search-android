@@ -94,6 +94,8 @@ public class TestActivity : AppCompatActivity() {
             isVisible = false
         }
 
+        // TODO migrate to Search Box
+        @Suppress("DEPRECATION")
         val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
             apiType = ApiType.SBS,
             settings = SearchEngineSettings(

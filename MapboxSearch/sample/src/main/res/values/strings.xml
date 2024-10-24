@@ -13,8 +13,6 @@
     <string name="action_open_custom_theme_example">Custom theme</string>
     <string name="action_open_forward_geocoding_kt_example">Forward geocoding</string>
     <string name="action_open_forward_geocoding_java_example">Forward geocoding</string>
-    <string name="action_open_forward_geocoding_batch_resolving_kt_example">Batch resolving</string>
-    <string name="action_open_forward_geocoding_batch_resolving_java_example">Batch resolving</string>
     <string name="action_open_reverse_geocoding_kt_example">Reverse geocoding</string>
     <string name="action_open_reverse_geocoding_java_example">Reverse geocoding</string>
     <string name="action_open_discover_search_kt_example">Category search</string>
