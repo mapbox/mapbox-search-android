@@ -79,7 +79,7 @@ dependencies {
     implementation project(path: ':base')
     api project(path: ':sdk-common')
 
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
