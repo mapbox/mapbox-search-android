@@ -60,8 +60,6 @@ import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
 import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
-import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingJavaExampleActivity
-import com.mapbox.search.sample.api.ForwardGeocodingBatchResolvingKotlinExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
@@ -465,14 +463,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_forward_geocoding_java_example -> {
                 startActivity(Intent(this, ForwardGeocodingJavaExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_kt_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingKotlinExampleActivity::class.java))
-                true
-            }
-            R.id.open_forward_geocoding_batch_resolving_java_example -> {
-                startActivity(Intent(this, ForwardGeocodingBatchResolvingJavaExampleActivity::class.java))
                 true
             }
             R.id.open_reverse_geocoding_kt_example -> {
