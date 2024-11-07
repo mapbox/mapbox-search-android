@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>OfflineSearchOptions</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>offline</span>
+            </a>
+    </div>
+    <div>
+2.6.0    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="offline::com.mapbox.search.offline/OfflineSearchOptions///PointingToDeclaration//-2088540605">
+  <div class="breadcrumbs"><a href="../../../index.html">offline</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.offline</a><span class="delimiter">/</span><span class="current">OfflineSearchOptions</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Options</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">OfflineSearchOptions</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>proximity<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>origin<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>boundingBox<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/BoundingBox///PointingToDeclaration/">BoundingBox</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">Options for the offline search.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="See also">See also</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">See also</h4>
+      <div data-togglable="See also">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><a href="../-offline-search-engine/index.html"><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Engine</span></span></a></div></span></div><div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="1107271253%2FConstructors%2F-2088540605" anchor-label="OfflineSearchOptions" id="1107271253%2FConstructors%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-offline-search-options.html"><span>Offline</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1107271253%2FConstructors%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-offline-search-options.html"><span class="token function">OfflineSearchOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">proximity<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">origin<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">boundingBox<span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/BoundingBox///PointingToDeclaration/">BoundingBox</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="-2099789679%2FClasslikes%2F-2088540605" anchor-label="Builder" id="-2099789679%2FClasslikes%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-builder/index.html"><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2099789679%2FClasslikes%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-builder/index.html">Builder</a></div><div class="brief "><p class="paragraph">Builder for <a href="index.html">OfflineSearchOptions</a> instance creation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-2088540605" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-offline-search-result/index.html#-1578325224%2FFunctions%2F-2088540605"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-offline-search-result/index.html#-1578325224%2FFunctions%2F-2088540605"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-154485351%2FFunctions%2F-2088540605" anchor-label="toBuilder" id="-154485351%2FFunctions%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="to-builder.html"><span>to</span><wbr></wbr><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-154485351%2FFunctions%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="to-builder.html"><span class="token function">toBuilder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-builder/index.html">OfflineSearchOptions.Builder</a></div><div class="brief "><p class="paragraph">Creates new <a href="-builder/index.html">OfflineSearchOptions.Builder</a> from current <a href="index.html">OfflineSearchOptions</a> instance.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F-2088540605" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-offline-search-result/index.html#-1754457655%2FFunctions%2F-2088540605"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-offline-search-result/index.html#-1754457655%2FFunctions%2F-2088540605"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="418278290%2FProperties%2F-2088540605" anchor-label="boundingBox" id="418278290%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="bounding-box.html"><span>bounding</span><wbr></wbr><span><span>Box</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="418278290%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="418278290%2FProperties%2F-2088540605" anchor-label="boundingBox" id="418278290%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="bounding-box.html">boundingBox</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/BoundingBox///PointingToDeclaration/">BoundingBox</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="418278290%2FProperties%2F-2088540605" anchor-label="boundingBox" id="418278290%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Limit results to only those contained within the supplied bounding box. The bounding box cannot cross the 180th meridian (longitude +/-180.0 deg.) and North or South pole (latitude +/- 90.0 deg.).</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1199538978%2FProperties%2F-2088540605" anchor-label="limit" id="-1199538978%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="limit.html"><span><span>limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1199538978%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-1199538978%2FProperties%2F-2088540605" anchor-label="limit" id="-1199538978%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="limit.html">limit</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1199538978%2FProperties%2F-2088540605" anchor-label="limit" id="-1199538978%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Specify the maximum number of results to return.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-216355237%2FProperties%2F-2088540605" anchor-label="origin" id="-216355237%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="origin.html"><span><span>origin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-216355237%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-216355237%2FProperties%2F-2088540605" anchor-label="origin" id="-216355237%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="origin.html">origin</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-216355237%2FProperties%2F-2088540605" anchor-label="origin" id="-216355237%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Search origin point, used to calculate the distance to the search result.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-249643366%2FProperties%2F-2088540605" anchor-label="proximity" id="-249643366%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":offline:dokkaHtml/release" data-filterable-set=":offline:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="proximity.html"><span><span>proximity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-249643366%2FProperties%2F-2088540605"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":offline:dokkaHtml/release"><a data-name="-249643366%2FProperties%2F-2088540605" anchor-label="proximity" id="-249643366%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="proximity.html">proximity</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-249643366%2FProperties%2F-2088540605" anchor-label="proximity" id="-249643366%2FProperties%2F-2088540605" data-filterable-set=":offline:dokkaHtml/release"></a><p class="paragraph">Bias the response to favor results that are closer to this location, provided as Point.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
