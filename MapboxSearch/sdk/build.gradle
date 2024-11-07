@@ -79,7 +79,9 @@ dependencies {
     implementation project(path: ':base')
     api project(path: ':sdk-common')
 
-    implementation dependenciesList.mapboxSearchNative
+    implementation (dependenciesList.mapboxSearchNative) {
+        exclude group: "com.mapbox.common", module: "common"
+    }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 

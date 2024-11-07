@@ -450,7 +450,9 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
     routeOptions?.route,
     routeOptions?.deviation?.sarType?.rawName,
     routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
+    // TODO FIXME support offlineSearchPlacesOutsideBbox
+    false
 )
 
 @JvmSynthetic

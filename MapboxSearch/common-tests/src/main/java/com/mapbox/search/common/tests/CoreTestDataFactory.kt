@@ -64,7 +64,9 @@ fun createTestCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    // TODO FIXME support offlineSearchPlacesOutsideBbox
+    false,
 )
 
 @Suppress("LongParameterList")

@@ -61,7 +61,9 @@ android {
 
 dependencies {
     api project(path: ':sdk-common')
-    implementation dependenciesList.mapboxSearchNative
+    api (dependenciesList.mapboxSearchNative) {
+        exclude group: "com.mapbox.common", module: "common"
+    }
     implementation dependenciesList.mapboxCommon
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 

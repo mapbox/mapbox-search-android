@@ -34,7 +34,9 @@ android {
 }
 
 dependencies {
-    implementation dependenciesList.mapboxSearchNative
+    api (dependenciesList.mapboxSearchNative) {
+        exclude group: "com.mapbox.common", module: "common"
+    }
 
     api "nl.jqno.equalsverifier:equalsverifier:$equals_verifier_version"
 
