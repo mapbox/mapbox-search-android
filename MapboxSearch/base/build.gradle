@@ -61,13 +61,11 @@ android {
 
 dependencies {
     api project(path: ':sdk-common')
-    api "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
+    implementation dependenciesList.mapboxCommon
+    implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
-
-    implementation "com.mapbox.common:common:$common_sdk_version"
-
-    implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
