@@ -661,8 +661,8 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 OpenHours.Scheduled(
                     periods = listOf(
                         OpenPeriod(
-                            open = WeekTimestamp(WeekDay.SATURDAY, 7, 0),
-                            closed = WeekTimestamp(WeekDay.SATURDAY, 20, 0)
+                            open = WeekTimestamp(WeekDay.FRIDAY, 7, 0),
+                            closed = WeekTimestamp(WeekDay.FRIDAY, 20, 0)
                         )
                     )
                 ), openHours

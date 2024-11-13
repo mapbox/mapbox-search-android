@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.6.1
+
+### Bug fixes
+- Fixed `OpenHours` parsing for the Search Box Api type.
+
+### Mapbox dependencies
+- Search Native SDK `2.6.2`
+- Common SDK `24.8.0`
+
+
+
 ## 2.6.0
 
 ### Mapbox dependencies
