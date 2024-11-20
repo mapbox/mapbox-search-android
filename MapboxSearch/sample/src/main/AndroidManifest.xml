@@ -68,6 +68,7 @@
         <activity android:name=".api.JapanSearchJavaExampleActivity" />
         <activity android:name=".api.JapanSearchKotlinExampleActivity" />
         <activity android:name=".api.OfflineSearchAlongRouteExampleActivity" />
+        <activity android:name=".api.DetailsApiKotlinExampleActivity" />
 
     </application>
 

@@ -1300,9 +1300,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         searchEngine.retrieve(mapboxId, callback)
 
         val result = callback.getResultBlocking()
-        assertTrue(result is SearchResult)
+        assertTrue(result.isSuccess)
 
-        val searchResult = result as SearchResult
+        val searchResult = result.getSuccess().result
         assertEquals(mapboxId, searchResult.mapboxId)
     }
 

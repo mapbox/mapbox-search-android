@@ -2,6 +2,9 @@
 
 ## 2.6.1
 
+### New features
+- Added experimental Details API that provides access to POI metadata, boundary details, addresses and places. See `DetailsApi` type.
+
 ### Bug fixes
 - Fixed `OpenHours` parsing for the Search Box Api type.
 

@@ -1,0 +1,186 @@
+{
+  "geometry": {
+    "coordinates": [
+      -77.029129,
+      38.902309
+    ],
+    "type": "Point"
+  },
+  "properties": {
+    "address": "925 13th St NW",
+    "context": {
+      "address": {
+        "address_number": "925",
+        "id": "",
+        "name": "925 13th St NW, Washington DC, DC 20005-4005",
+        "street_name": "13th st nw"
+      },
+      "country": {
+        "country_code": "US",
+        "country_code_alpha_3": "USA",
+        "id": "",
+        "name": "United States"
+      },
+      "neighborhood": {
+        "id": "dXJuOm1ieHBsYzpDaXpzN0E",
+        "name": "Downtown"
+      },
+      "place": {
+        "id": "dXJuOm1ieHBsYzpGSmlvN0E",
+        "name": "Washington"
+      },
+      "postcode": {
+        "id": "dXJuOm1ieHBsYzpBNTd1N0E",
+        "name": "20005"
+      },
+      "region": {
+        "id": "",
+        "name": "District of Columbia",
+        "region_code": "DC",
+        "region_code_full": "US-DC"
+      },
+      "street": {
+        "id": "",
+        "name": "13th st nw"
+      }
+    },
+    "coordinates": {
+      "latitude": 38.902309,
+      "longitude": -77.029129,
+      "routable_points": [
+        {
+          "latitude": 38.9023073713156,
+          "longitude": -77.0296257487584,
+          "name": "POI"
+        }
+      ]
+    },
+    "external_ids": {
+      "tripadvisor": "20145439"
+    },
+    "feature_type": "poi",
+    "full_address": "925 13th St NW, Washington, District of Columbia 20005, United States",
+    "language": "en",
+    "maki": "marker",
+    "mapbox_id": "dXJuOm1ieHBvaTo0ZTg2ZWFkNS1jOWMwLTQ3OWEtOTA5Mi1kMDVlNDQ3NDdlODk",
+    "metadata": {
+      "open_hours": {
+        "periods": [
+          {
+            "close": {
+              "day": 0,
+              "time": "1800"
+            },
+            "open": {
+              "day": 0,
+              "time": "1000"
+            }
+          },
+          {
+            "close": {
+              "day": 1,
+              "time": "1700"
+            },
+            "open": {
+              "day": 1,
+              "time": "1000"
+            }
+          },
+          {
+            "close": {
+              "day": 3,
+              "time": "1700"
+            },
+            "open": {
+              "day": 3,
+              "time": "1000"
+            }
+          },
+          {
+            "close": {
+              "day": 4,
+              "time": "1700"
+            },
+            "open": {
+              "day": 4,
+              "time": "1000"
+            }
+          },
+          {
+            "close": {
+              "day": 5,
+              "time": "1700"
+            },
+            "open": {
+              "day": 5,
+              "time": "1000"
+            }
+          },
+          {
+            "close": {
+              "day": 6,
+              "time": "1800"
+            },
+            "open": {
+              "day": 6,
+              "time": "1000"
+            }
+          }
+        ],
+        "weekday_text": [
+          "Monday: 10:00 AM - 5:00 PM",
+          "Tuesday: Closed",
+          "Wednesday: 10:00 AM - 5:00 PM",
+          "Thursday: 10:00 AM - 5:00 PM",
+          "Friday: 10:00 AM - 5:00 PM",
+          "Saturday: 10:00 AM - 6:00 PM",
+          "Sunday: 10:00 AM - 6:00 PM"
+        ]
+      },
+      "phone": "+12029313139",
+      "photos": [
+        {
+          "height": 768,
+          "url": "https://media-cdn.tripadvisor.com/media/photo-o/2a/08/ad/cd/caption.jpg",
+          "width": 1024
+        },
+        {
+          "height": 1024,
+          "url": "https://media-cdn.tripadvisor.com/media/photo-o/2a/08/ad/fe/caption.jpg",
+          "width": 768
+        },
+        {
+          "height": 975,
+          "url": "https://media-cdn.tripadvisor.com/media/photo-o/28/b6/2d/cc/caption.jpg",
+          "width": 2006
+        },
+        {
+          "height": 3888,
+          "url": "https://media-cdn.tripadvisor.com/media/photo-o/2a/45/ec/0a/caption.jpg",
+          "width": 5184
+        },
+        {
+          "height": 975,
+          "url": "https://media-cdn.tripadvisor.com/media/photo-o/28/b6/2d/ca/caption.jpg",
+          "width": 2006
+        }
+      ],
+      "primary_photo": "https://media-cdn.tripadvisor.com/media/photo-o/2a/08/ad/cd/caption.jpg",
+      "rating": 5,
+      "review_count": 69,
+      "website": "http://www.planetwordmuseum.org"
+    },
+    "name": "Planet Word",
+    "operational_status": "active",
+    "place_formatted": "Washington, District of Columbia 20005, United States",
+    "poi_category": [
+      "museum",
+      "tourist attraction"
+    ],
+    "poi_category_ids": [
+      "museum",
+      "tourist_attraction"
+    ]
+  },
+  "type": "Feature"
+}
