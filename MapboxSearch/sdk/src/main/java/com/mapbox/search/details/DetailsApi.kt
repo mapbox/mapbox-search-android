@@ -74,7 +74,8 @@ public interface DetailsApi {
          * @return a new instance instance of the [DetailsApi].
          */
         @JvmStatic
-        public fun create(settings: DetailsApiSettings): DetailsApi {
+        @JvmOverloads
+        public fun create(settings: DetailsApiSettings = DetailsApiSettings()): DetailsApi {
             val coreEngine = SearchEngineFactory().createCoreEngineByApiType(
                 apiType = ApiType.SEARCH_BOX,
                 baseUrl = settings.baseUrl,

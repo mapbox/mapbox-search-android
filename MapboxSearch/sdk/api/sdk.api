@@ -738,13 +738,16 @@ public final class com/mapbox/search/analytics/events/SearchResultsInfo$Creator 
 
 public abstract interface class com/mapbox/search/details/DetailsApi {
 	public static final field Companion Lcom/mapbox/search/details/DetailsApi$Companion;
+	public static fun create ()Lcom/mapbox/search/details/DetailsApi;
 	public static fun create (Lcom/mapbox/search/details/DetailsApiSettings;)Lcom/mapbox/search/details/DetailsApi;
 	public abstract fun retrieveDetails (Ljava/lang/String;Lcom/mapbox/search/details/RetrieveDetailsOptions;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun retrieveDetails (Ljava/lang/String;Lcom/mapbox/search/details/RetrieveDetailsOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public final class com/mapbox/search/details/DetailsApi$Companion {
+	public final fun create ()Lcom/mapbox/search/details/DetailsApi;
 	public final fun create (Lcom/mapbox/search/details/DetailsApiSettings;)Lcom/mapbox/search/details/DetailsApi;
+	public static synthetic fun create$default (Lcom/mapbox/search/details/DetailsApi$Companion;Lcom/mapbox/search/details/DetailsApiSettings;ILjava/lang/Object;)Lcom/mapbox/search/details/DetailsApi;
 }
 
 public final class com/mapbox/search/details/DetailsApi$DefaultImpls {

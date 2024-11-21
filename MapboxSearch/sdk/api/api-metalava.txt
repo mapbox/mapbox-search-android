@@ -607,14 +607,16 @@ package com.mapbox.search.analytics {
 package com.mapbox.search.details {
 
   @com.mapbox.search.base.ExperimentalMapboxSearchAPI public interface DetailsApi {
-    method public default static com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings);
+    method public default static com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings = DetailsApiSettings());
+    method public default static final com.mapbox.search.details.DetailsApi create();
     method public default com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, com.mapbox.search.SearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
     field public static final com.mapbox.search.details.DetailsApi.Companion Companion;
   }
 
   public static final class DetailsApi.Companion {
-    method public com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings);
+    method public com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings = DetailsApiSettings());
+    method public com.mapbox.search.details.DetailsApi create();
   }
 
   @com.mapbox.search.base.ExperimentalMapboxSearchAPI public final class DetailsApiSettings {
