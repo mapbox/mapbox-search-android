@@ -957,7 +957,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         searchEngine.retrieve(mapboxId, callback)
 
         val result = callback.getResultBlocking()
-        assertTrue(result is Exception)
+        assertTrue(result.isError)
     }
 
     @Test
