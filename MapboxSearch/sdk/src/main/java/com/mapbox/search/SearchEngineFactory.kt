@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.common.location.LocationProvider
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.StubCompletionCallback
@@ -93,18 +94,32 @@ internal class SearchEngineFactory {
             else -> null
         }
 
+        return createCoreEngineByApiType(
+            apiType = apiType,
+            baseUrl = baseUrl,
+            locationProvider = settings.locationProvider,
+            viewportProvider = settings.viewportProvider,
+        )
+    }
+
+    fun createCoreEngineByApiType(
+        apiType: ApiType,
+        baseUrl: String?,
+        locationProvider: LocationProvider?,
+        viewportProvider: ViewportProvider?,
+    ): CoreSearchEngineInterface {
         // Workaround for sync location provider in test environment.
         // Needed while https://github.com/mapbox/mapbox-search-sdk/issues/671 not fixed
-        val coreLocationProvider = if (settings.locationProvider is CoreLocationProvider) {
-            settings.locationProvider
+        val coreLocationProvider = if (locationProvider is CoreLocationProvider) {
+            locationProvider
         } else {
             WrapperLocationProvider(
                 LocationEngineAdapter(
                     BaseSearchSdkInitializerImpl.app,
-                    settings.locationProvider
+                    locationProvider
                 )
             ) {
-                settings.viewportProvider?.getViewport()?.mapToCore()
+                viewportProvider?.getViewport()?.mapToCore()
             }
         }
 

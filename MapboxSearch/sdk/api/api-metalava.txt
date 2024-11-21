@@ -604,6 +604,50 @@ package com.mapbox.search.analytics {
 
 }
 
+package com.mapbox.search.details {
+
+  @com.mapbox.search.base.ExperimentalMapboxSearchAPI public interface DetailsApi {
+    method public default static com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings = DetailsApiSettings());
+    method public default static final com.mapbox.search.details.DetailsApi create();
+    method public default com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, com.mapbox.search.SearchResultCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    field public static final com.mapbox.search.details.DetailsApi.Companion Companion;
+  }
+
+  public static final class DetailsApi.Companion {
+    method public com.mapbox.search.details.DetailsApi create(com.mapbox.search.details.DetailsApiSettings settings = DetailsApiSettings());
+    method public com.mapbox.search.details.DetailsApi create();
+  }
+
+  @com.mapbox.search.base.ExperimentalMapboxSearchAPI public final class DetailsApiSettings {
+    ctor public DetailsApiSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null, String? baseUrl = null);
+    ctor public DetailsApiSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.ViewportProvider? viewportProvider = null);
+    ctor public DetailsApiSettings(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    method public String? getBaseUrl();
+    method public com.mapbox.common.location.LocationProvider? getLocationProvider();
+    method public com.mapbox.search.ViewportProvider? getViewportProvider();
+    property public final String? baseUrl;
+    property public final com.mapbox.common.location.LocationProvider? locationProvider;
+    property public final com.mapbox.search.ViewportProvider? viewportProvider;
+  }
+
+  @com.mapbox.search.base.ExperimentalMapboxSearchAPI @kotlinx.parcelize.Parcelize public final class RetrieveDetailsOptions implements android.os.Parcelable {
+    ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>(), com.mapbox.search.common.IsoCountryCode? worldview = null);
+    ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>());
+    ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null);
+    method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
+    method public com.mapbox.search.common.IsoLanguageCode getLanguage();
+    method public com.mapbox.search.common.IsoCountryCode? getWorldview();
+    property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
+    property public final com.mapbox.search.common.IsoLanguageCode language;
+    property public final com.mapbox.search.common.IsoCountryCode? worldview;
+  }
+
+  public final class RetrieveDetailsOptionsKt {
+  }
+
+}
+
 package com.mapbox.search.record {
 
   @kotlinx.parcelize.Parcelize public final class FavoriteRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {

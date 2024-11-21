@@ -95,6 +95,11 @@
                 />
 
             <item
+                android:id="@+id/open_details_api_kt_example"
+                android:title="@string/action_open_details_api_kt_example"
+                />
+
+            <item
                 android:id="@+id/open_history_data_provider_kt_example"
                 android:title="@string/action_open_history_data_provider_kt_example"
                 />

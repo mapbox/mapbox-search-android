@@ -208,8 +208,8 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
                         OpenPeriod(
-                            open = WeekTimestamp(WeekDay.MONDAY, 9, 0),
-                            closed = WeekTimestamp(WeekDay.MONDAY, 23, 45)
+                            open = WeekTimestamp(WeekDay.SUNDAY, 9, 0),
+                            closed = WeekTimestamp(WeekDay.SUNDAY, 23, 45)
                         )
                     )
                 ),
