@@ -82,6 +82,14 @@ internal class SearchFeedbackEventsFactoryTest {
 
         every { eventJsonParser.serializeAny(any()) } returns TEST_SEARCH_RESULTS_INFO_JSON
 
+        every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
+            SearchFeedbackEvent().apply {
+                event = SearchFeedbackEvent.EVENT_NAME
+                endpoint = TEST_ENDPOINT
+                requestParamsJson = TEST_REQUEST_PARAMS_JSON
+            }
+        }
+
         feedbackEventsFactory = createEventsFactory()
     }
 
@@ -100,16 +108,6 @@ internal class SearchFeedbackEventsFactoryTest {
     @TestFactory
     fun `Check SearchResults converts to SearchFeedbackEvent`() = TestCase {
         Given("SearchFeedbackEventsFactory with mocked dependencies") {
-            every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
-                SearchFeedbackEvent().apply {
-                    event = SearchFeedbackEvent.EVENT_NAME
-                    endpoint = TEST_ENDPOINT
-                    requestParamsJson = TEST_REQUEST_PARAMS_JSON
-                }
-            }
-
-            feedbackEventsFactory = createEventsFactory()
-
             When("Converting search results with default feedback id") {
                 listOf(TEST_SERVER_SEARCH_RESULT, TEST_LOCAL_SEARCH_RESULT).forEach { searchResult ->
                     val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
@@ -228,16 +226,6 @@ internal class SearchFeedbackEventsFactoryTest {
     @TestFactory
     fun `Check SearchSuggestion converts to SearchFeedbackEvent`() = TestCase {
         Given("SearchFeedbackEventsFactory with mocked dependencies") {
-            every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
-                SearchFeedbackEvent().apply {
-                    event = SearchFeedbackEvent.EVENT_NAME
-                    endpoint = TEST_ENDPOINT
-                    requestParamsJson = TEST_REQUEST_PARAMS_JSON
-                }
-            }
-
-            feedbackEventsFactory = createEventsFactory()
-
             When("Converting search suggestions with default feedback id") {
                 listOf(
                     TEST_SERVER_SEARCH_SUGGESTION,
@@ -378,7 +366,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
                             userAgent = TEST_USER_AGENT
-                            queryString = ""
+                            queryString = NO_QUERY_STRING
                             feedbackReason = "Missing routable point"
                             feedbackText = "Fix, please!"
                             selectedItemName = TEST_FAVORITE_RECORD.address?.formattedAddress(SearchAddress.FormatStyle.Full)
@@ -438,7 +426,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             longitude = TEST_USER_LOCATION.longitude()
                             resultIndex = -1
                             userAgent = TEST_USER_AGENT
-                            queryString = ""
+                            queryString = NO_QUERY_STRING
                             feedbackReason = "Missing routable point"
                             feedbackText = "Fix, please!"
                             selectedItemName = NO_ADDRESS_PLACEHOLDER
@@ -482,16 +470,6 @@ internal class SearchFeedbackEventsFactoryTest {
     @TestFactory
     fun `Check ResponseInfo converts to SearchFeedbackEvent`() = TestCase {
         Given("SearchFeedbackEventsFactory with mocked dependencies") {
-            every { eventJsonParser.parse(TEST_CORE_RAW_EVENT) } answers {
-                SearchFeedbackEvent().apply {
-                    event = SearchFeedbackEvent.EVENT_NAME
-                    endpoint = TEST_ENDPOINT
-                    requestParamsJson = TEST_REQUEST_PARAMS_JSON
-                }
-            }
-
-            feedbackEventsFactory = createEventsFactory()
-
             When("Converting ResponseInfo with default feedback id") {
                 val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
 
@@ -592,6 +570,57 @@ internal class SearchFeedbackEventsFactoryTest {
         }
     }
 
+    @TestFactory
+    fun `Check options patching`() = TestCase {
+        Given("Request options with empty query and empty responseUuid") {
+            val options = createTestRequestOptions(
+                "",
+                endpoint = "suggest",
+                options = TEST_SEARCH_OPTIONS,
+                requestContext = SearchRequestContext(
+                    apiType = CoreApiType.SBS,
+                    keyboardLocale = TEST_LOCALE,
+                    screenOrientation = ScreenOrientation.PORTRAIT,
+                    responseUuid = ""
+                )
+            )
+
+            When("Search feedback event created") {
+                val callback = BlockingCompletionCallback<SearchFeedbackEvent>()
+
+                feedbackEventsFactory.createSearchFeedbackEvent(
+                    TEST_SERVER_SEARCH_SUGGESTION.rawSearchResult,
+                    options,
+                    null,
+                    TEST_USER_LOCATION,
+                    isReproducible = true,
+                    event = FeedbackEvent(
+                        reason = "Missing routable point",
+                        text = "Fix, please!",
+                        screenshot = mockBitmap,
+                        feedbackId = TEST_UUID,
+                    ),
+                    isCached = false,
+                    callback = callback
+                )
+
+                val feedback = callback.getResultBlocking().requireResult()
+
+                Then(
+                    "responseUuid should be null",
+                    null,
+                    feedback.responseUuid
+                )
+
+                Then(
+                    "queryString should be $NO_QUERY_STRING",
+                    NO_QUERY_STRING,
+                    feedback.queryString
+                )
+            }
+        }
+    }
+
     private companion object {
 
         const val TEST_USER_AGENT = "search-sdk-android-test"
@@ -613,6 +642,7 @@ internal class SearchFeedbackEventsFactoryTest {
         const val NOT_AVAILABLE_SESSION_ID = "<Not available>"
         const val SEARCH_FEEDBACK_SCHEMA_VERSION = "search.feedback-2.3"
         const val NO_ADDRESS_PLACEHOLDER = "<No address>"
+        const val NO_QUERY_STRING = "<no query string>"
 
         val TEST_SEARCH_OPTIONS = SearchOptions(
             proximity = TEST_USER_PROXIMITY,

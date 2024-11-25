@@ -164,8 +164,12 @@ internal class AnalyticsServiceImplTest {
                     throw IllegalStateException("Some illegal state") // This error should be thrown by sendFeedback.
                 }
 
-                Verify("Events service wasn't called") { eventsService wasNot Called }
-                Verify("Consumer callback was called") { mockConsumerCallback.onError(any()) }
+                VerifyNo("sendEvent() wasn't called") {
+                    eventsService.sendEvent(any(), any())
+                }
+                Verify("Consumer callback was called") {
+                    mockConsumerCallback.onError(any())
+                }
 
                 if (BuildConfig.DEBUG) {
                     Then("IllegalStateException was thrown") {
