@@ -322,6 +322,69 @@ public interface SearchEngine {
     )
 
     /**
+     * One-off search request to get a list of search results with coordinates and metadata.
+     * In contrast to Interactive Search ([search] and [select] functions),
+     * the [forward] request will not provide type-ahead suggestions,
+     * e.g., brand and category suggestions, but will only provide relevant search results.
+     * See the
+     * [Text Search documentation page](https://docs.mapbox.com/api/search/search-box/#search-request)
+     * for more details.
+     *
+     * This function makes a request to [Search Box](https://docs.mapbox.com/api/search/search-box)
+     * '/forward' endpoint.
+     *
+     * Please note that this function is supported only for [ApiType.SEARCH_BOX].
+     * If this [SearchEngine] was created with another [ApiType],
+     * the [SearchCallback.onError] will be triggered immediately.
+     *
+     * @param query Search query.
+     * @param options Search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Search result callback, delivers results using the provided [executor].
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public fun forward(
+        query: String,
+        options: ForwardSearchOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * One-off search request to get a list of search results with coordinates and metadata.
+     * In contrast to Interactive Search ([search] and [select] functions),
+     * the [forward] request will not provide type-ahead suggestions,
+     * e.g., brand and category suggestions, but will only provide relevant search results.
+     * See the
+     * [Text Search documentation page](https://docs.mapbox.com/api/search/search-box/#search-request)
+     * for more details.
+     *
+     * This function makes a request to [Search Box](https://docs.mapbox.com/api/search/search-box)
+     * '/forward' endpoint.
+     *
+     * Please note that this function is supported only for [ApiType.SEARCH_BOX].
+     * If this [SearchEngine] was created with another [ApiType],
+     * the [SearchCallback.onError] will be triggered immediately.
+     *
+     * @param query Search query.
+     * @param options Search options.
+     * @param callback Search result callback, delivers results on the main thread.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public fun forward(
+        query: String,
+        options: ForwardSearchOptions,
+        callback: SearchCallback,
+    ): AsyncOperationTask = forward(
+        query = query,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
      * Registers [dataProvider] in this [SearchEngine].
      *
      * @param dataProvider [IndexableDataProvider] to register.

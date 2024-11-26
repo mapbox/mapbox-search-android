@@ -26,7 +26,6 @@ import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.tests_support.createTestBaseSearchSuggestion
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
-import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot

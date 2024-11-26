@@ -402,6 +402,43 @@ internal class SearchEngineImpl(
         }
     }
 
+    override fun forward(
+        query: String,
+        options: ForwardSearchOptions,
+        executor: Executor,
+        callback: SearchCallback
+    ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-forward")
+
+        if (apiType != ApiType.SEARCH_BOX) {
+            executor.execute {
+                callback.onError(
+                    UnsupportedOperationException("Supported only for the SEARCH_BOX api type")
+                )
+            }
+            return AsyncOperationTaskImpl.COMPLETED
+        }
+
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
+            val requestContext = requestContextProvider.provide(apiType.mapToCore())
+            val requestId = coreEngine.forward(
+                query,
+                options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
+        }
+    }
+
     override fun <R : IndexableRecord> registerDataProvider(
         dataProvider: IndexableDataProvider<R>,
         executor: Executor,

@@ -7,6 +7,9 @@ import com.mapbox.search.base.failDebug
 
 /**
  * Values to filter results to include only a subset (one or more) of the available feature types.
+ * See the
+ * [Administrative unit types section](https://docs.mapbox.com/api/search/search-box/#administrative-unit-types)
+ * for details about the types.
  */
 public enum class QueryType {
 
