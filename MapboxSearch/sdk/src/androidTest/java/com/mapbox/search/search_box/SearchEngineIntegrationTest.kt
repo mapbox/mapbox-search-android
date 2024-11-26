@@ -1,3 +1,5 @@
+@file:OptIn(RestrictedMapboxSearchAPI::class)
+
 package com.mapbox.search.search_box
 
 import com.mapbox.common.LogConfiguration
@@ -23,6 +25,7 @@ import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.SelectOptions
 import com.mapbox.search.ServiceProvider
+import com.mapbox.search.base.RestrictedMapboxSearchAPI
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
@@ -258,6 +261,17 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(mapOf("id-1" to "id-1-key"), suggestion.externalIDs)
         assertEquals(0, suggestion.serverIndex)
         assertEquals(SearchSuggestionType.SearchResultSuggestion(listOf(SearchResultType.POI)), suggestion.type)
+        assertEquals(
+            Point.fromLngLat(-77.034309387207, 38.9028091430664),
+            suggestion.coordinate,
+        )
+        assertEquals(
+            listOf(RoutablePoint(
+                point = Point.fromLngLat(-77.03430676, 38.9026476),
+                name = "POI",
+            )),
+            suggestion.routablePoints,
+        )
 
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE), suggestions[1].type)
         assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.STREET), suggestions[2].type)

@@ -1274,6 +1274,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
 	public final fun getCategories ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDescriptionText ()Ljava/lang/String;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
@@ -1285,6 +1286,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
+	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getServerIndex ()Ljava/lang/Integer;
 	public final fun getType ()Lcom/mapbox/search/result/SearchSuggestionType;
 	public fun hashCode ()I
