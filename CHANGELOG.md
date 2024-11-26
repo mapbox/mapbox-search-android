@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.6.2
+
+### New features
+- Now `SearchSuggestion` type provides new properties - `coordinate` and `routablePoints`. This is a restricted API, available for selected customers only. Contact our team, if you're interested in this API.
+- Now `SearchEngine` provides new function `SearchEngine#forward()` to make an one-off search request to get a list of search results with coordinates and metadata. See https://docs.mapbox.com/api/search/search-box/#search-request for more information.
+
+### Bug fixes
+- Fixed `AnalyticsService#sendFeedback()` function which couldn't sent feedback event for `Search Box` api responses.
+
+### Mapbox dependencies
+- Search Native SDK `2.6.2`
+- Common SDK `24.8.0`
+
+
+
 ## 2.6.1
 
 ### New features
