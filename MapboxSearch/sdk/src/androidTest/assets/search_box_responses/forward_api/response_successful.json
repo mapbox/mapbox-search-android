@@ -1,0 +1,578 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [-77.0330038, 38.9098802],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Starbucks",
+        "mapbox_id": "dXJuOm1ieHBvaTphMzU1MDUwNy1kNzQ0LTQ4MGQtYjQ0ZC04MTQwMzk3MzdhNGE",
+        "feature_type": "poi",
+        "address": "1429 P St NW",
+        "full_address": "1429 P St NW, Washington, District of Columbia 20005, United States",
+        "place_formatted": "Washington, District of Columbia 20005, United States",
+        "context": {
+          "country": {
+            "name": "United States",
+            "country_code": "US",
+            "country_code_alpha_3": "USA"
+          },
+          "region": {
+            "name": "District of Columbia",
+            "region_code": "DC",
+            "region_code_full": "US-DC"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpBNTd1N0E",
+            "name": "20005"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpGSmlvN0E",
+            "name": "Washington"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpGZnRNN0E",
+            "name": "Logan Circle"
+          },
+          "address": {
+            "name": "1429 P St NW",
+            "address_number": "1429",
+            "street_name": "p st nw"
+          },
+          "street": {
+            "name": "P St NW"
+          }
+        },
+        "coordinates": {
+          "latitude": 38.9098802,
+          "longitude": -77.0330038,
+          "routable_points": [
+            {
+              "name": "POI",
+              "latitude": 38.909659,
+              "longitude": -77.03309
+            }
+          ]
+        },
+        "language": "",
+        "maki": "cafe",
+        "poi_category": [
+          "café",
+          "food",
+          "food and drink",
+          "restaurant",
+          "teahouse"
+        ],
+        "poi_category_ids": [
+          "cafe",
+          "food",
+          "food_and_drink",
+          "restaurant",
+          "teahouse"
+        ],
+        "brand": [
+          "Starbucks",
+          "星巴克",
+          "スターバックス",
+          "สตาร์บัคส์",
+          "ستاربكس"
+        ],
+        "brand_id": [
+          "starbucks"
+        ],
+        "external_ids": {
+          "golden": "starbucks-7845",
+          "tripadvisor": "4275499",
+          "dataplor": "fef2609d-6a51-495a-a6d3-98edcccf83a8"
+        },
+        "metadata": {
+          "review_count": 28,
+          "phone": "+12024629717",
+          "website": "http://www.starbucks.com",
+          "rating": 4,
+          "photos": [
+            {
+              "width": 50,
+              "height": 50,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-t/08/0f/e2/c6/starbucks.jpg"
+            },
+            {
+              "width": 150,
+              "height": 150,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-l/08/0f/e2/c6/starbucks.jpg"
+            },
+            {
+              "width": 154,
+              "height": 205,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-f/08/0f/e2/c6/starbucks.jpg"
+            },
+            {
+              "width": 338,
+              "height": 450,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-s/08/0f/e2/c6/starbucks.jpg"
+            },
+            {
+              "width": 1125,
+              "height": 1500,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-o/08/0f/e2/c6/starbucks.jpg"
+            }
+          ],
+          "open_hours": {
+            "periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 0,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 1,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 1,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 2,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 2,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 3,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 3,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 4,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 4,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 5,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 5,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 6,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 6,
+                  "time": "2000"
+                }
+              }
+            ]
+          },
+          "primary_photo": "https://media-cdn.tripadvisor.com/media/photo-t/08/0f/e2/c6/starbucks.jpg"
+        },
+        "distance": 600
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [-77.0247268676758, 38.9036445617676],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Starbucks",
+        "mapbox_id": "dXJuOm1ieHBvaToxODU5N2YxNi00ZWQ0LTRhODYtYWY5OS03NTA1YjkxNjZlZWI",
+        "feature_type": "poi",
+        "address": "901 Massachusetts Avenue Northwest",
+        "full_address": "901 Massachusetts Avenue Northwest, Washington, District of Columbia 20001, United States",
+        "place_formatted": "Washington, District of Columbia 20001, United States",
+        "context": {
+          "country": {
+            "name": "United States",
+            "country_code": "US",
+            "country_code_alpha_3": "USA"
+          },
+          "region": {
+            "name": "District of Columbia",
+            "region_code": "DC",
+            "region_code_full": "US-DC"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpBNTV1N0E",
+            "name": "20001"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpGSmlvN0E",
+            "name": "Washington"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpDaXpzN0E",
+            "name": "Downtown"
+          },
+          "address": {
+            "name": "901 Massachusetts Avenue Northwest",
+            "address_number": "901",
+            "street_name": "massachusetts avenue northwest"
+          },
+          "street": {
+            "name": "massachusetts avenue northwest"
+          }
+        },
+        "coordinates": {
+          "latitude": 38.9036445617676,
+          "longitude": -77.0247268676758,
+          "routable_points": [
+            {
+              "name": "POI",
+              "latitude": 38.90335878,
+              "longitude": -77.02486489
+            }
+          ]
+        },
+        "language": "",
+        "maki": "restaurant",
+        "poi_category": [
+          "bakery",
+          "café",
+          "coffee",
+          "coffee shop",
+          "food",
+          "food and drink",
+          "teahouse"
+        ],
+        "poi_category_ids": [
+          "bakery",
+          "cafe",
+          "coffee",
+          "coffee_shop",
+          "food",
+          "food_and_drink",
+          "teahouse"
+        ],
+        "brand": [
+          "Starbucks",
+          "星巴克",
+          "スターバックス",
+          "สตาร์บัคส์",
+          "ستاربكس"
+        ],
+        "brand_id": [
+          "starbucks"
+        ],
+        "external_ids": {
+          "golden": "starbucks-22039",
+          "dataplor": "c72a692a-4fd6-4420-935e-2f79d02ae635"
+        },
+        "metadata": {
+          "phone": "+12022897451",
+          "website": "https://www.starbucks.com/store-locator/store/7410/",
+          "open_hours": {
+            "periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": "0500"
+                },
+                "close": {
+                  "day": 0,
+                  "time": "1900"
+                }
+              },
+              {
+                "open": {
+                  "day": 1,
+                  "time": "0430"
+                },
+                "close": {
+                  "day": 1,
+                  "time": "1930"
+                }
+              },
+              {
+                "open": {
+                  "day": 2,
+                  "time": "0430"
+                },
+                "close": {
+                  "day": 2,
+                  "time": "1930"
+                }
+              },
+              {
+                "open": {
+                  "day": 3,
+                  "time": "0430"
+                },
+                "close": {
+                  "day": 3,
+                  "time": "1930"
+                }
+              },
+              {
+                "open": {
+                  "day": 4,
+                  "time": "0430"
+                },
+                "close": {
+                  "day": 4,
+                  "time": "1930"
+                }
+              },
+              {
+                "open": {
+                  "day": 5,
+                  "time": "0430"
+                },
+                "close": {
+                  "day": 5,
+                  "time": "1930"
+                }
+              },
+              {
+                "open": {
+                  "day": 6,
+                  "time": "0500"
+                },
+                "close": {
+                  "day": 6,
+                  "time": "1900"
+                }
+              }
+            ]
+          }
+        },
+        "distance": 800
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [-77.0403442382813, 38.8987197875977],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Starbucks",
+        "mapbox_id": "dXJuOm1ieHBvaTo0Nzg1MDNiNy04NWI0LTQwZTctYWEyZS02NjI2MjllZjhkMWE",
+        "feature_type": "poi",
+        "address": "1730 Pennsylvania Avenue Northwest",
+        "full_address": "1730 Pennsylvania Avenue Northwest, Washington, District of Columbia 20006, United States",
+        "place_formatted": "Washington, District of Columbia 20006, United States",
+        "context": {
+          "country": {
+            "name": "United States",
+            "country_code": "US",
+            "country_code_alpha_3": "USA"
+          },
+          "region": {
+            "name": "District of Columbia",
+            "region_code": "DC",
+            "region_code_full": "US-DC"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpBNThPN0E",
+            "name": "20006"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpGSmlvN0E",
+            "name": "Washington"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpEU0NzN0E",
+            "name": "Foggy Bottom"
+          },
+          "address": {
+            "name": "1730 Pennsylvania Avenue Northwest",
+            "address_number": "1730",
+            "street_name": "pennsylvania avenue northwest"
+          },
+          "street": {
+            "name": "pennsylvania avenue northwest"
+          }
+        },
+        "coordinates": {
+          "latitude": 38.8987197875977,
+          "longitude": -77.0403442382813,
+          "routable_points": [
+            {
+              "name": "POI",
+              "latitude": 38.899056,
+              "longitude": -77.040148
+            }
+          ]
+        },
+        "language": "",
+        "maki": "restaurant",
+        "poi_category": [
+          "bakery",
+          "café",
+          "coffee",
+          "coffee shop",
+          "food",
+          "food and drink",
+          "teahouse"
+        ],
+        "poi_category_ids": [
+          "bakery",
+          "cafe",
+          "coffee",
+          "coffee_shop",
+          "food",
+          "food_and_drink",
+          "teahouse"
+        ],
+        "brand": [
+          "Starbucks",
+          "星巴克",
+          "スターバックス",
+          "สตาร์บัคส์",
+          "ستاربكس"
+        ],
+        "brand_id": [
+          "starbucks"
+        ],
+        "external_ids": {
+          "tripadvisor": "4111839",
+          "dataplor": "9d3a7f34-e6d1-4941-a963-08b05d4ed9e9",
+          "golden": "starbucks-735"
+        },
+        "metadata": {
+          "review_count": 31,
+          "phone": "+12023931811",
+          "website": "http://www.starbucks.com",
+          "rating": 4,
+          "photos": [
+            {
+              "width": 50,
+              "height": 50,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-t/08/89/40/86/ambiente.jpg"
+            },
+            {
+              "width": 150,
+              "height": 150,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-l/08/89/40/86/ambiente.jpg"
+            },
+            {
+              "width": 154,
+              "height": 205,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-f/08/89/40/86/ambiente.jpg"
+            },
+            {
+              "width": 338,
+              "height": 450,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-s/08/89/40/86/ambiente.jpg"
+            },
+            {
+              "width": 1536,
+              "height": 2048,
+              "url": "https://media-cdn.tripadvisor.com/media/photo-o/08/89/40/86/ambiente.jpg"
+            }
+          ],
+          "open_hours": {
+            "periods": [
+              {
+                "open": {
+                  "day": 0,
+                  "time": "0730"
+                },
+                "close": {
+                  "day": 0,
+                  "time": "1900"
+                }
+              },
+              {
+                "open": {
+                  "day": 1,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 1,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 2,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 2,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 3,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 3,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 4,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 4,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 5,
+                  "time": "0530"
+                },
+                "close": {
+                  "day": 5,
+                  "time": "2000"
+                }
+              },
+              {
+                "open": {
+                  "day": 6,
+                  "time": "0730"
+                },
+                "close": {
+                  "day": 6,
+                  "time": "1900"
+                }
+              }
+            ]
+          },
+          "primary_photo": "https://media-cdn.tripadvisor.com/media/photo-t/08/89/40/86/ambiente.jpg"
+        },
+        "distance": 900
+      }
+    }
+  ],
+  "attribution": "© 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)",
+  "response_id": "dvOsuPxXi66rMTotPSVuv-BpZJ9xTHgOSiD6hHRJi7Vq6i3FpuE7VyxxbORH9S1ioSshBBr0WCTlqyiEuEg8BuIualSqCpnAeX8="
+}
