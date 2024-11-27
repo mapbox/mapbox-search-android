@@ -114,6 +114,55 @@ public final class com/mapbox/search/EtaType$Creator : android/os/Parcelable$Cre
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/ForwardSearchOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public synthetic fun <init> (Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Ljava/util/Map;ZLjava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;)Lcom/mapbox/search/ForwardSearchOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/ForwardSearchOptions;
+	public fun describeContents ()I
+	public final fun getBoundingBox ()Lcom/mapbox/geojson/BoundingBox;
+	public final fun getCountries ()Ljava/util/List;
+	public final fun getIgnoreIndexableRecords ()Z
+	public final fun getIndexableRecordsDistanceThresholdMeters ()Ljava/lang/Double;
+	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getNavigationOptions ()Lcom/mapbox/search/SearchNavigationOptions;
+	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
+	public final fun getProximity ()Lcom/mapbox/geojson/Point;
+	public final fun getRequestDebounce ()Ljava/lang/Integer;
+	public final fun getTypes ()Ljava/util/List;
+	public final fun getUnsafeParameters ()Ljava/util/Map;
+	public final fun toBuilder ()Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/ForwardSearchOptions$Builder {
+	public fun <init> ()V
+	public final fun boundingBox (Lcom/mapbox/geojson/BoundingBox;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun build ()Lcom/mapbox/search/ForwardSearchOptions;
+	public final fun countries (Ljava/util/List;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun countries ([Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun ignoreIndexableRecords (Z)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun indexableRecordsDistanceThresholdMeters (Ljava/lang/Double;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun language (Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun limit (I)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun requestDebounce (I)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun types (Ljava/util/List;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun types ([Lcom/mapbox/search/QueryType;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun unsafeParameters (Ljava/util/Map;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+}
+
+public final class com/mapbox/search/ForwardSearchOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/ForwardSearchOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/ForwardSearchOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/QueryType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/QueryType;
 	public static final field CATEGORY Lcom/mapbox/search/QueryType;
@@ -311,6 +360,8 @@ public abstract interface class com/mapbox/search/SearchEngine {
 	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;)Lcom/mapbox/search/SearchEngine;
 	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;)Lcom/mapbox/search/SearchEngine;
 	public static fun createSearchEngineWithBuiltInDataProviders (Lcom/mapbox/search/SearchEngineSettings;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/SearchEngine;
+	public abstract fun forward (Ljava/lang/String;Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun forward (Ljava/lang/String;Lcom/mapbox/search/ForwardSearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun getAnalyticsService ()Lcom/mapbox/search/analytics/AnalyticsService;
 	public abstract fun getApiType ()Lcom/mapbox/search/ApiType;
 	public abstract fun getSettings ()Lcom/mapbox/search/SearchEngineSettings;
@@ -347,6 +398,7 @@ public final class com/mapbox/search/SearchEngine$Companion {
 }
 
 public final class com/mapbox/search/SearchEngine$DefaultImpls {
+	public static fun forward (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun registerDataProvider (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun retrieve (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
@@ -1274,6 +1326,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddress ()Lcom/mapbox/search/result/SearchAddress;
 	public final fun getCategories ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
 	public final fun getDescriptionText ()Ljava/lang/String;
 	public final fun getDistanceMeters ()Ljava/lang/Double;
 	public final fun getEtaMinutes ()Ljava/lang/Double;
@@ -1285,6 +1338,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
+	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getServerIndex ()Ljava/lang/Integer;
 	public final fun getType ()Lcom/mapbox/search/result/SearchSuggestionType;
 	public fun hashCode ()I

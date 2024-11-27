@@ -26,7 +26,6 @@ import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.tests_support.createTestBaseSearchSuggestion
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
-import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -164,8 +163,12 @@ internal class AnalyticsServiceImplTest {
                     throw IllegalStateException("Some illegal state") // This error should be thrown by sendFeedback.
                 }
 
-                Verify("Events service wasn't called") { eventsService wasNot Called }
-                Verify("Consumer callback was called") { mockConsumerCallback.onError(any()) }
+                VerifyNo("sendEvent() wasn't called") {
+                    eventsService.sendEvent(any(), any())
+                }
+                Verify("Consumer callback was called") {
+                    mockConsumerCallback.onError(any())
+                }
 
                 if (BuildConfig.DEBUG) {
                     Then("IllegalStateException was thrown") {

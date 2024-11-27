@@ -31,6 +31,17 @@
           "name": "connecticut ave nw"
         }
       },
+      "coordinates": {
+        "latitude": 38.9028091430664,
+        "longitude": -77.034309387207,
+        "routable_points": [
+          {
+            "name": "POI",
+            "latitude": 38.9026476,
+            "longitude": -77.03430676
+          }
+        ]
+      },
       "language": "en",
       "maki": "marker",
       "poi_category": [

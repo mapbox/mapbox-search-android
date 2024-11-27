@@ -1,12 +1,18 @@
+@file:OptIn(RestrictedMapboxSearchAPI::class)
+
 package com.mapbox.search.result
 
 import android.os.Parcelable
+import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
+import com.mapbox.search.base.RestrictedMapboxSearchAPI
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
+import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.IgnoredOnParcel
@@ -33,6 +39,24 @@ public class SearchSuggestion internal constructor(
      */
     @IgnoredOnParcel
     public val name: String = base.name
+
+    /**
+     * Search suggestion coordinate.
+     * Coordinates at suggestions step are available for selected customers only.
+     * Contact our team, if you're interested in this API.
+     */
+    @IgnoredOnParcel
+    @RestrictedMapboxSearchAPI
+    public val coordinate: Point? = base.coordinate
+
+    /**
+     * List of points near [coordinate], that represents entries to associated building.
+     * Routable points at suggestions step are available for selected customers only.
+     * Contact our team, if you're interested in this API.
+     */
+    @IgnoredOnParcel
+    @RestrictedMapboxSearchAPI
+    public val routablePoints: List<RoutablePoint>? = base.routablePoints?.map { it.mapToPlatform() }
 
     /**
      * The feature name, as matched by the search algorithm.
@@ -130,6 +154,8 @@ public class SearchSuggestion internal constructor(
 
         if (id != other.id) return false
         if (name != other.name) return false
+        if (coordinate != other.coordinate) return false
+        if (routablePoints != other.routablePoints) return false
         if (matchingName != other.matchingName) return false
         if (descriptionText != other.descriptionText) return false
         if (address != other.address) return false
@@ -153,6 +179,8 @@ public class SearchSuggestion internal constructor(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
+        result = 31 * result + (coordinate?.hashCode() ?: 0)
+        result = 31 * result + (routablePoints?.hashCode() ?: 0)
         result = 31 * result + (matchingName?.hashCode() ?: 0)
         result = 31 * result + (descriptionText?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
@@ -176,6 +204,8 @@ public class SearchSuggestion internal constructor(
         return "SearchSuggestion(" +
                 "id='$id', " +
                 "name='$name', " +
+                "coordinate=$coordinate, " +
+                "routablePoints=$routablePoints, " +
                 "matchingName=$matchingName, " +
                 "descriptionText=$descriptionText, " +
                 "address=$address, " +

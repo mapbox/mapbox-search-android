@@ -89,6 +89,7 @@ internal class SearchFeedbackEventsFactory(
             }
             resultCoordinates = record.coordinate.coordinates()
             schema = "${SearchFeedbackEvent.EVENT_NAME}-$SEARCH_FEEDBACK_SCHEMA_VERSION"
+            fallbackRequiredFields()
         }
     }
 
@@ -156,6 +157,7 @@ internal class SearchFeedbackEventsFactory(
                     longitude = null
                     userAgent = null
                 }
+                fallbackRequiredFields()
             }
 
             callback.onComplete(baseEvent)
@@ -169,7 +171,6 @@ internal class SearchFeedbackEventsFactory(
         }
         country = requestOptions.options.countries?.map { it.code }
         types = requestOptions.options.types?.map { it.mapToCore().toString() }
-        @Suppress("DEPRECATION")
         fuzzyMatch = requestOptions.options.fuzzyMatch
         limit = requestOptions.options.limit
         proximity = requestOptions.options.proximity?.coordinates()
@@ -224,11 +225,21 @@ internal class SearchFeedbackEventsFactory(
         }
     }
 
+    private fun SearchFeedbackEvent.fallbackRequiredFields() {
+        if (responseUuid.isNullOrBlank()) {
+            responseUuid = null
+        }
+        if (queryString.isNullOrBlank()) {
+            queryString = NO_QUERY_STRING
+        }
+    }
+
     private companion object {
         const val SEARCH_FEEDBACK_SCHEMA_VERSION = "2.3"
         const val INDEXABLE_RECORD_SESSION_IDENTIFIER = "<Not available>"
         const val INDEXABLE_RECORD_FALLBACK_FEEDBACK_NAME = "<No address>"
         const val MISSING_RESULT_FEEDBACK_REASON = "cannot_find"
+        const val NO_QUERY_STRING = "<no query string>"
         val BITMAP_ENCODE_OPTIONS = BitmapEncodeOptions(minSideSize = 400, compressQuality = 90)
     }
 }
