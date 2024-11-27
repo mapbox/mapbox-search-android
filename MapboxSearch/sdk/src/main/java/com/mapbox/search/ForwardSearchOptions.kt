@@ -5,6 +5,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
@@ -345,22 +346,18 @@ public class ForwardSearchOptions private constructor(
 }
 
 @JvmSynthetic
-internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
+internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = createCoreSearchOptions(
     proximity = proximity,
     origin = origin,
     navProfile = navigationOptions?.navigationProfile?.rawName,
     etaType = navigationOptions?.etaType?.rawName,
     bbox = boundingBox?.mapToCore(),
     countries = countries?.map { it.code },
-    fuzzyMatch = null,
     language = language?.code?.let { listOf(it) },
     limit = limit,
     types = types?.mapToCoreTypes(),
     ignoreUR = ignoreIndexableRecords,
     urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
     requestDebounce = requestDebounce,
-    route = null,
-    sarType = null,
-    timeDeviation = null,
-    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )

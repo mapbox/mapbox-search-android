@@ -2,11 +2,11 @@ package com.mapbox.search.offline
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
-import com.mapbox.search.common.tests.createTestCoreSearchOptions
 import com.mapbox.search.common.tests.withPrefabTestPoint
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -50,6 +50,7 @@ internal class OfflineSearchOptionsTest {
                     limit = null,
                     origin = null,
                     boundingBox = null,
+                    searchPlacesOutsideBondingBox = false,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -67,6 +68,7 @@ internal class OfflineSearchOptionsTest {
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
+                    .searchPlacesOutsideBondingBox(true)
                     .build()
 
                 val expectedOptions = OfflineSearchOptions(
@@ -74,6 +76,7 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
+                    searchPlacesOutsideBondingBox = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -86,7 +89,7 @@ internal class OfflineSearchOptionsTest {
         Given("OfflineSearchOptions builder") {
             When("Build new OfflineSearchOptions with all values set") {
                 val actualOptions = OfflineSearchOptions().mapToCore()
-                val expectedOptions = createTestCoreSearchOptions()
+                val expectedOptions = createCoreSearchOptions()
                 Then("Options should be as expected", expectedOptions, actualOptions)
             }
         }
@@ -101,13 +104,15 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
+                    searchPlacesOutsideBondingBox = true,
                 ).mapToCore()
 
-                val expectedOptions = createTestCoreSearchOptions(
+                val expectedOptions = createCoreSearchOptions(
                     proximity = TEST_POINT,
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
+                    offlineSearchPlacesOutsideBbox = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -124,6 +129,7 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
+                    searchPlacesOutsideBondingBox = true,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())

@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.7.0-beta.1
+
+### New features
+- New option `OfflineSearchOptions.searchPlacesOutsideBondingBox` is available. It allows to search for places outside of the bounding box, if `boundingBox` option is specified.
+
+### Mapbox dependencies
+- Search Native SDK `2.7.0-beta.1`
+- Common SDK `24.9.0-beta.1`
+
+
+
 ## 2.6.2
 
 ### New features
