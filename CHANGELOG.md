@@ -3,7 +3,7 @@
 ## 2.7.0-beta.1
 
 ### New features
-- New option `OfflineSearchOptions.searchPlacesOutsideBondingBox` is available. It allows to search for places outside of the bounding box, if `boundingBox` option is specified.
+- New option `OfflineSearchOptions.searchPlacesOutsideBoundingBox` is available. It allows to search for places outside of the bounding box, if `boundingBox` option is specified.
 
 ### Mapbox dependencies
 - Search Native SDK `2.7.0-beta.1`
