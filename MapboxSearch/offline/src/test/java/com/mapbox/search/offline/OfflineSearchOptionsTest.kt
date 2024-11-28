@@ -50,7 +50,7 @@ internal class OfflineSearchOptionsTest {
                     limit = null,
                     origin = null,
                     boundingBox = null,
-                    searchPlacesOutsideBondingBox = false,
+                    searchPlacesOutsideBoundingBox = false,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -68,7 +68,7 @@ internal class OfflineSearchOptionsTest {
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
-                    .searchPlacesOutsideBondingBox(true)
+                    .searchPlacesOutsideBoundingBox(true)
                     .build()
 
                 val expectedOptions = OfflineSearchOptions(
@@ -76,7 +76,7 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    searchPlacesOutsideBondingBox = true,
+                    searchPlacesOutsideBoundingBox = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -104,7 +104,7 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    searchPlacesOutsideBondingBox = true,
+                    searchPlacesOutsideBoundingBox = true,
                 ).mapToCore()
 
                 val expectedOptions = createCoreSearchOptions(
@@ -129,7 +129,7 @@ internal class OfflineSearchOptionsTest {
                     limit = 100,
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
-                    searchPlacesOutsideBondingBox = true,
+                    searchPlacesOutsideBoundingBox = true,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())

@@ -40,11 +40,11 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
 
     /**
      * By default, when [boundingBox] is applied, all results outside the bounding box
-     * are filtered out. If [searchPlacesOutsideBondingBox] is set to true, the search
+     * are filtered out. If [searchPlacesOutsideBoundingBox] is set to true, the search
      * for places will be global, meaning results outside the [boundingBox] will not be
      * filtered out, even if a [boundingBox] is applied. Default if false.
      */
-    public val searchPlacesOutsideBondingBox: Boolean = false
+    public val searchPlacesOutsideBoundingBox: Boolean = false
 ) : Parcelable {
 
     init {
@@ -71,7 +71,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         if (limit != other.limit) return false
         if (origin != other.origin) return false
         if (boundingBox != other.boundingBox) return false
-        if (searchPlacesOutsideBondingBox != other.searchPlacesOutsideBondingBox) return false
+        if (searchPlacesOutsideBoundingBox != other.searchPlacesOutsideBoundingBox) return false
 
         return true
     }
@@ -84,7 +84,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         result = 31 * result + (limit ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (boundingBox?.hashCode() ?: 0)
-        result = 31 * result + searchPlacesOutsideBondingBox.hashCode()
+        result = 31 * result + searchPlacesOutsideBoundingBox.hashCode()
         return result
     }
 
@@ -97,7 +97,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
                 " limit=$limit, " +
                 "origin=$origin, " +
                 "boundingBox=$boundingBox, " +
-                "searchPlacesOutsideBondingBox=$searchPlacesOutsideBondingBox" +
+                "searchPlacesOutsideBoundingBox=$searchPlacesOutsideBoundingBox" +
                 ")"
     }
 
@@ -110,14 +110,14 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         private var limit: Int? = null
         private var origin: Point? = null
         private var boundingBox: BoundingBox? = null
-        private var searchPlacesOutsideBondingBox: Boolean = false
+        private var searchPlacesOutsideBoundingBox: Boolean = false
 
         internal constructor(options: OfflineSearchOptions) : this() {
             proximity = options.proximity
             limit = options.limit
             origin = options.origin
             boundingBox = options.boundingBox
-            searchPlacesOutsideBondingBox = options.searchPlacesOutsideBondingBox
+            searchPlacesOutsideBoundingBox = options.searchPlacesOutsideBoundingBox
         }
 
         /**
@@ -142,14 +142,14 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
 
         /**
          * By default, when [boundingBox] is applied, all results outside the bounding box
-         * are filtered out. If [searchPlacesOutsideBondingBox] is set to true, the search
+         * are filtered out. If [searchPlacesOutsideBoundingBox] is set to true, the search
          * for places will be global, meaning results outside the [boundingBox] will not be
          * filtered out, even if a [boundingBox] is applied. Default if false.
          */
-        public fun searchPlacesOutsideBondingBox(
-            searchPlacesOutsideBondingBox: Boolean,
+        public fun searchPlacesOutsideBoundingBox(
+            searchPlacesOutsideBoundingBox: Boolean,
         ): Builder = apply {
-            this.searchPlacesOutsideBondingBox = searchPlacesOutsideBondingBox
+            this.searchPlacesOutsideBoundingBox = searchPlacesOutsideBoundingBox
         }
 
         /**
@@ -160,7 +160,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
             limit = limit,
             origin = origin,
             boundingBox = boundingBox,
-            searchPlacesOutsideBondingBox = searchPlacesOutsideBondingBox,
+            searchPlacesOutsideBoundingBox = searchPlacesOutsideBoundingBox,
         )
     }
 }
@@ -171,5 +171,5 @@ internal fun OfflineSearchOptions.mapToCore(): CoreSearchOptions = createCoreSea
     origin = origin,
     bbox = boundingBox?.mapToCore(),
     limit = limit,
-    offlineSearchPlacesOutsideBbox = searchPlacesOutsideBondingBox,
+    offlineSearchPlacesOutsideBbox = searchPlacesOutsideBoundingBox,
 )

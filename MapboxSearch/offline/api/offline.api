@@ -224,7 +224,7 @@ public final class com/mapbox/search/offline/OfflineSearchOptions : android/os/P
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
 	public final fun getProximity ()Lcom/mapbox/geojson/Point;
-	public final fun getSearchPlacesOutsideBondingBox ()Z
+	public final fun getSearchPlacesOutsideBoundingBox ()Z
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
 	public fun toString ()Ljava/lang/String;
@@ -238,7 +238,7 @@ public final class com/mapbox/search/offline/OfflineSearchOptions$Builder {
 	public final fun limit (I)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
 	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
-	public final fun searchPlacesOutsideBondingBox (Z)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
+	public final fun searchPlacesOutsideBoundingBox (Z)Lcom/mapbox/search/offline/OfflineSearchOptions$Builder;
 }
 
 public final class com/mapbox/search/offline/OfflineSearchOptions$Creator : android/os/Parcelable$Creator {
