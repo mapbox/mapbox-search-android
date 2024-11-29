@@ -41,7 +41,7 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '11.8.0'
+    mapbox_maps_version = '11.9.0-beta.1'
     mapbox_turf_version = '6.15.0'
 
     common_sdk_version = '24.9.0-beta.1'
