@@ -6,6 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
 import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountryCode
@@ -392,22 +393,20 @@ public class CategorySearchOptions @JvmOverloads public constructor(
 }
 
 @JvmSynthetic
-internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = CoreSearchOptions(
-    proximity,
-    origin,
-    navigationProfile?.rawName,
-    null,
-    boundingBox?.mapToCore(),
-    countries?.map { it.code },
-    fuzzyMatch,
-    languages?.map { it.code },
-    limit,
-    null,
-    ignoreIndexableRecords,
-    indexableRecordsDistanceThresholdMeters,
-    requestDebounce,
-    routeOptions?.route,
-    routeOptions?.deviation?.sarType?.rawName,
-    routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = createCoreSearchOptions(
+    proximity = proximity,
+    origin = origin,
+    navProfile = navigationProfile?.rawName,
+    bbox = boundingBox?.mapToCore(),
+    countries = countries?.map { it.code },
+    fuzzyMatch = fuzzyMatch,
+    language = languages?.map { it.code },
+    limit = limit,
+    ignoreUR = ignoreIndexableRecords,
+    urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
+    requestDebounce = requestDebounce,
+    route = routeOptions?.route,
+    sarType = routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = routeOptions?.timeDeviationMinutes,
+    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )

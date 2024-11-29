@@ -8,6 +8,7 @@ import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.RouteOptions.Deviation.SarType
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
@@ -433,24 +434,24 @@ internal fun validateLimit(limit: Int?): Int? {
 }
 
 @JvmSynthetic
-internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
-    proximity,
-    origin,
-    navigationOptions?.navigationProfile?.rawName,
-    navigationOptions?.etaType?.rawName,
-    boundingBox?.mapToCore(),
-    countries?.map { it.code },
-    fuzzyMatch,
-    languages?.map { it.code },
-    limit,
-    types?.mapToCoreTypes(),
-    ignoreIndexableRecords,
-    indexableRecordsDistanceThresholdMeters,
-    requestDebounce,
-    routeOptions?.route,
-    routeOptions?.deviation?.sarType?.rawName,
-    routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+internal fun SearchOptions.mapToCore(): CoreSearchOptions = createCoreSearchOptions(
+    proximity = proximity,
+    origin = origin,
+    navProfile = navigationOptions?.navigationProfile?.rawName,
+    etaType = navigationOptions?.etaType?.rawName,
+    bbox = boundingBox?.mapToCore(),
+    countries = countries?.map { it.code },
+    fuzzyMatch = fuzzyMatch,
+    language = languages?.map { it.code },
+    limit = limit,
+    types = types?.mapToCoreTypes(),
+    ignoreUR = ignoreIndexableRecords,
+    urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
+    requestDebounce = requestDebounce,
+    route = routeOptions?.route,
+    sarType = routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = routeOptions?.timeDeviationMinutes,
+    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )
 
 @JvmSynthetic

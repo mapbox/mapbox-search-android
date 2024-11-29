@@ -47,6 +47,7 @@ fun createTestCoreSearchOptions(
     sarType: String? = null,
     timeDeviation: Double? = null,
     addonAPI: Map<String, String>? = null,
+    offlineSearchPlacesOutsideBbox: Boolean = false,
 ): SearchOptions = SearchOptions(
     proximity,
     origin,
@@ -64,7 +65,8 @@ fun createTestCoreSearchOptions(
     route,
     sarType,
     timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    offlineSearchPlacesOutsideBbox,
 )
 
 @Suppress("LongParameterList")
