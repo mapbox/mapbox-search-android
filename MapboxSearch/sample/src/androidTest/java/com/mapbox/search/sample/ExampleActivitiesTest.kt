@@ -9,10 +9,12 @@ import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
 import com.mapbox.search.sample.api.CustomIndexableDataProviderKotlinExample
+import com.mapbox.search.sample.api.DetailsApiKotlinExampleActivity
 import com.mapbox.search.sample.api.DiscoverJavaExampleActivity
 import com.mapbox.search.sample.api.DiscoverKotlinExampleActivity
 import com.mapbox.search.sample.api.FavoritesDataProviderJavaExample
 import com.mapbox.search.sample.api.FavoritesDataProviderKotlinExample
+import com.mapbox.search.sample.api.ForwardApiKotlinExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.ForwardGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
@@ -94,6 +96,9 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
 
             FavoritesDataProviderKotlinExample::class.java,
             FavoritesDataProviderJavaExample::class.java,
+
+            ForwardApiKotlinExampleActivity::class.java,
+            DetailsApiKotlinExampleActivity::class.java,
         )
     }
 }
