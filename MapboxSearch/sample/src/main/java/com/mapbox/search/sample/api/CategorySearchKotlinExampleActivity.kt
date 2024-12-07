@@ -48,8 +48,11 @@ class CategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override fun startExample() {
         searchRequestTask = searchEngine.search(
-            "cafe",
-            CategorySearchOptions(limit = 1),
+            listOf("cafe", "coffee_shop", "hotel"),
+            CategorySearchOptions(
+                limit = 10,
+                ensureResultsPerCategory = true,
+            ),
             searchCallback
         )
     }

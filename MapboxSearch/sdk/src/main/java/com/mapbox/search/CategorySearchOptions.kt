@@ -53,7 +53,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
 
     /**
      * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
-     * The maximum number of search results returned from the server is 10.
+     * The maximum number of search results is determined by server. For example,
+     * for the [ApiType.SEARCH_BOX] the maximum number of results to return is 25.
      */
     public val limit: Int? = null,
 
@@ -109,6 +110,28 @@ public class CategorySearchOptions @JvmOverloads public constructor(
      * Threshold specified in meters.
      */
     public val indexableRecordsDistanceThresholdMeters: Double? = null,
+
+    /**
+     * When set to true and multiple categories are requested, e.g.
+     * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`,
+     * results will include at least one POI for each category, provided a POI is available
+     * in a nearby location.
+     *
+     * A comma-separated list of multiple category values in the request determines the sort order
+     * of the POI result. For example, for request
+     * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`, coffee_shop POI will be listed
+     * first in the results.
+     *
+     * If there is more than one POI for categories, the number of search results will include
+     * multiple features for each category. For example, assuming that
+     * restaurant, coffee, parking_lot categories are requested and limit parameter is 10,
+     * the result will be ranked as follows:
+     * - 1st to 4th: restaurant POIs
+     * - 5th to 7th: coffee POIs
+     * - 8th to 10th: parking_lot POI
+     */
+    @Reserved(SEARCH_BOX)
+    public val ensureResultsPerCategory: Boolean? = null,
 ) : Parcelable {
 
     init {
@@ -135,7 +158,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         routeOptions: RouteOptions? = this.routeOptions,
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
-        indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters
+        indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
+        ensureResultsPerCategory: Boolean? = this.ensureResultsPerCategory,
     ): CategorySearchOptions {
         return CategorySearchOptions(
             proximity = proximity,
@@ -151,6 +175,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            ensureResultsPerCategory = ensureResultsPerCategory,
         )
     }
 
@@ -183,6 +208,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         if (unsafeParameters != other.unsafeParameters) return false
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
+        if (ensureResultsPerCategory != other.ensureResultsPerCategory) return false
 
         return true
     }
@@ -204,6 +230,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
+        result = 31 * result + ensureResultsPerCategory.hashCode()
         return result
     }
 
@@ -224,7 +251,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
                 "routeOptions=$routeOptions, " +
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
-                "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
+                "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
+                "ensureResultsPerCategory=$ensureResultsPerCategory" +
                 ")"
     }
 
@@ -247,6 +275,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
+        private var ensureResultsPerCategory: Boolean? = null
 
         internal constructor(options: CategorySearchOptions) : this() {
             proximity = options.proximity
@@ -262,6 +291,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = options.unsafeParameters
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
+            ensureResultsPerCategory = options.ensureResultsPerCategory
         }
 
         /**
@@ -308,7 +338,9 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         public fun languages(languages: List<IsoLanguageCode>): Builder = apply { this.languages = languages }
 
         /**
-         * Specify the maximum number of results to return. The maximum supported is 10.
+         * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
+         * The maximum number of search results is determined by server. For example,
+         * for the [ApiType.SEARCH_BOX] the maximum number of results to return is 25.
          */
         public fun limit(limit: Int): Builder = apply { this.limit = limit }
 
@@ -372,6 +404,30 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * When set to true and multiple categories are requested, e.g.
+         * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`,
+         * results will include at least one POI for each category, provided a POI is available
+         * in a nearby location.
+         *
+         * A comma-separated list of multiple category values in the request determines the sort order
+         * of the POI result. For example, for request
+         * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`, coffee_shop POI will be listed
+         * first in the results.
+         *
+         * If there is more than one POI for categories, the number of search results will include
+         * multiple features for each category. For example, assuming that
+         * restaurant, coffee, parking_lot categories are requested and limit parameter is 10,
+         * the result will be ranked as follows:
+         * - 1st to 4th: restaurant POIs
+         * - 5th to 7th: coffee POIs
+         * - 8th to 10th: parking_lot POI
+         */
+        @Reserved(SEARCH_BOX)
+        public fun ensureResultsPerCategory(ensureResultsPerCategory: Boolean?): Builder = apply {
+            this.ensureResultsPerCategory = ensureResultsPerCategory
+        }
+
+        /**
          * Create [CategorySearchOptions] instance from builder data.
          */
         public fun build(): CategorySearchOptions = CategorySearchOptions(
@@ -388,6 +444,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            ensureResultsPerCategory = ensureResultsPerCategory,
         )
     }
 }
@@ -409,4 +466,5 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = crea
     sarType = routeOptions?.deviation?.sarType?.rawName,
     timeDeviation = routeOptions?.timeDeviationMinutes,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
+    ensureResultsPerCategory = ensureResultsPerCategory,
 )

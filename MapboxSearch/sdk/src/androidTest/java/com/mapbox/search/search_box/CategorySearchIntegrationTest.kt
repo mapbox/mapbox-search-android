@@ -120,7 +120,8 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             limit = 5,
             origin = Point.fromLngLat(50.123, 70.123),
             navigationProfile = NavigationProfile.DRIVING,
-            routeOptions = TEST_ROUTE_OPTIONS
+            routeOptions = TEST_ROUTE_OPTIONS,
+            ensureResultsPerCategory = true,
         )
 
         searchEngine.categorySearchBlocking(TEST_CATEGORY, options)
@@ -148,7 +149,27 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertFalse(url.queryParameter("route").isNullOrEmpty())
         assertEquals("polyline6", url.queryParameter("route_geometry"))
 
+        assertEquals(options.ensureResultsPerCategory.toString(), url.queryParameter("ensure_results_per_category"))
+
         assertFalse(request.headers["X-Request-ID"].isNullOrBlank())
+    }
+
+    @Test
+    fun testMultipleCategoriesSearchRequestParametersAreCorrect() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val categories = listOf("cafe", "hotel")
+        searchEngine.categorySearchBlocking(categories, CategorySearchOptions())
+
+        val request = mockServer.takeRequest()
+        assertEqualsIgnoreCase("get", request.method!!)
+
+        val url = request.requestUrl!!
+        assertEqualsIgnoreCase(
+            "//search/searchbox/v1/category/${categories.joinToString("%2c")}",
+            url.encodedPath,
+        )
+        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
     }
 
     @Test

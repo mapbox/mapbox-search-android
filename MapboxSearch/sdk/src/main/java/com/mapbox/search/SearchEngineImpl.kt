@@ -348,7 +348,7 @@ internal class SearchEngineImpl(
     }
 
     override fun search(
-        categoryName: String,
+        categoryNames: List<String>,
         options: CategorySearchOptions,
         executor: Executor,
         callback: SearchCallback,
@@ -359,7 +359,7 @@ internal class SearchEngineImpl(
             val requestContext = requestContextProvider.provide(apiType.mapToCore())
             val requestId = coreEngine.search(
                 "",
-                listOf(categoryName),
+                categoryNames,
                 options.mapToCoreCategory(),
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
