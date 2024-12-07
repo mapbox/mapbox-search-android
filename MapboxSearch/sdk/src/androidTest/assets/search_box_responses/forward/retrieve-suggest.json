@@ -74,14 +74,13 @@
           "phone": "+123 456 789",
           "website": "https://www.test.com",
           "rating": 4.0,
-          "primary_photo":[
+          "primary_photo": "https://test.com/img-primary.jpg",
+          "photos":[
             {
               "width":300,
               "height":350,
               "url":"https://test.com/img-primary.jpg"
-            }
-          ],
-          "other_photo":[
+            },
             {
               "width":150,
               "height":350,
