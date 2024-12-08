@@ -94,7 +94,7 @@ internal class CategorySearchTest {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
                 val task = searchEngine.search(
-                    categoryName = TEST_CATEGORIES_QUERY,
+                    categoryName = TEST_CATEGORY_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
@@ -109,7 +109,70 @@ internal class CategorySearchTest {
                 Verify("CoreSearchEngine.search() called") {
                     coreEngine.search(
                         eq(""),
-                        eq(listOf(TEST_CATEGORIES_QUERY)),
+                        eq(listOf(TEST_CATEGORY_QUERY)),
+                        eq(TEST_SEARCH_OPTIONS.mapToCoreCategory()),
+                        slotSearchCallback.captured
+                    )
+                }
+
+                Verify("Results passed to callback") {
+                    callback.onResults(
+                        listOf(SearchResult(TEST_SEARCH_RESULT)),
+                        ResponseInfo(
+                            TEST_REQUEST_OPTIONS,
+                            TEST_SUCCESSFUL_CORE_RESPONSE.mapToBase(),
+                            isReproducible = true
+                        )
+                    )
+                }
+
+                VerifyNo("Request is not cancelled") {
+                    coreEngine.cancel(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("search-engine-category-search"))
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check successful multiple categories search`() = TestCase {
+        Given("CategorySearchEngine with mocked dependencies") {
+
+            val slotSuggestionCallback = slot<(Result<BaseSearchSuggestion>) -> Unit>()
+            every { searchResultFactory.createSearchSuggestionAsync(any(), any(), any(), any(), capture(slotSuggestionCallback)) }.answers {
+                slotSuggestionCallback.captured(Result.success(TEST_SEARCH_SUGGESTION))
+                AsyncOperationTaskImpl.COMPLETED
+            }
+
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.search(any(), any(), any(), capture(slotSearchCallback)) }.answers {
+                slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
+            }
+
+            When("Multiple categories search called") {
+                val callback = mockk<SearchCallback>(relaxed = true)
+
+                val task = searchEngine.search(
+                    categoryNames = TEST_CATEGORIES_QUERY,
+                    options = TEST_SEARCH_OPTIONS,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                Verify("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                Verify("CoreSearchEngine.search() called") {
+                    coreEngine.search(
+                        eq(""),
+                        eq(TEST_CATEGORIES_QUERY),
                         eq(TEST_SEARCH_OPTIONS.mapToCoreCategory()),
                         slotSearchCallback.captured
                     )
@@ -152,7 +215,7 @@ internal class CategorySearchTest {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
                 val task = searchEngine.search(
-                    categoryName = TEST_CATEGORIES_QUERY,
+                    categoryName = TEST_CATEGORY_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
@@ -167,7 +230,7 @@ internal class CategorySearchTest {
                 Verify("CoreSearchEngine.search() called") {
                     coreEngine.search(
                         eq(""),
-                        eq(listOf(TEST_CATEGORIES_QUERY)),
+                        eq(listOf(TEST_CATEGORY_QUERY)),
                         slotSearchOptions.captured,
                         slotSearchCallback.captured
                     )
@@ -217,7 +280,7 @@ internal class CategorySearchTest {
                 every { callback.onError(capture(slotCallbackError)) } returns Unit
 
                 searchEngine.search(
-                    categoryName = TEST_CATEGORIES_QUERY,
+                    categoryName = TEST_CATEGORY_QUERY,
                     options = TEST_SEARCH_OPTIONS,
                     executor = executor,
                     callback = callback
@@ -248,7 +311,7 @@ internal class CategorySearchTest {
             val cancellationReason = "Request cancelled"
 
             val slotSearchCallback = slot<CoreSearchCallback>()
-            every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORIES_QUERY)), any(), capture(slotSearchCallback)) } answers {
+            every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORY_QUERY)), any(), capture(slotSearchCallback)) } answers {
                 slotSearchCallback.captured.run(createTestCoreSearchResponseCancelled(cancellationReason))
                 TEST_REQUEST_ID
             }
@@ -256,7 +319,7 @@ internal class CategorySearchTest {
             When("Search request cancelled by the Search SDK") {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val task = searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, callback)
+                val task = searchEngine.search(TEST_CATEGORY_QUERY, TEST_SEARCH_OPTIONS, callback)
 
                 Then("Task is cancelled", true, task.isCancelled)
 
@@ -278,14 +341,14 @@ internal class CategorySearchTest {
     @TestFactory
     fun `Check search call cancellation initiated by user`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
-            every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORIES_QUERY)), any(), any()) } answers {
+            every { coreEngine.search(eq(""), eq(listOf(TEST_CATEGORY_QUERY)), any(), any()) } answers {
                 TEST_REQUEST_ID
             }
 
             When("Search request cancelled by user") {
                 val callback = mockk<SearchCallback>(relaxed = true)
 
-                val task = searchEngine.search(TEST_CATEGORIES_QUERY, TEST_SEARCH_OPTIONS, callback)
+                val task = searchEngine.search(TEST_CATEGORY_QUERY, TEST_SEARCH_OPTIONS, callback)
                 task.cancel()
 
                 Then("Task is marked as cancelled", true, task.isCancelled)
@@ -310,7 +373,8 @@ internal class CategorySearchTest {
 
         const val TEST_REQUEST_ID = 1L
 
-        const val TEST_CATEGORIES_QUERY = "cafe"
+        const val TEST_CATEGORY_QUERY = "cafe"
+        val TEST_CATEGORIES_QUERY = listOf("cafe", "hotel")
 
         val TEST_SEARCH_OPTIONS = CategorySearchOptions()
 

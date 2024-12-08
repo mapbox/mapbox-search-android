@@ -15,9 +15,8 @@ import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
-import com.mapbox.search.sample.BuildConfig;
-import com.mapbox.search.sample.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CategorySearchJavaExampleActivity extends AppCompatActivity {
@@ -51,10 +50,15 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
         );
 
         final CategorySearchOptions options = new CategorySearchOptions.Builder()
-            .limit(1)
+            .limit(10)
+            .ensureResultsPerCategory(true)
             .build();
 
-        searchRequestTask = searchEngine.search("cafe", options, searchCallback);
+        searchRequestTask = searchEngine.search(
+            Arrays.asList("cafe", "coffee_shop", "hotel"),
+            options,
+            searchCallback
+        );
     }
 
     @Override

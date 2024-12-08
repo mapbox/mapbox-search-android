@@ -26,6 +26,7 @@ fun createCoreSearchOptions(
     timeDeviation: Double? = null,
     addonAPI: Map<String, String>? = null,
     offlineSearchPlacesOutsideBbox: Boolean = false,
+    ensureResultsPerCategory: Boolean? = null,
 ): CoreSearchOptions = CoreSearchOptions(
     proximity = proximity,
     origin = origin,
@@ -45,6 +46,7 @@ fun createCoreSearchOptions(
     timeDeviation = timeDeviation,
     addonAPI = addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
     offlineSearchPlacesOutsideBbox = offlineSearchPlacesOutsideBbox,
+    ensureResultsPerCategory = ensureResultsPerCategory,
 )
 
 fun createCoreReverseGeoOptions(

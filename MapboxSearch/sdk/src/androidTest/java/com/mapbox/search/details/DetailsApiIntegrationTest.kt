@@ -9,6 +9,7 @@ import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchRequestException
+import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.tests_support.BlockingSearchResultCallback
 import com.mapbox.search.utils.assertEqualsIgnoreCase
@@ -91,7 +92,42 @@ internal class DetailsApiIntegrationTest : BaseTest() {
         assertEquals(Point.fromLngLat(-77.029129, 38.902309), searchResult.coordinate)
         assertTrue(searchResult.metadata?.openHours is OpenHours.Scheduled)
         assertEquals("+12029313139", searchResult.metadata?.phone)
-        assertEquals(5, searchResult.metadata?.otherPhotos?.size)
+
+        assertEquals(
+            listOf(
+                ImageInfo(
+                    url = "https://media-cdn.tripadvisor.com/media/photo-o/2a/08/ad/fe/caption.jpg",
+                    width = 768,
+                    height = 1024,
+                ),
+                ImageInfo(
+                    url = "https://media-cdn.tripadvisor.com/media/photo-o/28/b6/2d/cc/caption.jpg",
+                    width = 2006,
+                    height = 975,
+                ),
+                ImageInfo(
+                    url = "https://media-cdn.tripadvisor.com/media/photo-o/2a/45/ec/0a/caption.jpg",
+                    width = 5184,
+                    height = 3888,
+                ),
+                ImageInfo(
+                    url = "https://media-cdn.tripadvisor.com/media/photo-o/28/b6/2d/ca/caption.jpg",
+                    width = 2006,
+                    height = 975,
+                ),
+            ),
+            searchResult.metadata?.otherPhotos
+        )
+        assertEquals(
+            listOf(
+                ImageInfo(
+                    url = "https://media-cdn.tripadvisor.com/media/photo-o/2a/08/ad/cd/caption.jpg",
+                    width = 1024,
+                    height = 768,
+                ),
+            ),
+            searchResult.metadata?.primaryPhotos
+        )
     }
 
     @Test

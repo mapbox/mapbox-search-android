@@ -270,7 +270,12 @@ public interface SearchEngine {
         options: CategorySearchOptions,
         executor: Executor,
         callback: SearchCallback,
-    ): AsyncOperationTask
+    ): AsyncOperationTask = search(
+        categoryNames = listOf(categoryName),
+        options = options,
+        executor = executor,
+        callback = callback,
+    )
 
     /**
      * Performs a search request for places based on a category.
@@ -285,7 +290,41 @@ public interface SearchEngine {
         options: CategorySearchOptions,
         callback: SearchCallback,
     ): AsyncOperationTask = search(
-        categoryName = categoryName,
+        categoryNames = listOf(categoryName),
+        options = options,
+        callback = callback,
+    )
+
+    /**
+     * Performs a search request for places based on multiple categories.
+     *
+     * @param categoryNames Multiple categories to search.
+     * @param options Category search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Search callback to retrieve results.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    public fun search(
+        categoryNames: List<String>,
+        options: CategorySearchOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Performs a search request for places based on multiple categories.
+     *
+     * @param categoryNames Multiple categories to search.
+     * @param options Category search options.
+     * @param callback Search callback to retrieve results. Events are dispatched on the main thread.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    public fun search(
+        categoryNames: List<String>,
+        options: CategorySearchOptions,
+        callback: SearchCallback,
+    ): AsyncOperationTask = search(
+        categoryNames = categoryNames,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,

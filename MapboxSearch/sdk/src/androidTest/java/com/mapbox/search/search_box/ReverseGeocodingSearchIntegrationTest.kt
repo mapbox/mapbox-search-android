@@ -203,8 +203,8 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 averageRating = 5.0,
                 rating = 5.0f,
                 description = "Famous symbol of France",
-                primaryPhotos = null,
-                otherPhotos = listOf(ImageInfo(url = "https://test.com/img1.jpg", width = 50, height = 50), ImageInfo(url = "https://test.com/img2.jpg", width = 150, height = 150)),
+                primaryPhotos = listOf(ImageInfo(url = "https://test.com/img1.jpg", width = 50, height = 50)),
+                otherPhotos = listOf(ImageInfo(url = "https://test.com/img2.jpg", width = 150, height = 150)),
                 openHours = OpenHours.Scheduled(
                     periods = listOf(
                         OpenPeriod(

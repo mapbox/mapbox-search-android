@@ -49,6 +49,7 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = null,
                     ignoreIndexableRecords = false,
                     indexableRecordsDistanceThresholdMeters = null,
+                    ensureResultsPerCategory = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -75,6 +76,7 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(50.0)
+                    .ensureResultsPerCategory(true)
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -91,6 +93,7 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 50.0,
+                    ensureResultsPerCategory = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -117,6 +120,7 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(100.123)
+                    .ensureResultsPerCategory(true)
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -133,6 +137,7 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 100.123,
+                    ensureResultsPerCategory = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -174,6 +179,7 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(10.0)
+                    .ensureResultsPerCategory(true)
                     .build()
 
                 val actualOptions = originalOptions.mapToCoreCategory()
@@ -195,7 +201,8 @@ internal class CategorySearchOptionsTest {
                     route = TEST_ROUTE_OPTIONS.route,
                     sarType = "isochrone",
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
-                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS)
+                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
+                    ensureResultsPerCategory = true,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -221,6 +228,7 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 15.0,
+                    ensureResultsPerCategory = true,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
