@@ -1,5 +1,21 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.6.3
+
+### New features
+- Added new function to search for multiple categories, e.g., `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`,
+- New option `CategorySearchOptions.ensureResultsPerCategory` is available. It allows to request category search results to include at least one POI for each category, provided a POI is available in a nearby location.
+- New option `CategorySearchOptions.attributeSets` is available. It allows to request additional metadata attributes besides the basic ones.
+
+### Bug fixes
+- Fixed photos metadata parsing for the `ApiType.SEARCH_BOX`.
+
+### Mapbox dependencies
+- Search Native SDK `2.6.3`
+- Common SDK `24.8.0`
+
+
+
 ## 2.6.2
 
 ### New features
