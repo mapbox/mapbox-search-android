@@ -2,6 +2,7 @@ package com.mapbox.search.common.tests
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
+import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.ConnectionError
 import com.mapbox.search.internal.bindgen.HttpError
 import com.mapbox.search.internal.bindgen.ImageInfo
@@ -49,6 +50,7 @@ fun createTestCoreSearchOptions(
     addonAPI: Map<String, String>? = null,
     offlineSearchPlacesOutsideBbox: Boolean = false,
     ensureResultsPerCategory: Boolean? = null,
+    attributeSets: List<AttributeSet>? = null,
 ): SearchOptions = SearchOptions(
     proximity,
     origin,
@@ -69,6 +71,7 @@ fun createTestCoreSearchOptions(
     addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
     offlineSearchPlacesOutsideBbox,
     ensureResultsPerCategory,
+    attributeSets,
 )
 
 @Suppress("LongParameterList")
