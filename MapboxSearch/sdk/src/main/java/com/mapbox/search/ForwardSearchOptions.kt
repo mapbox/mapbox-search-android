@@ -364,6 +364,6 @@ internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOpt
     timeDeviation = null,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     ensureResultsPerCategory = null,
-    // TODO FIXME should we support attribute sets for the forward geocoding
+    // TODO should we support attribute sets for the forward geocoding?
     attributeSets = null,
 )

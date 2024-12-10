@@ -1,7 +1,6 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
-import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.CategorySearchOptions

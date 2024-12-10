@@ -330,66 +330,6 @@ internal class CategorySearchOptionsTest {
         }
     }
 
-    @TestFactory
-    fun `check fixed attributes options`() = TestCase {
-        Given("CategorySearchOptions") {
-            When("attributeSets is null") {
-                val searchOptions = CategorySearchOptions(attributeSets = null)
-
-                Then(
-                    "Native attributeSets should be null",
-                    null,
-                    searchOptions.mapToCoreCategory().attributeSets
-                )
-            }
-
-            When("attributeSets is empty") {
-                val searchOptions = CategorySearchOptions(attributeSets = emptyList())
-
-                Then(
-                    "Native attributeSets should be empty list",
-                    emptyList<CoreAttributeSet>(),
-                    searchOptions.mapToCoreCategory().attributeSets
-                )
-            }
-
-            When("attributeSets has multiple values and basic one is included") {
-                val searchOptions = CategorySearchOptions(
-                    attributeSets = listOf(
-                        AttributeSet.BASIC,
-                        AttributeSet.PHOTOS,
-                    )
-                )
-
-                Then(
-                    "Native attributeSets should be as in platform options",
-                    listOf(
-                        CoreAttributeSet.BASIC,
-                        CoreAttributeSet.PHOTOS,
-                    ),
-                    searchOptions.mapToCoreCategory().attributeSets
-                )
-            }
-
-            When("attributeSets has values and basic one is not included") {
-                val searchOptions = CategorySearchOptions(
-                    attributeSets = listOf(
-                        AttributeSet.PHOTOS,
-                    )
-                )
-
-                Then(
-                    "Basic attributes set should be appended",
-                    listOf(
-                        CoreAttributeSet.PHOTOS,
-                        CoreAttributeSet.BASIC,
-                    ),
-                    searchOptions.mapToCoreCategory().attributeSets
-                )
-            }
-        }
-    }
-
     private companion object {
 
         val TEST_LOCALE: Locale = Locale.ENGLISH

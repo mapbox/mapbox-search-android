@@ -489,5 +489,5 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = crea
     timeDeviation = routeOptions?.timeDeviationMinutes,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     ensureResultsPerCategory = ensureResultsPerCategory,
-    attributeSets = attributeSets?.fixedAttributesOption()?.map { it.mapToCore() },
+    attributeSets = attributeSets?.map { it.mapToCore() },
 )

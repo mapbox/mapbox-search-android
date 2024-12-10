@@ -6,7 +6,6 @@ import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
-import com.mapbox.search.fixedAttributesOption
 import com.mapbox.search.internal.bindgen.DetailsOptions
 import com.mapbox.search.mapToCore
 import kotlinx.parcelize.Parcelize
@@ -83,4 +82,13 @@ internal fun RetrieveDetailsOptions.mapToCore(): DetailsOptions {
         language.code,
         worldview?.code,
     )
+}
+
+@JvmSynthetic
+private fun List<AttributeSet>.fixedAttributesOption(): List<AttributeSet> {
+    return if (isNotEmpty() && !contains(AttributeSet.BASIC)) {
+        this + AttributeSet.BASIC
+    } else {
+        this
+    }
 }
