@@ -434,23 +434,25 @@ internal fun validateLimit(limit: Int?): Int? {
 
 @JvmSynthetic
 internal fun SearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOptions(
-    proximity,
-    origin,
-    navigationOptions?.navigationProfile?.rawName,
-    navigationOptions?.etaType?.rawName,
-    boundingBox?.mapToCore(),
-    countries?.map { it.code },
-    fuzzyMatch,
-    languages?.map { it.code },
-    limit,
-    types?.mapToCoreTypes(),
-    ignoreIndexableRecords,
-    indexableRecordsDistanceThresholdMeters,
-    requestDebounce,
-    routeOptions?.route,
-    routeOptions?.deviation?.sarType?.rawName,
-    routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+    proximity = proximity,
+    origin = origin,
+    navProfile = navigationOptions?.navigationProfile?.rawName,
+    etaType = navigationOptions?.etaType?.rawName,
+    bbox = boundingBox?.mapToCore(),
+    countries = countries?.map { it.code },
+    fuzzyMatch = fuzzyMatch,
+    language = languages?.map { it.code },
+    limit = limit,
+    types = types?.mapToCoreTypes(),
+    ignoreUR = ignoreIndexableRecords,
+    urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
+    requestDebounce = requestDebounce,
+    route = routeOptions?.route,
+    sarType = routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = routeOptions?.timeDeviationMinutes,
+    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
+    ensureResultsPerCategory = null,
+    attributeSets = null,
 )
 
 @JvmSynthetic

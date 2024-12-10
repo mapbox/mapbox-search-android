@@ -2,6 +2,7 @@ package com.mapbox.search.sample.api
 
 import android.os.Bundle
 import com.mapbox.search.ApiType
+import com.mapbox.search.AttributeSet
 import com.mapbox.search.CategorySearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
@@ -48,8 +49,17 @@ class CategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override fun startExample() {
         searchRequestTask = searchEngine.search(
-            "cafe",
-            CategorySearchOptions(limit = 1),
+            listOf("cafe", "coffee_shop", "hotel"),
+            CategorySearchOptions(
+                limit = 10,
+                ensureResultsPerCategory = true,
+                attributeSets = listOf(
+                    AttributeSet.BASIC,
+                    AttributeSet.VISIT,
+                    AttributeSet.VENUE,
+                    AttributeSet.PHOTOS,
+                ),
+            ),
             searchCallback
         )
     }

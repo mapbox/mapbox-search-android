@@ -18,10 +18,7 @@ import kotlinx.parcelize.Parcelize
 public class RetrieveDetailsOptions @JvmOverloads constructor(
 
     /**
-     * Besides the basic metadata attributes, developers can request additional
-     * attributes by setting attribute_sets parameter with attribute set values,
-     * for example &attribute_sets=basic,photos,visit.
-     * The requested metadata will be provided in metadata object in the response.
+     * Request additional metadata attributes besides the basic ones.
      */
     public val attributeSets: List<AttributeSet>? = null,
 
@@ -87,6 +84,7 @@ internal fun RetrieveDetailsOptions.mapToCore(): DetailsOptions {
     )
 }
 
+@JvmSynthetic
 private fun List<AttributeSet>.fixedAttributesOption(): List<AttributeSet> {
     return if (isNotEmpty() && !contains(AttributeSet.BASIC)) {
         this + AttributeSet.BASIC

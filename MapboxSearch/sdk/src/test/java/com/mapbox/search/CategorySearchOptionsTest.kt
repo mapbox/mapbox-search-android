@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreAttributeSet
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -49,6 +50,8 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = null,
                     ignoreIndexableRecords = false,
                     indexableRecordsDistanceThresholdMeters = null,
+                    ensureResultsPerCategory = null,
+                    attributeSets = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -75,6 +78,8 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(50.0)
+                    .ensureResultsPerCategory(true)
+                    .attributeSets(AttributeSet.values().toList())
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -91,6 +96,8 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 50.0,
+                    ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -117,6 +124,8 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(100.123)
+                    .ensureResultsPerCategory(true)
+                    .attributeSets(AttributeSet.values().toList())
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -133,6 +142,8 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 100.123,
+                    ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -174,6 +185,15 @@ internal class CategorySearchOptionsTest {
                     .unsafeParameters(TEST_UNSAFE_PARAMETERS)
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(10.0)
+                    .ensureResultsPerCategory(true)
+                    .attributeSets(
+                        listOf(
+                            AttributeSet.BASIC,
+                            AttributeSet.PHOTOS,
+                            AttributeSet.VISIT,
+                            AttributeSet.VENUE,
+                        )
+                    )
                     .build()
 
                 val actualOptions = originalOptions.mapToCoreCategory()
@@ -195,7 +215,14 @@ internal class CategorySearchOptionsTest {
                     route = TEST_ROUTE_OPTIONS.route,
                     sarType = "isochrone",
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
-                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS)
+                    addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
+                    ensureResultsPerCategory = true,
+                    attributeSets = listOf(
+                        CoreAttributeSet.BASIC,
+                        CoreAttributeSet.PHOTOS,
+                        CoreAttributeSet.VISIT,
+                        CoreAttributeSet.VENUE,
+                    ),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -221,6 +248,8 @@ internal class CategorySearchOptionsTest {
                     unsafeParameters = TEST_UNSAFE_PARAMETERS,
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 15.0,
+                    ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())

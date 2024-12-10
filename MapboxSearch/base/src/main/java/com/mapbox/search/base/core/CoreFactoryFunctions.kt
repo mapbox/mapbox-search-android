@@ -1,6 +1,7 @@
 package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
@@ -25,24 +26,28 @@ fun createCoreSearchOptions(
     sarType: String? = null,
     timeDeviation: Double? = null,
     addonAPI: Map<String, String>? = null,
+    ensureResultsPerCategory: Boolean? = null,
+    attributeSets: List<AttributeSet>? = null,
 ): CoreSearchOptions = CoreSearchOptions(
-    proximity,
-    origin,
-    navProfile,
-    etaType,
-    bbox,
-    countries,
-    fuzzyMatch,
-    language,
-    limit,
-    types,
-    ignoreUR,
-    urDistanceThreshold,
-    requestDebounce,
-    route,
-    sarType,
-    timeDeviation,
-    addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) }
+    proximity = proximity,
+    origin = origin,
+    navProfile = navProfile,
+    etaType = etaType,
+    bbox = bbox,
+    countries = countries,
+    fuzzyMatch = fuzzyMatch,
+    language = language,
+    limit = limit,
+    types = types,
+    ignoreUR = ignoreUR,
+    urDistanceThreshold = urDistanceThreshold,
+    requestDebounce = requestDebounce,
+    route = route,
+    sarType = sarType,
+    timeDeviation = timeDeviation,
+    addonAPI = addonAPI?.let { it as? HashMap<String, String> ?: HashMap(it) },
+    ensureResultsPerCategory = ensureResultsPerCategory,
+    attributeSets = attributeSets,
 )
 
 fun createCoreReverseGeoOptions(

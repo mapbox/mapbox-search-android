@@ -21,6 +21,8 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class CategorySearchOptions implements android.os.Parcelable {
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null, Boolean? ensureResultsPerCategory = null, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null);
+    ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null, Boolean? ensureResultsPerCategory = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null, com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
@@ -34,8 +36,10 @@ package com.mapbox.search {
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public CategorySearchOptions(com.mapbox.geojson.Point? proximity = null);
+    method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
+    method public Boolean? getEnsureResultsPerCategory();
     method public Boolean? getFuzzyMatch();
     method public boolean getIgnoreIndexableRecords();
     method public Double? getIndexableRecordsDistanceThresholdMeters();
@@ -48,8 +52,10 @@ package com.mapbox.search {
     method public com.mapbox.search.RouteOptions? getRouteOptions();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.CategorySearchOptions.Builder toBuilder();
+    property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
+    property public final Boolean? ensureResultsPerCategory;
     property public final Boolean? fuzzyMatch;
     property public final boolean ignoreIndexableRecords;
     property public final Double? indexableRecordsDistanceThresholdMeters;
@@ -65,10 +71,12 @@ package com.mapbox.search {
 
   public static final class CategorySearchOptions.Builder {
     ctor public CategorySearchOptions.Builder();
+    method public com.mapbox.search.CategorySearchOptions.Builder attributeSets(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets);
     method public com.mapbox.search.CategorySearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.CategorySearchOptions build();
     method public com.mapbox.search.CategorySearchOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
     method public com.mapbox.search.CategorySearchOptions.Builder countries(java.util.List<com.mapbox.search.common.IsoCountryCode> countries);
+    method public com.mapbox.search.CategorySearchOptions.Builder ensureResultsPerCategory(Boolean? ensureResultsPerCategory);
     method public com.mapbox.search.CategorySearchOptions.Builder fuzzyMatch(boolean fuzzyMatch);
     method public com.mapbox.search.CategorySearchOptions.Builder ignoreIndexableRecords(boolean ignoreIndexableRecords);
     method public com.mapbox.search.CategorySearchOptions.Builder indexableRecordsDistanceThresholdMeters(Double? threshold);
@@ -291,8 +299,10 @@ package com.mapbox.search {
     method public default com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, com.mapbox.search.SearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
-    method public com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(String categoryName, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask search(java.util.List<java.lang.String> categoryNames, com.mapbox.search.CategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask search(java.util.List<java.lang.String> categoryNames, com.mapbox.search.CategorySearchOptions options, com.mapbox.search.SearchCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.ReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(com.mapbox.search.ReverseGeoOptions options, com.mapbox.search.SearchCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask select(com.mapbox.search.result.SearchSuggestion suggestion, com.mapbox.search.SearchSelectionCallback callback);

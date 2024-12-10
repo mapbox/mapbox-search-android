@@ -6,6 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
 import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreSearchOptions
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountryCode
@@ -52,7 +53,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
 
     /**
      * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
-     * The maximum number of search results returned from the server is 10.
+     * The maximum number of search results is determined by server. For example,
+     * for the [ApiType.SEARCH_BOX] the maximum number of results to return is 25.
      */
     public val limit: Int? = null,
 
@@ -108,6 +110,34 @@ public class CategorySearchOptions @JvmOverloads public constructor(
      * Threshold specified in meters.
      */
     public val indexableRecordsDistanceThresholdMeters: Double? = null,
+
+    /**
+     * When set to true and multiple categories are requested, e.g.
+     * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`,
+     * results will include at least one POI for each category, provided a POI is available
+     * in a nearby location.
+     *
+     * A comma-separated list of multiple category values in the request determines the sort order
+     * of the POI result. For example, for request
+     * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`, coffee_shop POI will be listed
+     * first in the results.
+     *
+     * If there is more than one POI for categories, the number of search results will include
+     * multiple features for each category. For example, assuming that
+     * restaurant, coffee, parking_lot categories are requested and limit parameter is 10,
+     * the result will be ranked as follows:
+     * - 1st to 4th: restaurant POIs
+     * - 5th to 7th: coffee POIs
+     * - 8th to 10th: parking_lot POI
+     */
+    @Reserved(SEARCH_BOX)
+    public val ensureResultsPerCategory: Boolean? = null,
+
+    /**
+     * Request additional metadata attributes besides the basic ones.
+     */
+    @Reserved(SEARCH_BOX)
+    public val attributeSets: List<AttributeSet>? = null,
 ) : Parcelable {
 
     init {
@@ -134,7 +164,9 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         routeOptions: RouteOptions? = this.routeOptions,
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
-        indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters
+        indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
+        ensureResultsPerCategory: Boolean? = this.ensureResultsPerCategory,
+        attributeSets: List<AttributeSet>? = this.attributeSets,
     ): CategorySearchOptions {
         return CategorySearchOptions(
             proximity = proximity,
@@ -150,6 +182,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            ensureResultsPerCategory = ensureResultsPerCategory,
+            attributeSets = attributeSets,
         )
     }
 
@@ -182,6 +216,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         if (unsafeParameters != other.unsafeParameters) return false
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
+        if (ensureResultsPerCategory != other.ensureResultsPerCategory) return false
+        if (attributeSets != other.attributeSets) return false
 
         return true
     }
@@ -203,6 +239,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
+        result = 31 * result + ensureResultsPerCategory.hashCode()
+        result = 31 * result + attributeSets.hashCode()
         return result
     }
 
@@ -223,7 +261,9 @@ public class CategorySearchOptions @JvmOverloads public constructor(
                 "routeOptions=$routeOptions, " +
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
-                "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters" +
+                "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
+                "ensureResultsPerCategory=$ensureResultsPerCategory, " +
+                "attributeSets=$attributeSets" +
                 ")"
     }
 
@@ -246,6 +286,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
+        private var ensureResultsPerCategory: Boolean? = null
+        private var attributeSets: List<AttributeSet>? = null
 
         internal constructor(options: CategorySearchOptions) : this() {
             proximity = options.proximity
@@ -261,6 +303,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = options.unsafeParameters
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
+            ensureResultsPerCategory = options.ensureResultsPerCategory
+            attributeSets = options.attributeSets
         }
 
         /**
@@ -307,7 +351,9 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         public fun languages(languages: List<IsoLanguageCode>): Builder = apply { this.languages = languages }
 
         /**
-         * Specify the maximum number of results to return. The maximum supported is 10.
+         * Specify the maximum number of results to return, including results from [com.mapbox.search.record.IndexableDataProvider].
+         * The maximum number of search results is determined by server. For example,
+         * for the [ApiType.SEARCH_BOX] the maximum number of results to return is 25.
          */
         public fun limit(limit: Int): Builder = apply { this.limit = limit }
 
@@ -371,6 +417,38 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * When set to true and multiple categories are requested, e.g.
+         * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`,
+         * results will include at least one POI for each category, provided a POI is available
+         * in a nearby location.
+         *
+         * A comma-separated list of multiple category values in the request determines the sort order
+         * of the POI result. For example, for request
+         * `SearchEngine.search(listOf("coffee_shop", "hotel"), ...)`, coffee_shop POI will be listed
+         * first in the results.
+         *
+         * If there is more than one POI for categories, the number of search results will include
+         * multiple features for each category. For example, assuming that
+         * restaurant, coffee, parking_lot categories are requested and limit parameter is 10,
+         * the result will be ranked as follows:
+         * - 1st to 4th: restaurant POIs
+         * - 5th to 7th: coffee POIs
+         * - 8th to 10th: parking_lot POI
+         */
+        @Reserved(SEARCH_BOX)
+        public fun ensureResultsPerCategory(ensureResultsPerCategory: Boolean?): Builder = apply {
+            this.ensureResultsPerCategory = ensureResultsPerCategory
+        }
+
+        /**
+         * Request additional metadata attributes besides the basic ones.
+         */
+        @Reserved(SEARCH_BOX)
+        public fun attributeSets(attributeSets: List<AttributeSet>?): Builder = apply {
+            this.attributeSets = attributeSets
+        }
+
+        /**
          * Create [CategorySearchOptions] instance from builder data.
          */
         public fun build(): CategorySearchOptions = CategorySearchOptions(
@@ -387,27 +465,29 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            ensureResultsPerCategory = ensureResultsPerCategory,
+            attributeSets = attributeSets,
         )
     }
 }
 
 @JvmSynthetic
-internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = CoreSearchOptions(
-    proximity,
-    origin,
-    navigationProfile?.rawName,
-    null,
-    boundingBox?.mapToCore(),
-    countries?.map { it.code },
-    fuzzyMatch,
-    languages?.map { it.code },
-    limit,
-    null,
-    ignoreIndexableRecords,
-    indexableRecordsDistanceThresholdMeters,
-    requestDebounce,
-    routeOptions?.route,
-    routeOptions?.deviation?.sarType?.rawName,
-    routeOptions?.timeDeviationMinutes,
-    unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) }
+internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = createCoreSearchOptions(
+    proximity = proximity,
+    origin = origin,
+    navProfile = navigationProfile?.rawName,
+    bbox = boundingBox?.mapToCore(),
+    countries = countries?.map { it.code },
+    fuzzyMatch = fuzzyMatch,
+    language = languages?.map { it.code },
+    limit = limit,
+    ignoreUR = ignoreIndexableRecords,
+    urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
+    requestDebounce = requestDebounce,
+    route = routeOptions?.route,
+    sarType = routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = routeOptions?.timeDeviationMinutes,
+    addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
+    ensureResultsPerCategory = ensureResultsPerCategory,
+    attributeSets = attributeSets?.map { it.mapToCore() },
 )

@@ -50,8 +50,16 @@ internal fun SearchEngine.categorySearchBlocking(
     options: CategorySearchOptions = CategorySearchOptions(),
     executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
 ): BlockingSearchCallback.SearchEngineResult {
+    return categorySearchBlocking(listOf(categoryName), options, executor)
+}
+
+internal fun SearchEngine.categorySearchBlocking(
+    categories: List<String>,
+    options: CategorySearchOptions = CategorySearchOptions(),
+    executor: Executor = SearchSdkMainThreadWorker.mainExecutor,
+): BlockingSearchCallback.SearchEngineResult {
     val callback = BlockingSearchCallback()
-    search(categoryName, options, executor, callback)
+    search(categories, options, executor, callback)
     return callback.getResultBlocking()
 }
 
