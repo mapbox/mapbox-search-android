@@ -46,3 +46,12 @@ internal fun CoreAttributeSet.mapToPlatform(): AttributeSet {
         CoreAttributeSet.VISIT -> AttributeSet.VISIT
     }
 }
+
+@JvmSynthetic
+internal fun List<AttributeSet>.fixedAttributesOption(): List<AttributeSet> {
+    return if (isNotEmpty() && !contains(AttributeSet.BASIC)) {
+        this + AttributeSet.BASIC
+    } else {
+        this
+    }
+}

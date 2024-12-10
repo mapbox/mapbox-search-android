@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreAttributeSet
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -50,6 +51,7 @@ internal class CategorySearchOptionsTest {
                     ignoreIndexableRecords = false,
                     indexableRecordsDistanceThresholdMeters = null,
                     ensureResultsPerCategory = null,
+                    attributeSets = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -77,6 +79,7 @@ internal class CategorySearchOptionsTest {
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(50.0)
                     .ensureResultsPerCategory(true)
+                    .attributeSets(AttributeSet.values().toList())
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -94,6 +97,7 @@ internal class CategorySearchOptionsTest {
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 50.0,
                     ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -121,6 +125,7 @@ internal class CategorySearchOptionsTest {
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(100.123)
                     .ensureResultsPerCategory(true)
+                    .attributeSets(AttributeSet.values().toList())
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -138,6 +143,7 @@ internal class CategorySearchOptionsTest {
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 100.123,
                     ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -180,6 +186,14 @@ internal class CategorySearchOptionsTest {
                     .ignoreIndexableRecords(true)
                     .indexableRecordsDistanceThresholdMeters(10.0)
                     .ensureResultsPerCategory(true)
+                    .attributeSets(
+                        listOf(
+                            AttributeSet.BASIC,
+                            AttributeSet.PHOTOS,
+                            AttributeSet.VISIT,
+                            AttributeSet.VENUE,
+                        )
+                    )
                     .build()
 
                 val actualOptions = originalOptions.mapToCoreCategory()
@@ -203,6 +217,12 @@ internal class CategorySearchOptionsTest {
                     timeDeviation = TEST_ROUTE_OPTIONS.timeDeviationMinutes,
                     addonAPI = HashMap(TEST_UNSAFE_PARAMETERS),
                     ensureResultsPerCategory = true,
+                    attributeSets = listOf(
+                        CoreAttributeSet.BASIC,
+                        CoreAttributeSet.PHOTOS,
+                        CoreAttributeSet.VISIT,
+                        CoreAttributeSet.VENUE,
+                    ),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -229,6 +249,7 @@ internal class CategorySearchOptionsTest {
                     ignoreIndexableRecords = true,
                     indexableRecordsDistanceThresholdMeters = 15.0,
                     ensureResultsPerCategory = true,
+                    attributeSets = AttributeSet.values().toList(),
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
@@ -305,6 +326,66 @@ internal class CategorySearchOptionsTest {
                         .indexableRecordsDistanceThresholdMeters(inputValue)
                         .build()
                 }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `check fixed attributes options`() = TestCase {
+        Given("CategorySearchOptions") {
+            When("attributeSets is null") {
+                val searchOptions = CategorySearchOptions(attributeSets = null)
+
+                Then(
+                    "Native attributeSets should be null",
+                    null,
+                    searchOptions.mapToCoreCategory().attributeSets
+                )
+            }
+
+            When("attributeSets is empty") {
+                val searchOptions = CategorySearchOptions(attributeSets = emptyList())
+
+                Then(
+                    "Native attributeSets should be empty list",
+                    emptyList<CoreAttributeSet>(),
+                    searchOptions.mapToCoreCategory().attributeSets
+                )
+            }
+
+            When("attributeSets has multiple values and basic one is included") {
+                val searchOptions = CategorySearchOptions(
+                    attributeSets = listOf(
+                        AttributeSet.BASIC,
+                        AttributeSet.PHOTOS,
+                    )
+                )
+
+                Then(
+                    "Native attributeSets should be as in platform options",
+                    listOf(
+                        CoreAttributeSet.BASIC,
+                        CoreAttributeSet.PHOTOS,
+                    ),
+                    searchOptions.mapToCoreCategory().attributeSets
+                )
+            }
+
+            When("attributeSets has values and basic one is not included") {
+                val searchOptions = CategorySearchOptions(
+                    attributeSets = listOf(
+                        AttributeSet.PHOTOS,
+                    )
+                )
+
+                Then(
+                    "Basic attributes set should be appended",
+                    listOf(
+                        CoreAttributeSet.PHOTOS,
+                        CoreAttributeSet.BASIC,
+                    ),
+                    searchOptions.mapToCoreCategory().attributeSets
+                )
             }
         }
     }
