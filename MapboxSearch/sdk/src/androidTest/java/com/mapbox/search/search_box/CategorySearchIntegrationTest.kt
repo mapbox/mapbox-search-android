@@ -8,12 +8,14 @@ import com.mapbox.search.AttributeSet
 import com.mapbox.search.BaseTest
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.CategorySearchOptions
+import com.mapbox.search.EtaType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.SearchNavigationOptions
 import com.mapbox.search.ServiceProvider
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -128,7 +130,11 @@ internal class CategorySearchIntegrationTest : BaseTest() {
                 AttributeSet.VENUE,
                 AttributeSet.VISIT,
                 AttributeSet.PHOTOS,
-            )
+            ),
+            navigationOptions = SearchNavigationOptions(
+                NavigationProfile.DRIVING,
+                EtaType.NAVIGATION,
+            ),
         )
 
         searchEngine.categorySearchBlocking(TEST_CATEGORY, options)
@@ -149,7 +155,16 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertEquals(options.limit.toString(), url.queryParameter("limit"))
 
         assertEquals(url.queryParameter("origin"), formatPoints(options.origin))
-        assertEquals(options.navigationProfile?.rawName!!, url.queryParameter("navigation_profile"))
+        assertEquals(
+            options.navigationOptions?.navigationProfile?.rawName!!,
+            url.queryParameter("navigation_profile"),
+        )
+
+        // TODO should be supported by the Search Native SDK
+//        assertEquals(
+//            options.navigationOptions?.etaType?.rawName!!,
+//            url.queryParameter("eta_type"),
+//        )
 
         assertEquals(TEST_ROUTE_OPTIONS.timeDeviationMinutes.formatToBackendConvention(), url.queryParameter("time_deviation"))
         // Route encoded as polyline6 format, it's tricky to decode it manually and test.

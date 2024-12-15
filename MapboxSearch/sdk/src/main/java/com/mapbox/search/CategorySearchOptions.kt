@@ -66,7 +66,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
     /**
      * Point for alternative search ranking logic, that is turned on if [navigationProfile] is specified.
      *
-     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only.
      *
      * @see navigationProfile
      */
@@ -76,15 +76,22 @@ public class CategorySearchOptions @JvmOverloads public constructor(
     /**
      * Type of movement. Used to alter search ranking logic: the faster you can walk/drive from the [origin] to the search result, the higher search result rank.
      *
-     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only.
+     *
+     * Deprecated, use [navigationOptions] property instead. In case both
+     * [navigationProfile] and [navigationOptions] are provided, parameters from [navigationOptions]
+     * will be taken.
+     *
+     * @see navigationOptions
      */
     @Reserved(SBS, SEARCH_BOX)
+    @Deprecated("Use navigationOptions property instead", ReplaceWith("navigationOptions"))
     public val navigationProfile: NavigationProfile? = null,
 
     /**
      * Options to configure Route for search along the route functionality.
      *
-     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
+     * Note: Supported for Single Box Search and Search Box APIs only.
      */
     @Reserved(SBS, SEARCH_BOX)
     public val routeOptions: RouteOptions? = null,
@@ -138,6 +145,18 @@ public class CategorySearchOptions @JvmOverloads public constructor(
      */
     @Reserved(SEARCH_BOX)
     public val attributeSets: List<AttributeSet>? = null,
+
+    /**
+     * Navigation options used for proper calculation of ETA and results ranking.
+     *
+     * Note: Supported for Single Box Search and Search Box APIs only.
+     *
+     * This property replaces old [navigationProfile].In case both
+     * [navigationProfile] and [navigationOptions] are provided, parameters from [navigationOptions]
+     * will be taken.
+     */
+    @Reserved(SEARCH_BOX)
+    public val navigationOptions: SearchNavigationOptions? = null,
 ) : Parcelable {
 
     init {
@@ -167,6 +186,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
         ensureResultsPerCategory: Boolean? = this.ensureResultsPerCategory,
         attributeSets: List<AttributeSet>? = this.attributeSets,
+        navigationOptions: SearchNavigationOptions? = this.navigationOptions,
     ): CategorySearchOptions {
         return CategorySearchOptions(
             proximity = proximity,
@@ -184,6 +204,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             ensureResultsPerCategory = ensureResultsPerCategory,
             attributeSets = attributeSets,
+            navigationOptions = navigationOptions,
         )
     }
 
@@ -218,6 +239,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
         if (ensureResultsPerCategory != other.ensureResultsPerCategory) return false
         if (attributeSets != other.attributeSets) return false
+        if (navigationOptions != other.navigationOptions) return false
 
         return true
     }
@@ -241,6 +263,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
         result = 31 * result + ensureResultsPerCategory.hashCode()
         result = 31 * result + attributeSets.hashCode()
+        result = 31 * result + navigationOptions.hashCode()
         return result
     }
 
@@ -263,7 +286,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
                 "ensureResultsPerCategory=$ensureResultsPerCategory, " +
-                "attributeSets=$attributeSets" +
+                "attributeSets=$attributeSets, " +
+                "navigationOptions=$navigationOptions" +
                 ")"
     }
 
@@ -288,6 +312,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         private var indexableRecordsDistanceThresholdMeters: Double? = null
         private var ensureResultsPerCategory: Boolean? = null
         private var attributeSets: List<AttributeSet>? = null
+        private var navigationOptions: SearchNavigationOptions? = null
 
         internal constructor(options: CategorySearchOptions) : this() {
             proximity = options.proximity
@@ -305,6 +330,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
             ensureResultsPerCategory = options.ensureResultsPerCategory
             attributeSets = options.attributeSets
+            navigationOptions = options.navigationOptions
         }
 
         /**
@@ -365,19 +391,24 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         /**
          * Point for alternative search ranking logic, that is turned on if [navigationProfile] is specified.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search API only.
          *
          * @see navigationProfile
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         public fun origin(origin: Point): Builder = apply { this.origin = origin }
 
         /**
          * Type of movement. Used to alter search ranking logic: the faster you can walk/drive from the [origin] to the search result, the higher search result rank.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search API only.
+         *
+         * Deprecated, use [navigationOptions] property instead. In case both
+         * [navigationProfile] and [navigationOptions] are provided, parameters from [navigationOptions]
+         * will be taken.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
+        @Deprecated("Use navigationOptions function instead", ReplaceWith("navigationOptions"))
         public fun navigationProfile(navigationProfile: NavigationProfile): Builder = apply {
             this.navigationProfile = navigationProfile
         }
@@ -385,9 +416,9 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         /**
          * Options to configure Route for search along the route functionality.
          *
-         * Note: Supported for Single Box Search API only. Reserved for internal and special use.
+         * Note: Supported for Single Box Search API only.
          */
-        @Reserved(SBS)
+        @Reserved(SBS, SEARCH_BOX)
         public fun routeOptions(routeOptions: RouteOptions): Builder = apply { this.routeOptions = routeOptions }
 
         /**
@@ -449,6 +480,20 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * Navigation options used for proper calculation of ETA and results ranking.
+         *
+         * Note: Supported for Single Box Search and Search Box APIs only.
+         *
+         * This property replaces old [navigationProfile].In case both
+         * [navigationProfile] and [navigationOptions] are provided, parameters from [navigationOptions]
+         * will be taken.
+         */
+        @Reserved(SEARCH_BOX)
+        public fun navigationOptions(navigationOptions: SearchNavigationOptions?): Builder = apply {
+            this.navigationOptions = navigationOptions
+        }
+
+        /**
          * Create [CategorySearchOptions] instance from builder data.
          */
         public fun build(): CategorySearchOptions = CategorySearchOptions(
@@ -467,6 +512,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             ensureResultsPerCategory = ensureResultsPerCategory,
             attributeSets = attributeSets,
+            navigationOptions = navigationOptions,
         )
     }
 }
@@ -475,7 +521,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
 internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = createCoreSearchOptions(
     proximity = proximity,
     origin = origin,
-    navProfile = navigationProfile?.rawName,
+    navProfile = navigationOptions?.navigationProfile?.rawName ?: navigationProfile?.rawName,
+    etaType = navigationOptions?.etaType?.rawName,
     bbox = boundingBox?.mapToCore(),
     countries = countries?.map { it.code },
     fuzzyMatch = fuzzyMatch,
