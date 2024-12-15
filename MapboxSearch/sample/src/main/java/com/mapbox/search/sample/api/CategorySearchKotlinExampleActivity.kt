@@ -4,11 +4,14 @@ import android.os.Bundle
 import com.mapbox.search.ApiType
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.CategorySearchOptions
+import com.mapbox.search.EtaType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
+import com.mapbox.search.SearchNavigationOptions
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
 
@@ -58,6 +61,10 @@ class CategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
                     AttributeSet.VISIT,
                     AttributeSet.VENUE,
                     AttributeSet.PHOTOS,
+                ),
+                navigationOptions = SearchNavigationOptions(
+                    NavigationProfile.CYCLING,
+                    EtaType.NAVIGATION
                 ),
             ),
             searchCallback

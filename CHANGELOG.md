@@ -1,5 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.6.4
+- `CategorySearchOptions` now supports `navigationOptions` property. Option `navigationProfile` has been deprecated and should be replaced by `navigationOptions`.
+
+### Mapbox dependencies
+- Search Native SDK `2.6.3`
+- Common SDK `24.8.0`
+
+
+
 ## 2.6.3
 
 ### New features

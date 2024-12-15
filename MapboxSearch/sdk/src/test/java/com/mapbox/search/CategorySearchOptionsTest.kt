@@ -52,6 +52,7 @@ internal class CategorySearchOptionsTest {
                     indexableRecordsDistanceThresholdMeters = null,
                     ensureResultsPerCategory = null,
                     attributeSets = null,
+                    navigationOptions = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -80,6 +81,7 @@ internal class CategorySearchOptionsTest {
                     .indexableRecordsDistanceThresholdMeters(50.0)
                     .ensureResultsPerCategory(true)
                     .attributeSets(AttributeSet.values().toList())
+                    .navigationOptions(TEST_NAV_OPTIONS)
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -98,6 +100,7 @@ internal class CategorySearchOptionsTest {
                     indexableRecordsDistanceThresholdMeters = 50.0,
                     ensureResultsPerCategory = true,
                     attributeSets = AttributeSet.values().toList(),
+                    navigationOptions = TEST_NAV_OPTIONS,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -126,6 +129,7 @@ internal class CategorySearchOptionsTest {
                     .indexableRecordsDistanceThresholdMeters(100.123)
                     .ensureResultsPerCategory(true)
                     .attributeSets(AttributeSet.values().toList())
+                    .navigationOptions(TEST_NAV_OPTIONS)
                     .build()
 
                 val expectedOptions = CategorySearchOptions(
@@ -144,6 +148,7 @@ internal class CategorySearchOptionsTest {
                     indexableRecordsDistanceThresholdMeters = 100.123,
                     ensureResultsPerCategory = true,
                     attributeSets = AttributeSet.values().toList(),
+                    navigationOptions = TEST_NAV_OPTIONS,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -167,9 +172,9 @@ internal class CategorySearchOptionsTest {
     }
 
     @TestFactory
-    fun `Check filled CategorySearchOptions mapToCore() function`() = TestCase {
+    fun `Check CategorySearchOptions mapToCore() function`() = TestCase {
         Given("CategorySearchOptions builder") {
-            When("Build new CategorySearchOptions with all values set") {
+            When("Only navigationProfile provided") {
                 @Suppress("DEPRECATION")
                 val originalOptions = CategorySearchOptions.Builder()
                     .proximity(TEST_POINT)
@@ -227,6 +232,42 @@ internal class CategorySearchOptionsTest {
 
                 Then("Options should be equal", expectedOptions, actualOptions)
             }
+
+            When("Both navigationProfile and navigationOptions provided") {
+                @Suppress("DEPRECATION")
+                val originalOptions = CategorySearchOptions.Builder()
+                    .languages(TEST_LANGUAGE)
+                    .navigationProfile(TEST_NAV_PROFILE)
+                    .navigationOptions(TEST_NAV_OPTIONS)
+                    .build()
+
+                val actualOptions = originalOptions.mapToCoreCategory()
+
+                val expectedOptions = createTestCoreSearchOptions(
+                    language = listOf(TEST_LANGUAGE.code),
+                    navProfile = TEST_NAV_OPTIONS.navigationProfile.rawName,
+                    etaType = TEST_NAV_OPTIONS.etaType?.rawName,
+                )
+
+                Then("Options should be equal", expectedOptions, actualOptions)
+            }
+
+            When("Only navigationOptions provided") {
+                val originalOptions = CategorySearchOptions.Builder()
+                    .languages(TEST_LANGUAGE)
+                    .navigationOptions(TEST_NAV_OPTIONS)
+                    .build()
+
+                val actualOptions = originalOptions.mapToCoreCategory()
+
+                val expectedOptions = createTestCoreSearchOptions(
+                    language = listOf(TEST_LANGUAGE.code),
+                    navProfile = TEST_NAV_OPTIONS.navigationProfile.rawName,
+                    etaType = TEST_NAV_OPTIONS.etaType?.rawName,
+                )
+
+                Then("Options should be equal", expectedOptions, actualOptions)
+            }
         }
     }
 
@@ -250,6 +291,7 @@ internal class CategorySearchOptionsTest {
                     indexableRecordsDistanceThresholdMeters = 15.0,
                     ensureResultsPerCategory = true,
                     attributeSets = AttributeSet.values().toList(),
+                    navigationOptions = TEST_NAV_OPTIONS,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
@@ -334,10 +376,13 @@ internal class CategorySearchOptionsTest {
 
         val TEST_LOCALE: Locale = Locale.ENGLISH
 
+        val TEST_LANGUAGE = IsoLanguageCode.ENGLISH
         val TEST_BOUNDING_BOX: BoundingBox = BoundingBox.fromPoints(Point.fromLngLat(10.0, 20.0), Point.fromLngLat(20.0, 30.0))
         val TEST_POINT: Point = Point.fromLngLat(10.0, 10.0)
         val TEST_ORIGIN_POINT: Point = Point.fromLngLat(20.0, 20.0)
         val TEST_NAV_PROFILE: NavigationProfile = NavigationProfile.CYCLING
+        val TEST_ETA_TYPE: EtaType = EtaType.NAVIGATION
+        val TEST_NAV_OPTIONS = SearchNavigationOptions(NavigationProfile.DRIVING, TEST_ETA_TYPE)
         val TEST_ROUTE_OPTIONS = RouteOptions(
             route = listOf(Point.fromLngLat(1.0, 2.0), Point.fromLngLat(3.0, 4.0), Point.fromLngLat(5.0, 6.0)),
             deviation = RouteOptions.Deviation.Time(
