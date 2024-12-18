@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.search.ApiType;
+import com.mapbox.search.AttributeSet;
 import com.mapbox.search.CategorySearchOptions;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchCallback;
@@ -52,6 +53,14 @@ public class CategorySearchJavaExampleActivity extends AppCompatActivity {
         final CategorySearchOptions options = new CategorySearchOptions.Builder()
             .limit(10)
             .ensureResultsPerCategory(true)
+            .attributeSets(
+                Arrays.asList(
+                    AttributeSet.BASIC,
+                    AttributeSet.VISIT,
+                    AttributeSet.VENUE,
+                    AttributeSet.PHOTOS
+                )
+            )
             .build();
 
         searchRequestTask = searchEngine.search(

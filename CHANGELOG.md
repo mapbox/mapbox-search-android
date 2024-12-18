@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.7.0
+
+### New features
+- New option `CategorySearchOptions.attributeSets` is available. It allows to request additional metadata attributes besides the basic ones.
+
+### Mapbox dependencies
+- Search Native SDK `2.7.0`
+- Common SDK `24.9.0`
+
+
+
 ## 2.7.0-rc.1
 
 ### New features

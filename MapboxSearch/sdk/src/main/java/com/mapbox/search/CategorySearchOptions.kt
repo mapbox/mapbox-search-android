@@ -132,6 +132,12 @@ public class CategorySearchOptions @JvmOverloads public constructor(
      */
     @Reserved(SEARCH_BOX)
     public val ensureResultsPerCategory: Boolean? = null,
+
+    /**
+     * Request additional metadata attributes besides the basic ones.
+     */
+    @Reserved(SEARCH_BOX)
+    public val attributeSets: List<AttributeSet>? = null,
 ) : Parcelable {
 
     init {
@@ -160,6 +166,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
         ensureResultsPerCategory: Boolean? = this.ensureResultsPerCategory,
+        attributeSets: List<AttributeSet>? = this.attributeSets,
     ): CategorySearchOptions {
         return CategorySearchOptions(
             proximity = proximity,
@@ -176,6 +183,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             ensureResultsPerCategory = ensureResultsPerCategory,
+            attributeSets = attributeSets,
         )
     }
 
@@ -209,6 +217,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
         if (ensureResultsPerCategory != other.ensureResultsPerCategory) return false
+        if (attributeSets != other.attributeSets) return false
 
         return true
     }
@@ -231,6 +240,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + indexableRecordsDistanceThresholdMeters.hashCode()
         result = 31 * result + ensureResultsPerCategory.hashCode()
+        result = 31 * result + attributeSets.hashCode()
         return result
     }
 
@@ -252,7 +262,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
-                "ensureResultsPerCategory=$ensureResultsPerCategory" +
+                "ensureResultsPerCategory=$ensureResultsPerCategory, " +
+                "attributeSets=$attributeSets" +
                 ")"
     }
 
@@ -276,6 +287,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
         private var ensureResultsPerCategory: Boolean? = null
+        private var attributeSets: List<AttributeSet>? = null
 
         internal constructor(options: CategorySearchOptions) : this() {
             proximity = options.proximity
@@ -292,6 +304,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters = options.indexableRecordsDistanceThresholdMeters
             ensureResultsPerCategory = options.ensureResultsPerCategory
+            attributeSets = options.attributeSets
         }
 
         /**
@@ -428,6 +441,14 @@ public class CategorySearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * Request additional metadata attributes besides the basic ones.
+         */
+        @Reserved(SEARCH_BOX)
+        public fun attributeSets(attributeSets: List<AttributeSet>?): Builder = apply {
+            this.attributeSets = attributeSets
+        }
+
+        /**
          * Create [CategorySearchOptions] instance from builder data.
          */
         public fun build(): CategorySearchOptions = CategorySearchOptions(
@@ -445,6 +466,7 @@ public class CategorySearchOptions @JvmOverloads public constructor(
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             ensureResultsPerCategory = ensureResultsPerCategory,
+            attributeSets = attributeSets,
         )
     }
 }
@@ -467,4 +489,5 @@ internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = crea
     timeDeviation = routeOptions?.timeDeviationMinutes,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     ensureResultsPerCategory = ensureResultsPerCategory,
+    attributeSets = attributeSets?.map { it.mapToCore() },
 )

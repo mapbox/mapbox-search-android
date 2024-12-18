@@ -4,6 +4,7 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
+import com.mapbox.search.AttributeSet
 import com.mapbox.search.BaseTest
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.CategorySearchOptions
@@ -122,6 +123,12 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             navigationProfile = NavigationProfile.DRIVING,
             routeOptions = TEST_ROUTE_OPTIONS,
             ensureResultsPerCategory = true,
+            attributeSets = listOf(
+                AttributeSet.BASIC,
+                AttributeSet.VENUE,
+                AttributeSet.VISIT,
+                AttributeSet.PHOTOS,
+            )
         )
 
         searchEngine.categorySearchBlocking(TEST_CATEGORY, options)
@@ -150,6 +157,11 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         assertEquals("polyline6", url.queryParameter("route_geometry"))
 
         assertEquals(options.ensureResultsPerCategory.toString(), url.queryParameter("ensure_results_per_category"))
+
+        assertEquals(
+            options.attributeSets!!.joinToString(separator = ",") { it.name.lowercase() },
+            url.queryParameter("attribute_sets")
+        )
 
         assertFalse(request.headers["X-Request-ID"].isNullOrBlank())
     }
