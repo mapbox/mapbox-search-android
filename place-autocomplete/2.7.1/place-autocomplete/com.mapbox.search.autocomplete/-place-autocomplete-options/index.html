@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>PlaceAutocompleteOptions</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>place-autocomplete</span>
+            </a>
+    </div>
+    <div>
+2.7.1    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="place-autocomplete::com.mapbox.search.autocomplete/PlaceAutocompleteOptions///PointingToDeclaration//1709204704">
+  <div class="breadcrumbs"><a href="../../../index.html">place-autocomplete</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.autocomplete</a><span class="delimiter">/</span><span class="current">PlaceAutocompleteOptions</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Place</span><wbr></wbr><span>Autocomplete</span><wbr></wbr><span><span>Options</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">PlaceAutocompleteOptions</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>countries<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.common/IsoCountryCode///PointingToDeclaration/">IsoCountryCode</span><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>language<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/IsoLanguageCode///PointingToDeclaration/">IsoLanguageCode</span><span class="token operator"> = </span>defaultLocaleLanguage()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>types<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-place-autocomplete-type/index.html">PlaceAutocompleteType</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>navigationProfile<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/NavigationProfile///PointingToDeclaration/">NavigationProfile</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">Search options, used for the Place Autocomplete requests.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="See also">See also</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">See also</h4>
+      <div data-togglable="See also">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><a href="../-place-autocomplete/index.html"><span>Place</span><wbr></wbr><span><span>Autocomplete</span></span></a></div></span></div><div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-1599481985%2FConstructors%2F1709204704" anchor-label="PlaceAutocompleteOptions" id="-1599481985%2FConstructors%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-place-autocomplete-options.html"><span>Place</span><wbr></wbr><span>Autocomplete</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1599481985%2FConstructors%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-place-autocomplete-options.html"><span class="token function">PlaceAutocompleteOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">countries<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.common/IsoCountryCode///PointingToDeclaration/">IsoCountryCode</span><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">language<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/IsoLanguageCode///PointingToDeclaration/">IsoLanguageCode</span><span class="token operator"> = </span>defaultLocaleLanguage()<span class="token punctuation">, </span></span><span class="parameter ">types<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-place-autocomplete-type/index.html">PlaceAutocompleteType</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">navigationProfile<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/NavigationProfile///PointingToDeclaration/">NavigationProfile</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F1709204704" anchor-label="describeContents" id="-1578325224%2FFunctions%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-place-autocomplete-type/-administrative-unit/-address/index.html#-1578325224%2FFunctions%2F1709204704"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-place-autocomplete-type/-administrative-unit/-address/index.html#-1578325224%2FFunctions%2F1709204704"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F1709204704" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-place-autocomplete-type/-administrative-unit/-address/index.html#-1754457655%2FFunctions%2F1709204704"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-place-autocomplete-type/-administrative-unit/-address/index.html#-1754457655%2FFunctions%2F1709204704"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="1217721942%2FProperties%2F1709204704" anchor-label="countries" id="1217721942%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="countries.html"><span><span>countries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1217721942%2FProperties%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><a data-name="1217721942%2FProperties%2F1709204704" anchor-label="countries" id="1217721942%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="countries.html">countries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="com.mapbox.search.common/IsoCountryCode///PointingToDeclaration/">IsoCountryCode</span><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="1217721942%2FProperties%2F1709204704" anchor-label="countries" id="1217721942%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><p class="paragraph">Limit results to one or more countries.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="591313656%2FProperties%2F1709204704" anchor-label="language" id="591313656%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="language.html"><span><span>language</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="591313656%2FProperties%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><a data-name="591313656%2FProperties%2F1709204704" anchor-label="language" id="591313656%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="language.html">language</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/IsoLanguageCode///PointingToDeclaration/">IsoLanguageCode</span></div><div class="brief "><a data-name="591313656%2FProperties%2F1709204704" anchor-label="language" id="591313656%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><p class="paragraph">Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1877272145%2FProperties%2F1709204704" anchor-label="limit" id="-1877272145%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="limit.html"><span><span>limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1877272145%2FProperties%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><a data-name="-1877272145%2FProperties%2F1709204704" anchor-label="limit" id="-1877272145%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="limit.html">limit</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span></div><div class="brief "><a data-name="-1877272145%2FProperties%2F1709204704" anchor-label="limit" id="-1877272145%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><p class="paragraph">Maximum number of results to return.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1781664203%2FProperties%2F1709204704" anchor-label="navigationProfile" id="-1781664203%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="navigation-profile.html"><span>navigation</span><wbr></wbr><span><span>Profile</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1781664203%2FProperties%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><a data-name="-1781664203%2FProperties%2F1709204704" anchor-label="navigationProfile" id="-1781664203%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="navigation-profile.html">navigationProfile</a><span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.common/NavigationProfile///PointingToDeclaration/">NavigationProfile</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1781664203%2FProperties%2F1709204704" anchor-label="navigationProfile" id="-1781664203%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><p class="paragraph">Optional navigation routing profile to use. Required for <a href="../-place-autocomplete-suggestion/distance-meters.html">PlaceAutocompleteSuggestion.distanceMeters</a> and <a href="../-place-autocomplete-suggestion/eta-minutes.html">PlaceAutocompleteSuggestion.etaMinutes</a> calculations.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="366231217%2FProperties%2F1709204704" anchor-label="types" id="366231217%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":place-autocomplete:dokkaHtml/release" data-filterable-set=":place-autocomplete:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="types.html"><span><span>types</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="366231217%2FProperties%2F1709204704"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":place-autocomplete:dokkaHtml/release"><a data-name="366231217%2FProperties%2F1709204704" anchor-label="types" id="366231217%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="types.html">types</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-place-autocomplete-type/index.html">PlaceAutocompleteType</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="366231217%2FProperties%2F1709204704" anchor-label="types" id="366231217%2FProperties%2F1709204704" data-filterable-set=":place-autocomplete:dokkaHtml/release"></a><p class="paragraph">Limit results to one or more types of features, provided as a comma-separated list. If no types are specified, all possible types may be returned.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
