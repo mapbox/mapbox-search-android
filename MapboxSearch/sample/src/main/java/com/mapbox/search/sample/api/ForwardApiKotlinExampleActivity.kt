@@ -1,7 +1,9 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
+import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
+import com.mapbox.search.AttributeSet
 import com.mapbox.search.ForwardSearchOptions
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchCallback
@@ -32,9 +34,21 @@ class ForwardApiKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun startExample() {
+        val options = ForwardSearchOptions.Builder()
+            .proximity(Point.fromLngLat(-77.03400742663874, 38.904863105693586))
+            .attributeSets(
+                listOf(
+                    AttributeSet.BASIC,
+                    AttributeSet.PHOTOS,
+                    AttributeSet.VENUE,
+                    AttributeSet.VISIT,
+                )
+            )
+            .build()
+
         task = searchEngine.forward(
-            query = "Mapbox DC",
-            options = ForwardSearchOptions.Builder().build(),
+            query = "Starbucks",
+            options = options,
             callback = object : SearchCallback {
                 override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
                     logI("SearchApiExample", "Forward request results:", results)

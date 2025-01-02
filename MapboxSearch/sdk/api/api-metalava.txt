@@ -106,6 +106,7 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class ForwardSearchOptions implements android.os.Parcelable {
+    method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public boolean getIgnoreIndexableRecords();
@@ -119,6 +120,7 @@ package com.mapbox.search {
     method public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.ForwardSearchOptions.Builder toBuilder();
+    property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final boolean ignoreIndexableRecords;
@@ -135,6 +137,7 @@ package com.mapbox.search {
 
   public static final class ForwardSearchOptions.Builder {
     ctor public ForwardSearchOptions.Builder();
+    method public com.mapbox.search.ForwardSearchOptions.Builder attributeSets(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets);
     method public com.mapbox.search.ForwardSearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.ForwardSearchOptions build();
     method public com.mapbox.search.ForwardSearchOptions.Builder countries(com.mapbox.search.common.IsoCountryCode... countries);
