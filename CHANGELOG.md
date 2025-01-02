@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.6.4
+- New option `ForwardSearchOptions.attributeSets` is available. It allows to request additional metadata attributes besides the basic ones.
+
+### New features
+
+### Mapbox dependencies
+- Search Native SDK `2.6.3`
+- Common SDK `24.8.0`
+
+
+
 ## 2.6.3
 
 ### New features
