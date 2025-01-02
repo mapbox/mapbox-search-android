@@ -7,6 +7,7 @@ import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import kotlinx.parcelize.Parcelize
@@ -112,6 +113,11 @@ public class ForwardSearchOptions private constructor(
      * Threshold specified in meters.
      */
     public val indexableRecordsDistanceThresholdMeters: Double? = null,
+
+    /**
+     * Request additional metadata attributes besides the basic ones.
+     */
+    public val attributeSets: List<AttributeSet>? = null,
 ) : Parcelable {
 
     init {
@@ -142,6 +148,7 @@ public class ForwardSearchOptions private constructor(
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
+        attributeSets: List<AttributeSet>? = this.attributeSets,
     ): ForwardSearchOptions {
         return ForwardSearchOptions(
             proximity = proximity,
@@ -156,6 +163,7 @@ public class ForwardSearchOptions private constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            attributeSets = attributeSets,
         )
     }
 
@@ -169,6 +177,69 @@ public class ForwardSearchOptions private constructor(
     /**
      * @suppress
      */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ForwardSearchOptions
+
+        if (language != other.language) return false
+        if (limit != other.limit) return false
+        if (proximity != other.proximity) return false
+        if (boundingBox != other.boundingBox) return false
+        if (countries != other.countries) return false
+        if (types != other.types) return false
+        if (navigationOptions != other.navigationOptions) return false
+        if (origin != other.origin) return false
+        if (requestDebounce != other.requestDebounce) return false
+        if (unsafeParameters != other.unsafeParameters) return false
+        if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
+        if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
+        if (attributeSets != other.attributeSets) return false
+
+        return true
+    }
+
+    /**
+     * @suppress
+     */
+    override fun hashCode(): Int {
+        var result = language?.hashCode() ?: 0
+        result = 31 * result + (limit ?: 0)
+        result = 31 * result + (proximity?.hashCode() ?: 0)
+        result = 31 * result + (boundingBox?.hashCode() ?: 0)
+        result = 31 * result + (countries?.hashCode() ?: 0)
+        result = 31 * result + (types?.hashCode() ?: 0)
+        result = 31 * result + (navigationOptions?.hashCode() ?: 0)
+        result = 31 * result + (origin?.hashCode() ?: 0)
+        result = 31 * result + (requestDebounce ?: 0)
+        result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
+        result = 31 * result + ignoreIndexableRecords.hashCode()
+        result = 31 * result + (indexableRecordsDistanceThresholdMeters?.hashCode() ?: 0)
+        result = 31 * result + (attributeSets?.hashCode() ?: 0)
+        return result
+    }
+
+    /**
+     * @suppress
+     */
+    override fun toString(): String {
+        return "ForwardSearchOptions(" +
+                "language=$language, " +
+                "limit=$limit, " +
+                "proximity=$proximity, " +
+                "boundingBox=$boundingBox, " +
+                "countries=$countries, " +
+                "types=$types, " +
+                "navigationOptions=$navigationOptions, " +
+                "origin=$origin, " +
+                "requestDebounce=$requestDebounce, " +
+                "unsafeParameters=$unsafeParameters, " +
+                "ignoreIndexableRecords=$ignoreIndexableRecords, " +
+                "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
+                "attributeSets=$attributeSets" +
+                ")"
+    }
 
     /**
      * Builder for comfortable creation of [ForwardSearchOptions] instance.
@@ -188,6 +259,7 @@ public class ForwardSearchOptions private constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
+        private var attributeSets: List<AttributeSet>? = null
 
         internal constructor(options: ForwardSearchOptions) : this() {
             proximity = options.proximity
@@ -203,6 +275,7 @@ public class ForwardSearchOptions private constructor(
             ignoreIndexableRecords = options.ignoreIndexableRecords
             indexableRecordsDistanceThresholdMeters =
                 options.indexableRecordsDistanceThresholdMeters
+            attributeSets = options.attributeSets
         }
 
         /**
@@ -325,6 +398,13 @@ public class ForwardSearchOptions private constructor(
         }
 
         /**
+         * Request additional metadata attributes besides the basic ones.
+         */
+        public fun attributeSets(attributeSets: List<AttributeSet>?): Builder = apply {
+            this.attributeSets = attributeSets
+        }
+
+        /**
          * Create [ForwardSearchOptions] instance from builder data.
          */
         public fun build(): ForwardSearchOptions = ForwardSearchOptions(
@@ -340,6 +420,7 @@ public class ForwardSearchOptions private constructor(
             unsafeParameters = unsafeParameters,
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
+            attributeSets = attributeSets,
         )
     }
 }
@@ -364,6 +445,5 @@ internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = CoreSearchOpt
     timeDeviation = null,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     ensureResultsPerCategory = null,
-    // TODO should we support attribute sets for the forward geocoding?
-    attributeSets = null,
+    attributeSets = attributeSets?.map { it.mapToCore() },
 )
