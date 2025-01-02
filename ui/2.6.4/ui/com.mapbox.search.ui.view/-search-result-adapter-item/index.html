@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SearchResultAdapterItem</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>ui</span>
+            </a>
+    </div>
+    <div>
+2.6.4    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="ui::com.mapbox.search.ui.view/SearchResultAdapterItem///PointingToDeclaration//-1368162426">
+  <div class="breadcrumbs"><a href="../../../index.html">ui</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.ui.view</a><span class="delimiter">/</span><span class="current">SearchResultAdapterItem</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Search</span><wbr></wbr><span>Result</span><wbr></wbr><span>Adapter</span><wbr></wbr><span><span>Item</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">SearchResultAdapterItem</a></div><p class="paragraph"><a href="../-search-results-view/index.html">com.mapbox.search.ui.view.SearchResultsView</a> adapter items.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="See also">See also</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section-body">
+      <h4 class="">See also</h4>
+      <div data-togglable="See also">
+        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><a href="../-search-results-view/set-adapter-items.html"><span>Search</span><wbr></wbr><span>Results</span><wbr></wbr><span>View.</span><wbr></wbr><span>set</span><wbr></wbr><span>Adapter</span><wbr></wbr><span><span>Items</span></span></a></div></span></div><div></div></div></div></div></div></div></div>
+      </div>
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="935752341%2FClasslikes%2F-1368162426" anchor-label="EmptyHistory" id="935752341%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-empty-history/index.html"><span>Empty</span><wbr></wbr><span><span>History</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="935752341%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-empty-history/index.html">EmptyHistory</a> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents header for the empty search history.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1848433979%2FClasslikes%2F-1368162426" anchor-label="EmptySearchResults" id="1848433979%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-empty-search-results/index.html"><span>Empty</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Results</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1848433979%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-empty-search-results/index.html">EmptySearchResults</a> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents view for a case where search engine returns nothing.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1707525758%2FClasslikes%2F-1368162426" anchor-label="Error" id="1707525758%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-error/index.html"><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1707525758%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-error/index.html">Error</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>uiError<span class="token operator">: </span><a href="../-ui-error/index.html">UiError</a></span></span><span class="token punctuation">)</span> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents error view and <code class="lang-kotlin">Retry</code> button.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="526936114%2FClasslikes%2F-1368162426" anchor-label="History" id="526936114%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-history/index.html"><span><span>History</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="526936114%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-history/index.html">History</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>record<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search.record/HistoryRecord///PointingToDeclaration/">HistoryRecord</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>isFavorite<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents one search history entry.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1896446090%2FClasslikes%2F-1368162426" anchor-label="Loading" id="1896446090%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-loading/index.html"><span><span>Loading</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1896446090%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-loading/index.html">Loading</a> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents spinning progress view.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="665090238%2FClasslikes%2F-1368162426" anchor-label="MissingResultFeedback" id="665090238%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-missing-result-feedback/index.html"><span>Missing</span><wbr></wbr><span>Result</span><wbr></wbr><span><span>Feedback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="665090238%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-missing-result-feedback/index.html">MissingResultFeedback</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>responseInfo<span class="token operator">: </span><span data-unresolved-link="com.mapbox.search/ResponseInfo///PointingToDeclaration/">ResponseInfo</span></span></span><span class="token punctuation">)</span> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents <code class="lang-kotlin">Missing result?</code> button.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-77589442%2FClasslikes%2F-1368162426" anchor-label="RecentSearchesHeader" id="-77589442%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-recent-searches-header/index.html"><span>Recent</span><wbr></wbr><span>Searches</span><wbr></wbr><span><span>Header</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-77589442%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-recent-searches-header/index.html">RecentSearchesHeader</a> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents <code class="lang-kotlin">Recent searches</code> header for the search history.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-848119297%2FClasslikes%2F-1368162426" anchor-label="Result" id="-848119297%2FClasslikes%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-result/index.html"><span><span>Result</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-848119297%2FClasslikes%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ui:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-result/index.html">Result</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>title<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html">CharSequence</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>subtitle<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html">CharSequence</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>distanceMeters<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/DrawableRes.html"><span class="token annotation builtin">DrawableRes</span></a> </span><span class="token keyword">val </span>drawable<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/ColorInt.html"><span class="token annotation builtin">ColorInt</span></a> </span><span class="token keyword">val </span>drawableColor<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>isPopulateQueryVisible<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>payload<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="index.html">SearchResultAdapterItem</a></div><div class="brief "><p class="paragraph">Item that represents any search result. This can be a result from any search engine, or use case, for example, <span data-unresolved-link="com.mapbox.search.result/SearchSuggestion///PointingToDeclaration/">com.mapbox.search.result.SearchSuggestion</span>, <span data-unresolved-link="com.mapbox.search.result/SearchResult///PointingToDeclaration/">com.mapbox.search.result.SearchResult</span>, <span data-unresolved-link="com.mapbox.search.offline/OfflineSearchResult///PointingToDeclaration/">com.mapbox.search.offline.OfflineSearchResult</span>, etc.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Inheritors</h2>
+      <div class="table" data-togglable="Inheritors"><a data-name="1896446090%2FInheritors%2F-1368162426" anchor-label="Loading" id="1896446090%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-loading/index.html">Loading</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1896446090%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-77589442%2FInheritors%2F-1368162426" anchor-label="RecentSearchesHeader" id="-77589442%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-recent-searches-header/index.html">RecentSearchesHeader</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-77589442%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="935752341%2FInheritors%2F-1368162426" anchor-label="EmptyHistory" id="935752341%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-empty-history/index.html">EmptyHistory</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="935752341%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="526936114%2FInheritors%2F-1368162426" anchor-label="History" id="526936114%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-history/index.html">History</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="526936114%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1848433979%2FInheritors%2F-1368162426" anchor-label="EmptySearchResults" id="1848433979%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-empty-search-results/index.html">EmptySearchResults</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1848433979%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-848119297%2FInheritors%2F-1368162426" anchor-label="Result" id="-848119297%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-result/index.html">Result</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-848119297%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="665090238%2FInheritors%2F-1368162426" anchor-label="MissingResultFeedback" id="665090238%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-missing-result-feedback/index.html">MissingResultFeedback</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="665090238%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1707525758%2FInheritors%2F-1368162426" anchor-label="Error" id="1707525758%2FInheritors%2F-1368162426" data-filterable-set=":ui:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":ui:dokkaHtml/release" data-filterable-set=":ui:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-error/index.html">Error</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1707525758%2FInheritors%2F-1368162426"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
