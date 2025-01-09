@@ -6,7 +6,7 @@ import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
-import java.util.HashMap
+import kotlin.collections.HashMap
 
 fun createCoreSearchOptions(
     proximity: Point? = null,
@@ -80,7 +80,7 @@ fun createCoreResultMetadata(
     cpsJson: String? = null,
     parking: CoreParkingData? = null,
     children: List<CoreChildMetadata>? = null,
-    data: HashMap<String, String>,
+    data: HashMap<String, String> = HashMap(),
     wheelchairAccessible: Boolean? = null,
     delivery: Boolean? = null,
     driveThrough: Boolean? = null,

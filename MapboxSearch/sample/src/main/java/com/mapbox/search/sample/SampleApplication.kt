@@ -106,7 +106,8 @@ open class SampleApplication : Application() {
         val SEARCH_ENDPOINTS_URL = listOf(
             "https://api.mapbox.com/autofill",
             "https://api.mapbox.com/search",
-            "https://api.mapbox.com/geocoding"
+            "https://api.mapbox.com/geocoding",
+            "https://api.mapbox.com/ev"
         )
     }
 }

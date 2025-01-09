@@ -1,6 +1,7 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
+import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.CategorySearchOptions
@@ -49,10 +50,10 @@ class CategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override fun startExample() {
         searchRequestTask = searchEngine.search(
-            listOf("cafe", "coffee_shop", "hotel"),
+            "charging_station",
             CategorySearchOptions(
+                proximity = Point.fromLngLat(11.581817055258599, 48.13485237209964),
                 limit = 10,
-                ensureResultsPerCategory = true,
                 attributeSets = listOf(
                     AttributeSet.BASIC,
                     AttributeSet.VISIT,

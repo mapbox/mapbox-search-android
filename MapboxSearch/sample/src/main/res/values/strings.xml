@@ -34,6 +34,8 @@
 
     <string name="action_open_offline_search_along_route_example">Offline Search Along Route</string>
 
+    <string name="action_open_advanced_search_component">Advanced Search Component</string>
+
     <string name="simple_ui_toolbar_title">Mapbox search</string>
 
     <string name="query_hint">Where to?</string>

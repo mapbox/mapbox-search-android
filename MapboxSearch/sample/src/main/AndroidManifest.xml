@@ -70,6 +70,7 @@
         <activity android:name=".api.OfflineSearchAlongRouteExampleActivity" />
         <activity android:name=".api.DetailsApiKotlinExampleActivity" />
         <activity android:name=".api.ForwardApiKotlinExampleActivity" />
+        <activity android:name=".advanced.AdvancedSearchEngineActivity" />
 
     </application>
 

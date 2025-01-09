@@ -1,6 +1,7 @@
 package com.mapbox.search
 
 import android.os.Parcelable
+import androidx.annotation.RestrictTo
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.Reserved.Flags.SBS
@@ -472,7 +473,8 @@ public class CategorySearchOptions @JvmOverloads public constructor(
 }
 
 @JvmSynthetic
-internal fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = createCoreSearchOptions(
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+public fun CategorySearchOptions.mapToCoreCategory(): CoreSearchOptions = createCoreSearchOptions(
     proximity = proximity,
     origin = origin,
     navProfile = navigationProfile?.rawName,
