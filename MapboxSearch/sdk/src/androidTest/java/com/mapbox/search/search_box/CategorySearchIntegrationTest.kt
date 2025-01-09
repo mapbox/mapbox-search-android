@@ -211,6 +211,13 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         val (results, responseInfo) = response.requireResultPair()
         assertEquals(3, results.size)
         assertNotNull(responseInfo.coreSearchResponse)
+
+        val first = results.first()
+        assertEquals("Devon & Blakely", first.name)
+        assertEquals(433.7, first.distanceMeters)
+
+        // TODO should be fixe on the Search Native side
+        // assertEquals(2.145, first.etaMinutes)
     }
 
     @Test
