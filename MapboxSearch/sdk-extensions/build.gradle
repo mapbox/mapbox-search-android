@@ -1,0 +1,111 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'de.mannodermaus.android-junit5'
+    id 'com.mapbox.android.sdk.versions'
+    id 'com.getkeepsafe.dexcount'
+}
+
+apply from: "../gradle/ktlint.gradle"
+apply from: "../gradle/versions.gradle"
+apply from: "../gradle/pitest.gradle"
+apply from: "../gradle/jacoco.gradle"
+apply from: "../gradle/dexcount.gradle"
+apply from: "../gradle/dokka.gradle"
+apply from: "../gradle/publish.gradle"
+apply from: "../gradle/license.gradle"
+apply from: "../gradle/track-public-apis.gradle"
+
+android {
+    compileSdkVersion compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled project.hasProperty('coverage')
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk-extensions.txt"
+        }
+        release {
+            jniDebuggable false
+            minifyEnabled false
+            consumerProguardFiles "${projectDir}/proguard/consumer-proguard-sdk-extensions.txt"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+        /**
+         * Migrate to Groovy syntax when the issue https://youtrack.jetbrains.com/issue/KT-37652 is resolved
+         *
+         *     kotlin {
+         *         explicitApi()
+         *     }
+         */
+        freeCompilerArgs += [
+                '-Xexplicit-api=strict',
+        ]
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+        }
+    }
+
+    lint {
+        abortOnError true
+        disable 'ParcelCreator', 'EnsureInitializerMetadata'
+    }
+}
+
+dependencies {
+    implementation project(path: ':base')
+    api project(path: ':sdk-common')
+    api project(path: ':sdk')
+    api "com.mapbox.navigationcore:ev:$mapbox_nav_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
+    implementation "androidx.annotation:annotation:$androidx_annotation_version"
+    implementation "androidx.collection:collection-ktx:$androidx_collection_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
+
+    api "com.mapbox.common:common:$common_sdk_version"
+
+    implementation "com.mapbox.base:annotations:$mapbox_base_version"
+
+    ktlint "com.pinterest:ktlint:$ktlint_version"
+
+    testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+    testImplementation project(":common-tests")
+
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    androidTestImplementation project(":common-tests")
+}

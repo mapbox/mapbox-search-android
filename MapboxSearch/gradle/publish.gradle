@@ -63,6 +63,7 @@ sdkNameMap["offline"] = "search-offline-sdk"
 sdkNameMap["autofill"] = "search-autofill-sdk"
 sdkNameMap["discover"] = "search-discover-sdk"
 sdkNameMap["place-autocomplete"] = "search-place-autocomplete-sdk"
+sdkNameMap["sdk-extensions"] = "search-sdk-extensions"
 
 registry {
     sdkName = sdkNameMap[project.name]

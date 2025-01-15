@@ -51,6 +51,7 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.sample.advanced.AdvancedSearchEngineActivity
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
@@ -533,6 +534,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_offline_search_along_route_example -> {
                 startActivity(Intent(this, OfflineSearchAlongRouteExampleActivity::class.java))
+                true
+            }
+            R.id.open_advanced_search_component -> {
+                startActivity(Intent(this, AdvancedSearchEngineActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

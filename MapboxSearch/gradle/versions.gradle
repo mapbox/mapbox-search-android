@@ -1,7 +1,7 @@
 ext {
     gradle_plugin = '7.4.2'
     kotlin_version = '1.7.20'
-    kotlin_coroutines_version = '1.6.0'
+    kotlin_coroutines_version = '1.6.4'
 
     min_sdk_version = 21
     target_sdk_version = 33
@@ -41,7 +41,8 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '11.9.0-rc.1'
+    mapbox_maps_version = '11.9.0'
+    mapbox_nav_version = "3.6.0"
     mapbox_turf_version = '6.15.0'
 
     common_sdk_version = '24.9.0'
