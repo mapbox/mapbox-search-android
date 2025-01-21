@@ -63,6 +63,7 @@ internal object RetrieveUtils {
             "",
             listOf(ResultType.POI),
             listOf(),
+            null,
             listOf(),
             null,
             null,
