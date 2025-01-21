@@ -92,8 +92,12 @@ public class SearchOptions @JvmOverloads public constructor(
     /**
      * Options to configure Route for search along the route functionality.
      *
-     * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
+     * Deprecated, not supported for the forward geocoding.
      */
+    @Deprecated(
+        "Search Along the Route is not supported for the forward geocoding",
+        ReplaceWith("null"),
+    )
     @Reserved(SBS, SEARCH_BOX)
     public val routeOptions: RouteOptions? = null,
 
@@ -142,6 +146,7 @@ public class SearchOptions @JvmOverloads public constructor(
         requestDebounce: Int? = this.requestDebounce,
         origin: Point? = this.origin,
         navigationOptions: SearchNavigationOptions? = this.navigationOptions,
+        @Suppress("DEPRECATION")
         routeOptions: RouteOptions? = this.routeOptions,
         unsafeParameters: Map<String, String>? = this.unsafeParameters,
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
@@ -191,6 +196,7 @@ public class SearchOptions @JvmOverloads public constructor(
         if (requestDebounce != other.requestDebounce) return false
         if (origin != other.origin) return false
         if (navigationOptions != other.navigationOptions) return false
+        @Suppress("DEPRECATION")
         if (routeOptions != other.routeOptions) return false
         if (unsafeParameters != other.unsafeParameters) return false
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
@@ -213,6 +219,7 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + (requestDebounce ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (navigationOptions?.hashCode() ?: 0)
+        @Suppress("DEPRECATION")
         result = 31 * result + (routeOptions?.hashCode() ?: 0)
         result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         result = 31 * result + ignoreIndexableRecords.hashCode()
@@ -235,6 +242,7 @@ public class SearchOptions @JvmOverloads public constructor(
                 "requestDebounce=$requestDebounce, " +
                 "origin=$origin, " +
                 "navigationOptions=$navigationOptions, " +
+                @Suppress("DEPRECATION")
                 "routeOptions=$routeOptions, " +
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
@@ -262,7 +270,6 @@ public class SearchOptions @JvmOverloads public constructor(
         private var unsafeParameters: Map<String, String>? = null
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
-        private var attributeSet: List<AttributeSet>? = null
 
         internal constructor(options: SearchOptions) : this() {
             proximity = options.proximity
@@ -275,6 +282,7 @@ public class SearchOptions @JvmOverloads public constructor(
             requestDebounce = options.requestDebounce
             origin = options.origin
             navigationOptions = options.navigationOptions
+            @Suppress("DEPRECATION")
             routeOptions = options.routeOptions
             unsafeParameters = options.unsafeParameters
             ignoreIndexableRecords = options.ignoreIndexableRecords
@@ -365,8 +373,12 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Options to configure Route for search along the route functionality.
          *
-         * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
+         * Deprecated, not supported for the forward geocoding.
          */
+        @Deprecated(
+            "Search Along the Route is not supported for the forward geocoding",
+            ReplaceWith("null"),
+        )
         @Reserved(SBS, SEARCH_BOX)
         public fun routeOptions(routeOptions: RouteOptions): Builder = apply { this.routeOptions = routeOptions }
 
@@ -448,9 +460,9 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = createCoreSearchOpti
     ignoreUR = ignoreIndexableRecords,
     urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
     requestDebounce = requestDebounce,
-    route = routeOptions?.route,
-    sarType = routeOptions?.deviation?.sarType?.rawName,
-    timeDeviation = routeOptions?.timeDeviationMinutes,
+    route = @Suppress("DEPRECATION") routeOptions?.route,
+    sarType = @Suppress("DEPRECATION") routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = @Suppress("DEPRECATION") routeOptions?.timeDeviationMinutes,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )
 
