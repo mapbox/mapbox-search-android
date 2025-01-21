@@ -1,5 +1,25 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.8.0-beta.1
+
+### New features
+- New property `SearchSuggestion.namePreferred` is available. It provides the official name of the suggestion.
+
+### Bug fixes
+- Fixed `SearchResult.etaMinutes` parsing for the Search Box api type.
+
+### Other
+- `SearchOptions.routeOptions` has been deprecated as not supported for the forward geocoding.
+
+
+### New features
+
+### Mapbox dependencies
+- Search Native SDK `2.8.0-beta.2`
+- Common SDK `24.10.0-beta.`
+
+
+
 ## 2.7.1
 
 ### New features
