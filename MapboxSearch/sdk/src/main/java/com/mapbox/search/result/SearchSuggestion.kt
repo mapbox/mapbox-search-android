@@ -5,6 +5,7 @@ package com.mapbox.search.result
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
+import com.mapbox.search.Reserved
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.RestrictedMapboxSearchAPI
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
@@ -35,10 +36,26 @@ public class SearchSuggestion internal constructor(
     public val id: String = base.id
 
     /**
-     * Suggestion name.
+     * The name of the suggestion. This may return an alternative name that best matches the query.
+     * For the official name, refer to [namePreferred].
+     *
+     * @see namePreferred
      */
     @IgnoredOnParcel
     public val name: String = base.name
+
+    /**
+     * The official name of the suggestion. The distinction between [namePreferred] and [name] is that
+     * [name] may return an alternative name that best matches the query, whereas [namePreferred] always
+     * retains its original value. This property is null if [namePreferred] is identical to [name].
+     *
+     * [SearchResult.name] always returns the value of [namePreferred].
+     *
+     * @see name
+     */
+    @IgnoredOnParcel
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public val namePreferred: String? = base.namePreferred
 
     /**
      * Search suggestion coordinate.
@@ -154,6 +171,7 @@ public class SearchSuggestion internal constructor(
 
         if (id != other.id) return false
         if (name != other.name) return false
+        if (namePreferred != other.namePreferred) return false
         if (coordinate != other.coordinate) return false
         if (routablePoints != other.routablePoints) return false
         if (matchingName != other.matchingName) return false
@@ -179,6 +197,7 @@ public class SearchSuggestion internal constructor(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
+        result = 31 * result + namePreferred.hashCode()
         result = 31 * result + (coordinate?.hashCode() ?: 0)
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
         result = 31 * result + (matchingName?.hashCode() ?: 0)
@@ -204,6 +223,7 @@ public class SearchSuggestion internal constructor(
         return "SearchSuggestion(" +
                 "id='$id', " +
                 "name='$name', " +
+                "namePreferred='$namePreferred', " +
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +
                 "matchingName=$matchingName, " +

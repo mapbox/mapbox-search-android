@@ -1069,6 +1069,7 @@ package com.mapbox.search.result {
     method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
+    method public String? getNamePreferred();
     method public com.mapbox.search.RequestOptions getRequestOptions();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
@@ -1088,6 +1089,7 @@ package com.mapbox.search.result {
     property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
+    property public final String? namePreferred;
     property public final com.mapbox.search.RequestOptions requestOptions;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final Integer? serverIndex;

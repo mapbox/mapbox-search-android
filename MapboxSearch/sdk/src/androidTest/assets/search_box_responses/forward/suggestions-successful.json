@@ -2,6 +2,7 @@
   "suggestions": [
     {
       "name": "Washington",
+      "name_preferred": "Washington - test preferred name",
       "mapbox_id": "suggestion-id-1",
       "feature_type": "poi",
       "address": "1211 Connecticut Ave NW",

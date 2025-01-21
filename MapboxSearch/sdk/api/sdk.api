@@ -1352,6 +1352,7 @@ public final class com/mapbox/search/result/SearchSuggestion : android/os/Parcel
 	public final fun getMatchingName ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getNamePreferred ()Ljava/lang/String;
 	public final fun getRequestOptions ()Lcom/mapbox/search/RequestOptions;
 	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getServerIndex ()Ljava/lang/Integer;

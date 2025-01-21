@@ -18,6 +18,9 @@ sealed class BaseSearchSuggestion(
     open val name: String
         get() = rawSearchResult.names[0]
 
+    open val namePreferred: String?
+        get() = rawSearchResult.namePreferred
+
     open val coordinate: Point?
         get() = rawSearchResult.center
 
