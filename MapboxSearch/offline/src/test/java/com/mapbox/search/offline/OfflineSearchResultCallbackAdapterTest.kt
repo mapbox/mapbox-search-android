@@ -178,6 +178,7 @@ internal class OfflineSearchResultCallbackAdapterTest {
             mapboxId = mapboxId,
             listOf(resultType),
             listOf(name),
+            null,
             listOf(),
             listOf(),
             null,

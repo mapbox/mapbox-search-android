@@ -234,6 +234,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val suggestion = suggestions[0]
         assertEquals("suggestion-id-1", suggestion.id)
         assertEquals("Washington", suggestion.name)
+        assertEquals("Washington - test preferred name", suggestion.namePreferred)
         assertEquals(
             "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             suggestion.descriptionText

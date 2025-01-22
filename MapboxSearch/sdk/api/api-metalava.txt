@@ -402,7 +402,7 @@ package com.mapbox.search {
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public Integer? getRequestDebounce();
-    method public com.mapbox.search.RouteOptions? getRouteOptions();
+    method @Deprecated public com.mapbox.search.RouteOptions? getRouteOptions();
     method public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.SearchOptions.Builder toBuilder();
@@ -417,7 +417,7 @@ package com.mapbox.search {
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Integer? requestDebounce;
-    property public final com.mapbox.search.RouteOptions? routeOptions;
+    property @Deprecated public final com.mapbox.search.RouteOptions? routeOptions;
     property public final java.util.List<com.mapbox.search.QueryType>? types;
     property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
@@ -438,7 +438,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.SearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.SearchOptions.Builder requestDebounce(int debounce);
-    method public com.mapbox.search.SearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
+    method @Deprecated public com.mapbox.search.SearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
     method public com.mapbox.search.SearchOptions.Builder types(com.mapbox.search.QueryType... types);
     method public com.mapbox.search.SearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
     method public com.mapbox.search.SearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
@@ -1069,6 +1069,7 @@ package com.mapbox.search.result {
     method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
+    method public String? getNamePreferred();
     method public com.mapbox.search.RequestOptions getRequestOptions();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
@@ -1088,6 +1089,7 @@ package com.mapbox.search.result {
     property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
+    property public final String? namePreferred;
     property public final com.mapbox.search.RequestOptions requestOptions;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final Integer? serverIndex;
