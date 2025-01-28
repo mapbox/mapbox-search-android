@@ -3,10 +3,10 @@ package com.mapbox.search.base.result
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BuildConfig
 import com.mapbox.search.base.core.CoreResultAccuracy
-import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchResult
 import com.mapbox.search.base.core.CoreSuggestAction
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
@@ -395,43 +395,12 @@ internal class BaseRawSearchResultTest {
                 listOf("test brand"),
                 "test brand id",
                 "test maki",
-                CoreResultMetadata(
+                createCoreResultMetadata(
                     3456,
                     "+902 10 70 77",
                     "https://www.museodelprado.es/en/visit-the-museum",
                     9.7,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    hashMapOf(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
+                    data = hashMapOf(),
                 ),
                 hashMapOf("external id 1" to "123", "external id 2" to "456", "external id 3" to "789"),
                 "test layer id",

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.Objects
 
+// TODO support exceptional periods
 /**
  * Availability information for the POI.
  */

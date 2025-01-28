@@ -2,7 +2,10 @@ package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.AttributeSet
+import com.mapbox.search.internal.bindgen.ExceptionalPeriod
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import com.mapbox.search.internal.bindgen.OpenMode
+import com.mapbox.search.internal.bindgen.OpenPeriod
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
@@ -50,6 +53,8 @@ fun createCoreSearchOptions(
     offlineSearchPlacesOutsideBbox = offlineSearchPlacesOutsideBbox,
     ensureResultsPerCategory = ensureResultsPerCategory,
     attributeSets = attributeSets,
+    // TODO FIXME
+    null,
 )
 
 fun createCoreReverseGeoOptions(
@@ -105,6 +110,7 @@ fun createCoreResultMetadata(
     servesVegetarian: Boolean? = null,
     rating: Float? = null,
     popularity: Float? = null,
+    evMetadata: CoreEvMetadata? = null,
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount,
     phone,
@@ -142,4 +148,21 @@ fun createCoreResultMetadata(
     servesVegetarian,
     rating,
     popularity,
+    evMetadata,
+)
+
+fun createCoreOpenHours(
+    mode: OpenMode,
+    periods: List<OpenPeriod>,
+    weekdayText: List<String>? = null,
+    note: String? = null,
+    exceptionalOpenings: List<ExceptionalPeriod> = emptyList(),
+    exceptionalClosings: List<ExceptionalPeriod> = emptyList(),
+): CoreOpenHours = CoreOpenHours(
+    mode = mode,
+    periods = periods,
+    weekdayText = weekdayText,
+    note = note,
+    exceptionalOpenings = exceptionalOpenings,
+    exceptionalClosings = exceptionalClosings,
 )

@@ -266,8 +266,8 @@ public interface OfflineSearchEngine {
     /**
      * Function to retrieve the details for a given mapboxId that dispatches events using the
      * main executor. The callback will be invoked with a [OfflineSearchResult] on successful execution.
-     *     *
-     * @param mapboxId for the item to retrieve details for
+     *
+     * @param feature the [Feature] item to retrieve details for
      * @param callback used to receive the [OfflineSearchResult] on successful execution
      * @return [AsyncOperationTask] object representing pending completion of the request
      */

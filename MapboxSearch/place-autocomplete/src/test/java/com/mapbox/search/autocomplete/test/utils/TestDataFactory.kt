@@ -7,6 +7,7 @@ import com.mapbox.search.base.core.CoreRequestOptions
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.core.createCoreOpenHours
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchResultType
@@ -24,7 +25,6 @@ import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
 import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.internal.bindgen.ImageInfo
-import com.mapbox.search.internal.bindgen.OpenHours
 import com.mapbox.search.internal.bindgen.OpenMode
 
 internal val filledTestCoreMetadata: CoreResultMetadata = createTestResultMetadata(
@@ -33,7 +33,7 @@ internal val filledTestCoreMetadata: CoreResultMetadata = createTestResultMetada
     website = "https://test.com",
     avRating = 4.9,
     description = "test-description",
-    openHours = OpenHours(OpenMode.ALWAYS_OPEN, emptyList(), null, null),
+    openHours = createCoreOpenHours(OpenMode.ALWAYS_OPEN, emptyList()),
     primaryPhoto = listOf(ImageInfo("https://test.com/img-primary.jpg", 150, 150)),
     otherPhoto = listOf(ImageInfo("https://test.com/img-other.jpg", 300, 150)),
     data = hashMapOf("iso_3166_1" to "test-iso-1", "iso_3166_2" to "test-iso-2"),

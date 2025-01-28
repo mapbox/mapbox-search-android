@@ -1,8 +1,8 @@
 package com.mapbox.search.record
 
 import com.mapbox.geojson.Point
-import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
@@ -505,43 +505,12 @@ internal class HistoryDataProviderTest {
             distanceMeters = 100.0,
             center = Point.fromLngLat(10.0, 11.0),
             categories = emptyList(),
-            metadata = CoreResultMetadata(
+            metadata = createCoreResultMetadata(
                 3456,
                 "+902 10 70 77",
                 "https://www.museodelprado.es/en/visit-the-museum",
                 9.7,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                hashMapOf(),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                data = hashMapOf(),
             ),
         )
 

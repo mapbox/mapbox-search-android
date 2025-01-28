@@ -4,6 +4,8 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.AttributeSet
 import com.mapbox.search.internal.bindgen.ConnectionError
+import com.mapbox.search.internal.bindgen.EvMetadata
+import com.mapbox.search.internal.bindgen.EvSearchOptions
 import com.mapbox.search.internal.bindgen.HttpError
 import com.mapbox.search.internal.bindgen.ImageInfo
 import com.mapbox.search.internal.bindgen.InternalError
@@ -51,6 +53,7 @@ fun createTestCoreSearchOptions(
     offlineSearchPlacesOutsideBbox: Boolean = false,
     ensureResultsPerCategory: Boolean? = null,
     attributeSets: List<AttributeSet>? = null,
+    evOptions: EvSearchOptions? = null,
 ): SearchOptions = SearchOptions(
     proximity,
     origin,
@@ -72,6 +75,7 @@ fun createTestCoreSearchOptions(
     offlineSearchPlacesOutsideBbox,
     ensureResultsPerCategory,
     attributeSets,
+    evOptions,
 )
 
 @Suppress("LongParameterList")
@@ -361,6 +365,7 @@ fun createTestResultMetadata(
     servesVegetarian: Boolean? = null,
     rating: Float? = null,
     popularity: Float? = null,
+    evMetadata: EvMetadata? = null,
 ): ResultMetadata = ResultMetadata(
     reviewCount,
     phone,
@@ -398,4 +403,5 @@ fun createTestResultMetadata(
     servesVegetarian,
     rating,
     popularity,
+    evMetadata,
 )

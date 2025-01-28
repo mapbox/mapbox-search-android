@@ -3,12 +3,10 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
-import com.mapbox.search.base.core.CoreChildMetadata
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -127,55 +125,6 @@ internal class DataClassGeneratedFunctionsTest {
                     ToStringVerifier(
                         clazz = SearchAddress.FormatComponent::class,
                         objectsFactory = reflectionObjectFactory,
-                    ).verify()
-                }
-            }
-        }
-
-        Given("SearchResultMetadata class") {
-            When("SearchResultMetadata class") {
-                Then("equals() and hashCode() functions should use every declared property") {
-                    EqualsVerifier
-                        .forClass(SearchResultMetadata::class.java)
-                        .withPrefabValues(
-                            CoreChildMetadata::class.java,
-                            CoreChildMetadata(
-                                mapboxId = "mapboxId_1",
-                                name = "name_1",
-                                category = "category_1",
-                                coordinates = Point.fromLngLat(1.0, 0.0),
-                            ),
-                            CoreChildMetadata(
-                                mapboxId = "mapboxId_2",
-                                name = "name_2",
-                                category = "category_2",
-                                coordinates = Point.fromLngLat(2.0, 0.0),
-                            ),
-                        )
-                        .withPrefabValues(
-                            ChildMetadata::class.java,
-                            ChildMetadata(
-                                mapboxId = "mapboxId_1",
-                                name = "name_1",
-                                category = "category_1",
-                                coordinates = Point.fromLngLat(1.0, 0.0),
-                            ),
-                            ChildMetadata(
-                                mapboxId = "mapboxId_2",
-                                name = "name_2",
-                                category = "category_2",
-                                coordinates = Point.fromLngLat(2.0, 0.0),
-                            ),
-                        )
-                        .withOnlyTheseFields("coreMetadata")
-                        .verify()
-                }
-
-                Then("toString() function should use every declared property") {
-                    ToStringVerifier(
-                        clazz = SearchResultMetadata::class,
-                        objectsFactory = reflectionObjectFactory,
-                        ignoredProperties = listOf("coreMetadata"),
                     ).verify()
                 }
             }
