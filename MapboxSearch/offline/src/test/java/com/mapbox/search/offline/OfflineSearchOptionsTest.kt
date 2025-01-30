@@ -4,6 +4,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.ev.EvConnectorType
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -51,6 +52,7 @@ internal class OfflineSearchOptionsTest {
                     origin = null,
                     boundingBox = null,
                     searchPlacesOutsideBoundingBox = false,
+                    evSearchOptions = null,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -62,13 +64,13 @@ internal class OfflineSearchOptionsTest {
     fun `Check OfflineSearchOptions builder with all values set`() = TestCase {
         Given("OfflineSearchOptions builder") {
             When("Build new OfflineSearchOptions with all values set") {
-
                 val actualOptions = OfflineSearchOptions.Builder()
                     .proximity(TEST_POINT)
                     .limit(100)
                     .origin(TEST_ORIGIN_POINT)
                     .boundingBox(TEST_BOUNDING_BOX)
                     .searchPlacesOutsideBoundingBox(true)
+                    .evSearchOptions(TEST_EV_OPTIONS)
                     .build()
 
                 val expectedOptions = OfflineSearchOptions(
@@ -77,6 +79,7 @@ internal class OfflineSearchOptionsTest {
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
                     searchPlacesOutsideBoundingBox = true,
+                    evSearchOptions = TEST_EV_OPTIONS,
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -105,6 +108,7 @@ internal class OfflineSearchOptionsTest {
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
                     searchPlacesOutsideBoundingBox = true,
+                    evSearchOptions = TEST_EV_OPTIONS,
                 ).mapToCore()
 
                 val expectedOptions = createCoreSearchOptions(
@@ -113,6 +117,7 @@ internal class OfflineSearchOptionsTest {
                     origin = TEST_ORIGIN_POINT,
                     bbox = TEST_BOUNDING_BOX.mapToCore(),
                     offlineSearchPlacesOutsideBbox = true,
+                    evSearchOptions = TEST_EV_OPTIONS.mapToCore(),
                 )
 
                 Then("Options should be equal", expectedOptions, actualOptions)
@@ -130,6 +135,7 @@ internal class OfflineSearchOptionsTest {
                     origin = TEST_ORIGIN_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
                     searchPlacesOutsideBoundingBox = true,
+                    evSearchOptions = TEST_EV_OPTIONS,
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
@@ -175,5 +181,11 @@ internal class OfflineSearchOptionsTest {
         val TEST_POINT: Point = Point.fromLngLat(10.0, 10.0)
         val TEST_ORIGIN_POINT: Point = Point.fromLngLat(20.0, 20.0)
         val TEST_BOUNDING_BOX: BoundingBox = BoundingBox.fromLngLats(0.0, 0.0, 90.0, 45.0)
+        val TEST_EV_OPTIONS = OfflineEvSearchOptions(
+            connectorTypes = listOf(EvConnectorType.TESLA_S, EvConnectorType.TESLA_R),
+            operators = listOf("test-operator"),
+            minChargingPower = 1000f,
+            maxChargingPower = 10000f,
+        )
     }
 }

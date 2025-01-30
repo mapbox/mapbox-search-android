@@ -44,7 +44,12 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
      * for places will be global, meaning results outside the [boundingBox] will not be
      * filtered out, even if a [boundingBox] is applied. Default if false.
      */
-    public val searchPlacesOutsideBoundingBox: Boolean = false
+    public val searchPlacesOutsideBoundingBox: Boolean = false,
+
+    /**
+     * Optional offline EV options.
+     */
+    public val evSearchOptions: OfflineEvSearchOptions? = null,
 ) : Parcelable {
 
     init {
@@ -72,6 +77,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         if (origin != other.origin) return false
         if (boundingBox != other.boundingBox) return false
         if (searchPlacesOutsideBoundingBox != other.searchPlacesOutsideBoundingBox) return false
+        if (evSearchOptions != other.evSearchOptions) return false
 
         return true
     }
@@ -85,6 +91,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (boundingBox?.hashCode() ?: 0)
         result = 31 * result + searchPlacesOutsideBoundingBox.hashCode()
+        result = 31 * result + evSearchOptions.hashCode()
         return result
     }
 
@@ -97,7 +104,8 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
                 " limit=$limit, " +
                 "origin=$origin, " +
                 "boundingBox=$boundingBox, " +
-                "searchPlacesOutsideBoundingBox=$searchPlacesOutsideBoundingBox" +
+                "searchPlacesOutsideBoundingBox=$searchPlacesOutsideBoundingBox, " +
+                "evSearchOptions=$evSearchOptions" +
                 ")"
     }
 
@@ -111,6 +119,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         private var origin: Point? = null
         private var boundingBox: BoundingBox? = null
         private var searchPlacesOutsideBoundingBox: Boolean = false
+        private var evSearchOptions: OfflineEvSearchOptions? = null
 
         internal constructor(options: OfflineSearchOptions) : this() {
             proximity = options.proximity
@@ -118,6 +127,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
             origin = options.origin
             boundingBox = options.boundingBox
             searchPlacesOutsideBoundingBox = options.searchPlacesOutsideBoundingBox
+            evSearchOptions = options.evSearchOptions
         }
 
         /**
@@ -153,6 +163,13 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
         }
 
         /**
+         * Optional offline EV options.
+         */
+        public fun evSearchOptions(evSearchOptions: OfflineEvSearchOptions?): Builder = apply {
+            this.evSearchOptions = evSearchOptions
+        }
+
+        /**
          * Create [OfflineSearchOptions] instance from builder data.
          */
         public fun build(): OfflineSearchOptions = OfflineSearchOptions(
@@ -161,6 +178,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
             origin = origin,
             boundingBox = boundingBox,
             searchPlacesOutsideBoundingBox = searchPlacesOutsideBoundingBox,
+            evSearchOptions = evSearchOptions,
         )
     }
 }
@@ -172,4 +190,5 @@ internal fun OfflineSearchOptions.mapToCore(): CoreSearchOptions = createCoreSea
     bbox = boundingBox?.mapToCore(),
     limit = limit,
     offlineSearchPlacesOutsideBbox = searchPlacesOutsideBoundingBox,
+    evSearchOptions = evSearchOptions?.mapToCore(),
 )

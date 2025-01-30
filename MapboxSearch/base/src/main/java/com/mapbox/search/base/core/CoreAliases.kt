@@ -61,3 +61,4 @@ typealias CoreEvseCapability = com.mapbox.search.internal.bindgen.EvseCapability
 typealias CoreChargingStatus = com.mapbox.search.internal.bindgen.ChargingStatus
 typealias CoreImageCategory = com.mapbox.search.internal.bindgen.ImageCategory
 typealias CoreEvMetadata = com.mapbox.search.internal.bindgen.EvMetadata
+typealias CoreEvSearchOptions = com.mapbox.search.internal.bindgen.EvSearchOptions

@@ -2,6 +2,7 @@ package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.AttributeSet
+import com.mapbox.search.internal.bindgen.EvSearchOptions
 import com.mapbox.search.internal.bindgen.ExceptionalPeriod
 import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.OpenMode
@@ -32,6 +33,7 @@ fun createCoreSearchOptions(
     offlineSearchPlacesOutsideBbox: Boolean = false,
     ensureResultsPerCategory: Boolean? = null,
     attributeSets: List<AttributeSet>? = null,
+    evSearchOptions: EvSearchOptions? = null,
 ): CoreSearchOptions = CoreSearchOptions(
     proximity = proximity,
     origin = origin,
@@ -53,8 +55,7 @@ fun createCoreSearchOptions(
     offlineSearchPlacesOutsideBbox = offlineSearchPlacesOutsideBbox,
     ensureResultsPerCategory = ensureResultsPerCategory,
     attributeSets = attributeSets,
-    // TODO FIXME
-    null,
+    evSearchOptions = evSearchOptions,
 )
 
 fun createCoreReverseGeoOptions(
@@ -165,4 +166,18 @@ fun createCoreOpenHours(
     note = note,
     exceptionalOpenings = exceptionalOpenings,
     exceptionalClosings = exceptionalClosings,
+)
+
+fun createCoreEvSearchOptions(
+    connectorTypes: List<CoreConnectorType>? = null,
+    operators: List<String>? = null,
+    minChargingPower: Float? = null,
+    maxChargingPower: Float? = null,
+    availability: CoreChargingStatus? = null,
+): CoreEvSearchOptions = CoreEvSearchOptions(
+    connectorTypes = connectorTypes,
+    operators = operators,
+    minChargingPower = minChargingPower,
+    maxChargingPower = maxChargingPower,
+    availability = availability,
 )
