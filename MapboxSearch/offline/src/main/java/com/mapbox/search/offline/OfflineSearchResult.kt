@@ -1,6 +1,7 @@
 package com.mapbox.search.offline
 
 import android.os.Parcelable
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.result.BaseRawSearchResult
@@ -25,7 +26,7 @@ public class OfflineSearchResult internal constructor(
             "Server search result must have a coordinate"
         }
 
-        val type = rawSearchResult.types.mapNotNull { it.tryMapToOfflineSdkType() }.firstOrNull()
+        val type = rawSearchResult.types.firstNotNullOfOrNull { it.tryMapToOfflineSdkType() }
         offlineType = if (type == null) {
             failDebug {
                 "Unsupported in offline SDK result types: $rawSearchResult.types. Fallback to ${OfflineSearchResultType.PLACE}"
@@ -91,6 +92,15 @@ public class OfflineSearchResult internal constructor(
         get() = rawSearchResult.distanceMeters
 
     /**
+     * Metadata containing geo place's detailed information if available.
+     */
+    @MapboxExperimental
+    public val metadata: OfflineSearchResultMetadata?
+        get() = rawSearchResult.metadata?.let {
+            OfflineSearchResultMetadata(it)
+        }
+
+    /**
      * @suppress
      */
     override fun equals(other: Any?): Boolean {
@@ -99,9 +109,7 @@ public class OfflineSearchResult internal constructor(
 
         other as OfflineSearchResult
 
-        if (rawSearchResult != other.rawSearchResult) return false
-
-        return true
+        return rawSearchResult == other.rawSearchResult
     }
 
     /**
@@ -114,6 +122,7 @@ public class OfflineSearchResult internal constructor(
     /**
      * @suppress
      */
+    @OptIn(MapboxExperimental::class)
     override fun toString(): String {
         return "OfflineSearchResult(" +
                 "id='$id', " +
@@ -124,7 +133,8 @@ public class OfflineSearchResult internal constructor(
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +
                 "type=$type, " +
-                "distanceMeters=$distanceMeters" +
+                "distanceMeters=$distanceMeters, " +
+                "metadata=$metadata" +
                 ")"
     }
 }
