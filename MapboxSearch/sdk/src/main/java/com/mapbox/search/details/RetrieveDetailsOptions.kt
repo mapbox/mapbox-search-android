@@ -1,8 +1,8 @@
 package com.mapbox.search.details
 
 import android.os.Parcelable
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.AttributeSet
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.defaultLocaleLanguage
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * Options, used for the [DetailsApi.retrieveDetails].
  */
-@ExperimentalMapboxSearchAPI
+@MapboxExperimental
 @Parcelize
 public class RetrieveDetailsOptions @JvmOverloads constructor(
 
@@ -74,7 +74,7 @@ public class RetrieveDetailsOptions @JvmOverloads constructor(
     }
 }
 
-@OptIn(ExperimentalMapboxSearchAPI::class)
+@OptIn(MapboxExperimental::class)
 @JvmSynthetic
 internal fun RetrieveDetailsOptions.mapToCore(): DetailsOptions {
     return DetailsOptions(

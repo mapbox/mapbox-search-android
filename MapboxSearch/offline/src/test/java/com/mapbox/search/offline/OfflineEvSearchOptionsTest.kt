@@ -1,5 +1,8 @@
+@file:OptIn(MapboxExperimental::class)
+
 package com.mapbox.search.offline
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreConnectorType
 import com.mapbox.search.base.core.createCoreEvSearchOptions
 import com.mapbox.search.common.ev.EvConnectorType

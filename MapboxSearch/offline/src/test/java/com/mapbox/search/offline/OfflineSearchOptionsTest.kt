@@ -1,5 +1,8 @@
+@file:OptIn(MapboxExperimental::class)
+
 package com.mapbox.search.offline
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreSearchOptions

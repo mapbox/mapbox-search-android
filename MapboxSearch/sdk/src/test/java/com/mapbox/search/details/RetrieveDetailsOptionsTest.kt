@@ -1,7 +1,7 @@
 package com.mapbox.search.details
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.AttributeSet
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.core.CoreAttributeSet
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
@@ -10,7 +10,7 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-@OptIn(ExperimentalMapboxSearchAPI::class)
+@OptIn(MapboxExperimental::class)
 internal class RetrieveDetailsOptionsTest {
 
     @Test

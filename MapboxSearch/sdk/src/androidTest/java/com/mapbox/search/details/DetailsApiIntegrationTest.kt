@@ -1,11 +1,11 @@
 package com.mapbox.search.details
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.Point
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.BaseTest
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchRequestException
@@ -20,7 +20,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalMapboxSearchAPI::class)
+@OptIn(MapboxExperimental::class)
 internal class DetailsApiIntegrationTest : BaseTest() {
 
     private lateinit var mockServer: MockWebServer

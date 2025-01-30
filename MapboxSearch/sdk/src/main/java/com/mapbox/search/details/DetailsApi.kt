@@ -1,10 +1,10 @@
 package com.mapbox.search.details
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
 import com.mapbox.search.SearchEngineFactory
 import com.mapbox.search.SearchResultCallback
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -16,7 +16,7 @@ import java.util.concurrent.Executor
  *
  * Instance of the [DetailsApi] can be obtained with [DetailsApi.create].
  */
-@ExperimentalMapboxSearchAPI
+@MapboxExperimental
 public interface DetailsApi {
 
     /**
