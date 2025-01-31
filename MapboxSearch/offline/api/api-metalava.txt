@@ -113,10 +113,12 @@ package com.mapbox.search.offline {
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
@@ -141,10 +143,12 @@ package com.mapbox.search.offline {
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
   }
 
   public static interface OfflineSearchEngine.EngineReadyCallback {

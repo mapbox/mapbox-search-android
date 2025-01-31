@@ -4,6 +4,7 @@
 
 ### New features
 - Added experimental support for the EV search in offline, see `OfflineSearchOptions.evSearchOptions` and `OfflineSearchResult.metadata`.
+- Added experimental support for worldviews. Note that only selected worldviews are supported. To specify worldview, create Tileset Descriptor with required language and worldview, for example, `OfflineSearchEngine.createTilesetDescriptor(language = IsoLanguageCode.ENGLISH, worldview = IsoCountryCode.MOROCCO)`. 
 
 ### Experimental API breaking changes
 - Annotation `ExperimentalMapboxSearchAPI` has been replaced with Mapbox common annotation `MapboxExperimental`.

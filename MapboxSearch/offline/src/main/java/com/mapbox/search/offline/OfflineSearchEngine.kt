@@ -1,6 +1,7 @@
 package com.mapbox.search.offline
 
 import android.app.Application
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.Value
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStoreOptions
@@ -21,6 +22,8 @@ import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
@@ -337,17 +340,6 @@ public interface OfflineSearchEngine {
      */
     public companion object {
 
-        private val REGEX_LANGUAGE_CODE = "^[a-z]{2}\$".toRegex(RegexOption.IGNORE_CASE)
-
-        private fun buildDatasetName(dataset: String, language: String?): String =
-            language?.let {
-                if (!REGEX_LANGUAGE_CODE.matches(it)) {
-                    throw IllegalArgumentException("Language should be an ISO 639-1 code")
-                }
-
-                "${dataset}_${it.lowercase()}"
-            } ?: dataset
-
         /**
          * Creates a new instance of [OfflineSearchEngine].
          * @param settings [OfflineSearchEngine] settings.
@@ -355,8 +347,7 @@ public interface OfflineSearchEngine {
          */
         @JvmStatic
         public fun create(settings: OfflineSearchEngineSettings): OfflineSearchEngine {
-            val app = BaseSearchSdkInitializerImpl
-                .appContext as Application
+            val app = BaseSearchSdkInitializerImpl.appContext as Application
 
             with(settings) {
                 tileStore.setOption(
@@ -410,7 +401,34 @@ public interface OfflineSearchEngine {
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createTilesetDescriptor(buildDatasetName(dataset, language), version)
+            return CoreSearchEngine.createTilesetDescriptor(
+                DatasetNameBuilder.buildDatasetName(dataset, language),
+                version,
+            )
+        }
+
+        /**
+         * Creates TilesetDescriptor for offline search index data using the specified dataset,
+         * version, language, and worldview.
+         * Downloaded data will include addresses and places.
+         *
+         * @param dataset Tiles dataset.
+         * @param version Tiles version, chosen automatically if empty.
+         * @param language [IsoLanguageCode] language code.
+         * @param worldview [IsoCountryCode] country code.
+         */
+        @JvmStatic
+        @MapboxExperimental
+        public fun createTilesetDescriptor(
+            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
+            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: IsoLanguageCode,
+            worldview: IsoCountryCode
+        ): TilesetDescriptor {
+            return CoreSearchEngine.createTilesetDescriptor(
+                DatasetNameBuilder.buildDatasetName(dataset, language.code, worldview.code),
+                version,
+            )
         }
 
         /**
@@ -428,7 +446,34 @@ public interface OfflineSearchEngine {
             version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
-            return CoreSearchEngine.createPlacesTilesetDescriptor(buildDatasetName(dataset, language), version)
+            return CoreSearchEngine.createPlacesTilesetDescriptor(
+                DatasetNameBuilder.buildDatasetName(dataset, language),
+                version,
+            )
+        }
+
+        /**
+         * Creates TilesetDescriptor for offline search using the specified dataset,
+         * version, language, and worldview.
+         * Downloaded data will include only places.
+         *
+         * @param dataset Tiles dataset.
+         * @param version Tiles version, chosen automatically if empty.
+         * @param language [IsoLanguageCode] language code.
+         * @param worldview [IsoCountryCode] country code.
+         */
+        @JvmStatic
+        @MapboxExperimental
+        public fun createPlacesTilesetDescriptor(
+            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
+            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            language: IsoLanguageCode,
+            worldview: IsoCountryCode,
+        ): TilesetDescriptor {
+            return CoreSearchEngine.createPlacesTilesetDescriptor(
+                DatasetNameBuilder.buildDatasetName(dataset, language.code, worldview.code),
+                version,
+            )
         }
     }
 }
