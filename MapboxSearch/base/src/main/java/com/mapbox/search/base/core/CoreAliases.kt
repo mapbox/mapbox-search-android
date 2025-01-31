@@ -51,7 +51,6 @@ typealias CoreEnergySourceCategory = com.mapbox.search.internal.bindgen.EnergySo
 typealias CoreEnvironmentalImpact = com.mapbox.search.internal.bindgen.EnvironmentalImpact
 typealias CoreEnvironmentalImpactCategory = com.mapbox.search.internal.bindgen.EnvironmentalImpactCategory
 typealias CoreFacility = com.mapbox.search.internal.bindgen.Facility
-typealias CoreImage = com.mapbox.search.internal.bindgen.Image
 typealias CoreEvLocation = com.mapbox.search.internal.bindgen.EvLocation
 typealias CoreParkingRestriction = com.mapbox.search.internal.bindgen.ParkingRestriction
 typealias CoreParkingType = com.mapbox.search.internal.bindgen.ParkingType

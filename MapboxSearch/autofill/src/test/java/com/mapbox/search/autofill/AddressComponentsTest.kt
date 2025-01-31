@@ -2,11 +2,11 @@ package com.mapbox.search.autofill
 
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
-import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.common.tests.withPrefabTestBoundingBox
 import com.mapbox.search.common.tests.withPrefabTestPoint
 import io.mockk.every
@@ -33,7 +33,7 @@ internal class AddressComponentsTest {
             country = "France"
         )
 
-        val coreMetadata = createTestResultMetadata(
+        val coreMetadata = createCoreResultMetadata(
             data = hashMapOf("iso_3166_1" to "fra", "iso_3166_2" to "fr")
         )
 

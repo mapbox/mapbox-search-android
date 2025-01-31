@@ -3,8 +3,11 @@ package com.mapbox.search.offline
 import android.os.Parcelable
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreResultMetadata
-import com.mapbox.search.base.factory.ev.toPlatform
+import com.mapbox.search.base.factory.mapToPlatform
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.Facility
+import com.mapbox.search.common.LocalizedText
+import com.mapbox.search.common.ParkingType
 import com.mapbox.search.common.ev.EvMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
@@ -62,6 +65,19 @@ public class OfflineSearchResultMetadata internal constructor(
     public val parkingAvailable: Boolean? = coreMetadata.parkingAvailable
 
     /**
+     * The type of parking at the POI.
+     */
+    @IgnoredOnParcel
+    @ParkingType.Type
+    public val parkingType: String? = coreMetadata.parkingType?.mapToPlatform()
+
+    /**
+     * Human-readable directions on how to reach the location.
+     */
+    @IgnoredOnParcel
+    public val directions: List<LocalizedText>? = coreMetadata.directions?.map { it.mapToPlatform() }
+
+    /**
      * Indicates the availability of street parking near the location.
      */
     @IgnoredOnParcel
@@ -71,7 +87,25 @@ public class OfflineSearchResultMetadata internal constructor(
      * Provides EV-related metadata
      */
     @IgnoredOnParcel
-    public val evMetadata: EvMetadata? = coreMetadata.evMetadata?.toPlatform()
+    public val evMetadata: EvMetadata? = coreMetadata.evMetadata?.mapToPlatform()
+
+    /**
+     * List of [Facility.Type] values this POI directly belongs to.
+     */
+    @IgnoredOnParcel
+    public val facilities: List<String>? = coreMetadata.facilities?.map { it.mapToPlatform() }
+
+    /**
+     * One of IANA time zone data’s TZ-values representing the time zone of the location.
+     */
+    @IgnoredOnParcel
+    public val timezone: String? = coreMetadata.timezone
+
+    /**
+     * Timestamp in RFC 3339 format when POI data were last updated (or created).
+     */
+    @IgnoredOnParcel
+    public val lastUpdated: String? = coreMetadata.lastUpdated
 
     /**
      * @suppress
@@ -103,8 +137,13 @@ public class OfflineSearchResultMetadata internal constructor(
                 "otherPhotos=$otherPhotos, " +
                 "openHours=$openHours, " +
                 "parkingAvailable=$parkingAvailable, " +
+                "parkingType=$parkingType, " +
+                "directions=$directions, " +
                 "streetParking=$streetParking, " +
-                "evMetadata=$evMetadata" +
+                "evMetadata=$evMetadata, " +
+                "facilities=$facilities, " +
+                "timezone=$timezone, " +
+                "lastUpdated=$lastUpdated" +
                 ")"
     }
 }

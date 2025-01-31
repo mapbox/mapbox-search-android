@@ -19,7 +19,7 @@ import kotlinx.parcelize.Parcelize
 @MapboxExperimental
 @Parcelize
 public class EvEnergyMix @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
-    public val isGreenEnergy: Boolean,
+    public val isGreenEnergy: Boolean?,
     public val energySources: List<EvEnergySource>,
     public val environmentalImpact: List<EvEnvironmentalImpact>,
     public val supplierName: String?,

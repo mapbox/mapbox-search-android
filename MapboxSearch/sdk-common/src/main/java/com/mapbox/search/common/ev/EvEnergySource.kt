@@ -17,7 +17,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class EvEnergySource @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
     @EvEnergySourceCategory.Type public val source: String,
-    public val percentage: Int
+    public val percentage: Int?
 ) : Parcelable {
 
     /**
@@ -40,7 +40,7 @@ public class EvEnergySource @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) c
      */
     override fun hashCode(): Int {
         var result = source.hashCode()
-        result = 31 * result + percentage
+        result = 31 * result + (percentage ?: 0)
         return result
     }
 

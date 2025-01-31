@@ -4,6 +4,8 @@ import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.LocalizedText
+import com.mapbox.search.common.metadata.ImageInfo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -28,10 +30,10 @@ import kotlinx.parcelize.Parcelize
  * in the locally displayed numbering scheme.
  * @property coordinate Coordinate of the EVSE.
  * @property physicalReference A number/string printed on the outside of the EVSE for visual identification.
- * @property directions [EvDisplayText] objects representing multi-language human-readable directions
+ * @property directions [LocalizedText] objects representing multi-language human-readable directions
  * when more detailed information on how to reach the EVSE from the Location is required.
  * @property parkingRestrictions List of [EvParkingRestriction.Type] values that apply to the parking spot.
- * @property images List of [EvImage] objects representing links to images related to the EVSE such as photos or logos.
+ * @property images List of [ImageInfo] objects representing links to images related to the EVSE such as photos or logos.
  * @property lastUpdated Timestamp in RFC 3339 format when this EVSE or
  * one of its Connectors was last updated (or created).
  */
@@ -47,10 +49,10 @@ public class EVSE @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor
     public val floorLevel: String? = null,
     public val coordinate: Point? = null,
     public val physicalReference: String? = null,
-    public val directions: List<EvDisplayText>,
+    public val directions: List<LocalizedText>,
     public val parkingRestrictions: List<String>,
-    public val images: List<EvImage>,
-    public val lastUpdated: String,
+    public val images: List<ImageInfo>,
+    public val lastUpdated: String?,
 ) : Parcelable {
 
     /**

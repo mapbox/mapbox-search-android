@@ -2,7 +2,8 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreChildMetadata
-import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.metadata.ChildMetadata
@@ -75,7 +76,7 @@ internal class SearchResultMetadataTest {
                 )
             )
 
-            val originalCoreMeta = CoreResultMetadata(
+            val originalCoreMeta = createCoreResultMetadata(
                 reviewCount = 243,
                 phone = "+7 939 32 12",
                 website = "www.test.com",
@@ -112,7 +113,6 @@ internal class SearchResultMetadataTest {
                 servesVegetarian = true,
                 rating = 5.0f,
                 popularity = 0.5f,
-                evMetadata = null,
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 

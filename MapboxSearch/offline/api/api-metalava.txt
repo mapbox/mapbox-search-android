@@ -244,21 +244,31 @@ package com.mapbox.search.offline {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class OfflineSearchResultMetadata implements android.os.Parcelable {
+    method public java.util.List<com.mapbox.search.common.LocalizedText>? getDirections();
     method public com.mapbox.search.common.ev.EvMetadata? getEvMetadata();
     method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
+    method public java.util.List<java.lang.String>? getFacilities();
+    method public String? getLastUpdated();
     method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
     method public Boolean? getParkingAvailable();
+    method public String? getParkingType();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
     method public Boolean? getStreetParking();
+    method public String? getTimezone();
     method public String? getWebsite();
+    property public final java.util.List<com.mapbox.search.common.LocalizedText>? directions;
     property public final com.mapbox.search.common.ev.EvMetadata? evMetadata;
     property public final java.util.Map<java.lang.String,java.lang.String> extraData;
+    property public final java.util.List<java.lang.String>? facilities;
+    property public final String? lastUpdated;
     property public final com.mapbox.search.common.metadata.OpenHours? openHours;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
     property public final Boolean? parkingAvailable;
+    property public final String? parkingType;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
     property public final Boolean? streetParking;
+    property public final String? timezone;
     property public final String? website;
   }
 

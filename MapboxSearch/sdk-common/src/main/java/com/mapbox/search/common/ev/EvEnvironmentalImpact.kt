@@ -18,7 +18,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class EvEnvironmentalImpact @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
     @EvEnvironmentalImpactCategory.Type public val category: String,
-    public val amount: Float
+    public val amount: Float?
 ) : Parcelable {
 
     /**

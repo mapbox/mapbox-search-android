@@ -1,15 +1,14 @@
-package com.mapbox.search.common.ev
+package com.mapbox.search.common
 
 import androidx.annotation.StringDef
 import com.mapbox.annotation.MapboxExperimental
 
 /**
- * OCPI Facility. A facility to which a charging location directly belongs.
- * Refer to this type in the [OCPI GitHub repository](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1412-facility-enum)
- * for more details.
+ * Facility type. One of the examples is
+ * [OCPI Facility](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1412-facility-enum).
  */
 @MapboxExperimental
-public object EvFacility {
+public object Facility {
 
     /**
      * A hotel.

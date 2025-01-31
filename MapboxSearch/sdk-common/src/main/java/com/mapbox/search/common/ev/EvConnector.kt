@@ -3,6 +3,7 @@ package com.mapbox.search.common.ev
 import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.search.common.ParkingType
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -15,7 +16,7 @@ import kotlinx.parcelize.Parcelize
  * as long as they do not belong to the same EVSE object.
  * @property standard [EvConnectorType.Type] value indicating the standard of the installed connector.
  * @property format [EvConnectorFormat.Type] value indicating the format (socket/cable) of the installed connector.
- * @property powerType [EvParkingType.Type] value indicating electrical power configuration.
+ * @property powerType [ParkingType.Type] value indicating electrical power configuration.
  * @property maxVoltage Maximum voltage of the connector (line to neutral for AC_3_PHASE), in volt (V).
  * For example: DC Chargers might vary the voltage during charging when battery almost full.
  * @property maxAmperage Maximum amperage of the connector, in ampere (A).
@@ -43,7 +44,7 @@ public class EvConnector @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) cons
     public val maxElectricPower: Int? = null,
     public val tariffIds: List<String>,
     public val termsAndConditions: String? = null,
-    public val lastUpdated: String,
+    public val lastUpdated: String?,
 ) : Parcelable {
 
     /**

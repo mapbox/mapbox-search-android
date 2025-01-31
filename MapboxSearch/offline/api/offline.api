@@ -315,13 +315,18 @@ public final class com/mapbox/search/offline/OfflineSearchResultMetadata : andro
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDirections ()Ljava/util/List;
 	public final fun getEvMetadata ()Lcom/mapbox/search/common/ev/EvMetadata;
 	public final fun getExtraData ()Ljava/util/Map;
+	public final fun getFacilities ()Ljava/util/List;
+	public final fun getLastUpdated ()Ljava/lang/String;
 	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
 	public final fun getParkingAvailable ()Ljava/lang/Boolean;
+	public final fun getParkingType ()Ljava/lang/String;
 	public final fun getPrimaryPhotos ()Ljava/util/List;
 	public final fun getStreetParking ()Ljava/lang/Boolean;
+	public final fun getTimezone ()Ljava/lang/String;
 	public final fun getWebsite ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

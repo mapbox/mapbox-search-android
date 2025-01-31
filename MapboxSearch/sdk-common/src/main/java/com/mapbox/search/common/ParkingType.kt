@@ -1,15 +1,14 @@
-package com.mapbox.search.common.ev
+package com.mapbox.search.common
 
 import androidx.annotation.StringDef
 import com.mapbox.annotation.MapboxExperimental
 
 /**
- * OCPI ParkingType. Reflects the general type of the charge point’s location.
- * May be used for user information. Refer to this type in the [OCPI GitHub repository](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1418-parkingtype-enum)
- * for more details.
+ * The general type of parking near POI. One of the examples is
+ * [OCPI ParkingType](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1418-parkingtype-enum)
  */
 @MapboxExperimental
-public object EvParkingType {
+public object ParkingType {
 
     /**
      * Location on a parking facility/rest area along a motorway, freeway, interstate, highway etc.

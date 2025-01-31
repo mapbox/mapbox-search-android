@@ -2,7 +2,7 @@ package com.mapbox.search.offline
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.createCoreEvSearchOptions
-import com.mapbox.search.base.factory.ev.createCoreConnectorType
+import com.mapbox.search.base.factory.createCoreConnectorType
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.ev.EvConnectorType
 import kotlinx.parcelize.Parcelize

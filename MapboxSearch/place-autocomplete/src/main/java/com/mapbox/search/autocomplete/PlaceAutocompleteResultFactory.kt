@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
+import com.mapbox.search.base.factory.mapToPlatform
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion

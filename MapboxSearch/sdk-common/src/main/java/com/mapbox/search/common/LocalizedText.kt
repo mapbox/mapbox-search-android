@@ -1,4 +1,4 @@
-package com.mapbox.search.common.ev
+package com.mapbox.search.common
 
 import android.os.Parcelable
 import androidx.annotation.RestrictTo
@@ -6,16 +6,15 @@ import com.mapbox.annotation.MapboxExperimental
 import kotlinx.parcelize.Parcelize
 
 /**
- * OCPI DisplayText.
- * Refer to this type in the [OCPI GitHub repository](https://github.com/ocpi/ocpi/blob/2.2.1/types.asciidoc#13-displaytext-class)
- * for more details.
+ * Represents a piece of text associated with a specific language.
+ * One of examples is [OCPI DisplayText](https://github.com/ocpi/ocpi/blob/2.2.1/types.asciidoc#13-displaytext-class).
  *
  * @property language Language Code ISO 639-1.
- * @property text Text to be displayed to an end user. No markup, HTML etc. allowed.
+ * @property text The localized text content in the specified language. No markup, HTML etc. allowed.
  */
 @MapboxExperimental
 @Parcelize
-public class EvDisplayText @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
+public class LocalizedText @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
     public val language: String,
     public val text: String,
 ) : Parcelable {
@@ -27,7 +26,7 @@ public class EvDisplayText @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) co
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as EvDisplayText
+        other as LocalizedText
 
         if (language != other.language) return false
         if (text != other.text) return false

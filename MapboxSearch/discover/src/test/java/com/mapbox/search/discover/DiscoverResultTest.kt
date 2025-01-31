@@ -3,6 +3,7 @@ package com.mapbox.search.discover
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.mapToBase
@@ -15,7 +16,6 @@ import com.mapbox.search.common.tests.createCoreSearchAddressCountry
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreRoutablePoint
 import com.mapbox.search.common.tests.createTestCoreSearchResult
-import com.mapbox.search.common.tests.createTestResultMetadata
 import com.mapbox.search.common.tests.withPrefabTestPoint
 import io.mockk.mockk
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -44,7 +44,7 @@ internal class DiscoverResultTest {
 
     @Test
     fun `Check DiscoverApiResult`() {
-        val coreMetadata = createTestResultMetadata(
+        val coreMetadata = createCoreResultMetadata(
             data = hashMapOf("iso_3166_1" to "fra", "iso_3166_2" to "fr")
         )
 

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.LocalizedText
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,7 +14,7 @@ import kotlinx.parcelize.Parcelize
  * for more details.
  *
  * @property position Geographic position of the point.
- * @property name [EvDisplayText] object representing name of the point in local language or
+ * @property name [LocalizedText] object representing name of the point in local language or
  * as written at the location. For example the street name of a parking lot entrance
  * or its number.
  */
@@ -21,7 +22,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class EvAdditionalGeoLocation @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
     public val position: Point,
-    public val name: EvDisplayText? = null,
+    public val name: LocalizedText? = null,
 ) : Parcelable {
 
     /**

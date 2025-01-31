@@ -3,6 +3,8 @@ package com.mapbox.search
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.mapToCore
+import com.mapbox.search.base.factory.mapToPlatform
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.metadata.ChildMetadata

@@ -1,15 +1,14 @@
-package com.mapbox.search.common.ev
+package com.mapbox.search.common
 
 import androidx.annotation.StringDef
 import com.mapbox.annotation.MapboxExperimental
 
 /**
- * OCPI ParkingRestriction. This value, if provided, is the restriction to the parking spot
- * for different purposes. Refer to this type in the [OCPI GitHub repository](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1417-parkingrestriction-enum)
- * for more details.
+ * Represents the restriction to the parking spot for different purposes. One of the examples is
+ * [OCPI ParkingRestriction](https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#1417-parkingrestriction-enum).
  */
 @MapboxExperimental
-public object EvParkingRestriction {
+public object ParkingRestriction {
 
     /**
      * Reserved parking spot for electric vehicles.
