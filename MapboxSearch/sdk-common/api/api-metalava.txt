@@ -470,6 +470,9 @@ package com.mapbox.search.common {
     property public String message;
   }
 
+  public final class UtilsKt {
+  }
+
 }
 
 package com.mapbox.search.common.concurrent {
