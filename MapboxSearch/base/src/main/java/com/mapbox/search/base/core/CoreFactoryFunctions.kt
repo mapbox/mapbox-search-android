@@ -2,11 +2,14 @@ package com.mapbox.search.base.core
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.internal.bindgen.AttributeSet
+import com.mapbox.search.internal.bindgen.EvSearchOptions
+import com.mapbox.search.internal.bindgen.ExceptionalPeriod
 import com.mapbox.search.internal.bindgen.LonLatBBox
+import com.mapbox.search.internal.bindgen.OpenMode
+import com.mapbox.search.internal.bindgen.OpenPeriod
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
-import java.util.HashMap
 
 fun createCoreSearchOptions(
     proximity: Point? = null,
@@ -29,6 +32,7 @@ fun createCoreSearchOptions(
     offlineSearchPlacesOutsideBbox: Boolean = false,
     ensureResultsPerCategory: Boolean? = null,
     attributeSets: List<AttributeSet>? = null,
+    evSearchOptions: EvSearchOptions? = null,
 ): CoreSearchOptions = CoreSearchOptions(
     proximity = proximity,
     origin = origin,
@@ -50,6 +54,7 @@ fun createCoreSearchOptions(
     offlineSearchPlacesOutsideBbox = offlineSearchPlacesOutsideBbox,
     ensureResultsPerCategory = ensureResultsPerCategory,
     attributeSets = attributeSets,
+    evSearchOptions = evSearchOptions,
 )
 
 fun createCoreReverseGeoOptions(
@@ -80,7 +85,7 @@ fun createCoreResultMetadata(
     cpsJson: String? = null,
     parking: CoreParkingData? = null,
     children: List<CoreChildMetadata>? = null,
-    data: HashMap<String, String>,
+    data: HashMap<String, String> = hashMapOf(),
     wheelchairAccessible: Boolean? = null,
     delivery: Boolean? = null,
     driveThrough: Boolean? = null,
@@ -88,6 +93,7 @@ fun createCoreResultMetadata(
     parkingAvailable: Boolean? = null,
     valetParking: Boolean? = null,
     streetParking: Boolean? = null,
+    parkingType: CoreParkingType? = null,
     servesBreakfast: Boolean? = null,
     servesBrunch: Boolean? = null,
     servesDinner: Boolean? = null,
@@ -105,41 +111,82 @@ fun createCoreResultMetadata(
     servesVegetarian: Boolean? = null,
     rating: Float? = null,
     popularity: Float? = null,
+    evMetadata: CoreEvMetadata? = null,
+    directions: List<CoreDisplayText>? = null,
+    facilities: List<CoreFacility>? = null,
+    timezone: String? = null,
+    lastUpdated: String? = null,
 ): CoreResultMetadata = CoreResultMetadata(
-    reviewCount,
-    phone,
-    website,
-    avRating,
-    description,
-    openHours,
-    primaryPhoto,
-    otherPhoto,
-    cpsJson,
-    parking,
-    children,
-    data,
-    wheelchairAccessible,
-    delivery,
-    driveThrough,
-    reservable,
-    parkingAvailable,
-    valetParking,
-    streetParking,
-    servesBreakfast,
-    servesBrunch,
-    servesDinner,
-    servesLunch,
-    servesWine,
-    servesBeer,
-    takeout,
-    facebookId,
-    fax,
-    email,
-    instagram,
-    twitter,
-    priceLevel,
-    servesVegan,
-    servesVegetarian,
-    rating,
-    popularity,
+    reviewCount = reviewCount,
+    phone = phone,
+    website = website,
+    avRating = avRating,
+    description = description,
+    openHours = openHours,
+    primaryPhoto = primaryPhoto,
+    otherPhoto = otherPhoto,
+    cpsJson = cpsJson,
+    parking = parking,
+    children = children,
+    data = data,
+    wheelchairAccessible = wheelchairAccessible,
+    delivery = delivery,
+    driveThrough = driveThrough,
+    reservable = reservable,
+    parkingAvailable = parkingAvailable,
+    valetParking = valetParking,
+    streetParking = streetParking,
+    parkingType = parkingType,
+    servesBreakfast = servesBreakfast,
+    servesBrunch = servesBrunch,
+    servesDinner = servesDinner,
+    servesLunch = servesLunch,
+    servesWine = servesWine,
+    servesBeer = servesBeer,
+    takeout = takeout,
+    facebookId = facebookId,
+    fax = fax,
+    email = email,
+    instagram = instagram,
+    twitter = twitter,
+    priceLevel = priceLevel,
+    servesVegan = servesVegan,
+    servesVegetarian = servesVegetarian,
+    rating = rating,
+    popularity = popularity,
+    evMetadata = evMetadata,
+    directions = directions,
+    facilities = facilities,
+    timezone = timezone,
+    lastUpdated = lastUpdated,
+)
+
+fun createCoreOpenHours(
+    mode: OpenMode,
+    periods: List<OpenPeriod>,
+    weekdayText: List<String>? = null,
+    note: String? = null,
+    exceptionalOpenings: List<ExceptionalPeriod> = emptyList(),
+    exceptionalClosings: List<ExceptionalPeriod> = emptyList(),
+): CoreOpenHours = CoreOpenHours(
+    mode = mode,
+    periods = periods,
+    weekdayText = weekdayText,
+    note = note,
+    exceptionalOpenings = exceptionalOpenings,
+    exceptionalClosings = exceptionalClosings,
+)
+
+fun createCoreEvSearchOptions(
+    connectorTypes: List<CoreConnectorType>? = null,
+    operators: List<String>? = null,
+    minChargingPower: Float? = null,
+    maxChargingPower: Float? = null,
+    availability: CoreChargingStatus? = null,
+): CoreEvSearchOptions = CoreEvSearchOptions(
+    connectorTypes = connectorTypes,
+    operators = operators,
+    minChargingPower = minChargingPower,
+    maxChargingPower = maxChargingPower,
+    availability = availability,
 )

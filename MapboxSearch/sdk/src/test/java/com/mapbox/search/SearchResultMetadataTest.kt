@@ -2,7 +2,8 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreChildMetadata
-import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.metadata.ChildMetadata
@@ -12,8 +13,15 @@ import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.tests.ReflectionObjectsFactory
+import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.tests.withPrefabTestPoint
+import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
 import com.mapbox.test.dsl.TestCase
+import io.mockk.every
+import io.mockk.mockk
 import io.mockk.spyk
+import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.TestFactory
@@ -35,13 +43,11 @@ internal class SearchResultMetadataTest {
 
             val testMetaKey = "key"
             val testValue = "test value"
-            val spyMetaMap = spyk(
-                hashMapOf(
-                    testMetaKey to testValue,
-                    testIso1Key to testIso1Value,
-                    testIso2Key to testIso2Value,
-                )
-            )
+            val metaMap = mockk<HashMap<String, String>>(relaxed = true).apply {
+                every { this@apply[eq(testMetaKey)] } returns testValue
+                every { this@apply[eq(testIso1Key)] } returns testIso1Value
+                every { this@apply[eq(testIso2Key)] } returns testIso2Value
+            }
 
             val testOpenHours = OpenHours.Scheduled(
                 periods = listOf(
@@ -70,7 +76,7 @@ internal class SearchResultMetadataTest {
                 )
             )
 
-            val originalCoreMeta = CoreResultMetadata(
+            val originalCoreMeta = createCoreResultMetadata(
                 reviewCount = 243,
                 phone = "+7 939 32 12",
                 website = "www.test.com",
@@ -82,7 +88,7 @@ internal class SearchResultMetadataTest {
                 cpsJson = testCpsJson,
                 parking = testParking.mapToCore(),
                 children = children,
-                data = spyMetaMap,
+                data = metaMap,
                 wheelchairAccessible = true,
                 delivery = true,
                 driveThrough = true,
@@ -106,7 +112,7 @@ internal class SearchResultMetadataTest {
                 servesVegan = true,
                 servesVegetarian = true,
                 rating = 5.0f,
-                popularity = 0.5f
+                popularity = 0.5f,
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -154,11 +160,11 @@ internal class SearchResultMetadataTest {
                 }
 
                 Verify("CoreResultMetadata.data.get(\"iso_3166_1\") called") {
-                    spyMetaMap["iso_3166_1"]
+                    metaMap["iso_3166_1"]
                 }
 
                 Verify("CoreResultMetadata.data.get(\"iso_3166_2\") called") {
-                    spyMetaMap["iso_3166_2"]
+                    metaMap["iso_3166_2"]
                 }
 
                 Verify("CoreResultMetadata.getWheelchairAccessible() called") {
@@ -288,7 +294,7 @@ internal class SearchResultMetadataTest {
 
             When("extraData accessed") {
                 Then("Returned data should be as original") {
-                    assertSame(metadata.extraData, spyMetaMap)
+                    assertSame(metadata.extraData, metaMap)
                 }
             }
 
@@ -613,6 +619,64 @@ internal class SearchResultMetadataTest {
                     assertEquals(searchResultMetadata.servesVegetarian, servesVegetarian)
                     assertEquals(searchResultMetadata.rating, rating)
                     assertEquals(searchResultMetadata.popularity, popularity)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Test generated equals(), hashCode() and toString() methods`() = TestCase {
+        Given("SearchResultMetadata class") {
+
+            val reflectionObjectFactory = ReflectionObjectsFactory(
+                extraCreators = SdkCustomTypeObjectCreators.ALL_CREATORS,
+            )
+
+            When("SearchResultMetadata class") {
+                Then("equals() and hashCode() functions should use every declared property") {
+                    EqualsVerifier
+                        .forClass(SearchResultMetadata::class.java)
+                        .withPrefabValues(
+                            CoreChildMetadata::class.java,
+                            CoreChildMetadata(
+                                mapboxId = "mapboxId_1",
+                                name = "name_1",
+                                category = "category_1",
+                                coordinates = Point.fromLngLat(1.0, 0.0),
+                            ),
+                            CoreChildMetadata(
+                                mapboxId = "mapboxId_2",
+                                name = "name_2",
+                                category = "category_2",
+                                coordinates = Point.fromLngLat(2.0, 0.0),
+                            ),
+                        )
+                        .withPrefabValues(
+                            ChildMetadata::class.java,
+                            ChildMetadata(
+                                mapboxId = "mapboxId_1",
+                                name = "name_1",
+                                category = "category_1",
+                                coordinates = Point.fromLngLat(1.0, 0.0),
+                            ),
+                            ChildMetadata(
+                                mapboxId = "mapboxId_2",
+                                name = "name_2",
+                                category = "category_2",
+                                coordinates = Point.fromLngLat(2.0, 0.0),
+                            ),
+                        )
+                        .withPrefabTestPoint()
+                        .withOnlyTheseFields("coreMetadata")
+                        .verify()
+                }
+
+                Then("toString() function should use every declared property") {
+                    ToStringVerifier(
+                        clazz = SearchResultMetadata::class,
+                        objectsFactory = reflectionObjectFactory,
+                        ignoredProperties = listOf("coreMetadata"),
+                    ).verify()
                 }
             }
         }

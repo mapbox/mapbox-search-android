@@ -1,8 +1,8 @@
 package com.mapbox.search.details
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.SearchResultCallback
 import com.mapbox.search.adapter.SearchResultCallbackAdapter
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreSearchEngineInterface
@@ -15,7 +15,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@OptIn(ExperimentalMapboxSearchAPI::class)
+@OptIn(MapboxExperimental::class)
 internal class DetailsApiImpl(
     private val coreEngine: CoreSearchEngineInterface,
     private val activityReporter: UserActivityReporterInterface,

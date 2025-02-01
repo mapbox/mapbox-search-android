@@ -6,6 +6,7 @@ import com.mapbox.search.autocomplete.test.utils.testBaseRawSearchSuggestionWith
 import com.mapbox.search.autocomplete.test.utils.testBaseResult
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
+import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.utils.extension.mapToCore

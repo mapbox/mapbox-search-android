@@ -2,6 +2,9 @@ package com.mapbox.search
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.mapToCore
+import com.mapbox.search.base.factory.mapToPlatform
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.metadata.ChildMetadata
@@ -302,43 +305,45 @@ public class SearchResultMetadata internal constructor(
         rating: Float? = null,
         popularity: Float? = null,
     ) : this(
-        CoreResultMetadata(
-            reviewCount,
-            phone,
-            website,
-            averageRating,
-            description,
-            openHours?.mapToCore(),
-            primaryPhotos?.map { it.mapToCore() },
-            otherPhotos?.map { it.mapToCore() },
-            cpsJson,
-            parking?.mapToCore(),
-            children?.map { it.mapToCore() },
-            HashMap(metadata),
-            wheelchairAccessible,
-            delivery,
-            driveThrough,
-            reservable,
-            parkingAvailable,
-            valetParking,
-            streetParking,
-            servesBreakfast,
-            servesBrunch,
-            servesDinner,
-            servesLunch,
-            servesWine,
-            servesBeer,
-            takeout,
-            facebookId,
-            fax,
-            email,
-            instagram,
-            twitter,
-            priceLevel,
-            servesVegan,
-            servesVegetarian,
-            rating,
-            popularity,
+        createCoreResultMetadata(
+            reviewCount = reviewCount,
+            phone = phone,
+            website = website,
+            avRating = averageRating,
+            description = description,
+            openHours = openHours?.mapToCore(),
+            primaryPhoto = primaryPhotos?.map { it.mapToCore() },
+            otherPhoto = otherPhotos?.map { it.mapToCore() },
+            cpsJson = cpsJson,
+            parking = parking?.mapToCore(),
+            children = children?.map { it.mapToCore() },
+            data = HashMap(metadata),
+            wheelchairAccessible = wheelchairAccessible,
+            delivery = delivery,
+            driveThrough = driveThrough,
+            reservable = reservable,
+            parkingAvailable = parkingAvailable,
+            valetParking = valetParking,
+            streetParking = streetParking,
+            servesBreakfast = servesBreakfast,
+            servesBrunch = servesBrunch,
+            servesDinner = servesDinner,
+            servesLunch = servesLunch,
+            servesWine = servesWine,
+            servesBeer = servesBeer,
+            takeout = takeout,
+            facebookId = facebookId,
+            fax = fax,
+            email = email,
+            instagram = instagram,
+            twitter = twitter,
+            priceLevel = priceLevel,
+            servesVegan = servesVegan,
+            servesVegetarian = servesVegetarian,
+            rating = rating,
+            popularity = popularity,
+            // We don't support EV metadata for online search yet
+            evMetadata = null,
         )
     )
 

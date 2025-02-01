@@ -1,5 +1,23 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.8.0-rc.1
+
+### New features
+- Added experimental support for the EV search in offline, see `OfflineSearchOptions.evSearchOptions` and `OfflineSearchResult.metadata`.
+- Added experimental support for worldviews. Note that only selected worldviews are supported. To specify worldview, create Tileset Descriptor with required language and worldview, for example, `OfflineSearchEngine.createTilesetDescriptor(language = IsoLanguageCode.ENGLISH, worldview = IsoCountryCode.MOROCCO)`. 
+
+### Experimental API breaking changes
+- Annotation `ExperimentalMapboxSearchAPI` has been replaced with Mapbox common annotation `MapboxExperimental`.
+
+### Known issues
+- `OfflineSearchEngine.OnIndexChangeListener` is not called when expected. Workaround is to listen for `TileStore.loadTileRegion` `onFinish` event and allow some time (few seconds) for the `OfflineSearchEngine` to initialize the downloaded tiles.
+
+### Mapbox dependencies
+- Search Native SDK `2.8.0-rc.1`
+- Common SDK `24.10.0-rc.1`
+
+
+
 ## 2.8.0-beta.1
 
 ### New features
@@ -11,12 +29,9 @@
 ### Other
 - `SearchOptions.routeOptions` has been deprecated as not supported for the forward geocoding.
 
-
-### New features
-
 ### Mapbox dependencies
 - Search Native SDK `2.8.0-beta.2`
-- Common SDK `24.10.0-beta.`
+- Common SDK `24.10.0-beta.2`
 
 
 

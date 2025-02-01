@@ -1,6 +1,21 @@
 // Signature format: 3.0
 package com.mapbox.search.offline {
 
+  @kotlinx.parcelize.Parcelize public final class OfflineEvSearchOptions implements android.os.Parcelable {
+    ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null, Float? minChargingPower = null, Float? maxChargingPower = null);
+    ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null, Float? minChargingPower = null);
+    ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null);
+    ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null);
+    method public java.util.List<java.lang.String>? getConnectorTypes();
+    method public Float? getMaxChargingPower();
+    method public Float? getMinChargingPower();
+    method public java.util.List<java.lang.String>? getOperators();
+    property public final java.util.List<java.lang.String>? connectorTypes;
+    property public final Float? maxChargingPower;
+    property public final Float? minChargingPower;
+    property public final java.util.List<java.lang.String>? operators;
+  }
+
   public final class OfflineIndexChangeEvent {
     method public String getDataset();
     method public String getRegionId();
@@ -98,10 +113,12 @@ package com.mapbox.search.offline {
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
     method public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
@@ -126,10 +143,12 @@ package com.mapbox.search.offline {
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
   }
 
   public static interface OfflineSearchEngine.EngineReadyCallback {
@@ -165,18 +184,21 @@ package com.mapbox.search.offline {
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null, boolean searchPlacesOutsideBoundingBox = false, com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null, boolean searchPlacesOutsideBoundingBox = false);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null);
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
+    method public com.mapbox.search.offline.OfflineEvSearchOptions? getEvSearchOptions();
     method public Integer? getLimit();
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public boolean getSearchPlacesOutsideBoundingBox();
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder toBuilder();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
+    property public final com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions;
     property public final Integer? limit;
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
@@ -187,6 +209,7 @@ package com.mapbox.search.offline {
     ctor public OfflineSearchOptions.Builder();
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder boundingBox(com.mapbox.geojson.BoundingBox boundingBox);
     method public com.mapbox.search.offline.OfflineSearchOptions build();
+    method public com.mapbox.search.offline.OfflineSearchOptions.Builder evSearchOptions(com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions);
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder limit(int limit);
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.offline.OfflineSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
@@ -203,6 +226,7 @@ package com.mapbox.search.offline {
     method public Double? getDistanceMeters();
     method public String getId();
     method public String? getMapboxId();
+    method public com.mapbox.search.offline.OfflineSearchResultMetadata? getMetadata();
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.offline.OfflineSearchResultType getType();
@@ -212,6 +236,7 @@ package com.mapbox.search.offline {
     property public final Double? distanceMeters;
     property public final String id;
     property public final String? mapboxId;
+    property public final com.mapbox.search.offline.OfflineSearchResultMetadata? metadata;
     property public final String name;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final com.mapbox.search.offline.OfflineSearchResultType type;
@@ -220,6 +245,35 @@ package com.mapbox.search.offline {
   public interface OfflineSearchResultCallback {
     method public void onError(Exception e);
     method public void onResult(com.mapbox.search.offline.OfflineSearchResult result, com.mapbox.search.offline.OfflineResponseInfo responseInfo);
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class OfflineSearchResultMetadata implements android.os.Parcelable {
+    method public java.util.List<com.mapbox.search.common.LocalizedText>? getDirections();
+    method public com.mapbox.search.common.ev.EvMetadata? getEvMetadata();
+    method public java.util.Map<java.lang.String,java.lang.String> getExtraData();
+    method public java.util.List<java.lang.String>? getFacilities();
+    method public String? getLastUpdated();
+    method public com.mapbox.search.common.metadata.OpenHours? getOpenHours();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
+    method public Boolean? getParkingAvailable();
+    method public String? getParkingType();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
+    method public Boolean? getStreetParking();
+    method public String? getTimezone();
+    method public String? getWebsite();
+    property public final java.util.List<com.mapbox.search.common.LocalizedText>? directions;
+    property public final com.mapbox.search.common.ev.EvMetadata? evMetadata;
+    property public final java.util.Map<java.lang.String,java.lang.String> extraData;
+    property public final java.util.List<java.lang.String>? facilities;
+    property public final String? lastUpdated;
+    property public final com.mapbox.search.common.metadata.OpenHours? openHours;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
+    property public final Boolean? parkingAvailable;
+    property public final String? parkingType;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
+    property public final Boolean? streetParking;
+    property public final String? timezone;
+    property public final String? website;
   }
 
   public enum OfflineSearchResultType {

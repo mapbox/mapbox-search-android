@@ -1,10 +1,10 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchResultCallback
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.details.DetailsApi
 import com.mapbox.search.details.DetailsApiSettings
@@ -12,7 +12,7 @@ import com.mapbox.search.details.RetrieveDetailsOptions
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
 
-@OptIn(ExperimentalMapboxSearchAPI::class)
+@OptIn(MapboxExperimental::class)
 class DetailsApiKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override val titleResId: Int = R.string.action_open_details_api_kt_example

@@ -1,9 +1,9 @@
 package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
-import com.mapbox.search.common.tests.createTestResultMetadata
 
 internal object TypeObjectCreator {
 
@@ -20,7 +20,7 @@ internal object TypeObjectCreator {
             country = "France"
         )
 
-        val coreMetadata = createTestResultMetadata(
+        val coreMetadata = createCoreResultMetadata(
             data = hashMapOf("iso_3166_1" to "fra", "iso_3166_2" to "fr")
         )
 

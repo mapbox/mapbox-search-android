@@ -1,17 +1,17 @@
 package com.mapbox.search.details
 
 import android.Manifest
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.search.ViewportProvider
-import com.mapbox.search.base.ExperimentalMapboxSearchAPI
 import com.mapbox.search.base.location.defaultLocationProvider
 
 /**
  * Settings used for [DetailsApi] configuration.
  * @see DetailsApi
  */
-@ExperimentalMapboxSearchAPI
+@MapboxExperimental
 public class DetailsApiSettings @JvmOverloads constructor(
 
     /**

@@ -1,14 +1,16 @@
+@file:OptIn(MapboxExperimental::class)
+
 package com.mapbox.search.base
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreChildMetadata
-import com.mapbox.search.base.core.CoreImageInfo
 import com.mapbox.search.base.core.CoreOpenHours
 import com.mapbox.search.base.core.CoreOpenMode
 import com.mapbox.search.base.core.CoreOpenPeriod
 import com.mapbox.search.base.core.CoreParkingData
+import com.mapbox.search.base.core.createCoreOpenHours
 import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.common.metadata.ChildMetadata
-import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
@@ -33,14 +35,14 @@ fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
 }
 
 fun OpenHours.mapToCore() = when (this) {
-    OpenHours.AlwaysOpen -> CoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList(), null, null)
-    OpenHours.TemporaryClosed -> CoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList(), null, null)
-    OpenHours.PermanentlyClosed -> CoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList(), null, null)
-    is OpenHours.Scheduled -> CoreOpenHours(
+    OpenHours.AlwaysOpen -> createCoreOpenHours(CoreOpenMode.ALWAYS_OPEN, emptyList())
+    OpenHours.TemporaryClosed -> createCoreOpenHours(CoreOpenMode.TEMPORARILY_CLOSED, emptyList())
+    OpenHours.PermanentlyClosed -> createCoreOpenHours(CoreOpenMode.PERMANENTLY_CLOSED, emptyList())
+    is OpenHours.Scheduled -> createCoreOpenHours(
         CoreOpenMode.SCHEDULED,
         periods.map { it.mapToCore() },
         weekdayText,
-        note
+        note,
     )
     else -> error("Unknown OpenHours subclass: ${javaClass.printableName}.")
 }
@@ -91,15 +93,3 @@ fun weekDayFromCore(dayCode: Byte): WeekDay {
     return WeekDay.values().firstOrNull { it.internalRawCode == dayCode }
         ?: throw IllegalArgumentException("Unknown day code (=$dayCode) from Core SDK.")
 }
-
-fun CoreImageInfo.mapToPlatform(): ImageInfo = ImageInfo(
-    url = url,
-    width = width,
-    height = height
-)
-
-fun ImageInfo.mapToCore(): CoreImageInfo = CoreImageInfo(
-    url,
-    width,
-    height
-)

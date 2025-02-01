@@ -16,6 +16,16 @@ package com.mapbox.search.common {
     property public final com.mapbox.search.common.AsyncOperationTask COMPLETED;
   }
 
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class BusinessDetails implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public BusinessDetails(String name, String? website = null, com.mapbox.search.common.metadata.ImageInfo? logo = null);
+    method public com.mapbox.search.common.metadata.ImageInfo? getLogo();
+    method public String getName();
+    method public String? getWebsite();
+    property public final com.mapbox.search.common.metadata.ImageInfo? logo;
+    property public final String name;
+    property public final String? website;
+  }
+
   public interface CompletionCallback<T> {
     method public void onComplete(T? result);
     method public void onError(Exception e);
@@ -34,6 +44,34 @@ package com.mapbox.search.common {
   }
 
   public final class DistanceCalculatorKt {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class Facility {
+    field public static final String AIRPORT = "AIRPORT";
+    field public static final String BIKE_SHARING = "BIKE_SHARING";
+    field public static final String BUS_STOP = "BUS_STOP";
+    field public static final String CAFE = "CAFE";
+    field public static final String CARPOOL_PARKING = "CARPOOL_PARKING";
+    field public static final String FUEL_STATION = "FUEL_STATION";
+    field public static final String HOTEL = "HOTEL";
+    field public static final com.mapbox.search.common.Facility INSTANCE;
+    field public static final String MALL = "MALL";
+    field public static final String METRO_STATION = "METRO_STATION";
+    field public static final String MUSEUM = "MUSEUM";
+    field public static final String NATURE = "NATURE";
+    field public static final String PARKING_LOT = "PARKING_LOT";
+    field public static final String RECREATION_AREA = "RECREATION_AREA";
+    field public static final String RESTAURANT = "RESTAURANT";
+    field public static final String SPORT = "SPORT";
+    field public static final String SUPERMARKET = "SUPERMARKET";
+    field public static final String TAXI_STAND = "TAXI_STAND";
+    field public static final String TRAIN_STATION = "TRAIN_STATION";
+    field public static final String TRAM_STOP = "TRAM_STOP";
+    field public static final String UNKNOWN = "UNKNOWN";
+    field public static final String WIFI = "WIFI";
+  }
+
+  @StringDef({com.mapbox.search.common.Facility.HOTEL, com.mapbox.search.common.Facility.RESTAURANT, com.mapbox.search.common.Facility.CAFE, com.mapbox.search.common.Facility.MALL, com.mapbox.search.common.Facility.SUPERMARKET, com.mapbox.search.common.Facility.SPORT, com.mapbox.search.common.Facility.RECREATION_AREA, com.mapbox.search.common.Facility.NATURE, com.mapbox.search.common.Facility.MUSEUM, com.mapbox.search.common.Facility.BIKE_SHARING, com.mapbox.search.common.Facility.BUS_STOP, com.mapbox.search.common.Facility.TAXI_STAND, com.mapbox.search.common.Facility.TRAM_STOP, com.mapbox.search.common.Facility.METRO_STATION, com.mapbox.search.common.Facility.TRAIN_STATION, com.mapbox.search.common.Facility.AIRPORT, com.mapbox.search.common.Facility.PARKING_LOT, com.mapbox.search.common.Facility.CARPOOL_PARKING, com.mapbox.search.common.Facility.FUEL_STATION, com.mapbox.search.common.Facility.WIFI, com.mapbox.search.common.Facility.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface Facility.Type {
   }
 
   public interface HighlightsCalculator {
@@ -354,6 +392,14 @@ package com.mapbox.search.common {
   public static final class IsoLanguageCode.Companion {
   }
 
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class LocalizedText implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public LocalizedText(String language, String text);
+    method public String getLanguage();
+    method public String getText();
+    property public final String language;
+    property public final String text;
+  }
+
   @kotlinx.parcelize.Parcelize public final class NavigationProfile implements android.os.Parcelable {
     ctor public NavigationProfile(String rawName);
     method public String getRawName();
@@ -371,6 +417,33 @@ package com.mapbox.search.common {
     method public static String? fromPoiId(long poiId);
     method public static String? fromPoiId(String poiId);
     field public static final com.mapbox.search.common.OsmIdUtils INSTANCE;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingRestriction {
+    field public static final String CUSTOMERS = "CUSTOMERS";
+    field public static final String DISABLED = "DISABLED";
+    field public static final String EV_ONLY = "EV_ONLY";
+    field public static final com.mapbox.search.common.ParkingRestriction INSTANCE;
+    field public static final String MOTOR_CYCLES = "MOTOR_CYCLES";
+    field public static final String PLUGGED = "PLUGGED";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ParkingRestriction.EV_ONLY, com.mapbox.search.common.ParkingRestriction.PLUGGED, com.mapbox.search.common.ParkingRestriction.DISABLED, com.mapbox.search.common.ParkingRestriction.CUSTOMERS, com.mapbox.search.common.ParkingRestriction.MOTOR_CYCLES, com.mapbox.search.common.ParkingRestriction.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingRestriction.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingType {
+    field public static final String ALONG_MOTORWAY = "ALONG_MOTORWAY";
+    field public static final com.mapbox.search.common.ParkingType INSTANCE;
+    field public static final String ON_DRIVEWAY = "ON_DRIVEWAY";
+    field public static final String ON_STREET = "ON_STREET";
+    field public static final String PARKING_GARAGE = "PARKING_GARAGE";
+    field public static final String PARKING_LOT = "PARKING_LOT";
+    field public static final String UNDERGROUND_GARAGE = "UNDERGROUND_GARAGE";
+    field public static final String UNKNOWN = "";
+  }
+
+  @StringDef({com.mapbox.search.common.ParkingType.ALONG_MOTORWAY, com.mapbox.search.common.ParkingType.PARKING_GARAGE, com.mapbox.search.common.ParkingType.PARKING_LOT, com.mapbox.search.common.ParkingType.ON_DRIVEWAY, com.mapbox.search.common.ParkingType.ON_STREET, com.mapbox.search.common.ParkingType.UNDERGROUND_GARAGE, com.mapbox.search.common.ParkingType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingType.Type {
   }
 
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
@@ -428,6 +501,303 @@ package com.mapbox.search.common.concurrent {
 
 }
 
+package com.mapbox.search.common.ev {
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EVSE implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EVSE(String uid, String? evseId = null, @com.mapbox.search.common.ev.EvseStatus.Type String status, java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> statusSchedule, java.util.List<java.lang.String> capabilities, java.util.List<com.mapbox.search.common.ev.EvConnector> connectors, String? floorLevel = null, com.mapbox.geojson.Point? coordinate = null, String? physicalReference = null, java.util.List<com.mapbox.search.common.LocalizedText> directions, java.util.List<java.lang.String> parkingRestrictions, java.util.List<com.mapbox.search.common.metadata.ImageInfo> images, String? lastUpdated);
+    method public java.util.List<java.lang.String> getCapabilities();
+    method public java.util.List<com.mapbox.search.common.ev.EvConnector> getConnectors();
+    method public com.mapbox.geojson.Point? getCoordinate();
+    method public java.util.List<com.mapbox.search.common.LocalizedText> getDirections();
+    method public String? getEvseId();
+    method public String? getFloorLevel();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo> getImages();
+    method public String? getLastUpdated();
+    method public java.util.List<java.lang.String> getParkingRestrictions();
+    method public String? getPhysicalReference();
+    method public String getStatus();
+    method public java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> getStatusSchedule();
+    method public String getUid();
+    property public final java.util.List<java.lang.String> capabilities;
+    property public final java.util.List<com.mapbox.search.common.ev.EvConnector> connectors;
+    property public final com.mapbox.geojson.Point? coordinate;
+    property public final java.util.List<com.mapbox.search.common.LocalizedText> directions;
+    property public final String? evseId;
+    property public final String? floorLevel;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo> images;
+    property public final String? lastUpdated;
+    property public final java.util.List<java.lang.String> parkingRestrictions;
+    property public final String? physicalReference;
+    property public final String status;
+    property public final java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> statusSchedule;
+    property public final String uid;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvAdditionalGeoLocation implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvAdditionalGeoLocation(com.mapbox.geojson.Point position, com.mapbox.search.common.LocalizedText? name = null);
+    method public com.mapbox.search.common.LocalizedText? getName();
+    method public com.mapbox.geojson.Point getPosition();
+    property public final com.mapbox.search.common.LocalizedText? name;
+    property public final com.mapbox.geojson.Point position;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvConnector implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvConnector(String id, @com.mapbox.search.common.ev.EvConnectorType.Type String standard, @com.mapbox.search.common.ev.EvConnectorFormat.Type String format, @com.mapbox.search.common.ev.EvPowerType.Type String powerType, int maxVoltage, int maxAmperage, Integer? maxElectricPower = null, java.util.List<java.lang.String> tariffIds, String? termsAndConditions = null, String? lastUpdated);
+    method public String getFormat();
+    method public String getId();
+    method public String? getLastUpdated();
+    method public int getMaxAmperage();
+    method public Integer? getMaxElectricPower();
+    method public int getMaxVoltage();
+    method public String getPowerType();
+    method public String getStandard();
+    method public java.util.List<java.lang.String> getTariffIds();
+    method public String? getTermsAndConditions();
+    property public final String format;
+    property public final String id;
+    property public final String? lastUpdated;
+    property public final int maxAmperage;
+    property public final Integer? maxElectricPower;
+    property public final int maxVoltage;
+    property public final String powerType;
+    property public final String standard;
+    property public final java.util.List<java.lang.String> tariffIds;
+    property public final String? termsAndConditions;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvConnectorFormat {
+    field public static final String CABLE = "CABLE";
+    field public static final com.mapbox.search.common.ev.EvConnectorFormat INSTANCE;
+    field public static final String SOCKET = "SOCKET";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvConnectorFormat.SOCKET, com.mapbox.search.common.ev.EvConnectorFormat.CABLE, com.mapbox.search.common.ev.EvConnectorFormat.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvConnectorFormat.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvConnectorType {
+    field public static final String CHADEMO = "CHADEMO";
+    field public static final String CHAOJI = "CHAOJI";
+    field public static final String DOMESTIC_A = "DOMESTIC_A";
+    field public static final String DOMESTIC_B = "DOMESTIC_B";
+    field public static final String DOMESTIC_C = "DOMESTIC_C";
+    field public static final String DOMESTIC_D = "DOMESTIC_D";
+    field public static final String DOMESTIC_E = "DOMESTIC_E";
+    field public static final String DOMESTIC_F = "DOMESTIC_F";
+    field public static final String DOMESTIC_G = "DOMESTIC_G";
+    field public static final String DOMESTIC_H = "DOMESTIC_H";
+    field public static final String DOMESTIC_I = "DOMESTIC_I";
+    field public static final String DOMESTIC_J = "DOMESTIC_J";
+    field public static final String DOMESTIC_K = "DOMESTIC_K";
+    field public static final String DOMESTIC_L = "DOMESTIC_L";
+    field public static final String DOMESTIC_M = "DOMESTIC_M";
+    field public static final String DOMESTIC_N = "DOMESTIC_N";
+    field public static final String DOMESTIC_O = "DOMESTIC_O";
+    field public static final String GBT_AC = "GBT_AC";
+    field public static final String GBT_DC = "GBT_DC";
+    field public static final String IEC_60309_2_SINGLE_16 = "IEC_60309_2_SINGLE_16";
+    field public static final String IEC_60309_2_THREE_16 = "IEC_60309_2_THREE_16";
+    field public static final String IEC_60309_2_THREE_32 = "IEC_60309_2_THREE_32";
+    field public static final String IEC_60309_2_THREE_64 = "IEC_60309_2_THREE_64";
+    field public static final String IEC_62196_T1 = "IEC_62196_T1";
+    field public static final String IEC_62196_T1_COMBO = "IEC_62196_T1_COMBO";
+    field public static final String IEC_62196_T2 = "IEC_62196_T2";
+    field public static final String IEC_62196_T2_COMBO = "IEC_62196_T2_COMBO";
+    field public static final String IEC_62196_T3_A = "IEC_62196_T3_A";
+    field public static final String IEC_62196_T3_C = "IEC_62196_T3_C";
+    field public static final com.mapbox.search.common.ev.EvConnectorType INSTANCE;
+    field public static final String NEMA_10_30 = "NEMA_10_30";
+    field public static final String NEMA_10_50 = "NEMA_10_50";
+    field public static final String NEMA_14_30 = "NEMA_14_30";
+    field public static final String NEMA_14_50 = "NEMA_14_50";
+    field public static final String NEMA_5_20 = "NEMA_5_20";
+    field public static final String NEMA_6_30 = "NEMA_6_30";
+    field public static final String NEMA_6_50 = "NEMA_6_50";
+    field public static final String PANTOGRAPH_BOTTOM_UP = "PANTOGRAPH_BOTTOM_UP";
+    field public static final String PANTOGRAPH_TOP_DOWN = "PANTOGRAPH_TOP_DOWN";
+    field public static final String TESLA_R = "TESLA_R";
+    field public static final String TESLA_S = "TESLA_S";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvConnectorType.CHADEMO, com.mapbox.search.common.ev.EvConnectorType.CHAOJI, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_A, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_B, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_C, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_D, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_E, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_F, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_G, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_H, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_I, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_J, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_K, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_L, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_M, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_N, com.mapbox.search.common.ev.EvConnectorType.DOMESTIC_O, com.mapbox.search.common.ev.EvConnectorType.GBT_AC, com.mapbox.search.common.ev.EvConnectorType.GBT_DC, com.mapbox.search.common.ev.EvConnectorType.IEC_60309_2_SINGLE_16, com.mapbox.search.common.ev.EvConnectorType.IEC_60309_2_THREE_16, com.mapbox.search.common.ev.EvConnectorType.IEC_60309_2_THREE_32, com.mapbox.search.common.ev.EvConnectorType.IEC_60309_2_THREE_64, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T1, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T1_COMBO, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T2, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T2_COMBO, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T3_A, com.mapbox.search.common.ev.EvConnectorType.IEC_62196_T3_C, com.mapbox.search.common.ev.EvConnectorType.NEMA_5_20, com.mapbox.search.common.ev.EvConnectorType.NEMA_6_30, com.mapbox.search.common.ev.EvConnectorType.NEMA_6_50, com.mapbox.search.common.ev.EvConnectorType.NEMA_10_30, com.mapbox.search.common.ev.EvConnectorType.NEMA_10_50, com.mapbox.search.common.ev.EvConnectorType.NEMA_14_30, com.mapbox.search.common.ev.EvConnectorType.NEMA_14_50, com.mapbox.search.common.ev.EvConnectorType.PANTOGRAPH_BOTTOM_UP, com.mapbox.search.common.ev.EvConnectorType.PANTOGRAPH_TOP_DOWN, com.mapbox.search.common.ev.EvConnectorType.TESLA_R, com.mapbox.search.common.ev.EvConnectorType.TESLA_S, com.mapbox.search.common.ev.EvConnectorType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvConnectorType.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvEnergyMix implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvEnergyMix(Boolean? isGreenEnergy, java.util.List<com.mapbox.search.common.ev.EvEnergySource> energySources, java.util.List<com.mapbox.search.common.ev.EvEnvironmentalImpact> environmentalImpact, String? supplierName, String? energyProductName);
+    method public String? getEnergyProductName();
+    method public java.util.List<com.mapbox.search.common.ev.EvEnergySource> getEnergySources();
+    method public java.util.List<com.mapbox.search.common.ev.EvEnvironmentalImpact> getEnvironmentalImpact();
+    method public String? getSupplierName();
+    method public Boolean? isGreenEnergy();
+    property public final String? energyProductName;
+    property public final java.util.List<com.mapbox.search.common.ev.EvEnergySource> energySources;
+    property public final java.util.List<com.mapbox.search.common.ev.EvEnvironmentalImpact> environmentalImpact;
+    property public final Boolean? isGreenEnergy;
+    property public final String? supplierName;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvEnergySource implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvEnergySource(@com.mapbox.search.common.ev.EvEnergySourceCategory.Type String source, Integer? percentage);
+    method public Integer? getPercentage();
+    method public String getSource();
+    property public final Integer? percentage;
+    property public final String source;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvEnergySourceCategory {
+    field public static final String COAL = "COAL";
+    field public static final String GAS = "GAS";
+    field public static final String GENERAL_FOSSIL = "GENERAL_FOSSIL";
+    field public static final String GENERAL_GREEN = "GENERAL_GREEN";
+    field public static final com.mapbox.search.common.ev.EvEnergySourceCategory INSTANCE;
+    field public static final String NUCLEAR = "NUCLEAR";
+    field public static final String SOLAR = "SOLAR";
+    field public static final String UNKNOWN = "UNKNOWN";
+    field public static final String WATER = "WATER";
+    field public static final String WIND = "WIND";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvEnergySourceCategory.NUCLEAR, com.mapbox.search.common.ev.EvEnergySourceCategory.GENERAL_FOSSIL, com.mapbox.search.common.ev.EvEnergySourceCategory.COAL, com.mapbox.search.common.ev.EvEnergySourceCategory.GAS, com.mapbox.search.common.ev.EvEnergySourceCategory.GENERAL_GREEN, com.mapbox.search.common.ev.EvEnergySourceCategory.SOLAR, com.mapbox.search.common.ev.EvEnergySourceCategory.WIND, com.mapbox.search.common.ev.EvEnergySourceCategory.WATER, com.mapbox.search.common.ev.EvEnergySourceCategory.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvEnergySourceCategory.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvEnvironmentalImpact implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvEnvironmentalImpact(@com.mapbox.search.common.ev.EvEnvironmentalImpactCategory.Type String category, Float? amount);
+    method public Float? getAmount();
+    method public String getCategory();
+    property public final Float? amount;
+    property public final String category;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvEnvironmentalImpactCategory {
+    field public static final String CARBON_DIOXIDE = "CARBON_DIOXIDE";
+    field public static final com.mapbox.search.common.ev.EvEnvironmentalImpactCategory INSTANCE;
+    field public static final String NUCLEAR_WASTE = "NUCLEAR_WASTE";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvEnvironmentalImpactCategory.NUCLEAR_WASTE, com.mapbox.search.common.ev.EvEnvironmentalImpactCategory.CARBON_DIOXIDE, com.mapbox.search.common.ev.EvEnvironmentalImpactCategory.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvEnvironmentalImpactCategory.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvLocation implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvLocation(String partyId, boolean publish, java.util.List<com.mapbox.search.common.ev.EvsePublishTokenType> publishAllowedTo, java.util.List<com.mapbox.search.common.ev.EvAdditionalGeoLocation> relatedLocations, java.util.List<com.mapbox.search.common.ev.EVSE> evses, com.mapbox.search.common.BusinessDetails? operatorDetails, com.mapbox.search.common.BusinessDetails? suboperatorDetails, com.mapbox.search.common.BusinessDetails? ownerDetails, Boolean? chargingWhenClosed, java.util.List<com.mapbox.search.common.metadata.ImageInfo> images, com.mapbox.search.common.ev.EvEnergyMix? energyMix);
+    method public Boolean? getChargingWhenClosed();
+    method public com.mapbox.search.common.ev.EvEnergyMix? getEnergyMix();
+    method public java.util.List<com.mapbox.search.common.ev.EVSE> getEvses();
+    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo> getImages();
+    method public com.mapbox.search.common.BusinessDetails? getOperatorDetails();
+    method public com.mapbox.search.common.BusinessDetails? getOwnerDetails();
+    method public String getPartyId();
+    method public boolean getPublish();
+    method public java.util.List<com.mapbox.search.common.ev.EvsePublishTokenType> getPublishAllowedTo();
+    method public java.util.List<com.mapbox.search.common.ev.EvAdditionalGeoLocation> getRelatedLocations();
+    method public com.mapbox.search.common.BusinessDetails? getSuboperatorDetails();
+    property public final Boolean? chargingWhenClosed;
+    property public final com.mapbox.search.common.ev.EvEnergyMix? energyMix;
+    property public final java.util.List<com.mapbox.search.common.ev.EVSE> evses;
+    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo> images;
+    property public final com.mapbox.search.common.BusinessDetails? operatorDetails;
+    property public final com.mapbox.search.common.BusinessDetails? ownerDetails;
+    property public final String partyId;
+    property public final boolean publish;
+    property public final java.util.List<com.mapbox.search.common.ev.EvsePublishTokenType> publishAllowedTo;
+    property public final java.util.List<com.mapbox.search.common.ev.EvAdditionalGeoLocation> relatedLocations;
+    property public final com.mapbox.search.common.BusinessDetails? suboperatorDetails;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvMetadata implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvMetadata(com.mapbox.search.common.ev.EvLocation? evLocation);
+    method public com.mapbox.search.common.ev.EvLocation? getEvLocation();
+    property public final com.mapbox.search.common.ev.EvLocation? evLocation;
+  }
+
+  public final class EvPowerType {
+    field public static final String AC_1_PHASE = "AC_1_PHASE";
+    field public static final String AC_2_PHASE = "AC_2_PHASE";
+    field public static final String AC_2_PHASE_SPLIT = "AC_2_PHASE_SPLIT";
+    field public static final String AC_3_PHASE = "AC_3_PHASE";
+    field public static final String DC = "DC";
+    field public static final com.mapbox.search.common.ev.EvPowerType INSTANCE;
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvPowerType.AC_1_PHASE, com.mapbox.search.common.ev.EvPowerType.AC_2_PHASE, com.mapbox.search.common.ev.EvPowerType.AC_2_PHASE_SPLIT, com.mapbox.search.common.ev.EvPowerType.AC_3_PHASE, com.mapbox.search.common.ev.EvPowerType.DC, com.mapbox.search.common.ev.EvPowerType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvPowerType.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvStatusSchedule implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvStatusSchedule(String periodBegin, String? periodEnd = null, @com.mapbox.search.common.ev.EvseStatus.Type String status);
+    method public String getPeriodBegin();
+    method public String? getPeriodEnd();
+    method public String getStatus();
+    property public final String periodBegin;
+    property public final String? periodEnd;
+    property public final String status;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvseCapability {
+    field public static final String CHARGING_PREFERENCES_CAPABLE = "CHARGING_PREFERENCES_CAPABLE";
+    field public static final String CHARGING_PROFILE_CAPABLE = "CHARGING_PROFILE_CAPABLE";
+    field public static final String CHIP_CARD_SUPPORT = "CHIP_CARD_SUPPORT";
+    field public static final String CONTACTLESS_CARD_SUPPORT = "CONTACTLESS_CARD_SUPPORT";
+    field public static final String CREDIT_CARD_PAYABLE = "CREDIT_CARD_PAYABLE";
+    field public static final String DEBIT_CARD_PAYABLE = "DEBIT_CARD_PAYABLE";
+    field public static final com.mapbox.search.common.ev.EvseCapability INSTANCE;
+    field public static final String PED_TERMINAL = "PED_TERMINAL";
+    field public static final String REMOTE_START_STOP_CAPABLE = "REMOTE_START_STOP_CAPABLE";
+    field public static final String RESERVABLE = "RESERVABLE";
+    field public static final String RFID_READER = "RFID_READER";
+    field public static final String START_SESSION_CONNECTOR_REQUIRED = "START_SESSION_CONNECTOR_REQUIRED";
+    field public static final String TOKEN_GROUP_CAPABLE = "TOKEN_GROUP_CAPABLE";
+    field public static final String UNKNOWN = "UNKNOWN";
+    field public static final String UNLOCK_CAPABLE = "UNLOCK_CAPABLE";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvseCapability.CHARGING_PROFILE_CAPABLE, com.mapbox.search.common.ev.EvseCapability.CHARGING_PREFERENCES_CAPABLE, com.mapbox.search.common.ev.EvseCapability.CHIP_CARD_SUPPORT, com.mapbox.search.common.ev.EvseCapability.CONTACTLESS_CARD_SUPPORT, com.mapbox.search.common.ev.EvseCapability.CREDIT_CARD_PAYABLE, com.mapbox.search.common.ev.EvseCapability.DEBIT_CARD_PAYABLE, com.mapbox.search.common.ev.EvseCapability.PED_TERMINAL, com.mapbox.search.common.ev.EvseCapability.REMOTE_START_STOP_CAPABLE, com.mapbox.search.common.ev.EvseCapability.RESERVABLE, com.mapbox.search.common.ev.EvseCapability.RFID_READER, com.mapbox.search.common.ev.EvseCapability.START_SESSION_CONNECTOR_REQUIRED, com.mapbox.search.common.ev.EvseCapability.TOKEN_GROUP_CAPABLE, com.mapbox.search.common.ev.EvseCapability.UNLOCK_CAPABLE, com.mapbox.search.common.ev.EvseCapability.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvseCapability.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvsePublishTokenType implements android.os.Parcelable {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvsePublishTokenType(String? uid, @com.mapbox.search.common.ev.EvseTokenType.Type String? tokenType, String? visualNumber, String? issuer, String? groupId);
+    method public String? getGroupId();
+    method public String? getIssuer();
+    method public String? getTokenType();
+    method public String? getUid();
+    method public String? getVisualNumber();
+    property public final String? groupId;
+    property public final String? issuer;
+    property public final String? tokenType;
+    property public final String? uid;
+    property public final String? visualNumber;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvseStatus {
+    field public static final String AVAILABLE = "AVAILABLE";
+    field public static final String BLOCKED = "BLOCKED";
+    field public static final String CHARGING = "CHARGING";
+    field public static final String INOPERATIVE = "INOPERATIVE";
+    field public static final com.mapbox.search.common.ev.EvseStatus INSTANCE;
+    field public static final String OUT_OF_ORDER = "OUT_OF_ORDER";
+    field public static final String PLANNED = "PLANNED";
+    field public static final String REMOVED = "REMOVED";
+    field public static final String RESERVED = "RESERVED";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvseStatus.AVAILABLE, com.mapbox.search.common.ev.EvseStatus.BLOCKED, com.mapbox.search.common.ev.EvseStatus.CHARGING, com.mapbox.search.common.ev.EvseStatus.INOPERATIVE, com.mapbox.search.common.ev.EvseStatus.OUT_OF_ORDER, com.mapbox.search.common.ev.EvseStatus.PLANNED, com.mapbox.search.common.ev.EvseStatus.REMOVED, com.mapbox.search.common.ev.EvseStatus.RESERVED, com.mapbox.search.common.ev.EvseStatus.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvseStatus.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class EvseTokenType {
+    field public static final String AD_HOC_USER = "AD_HOC_USER";
+    field public static final String APP_USER = "APP_USER";
+    field public static final com.mapbox.search.common.ev.EvseTokenType INSTANCE;
+    field public static final String OTHER = "OTHER";
+    field public static final String RFID = "RFID";
+  }
+
+  @StringDef({com.mapbox.search.common.ev.EvseTokenType.AD_HOC_USER, com.mapbox.search.common.ev.EvseTokenType.APP_USER, com.mapbox.search.common.ev.EvseTokenType.RFID, com.mapbox.search.common.ev.EvseTokenType.OTHER}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface EvseTokenType.Type {
+  }
+
+}
+
 package com.mapbox.search.common.metadata {
 
   @kotlinx.parcelize.Parcelize public final class ChildMetadata implements android.os.Parcelable {
@@ -442,12 +812,33 @@ package com.mapbox.search.common.metadata {
     property public final String? name;
   }
 
+  @com.mapbox.annotation.MapboxExperimental public final class ImageCategory {
+    field public static final String ENTRANCE = "ENTRANCE";
+    field public static final String EV_CHARGER = "EV_CHARGER";
+    field public static final String EV_NETWORK = "EV_NETWORK";
+    field public static final String EV_OPERATOR = "EV_OPERATOR";
+    field public static final String EV_OWNER = "EV_OWNER";
+    field public static final com.mapbox.search.common.metadata.ImageCategory INSTANCE;
+    field public static final String LOCATION = "LOCATION";
+    field public static final String OTHER = "OTHER";
+  }
+
+  @StringDef({com.mapbox.search.common.metadata.ImageCategory.EV_CHARGER, com.mapbox.search.common.metadata.ImageCategory.EV_NETWORK, com.mapbox.search.common.metadata.ImageCategory.EV_OPERATOR, com.mapbox.search.common.metadata.ImageCategory.EV_OWNER, com.mapbox.search.common.metadata.ImageCategory.ENTRANCE, com.mapbox.search.common.metadata.ImageCategory.LOCATION, com.mapbox.search.common.metadata.ImageCategory.OTHER}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ImageCategory.Type {
+  }
+
   @kotlinx.parcelize.Parcelize public final class ImageInfo implements android.os.Parcelable {
-    ctor public ImageInfo(String url, @Px int width, @Px int height);
+    ctor @com.mapbox.annotation.MapboxExperimental public ImageInfo(String url, @Px int width, @Px int height, @com.mapbox.annotation.MapboxExperimental String? thumbnailUrl, @com.mapbox.annotation.MapboxExperimental @com.mapbox.search.common.metadata.ImageCategory.Type String? imageCategory, @com.mapbox.annotation.MapboxExperimental String? type);
+    ctor public ImageInfo(String url, int width, int height);
     method public int getHeight();
+    method public String? getImageCategory();
+    method public String? getThumbnailUrl();
+    method public String? getType();
     method public String getUrl();
     method public int getWidth();
     property public final int height;
+    property public final String? imageCategory;
+    property public final String? thumbnailUrl;
+    property public final String? type;
     property public final String url;
     property public final int width;
   }

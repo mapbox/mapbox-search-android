@@ -18,6 +18,28 @@ public final class com/mapbox/search/common/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/search/common/BusinessDetails : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/metadata/ImageInfo;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/metadata/ImageInfo;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLogo ()Lcom/mapbox/search/common/metadata/ImageInfo;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getWebsite ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/BusinessDetails$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/BusinessDetails;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/BusinessDetails;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract interface class com/mapbox/search/common/CompletionCallback {
 	public abstract fun onComplete (Ljava/lang/Object;)V
 	public abstract fun onError (Ljava/lang/Exception;)V
@@ -33,6 +55,34 @@ public abstract interface class com/mapbox/search/common/DistanceCalculator {
 public final class com/mapbox/search/common/DistanceCalculator$Companion {
 	public final fun distanceOnSphere (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)D
 	public final fun instance (D)Lcom/mapbox/search/common/DistanceCalculator;
+}
+
+public final class com/mapbox/search/common/Facility {
+	public static final field AIRPORT Ljava/lang/String;
+	public static final field BIKE_SHARING Ljava/lang/String;
+	public static final field BUS_STOP Ljava/lang/String;
+	public static final field CAFE Ljava/lang/String;
+	public static final field CARPOOL_PARKING Ljava/lang/String;
+	public static final field FUEL_STATION Ljava/lang/String;
+	public static final field HOTEL Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/Facility;
+	public static final field MALL Ljava/lang/String;
+	public static final field METRO_STATION Ljava/lang/String;
+	public static final field MUSEUM Ljava/lang/String;
+	public static final field NATURE Ljava/lang/String;
+	public static final field PARKING_LOT Ljava/lang/String;
+	public static final field RECREATION_AREA Ljava/lang/String;
+	public static final field RESTAURANT Ljava/lang/String;
+	public static final field SPORT Ljava/lang/String;
+	public static final field SUPERMARKET Ljava/lang/String;
+	public static final field TAXI_STAND Ljava/lang/String;
+	public static final field TRAIN_STATION Ljava/lang/String;
+	public static final field TRAM_STOP Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+	public static final field WIFI Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/Facility$Type : java/lang/annotation/Annotation {
 }
 
 public abstract interface class com/mapbox/search/common/HighlightsCalculator {
@@ -378,6 +428,26 @@ public final class com/mapbox/search/common/IsoLanguageCode$Creator : android/os
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/common/LocalizedText : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLanguage ()Ljava/lang/String;
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/LocalizedText$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/LocalizedText;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/LocalizedText;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/NavigationProfile : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field CYCLING Lcom/mapbox/search/common/NavigationProfile;
@@ -408,6 +478,33 @@ public final class com/mapbox/search/common/OsmIdUtils {
 	public static final field INSTANCE Lcom/mapbox/search/common/OsmIdUtils;
 	public static final fun fromPoiId (J)Ljava/lang/String;
 	public static final fun fromPoiId (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class com/mapbox/search/common/ParkingRestriction {
+	public static final field CUSTOMERS Ljava/lang/String;
+	public static final field DISABLED Ljava/lang/String;
+	public static final field EV_ONLY Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ParkingRestriction;
+	public static final field MOTOR_CYCLES Ljava/lang/String;
+	public static final field PLUGGED Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ParkingRestriction$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ParkingType {
+	public static final field ALONG_MOTORWAY Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ParkingType;
+	public static final field ON_DRIVEWAY Ljava/lang/String;
+	public static final field ON_STREET Ljava/lang/String;
+	public static final field PARKING_GARAGE Ljava/lang/String;
+	public static final field PARKING_LOT Ljava/lang/String;
+	public static final field UNDERGROUND_GARAGE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ParkingType$Type : java/lang/annotation/Annotation {
 }
 
 public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelable {
@@ -476,6 +573,389 @@ public final class com/mapbox/search/common/concurrent/SearchSdkMainThreadWorker
 	public final fun setDelegate (Lcom/mapbox/search/common/concurrent/MainThreadWorker;)V
 }
 
+public final class com/mapbox/search/common/ev/EVSE : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCapabilities ()Ljava/util/List;
+	public final fun getConnectors ()Ljava/util/List;
+	public final fun getCoordinate ()Lcom/mapbox/geojson/Point;
+	public final fun getDirections ()Ljava/util/List;
+	public final fun getEvseId ()Ljava/lang/String;
+	public final fun getFloorLevel ()Ljava/lang/String;
+	public final fun getImages ()Ljava/util/List;
+	public final fun getLastUpdated ()Ljava/lang/String;
+	public final fun getParkingRestrictions ()Ljava/util/List;
+	public final fun getPhysicalReference ()Ljava/lang/String;
+	public final fun getStatus ()Ljava/lang/String;
+	public final fun getStatusSchedule ()Ljava/util/List;
+	public final fun getUid ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EVSE$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EVSE;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EVSE;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvAdditionalGeoLocation : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/common/LocalizedText;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/search/common/LocalizedText;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Lcom/mapbox/search/common/LocalizedText;
+	public final fun getPosition ()Lcom/mapbox/geojson/Point;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvAdditionalGeoLocation$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvAdditionalGeoLocation;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvAdditionalGeoLocation;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvConnector : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFormat ()Ljava/lang/String;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLastUpdated ()Ljava/lang/String;
+	public final fun getMaxAmperage ()I
+	public final fun getMaxElectricPower ()Ljava/lang/Integer;
+	public final fun getMaxVoltage ()I
+	public final fun getPowerType ()Ljava/lang/String;
+	public final fun getStandard ()Ljava/lang/String;
+	public final fun getTariffIds ()Ljava/util/List;
+	public final fun getTermsAndConditions ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvConnector$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvConnector;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvConnector;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvConnectorFormat {
+	public static final field CABLE Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvConnectorFormat;
+	public static final field SOCKET Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvConnectorFormat$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvConnectorType {
+	public static final field CHADEMO Ljava/lang/String;
+	public static final field CHAOJI Ljava/lang/String;
+	public static final field DOMESTIC_A Ljava/lang/String;
+	public static final field DOMESTIC_B Ljava/lang/String;
+	public static final field DOMESTIC_C Ljava/lang/String;
+	public static final field DOMESTIC_D Ljava/lang/String;
+	public static final field DOMESTIC_E Ljava/lang/String;
+	public static final field DOMESTIC_F Ljava/lang/String;
+	public static final field DOMESTIC_G Ljava/lang/String;
+	public static final field DOMESTIC_H Ljava/lang/String;
+	public static final field DOMESTIC_I Ljava/lang/String;
+	public static final field DOMESTIC_J Ljava/lang/String;
+	public static final field DOMESTIC_K Ljava/lang/String;
+	public static final field DOMESTIC_L Ljava/lang/String;
+	public static final field DOMESTIC_M Ljava/lang/String;
+	public static final field DOMESTIC_N Ljava/lang/String;
+	public static final field DOMESTIC_O Ljava/lang/String;
+	public static final field GBT_AC Ljava/lang/String;
+	public static final field GBT_DC Ljava/lang/String;
+	public static final field IEC_60309_2_SINGLE_16 Ljava/lang/String;
+	public static final field IEC_60309_2_THREE_16 Ljava/lang/String;
+	public static final field IEC_60309_2_THREE_32 Ljava/lang/String;
+	public static final field IEC_60309_2_THREE_64 Ljava/lang/String;
+	public static final field IEC_62196_T1 Ljava/lang/String;
+	public static final field IEC_62196_T1_COMBO Ljava/lang/String;
+	public static final field IEC_62196_T2 Ljava/lang/String;
+	public static final field IEC_62196_T2_COMBO Ljava/lang/String;
+	public static final field IEC_62196_T3_A Ljava/lang/String;
+	public static final field IEC_62196_T3_C Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvConnectorType;
+	public static final field NEMA_10_30 Ljava/lang/String;
+	public static final field NEMA_10_50 Ljava/lang/String;
+	public static final field NEMA_14_30 Ljava/lang/String;
+	public static final field NEMA_14_50 Ljava/lang/String;
+	public static final field NEMA_5_20 Ljava/lang/String;
+	public static final field NEMA_6_30 Ljava/lang/String;
+	public static final field NEMA_6_50 Ljava/lang/String;
+	public static final field PANTOGRAPH_BOTTOM_UP Ljava/lang/String;
+	public static final field PANTOGRAPH_TOP_DOWN Ljava/lang/String;
+	public static final field TESLA_R Ljava/lang/String;
+	public static final field TESLA_S Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvConnectorType$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvEnergyMix : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/Boolean;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnergyProductName ()Ljava/lang/String;
+	public final fun getEnergySources ()Ljava/util/List;
+	public final fun getEnvironmentalImpact ()Ljava/util/List;
+	public final fun getSupplierName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isGreenEnergy ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvEnergyMix$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvEnergyMix;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvEnergyMix;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvEnergySource : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPercentage ()Ljava/lang/Integer;
+	public final fun getSource ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvEnergySource$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvEnergySource;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvEnergySource;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvEnergySourceCategory {
+	public static final field COAL Ljava/lang/String;
+	public static final field GAS Ljava/lang/String;
+	public static final field GENERAL_FOSSIL Ljava/lang/String;
+	public static final field GENERAL_GREEN Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvEnergySourceCategory;
+	public static final field NUCLEAR Ljava/lang/String;
+	public static final field SOLAR Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+	public static final field WATER Ljava/lang/String;
+	public static final field WIND Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvEnergySourceCategory$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvEnvironmentalImpact : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Float;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()Ljava/lang/Float;
+	public final fun getCategory ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvEnvironmentalImpact$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvEnvironmentalImpact;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvEnvironmentalImpact;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvEnvironmentalImpactCategory {
+	public static final field CARBON_DIOXIDE Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvEnvironmentalImpactCategory;
+	public static final field NUCLEAR_WASTE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvEnvironmentalImpactCategory$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvLocation : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;ZLjava/util/List;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Ljava/lang/Boolean;Ljava/util/List;Lcom/mapbox/search/common/ev/EvEnergyMix;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChargingWhenClosed ()Ljava/lang/Boolean;
+	public final fun getEnergyMix ()Lcom/mapbox/search/common/ev/EvEnergyMix;
+	public final fun getEvses ()Ljava/util/List;
+	public final fun getImages ()Ljava/util/List;
+	public final fun getOperatorDetails ()Lcom/mapbox/search/common/BusinessDetails;
+	public final fun getOwnerDetails ()Lcom/mapbox/search/common/BusinessDetails;
+	public final fun getPartyId ()Ljava/lang/String;
+	public final fun getPublish ()Z
+	public final fun getPublishAllowedTo ()Ljava/util/List;
+	public final fun getRelatedLocations ()Ljava/util/List;
+	public final fun getSuboperatorDetails ()Lcom/mapbox/search/common/BusinessDetails;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvLocation$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvLocation;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvLocation;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvMetadata : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lcom/mapbox/search/common/ev/EvLocation;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvLocation ()Lcom/mapbox/search/common/ev/EvLocation;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvMetadata$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvMetadata;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvMetadata;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvPowerType {
+	public static final field AC_1_PHASE Ljava/lang/String;
+	public static final field AC_2_PHASE Ljava/lang/String;
+	public static final field AC_2_PHASE_SPLIT Ljava/lang/String;
+	public static final field AC_3_PHASE Ljava/lang/String;
+	public static final field DC Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvPowerType;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvPowerType$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvStatusSchedule : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPeriodBegin ()Ljava/lang/String;
+	public final fun getPeriodEnd ()Ljava/lang/String;
+	public final fun getStatus ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvStatusSchedule$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvStatusSchedule;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvStatusSchedule;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvseCapability {
+	public static final field CHARGING_PREFERENCES_CAPABLE Ljava/lang/String;
+	public static final field CHARGING_PROFILE_CAPABLE Ljava/lang/String;
+	public static final field CHIP_CARD_SUPPORT Ljava/lang/String;
+	public static final field CONTACTLESS_CARD_SUPPORT Ljava/lang/String;
+	public static final field CREDIT_CARD_PAYABLE Ljava/lang/String;
+	public static final field DEBIT_CARD_PAYABLE Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvseCapability;
+	public static final field PED_TERMINAL Ljava/lang/String;
+	public static final field REMOTE_START_STOP_CAPABLE Ljava/lang/String;
+	public static final field RESERVABLE Ljava/lang/String;
+	public static final field RFID_READER Ljava/lang/String;
+	public static final field START_SESSION_CONNECTOR_REQUIRED Ljava/lang/String;
+	public static final field TOKEN_GROUP_CAPABLE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+	public static final field UNLOCK_CAPABLE Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvseCapability$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvsePublishTokenType : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGroupId ()Ljava/lang/String;
+	public final fun getIssuer ()Ljava/lang/String;
+	public final fun getTokenType ()Ljava/lang/String;
+	public final fun getUid ()Ljava/lang/String;
+	public final fun getVisualNumber ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/ev/EvsePublishTokenType$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/ev/EvsePublishTokenType;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/ev/EvsePublishTokenType;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/ev/EvseStatus {
+	public static final field AVAILABLE Ljava/lang/String;
+	public static final field BLOCKED Ljava/lang/String;
+	public static final field CHARGING Ljava/lang/String;
+	public static final field INOPERATIVE Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvseStatus;
+	public static final field OUT_OF_ORDER Ljava/lang/String;
+	public static final field PLANNED Ljava/lang/String;
+	public static final field REMOVED Ljava/lang/String;
+	public static final field RESERVED Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvseStatus$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/ev/EvseTokenType {
+	public static final field AD_HOC_USER Ljava/lang/String;
+	public static final field APP_USER Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvseTokenType;
+	public static final field OTHER Ljava/lang/String;
+	public static final field RFID Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/ev/EvseTokenType$Type : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/search/common/metadata/ChildMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/geojson/Point;)V
@@ -498,12 +978,30 @@ public final class com/mapbox/search/common/metadata/ChildMetadata$Creator : and
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/common/metadata/ImageCategory {
+	public static final field ENTRANCE Ljava/lang/String;
+	public static final field EV_CHARGER Ljava/lang/String;
+	public static final field EV_NETWORK Ljava/lang/String;
+	public static final field EV_OPERATOR Ljava/lang/String;
+	public static final field EV_OWNER Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/metadata/ImageCategory;
+	public static final field LOCATION Ljava/lang/String;
+	public static final field OTHER Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/metadata/ImageCategory$Type : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/search/common/metadata/ImageInfo : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;II)V
+	public fun <init> (Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getHeight ()I
+	public final fun getImageCategory ()Ljava/lang/String;
+	public final fun getThumbnailUrl ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
 	public final fun getWidth ()I
 	public fun hashCode ()I
