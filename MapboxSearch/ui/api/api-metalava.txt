@@ -5,10 +5,10 @@ package com.mapbox.search.ui.adapter.autocomplete {
     ctor public PlaceAutocompleteUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autocomplete.PlaceAutocomplete placeAutocomplete);
     method public void addSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autocomplete.PlaceAutocompleteUiAdapter.SearchListener listener);
-    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
-    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
-    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
-    method public suspend Object? search(String query, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, com.mapbox.geojson.BoundingBox? region = null, kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? search(String query, kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
   }
 
   public static interface PlaceAutocompleteUiAdapter.SearchListener {
@@ -26,8 +26,8 @@ package com.mapbox.search.ui.adapter.autofill {
     ctor public AddressAutofillUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.autofill.AddressAutofill addressAutofill);
     method public void addSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
     method public void removeSearchListener(com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter.SearchListener listener);
-    method public suspend Object? search(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options = com.mapbox.search.autofill.AddressAutofillOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> p = com.mapbox.search.autofill.AddressAutofillOptions());
-    method public suspend Object? search(com.mapbox.search.autofill.Query query, kotlin.coroutines.Continuation<? super kotlin.Unit> continuation = com.mapbox.search.autofill.AddressAutofillOptions());
+    method public suspend Object? search(com.mapbox.search.autofill.Query query, com.mapbox.search.autofill.AddressAutofillOptions options = com.mapbox.search.autofill.AddressAutofillOptions(), kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autofill.AddressAutofillOptions());
+    method public suspend Object? search(com.mapbox.search.autofill.Query query, kotlin.coroutines.Continuation<? super kotlin.Unit> = com.mapbox.search.autofill.AddressAutofillOptions());
   }
 
   public static interface AddressAutofillUiAdapter.SearchListener {
@@ -41,14 +41,14 @@ package com.mapbox.search.ui.adapter.autofill {
 package com.mapbox.search.ui.adapter.engines {
 
   public final class SearchEngineUiAdapter {
-    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.common.location.LocationProvider? locationEngine = <anonymous class>(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider(), com.mapbox.search.common.concurrent.MainThreadWorker mainThreadWorker = SearchSdkMainThreadWorker);
+    ctor public SearchEngineUiAdapter(com.mapbox.search.ui.view.SearchResultsView view, com.mapbox.search.SearchEngine searchEngine, com.mapbox.search.offline.OfflineSearchEngine offlineSearchEngine, com.mapbox.common.location.LocationProvider? locationEngine = defaultLocationProvider(), com.mapbox.search.record.HistoryDataProvider historyDataProvider = ServiceProvider.INSTANCE.historyDataProvider(), com.mapbox.search.common.concurrent.MainThreadWorker mainThreadWorker = SearchSdkMainThreadWorker);
     method public void addSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);
     method public com.mapbox.search.ui.view.SearchMode getSearchMode();
     method public void removeSearchListener(com.mapbox.search.ui.adapter.engines.SearchEngineUiAdapter.SearchListener listener);
     method @UiThread public void search(String query, com.mapbox.search.SearchOptions options = GlobalViewPreferences.DEFAULT_SEARCH_OPTIONS);
     method @UiThread public void search(String query);
     method @UiThread public void select(com.mapbox.geojson.Feature feature);
-    method public void setSearchMode(com.mapbox.search.ui.view.SearchMode value);
+    method public void setSearchMode(com.mapbox.search.ui.view.SearchMode);
     property public final com.mapbox.search.ui.view.SearchMode searchMode;
   }
 
@@ -234,7 +234,7 @@ package com.mapbox.search.ui.view {
     ctor public SearchSdkFrameLayout(android.content.Context context, android.util.AttributeSet? attrs = null);
     ctor public SearchSdkFrameLayout(android.content.Context context);
     method public final int getMaxWidth();
-    method public final void setMaxWidth(int value);
+    method public final void setMaxWidth(int);
     property public final int maxWidth;
   }
 
@@ -294,6 +294,7 @@ package com.mapbox.search.ui.view.place {
 
   @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
     ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ui.view.place.SearchPlace! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes = resultTypes, com.mapbox.search.record.IndexableRecord? record = record, com.mapbox.geojson.Point coordinate = coordinate, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.search.SearchResultMetadata? metadata = metadata, double distanceMeters = distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback = feedback);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
@@ -366,9 +367,9 @@ package com.mapbox.search.ui.view.place {
     method public void removeOnNavigateClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnNavigateClickListener listener);
     method public void removeOnSearchPlaceAddedToFavoritesListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnSearchPlaceAddedToFavoritesListener listener);
     method public void removeOnShareClickListener(com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OnShareClickListener listener);
-    method public void setFavoriteButtonVisible(boolean value);
-    method public void setNavigateButtonVisible(boolean value);
-    method public void setShareButtonVisible(boolean value);
+    method public void setFavoriteButtonVisible(boolean);
+    method public void setNavigateButtonVisible(boolean);
+    method public void setShareButtonVisible(boolean);
     method public boolean updateDistance(double distanceMeters);
     property public final boolean isFavoriteButtonVisible;
     property public final boolean isNavigateButtonVisible;
@@ -381,7 +382,7 @@ package com.mapbox.search.ui.view.place {
     field public static final int SETTLING = 4; // 0x4
   }
 
-  @IntDef({com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.HIDDEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OPEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.DRAGGING, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface SearchPlaceBottomSheetView.BottomSheetState {
+  @IntDef({com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.HIDDEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.OPEN, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.DRAGGING, com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView.SETTLING}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.SOURCE) public static @interface SearchPlaceBottomSheetView.BottomSheetState {
   }
 
   public static final class SearchPlaceBottomSheetView.Companion {

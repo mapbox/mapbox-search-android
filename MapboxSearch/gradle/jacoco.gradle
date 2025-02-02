@@ -52,8 +52,9 @@ project.afterEvaluate {
             )
 
             reports {
-                xml.enabled = true
-                html.enabled = true
+                xml.required = true
+                csv.required = false
+                html.required = true
             }
         }
         build.dependsOn "${coverageTaskName}"

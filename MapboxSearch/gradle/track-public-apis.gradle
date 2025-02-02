@@ -33,9 +33,7 @@ android.libraryVariants.all { variant ->
             args = [
                     '--no-banner',
                     '--source-path', 'src/main/java',
-                    '--compatible-output=no',
                     '--output-default-values=yes',
-                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
                     '--warnings-as-errors',
                     '--lints-as-errors',
@@ -72,15 +70,13 @@ android.libraryVariants.all { variant ->
             args = [
                     '--no-banner',
                     '--source-path', 'src/main/java',
-                    '--compatible-output=no',
                     '--output-default-values=yes',
-                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
                     '--input-kotlin-nulls=yes',
                     '--warnings-as-errors',
                     '--lints-as-errors',
                     '--classpath', (project.files(android.getBootClasspath()) + variant.javaCompileProvider.get().classpath).join(File.pathSeparator),
-                    '--check-compatibility:api:current', 'api/api-metalava.txt'
+                    '--check-compatibility:api:released', 'api/api-metalava.txt'
             ]
             if (project.hasProperty('sourcePath')) {
                 args += '--source-path'
