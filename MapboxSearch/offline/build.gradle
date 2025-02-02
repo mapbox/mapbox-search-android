@@ -10,7 +10,7 @@ plugins {
 
 apply from: "../gradle/ktlint.gradle"
 apply from: "../gradle/versions.gradle"
-apply from: "../gradle/pitest.gradle"
+//apply from: "../gradle/pitest.gradle"
 apply from: "../gradle/jacoco.gradle"
 apply from: "../gradle/dexcount.gradle"
 apply from: "../gradle/dokka.gradle"
@@ -19,6 +19,7 @@ apply from: "../gradle/license.gradle"
 apply from: "../gradle/track-public-apis.gradle"
 
 android {
+    namespace 'com.mapbox.search.offline'
     compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
@@ -43,6 +44,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     kotlinOptions {
