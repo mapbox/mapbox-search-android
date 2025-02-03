@@ -191,7 +191,6 @@ internal class CategorySearchOptionsTest {
                             AttributeSet.BASIC,
                             AttributeSet.PHOTOS,
                             AttributeSet.VISIT,
-                            AttributeSet.VENUE,
                         )
                     )
                     .build()
@@ -221,7 +220,6 @@ internal class CategorySearchOptionsTest {
                         CoreAttributeSet.BASIC,
                         CoreAttributeSet.PHOTOS,
                         CoreAttributeSet.VISIT,
-                        CoreAttributeSet.VENUE,
                     ),
                 )
 

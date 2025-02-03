@@ -37,7 +37,7 @@ interface ObjectsFactory {
 
 @Suppress("TooGenericExceptionThrown")
 class ReflectionObjectsFactory(
-    private val extraCreators: List<CustomTypeObjectCreator> = emptyList(),
+    private val extraCreators: List<CustomTypeObjectCreator> = CommonSdkTypeObjectCreators.ALL_CREATORS,
     private val subclassProvider: (KClass<*>) -> KClass<*>? = { null },
 ) : ObjectsFactory {
 

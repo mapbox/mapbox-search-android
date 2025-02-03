@@ -3,6 +3,7 @@ package com.mapbox.search.common.ev
 import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.search.common.safeCompareTo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -31,7 +32,7 @@ public class EvEnvironmentalImpact @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PR
         other as EvEnvironmentalImpact
 
         if (category != other.category) return false
-        if (amount != other.amount) return false
+        if (!amount.safeCompareTo(other.amount)) return false
 
         return true
     }

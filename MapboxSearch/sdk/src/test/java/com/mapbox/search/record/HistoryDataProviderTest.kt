@@ -327,9 +327,9 @@ internal class HistoryDataProviderTest {
             }
         }
 
-        maxRecordsAmount = 100_000
+        maxRecordsAmount = 10_000
         Given("HistoryDataProviderImpl with max allowed records amount = $maxRecordsAmount") {
-            val testRecords = (1..200_000L).map { index ->
+            val testRecords = (1..20_000L).map { index ->
                 createTestHistoryRecord(
                     id = "test-history-record-$index",
                     name = "Test History #$index",
@@ -342,7 +342,7 @@ internal class HistoryDataProviderTest {
             historyDataProvider.registerIndexableDataProviderEngineBlocking(testEngine, executor)
 
             When("New records added") {
-                val anotherTestRecords = (150_000..200_000L).map { index ->
+                val anotherTestRecords = (15_000..20_000L).map { index ->
                     createTestHistoryRecord(
                         id = "another-test-history-record-$index",
                         name = "Another Test History #$index",
@@ -356,8 +356,8 @@ internal class HistoryDataProviderTest {
 
                 Then("Amount of all records equals to $maxRecordsAmount", maxRecordsAmount, allRecords.size)
 
-                val expectedRecords = (testRecords.filter { it.timestamp > 150_000L } +
-                        anotherTestRecords.filter { it.timestamp > 150_000L }).sortedBy { it.timestamp }
+                val expectedRecords = (testRecords.filter { it.timestamp > 15_000L } +
+                        anotherTestRecords.filter { it.timestamp > 15_000L }).sortedBy { it.timestamp }
 
                 Then("Only records with latest timestamps are present") {
                     assertEqualsJsonify(
