@@ -1,5 +1,19 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.8.0-rc.2
+
+### New features
+- Added new type `OfflineSearchAlongRouteOptions` that accepts `OfflineEvSearchOptions` and allows to search for EV stations along the route.
+
+### Bug fixes
+- Search along route functionality in offline has been improved.
+
+### Mapbox dependencies
+- Search Native SDK `2.8.0-rc.1`
+- Common SDK `24.10.0-rc.1`
+
+
+
 ## 2.8.0-rc.1
 
 ### New features
