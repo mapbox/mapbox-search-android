@@ -1,15 +1,16 @@
 package com.mapbox.search.offline
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreOfflineIndexObserver
 import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.engine.BaseSearchEngine
 import com.mapbox.search.base.engine.OneStepRequestCallbackWrapper
 import com.mapbox.search.base.logger.logd
@@ -22,7 +23,6 @@ import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
 import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
 import com.mapbox.turf.TurfMeasurement
-import com.mapbox.turf.TurfMisc
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -155,28 +155,43 @@ internal class OfflineSearchEngineImpl(
         }
     }
 
+    @MapboxExperimental
     override fun searchAlongRoute(
         query: String,
-        proximity: Point,
-        route: List<Point>,
+        options: OfflineSearchAlongRouteOptions,
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
-        val remainingRoute = TurfMisc.lineSlice(proximity, route.last(), LineString.fromLngLats(route))
-        val coords = bufferBoundingBox(TurfMeasurement.bbox(remainingRoute))
-        val boundingBox = BoundingBox.fromLngLats(coords[0], coords[1], coords[2], coords[3])
+        logd("searchAlongRoute($query, $options) called")
 
-        val options = OfflineSearchOptions(
+        activityReporter.reportActivity("offline-search-engine-search-along-route")
+
+        // We should not rely on location provider in case of SAR,
+        // because requested route might be too far away
+        val proximity = options.proximity ?: options.route.first()
+        val origin = options.origin ?: proximity
+
+        val coreOptions = createCoreSearchOptions(
+            route = options.route,
             proximity = proximity,
-            boundingBox = boundingBox,
+            origin = origin,
+            limit = options.limit,
+            evSearchOptions = options.evSearchOptions?.mapToCore(),
         )
 
-        return this.search(
-            query = query,
-            options = options,
-            executor = executor,
-            callback = callback
-        )
+        return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
+            coreEngine.searchOffline(
+                query, emptyList(), coreOptions,
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    isOffline = true,
+                )
+            )
+        }
     }
 
     override fun retrieve(

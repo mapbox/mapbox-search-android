@@ -1,11 +1,13 @@
 package com.mapbox.search.offline
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreSearchCallback
 import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.SearchRequestContext
@@ -14,6 +16,7 @@ import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.common.SearchCancellationException
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.ev.EvConnectorType
 import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.TestThreadExecutorService
@@ -42,6 +45,7 @@ import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
+@OptIn(MapboxExperimental::class)
 @Suppress("LargeClass")
 internal class OfflineSearchEngineTest {
 
@@ -609,6 +613,117 @@ internal class OfflineSearchEngineTest {
 
                 VerifyNo("onError() wasn't called") {
                     callback.onError(any())
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check offline search along route search`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            When("searchAlongRoute() called with explicitly initialized OfflineSearchAlongRouteOptions options") {
+                val slotSearchCallback = slot<CoreSearchCallback>()
+
+                every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
+                    slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+                }
+
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+
+                val options = OfflineSearchAlongRouteOptions(
+                    route = listOf(Point.fromLngLat(10.0, 20.0), Point.fromLngLat(20.0, 30.0)),
+                    proximity = Point.fromLngLat(30.0, 40.0),
+                    origin = Point.fromLngLat(40.0, 50.0),
+                    limit = 15,
+                    evSearchOptions = OfflineEvSearchOptions(connectorTypes = listOf(EvConnectorType.TESLA_S)),
+                )
+
+                val coreOptions = createCoreSearchOptions(
+                    route = options.route,
+                    proximity = options.proximity,
+                    origin = options.origin,
+                    limit = options.limit,
+                    evSearchOptions = options.evSearchOptions?.mapToCore(),
+                )
+
+                val task = searchEngine.searchAlongRoute(
+                    query = TEST_QUERY,
+                    options = options,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyOnce("CoreSearchEngine.searchOffline() called with correct arguments") {
+                    coreEngine.searchOffline(
+                        eq(TEST_QUERY),
+                        eq(emptyList()),
+                        eq(coreOptions),
+                        slotSearchCallback.captured
+                    )
+                }
+
+                VerifyOnce("Results passed to callback") {
+                    callback.onResults(
+                        listOf(TEST_SEARCH_RESULT),
+                        TEST_OFFLINE_RESPONSE_INFO
+                    )
+                }
+
+                VerifyNo("onError() wasn't called") {
+                    callback.onError(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-search-along-route"))
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check offline search along route search default parameters`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            When("searchAlongRoute() called with OfflineSearchAlongRouteOptions default parameters") {
+                val slotSearchCallback = slot<CoreSearchCallback>()
+
+                every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
+                    slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+                }
+
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+
+                val options = OfflineSearchAlongRouteOptions(
+                    route = listOf(Point.fromLngLat(10.0, 20.0), Point.fromLngLat(20.0, 30.0)),
+                )
+
+                val coreOptions = createCoreSearchOptions(
+                    route = options.route,
+                    proximity = options.route.first(),
+                    origin = options.route.first(),
+                    limit = null,
+                    evSearchOptions = null,
+                )
+
+                searchEngine.searchAlongRoute(
+                    query = TEST_QUERY,
+                    options = options,
+                    executor = executor,
+                    callback = callback
+                )
+
+                VerifyOnce("CoreSearchEngine.searchOffline() called with correct arguments") {
+                    coreEngine.searchOffline(
+                        eq(TEST_QUERY),
+                        eq(emptyList()),
+                        eq(coreOptions),
+                        slotSearchCallback.captured
+                    )
                 }
             }
         }
