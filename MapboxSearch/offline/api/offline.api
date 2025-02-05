@@ -142,6 +142,34 @@ public final class com/mapbox/search/offline/OfflineSearchAddress$Creator : andr
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/offline/OfflineSearchAlongRouteOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Lcom/mapbox/search/offline/OfflineEvSearchOptions;)V
+	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Lcom/mapbox/search/offline/OfflineEvSearchOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvSearchOptions ()Lcom/mapbox/search/offline/OfflineEvSearchOptions;
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
+	public final fun getProximity ()Lcom/mapbox/geojson/Point;
+	public final fun getRoute ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/offline/OfflineSearchAlongRouteOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract interface class com/mapbox/search/offline/OfflineSearchCallback {
 	public abstract fun onError (Ljava/lang/Exception;)V
 	public abstract fun onResults (Ljava/util/List;Lcom/mapbox/search/offline/OfflineResponseInfo;)V
@@ -177,6 +205,8 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun searchAddressesNearby (Ljava/lang/String;Lcom/mapbox/geojson/Point;DLjava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
 }
 
@@ -206,6 +236,8 @@ public final class com/mapbox/search/offline/OfflineSearchEngine$DefaultImpls {
 	public static fun search (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun searchAddressesNearby (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;DLcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun searchAlongRoute (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun searchAlongRoute (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun searchAlongRoute (Lcom/mapbox/search/offline/OfflineSearchEngine;Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback {

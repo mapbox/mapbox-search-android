@@ -220,13 +220,19 @@ public interface OfflineSearchEngine {
      * @param callback search result callback, delivers results on the main thread
      * @return [AsyncOperationTask] object which allows to cancel the request.
      */
+    @OptIn(MapboxExperimental::class)
     public fun searchAlongRoute(
         query: String,
         proximity: Point,
         route: List<Point>,
         executor: Executor,
         callback: OfflineSearchCallback
-    ): AsyncOperationTask
+    ): AsyncOperationTask = searchAlongRoute(
+        query = query,
+        options = OfflineSearchAlongRouteOptions(route, proximity),
+        executor = executor,
+        callback = callback,
+    )
 
     /**
      * Performs a search along the supplied [route].
@@ -246,6 +252,43 @@ public interface OfflineSearchEngine {
         query = query,
         proximity = proximity,
         route = route,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback
+    )
+
+    /**
+     * Performs a search along the supplied in the [options] route.
+     *
+     * @param query the search query
+     * @param options the search along route options
+     * @param executor executor for dispatching event, by default events are dispatched to the main thread
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun searchAlongRoute(
+        query: String,
+        options: OfflineSearchAlongRouteOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Performs a search along the supplied in the [options] route.
+     *
+     * @param query the search query
+     * @param options the search along route options
+     * @param callback search result callback, delivers results on the main thread
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun searchAlongRoute(
+        query: String,
+        options: OfflineSearchAlongRouteOptions,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask = searchAlongRoute(
+        query = query,
+        options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback
     )
