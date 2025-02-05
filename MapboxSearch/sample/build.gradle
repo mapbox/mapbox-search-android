@@ -91,6 +91,10 @@ android {
     kotlinOptions {
         allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+        freeCompilerArgs += [
+                '-Xopt-in=com.mapbox.search.common.RestrictedMapboxSearchAPI'
+        ]
     }
 
     lint {

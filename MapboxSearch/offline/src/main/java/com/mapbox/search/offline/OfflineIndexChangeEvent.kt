@@ -85,12 +85,12 @@ public class OfflineIndexChangeEvent internal constructor(
         ADD,
 
         /**
-         * [OfflineIndexChangeEvent] generated when data removed from the search index.
+         * [OfflineIndexChangeEvent] generated when data from the search index was updated.
          */
         UPDATE,
 
         /**
-         * [OfflineIndexChangeEvent] generated when data from the search index was updated.
+         * [OfflineIndexChangeEvent] generated when data removed from the search index.
          */
         REMOVE,
     }

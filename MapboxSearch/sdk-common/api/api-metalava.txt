@@ -446,6 +446,9 @@ package com.mapbox.search.common {
   @StringDef({com.mapbox.search.common.ParkingType.ALONG_MOTORWAY, com.mapbox.search.common.ParkingType.PARKING_GARAGE, com.mapbox.search.common.ParkingType.PARKING_LOT, com.mapbox.search.common.ParkingType.ON_DRIVEWAY, com.mapbox.search.common.ParkingType.ON_STREET, com.mapbox.search.common.ParkingType.UNDERGROUND_GARAGE, com.mapbox.search.common.ParkingType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingType.Type {
   }
 
+  @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface RestrictedMapboxSearchAPI {
+  }
+
   @kotlinx.parcelize.Parcelize public final class RoutablePoint implements android.os.Parcelable {
     ctor public RoutablePoint(com.mapbox.geojson.Point point, String name);
     method public String getName();

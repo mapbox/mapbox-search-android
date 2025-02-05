@@ -3,6 +3,7 @@ package com.mapbox.search.offline
 import android.os.Parcelable
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -11,6 +12,7 @@ import kotlinx.parcelize.Parcelize
  *
  * @throws [IllegalArgumentException] if number of [route] points is less than 2
  */
+@OptIn(RestrictedMapboxSearchAPI::class)
 @MapboxExperimental
 @Parcelize
 public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
@@ -38,7 +40,12 @@ public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
 
     /**
      * Optional offline EV options.
+     *
+     * Only specific datasets support EV filters and EV metadata.
+     * Contact our [sales](https://www.mapbox.com/contact/sales) team to access datasets
+     * that include EV charging station data.
      */
+    @RestrictedMapboxSearchAPI
     public val evSearchOptions: OfflineEvSearchOptions? = null,
 ) : Parcelable {
 

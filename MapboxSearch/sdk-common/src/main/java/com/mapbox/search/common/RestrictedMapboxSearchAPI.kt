@@ -1,4 +1,4 @@
-package com.mapbox.search.base
+package com.mapbox.search.common
 
 /**
  * This annotation marks the Search SDK API that is available for selected customers only.
@@ -8,13 +8,13 @@ package com.mapbox.search.base
  * Any usage of a declaration annotated with `@RestrictedMapboxSearchAPI` must be accepted
  * either by annotating that usage with the [OptIn] annotation,
  * e.g. `@OptIn(RestrictedMapboxSearchAPI::class)`, or by using the compiler argument
- * `-Xopt-in=com.mapbox.search.base.RestrictedMapboxSearchAPI`.
+ * `-Xopt-in=com.mapbox.search.common.RestrictedMapboxSearchAPI`.
  */
 @Retention(value = AnnotationRetention.BINARY)
-@RequiresOptIn(level = RequiresOptIn.Level.ERROR)
+@RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(
     AnnotationTarget.CLASS,
     AnnotationTarget.FUNCTION,
     AnnotationTarget.PROPERTY,
 )
-annotation class RestrictedMapboxSearchAPI
+public annotation class RestrictedMapboxSearchAPI

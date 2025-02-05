@@ -6,6 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.RoutablePoint
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -93,8 +94,12 @@ public class OfflineSearchResult internal constructor(
 
     /**
      * Metadata containing geo place's detailed information if available.
+     *
+     * Only specific datasets support metadata. Contact our [sales](https://www.mapbox.com/contact/sales)
+     * team to access datasets that include EV charging station data.
      */
     @MapboxExperimental
+    @RestrictedMapboxSearchAPI
     public val metadata: OfflineSearchResultMetadata?
         get() = rawSearchResult.metadata?.let {
             OfflineSearchResultMetadata(it)

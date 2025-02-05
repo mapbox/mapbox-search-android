@@ -99,7 +99,7 @@ package com.mapbox.search.offline {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class OfflineSearchAlongRouteOptions implements android.os.Parcelable {
-    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null, Integer? limit = null, com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
+    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null, Integer? limit = null, @com.mapbox.search.common.RestrictedMapboxSearchAPI com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
     ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null, Integer? limit = null);
     ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null);
@@ -204,7 +204,7 @@ package com.mapbox.search.offline {
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchOptions implements android.os.Parcelable {
-    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null, boolean searchPlacesOutsideBoundingBox = false, com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
+    ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null, boolean searchPlacesOutsideBoundingBox = false, @com.mapbox.search.common.RestrictedMapboxSearchAPI com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null, boolean searchPlacesOutsideBoundingBox = false);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);

@@ -58,6 +58,7 @@ android {
          */
         freeCompilerArgs += [
                 '-Xexplicit-api=strict',
+                '-Xopt-in=com.mapbox.search.common.RestrictedMapboxSearchAPI'
         ]
     }
 

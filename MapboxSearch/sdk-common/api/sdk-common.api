@@ -507,6 +507,9 @@ public final class com/mapbox/search/common/ParkingType {
 public abstract interface annotation class com/mapbox/search/common/ParkingType$Type : java/lang/annotation/Annotation {
 }
 
+public abstract interface annotation class com/mapbox/search/common/RestrictedMapboxSearchAPI : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/search/common/RoutablePoint : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/lang/String;)V

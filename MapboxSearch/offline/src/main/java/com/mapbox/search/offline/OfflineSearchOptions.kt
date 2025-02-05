@@ -6,6 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreSearchOptions
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -48,7 +49,12 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
 
     /**
      * Optional offline EV options.
+     *
+     * Only specific datasets support EV filters and EV metadata.
+     * Contact our [sales](https://www.mapbox.com/contact/sales) team to access datasets
+     * that include EV charging station data.
      */
+    @RestrictedMapboxSearchAPI
     public val evSearchOptions: OfflineEvSearchOptions? = null,
 ) : Parcelable {
 
