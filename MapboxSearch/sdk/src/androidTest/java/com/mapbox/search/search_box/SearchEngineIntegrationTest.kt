@@ -25,7 +25,6 @@ import com.mapbox.search.SearchSelectionCallback
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.SelectOptions
 import com.mapbox.search.ServiceProvider
-import com.mapbox.search.base.RestrictedMapboxSearchAPI
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
@@ -39,6 +38,7 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker

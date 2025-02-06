@@ -7,12 +7,12 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.Reserved
 import com.mapbox.search.SearchResultMetadata
-import com.mapbox.search.base.RestrictedMapboxSearchAPI
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
