@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.8.0-NOT-PUBLISHED
+## 2.8.0-SNAPSHOT
 
 ### New features
 - `OfflineSearchResult` can now be of a POI type. `OfflineSearchResultType` has been deprecated, along with the `OfflineSearchResult.type` property. Use `OfflineSearchResult.newType` instead.
