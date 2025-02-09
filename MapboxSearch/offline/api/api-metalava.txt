@@ -1,6 +1,17 @@
 // Signature format: 3.0
 package com.mapbox.search.offline {
 
+  public final class NewOfflineSearchResultType {
+    field public static final String ADDRESS = "ADDRESS";
+    field public static final com.mapbox.search.offline.NewOfflineSearchResultType INSTANCE;
+    field public static final String PLACE = "PLACE";
+    field public static final String POI = "POI";
+    field public static final String STREET = "STREET";
+  }
+
+  @StringDef({com.mapbox.search.offline.NewOfflineSearchResultType.PLACE, com.mapbox.search.offline.NewOfflineSearchResultType.STREET, com.mapbox.search.offline.NewOfflineSearchResultType.ADDRESS, com.mapbox.search.offline.NewOfflineSearchResultType.POI}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface NewOfflineSearchResultType.Type {
+  }
+
   @kotlinx.parcelize.Parcelize public final class OfflineEvSearchOptions implements android.os.Parcelable {
     ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null, Float? minChargingPower = null, Float? maxChargingPower = null);
     ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null, Float? minChargingPower = null);
@@ -248,8 +259,9 @@ package com.mapbox.search.offline {
     method public String? getMapboxId();
     method public com.mapbox.search.offline.OfflineSearchResultMetadata? getMetadata();
     method public String getName();
+    method public String getNewType();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
-    method public com.mapbox.search.offline.OfflineSearchResultType getType();
+    method @Deprecated public com.mapbox.search.offline.OfflineSearchResultType getType();
     property public final com.mapbox.search.offline.OfflineSearchAddress? address;
     property public final com.mapbox.geojson.Point coordinate;
     property public final String? descriptionText;
@@ -258,8 +270,9 @@ package com.mapbox.search.offline {
     property public final String? mapboxId;
     property public final com.mapbox.search.offline.OfflineSearchResultMetadata? metadata;
     property public final String name;
+    property public final String newType;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
-    property public final com.mapbox.search.offline.OfflineSearchResultType type;
+    property @Deprecated public final com.mapbox.search.offline.OfflineSearchResultType type;
   }
 
   public interface OfflineSearchResultCallback {
@@ -296,13 +309,16 @@ package com.mapbox.search.offline {
     property public final String? website;
   }
 
-  public enum OfflineSearchResultType {
-    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType ADDRESS;
-    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType PLACE;
-    enum_constant public static final com.mapbox.search.offline.OfflineSearchResultType STREET;
+  @Deprecated public enum OfflineSearchResultType {
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineSearchResultType ADDRESS;
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineSearchResultType PLACE;
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineSearchResultType STREET;
+    field @Deprecated public static final com.mapbox.search.offline.OfflineSearchResultType.Companion Companion;
   }
 
-  public final class OfflineSearchResultTypeKt {
+  @Deprecated public static final class OfflineSearchResultType.Companion {
+    method @Deprecated public com.mapbox.search.offline.OfflineSearchResultType getDEFAULT();
+    property public final com.mapbox.search.offline.OfflineSearchResultType DEFAULT;
   }
 
 }

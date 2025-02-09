@@ -2,6 +2,9 @@
 
 ## 2.8.0-NOT-PUBLISHED
 
+### New features
+- `OfflineSearchResult` can now be of a POI type. `OfflineSearchResultType` has been deprecated, along with the `OfflineSearchResult.type` property. Use `OfflineSearchResult.newType` instead.
+
 ### Experimental API breaking changes
 - Properties `EvConnector.id`, `EVSE.uid` are nullable now. 
 - Property `EvLocation.images` has been removed.

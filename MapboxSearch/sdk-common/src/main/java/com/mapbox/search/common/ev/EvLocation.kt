@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.common.BusinessDetails
-import com.mapbox.search.common.metadata.ImageInfo
 import kotlinx.parcelize.Parcelize
 
 /**

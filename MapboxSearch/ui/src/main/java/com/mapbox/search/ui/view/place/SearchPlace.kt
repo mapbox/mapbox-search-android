@@ -16,6 +16,7 @@ import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.ui.utils.extenstion.toSearchAddress
 import com.mapbox.search.ui.utils.extenstion.toSearchResultType
+import com.mapbox.search.ui.utils.offline.createSearchResultTypeFromOfflineType
 import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import kotlinx.parcelize.Parcelize
 import java.util.UUID
@@ -252,7 +253,7 @@ public class SearchPlace(
                 name = searchResult.name,
                 descriptionText = searchResult.descriptionText,
                 address = searchResult.address?.mapToSdkSearchResultType(),
-                resultTypes = listOf(searchResult.type.mapToSdkSearchResultType()),
+                resultTypes = listOf(createSearchResultTypeFromOfflineType(searchResult.newType)),
                 record = null,
                 coordinate = searchResult.coordinate,
                 routablePoints = searchResult.routablePoints,
