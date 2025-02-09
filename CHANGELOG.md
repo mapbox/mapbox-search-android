@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.8.0-NOT-PUBLISHED
+
+### Experimental API breaking changes
+- Properties `EvConnector.id`, `EVSE.uid` are nullable now. 
+- Property `EvLocation.images` has been removed.
+
+### Mapbox dependencies
+- Search Native SDK `2.8.0-rc.2`
+- Common SDK `24.10.0-rc.1`
+
+
+
 ## 2.8.0-rc.2
 
 ### New features

@@ -47,7 +47,7 @@ ext {
     common_sdk_version = '24.10.0-rc.1'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '2.8.0-rc.1'
+    search_native_version = '2.8.0-rc.2'
 
     detekt_version = '1.19.0'
 

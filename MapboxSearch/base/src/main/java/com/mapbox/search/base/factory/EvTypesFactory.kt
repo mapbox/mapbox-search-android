@@ -208,7 +208,6 @@ fun CoreEvLocation.mapToPlatform(): EvLocation {
         suboperatorDetails = suboperatorDetails?.mapToPlatform(),
         ownerDetails = ownerDetails?.mapToPlatform(),
         chargingWhenClosed = chargingWhenClosed,
-        images = images.map { it.mapToPlatform() },
         energyMix = energyMix?.mapToPlatform(),
     )
 }

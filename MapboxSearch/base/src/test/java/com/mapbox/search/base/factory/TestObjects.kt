@@ -100,7 +100,6 @@ internal object TestObjects {
         suboperatorDetails = null,
         ownerDetails = CoreBusinessDetails("Owner", "https://test-owner.com", null),
         chargingWhenClosed = false,
-        images = listOf(createCoreImageInfo("https://test.com/img.png", 500, 300)),
         energyMix = CORE_ENERGY_MIX
     )
 }
