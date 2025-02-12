@@ -5,6 +5,17 @@ public final class com/mapbox/search/offline/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/search/offline/NewOfflineSearchResultType {
+	public static final field ADDRESS Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/offline/NewOfflineSearchResultType;
+	public static final field PLACE Ljava/lang/String;
+	public static final field POI Ljava/lang/String;
+	public static final field STREET Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/offline/NewOfflineSearchResultType$Type : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/search/offline/OfflineEvSearchOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
@@ -329,6 +340,7 @@ public final class com/mapbox/search/offline/OfflineSearchResult : android/os/Pa
 	public final fun getMapboxId ()Ljava/lang/String;
 	public final fun getMetadata ()Lcom/mapbox/search/offline/OfflineSearchResultMetadata;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getNewType ()Ljava/lang/String;
 	public final fun getRoutablePoints ()Ljava/util/List;
 	public final fun getType ()Lcom/mapbox/search/offline/OfflineSearchResultType;
 	public fun hashCode ()I
@@ -381,9 +393,14 @@ public final class com/mapbox/search/offline/OfflineSearchResultMetadata$Creator
 
 public final class com/mapbox/search/offline/OfflineSearchResultType : java/lang/Enum {
 	public static final field ADDRESS Lcom/mapbox/search/offline/OfflineSearchResultType;
+	public static final field Companion Lcom/mapbox/search/offline/OfflineSearchResultType$Companion;
 	public static final field PLACE Lcom/mapbox/search/offline/OfflineSearchResultType;
 	public static final field STREET Lcom/mapbox/search/offline/OfflineSearchResultType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/search/offline/OfflineSearchResultType;
 	public static fun values ()[Lcom/mapbox/search/offline/OfflineSearchResultType;
+}
+
+public final class com/mapbox/search/offline/OfflineSearchResultType$Companion {
+	public final fun getDEFAULT ()Lcom/mapbox/search/offline/OfflineSearchResultType;
 }
 

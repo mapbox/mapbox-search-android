@@ -14,25 +14,31 @@ import kotlinx.parcelize.Parcelize
 /**
  * Result returned by the offline search engine.
  */
+@Suppress("DEPRECATION")
 @Parcelize
 public class OfflineSearchResult internal constructor(
     internal val rawSearchResult: BaseRawSearchResult
 ) : Parcelable {
 
+    @NewOfflineSearchResultType.Type
     @IgnoredOnParcel
-    private val offlineType: OfflineSearchResultType
+    private val offlineType: String
 
     init {
         check(rawSearchResult.center != null) {
-            "Server search result must have a coordinate"
+            "Offline search result must have a coordinate"
         }
 
-        val type = rawSearchResult.types.firstNotNullOfOrNull { it.tryMapToOfflineSdkType() }
+        val type = rawSearchResult.types.firstNotNullOfOrNull {
+            NewOfflineSearchResultType.createFromRawResultType(it)
+        }
         offlineType = if (type == null) {
+            val fallbackType = NewOfflineSearchResultType.FALLBACK_TYPE
             failDebug {
-                "Unsupported in offline SDK result types: $rawSearchResult.types. Fallback to ${OfflineSearchResultType.PLACE}"
+                "Unsupported in offline SDK result types: ${rawSearchResult.types}. " +
+                        "Fallback to $fallbackType"
             }
-            OfflineSearchResultType.PLACE
+            fallbackType
         } else {
             type
         }
@@ -82,8 +88,22 @@ public class OfflineSearchResult internal constructor(
 
     /**
      * Search result type.
+     *
+     * This property is of type [OfflineSearchResultType], which has been replaced by [NewOfflineSearchResultType].
+     * Use [newType] to identify the actual type of this [OfflineSearchResult].
      */
+    @Deprecated(
+        message = "This property is of type OfflineSearchResultType, which has been replaced by NewOfflineSearchResultType",
+        replaceWith = ReplaceWith("newType"),
+    )
     public val type: OfflineSearchResultType
+        get() = NewOfflineSearchResultType.toOldResultType(newType)
+
+    /**
+     * The type of the search result.
+     */
+    @NewOfflineSearchResultType.Type
+    public val newType: String
         get() = offlineType
 
     /**
@@ -138,6 +158,7 @@ public class OfflineSearchResult internal constructor(
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +
                 "type=$type, " +
+                "newType=$newType, " +
                 "distanceMeters=$distanceMeters, " +
                 "metadata=$metadata" +
                 ")"

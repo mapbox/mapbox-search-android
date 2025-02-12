@@ -20,6 +20,7 @@ import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
 import com.mapbox.search.ui.utils.maki.MakiToDrawableIdMapper
+import com.mapbox.search.ui.utils.offline.createSearchResultTypeFromOfflineType
 import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.view.category.Category
 import com.mapbox.search.ui.view.place.SearchPlace
@@ -83,7 +84,7 @@ internal class SearchEntityPresentation(
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            else -> getResultTypeName(listOf(searchResult.type.mapToSdkSearchResultType()))
+            else -> getResultTypeName(listOf(createSearchResultTypeFromOfflineType(searchResult.newType)))
         }
     }
 

@@ -807,13 +807,12 @@ public abstract interface annotation class com/mapbox/search/common/ev/EvEnviron
 
 public final class com/mapbox/search/common/ev/EvLocation : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;ZLjava/util/List;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Ljava/lang/Boolean;Ljava/util/List;Lcom/mapbox/search/common/ev/EvEnergyMix;)V
+	public fun <init> (Ljava/lang/String;ZLjava/util/List;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Lcom/mapbox/search/common/BusinessDetails;Ljava/lang/Boolean;Lcom/mapbox/search/common/ev/EvEnergyMix;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChargingWhenClosed ()Ljava/lang/Boolean;
 	public final fun getEnergyMix ()Lcom/mapbox/search/common/ev/EvEnergyMix;
 	public final fun getEvses ()Ljava/util/List;
-	public final fun getImages ()Ljava/util/List;
 	public final fun getOperatorDetails ()Lcom/mapbox/search/common/BusinessDetails;
 	public final fun getOwnerDetails ()Lcom/mapbox/search/common/BusinessDetails;
 	public final fun getPartyId ()Ljava/lang/String;

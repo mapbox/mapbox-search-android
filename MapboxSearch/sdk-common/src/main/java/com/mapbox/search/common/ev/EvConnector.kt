@@ -35,7 +35,7 @@ import kotlinx.parcelize.Parcelize
 @MapboxExperimental
 @Parcelize
 public class EvConnector @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
-    public val id: String,
+    public val id: String?,
     @EvConnectorType.Type public val standard: String,
     @EvConnectorFormat.Type public val format: String,
     @EvPowerType.Type public val powerType: String,

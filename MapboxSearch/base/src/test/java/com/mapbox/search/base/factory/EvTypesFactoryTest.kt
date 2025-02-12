@@ -265,7 +265,6 @@ class EvTypesFactoryTest {
             suboperatorDetails = null,
             ownerDetails = core.ownerDetails?.mapToPlatform(),
             chargingWhenClosed = core.chargingWhenClosed,
-            images = core.images.map { it.mapToPlatform() },
             energyMix = core.energyMix?.mapToPlatform()
         )
 

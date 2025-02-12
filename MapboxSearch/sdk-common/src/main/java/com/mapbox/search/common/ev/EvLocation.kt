@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.common.BusinessDetails
-import com.mapbox.search.common.metadata.ImageInfo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -22,7 +21,6 @@ import kotlinx.parcelize.Parcelize
  * @property suboperatorDetails BusinessDetails object representing information of the suboperator if available.
  * @property ownerDetails BusinessDetails object representing information of the owner if available.
  * @property chargingWhenClosed Indicates if the EVSEs are still charging outside the opening hours of the location.
- * @property images Image object representing links to images related to the location such as photos or logos.
  * @property energyMix EnergyMix object representing details on the energy supplied at this location.
  */
 @MapboxExperimental
@@ -37,7 +35,6 @@ public class EvLocation @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) const
     public val suboperatorDetails: BusinessDetails?,
     public val ownerDetails: BusinessDetails?,
     public val chargingWhenClosed: Boolean?,
-    public val images: List<ImageInfo>,
     public val energyMix: EvEnergyMix?,
 ) : Parcelable {
 
@@ -59,7 +56,6 @@ public class EvLocation @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) const
         if (suboperatorDetails != other.suboperatorDetails) return false
         if (ownerDetails != other.ownerDetails) return false
         if (chargingWhenClosed != other.chargingWhenClosed) return false
-        if (images != other.images) return false
         if (energyMix != other.energyMix) return false
 
         return true
@@ -78,7 +74,6 @@ public class EvLocation @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) const
         result = 31 * result + (suboperatorDetails?.hashCode() ?: 0)
         result = 31 * result + (ownerDetails?.hashCode() ?: 0)
         result = 31 * result + (chargingWhenClosed?.hashCode() ?: 0)
-        result = 31 * result + images.hashCode()
         result = 31 * result + (energyMix?.hashCode() ?: 0)
         return result
     }
@@ -97,7 +92,6 @@ public class EvLocation @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) const
                 "suboperatorDetails=$suboperatorDetails, " +
                 "ownerDetails=$ownerDetails, " +
                 "chargingWhenClosed=$chargingWhenClosed, " +
-                "images=$images, " +
                 "energyMix=$energyMix, " +
                 ")"
     }

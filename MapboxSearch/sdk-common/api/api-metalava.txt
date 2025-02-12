@@ -510,7 +510,7 @@ package com.mapbox.search.common.concurrent {
 package com.mapbox.search.common.ev {
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EVSE implements android.os.Parcelable {
-    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EVSE(String uid, String? evseId = null, @com.mapbox.search.common.ev.EvseStatus.Type String status, java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> statusSchedule, java.util.List<java.lang.String> capabilities, java.util.List<com.mapbox.search.common.ev.EvConnector> connectors, String? floorLevel = null, com.mapbox.geojson.Point? coordinate = null, String? physicalReference = null, java.util.List<com.mapbox.search.common.LocalizedText> directions, java.util.List<java.lang.String> parkingRestrictions, java.util.List<com.mapbox.search.common.metadata.ImageInfo> images, String? lastUpdated);
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EVSE(String? uid, String? evseId = null, @com.mapbox.search.common.ev.EvseStatus.Type String status, java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> statusSchedule, java.util.List<java.lang.String> capabilities, java.util.List<com.mapbox.search.common.ev.EvConnector> connectors, String? floorLevel = null, com.mapbox.geojson.Point? coordinate = null, String? physicalReference = null, java.util.List<com.mapbox.search.common.LocalizedText> directions, java.util.List<java.lang.String> parkingRestrictions, java.util.List<com.mapbox.search.common.metadata.ImageInfo> images, String? lastUpdated);
     method public java.util.List<java.lang.String> getCapabilities();
     method public java.util.List<com.mapbox.search.common.ev.EvConnector> getConnectors();
     method public com.mapbox.geojson.Point? getCoordinate();
@@ -523,7 +523,7 @@ package com.mapbox.search.common.ev {
     method public String? getPhysicalReference();
     method public String getStatus();
     method public java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> getStatusSchedule();
-    method public String getUid();
+    method public String? getUid();
     property public final java.util.List<java.lang.String> capabilities;
     property public final java.util.List<com.mapbox.search.common.ev.EvConnector> connectors;
     property public final com.mapbox.geojson.Point? coordinate;
@@ -536,7 +536,7 @@ package com.mapbox.search.common.ev {
     property public final String? physicalReference;
     property public final String status;
     property public final java.util.List<com.mapbox.search.common.ev.EvStatusSchedule> statusSchedule;
-    property public final String uid;
+    property public final String? uid;
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvAdditionalGeoLocation implements android.os.Parcelable {
@@ -548,9 +548,9 @@ package com.mapbox.search.common.ev {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvConnector implements android.os.Parcelable {
-    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvConnector(String id, @com.mapbox.search.common.ev.EvConnectorType.Type String standard, @com.mapbox.search.common.ev.EvConnectorFormat.Type String format, @com.mapbox.search.common.ev.EvPowerType.Type String powerType, int maxVoltage, int maxAmperage, Integer? maxElectricPower = null, java.util.List<java.lang.String> tariffIds, String? termsAndConditions = null, String? lastUpdated);
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvConnector(String? id, @com.mapbox.search.common.ev.EvConnectorType.Type String standard, @com.mapbox.search.common.ev.EvConnectorFormat.Type String format, @com.mapbox.search.common.ev.EvPowerType.Type String powerType, int maxVoltage, int maxAmperage, Integer? maxElectricPower = null, java.util.List<java.lang.String> tariffIds, String? termsAndConditions = null, String? lastUpdated);
     method public String getFormat();
-    method public String getId();
+    method public String? getId();
     method public String? getLastUpdated();
     method public int getMaxAmperage();
     method public Integer? getMaxElectricPower();
@@ -560,7 +560,7 @@ package com.mapbox.search.common.ev {
     method public java.util.List<java.lang.String> getTariffIds();
     method public String? getTermsAndConditions();
     property public final String format;
-    property public final String id;
+    property public final String? id;
     property public final String? lastUpdated;
     property public final int maxAmperage;
     property public final Integer? maxElectricPower;
@@ -686,11 +686,10 @@ package com.mapbox.search.common.ev {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class EvLocation implements android.os.Parcelable {
-    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvLocation(String partyId, boolean publish, java.util.List<com.mapbox.search.common.ev.EvsePublishTokenType> publishAllowedTo, java.util.List<com.mapbox.search.common.ev.EvAdditionalGeoLocation> relatedLocations, java.util.List<com.mapbox.search.common.ev.EVSE> evses, com.mapbox.search.common.BusinessDetails? operatorDetails, com.mapbox.search.common.BusinessDetails? suboperatorDetails, com.mapbox.search.common.BusinessDetails? ownerDetails, Boolean? chargingWhenClosed, java.util.List<com.mapbox.search.common.metadata.ImageInfo> images, com.mapbox.search.common.ev.EvEnergyMix? energyMix);
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope) public EvLocation(String partyId, boolean publish, java.util.List<com.mapbox.search.common.ev.EvsePublishTokenType> publishAllowedTo, java.util.List<com.mapbox.search.common.ev.EvAdditionalGeoLocation> relatedLocations, java.util.List<com.mapbox.search.common.ev.EVSE> evses, com.mapbox.search.common.BusinessDetails? operatorDetails, com.mapbox.search.common.BusinessDetails? suboperatorDetails, com.mapbox.search.common.BusinessDetails? ownerDetails, Boolean? chargingWhenClosed, com.mapbox.search.common.ev.EvEnergyMix? energyMix);
     method public Boolean? getChargingWhenClosed();
     method public com.mapbox.search.common.ev.EvEnergyMix? getEnergyMix();
     method public java.util.List<com.mapbox.search.common.ev.EVSE> getEvses();
-    method public java.util.List<com.mapbox.search.common.metadata.ImageInfo> getImages();
     method public com.mapbox.search.common.BusinessDetails? getOperatorDetails();
     method public com.mapbox.search.common.BusinessDetails? getOwnerDetails();
     method public String getPartyId();
@@ -701,7 +700,6 @@ package com.mapbox.search.common.ev {
     property public final Boolean? chargingWhenClosed;
     property public final com.mapbox.search.common.ev.EvEnergyMix? energyMix;
     property public final java.util.List<com.mapbox.search.common.ev.EVSE> evses;
-    property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo> images;
     property public final com.mapbox.search.common.BusinessDetails? operatorDetails;
     property public final com.mapbox.search.common.BusinessDetails? ownerDetails;
     property public final String partyId;

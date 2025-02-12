@@ -1,13 +1,20 @@
 package com.mapbox.search.ui.utils.offline
 
-import com.mapbox.search.offline.OfflineSearchResultType
+import com.mapbox.search.base.failDebug
+import com.mapbox.search.offline.NewOfflineSearchResultType
 import com.mapbox.search.result.SearchResultType
 
-@JvmSynthetic
-internal fun OfflineSearchResultType.mapToSdkSearchResultType(): SearchResultType {
-    return when (this) {
-        OfflineSearchResultType.PLACE -> SearchResultType.PLACE
-        OfflineSearchResultType.STREET -> SearchResultType.STREET
-        OfflineSearchResultType.ADDRESS -> SearchResultType.ADDRESS
+internal fun createSearchResultTypeFromOfflineType(@NewOfflineSearchResultType.Type type: String): SearchResultType {
+    return when (type) {
+        NewOfflineSearchResultType.PLACE -> SearchResultType.PLACE
+        NewOfflineSearchResultType.STREET -> SearchResultType.STREET
+        NewOfflineSearchResultType.ADDRESS -> SearchResultType.ADDRESS
+        NewOfflineSearchResultType.POI -> SearchResultType.POI
+        else -> {
+            failDebug {
+                "Unprocessed offline search result type: $type"
+            }
+            SearchResultType.ADDRESS
+        }
     }
 }

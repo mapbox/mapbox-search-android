@@ -40,7 +40,7 @@ import kotlinx.parcelize.Parcelize
 @MapboxExperimental
 @Parcelize
 public class EVSE @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX) constructor(
-    public val uid: String,
+    public val uid: String?,
     public val evseId: String? = null,
     @EvseStatus.Type public val status: String,
     public val statusSchedule: List<EvStatusSchedule>,

@@ -30,7 +30,6 @@ import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.SearchCancellationException
 import com.mapbox.search.common.SearchRequestException
-import com.mapbox.search.common.tests.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.TestThreadExecutorService
 import com.mapbox.search.common.tests.catchThrowable
@@ -52,11 +51,8 @@ import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
-import io.mockk.unmockkStatic
-import junit.framework.TestCase.assertEquals
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -1167,7 +1163,6 @@ internal class SearchEngineTest {
         @JvmStatic
         fun setUpAll() {
             resetLogImpl()
-            mockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")
@@ -1175,7 +1170,6 @@ internal class SearchEngineTest {
         @JvmStatic
         fun tearDownAll() {
             reinitializeLogImpl()
-            unmockkStatic(ASSERTIONS_KT_CLASS_NAME)
         }
     }
 }
