@@ -632,7 +632,6 @@ internal class OfflineSearchEngineTest {
 
                 val options = OfflineSearchAlongRouteOptions(
                     route = listOf(Point.fromLngLat(10.0, 20.0), Point.fromLngLat(20.0, 30.0)),
-                    proximity = Point.fromLngLat(30.0, 40.0),
                     origin = Point.fromLngLat(40.0, 50.0),
                     limit = 15,
                     evSearchOptions = OfflineEvSearchOptions(connectorTypes = listOf(EvConnectorType.TESLA_S)),
@@ -640,7 +639,7 @@ internal class OfflineSearchEngineTest {
 
                 val coreOptions = createCoreSearchOptions(
                     route = options.route,
-                    proximity = options.proximity,
+                    proximity = options.route.first(),
                     origin = options.origin,
                     limit = options.limit,
                     evSearchOptions = options.evSearchOptions?.mapToCore(),
@@ -705,7 +704,7 @@ internal class OfflineSearchEngineTest {
                 val coreOptions = createCoreSearchOptions(
                     route = options.route,
                     proximity = options.route.first(),
-                    origin = options.route.first(),
+                    origin = options.origin,
                     limit = null,
                     evSearchOptions = null,
                 )

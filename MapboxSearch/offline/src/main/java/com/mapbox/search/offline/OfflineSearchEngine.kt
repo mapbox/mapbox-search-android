@@ -211,6 +211,12 @@ public interface OfflineSearchEngine {
     )
 
     /**
+     * Deprecated: Use an overloaded function that accepts [OfflineSearchAlongRouteOptions]
+     * as a parameter instead.
+     * If you choose to use this function, it is recommended to set the first point of the route
+     * as the [proximity] for future compatibility. In upcoming SDK updates,
+     * the semantics of the [proximity] parameter will change.
+     *
      * Performs a search along the supplied [route].
      *
      * @param query the search query
@@ -220,21 +226,25 @@ public interface OfflineSearchEngine {
      * @param callback search result callback, delivers results on the main thread
      * @return [AsyncOperationTask] object which allows to cancel the request.
      */
-    @OptIn(MapboxExperimental::class)
+    @Deprecated(
+        "Deprecated, use an overloading that accepts OfflineSearchAlongRouteOptions as a parameter",
+        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route)), executor, callback"),
+    )
     public fun searchAlongRoute(
         query: String,
         proximity: Point,
         route: List<Point>,
         executor: Executor,
         callback: OfflineSearchCallback
-    ): AsyncOperationTask = searchAlongRoute(
-        query = query,
-        options = OfflineSearchAlongRouteOptions(route, proximity),
-        executor = executor,
-        callback = callback,
-    )
+    ): AsyncOperationTask
 
     /**
+     * Deprecated: Use an overloaded function that accepts [OfflineSearchAlongRouteOptions]
+     * as a parameter instead.
+     * If you choose to use this function, it is recommended to set the first point of the route
+     * as the [proximity] for future compatibility. In upcoming SDK updates,
+     * the semantics of the [proximity] parameter will change.
+     *
      * Performs a search along the supplied [route].
      *
      * @param query the search query
@@ -243,6 +253,11 @@ public interface OfflineSearchEngine {
      * @param callback search result callback, delivers results on the main thread
      * @return [AsyncOperationTask] object which allows to cancel the request.
      */
+    @Deprecated(
+        "Deprecated, use an overloading that accepts OfflineSearchAlongRouteOptions as a parameter",
+        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route)), callback"),
+    )
+    @Suppress("DEPRECATION")
     public fun searchAlongRoute(
         query: String,
         proximity: Point,

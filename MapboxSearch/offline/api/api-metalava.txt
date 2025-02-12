@@ -110,20 +110,17 @@ package com.mapbox.search.offline {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class OfflineSearchAlongRouteOptions implements android.os.Parcelable {
-    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null, Integer? limit = null, @com.mapbox.search.common.RestrictedMapboxSearchAPI com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
-    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null, Integer? limit = null);
-    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.Point? origin = null);
-    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? proximity = null);
+    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? origin = null, Integer? limit = null, @com.mapbox.search.common.RestrictedMapboxSearchAPI com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions = null);
+    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? origin = null, Integer? limit = null);
+    ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchAlongRouteOptions(java.util.List<com.mapbox.geojson.Point> route);
     method public com.mapbox.search.offline.OfflineEvSearchOptions? getEvSearchOptions();
     method public Integer? getLimit();
     method public com.mapbox.geojson.Point? getOrigin();
-    method public com.mapbox.geojson.Point? getProximity();
     method public java.util.List<com.mapbox.geojson.Point> getRoute();
     property public final com.mapbox.search.offline.OfflineEvSearchOptions? evSearchOptions;
     property public final Integer? limit;
     property public final com.mapbox.geojson.Point? origin;
-    property public final com.mapbox.geojson.Point? proximity;
     property public final java.util.List<com.mapbox.geojson.Point> route;
   }
 
@@ -159,8 +156,8 @@ package com.mapbox.search.offline {
     method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.offline.OfflineSearchOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask searchAddressesNearby(String street, com.mapbox.geojson.Point proximity, double radiusMeters, com.mapbox.search.offline.OfflineSearchCallback callback);
-    method public default com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.geojson.Point proximity, java.util.List<com.mapbox.geojson.Point> route, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
-    method public default com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.geojson.Point proximity, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method @Deprecated public com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.geojson.Point proximity, java.util.List<com.mapbox.geojson.Point> route, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
+    method @Deprecated public default com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.geojson.Point proximity, java.util.List<com.mapbox.geojson.Point> route, com.mapbox.search.offline.OfflineSearchCallback callback);
     method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.search.offline.OfflineSearchAlongRouteOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
     method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.search.offline.OfflineSearchAlongRouteOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public void selectTileset(String? dataset, String? version);

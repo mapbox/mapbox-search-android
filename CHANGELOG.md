@@ -1,13 +1,15 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.8.0-SNAPSHOT
+## 2.8.0
 
 ### New features
 - `OfflineSearchResult` can now be of a POI type. `OfflineSearchResultType` has been deprecated, along with the `OfflineSearchResult.type` property. Use `OfflineSearchResult.newType` instead.
+- `OfflineSearchEngine.searchAlongRoute(String, Point, List<Point>, OfflineSearchCallback)` has been deprecated. Use an overloaded function that accepts `OfflineSearchAlongRouteOptions` as a parameter instead.
 
 ### Experimental API breaking changes
 - Properties `EvConnector.id`, `EVSE.uid` are nullable now. 
 - Property `EvLocation.images` has been removed.
+- Now `OfflineSearchAlongRouteOptions` doesn't accept `proximity` as a parameter, search will be performed along the whole route.
 
 ### Mapbox dependencies
 - Search Native SDK `2.8.0-rc.2`
