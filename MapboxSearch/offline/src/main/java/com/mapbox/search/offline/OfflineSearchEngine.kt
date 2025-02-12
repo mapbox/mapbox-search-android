@@ -228,7 +228,7 @@ public interface OfflineSearchEngine {
      */
     @Deprecated(
         "Deprecated, use an overloading that accepts OfflineSearchAlongRouteOptions as a parameter",
-        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route)), executor, callback"),
+        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route), executor, callback)"),
     )
     public fun searchAlongRoute(
         query: String,
@@ -255,7 +255,7 @@ public interface OfflineSearchEngine {
      */
     @Deprecated(
         "Deprecated, use an overloading that accepts OfflineSearchAlongRouteOptions as a parameter",
-        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route)), callback"),
+        ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route), callback)"),
     )
     @Suppress("DEPRECATION")
     public fun searchAlongRoute(
