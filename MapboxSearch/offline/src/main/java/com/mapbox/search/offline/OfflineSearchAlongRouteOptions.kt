@@ -23,11 +23,6 @@ public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
     public val route: List<Point>,
 
     /**
-     * Bias the response to favor results that are closer to this location, provided as Point.
-     */
-    public val proximity: Point? = null,
-
-    /**
      * Search origin point, used to calculate the distance to the search result.
      * @see [OfflineSearchResult.distanceMeters]
      */
@@ -63,7 +58,6 @@ public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
         other as OfflineSearchAlongRouteOptions
 
         if (route != other.route) return false
-        if (proximity != other.proximity) return false
         if (limit != other.limit) return false
         if (origin != other.origin) return false
         if (evSearchOptions != other.evSearchOptions) return false
@@ -76,7 +70,6 @@ public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
      */
     override fun hashCode(): Int {
         var result = route.hashCode()
-        result = 31 * result + (proximity?.hashCode() ?: 0)
         result = 31 * result + (limit ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (evSearchOptions?.hashCode() ?: 0)
@@ -89,7 +82,6 @@ public class OfflineSearchAlongRouteOptions @JvmOverloads public constructor(
     override fun toString(): String {
         return "OfflineSearchAlongRouteOptions(" +
                 "route=$route, " +
-                "proximity=$proximity, " +
                 "limit=$limit, " +
                 "origin=$origin, " +
                 "evSearchOptions=$evSearchOptions" +

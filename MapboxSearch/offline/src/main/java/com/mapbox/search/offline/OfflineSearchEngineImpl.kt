@@ -166,17 +166,50 @@ internal class OfflineSearchEngineImpl(
 
         activityReporter.reportActivity("offline-search-engine-search-along-route")
 
-        // We should not rely on location provider in case of SAR,
-        // because requested route might be too far away
-        val proximity = options.proximity ?: options.route.first()
-        val origin = options.origin ?: proximity
-
         val coreOptions = createCoreSearchOptions(
             route = options.route,
-            proximity = proximity,
-            origin = origin,
             limit = options.limit,
+            origin = options.origin,
+            // For future changes compatibility we use the first route point as a proximity to force
+            // search native search from the route beginning. This behavior should be by default
+            // in the future search native version
+            proximity = options.route.first(),
             evSearchOptions = options.evSearchOptions?.mapToCore(),
+        )
+
+        return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
+            coreEngine.searchOffline(
+                query, emptyList(), coreOptions,
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    isOffline = true,
+                )
+            )
+        }
+    }
+
+    @Deprecated(
+        "Deprecated, use an overloading that accepts OfflineSearchAlongRouteOptions as a parameter",
+        replaceWith = ReplaceWith("searchAlongRoute(query, OfflineSearchAlongRouteOptions(route)), executor, callback")
+    )
+    override fun searchAlongRoute(
+        query: String,
+        proximity: Point,
+        route: List<Point>,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask {
+        logd("searchAlongRoute($query, $proximity, $route) called")
+
+        activityReporter.reportActivity("offline-search-engine-search-along-route")
+
+        val coreOptions = createCoreSearchOptions(
+            route = route,
+            proximity = proximity,
         )
 
         return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->

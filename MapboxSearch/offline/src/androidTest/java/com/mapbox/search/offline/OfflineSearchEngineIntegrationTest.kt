@@ -1,8 +1,6 @@
 package com.mapbox.search.offline
 
-import android.app.Application
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.TileRegion
@@ -42,9 +40,6 @@ import kotlin.math.abs
 
 @Suppress("LargeClass")
 internal class OfflineSearchEngineIntegrationTest {
-
-    private val targetApplication: Application
-        get() = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
 
     private lateinit var searchEngine: OfflineSearchEngine
 
@@ -88,56 +83,6 @@ internal class OfflineSearchEngineIntegrationTest {
         val engineReadyCallback = BlockingEngineReadyCallback()
         searchEngine.addEngineReadyCallback(engineReadyCallback)
         engineReadyCallback.getResultBlocking()
-    }
-
-    @After
-    fun tearDown() {
-        // TODO: Clearing the tiles data after a test causes the next test to fail,
-        // even though we recreate the Search Engine and download the data again.
-        // clearOfflineData()
-        tileStore.removeObserver(debugTileStoreObserver)
-    }
-
-    @Test
-    fun complexForwardReverseTest() {
-        val listener = BlockingOnIndexChangeListener(1)
-        searchEngine.addOnIndexChangeListener(listener)
-
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
-
-        val dcLoadOptions = TileRegionLoadOptions.Builder()
-            .descriptors(descriptors)
-            .geometry(MAPBOX_DC_LOCATION)
-            .acceptExpired(true)
-            .build()
-
-        val loadTilesResult = tileStore.loadTileRegionBlocking(TEST_GROUP_ID, dcLoadOptions)
-        assertTrue(loadTilesResult.isValue)
-
-        val tileRegion = requireNotNull(loadTilesResult.value)
-        assertEquals(TEST_GROUP_ID, tileRegion.id)
-        assertTrue(tileRegion.completedResourceCount > 0)
-        assertEquals(tileRegion.requiredResourceCount, tileRegion.completedResourceCount)
-
-        val events = listener.getResultsBlocking()
-        events.forEach {
-            val result = (it as? BlockingOnIndexChangeListener.OnIndexChangeResult.Result)
-            assertNotNull(result)
-            assertTrue(
-                "Event type should be ADD, but was ${result!!.event.type}",
-                result.event.type == OfflineIndexChangeEvent.EventType.ADD
-            )
-        }
-
-        // Forward geocoding
-        val searchResult = searchEngine.searchBlocking("1")
-        assertTrue(searchResult is SearchEngineResult.Results)
-        assertTrue(searchResult.requireResults().isNotEmpty())
-
-        // Reverse geocoding
-        val reverseResult = searchEngine.reverseGeocodingBlocking(searchResult.requireResults().first().coordinate)
-        assertTrue(reverseResult is SearchEngineResult.Results)
-        assertTrue(reverseResult.requireResults().isNotEmpty())
     }
 
     private fun loadOfflineData() {
@@ -185,22 +130,12 @@ internal class OfflineSearchEngineIntegrationTest {
         }
     }
 
-    @Ignore("TODO ignored because we don't clear data after each test case, see tearDown()")
-    @Test
-    fun testSearchRequestWithoutAddedRegions() {
-        val result = searchEngine.searchBlocking("123")
-        assertTrue(result is SearchEngineResult.Error)
-    }
-
-    @Ignore("TODO ignored because we don't clear data after each test case, see tearDown()")
-    @Test
-    fun testReverseGeocodingWithoutAddedRegions() {
-        val callback = BlockingOfflineSearchCallback()
-        searchEngine.reverseGeocoding(
-            OfflineReverseGeoOptions(center = MAPBOX_DC_LOCATION),
-            callback
-        )
-        assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
+    @After
+    fun tearDown() {
+        // TODO: Clearing the tiles data after a test causes the next test to fail,
+        // even though we recreate the Search Engine and download the data again.
+        // clearOfflineData()
+        tileStore.removeObserver(debugTileStoreObserver)
     }
 
     @Test
@@ -227,6 +162,24 @@ internal class OfflineSearchEngineIntegrationTest {
         val allTileRegions = requireNotNull(allTileRegionsResult.value)
         assertEquals(1, allTileRegions.size)
         assertEquals(TEST_GROUP_ID, allTileRegions.first().id)
+    }
+
+    @Ignore("TODO ignored because we don't clear data after each test case, see tearDown()")
+    @Test
+    fun testSearchRequestWithoutAddedRegions() {
+        val result = searchEngine.searchBlocking("123")
+        assertTrue(result is SearchEngineResult.Error)
+    }
+
+    @Ignore("TODO ignored because we don't clear data after each test case, see tearDown()")
+    @Test
+    fun testReverseGeocodingWithoutAddedRegions() {
+        val callback = BlockingOfflineSearchCallback()
+        searchEngine.reverseGeocoding(
+            OfflineReverseGeoOptions(center = MAPBOX_DC_LOCATION),
+            callback
+        )
+        assertTrue(callback.getResultBlocking() is SearchEngineResult.Error)
     }
 
     @Ignore("TODO clearing the tiles data after a test causes the next test to fail, see tearDown()")
@@ -269,6 +222,21 @@ internal class OfflineSearchEngineIntegrationTest {
         assertTrue(searchResult is SearchEngineResult.Error)
         val error = searchResult as SearchEngineResult.Error
         assertTrue(error.e.message?.contains("Offline regions not added") == true)
+    }
+
+    @Test
+    fun complexForwardReverseTest() {
+        loadOfflineData()
+
+        // Forward geocoding
+        val searchResult = searchEngine.searchBlocking("1")
+        assertTrue(searchResult is SearchEngineResult.Results)
+        assertTrue(searchResult.requireResults().isNotEmpty())
+
+        // Reverse geocoding
+        val reverseResult = searchEngine.reverseGeocodingBlocking(searchResult.requireResults().first().coordinate)
+        assertTrue(reverseResult is SearchEngineResult.Results)
+        assertTrue(reverseResult.requireResults().isNotEmpty())
     }
 
     @Test

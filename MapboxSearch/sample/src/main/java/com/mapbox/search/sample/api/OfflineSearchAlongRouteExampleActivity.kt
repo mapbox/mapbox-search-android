@@ -533,7 +533,9 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
 
         private fun runSearch(options: SearchAlongRouteOptions) {
             searchRequestTask = if (options.route.isNotEmpty()) {
-                 searchEngine.searchAlongRoute(
+                // TODO remove "proximity" once the search native no longer use it.
+                @Suppress("DEPRECATION")
+                searchEngine.searchAlongRoute(
                     query = options.query,
                     proximity = options.proximity,
                     route = options.route,
