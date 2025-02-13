@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.MapboxOptions
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
@@ -137,8 +138,10 @@ internal class PlaceAutocompleteIntegrationTest {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
 
-        assertTrue(response.isValue)
-        assertTrue(requireNotNull(response.value).isEmpty())
+        assertEqualsExpected(
+            ExpectedFactory.createValue(emptyList()),
+            response,
+        )
     }
 
     @Test
