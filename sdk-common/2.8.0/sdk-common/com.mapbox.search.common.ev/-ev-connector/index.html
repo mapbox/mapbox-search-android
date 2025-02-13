@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EvConnector</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>sdk-common</span>
+            </a>
+    </div>
+    <div>
+2.8.0    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="sdk-common::com.mapbox.search.common.ev/EvConnector///PointingToDeclaration//-1413817904">
+  <div class="breadcrumbs"><a href="../../../index.html">sdk-common</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.common.ev</a><span class="delimiter">/</span><span class="current">EvConnector</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Ev</span><wbr></wbr><span><span>Connector</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.mapbox.annotation/MapboxExperimental///PointingToDeclaration/"><span class="token annotation builtin">MapboxExperimental</span></span></div></div><span class="token keyword">class </span><a href="index.html">EvConnector</a> <span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="token punctuation">[</span><span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.LIBRARY_GROUP_PREFIX.html">RestrictTo.Scope.LIBRARY_GROUP_PREFIX</a></span><wbr></wbr><span class="token punctuation">]</span></span><wbr></wbr><span class="token punctuation">)</span> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>standard<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>format<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>powerType<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maxVoltage<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maxAmperage<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maxElectricPower<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>tariffIds<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>termsAndConditions<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>lastUpdated<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">OCPI Connector. A Connector is the socket or cable and plug available for the EV to use. A single EVSE may provide multiple Connectors but only one of them can be in use at the same time. A Connector always belongs to an EVSE object. Refer to this type in the <a href="https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#mod_locations_connector_object">OCPI GitHub repository</a> for more details.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-443089934%2FConstructors%2F-1413817904" anchor-label="EvConnector" id="-443089934%2FConstructors%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-ev-connector.html"><span>Ev</span><wbr></wbr><span><span>Connector</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-443089934%2FConstructors%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="token punctuation">[</span><span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.LIBRARY_GROUP_PREFIX.html">RestrictTo.Scope.LIBRARY_GROUP_PREFIX</a></span><wbr></wbr><span class="token punctuation">]</span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-ev-connector.html"><span class="token function">EvConnector</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">standard<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">format<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">powerType<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">maxVoltage<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">maxAmperage<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">maxElectricPower<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">tariffIds<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">termsAndConditions<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">lastUpdated<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-1413817904" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1578325224%2FFunctions%2F-1413817904"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1578325224%2FFunctions%2F-1413817904"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F-1413817904" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1754457655%2FFunctions%2F-1413817904"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1754457655%2FFunctions%2F-1413817904"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-78134524%2FProperties%2F-1413817904" anchor-label="format" id="-78134524%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="format.html"><span><span>format</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-78134524%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-78134524%2FProperties%2F-1413817904" anchor-label="format" id="-78134524%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="format.html">format</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-78134524%2FProperties%2F-1413817904" anchor-label="format" id="-78134524%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph"><a href="../-ev-connector-format/-type/index.html">EvConnectorFormat.Type</a> value indicating the format (socket/cable) of the installed connector.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-798139040%2FProperties%2F-1413817904" anchor-label="id" id="-798139040%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-798139040%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-798139040%2FProperties%2F-1413817904" anchor-label="id" id="-798139040%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="id.html">id</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-798139040%2FProperties%2F-1413817904" anchor-label="id" id="-798139040%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Identifier of the Connector within the EVSE. Two Connectors may have the same id as long as they do not belong to the same EVSE object.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1999920774%2FProperties%2F-1413817904" anchor-label="lastUpdated" id="-1999920774%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="last-updated.html"><span>last</span><wbr></wbr><span><span>Updated</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1999920774%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1999920774%2FProperties%2F-1413817904" anchor-label="lastUpdated" id="-1999920774%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="last-updated.html">lastUpdated</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1999920774%2FProperties%2F-1413817904" anchor-label="lastUpdated" id="-1999920774%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Timestamp in RFC 3339 format when this Connector was last updated (or created).</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="891811821%2FProperties%2F-1413817904" anchor-label="maxAmperage" id="891811821%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="max-amperage.html"><span>max</span><wbr></wbr><span><span>Amperage</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="891811821%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="891811821%2FProperties%2F-1413817904" anchor-label="maxAmperage" id="891811821%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="max-amperage.html">maxAmperage</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><a data-name="891811821%2FProperties%2F-1413817904" anchor-label="maxAmperage" id="891811821%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Maximum amperage of the connector, in ampere (A).</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1419323593%2FProperties%2F-1413817904" anchor-label="maxElectricPower" id="-1419323593%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="max-electric-power.html"><span>max</span><wbr></wbr><span>Electric</span><wbr></wbr><span><span>Power</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1419323593%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1419323593%2FProperties%2F-1413817904" anchor-label="maxElectricPower" id="-1419323593%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="max-electric-power.html">maxElectricPower</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1419323593%2FProperties%2F-1413817904" anchor-label="maxElectricPower" id="-1419323593%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Maximum electric power that can be delivered by this connector, in Watts (W). Used when the maximum electric power is lower than the calculated value from voltage and amperage. For example: A DC Charge Point which can deliver up to 920V and up to 400A can be limited to a maximum of 150kW (maxElectricPower = 150000). Depending on the car, it may supply max voltage or current, but not both at the same time. For AC Charge Points, the amount of phases used can also influence the maximum power.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="68840449%2FProperties%2F-1413817904" anchor-label="maxVoltage" id="68840449%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="max-voltage.html"><span>max</span><wbr></wbr><span><span>Voltage</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68840449%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="68840449%2FProperties%2F-1413817904" anchor-label="maxVoltage" id="68840449%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="max-voltage.html">maxVoltage</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><a data-name="68840449%2FProperties%2F-1413817904" anchor-label="maxVoltage" id="68840449%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Maximum voltage of the connector (line to neutral for AC_3_PHASE), in volt (V). For example: DC Chargers might vary the voltage during charging when battery almost full.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1307869856%2FProperties%2F-1413817904" anchor-label="powerType" id="1307869856%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="power-type.html"><span>power</span><wbr></wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1307869856%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1307869856%2FProperties%2F-1413817904" anchor-label="powerType" id="1307869856%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="power-type.html">powerType</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1307869856%2FProperties%2F-1413817904" anchor-label="powerType" id="1307869856%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph"><a href="../../com.mapbox.search.common/-parking-type/-type/index.html">ParkingType.Type</a> value indicating electrical power configuration.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="559171454%2FProperties%2F-1413817904" anchor-label="standard" id="559171454%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="standard.html"><span><span>standard</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="559171454%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="559171454%2FProperties%2F-1413817904" anchor-label="standard" id="559171454%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="standard.html">standard</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="559171454%2FProperties%2F-1413817904" anchor-label="standard" id="559171454%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph"><a href="../-ev-connector-type/-type/index.html">EvConnectorType.Type</a> value indicating the standard of the installed connector.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="767791915%2FProperties%2F-1413817904" anchor-label="tariffIds" id="767791915%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="tariff-ids.html"><span>tariff</span><wbr></wbr><span><span>Ids</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="767791915%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="767791915%2FProperties%2F-1413817904" anchor-label="tariffIds" id="767791915%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="tariff-ids.html">tariffIds</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="767791915%2FProperties%2F-1413817904" anchor-label="tariffIds" id="767791915%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Identifiers of the valid charging tariffs. Multiple tariffs are possible, but only one of each Tariff.type can be active at the same time. Tariffs with the same type are only allowed if they are not active at the same time: start_date_time and end_date_time period not overlapping. Only included in the response of the Get Charge Point details by ID API.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-48008845%2FProperties%2F-1413817904" anchor-label="termsAndConditions" id="-48008845%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="terms-and-conditions.html"><span>terms</span><wbr></wbr><span>And</span><wbr></wbr><span><span>Conditions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-48008845%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-48008845%2FProperties%2F-1413817904" anchor-label="termsAndConditions" id="-48008845%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="terms-and-conditions.html">termsAndConditions</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-48008845%2FProperties%2F-1413817904" anchor-label="termsAndConditions" id="-48008845%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">URL to the operator’s terms and conditions.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

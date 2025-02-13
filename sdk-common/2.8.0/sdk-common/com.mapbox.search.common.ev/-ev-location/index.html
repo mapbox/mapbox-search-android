@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EvLocation</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>sdk-common</span>
+            </a>
+    </div>
+    <div>
+2.8.0    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="sdk-common::com.mapbox.search.common.ev/EvLocation///PointingToDeclaration//-1413817904">
+  <div class="breadcrumbs"><a href="../../../index.html">sdk-common</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.common.ev</a><span class="delimiter">/</span><span class="current">EvLocation</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Ev</span><wbr></wbr><span><span>Location</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.mapbox.annotation/MapboxExperimental///PointingToDeclaration/"><span class="token annotation builtin">MapboxExperimental</span></span></div></div><span class="token keyword">class </span><a href="index.html">EvLocation</a> <span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="token punctuation">[</span><span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.LIBRARY_GROUP_PREFIX.html">RestrictTo.Scope.LIBRARY_GROUP_PREFIX</a></span><wbr></wbr><span class="token punctuation">]</span></span><wbr></wbr><span class="token punctuation">)</span> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>partyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>publish<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>publishAllowedTo<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-evse-publish-token-type/index.html">EvsePublishTokenType</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>relatedLocations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-ev-additional-geo-location/index.html">EvAdditionalGeoLocation</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>evses<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-e-v-s-e/index.html">EVSE</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>operatorDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>suboperatorDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>ownerDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>chargingWhenClosed<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>energyMix<span class="token operator">: </span><a href="../-ev-energy-mix/index.html">EvEnergyMix</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div><p class="paragraph">OCPI Location. The Location object describes the location and its properties where a group of EVSEs that belong together are installed. Refer to this type in the <a href="https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#mod_locations_location_object">OCPI GitHub repository</a> for more details.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="1192565863%2FConstructors%2F-1413817904" anchor-label="EvLocation" id="1192565863%2FConstructors%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-ev-location.html"><span>Ev</span><wbr></wbr><span><span>Location</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1192565863%2FConstructors%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="token punctuation">[</span><span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.LIBRARY_GROUP_PREFIX.html">RestrictTo.Scope.LIBRARY_GROUP_PREFIX</a></span><wbr></wbr><span class="token punctuation">]</span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-ev-location.html"><span class="token function">EvLocation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">partyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">publish<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">publishAllowedTo<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-evse-publish-token-type/index.html">EvsePublishTokenType</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">relatedLocations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-ev-additional-geo-location/index.html">EvAdditionalGeoLocation</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">evses<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-e-v-s-e/index.html">EVSE</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">operatorDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">suboperatorDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">ownerDetails<span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">chargingWhenClosed<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">energyMix<span class="token operator">: </span><a href="../-ev-energy-mix/index.html">EvEnergyMix</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-1413817904" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1578325224%2FFunctions%2F-1413817904"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1578325224%2FFunctions%2F-1413817904"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1754457655%2FFunctions%2F-1413817904" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1754457655%2FFunctions%2F-1413817904"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.search.common.metadata/-week-timestamp/index.html#-1754457655%2FFunctions%2F-1413817904"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a><span class="token punctuation">, </span></span><span class="parameter ">p1<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="1507516556%2FProperties%2F-1413817904" anchor-label="chargingWhenClosed" id="1507516556%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="charging-when-closed.html"><span>charging</span><wbr></wbr><span>When</span><wbr></wbr><span><span>Closed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1507516556%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1507516556%2FProperties%2F-1413817904" anchor-label="chargingWhenClosed" id="1507516556%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="charging-when-closed.html">chargingWhenClosed</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><a data-name="1507516556%2FProperties%2F-1413817904" anchor-label="chargingWhenClosed" id="1507516556%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Indicates if the EVSEs are still charging outside the opening hours of the location.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1900586685%2FProperties%2F-1413817904" anchor-label="energyMix" id="-1900586685%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="energy-mix.html"><span>energy</span><wbr></wbr><span><span>Mix</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1900586685%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1900586685%2FProperties%2F-1413817904" anchor-label="energyMix" id="-1900586685%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="energy-mix.html">energyMix</a><span class="token operator">: </span><a href="../-ev-energy-mix/index.html">EvEnergyMix</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1900586685%2FProperties%2F-1413817904" anchor-label="energyMix" id="-1900586685%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EnergyMix object representing details on the energy supplied at this location.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1644761497%2FProperties%2F-1413817904" anchor-label="evses" id="-1644761497%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="evses.html"><span><span>evses</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1644761497%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1644761497%2FProperties%2F-1413817904" anchor-label="evses" id="-1644761497%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="evses.html">evses</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-e-v-s-e/index.html">EVSE</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1644761497%2FProperties%2F-1413817904" anchor-label="evses" id="-1644761497%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">List of <a href="../-e-v-s-e/index.html">EVSE</a> objects that belong to this Location.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1069589831%2FProperties%2F-1413817904" anchor-label="operatorDetails" id="-1069589831%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="operator-details.html"><span>operator</span><wbr></wbr><span><span>Details</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1069589831%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1069589831%2FProperties%2F-1413817904" anchor-label="operatorDetails" id="-1069589831%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="operator-details.html">operatorDetails</a><span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span></div><div class="brief "><a data-name="-1069589831%2FProperties%2F-1413817904" anchor-label="operatorDetails" id="-1069589831%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">BusinessDetails object representing information of the operator.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="181249684%2FProperties%2F-1413817904" anchor-label="ownerDetails" id="181249684%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="owner-details.html"><span>owner</span><wbr></wbr><span><span>Details</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="181249684%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="181249684%2FProperties%2F-1413817904" anchor-label="ownerDetails" id="181249684%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="owner-details.html">ownerDetails</a><span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span></div><div class="brief "><a data-name="181249684%2FProperties%2F-1413817904" anchor-label="ownerDetails" id="181249684%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">BusinessDetails object representing information of the owner if available.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1462984822%2FProperties%2F-1413817904" anchor-label="partyId" id="1462984822%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="party-id.html"><span>party</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1462984822%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1462984822%2FProperties%2F-1413817904" anchor-label="partyId" id="1462984822%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="party-id.html">partyId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1462984822%2FProperties%2F-1413817904" anchor-label="partyId" id="1462984822%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">3 letter identifier of the operator.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="96124360%2FProperties%2F-1413817904" anchor-label="publish" id="96124360%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="publish.html"><span><span>publish</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="96124360%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="96124360%2FProperties%2F-1413817904" anchor-label="publish" id="96124360%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="publish.html">publish</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><a data-name="96124360%2FProperties%2F-1413817904" anchor-label="publish" id="96124360%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Defines if a Location may be published on a website or app etc.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-845422257%2FProperties%2F-1413817904" anchor-label="publishAllowedTo" id="-845422257%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="publish-allowed-to.html"><span>publish</span><wbr></wbr><span>Allowed</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-845422257%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-845422257%2FProperties%2F-1413817904" anchor-label="publishAllowedTo" id="-845422257%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="publish-allowed-to.html">publishAllowedTo</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-evse-publish-token-type/index.html">EvsePublishTokenType</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-845422257%2FProperties%2F-1413817904" anchor-label="publishAllowedTo" id="-845422257%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">PublishTokenType object. This field may only be used when the publish field is false.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="52783280%2FProperties%2F-1413817904" anchor-label="relatedLocations" id="52783280%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="related-locations.html"><span>related</span><wbr></wbr><span><span>Locations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="52783280%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="52783280%2FProperties%2F-1413817904" anchor-label="relatedLocations" id="52783280%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="related-locations.html">relatedLocations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-ev-additional-geo-location/index.html">EvAdditionalGeoLocation</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="52783280%2FProperties%2F-1413817904" anchor-label="relatedLocations" id="52783280%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">AdditionalGeoLocation object representing geographical location of related points.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-479282619%2FProperties%2F-1413817904" anchor-label="suboperatorDetails" id="-479282619%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="suboperator-details.html"><span>suboperator</span><wbr></wbr><span><span>Details</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-479282619%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-479282619%2FProperties%2F-1413817904" anchor-label="suboperatorDetails" id="-479282619%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="suboperator-details.html">suboperatorDetails</a><span class="token operator">: </span><a href="../../com.mapbox.search.common/-business-details/index.html">BusinessDetails</a><span class="token operator">?</span></div><div class="brief "><a data-name="-479282619%2FProperties%2F-1413817904" anchor-label="suboperatorDetails" id="-479282619%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">BusinessDetails object representing information of the suboperator if available.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
