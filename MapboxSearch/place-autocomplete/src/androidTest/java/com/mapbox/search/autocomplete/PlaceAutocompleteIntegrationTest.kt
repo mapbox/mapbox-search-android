@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
@@ -39,6 +41,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -561,6 +564,12 @@ internal class PlaceAutocompleteIntegrationTest {
             return MockResponse()
                 .setResponseCode(200)
                 .setBody(readFileFromAssets(bodyContentPath))
+        }
+
+        @BeforeClass
+        @JvmStatic
+        fun enableDebugLogs() {
+            LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
         }
     }
 }
