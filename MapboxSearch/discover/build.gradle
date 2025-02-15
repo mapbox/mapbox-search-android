@@ -84,11 +84,11 @@ dependencies {
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
-
     testImplementation project(":common-tests")
 
     androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    androidTestImplementation project(":common-tests")
 }
