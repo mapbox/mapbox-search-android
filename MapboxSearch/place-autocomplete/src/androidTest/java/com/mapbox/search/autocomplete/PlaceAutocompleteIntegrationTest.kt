@@ -29,6 +29,7 @@ import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.tests.assertEqualsExpected
 import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
