@@ -41,13 +41,13 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '11.10.0-rc.1'
+    mapbox_maps_version = '11.11.0-SNAPSHOT.0224T1120Z.dzinad-patch-1.da389b9'
     mapbox_turf_version = '6.15.0'
 
-    common_sdk_version = '24.10.0'
+    common_sdk_version = '24.11.0-SNAPSHOT-02-21--04-29.git-04e5c24'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '2.8.0'
+    search_native_version = '2.9.0-SNAPSHOT-02-21--04-29.git-04e5c24'
 
     detekt_version = '1.19.0'
 
