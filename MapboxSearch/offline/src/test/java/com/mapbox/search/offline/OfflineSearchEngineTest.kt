@@ -734,7 +734,7 @@ internal class OfflineSearchEngineTest {
     }
 
     @Test
-    fun `Check selectTileset() functions`()  {
+    fun `Check selectTileset() functions`() {
         searchEngine.selectTileset("test-dataset", "test-version")
         verify(exactly = 1) {
             coreEngine.selectTileset("test-dataset", "test-version")

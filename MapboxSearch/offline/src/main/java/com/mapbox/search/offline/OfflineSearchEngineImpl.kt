@@ -68,6 +68,7 @@ internal class OfflineSearchEngineImpl(
         coreEngine.selectTileset(dataset, version)
     }
 
+    @MapboxExperimental
     override fun selectTileset(dataset: String, version: String, language: IsoLanguageCode) {
         val datasetName = DatasetNameBuilder.buildDatasetName(
             dataset = dataset, language = language.code, worldview = null,
@@ -75,6 +76,7 @@ internal class OfflineSearchEngineImpl(
         coreEngine.selectTileset(datasetName, version)
     }
 
+    @MapboxExperimental
     override fun selectTileset(
         dataset: String,
         version: String,
