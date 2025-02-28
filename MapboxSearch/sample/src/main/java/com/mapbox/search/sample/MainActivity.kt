@@ -87,6 +87,7 @@ import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
+import java.net.URI
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tileRegionLoadOptions: TileRegionLoadOptions
     private val tileStore = TileStore.create()
-    private val tileRegionId = "Washington DC"
+    private val tileRegionId = "Taiwan"
     private var tilesLoadingTask: Cancelable? = null
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
@@ -207,13 +208,20 @@ class MainActivity : AppCompatActivity() {
 
         val offlineSearchEngine = OfflineSearchEngine.create(
             OfflineSearchEngineSettings(
-                tileStore = tileStore
+                tileStore = tileStore,
+                tilesBaseUri = URI.create("https://search-sdk-offline-staging.tilestream.net")
             )
         )
 
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
-        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
-        val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
+        val descriptors = listOf(
+            OfflineSearchEngine.createTilesetDescriptor(
+                dataset = "experimental-poi-cat-alias",
+                version = "v20"
+            )
+        )
+
+        val dcLocation = Point.fromLngLat(120.45905992554272, 24.12517448549154)
+        val tileGeometry = TurfTransformation.circle(dcLocation, 10.0, 32, TurfConstants.UNIT_KILOMETERS)
 
         tileRegionLoadOptions = TileRegionLoadOptions
             .Builder()
@@ -227,10 +235,21 @@ class MainActivity : AppCompatActivity() {
             tileRegionLoadOptions,
             { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
             { result ->
-                if (result.isValue) {
+                val toastMsg = if (result.isValue) {
                     Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                    "Tile region $tileRegionId loaded"
                 } else {
                     Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
+                    "Tile region $tileRegionId load error: ${result.error}"
+                }
+
+                offlineSearchEngine.selectTileset(
+                    dataset = "experimental-poi-cat-alias",
+                    version = "v20"
+                )
+
+                runOnUiThread {
+                    Toast.makeText(applicationContext, toastMsg, Toast.LENGTH_SHORT).show()
                 }
             }
         )
