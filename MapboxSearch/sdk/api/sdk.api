@@ -563,7 +563,7 @@ public abstract interface class com/mapbox/search/SearchResultCallback {
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
@@ -571,6 +571,7 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getCountryIso1 ()Ljava/lang/String;
 	public final fun getCountryIso2 ()Ljava/lang/String;
 	public final fun getCpsJson ()Ljava/lang/String;
+	public final fun getCuisines ()Ljava/util/List;
 	public final fun getDelivery ()Ljava/lang/Boolean;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getDriveThrough ()Ljava/lang/Boolean;
@@ -616,6 +617,7 @@ public final class com/mapbox/search/SearchResultMetadata$Builder {
 	public final fun build ()Lcom/mapbox/search/SearchResultMetadata;
 	public final fun children (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun cpsJson (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun cuisines (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun delivery (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun description (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun driveThrough (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;

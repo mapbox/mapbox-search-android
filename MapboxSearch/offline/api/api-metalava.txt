@@ -161,6 +161,8 @@ package com.mapbox.search.offline {
     method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.search.offline.OfflineSearchAlongRouteOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
     method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask searchAlongRoute(String query, com.mapbox.search.offline.OfflineSearchAlongRouteOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public void selectTileset(String? dataset, String? version);
+    method public void selectTileset(String dataset, String version, com.mapbox.search.common.IsoLanguageCode language);
+    method public void selectTileset(String dataset, String version, com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     property public abstract com.mapbox.search.offline.OfflineSearchEngineSettings settings;
     field public static final com.mapbox.search.offline.OfflineSearchEngine.Companion Companion;
   }

@@ -217,6 +217,8 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;)V
+	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)V
 }
 
 public final class com/mapbox/search/offline/OfflineSearchEngine$Companion {

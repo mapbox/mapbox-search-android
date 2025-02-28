@@ -94,6 +94,46 @@ public interface OfflineSearchEngine {
     public fun selectTileset(dataset: String?, version: String?)
 
     /**
+     * Selects preferable tileset for offline search. If dataset or version is set, [OfflineSearchEngine] will try to
+     * match appropriate tileset and use it. If several tilesets are available, the latest registered will be used.
+     *
+     * By default, if multiple tilesets are registered at once
+     * (e.g. one offline region is loaded for several tilesets in single call),
+     * the biggest one (tilesets are compared as pair of strings {dataset, version}) is considered as latest.
+     *
+     * @param dataset Preferable dataset.
+     * @param version Preferable version.
+     * @param language [IsoLanguageCode] language code.
+     */
+    @MapboxExperimental
+    public fun selectTileset(
+        dataset: String,
+        version: String,
+        language: IsoLanguageCode,
+    )
+
+    /**
+     * Selects preferable tileset for offline search. If dataset or version is set, [OfflineSearchEngine] will try to
+     * match appropriate tileset and use it. If several tilesets are available, the latest registered will be used.
+     *
+     * By default, if multiple tilesets are registered at once
+     * (e.g. one offline region is loaded for several tilesets in single call),
+     * the biggest one (tilesets are compared as pair of strings {dataset, version}) is considered as latest.
+     *
+     * @param dataset Preferable dataset.
+     * @param version Preferable version.
+     * @param language [IsoLanguageCode] language code.
+     * @param worldview [IsoCountryCode] country code.
+     */
+    @MapboxExperimental
+    public fun selectTileset(
+        dataset: String,
+        version: String,
+        language: IsoLanguageCode,
+        worldview: IsoCountryCode,
+    )
+
+    /**
      * Performs forward geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
      * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
