@@ -267,6 +267,14 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val popularity: Float? = coreMetadata.popularity
 
+    /**
+     * A list of cuisines served if this metadata belongs to a food-serving POI,
+     * such as a café or restaurant.
+     * Returns `null` for other types of POIs.
+     */
+    @IgnoredOnParcel
+    public val cuisines: List<String>? = coreMetadata.cuisines
+
     internal constructor(
         metadata: Map<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -304,6 +312,7 @@ public class SearchResultMetadata internal constructor(
         servesVegetarian: Boolean? = null,
         rating: Float? = null,
         popularity: Float? = null,
+        cuisines: List<String>? = null,
     ) : this(
         createCoreResultMetadata(
             reviewCount = reviewCount,
@@ -344,6 +353,7 @@ public class SearchResultMetadata internal constructor(
             popularity = popularity,
             // We don't support EV metadata for online search yet
             evMetadata = null,
+            cuisines = cuisines,
         )
     )
 
@@ -401,9 +411,7 @@ public class SearchResultMetadata internal constructor(
 
         other as SearchResultMetadata
 
-        if (coreMetadata != other.coreMetadata) return false
-
-        return true
+        return coreMetadata == other.coreMetadata
     }
 
     /**
@@ -455,7 +463,8 @@ public class SearchResultMetadata internal constructor(
                 "servesVegan=$servesVegan, " +
                 "servesVegetarian=$servesVegetarian, " +
                 "rating=$rating, " +
-                "popularity=$popularity" +
+                "popularity=$popularity, " +
+                "cuisines=$cuisines" +
                 ")"
     }
 
@@ -463,7 +472,8 @@ public class SearchResultMetadata internal constructor(
      * Builder for creating instances of [SearchResultMetadata].
      */
     public class Builder {
-        private var metadata: Map<String, String> = HashMap<String, String>()
+
+        private var metadata: Map<String, String> = HashMap()
         private var reviewCount: Int? = null
         private var phone: String? = null
         private var website: String? = null
@@ -499,6 +509,7 @@ public class SearchResultMetadata internal constructor(
         private var servesVegetarian: Boolean? = null
         private var rating: Float? = null
         private var popularity: Float? = null
+        private var cuisines: List<String>? = null
 
         /**
          * Sets the metadata for the search result.
@@ -753,6 +764,14 @@ public class SearchResultMetadata internal constructor(
         public fun popularity(popularity: Float?): Builder = apply { this.popularity = popularity }
 
         /**
+         * Sets a list of cuisines served if this metadata belongs to a food-serving POI,
+         * such as a café or restaurant.
+         * @param cuisines List of cuisines served.
+         * @return The builder instance.
+         */
+        public fun cuisines(cuisines: List<String>?): Builder = apply { this.cuisines = cuisines }
+
+        /**
          * Builds an instance of [SearchResultMetadata] using the provided values.
          * @return A new instance of [SearchResultMetadata].
          */
@@ -793,7 +812,8 @@ public class SearchResultMetadata internal constructor(
                 servesVegan = servesVegan,
                 servesVegetarian = servesVegetarian,
                 rating = rating,
-                popularity = popularity
+                popularity = popularity,
+                cuisines = cuisines,
             )
         }
     }

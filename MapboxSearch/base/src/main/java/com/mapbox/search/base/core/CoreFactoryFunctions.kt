@@ -116,6 +116,7 @@ fun createCoreResultMetadata(
     facilities: List<CoreFacility>? = null,
     timezone: String? = null,
     lastUpdated: String? = null,
+    cuisines: List<String>? = null,
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount = reviewCount,
     phone = phone,
@@ -159,6 +160,7 @@ fun createCoreResultMetadata(
     facilities = facilities,
     timezone = timezone,
     lastUpdated = lastUpdated,
+    cuisines = cuisines,
 )
 
 fun createCoreOpenHours(
