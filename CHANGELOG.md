@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.9.0-beta.1
+
+### New features
+- Added new property `SearchResultMetadata.cuisines` which returns a list of cuisines served if metadata belongs to a food-serving POI.
+- Added new functions `OfflineSearchEngine.selectTileset()` which allow to select tileset with specific language and worldview.
+
+### Bug fixes
+- Search along route functionality in offline has been improved.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0-beta.1`
+- Common SDK `24.11.0-beta.1`
+
+
+
 ## 2.8.0
 
 ### New features
@@ -12,8 +27,8 @@
 - Now `OfflineSearchAlongRouteOptions` doesn't accept `proximity` as a parameter, search will be performed along the whole route.
 
 ### Mapbox dependencies
-- Search Native SDK `2.8.0-rc.2`
-- Common SDK `24.10.0-rc.1`
+- Search Native SDK `2.8.0`
+- Common SDK `24.10.0`
 
 
 
