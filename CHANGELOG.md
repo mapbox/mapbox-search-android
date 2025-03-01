@@ -4,7 +4,7 @@
 
 ### New features
 - Added new property `SearchResultMetadata.cuisines` which returns a list of cuisines served if metadata belongs to a food-serving POI.
-- Added new functions `OfflineSearchEngine.selectTileset(TilesetParameters)` which allow to select tileset with specified language and worldview.
+- Added new function `OfflineSearchEngine.selectTileset(TilesetParameters)` which allows to select tileset with specified parameters, including language and worldview.
 
 ### Bug fixes
 - Search along route functionality in offline has been improved.
