@@ -16,6 +16,7 @@ import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
 import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
+import com.mapbox.search.offline.TilesetParameters
 import com.mapbox.search.sample.R
 import kotlinx.coroutines.suspendCancellableCoroutine
 
@@ -31,22 +32,22 @@ class OfflineMultipleLanguagesActivity : BaseKotlinExampleActivity() {
     private lateinit var tileRegionLoadOptions: TileRegionLoadOptions
     private val tileRegionId = "Paris - multiple languages"
 
+    private val tilesetParamsEn = TilesetParameters.Builder()
+        .language(IsoLanguageCode.ENGLISH)
+        .build()
+
+    private val tilesetParamsFr = TilesetParameters.Builder()
+        .language(IsoLanguageCode.FRENCH)
+        .build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         searchEngine = OfflineSearchEngine.create(OfflineSearchEngineSettings(tileStore))
 
         val descriptors = listOf(
-            OfflineSearchEngine.createTilesetDescriptor(
-                dataset = TILES_DATASET,
-                version = TILES_VERSION,
-                language = IsoLanguageCode.ENGLISH.code,
-            ),
-            OfflineSearchEngine.createTilesetDescriptor(
-                dataset = TILES_DATASET,
-                version = TILES_VERSION,
-                language = IsoLanguageCode.FRENCH.code,
-            )
+            OfflineSearchEngine.createTilesetDescriptor(tilesetParamsEn),
+            OfflineSearchEngine.createTilesetDescriptor(tilesetParamsFr)
         )
 
         tileRegionLoadOptions = TileRegionLoadOptions.Builder()
@@ -78,12 +79,12 @@ class OfflineMultipleLanguagesActivity : BaseKotlinExampleActivity() {
 
     private suspend fun search() {
         logI("SearchApiExample", "Searching in English...")
-        searchEngine.selectTileset(TILES_DATASET, TILES_VERSION, IsoLanguageCode.ENGLISH)
+        searchEngine.selectTileset(tilesetParamsEn)
         val resultsInEnglish = searchEngine.search("7 Av. de la Bourdonnais")
         logI("SearchApiExample", "Search results in English", resultsInEnglish)
 
         logI("SearchApiExample", "Searching in French...")
-        searchEngine.selectTileset(TILES_DATASET, TILES_VERSION, IsoLanguageCode.FRENCH)
+        searchEngine.selectTileset(tilesetParamsFr)
         val resultsInFrench = searchEngine.search("7 Av. de la Bourdonnais")
         logI("SearchApiExample", "Search results in French", resultsInFrench)
     }
@@ -94,9 +95,6 @@ class OfflineMultipleLanguagesActivity : BaseKotlinExampleActivity() {
     }
 
     private companion object {
-
-        const val TILES_DATASET = "mbx-gen2"
-        const val TILES_VERSION = ""
 
         suspend fun OfflineSearchEngine.search(
             query: String,

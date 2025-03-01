@@ -9,7 +9,6 @@ import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileRegionLoadProgress
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreObserver
-import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultType
@@ -634,12 +633,6 @@ internal class OfflineSearchEngineIntegrationTest {
             if (distance1 == distance2) return true
             if (distance1 == null || distance2 == null) return false
             return abs(distance1 - distance2) < 10.0
-        }
-
-        fun BoundingBox.contains(p: Point): Boolean {
-            val lon = p.longitude()
-            val lat = p.latitude()
-            return west() < lon && lon < east() && south() < lat && lat < north()
         }
 
         fun assertSearchResultEquals(expected: OfflineSearchResult, actual: OfflineSearchResult): Boolean {

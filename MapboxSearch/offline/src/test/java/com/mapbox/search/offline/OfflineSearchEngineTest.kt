@@ -740,33 +740,15 @@ internal class OfflineSearchEngineTest {
             coreEngine.selectTileset("test-dataset", "test-version")
         }
 
-        clearMocks(coreEngine)
-        searchEngine.selectTileset(
-            "test-dataset",
-            "test-version",
-            IsoLanguageCode.FRENCH,
-        )
-        verify(exactly = 1) {
-            coreEngine.selectTileset(
-                DatasetNameBuilder.buildDatasetName("test-dataset", IsoLanguageCode.FRENCH.code, null),
-                "test-version",
-            )
-        }
+        val tilesetParameters = TilesetParameters.Builder(dataset = "test-dataset", version = "test-version")
+            .worldview(IsoLanguageCode.ENGLISH, IsoCountryCode.MOROCCO)
+            .build()
 
         clearMocks(coreEngine)
-        searchEngine.selectTileset(
-            "test-dataset",
-            "test-version",
-            IsoLanguageCode.ENGLISH,
-            IsoCountryCode.MOROCCO,
-        )
+        searchEngine.selectTileset(tilesetParameters)
         verify(exactly = 1) {
             coreEngine.selectTileset(
-                DatasetNameBuilder.buildDatasetName(
-                    "test-dataset",
-                    IsoLanguageCode.ENGLISH.code,
-                    IsoCountryCode.MOROCCO.code,
-                ),
+                tilesetParameters.generatedDatasetName,
                 "test-version",
             )
         }

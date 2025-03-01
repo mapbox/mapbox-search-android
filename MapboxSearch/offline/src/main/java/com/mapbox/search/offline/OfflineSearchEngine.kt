@@ -22,8 +22,6 @@ import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.common.IsoCountryCode
-import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import java.util.concurrent.Executor
 
@@ -101,37 +99,10 @@ public interface OfflineSearchEngine {
      * (e.g. one offline region is loaded for several tilesets in single call),
      * the biggest one (tilesets are compared as pair of strings {dataset, version}) is considered as latest.
      *
-     * @param dataset Preferable dataset.
-     * @param version Preferable version.
-     * @param language [IsoLanguageCode] language code.
+     * @param tilesetParameters [TilesetParameters] of the preferable tileset.
      */
     @MapboxExperimental
-    public fun selectTileset(
-        dataset: String,
-        version: String,
-        language: IsoLanguageCode,
-    )
-
-    /**
-     * Selects preferable tileset for offline search. If dataset or version is set, [OfflineSearchEngine] will try to
-     * match appropriate tileset and use it. If several tilesets are available, the latest registered will be used.
-     *
-     * By default, if multiple tilesets are registered at once
-     * (e.g. one offline region is loaded for several tilesets in single call),
-     * the biggest one (tilesets are compared as pair of strings {dataset, version}) is considered as latest.
-     *
-     * @param dataset Preferable dataset.
-     * @param version Preferable version.
-     * @param language [IsoLanguageCode] language code.
-     * @param worldview [IsoCountryCode] country code.
-     */
-    @MapboxExperimental
-    public fun selectTileset(
-        dataset: String,
-        version: String,
-        language: IsoLanguageCode,
-        worldview: IsoCountryCode,
-    )
+    public fun selectTileset(tilesetParameters: TilesetParameters)
 
     /**
      * Performs forward geocoding search request.
@@ -492,11 +463,12 @@ public interface OfflineSearchEngine {
          * @param version Tiles version, chosen automatically if empty.
          * @param language an ISO 639-1 language code
          */
+        @OptIn(MapboxExperimental::class)
         @JvmStatic
         @JvmOverloads
         public fun createTilesetDescriptor(
-            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
-            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            dataset: String = TilesetParameters.DEFAULT_DATASET,
+            version: String = TilesetParameters.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
             return CoreSearchEngine.createTilesetDescriptor(
@@ -506,26 +478,19 @@ public interface OfflineSearchEngine {
         }
 
         /**
-         * Creates TilesetDescriptor for offline search index data using the specified dataset,
-         * version, language, and worldview.
+         * Creates [TilesetDescriptor] for offline search using the tileset parameters.
          * Downloaded data will include addresses and places.
          *
-         * @param dataset Tiles dataset.
-         * @param version Tiles version, chosen automatically if empty.
-         * @param language [IsoLanguageCode] language code.
-         * @param worldview [IsoCountryCode] country code.
+         * @param tilesetParameters Tiles parameters.
          */
         @JvmStatic
         @MapboxExperimental
         public fun createTilesetDescriptor(
-            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
-            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
-            language: IsoLanguageCode,
-            worldview: IsoCountryCode
+            tilesetParameters: TilesetParameters,
         ): TilesetDescriptor {
             return CoreSearchEngine.createTilesetDescriptor(
-                DatasetNameBuilder.buildDatasetName(dataset, language.code, worldview.code),
-                version,
+                tilesetParameters.generatedDatasetName,
+                tilesetParameters.version,
             )
         }
 
@@ -537,40 +502,34 @@ public interface OfflineSearchEngine {
          * @param version Tiles version, chosen automatically if empty.
          * @param language an ISO 639-1 language code
          */
+        @OptIn(MapboxExperimental::class)
         @JvmStatic
         @JvmOverloads
         public fun createPlacesTilesetDescriptor(
-            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
-            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
+            dataset: String = TilesetParameters.DEFAULT_DATASET,
+            version: String = TilesetParameters.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
             return CoreSearchEngine.createPlacesTilesetDescriptor(
-                DatasetNameBuilder.buildDatasetName(dataset, language),
+                DatasetNameBuilder.buildDatasetName(dataset = dataset, language = language),
                 version,
             )
         }
 
         /**
-         * Creates TilesetDescriptor for offline search using the specified dataset,
-         * version, language, and worldview.
+         * Creates [TilesetDescriptor] for offline search using the tileset parameters.
          * Downloaded data will include only places.
          *
-         * @param dataset Tiles dataset.
-         * @param version Tiles version, chosen automatically if empty.
-         * @param language [IsoLanguageCode] language code.
-         * @param worldview [IsoCountryCode] country code.
+         * @param tilesetParameters Tiles parameters.
          */
         @JvmStatic
         @MapboxExperimental
         public fun createPlacesTilesetDescriptor(
-            dataset: String = OfflineSearchEngineSettings.DEFAULT_DATASET,
-            version: String = OfflineSearchEngineSettings.DEFAULT_VERSION,
-            language: IsoLanguageCode,
-            worldview: IsoCountryCode,
+            tilesetParameters: TilesetParameters,
         ): TilesetDescriptor {
             return CoreSearchEngine.createPlacesTilesetDescriptor(
-                DatasetNameBuilder.buildDatasetName(dataset, language.code, worldview.code),
-                version,
+                tilesetParameters.generatedDatasetName,
+                tilesetParameters.version,
             )
         }
     }

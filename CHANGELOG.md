@@ -4,10 +4,14 @@
 
 ### New features
 - Added new property `SearchResultMetadata.cuisines` which returns a list of cuisines served if metadata belongs to a food-serving POI.
-- Added new functions `OfflineSearchEngine.selectTileset()` which allow to select tileset with specific language and worldview.
+- Added new functions `OfflineSearchEngine.selectTileset(TilesetParameters)` which allow to select tileset with specified language and worldview.
 
 ### Bug fixes
 - Search along route functionality in offline has been improved.
+
+### Experimental API breaking changes
+- `OfflineSearchEngine.createTilesetDescriptor(String, String, IsoLanguageCode, IsoCountryCode)` has been replaced with `OfflineSearchEngine.createTilesetDescriptor(TilesetParameters)`.
+- `OfflineSearchEngine.createPlacesTilesetDescriptor(String, String, IsoLanguageCode, IsoCountryCode)` has been replaced with `OfflineSearchEngine.createPlacesTilesetDescriptor(TilesetParameters)`.
 
 ### Mapbox dependencies
 - Search Native SDK `2.9.0-beta.1`

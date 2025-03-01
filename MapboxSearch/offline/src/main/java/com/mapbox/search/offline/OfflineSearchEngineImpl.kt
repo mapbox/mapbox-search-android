@@ -17,8 +17,6 @@ import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.common.IsoCountryCode
-import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
@@ -69,24 +67,8 @@ internal class OfflineSearchEngineImpl(
     }
 
     @MapboxExperimental
-    override fun selectTileset(dataset: String, version: String, language: IsoLanguageCode) {
-        val datasetName = DatasetNameBuilder.buildDatasetName(
-            dataset = dataset, language = language.code, worldview = null,
-        )
-        coreEngine.selectTileset(datasetName, version)
-    }
-
-    @MapboxExperimental
-    override fun selectTileset(
-        dataset: String,
-        version: String,
-        language: IsoLanguageCode,
-        worldview: IsoCountryCode
-    ) {
-        val datasetName = DatasetNameBuilder.buildDatasetName(
-            dataset = dataset, language = language.code, worldview = worldview.code,
-        )
-        coreEngine.selectTileset(datasetName, version)
+    override fun selectTileset(tilesetParameters: TilesetParameters) {
+        coreEngine.selectTileset(tilesetParameters.generatedDatasetName, tilesetParameters.version)
     }
 
     override fun search(

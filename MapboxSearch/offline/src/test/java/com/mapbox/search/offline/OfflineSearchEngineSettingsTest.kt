@@ -42,18 +42,6 @@ internal class OfflineSearchEngineSettingsTest {
                     URI.create("https://api.mapbox.com"),
                     OfflineSearchEngineSettings.DEFAULT_ENDPOINT_URI
                 )
-
-                Then(
-                    "Default dataset should be as expected",
-                    "mbx-gen2",
-                    OfflineSearchEngineSettings.DEFAULT_DATASET
-                )
-
-                Then(
-                    "Default dataset version should be as expected",
-                    "",
-                    OfflineSearchEngineSettings.DEFAULT_VERSION
-                )
             }
         }
     }
