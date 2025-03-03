@@ -13,6 +13,8 @@ import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchCancellationException
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -30,17 +32,20 @@ import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.test.dsl.TestCase
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -725,6 +730,27 @@ internal class OfflineSearchEngineTest {
                     )
                 }
             }
+        }
+    }
+
+    @Test
+    fun `Check selectTileset() functions`() {
+        searchEngine.selectTileset("test-dataset", "test-version")
+        verify(exactly = 1) {
+            coreEngine.selectTileset("test-dataset", "test-version")
+        }
+
+        val tilesetParameters = TilesetParameters.Builder(dataset = "test-dataset", version = "test-version")
+            .worldview(IsoLanguageCode.ENGLISH, IsoCountryCode.MOROCCO)
+            .build()
+
+        clearMocks(coreEngine)
+        searchEngine.selectTileset(tilesetParameters)
+        verify(exactly = 1) {
+            coreEngine.selectTileset(
+                tilesetParameters.generatedDatasetName,
+                "test-version",
+            )
         }
     }
 

@@ -192,14 +192,14 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun addOnIndexChangeListener (Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchEngine$OnIndexChangeListener;)V
 	public static fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
 	public static fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createPlacesTilesetDescriptor (Lcom/mapbox/search/offline/TilesetParameters;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public static fun createTilesetDescriptor (Lcom/mapbox/search/offline/TilesetParameters;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public static fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/common/TilesetDescriptor;
 	public static fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public abstract fun getSettings ()Lcom/mapbox/search/offline/OfflineSearchEngineSettings;
 	public abstract fun removeEngineReadyCallback (Lcom/mapbox/search/offline/OfflineSearchEngine$EngineReadyCallback;)V
@@ -216,24 +216,23 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine {
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun searchAlongRoute (Ljava/lang/String;Lcom/mapbox/search/offline/OfflineSearchAlongRouteOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/offline/OfflineSearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun selectTileset (Lcom/mapbox/search/offline/TilesetParameters;)V
 	public abstract fun selectTileset (Ljava/lang/String;Ljava/lang/String;)V
 }
 
 public final class com/mapbox/search/offline/OfflineSearchEngine$Companion {
 	public final fun create (Lcom/mapbox/search/offline/OfflineSearchEngineSettings;)Lcom/mapbox/search/offline/OfflineSearchEngine;
 	public final fun createPlacesTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createPlacesTilesetDescriptor (Lcom/mapbox/search/offline/TilesetParameters;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createPlacesTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public static synthetic fun createPlacesTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
 	public static synthetic fun createPlacesTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createTilesetDescriptor ()Lcom/mapbox/common/TilesetDescriptor;
+	public final fun createTilesetDescriptor (Lcom/mapbox/search/offline/TilesetParameters;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createTilesetDescriptor (Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public final fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/common/TilesetDescriptor;
 	public final fun createTilesetDescriptor (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/common/TilesetDescriptor;
-	public static synthetic fun createTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
 	public static synthetic fun createTilesetDescriptor$default (Lcom/mapbox/search/offline/OfflineSearchEngine$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/common/TilesetDescriptor;
 }
 
@@ -258,8 +257,6 @@ public abstract interface class com/mapbox/search/offline/OfflineSearchEngine$On
 }
 
 public final class com/mapbox/search/offline/OfflineSearchEngineSettings {
-	public static final field DEFAULT_DATASET Ljava/lang/String;
-	public static final field DEFAULT_VERSION Ljava/lang/String;
 	public fun <init> ()V
 	public fun <init> (Lcom/mapbox/common/TileStore;)V
 	public fun <init> (Lcom/mapbox/common/TileStore;Ljava/net/URI;)V
@@ -399,5 +396,25 @@ public final class com/mapbox/search/offline/OfflineSearchResultType : java/lang
 
 public final class com/mapbox/search/offline/OfflineSearchResultType$Companion {
 	public final fun getDEFAULT ()Lcom/mapbox/search/offline/OfflineSearchResultType;
+}
+
+public final class com/mapbox/search/offline/TilesetParameters {
+	public static final synthetic field DEFAULT_DATASET Ljava/lang/String;
+	public static final synthetic field DEFAULT_VERSION Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/search/offline/TilesetParameters$Builder {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lcom/mapbox/search/offline/TilesetParameters;
+	public final fun getDataset ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public final fun language (Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/offline/TilesetParameters$Builder;
+	public final fun worldview (Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)Lcom/mapbox/search/offline/TilesetParameters$Builder;
 }
 

@@ -1,6 +1,7 @@
+@file:OptIn(MapboxExperimental::class)
+
 package com.mapbox.search.sample.api
 
-import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,10 +10,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MediatorLiveData
@@ -21,11 +20,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.mapbox.android.gestures.Utils
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
-import com.mapbox.common.location.Location
-import com.mapbox.common.location.LocationServiceFactory
-import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.utils.PolylineUtils
 import com.mapbox.maps.CameraOptions
@@ -42,6 +39,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.offline.OfflineResponseInfo
+import com.mapbox.search.offline.OfflineSearchAlongRouteOptions
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
 import com.mapbox.search.offline.OfflineSearchEngineSettings
@@ -54,8 +52,6 @@ import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultAdapterItem
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.turf.TurfConstants
-import com.mapbox.turf.TurfMeasurement
-import com.mapbox.turf.TurfMisc
 import com.mapbox.turf.TurfTransformation
 import kotlinx.coroutines.launch
 
@@ -72,8 +68,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[SearchAlongRouteViewModel::class.java]
         setContentView(binding.root)
 
-        binding.distanceAlongRoute.isEnabled = false
-
         mapView = binding.map
         mapboxMap = mapView.mapboxMap
         mapAnnotationsManager = AnnotationsManager(mapView)
@@ -89,22 +83,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         val routes = resources.getStringArray(R.array.routes)
         val arrayAdapter = ArrayAdapter(this, R.layout.route_dropdown_item, routes)
         binding.routesAutoComplete.setAdapter(arrayAdapter)
-
-        fun Location.toPoint(): Point = Point.fromLngLat(longitude, latitude)
-        val locationService = LocationServiceFactory.getOrCreate()
-            .getDeviceLocationProvider(null)
-            .value
-        locationService?.getLastLocation { location ->
-            location?.toPoint()?.let {
-                mapView.mapboxMap.setCamera(
-                    CameraOptions.Builder()
-                        .center(it)
-                        .zoom(9.0)
-                        .build()
-                )
-                viewModel.updateProximity(it)
-            }
-        }
 
         binding.queryText.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -125,61 +103,8 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             )
             val polyline = routePolylines[position]
             val selectedRoute = PolylineUtils.decode(polyline, 5)
-            val pointAlongRoute = selectedRoute.first()
-            binding.distanceAlongRoute.progress = 0
-            viewModel.updateRoute(selectedRoute, pointAlongRoute)
+            viewModel.updateRoute(selectedRoute)
             view.hideKeyboard()
-        }
-
-        binding.distanceAlongRoute.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seek: SeekBar,
-                progress: Int,
-                fromUser: Boolean
-            ) {
-                // do nothing
-            }
-
-            override fun onStartTrackingTouch(seek: SeekBar) {
-                // do nothing
-            }
-
-            override fun onStopTrackingTouch(seek: SeekBar) {
-                val percent = seek.progress
-                val route = mapAnnotationsManager.route
-
-                if (route != null) {
-                    val proximity = if (percent > 0) {
-                        val segments = route.zipWithNext()
-                        val totalDistance = segments.sumOf { segment ->
-                            TurfMeasurement.distance(segment.first, segment.second)
-                        }
-                        val distanceTravelled = totalDistance * (percent / 100.0)
-                        TurfMisc.lineSliceAlong(
-                            LineString.fromLngLats(route),
-                            0.0,
-                            distanceTravelled,
-                            TurfConstants.UNIT_KILOMETERS
-                        ).coordinates().last()
-                    } else {
-                        route.first()
-                    }
-
-                    viewModel.updateProximity(proximity)
-                }
-            }
-        })
-
-        if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                PERMISSIONS_REQUEST_LOCATION
-            )
         }
     }
 
@@ -235,8 +160,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         mapAnnotationsManager.clearAll()
 
         if (options.route.isNotEmpty()) {
-            mapAnnotationsManager.showRoute(options.route, options.proximity)
-            binding.distanceAlongRoute.isEnabled = true
+            mapAnnotationsManager.showRoute(options.route)
         }
     }
 
@@ -291,8 +215,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
         val MARKERS_INSETS_OPEN_CARD = EdgeInsets(
             MARKERS_EDGE_OFFSET, MARKERS_EDGE_OFFSET, PLACE_CARD_HEIGHT, MARKERS_EDGE_OFFSET
         )
-
-        const val PERMISSIONS_REQUEST_LOCATION = 0
     }
 
     private class AnnotationsManager(mapView: MapView) {
@@ -400,7 +322,7 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
         }
 
-        fun showRoute(route: List<Point>, par: Point? = null) {
+        fun showRoute(route: List<Point>) {
             if (route.isEmpty()) {
                 return
             }
@@ -416,17 +338,6 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
                 .withLineWidth(5.0)
 
             polylineAnnotationManager.create(polylineAnnotationOptions)
-
-            if (par != null) {
-                val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
-                    .withPoint(par)
-                    .withCircleRadius(6.0)
-                    .withCircleColor("#4caf50")
-                    .withCircleStrokeWidth(2.0)
-                    .withCircleStrokeColor("#ffffff")
-
-                pointAlongRoute = circleAnnotationManager.create(circleAnnotationOptions)
-            }
 
             mapboxMap.cameraForCoordinates(
                 route, CameraOptions.Builder().build(), MARKERS_INSETS, null, null,
@@ -468,10 +379,10 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             }
 
             val tileStore = TileStore.create()
-            val tileRegionId = "Washington DC"
+            val tileRegionId = "OfflineSARActivity - Washington DC"
             val tileDescriptors = listOf(OfflineSearchEngine.createTilesetDescriptor("mbx-gen2", language = "en"))
             val washingtonDc = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
-            val tileGeometry = TurfTransformation.circle(washingtonDc, 200.0, 32, TurfConstants.UNIT_KILOMETERS)
+            val tileGeometry = TurfTransformation.circle(washingtonDc, 10.0, 32, TurfConstants.UNIT_KILOMETERS)
 
             val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
                 .descriptors(tileDescriptors)
@@ -519,26 +430,16 @@ class OfflineSearchAlongRouteExampleActivity : AppCompatActivity() {
             searchOptionsData.value = currentRequest?.copy(query = query) ?: SearchAlongRouteOptions(query = query)
         }
 
-        fun updateRoute(route: List<Point>, pointAlongRoute: Point) {
+        fun updateRoute(route: List<Point>) {
             val currentRequest = searchOptionsData.value
-            searchOptionsData.value = currentRequest?.copy(route = route, proximity = pointAlongRoute) ?: SearchAlongRouteOptions(route = route, proximity = pointAlongRoute)
-        }
-
-        fun updateProximity(proximity: Point) {
-            cancelSearch()
-
-            val currentRequest = searchOptionsData.value
-            searchOptionsData.value = currentRequest?.copy(proximity = proximity) ?: SearchAlongRouteOptions(proximity = proximity)
+            searchOptionsData.value = currentRequest?.copy(route = route) ?: SearchAlongRouteOptions(route = route)
         }
 
         private fun runSearch(options: SearchAlongRouteOptions) {
             searchRequestTask = if (options.route.isNotEmpty()) {
-                // TODO remove "proximity" once the search native no longer use it.
-                @Suppress("DEPRECATION")
                 searchEngine.searchAlongRoute(
                     query = options.query,
-                    proximity = options.proximity,
-                    route = options.route,
+                    options = OfflineSearchAlongRouteOptions(route = options.route),
                     callback = searchCallback
                 )
             } else {

@@ -66,6 +66,11 @@ internal class OfflineSearchEngineImpl(
         coreEngine.selectTileset(dataset, version)
     }
 
+    @MapboxExperimental
+    override fun selectTileset(tilesetParameters: TilesetParameters) {
+        coreEngine.selectTileset(tilesetParameters.generatedDatasetName, tilesetParameters.version)
+    }
+
     override fun search(
         query: String,
         options: OfflineSearchOptions,
