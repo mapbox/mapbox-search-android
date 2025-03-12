@@ -1,5 +1,16 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.9.0-rc.1
+
+### New features
+- AAdded support for the offline search in Taiwan.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0-rc.1`
+- Common SDK `24.11.0-rc.1`
+
+
+
 ## 2.9.0-beta.1
 
 ### New features

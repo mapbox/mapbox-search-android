@@ -28,6 +28,7 @@
         />
 
     <ScrollView
+        android:id="@+id/logTextScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginVertical="16dp"
