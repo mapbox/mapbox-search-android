@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EvseCapability</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>sdk-common</span>
+            </a>
+    </div>
+    <div>
+2.9.0-rc.1    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="sdk-common::com.mapbox.search.common.ev/EvseCapability///PointingToDeclaration//-1413817904">
+  <div class="breadcrumbs"><a href="../../../index.html">sdk-common</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.search.common.ev</a><span class="delimiter">/</span><span class="current">EvseCapability</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Evse</span><wbr></wbr><span><span>Capability</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.mapbox.annotation/MapboxExperimental///PointingToDeclaration/"><span class="token annotation builtin">MapboxExperimental</span></span></div></div><span class="token keyword">object </span><a href="index.html">EvseCapability</a></div><p class="paragraph">OCPI Capability. The capabilities of an EVSE. Refer to this type in the <a href="https://github.com/ocpi/ocpi/blob/2.2.1/mod_locations.asciidoc#143-capability-enum">OCPI GitHub repository</a> for more details.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="-770857741%2FClasslikes%2F-1413817904" anchor-label="Type" id="-770857741%2FClasslikes%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-type/index.html"><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-770857741%2FClasslikes%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">annotation class </span><a href="-type/index.html">Type</a></div><div class="brief "><p class="paragraph">Retention policy for the EvseCapability.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-886427583%2FProperties%2F-1413817904" anchor-label="CHARGING_PREFERENCES_CAPABLE" id="-886427583%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-c-h-a-r-g-i-n-g_-p-r-e-f-e-r-e-n-c-e-s_-c-a-p-a-b-l-e.html"><span><span>CHARGING_PREFERENCES_CAPABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-886427583%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-886427583%2FProperties%2F-1413817904" anchor-label="CHARGING_PREFERENCES_CAPABLE" id="-886427583%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-c-h-a-r-g-i-n-g_-p-r-e-f-e-r-e-n-c-e-s_-c-a-p-a-b-l-e.html">CHARGING_PREFERENCES_CAPABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-886427583%2FProperties%2F-1413817904" anchor-label="CHARGING_PREFERENCES_CAPABLE" id="-886427583%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">The EVSE supports charging preferences.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-73264080%2FProperties%2F-1413817904" anchor-label="CHARGING_PROFILE_CAPABLE" id="-73264080%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-c-h-a-r-g-i-n-g_-p-r-o-f-i-l-e_-c-a-p-a-b-l-e.html"><span><span>CHARGING_PROFILE_CAPABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-73264080%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-73264080%2FProperties%2F-1413817904" anchor-label="CHARGING_PROFILE_CAPABLE" id="-73264080%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-c-h-a-r-g-i-n-g_-p-r-o-f-i-l-e_-c-a-p-a-b-l-e.html">CHARGING_PROFILE_CAPABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-73264080%2FProperties%2F-1413817904" anchor-label="CHARGING_PROFILE_CAPABLE" id="-73264080%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">The EVSE supports charging profiles.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-242955281%2FProperties%2F-1413817904" anchor-label="CHIP_CARD_SUPPORT" id="-242955281%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-c-h-i-p_-c-a-r-d_-s-u-p-p-o-r-t.html"><span><span>CHIP_CARD_SUPPORT</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-242955281%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-242955281%2FProperties%2F-1413817904" anchor-label="CHIP_CARD_SUPPORT" id="-242955281%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-c-h-i-p_-c-a-r-d_-s-u-p-p-o-r-t.html">CHIP_CARD_SUPPORT</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-242955281%2FProperties%2F-1413817904" anchor-label="CHIP_CARD_SUPPORT" id="-242955281%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EVSE has a payment terminal that supports chip cards.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1994949906%2FProperties%2F-1413817904" anchor-label="CONTACTLESS_CARD_SUPPORT" id="1994949906%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-c-o-n-t-a-c-t-l-e-s-s_-c-a-r-d_-s-u-p-p-o-r-t.html"><span><span>CONTACTLESS_CARD_SUPPORT</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1994949906%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1994949906%2FProperties%2F-1413817904" anchor-label="CONTACTLESS_CARD_SUPPORT" id="1994949906%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-c-o-n-t-a-c-t-l-e-s-s_-c-a-r-d_-s-u-p-p-o-r-t.html">CONTACTLESS_CARD_SUPPORT</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1994949906%2FProperties%2F-1413817904" anchor-label="CONTACTLESS_CARD_SUPPORT" id="1994949906%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EVSE has a payment terminal that supports contactless cards.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2067385545%2FProperties%2F-1413817904" anchor-label="CREDIT_CARD_PAYABLE" id="2067385545%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-c-r-e-d-i-t_-c-a-r-d_-p-a-y-a-b-l-e.html"><span><span>CREDIT_CARD_PAYABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2067385545%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="2067385545%2FProperties%2F-1413817904" anchor-label="CREDIT_CARD_PAYABLE" id="2067385545%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-c-r-e-d-i-t_-c-a-r-d_-p-a-y-a-b-l-e.html">CREDIT_CARD_PAYABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="2067385545%2FProperties%2F-1413817904" anchor-label="CREDIT_CARD_PAYABLE" id="2067385545%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EVSE has a payment terminal that makes it possible to pay for charging using a credit card.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1786810226%2FProperties%2F-1413817904" anchor-label="DEBIT_CARD_PAYABLE" id="1786810226%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-d-e-b-i-t_-c-a-r-d_-p-a-y-a-b-l-e.html"><span><span>DEBIT_CARD_PAYABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1786810226%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1786810226%2FProperties%2F-1413817904" anchor-label="DEBIT_CARD_PAYABLE" id="1786810226%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-d-e-b-i-t_-c-a-r-d_-p-a-y-a-b-l-e.html">DEBIT_CARD_PAYABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1786810226%2FProperties%2F-1413817904" anchor-label="DEBIT_CARD_PAYABLE" id="1786810226%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EVSE has a payment terminal that makes it possible to pay for charging using a debit card.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-429760788%2FProperties%2F-1413817904" anchor-label="PED_TERMINAL" id="-429760788%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-p-e-d_-t-e-r-m-i-n-a-l.html"><span><span>PED_TERMINAL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-429760788%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-429760788%2FProperties%2F-1413817904" anchor-label="PED_TERMINAL" id="-429760788%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-p-e-d_-t-e-r-m-i-n-a-l.html">PED_TERMINAL</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-429760788%2FProperties%2F-1413817904" anchor-label="PED_TERMINAL" id="-429760788%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">EVSE has a payment terminal with a pin-code entry device.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="190124925%2FProperties%2F-1413817904" anchor-label="REMOTE_START_STOP_CAPABLE" id="190124925%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-r-e-m-o-t-e_-s-t-a-r-t_-s-t-o-p_-c-a-p-a-b-l-e.html"><span><span>REMOTE_START_STOP_CAPABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="190124925%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="190124925%2FProperties%2F-1413817904" anchor-label="REMOTE_START_STOP_CAPABLE" id="190124925%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-r-e-m-o-t-e_-s-t-a-r-t_-s-t-o-p_-c-a-p-a-b-l-e.html">REMOTE_START_STOP_CAPABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="190124925%2FProperties%2F-1413817904" anchor-label="REMOTE_START_STOP_CAPABLE" id="190124925%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">The EVSE can remotely be started/stopped.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1346767797%2FProperties%2F-1413817904" anchor-label="RESERVABLE" id="1346767797%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-r-e-s-e-r-v-a-b-l-e.html"><span><span>RESERVABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1346767797%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1346767797%2FProperties%2F-1413817904" anchor-label="RESERVABLE" id="1346767797%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-r-e-s-e-r-v-a-b-l-e.html">RESERVABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1346767797%2FProperties%2F-1413817904" anchor-label="RESERVABLE" id="1346767797%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">The EVSE can be reserved.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1212211599%2FProperties%2F-1413817904" anchor-label="RFID_READER" id="1212211599%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-r-f-i-d_-r-e-a-d-e-r.html"><span><span>RFID_READER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1212211599%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1212211599%2FProperties%2F-1413817904" anchor-label="RFID_READER" id="1212211599%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-r-f-i-d_-r-e-a-d-e-r.html">RFID_READER</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1212211599%2FProperties%2F-1413817904" anchor-label="RFID_READER" id="1212211599%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Charging at this EVSE can be authorized with an RFID token.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1120804959%2FProperties%2F-1413817904" anchor-label="START_SESSION_CONNECTOR_REQUIRED" id="-1120804959%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-s-t-a-r-t_-s-e-s-s-i-o-n_-c-o-n-n-e-c-t-o-r_-r-e-q-u-i-r-e-d.html"><span><span>START_SESSION_CONNECTOR_REQUIRED</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1120804959%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1120804959%2FProperties%2F-1413817904" anchor-label="START_SESSION_CONNECTOR_REQUIRED" id="-1120804959%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-s-t-a-r-t_-s-e-s-s-i-o-n_-c-o-n-n-e-c-t-o-r_-r-e-q-u-i-r-e-d.html">START_SESSION_CONNECTOR_REQUIRED</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-1120804959%2FProperties%2F-1413817904" anchor-label="START_SESSION_CONNECTOR_REQUIRED" id="-1120804959%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">When a StartSession is received by this EVSE, the eMSP is required to add the optional c onnector_id field in the StartSession object.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1356214876%2FProperties%2F-1413817904" anchor-label="TOKEN_GROUP_CAPABLE" id="1356214876%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-t-o-k-e-n_-g-r-o-u-p_-c-a-p-a-b-l-e.html"><span><span>TOKEN_GROUP_CAPABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1356214876%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="1356214876%2FProperties%2F-1413817904" anchor-label="TOKEN_GROUP_CAPABLE" id="1356214876%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-t-o-k-e-n_-g-r-o-u-p_-c-a-p-a-b-l-e.html">TOKEN_GROUP_CAPABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="1356214876%2FProperties%2F-1413817904" anchor-label="TOKEN_GROUP_CAPABLE" id="1356214876%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">This EVSE supports token groups, two or more tokens work as one, so that a session can be started with one token and stopped with another (handy when an EV driver has both a card and key-fob).</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-575466376%2FProperties%2F-1413817904" anchor-label="UNKNOWN" id="-575466376%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-u-n-k-n-o-w-n.html"><span><span>UNKNOWN</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-575466376%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-575466376%2FProperties%2F-1413817904" anchor-label="UNKNOWN" id="-575466376%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-u-n-k-n-o-w-n.html">UNKNOWN</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-575466376%2FProperties%2F-1413817904" anchor-label="UNKNOWN" id="-575466376%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">The capability of the EVSE is unknown.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1026502265%2FProperties%2F-1413817904" anchor-label="UNLOCK_CAPABLE" id="-1026502265%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-common:dokkaHtml/release" data-filterable-set=":sdk-common:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-u-n-l-o-c-k_-c-a-p-a-b-l-e.html"><span><span>UNLOCK_CAPABLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1026502265%2FProperties%2F-1413817904"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-common:dokkaHtml/release"><a data-name="-1026502265%2FProperties%2F-1413817904" anchor-label="UNLOCK_CAPABLE" id="-1026502265%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-u-n-l-o-c-k_-c-a-p-a-b-l-e.html">UNLOCK_CAPABLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-1026502265%2FProperties%2F-1413817904" anchor-label="UNLOCK_CAPABLE" id="-1026502265%2FProperties%2F-1413817904" data-filterable-set=":sdk-common:dokkaHtml/release"></a><p class="paragraph">Connectors have mechanical lock that can be requested by the eMSP to be unlocked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
