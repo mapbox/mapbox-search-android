@@ -1,8 +1,10 @@
 package com.mapbox.search.base.utils.extension
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 fun <E, V, V1> Expected<E, V>.flatMap(transformer: (V) -> Expected<E, V1>): Expected<E, V1> {
     return if (isValue) {
         transformer(requireNotNull(value))
@@ -11,6 +13,7 @@ fun <E, V, V1> Expected<E, V>.flatMap(transformer: (V) -> Expected<E, V1>): Expe
     }
 }
 
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 suspend fun <E, V, V1> Expected<E, V>.suspendFlatMap(transformer: suspend (V) -> Expected<E, V1>): Expected<E, V1> {
     return if (isValue) {
         transformer(requireNotNull(value))
@@ -19,10 +22,22 @@ suspend fun <E, V, V1> Expected<E, V>.suspendFlatMap(transformer: suspend (V) ->
     }
 }
 
-fun <E, V> Expected<E, V>.realToString(): String {
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+fun <E, V> Expected<E, V>.toPrettyString(): String {
     return if (isValue) {
         "Value: $value"
     } else {
         "Error: $error"
+    }
+}
+
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+fun <E, V> Expected<E, V>.equalsTo(e: Expected<E, V>): Boolean {
+    return if (isValue && e.isValue) {
+        value == e.value
+    } else if (isError && e.isError) {
+        error == e.error
+    } else {
+        false
     }
 }

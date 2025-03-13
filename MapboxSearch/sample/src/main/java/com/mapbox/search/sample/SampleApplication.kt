@@ -14,6 +14,8 @@ import com.mapbox.common.HttpServiceFactory
 import com.mapbox.common.HttpServiceInterceptorInterface
 import com.mapbox.common.HttpServiceInterceptorRequestContinuation
 import com.mapbox.common.HttpServiceInterceptorResponseContinuation
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 
 open class SampleApplication : Application() {
 
@@ -30,6 +32,8 @@ open class SampleApplication : Application() {
         if (!BuildConfig.DEBUG) {
             return
         }
+
+        LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
 
         fun filter(url: String): Boolean {
             return !onlySearchLogs || SEARCH_ENDPOINTS_URL.any { url.startsWith(it) }
