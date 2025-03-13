@@ -3,7 +3,7 @@
 ## 2.9.0-rc.1
 
 ### New features
-- AAdded support for the offline search in Taiwan.
+- Added support for the offline search in Taiwan.
 
 ### Mapbox dependencies
 - Search Native SDK `2.9.0-rc.1`
