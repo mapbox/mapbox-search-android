@@ -1,9 +1,6 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
@@ -12,6 +9,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.ev.EvConnectorType
 import com.mapbox.search.offline.OfflineEvSearchOptions
+import com.mapbox.search.offline.OfflineIndexChangeEvent
+import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
+import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -20,7 +20,6 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 import java.net.URI
-import java.util.concurrent.TimeUnit
 
 @OptIn(MapboxExperimental::class)
 class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
@@ -34,13 +33,26 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
     private val searchCallback = object : OfflineSearchCallback {
 
         override fun onResults(results: List<OfflineSearchResult>, responseInfo: OfflineResponseInfo) {
-            logI("SearchApiExample", "Results:", results)
-            Log.d("Test.", "Test. results: $results")
+            printMessage("Results:\n${results.joinToString(separator = "\n") { it.toPrettyString() }}")
             onFinished()
         }
 
         override fun onError(e: Exception) {
-            logI("SearchApiExample", "Search error", e)
+            printMessage("Search error: $e")
+            onFinished()
+        }
+    }
+
+    private val onIndexChangeListener = object : OfflineSearchEngine.OnIndexChangeListener {
+        override fun onIndexChange(event: OfflineIndexChangeEvent) {
+            if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
+                printMessage("$tileRegionId was successfully added or updated")
+                startSearch()
+            }
+        }
+
+        override fun onError(event: OfflineIndexErrorEvent) {
+            printMessage("Offline index error: $event")
             onFinished()
         }
     }
@@ -70,18 +82,8 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun startExample() {
-        tileStore.getAllTileRegions { regions ->
-            regions.onValue { value ->
-                logI("SearchApiExample", "Available regions: $value")
-                downloadTiles()
-            }.onError { error ->
-                logI("SearchApiExample", "Unable to get tile regions: $error")
-                downloadTiles()
-            }
-        }
-    }
+        searchEngine.addOnIndexChangeListener(onIndexChangeListener)
 
-    private fun downloadTiles() {
         val tileRegionLoadOptions = TileRegionLoadOptions
             .Builder()
             .descriptors(descriptors)
@@ -93,14 +95,13 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             tileRegionId,
             tileRegionLoadOptions,
             { progress ->
-                logI("SearchApiExample", "Loading progress: $progress")
+                printMessage("Loading progress: $progress")
             },
             { result ->
                 if (result.isValue) {
-                    logI("SearchApiExample", "Tiles successfully loaded: ${result.value}")
-                    startSearchDelayed()
+                    printMessage("Tiles successfully loaded: ${result.value}")
                 } else {
-                    logI("SearchApiExample", "Tiles loading error: ${result.error}")
+                    printMessage("Tiles loading error: ${result.error}")
                 }
             }
         )
@@ -133,16 +134,8 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
         )
     }
 
-    private fun startSearchDelayed() {
-        // Workaround for an issue with OnIndexChangeListener
-        // Allow time for the OfflineSearchEngine to initialize the downloaded tiles
-        Handler(Looper.getMainLooper()).postDelayed(
-            ::startSearch,
-            TimeUnit.SECONDS.toMillis(1)
-        )
-    }
-
     override fun onDestroy() {
+        searchEngine.removeOnIndexChangeListener(onIndexChangeListener)
         tilesLoadingTask?.cancel()
         searchRequestTask?.cancel()
         super.onDestroy()
