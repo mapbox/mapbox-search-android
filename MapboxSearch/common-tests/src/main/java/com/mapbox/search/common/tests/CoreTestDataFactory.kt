@@ -197,7 +197,8 @@ fun createTestCoreSearchResult(
     userRecordId,
     userRecordPriority,
     action,
-    serverIndex
+    serverIndex,
+    null,
 )
 
 @Suppress("LongParameterList")
@@ -256,7 +257,8 @@ fun SearchResult.copy(
     userRecordId,
     userRecordPriority,
     action,
-    serverIndex
+    serverIndex,
+    null,
 )
 
 fun createCoreSearchAddressRegion(

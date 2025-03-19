@@ -157,4 +157,5 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     userRecordPriority,
     action?.mapToCore(),
     serverIndex,
+    null,
 )
