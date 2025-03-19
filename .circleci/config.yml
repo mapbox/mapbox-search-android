@@ -430,6 +430,9 @@ workflows:
       - sample-instrumentation-tests:
           requires:
             - prepare-and-assemble
+      - publish-snapshots:
+          requires:
+            - prepare-and-assemble
 #      - pitest-validate:
 #          requires:
 #            - unit-tests
