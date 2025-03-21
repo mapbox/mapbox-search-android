@@ -1,5 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.8.1
+- Fixed an issue that could cause offline tiles to be either inaccessible or incorrect when updating an older tile store database created with Search SDK 2.7 or earlier versions.
+
+### Mapbox dependencies
+- Search Native SDK `2.8.1`
+- Common SDK `24.10.1`
+
+
+
 ## 2.8.0
 
 ### New features
