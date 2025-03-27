@@ -531,6 +531,7 @@ internal class PlaceAutocompleteIntegrationTest {
                     apiType = ApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider), null

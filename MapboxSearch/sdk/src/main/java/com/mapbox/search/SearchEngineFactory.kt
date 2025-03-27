@@ -129,6 +129,7 @@ internal class SearchEngineFactory {
                 apiType = apiType.mapToCore(),
                 sdkInformation = UserAgentProvider.sdkInformation(),
                 eventsUrl = null,
+                onlineRequestTimeout = null,
             ),
             coreLocationProvider
         )

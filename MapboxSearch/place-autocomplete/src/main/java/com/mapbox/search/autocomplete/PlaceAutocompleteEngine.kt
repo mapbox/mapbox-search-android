@@ -354,6 +354,7 @@ internal class PlaceAutocompleteEngine(
                     apiType = CoreApiType.SEARCH_BOX,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

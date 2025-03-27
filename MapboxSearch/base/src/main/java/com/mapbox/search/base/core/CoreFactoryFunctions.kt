@@ -191,4 +191,6 @@ fun createCoreEvSearchOptions(
     minChargingPower = minChargingPower,
     maxChargingPower = maxChargingPower,
     availability = availability,
+    // TODO support excludeOperators option
+    excludeOperators = null,
 )
