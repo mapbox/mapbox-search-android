@@ -50,6 +50,7 @@ internal class OfflineEvSearchOptionsTest {
                     operators = null,
                     minChargingPower = null,
                     maxChargingPower = null,
+                    excludeOperators = null,
                 )
 
                 Then("Options should be equal", expectedOptions, options)
@@ -65,6 +66,7 @@ internal class OfflineEvSearchOptionsTest {
                 operators = listOf("test-operator"),
                 minChargingPower = 1000f,
                 maxChargingPower = 10000f,
+                excludeOperators = listOf("excluded-test-operator")
             )
 
             When("mapToCore() called") {
@@ -75,6 +77,7 @@ internal class OfflineEvSearchOptionsTest {
                     operators = listOf("test-operator"),
                     minChargingPower = 1000f,
                     maxChargingPower = 10000f,
+                    excludeOperators = listOf("excluded-test-operator"),
                 )
 
                 Then("Options should be as expected", expected, core)

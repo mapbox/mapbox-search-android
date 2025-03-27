@@ -185,10 +185,12 @@ fun createCoreEvSearchOptions(
     minChargingPower: Float? = null,
     maxChargingPower: Float? = null,
     availability: CoreChargingStatus? = null,
+    excludeOperators: List<String>? = null,
 ): CoreEvSearchOptions = CoreEvSearchOptions(
     connectorTypes = connectorTypes,
     operators = operators,
     minChargingPower = minChargingPower,
     maxChargingPower = maxChargingPower,
     availability = availability,
+    excludeOperators = excludeOperators,
 )
