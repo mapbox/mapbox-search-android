@@ -24,6 +24,7 @@ import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseSearchSuggestionType
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.suspendFlatMap
@@ -179,6 +180,7 @@ internal class PlaceAutocompleteImpl(
                     apiType = apiType,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

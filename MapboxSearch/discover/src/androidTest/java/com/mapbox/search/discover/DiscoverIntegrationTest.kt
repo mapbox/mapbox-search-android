@@ -20,6 +20,7 @@ import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
@@ -351,6 +352,7 @@ internal class DiscoverIntegrationTest {
                     apiType = ApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, defaultLocationProvider()), null

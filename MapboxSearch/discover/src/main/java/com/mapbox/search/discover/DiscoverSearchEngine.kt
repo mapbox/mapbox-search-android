@@ -21,6 +21,7 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -109,6 +110,7 @@ internal class DiscoverSearchEngine(
                     apiType = API_TYPE,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider), null

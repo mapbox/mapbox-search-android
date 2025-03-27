@@ -12,6 +12,7 @@ import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -129,6 +130,7 @@ internal class SearchEngineFactory {
                 apiType = apiType.mapToCore(),
                 sdkInformation = UserAgentProvider.sdkInformation(),
                 eventsUrl = null,
+                onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
             ),
             coreLocationProvider
         )
