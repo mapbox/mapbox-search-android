@@ -432,6 +432,7 @@ public interface OfflineSearchEngine {
                     apiType = CoreApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, settings.locationProvider),

@@ -300,7 +300,8 @@ internal class BaseRawSearchResultTest {
             null,
             -1,
             null,
-            null
+            null,
+            null,
         )
 
         val BASE_EMPTY_SEARCH_RESULT = BaseRawSearchResult(
@@ -407,7 +408,9 @@ internal class BaseRawSearchResultTest {
                 "test user record id",
                 -1,
                 CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
-                123
+                123,
+                // TODO support
+                null,
             )
         }
 

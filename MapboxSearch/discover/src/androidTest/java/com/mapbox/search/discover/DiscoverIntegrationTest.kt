@@ -351,6 +351,7 @@ internal class DiscoverIntegrationTest {
                     apiType = ApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, defaultLocationProvider()), null

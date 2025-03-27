@@ -310,6 +310,7 @@ internal class AddressAutofillIntegrationTest {
                     apiType = CoreApiType.AUTOFILL,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider), null

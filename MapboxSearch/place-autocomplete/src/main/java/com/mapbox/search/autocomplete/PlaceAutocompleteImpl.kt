@@ -179,6 +179,7 @@ internal class PlaceAutocompleteImpl(
                     apiType = apiType,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = null,
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

@@ -157,4 +157,6 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     userRecordPriority,
     action?.mapToCore(),
     serverIndex,
+    // TODO support bbox option
+    null,
 )
