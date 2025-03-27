@@ -23,6 +23,7 @@
     <string name="action_open_offline_reverse_geocoding_java_example">Offline reverse geocoding</string>
     <string name="action_open_offline_ev_search_kt_example">Offline EV search</string>
     <string name="action_open_offline_multiple_languages_kt_example">Offline multiple languages</string>
+    <string name="action_open_offline_category_search_kt_example">Offline category search</string>
     <string name="action_open_japan_search_kt_example">Japan Search</string>
     <string name="action_open_japan_search_java_example">Japan Search</string>
     <string name="action_open_history_data_provider_kt_example">History Data Provider</string>

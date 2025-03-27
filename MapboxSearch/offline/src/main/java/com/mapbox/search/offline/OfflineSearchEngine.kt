@@ -145,6 +145,93 @@ public interface OfflineSearchEngine {
     )
 
     /**
+     * Performs category search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param categoryNames List of categories to search.
+     * @param options Category search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback The callback to handle search result on the main thread.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun categorySearch(
+        categoryNames: List<String>,
+        options: OfflineCategorySearchOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Performs category search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param categoryNames List of categories to search.
+     * @param options Category search options.
+     * @param callback The callback to handle search result. Events are dispatched on the main thread.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun categorySearch(
+        categoryNames: List<String>,
+        options: OfflineCategorySearchOptions,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask = categorySearch(
+        categoryNames = categoryNames,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Performs category search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param categoryName Name of category to search.
+     * @param options Category search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback The callback to handle search result on the main thread.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun categorySearch(
+        categoryName: String,
+        options: OfflineCategorySearchOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask = categorySearch(
+        categoryNames = listOf(categoryName),
+        options = options,
+        executor = executor,
+        callback = callback,
+    )
+
+    /**
+     * Performs category search request.
+     * Each new search request cancels the previous one if it is still in progress.
+     * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].
+     *
+     * @param categoryName Name of category to search.
+     * @param options Category search options.
+     * @param callback The callback to handle search result. Events are dispatched on the main thread.
+     * @return [AsyncOperationTask] object which allows to cancel the request.
+     */
+    @MapboxExperimental
+    public fun categorySearch(
+        categoryName: String,
+        options: OfflineCategorySearchOptions,
+        callback: OfflineSearchCallback,
+    ): AsyncOperationTask = categorySearch(
+        categoryName = categoryName,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
      * Performs reverse geocoding search request.
      * Each new search request cancels the previous one if it is still in progress.
      * In this case [OfflineSearchCallback.onError] will be called with [com.mapbox.search.common.SearchCancellationException].

@@ -754,6 +754,57 @@ internal class OfflineSearchEngineTest {
         }
     }
 
+    @TestFactory
+    fun `Check offline category search`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
+                slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+            }
+
+            When("Category search called") {
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+
+                val task = searchEngine.categorySearch(
+                    categoryName = "cafe",
+                    options = OfflineCategorySearchOptions(),
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyOnce("CoreSearchEngine.searchOffline() called") {
+                    coreEngine.searchOffline(
+                        eq(""),
+                        eq(listOf("cafe")),
+                        eq(OfflineCategorySearchOptions().mapToCore()),
+                        slotSearchCallback.captured
+                    )
+                }
+
+                VerifyOnce("Results passed to callback") {
+                    callback.onResults(
+                        listOf(TEST_SEARCH_RESULT),
+                        TEST_OFFLINE_RESPONSE_INFO,
+                    )
+                }
+
+                VerifyNo("onError() wasn't called") {
+                    callback.onError(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-category-search"))
+                }
+            }
+        }
+    }
+
     private companion object {
 
         const val TEST_QUERY = "Minsk"
