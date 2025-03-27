@@ -1,6 +1,7 @@
 package com.mapbox.search.result
 
 import android.os.Parcelable
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchResultMetadata
@@ -74,6 +75,13 @@ public class SearchResult internal constructor(
      */
     @IgnoredOnParcel
     public val routablePoints: List<RoutablePoint>? = base.routablePoints?.map { it.mapToPlatform() }
+
+    /**
+     * Optional bounding box that represents the geographical boundaries of a location,
+     * e.g., a building.
+     */
+    @IgnoredOnParcel
+    public val boundingBox: BoundingBox? = base.bbox
 
     /**
      * Poi categories. Always empty for non-POI search results.
@@ -167,6 +175,7 @@ public class SearchResult internal constructor(
         if (address != other.address) return false
         if (fullAddress != other.fullAddress) return false
         if (routablePoints != other.routablePoints) return false
+        if (boundingBox != other.boundingBox) return false
         if (categories != other.categories) return false
         if (makiIcon != other.makiIcon) return false
         if (coordinate != other.coordinate) return false
@@ -195,6 +204,7 @@ public class SearchResult internal constructor(
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (fullAddress?.hashCode() ?: 0)
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
+        result = 31 * result + (boundingBox?.hashCode() ?: 0)
         result = 31 * result + (categories?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + coordinate.hashCode()
@@ -223,6 +233,7 @@ public class SearchResult internal constructor(
                 "address=$address, " +
                 "fullAddress=$fullAddress, " +
                 "routablePoints=$routablePoints, " +
+                "boundingBox=$boundingBox, " +
                 "categories=$categories, " +
                 "makiIcon=$makiIcon, " +
                 "coordinate=$coordinate, " +

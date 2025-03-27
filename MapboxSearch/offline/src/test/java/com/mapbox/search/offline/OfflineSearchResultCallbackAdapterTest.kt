@@ -197,6 +197,7 @@ internal class OfflineSearchResultCallbackAdapterTest {
             null,
             null,
             null,
+            null,
             0,
             null,
             null,
