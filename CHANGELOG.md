@@ -1,5 +1,18 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.9.0
+
+### New features
+- Added an optional property `SearchResult.boundingBox` which represents the geographical boundaries of a location.
+- Introduced a dedicated function for category search: `OfflineSearchEngine.categorySearch()`. This function can accept multiple categories. Besides that `OfflineCategorySearchOptions` has a new option `ensureResultsPerCategory`. See documentation for more information.
+- Added a new option `OfflineEvSearchOptions.excludeOperators` which allows to exclude specific operators from search results.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0`
+- Common SDK `24.11.0`
+
+
+
 ## 2.9.0-rc.1
 
 ### New features

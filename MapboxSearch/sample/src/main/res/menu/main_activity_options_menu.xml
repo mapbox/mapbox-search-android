@@ -100,6 +100,11 @@
                 />
 
             <item
+                android:id="@+id/open_offline_category_kt_example"
+                android:title="@string/action_open_offline_category_search_kt_example"
+                />
+
+            <item
                 android:id="@+id/open_japan_search_kt_example"
                 android:title="@string/action_open_japan_search_kt_example"
                 />

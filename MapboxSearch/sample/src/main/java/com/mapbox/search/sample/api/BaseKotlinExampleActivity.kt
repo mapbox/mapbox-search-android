@@ -75,6 +75,10 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
         }
     }
 
+    protected fun printMessage(results: List<OfflineSearchResult>) {
+        printMessage("Results:\n${results.joinToString(separator = "\n") { it.toPrettyString() }}")
+    }
+
     @SuppressLint("SetTextI18n")
     private fun appendToLogMsg(message: String) {
         logTextView.text = "${logTextView.text}\n$message"

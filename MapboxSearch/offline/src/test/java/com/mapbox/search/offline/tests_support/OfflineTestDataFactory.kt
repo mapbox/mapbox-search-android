@@ -1,5 +1,6 @@
 package com.mapbox.search.offline.tests_support
 
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
@@ -24,6 +25,7 @@ internal fun createTestBaseRawSearchResult(
     center: Point? = null,
     accuracy: CoreResultAccuracy? = null,
     routablePoints: List<CoreRoutablePoint>? = null,
+    bbox: BoundingBox? = null,
     categories: List<String>? = null,
     categoryIds: List<String>? = null,
     brand: List<String>? = null,
@@ -52,6 +54,7 @@ internal fun createTestBaseRawSearchResult(
     center = center,
     accuracy = accuracy,
     routablePoints = routablePoints,
+    bbox = bbox,
     categories = categories,
     categoryIds = categoryIds,
     brand = brand,

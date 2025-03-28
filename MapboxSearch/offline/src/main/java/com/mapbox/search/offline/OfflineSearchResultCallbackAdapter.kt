@@ -59,10 +59,11 @@ internal class OfflineSearchResultCallbackAdapter(private val feature: Feature, 
         null,
         null,
         null,
+        null,
         0,
         null,
         null,
-        null
+        null,
     )
 
     private companion object {

@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  *
  * @property connectorTypes An optional list of the [EvConnectorType.Type] values to be included
  * in the response. By default all connector types will be included in the response.
- * @property operators An optional comma-delimited list of the charge point operators
+ * @property operators An optional list of the charge point operators
  * to be included in the response. By default all operators will be included in the response.
  * @property minChargingPower An optional value in watts that sets the lower limit for the
  * charging power supported by EVSEs at a charge point. If [maxChargingPower] is provided,
@@ -20,6 +20,8 @@ import kotlinx.parcelize.Parcelize
  * @property maxChargingPower An optional value in watts that sets the upper limit for the
  * charging power supported by EVSEs at a charge point. If [minChargingPower] is provided,
  * the default value is 500000.
+ * @property excludeOperators An optional list of the charge point operators
+ * to be excluded from the response. By default all operators will be included in the response.
  */
 @Parcelize
 public class OfflineEvSearchOptions @JvmOverloads public constructor(
@@ -27,6 +29,7 @@ public class OfflineEvSearchOptions @JvmOverloads public constructor(
     public val operators: List<String>? = null,
     public val minChargingPower: Float? = null,
     public val maxChargingPower: Float? = null,
+    public val excludeOperators: List<String>? = null,
 ) : Parcelable {
 
     /**
@@ -42,6 +45,7 @@ public class OfflineEvSearchOptions @JvmOverloads public constructor(
         if (operators != other.operators) return false
         if (!minChargingPower.safeCompareTo(other.minChargingPower)) return false
         if (!maxChargingPower.safeCompareTo(other.maxChargingPower)) return false
+        if (excludeOperators != other.excludeOperators) return false
 
         return true
     }
@@ -54,6 +58,7 @@ public class OfflineEvSearchOptions @JvmOverloads public constructor(
         result = 31 * result + (operators?.hashCode() ?: 0)
         result = 31 * result + (minChargingPower?.hashCode() ?: 0)
         result = 31 * result + (maxChargingPower?.hashCode() ?: 0)
+        result = 31 * result + (excludeOperators?.hashCode() ?: 0)
         return result
     }
 
@@ -65,7 +70,8 @@ public class OfflineEvSearchOptions @JvmOverloads public constructor(
                 "connectorTypes=$connectorTypes, " +
                 "operators=$operators, " +
                 "minChargingPower=$minChargingPower, " +
-                "maxChargingPower=$maxChargingPower" +
+                "maxChargingPower=$maxChargingPower, " +
+                "excludeOperators=$excludeOperators" +
                 ")"
     }
 
@@ -75,5 +81,6 @@ public class OfflineEvSearchOptions @JvmOverloads public constructor(
         operators = operators,
         minChargingPower = minChargingPower,
         maxChargingPower = maxChargingPower,
+        excludeOperators = excludeOperators,
     )
 }

@@ -63,6 +63,7 @@
         <activity android:name=".api.OfflineReverseGeocodingJavaExampleActivity" />
         <activity android:name=".api.OfflineEvSearchKotlinExampleActivity" />
         <activity android:name=".api.OfflineMultipleLanguagesActivity" />
+        <activity android:name=".api.OfflineCategorySearchKotlinExampleActivity" />
         <activity android:name=".api.HistoryDataProviderKotlinExample" />
         <activity android:name=".api.HistoryDataProviderJavaExample" />
         <activity android:name=".api.FavoritesDataProviderKotlinExample" />

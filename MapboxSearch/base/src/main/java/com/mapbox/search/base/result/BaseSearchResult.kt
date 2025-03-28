@@ -1,6 +1,7 @@
 package com.mapbox.search.base.result
 
 import android.os.Parcelable
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultAccuracy
@@ -40,6 +41,9 @@ abstract class BaseSearchResult(
 
     open val routablePoints: List<CoreRoutablePoint>?
         get() = rawSearchResult.routablePoints
+
+    open val bbox: BoundingBox?
+        get() = rawSearchResult.bbox
 
     open val categories: List<String>?
         get() = rawSearchResult.categories

@@ -107,7 +107,7 @@ public class OfflineSearchOptions @JvmOverloads public constructor(
     override fun toString(): String {
         return "OfflineSearchOptions(" +
                 "proximity=$proximity," +
-                " limit=$limit, " +
+                "limit=$limit, " +
                 "origin=$origin, " +
                 "boundingBox=$boundingBox, " +
                 "searchPlacesOutsideBoundingBox=$searchPlacesOutsideBoundingBox, " +

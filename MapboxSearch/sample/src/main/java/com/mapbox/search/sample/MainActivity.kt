@@ -68,6 +68,7 @@ import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
 import com.mapbox.search.sample.api.HistoryDataProviderKotlinExample
 import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
 import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
+import com.mapbox.search.sample.api.OfflineCategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineEvSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineMultipleLanguagesActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
@@ -528,6 +529,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.open_offline_multiple_languages_kt_example -> {
                 startActivity(Intent(this, OfflineMultipleLanguagesActivity::class.java))
+                true
+            }
+            R.id.open_offline_category_kt_example -> {
+                startActivity(Intent(this, OfflineCategorySearchKotlinExampleActivity::class.java))
                 true
             }
             R.id.open_history_data_provider_java_example -> {

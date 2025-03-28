@@ -170,6 +170,7 @@ fun createTestCoreSearchResult(
     userRecordPriority: Int = 0,
     action: SuggestAction? = null,
     serverIndex: Int? = 0,
+    bbox: LonLatBBox? = null,
 ) = SearchResult(
     id,
     mapboxId,
@@ -197,7 +198,8 @@ fun createTestCoreSearchResult(
     userRecordId,
     userRecordPriority,
     action,
-    serverIndex
+    serverIndex,
+    bbox,
 )
 
 @Suppress("LongParameterList")
@@ -229,6 +231,7 @@ fun SearchResult.copy(
     userRecordPriority: Int = this.userRecordPriority,
     action: SuggestAction? = this.action,
     serverIndex: Int? = this.serverIndex,
+    bbox: LonLatBBox? = this.bbox,
 ) = SearchResult(
     id,
     mapboxId,
@@ -256,7 +259,8 @@ fun SearchResult.copy(
     userRecordId,
     userRecordPriority,
     action,
-    serverIndex
+    serverIndex,
+    bbox,
 )
 
 fun createCoreSearchAddressRegion(
