@@ -1,12 +1,15 @@
 package com.mapbox.search.base.result
 
 import android.os.Parcelable
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchResult
+import com.mapbox.search.base.utils.extension.mapToCore
+import com.mapbox.search.base.utils.extension.mapToPlatform
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.util.HashMap
@@ -27,6 +30,7 @@ data class BaseRawSearchResult(
     val center: Point?,
     val accuracy: CoreResultAccuracy?,
     val routablePoints: List<CoreRoutablePoint>?,
+    val bbox: BoundingBox?,
     val categories: List<String>?,
     val categoryIds: List<String>?,
     val brand: List<String>?,
@@ -114,6 +118,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     center = center,
     accuracy = accuracy,
     routablePoints = routablePoints,
+    bbox = bbox?.mapToPlatform(),
     categories = categories,
     categoryIds = categoryIDs,
     brand = brand,
@@ -157,4 +162,5 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     userRecordPriority,
     action?.mapToCore(),
     serverIndex,
+    bbox?.mapToCore(),
 )

@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
@@ -17,10 +20,12 @@ import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
+import com.mapbox.search.common.tests.assertEqualsExpected
 import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -28,6 +33,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
@@ -220,8 +226,10 @@ internal class DiscoverIntegrationTest {
             )
         }
 
-        assertTrue(response.isValue)
-        assertEquals(0, requireNotNull(response.value).size)
+        assertEqualsExpected(
+            ExpectedFactory.createValue(emptyList()),
+            response,
+        )
     }
 
     @Test
@@ -344,6 +352,7 @@ internal class DiscoverIntegrationTest {
                     apiType = ApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, defaultLocationProvider()), null
@@ -390,6 +399,12 @@ internal class DiscoverIntegrationTest {
             return MockResponse()
                 .setResponseCode(200)
                 .setBody(readFileFromAssets(bodyContentPath))
+        }
+
+        @BeforeClass
+        @JvmStatic
+        fun enableDebugLogs() {
+            LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
         }
     }
 }

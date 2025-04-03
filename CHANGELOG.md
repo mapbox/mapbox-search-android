@@ -1,5 +1,48 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.9.0
+
+### New features
+- Added an optional property `SearchResult.boundingBox` which represents the geographical boundaries of a location.
+- Introduced a dedicated function for category search: `OfflineSearchEngine.categorySearch()`. This function can accept multiple categories. Besides that `OfflineCategorySearchOptions` has a new option `ensureResultsPerCategory`. See documentation for more information.
+- Added a new option `OfflineEvSearchOptions.excludeOperators` which allows to exclude specific operators from search results.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0`
+- Common SDK `24.11.0`
+
+
+
+## 2.9.0-rc.1
+
+### New features
+- Added support for the offline search in Taiwan.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0-rc.1`
+- Common SDK `24.11.0-rc.1`
+
+
+
+## 2.9.0-beta.1
+
+### New features
+- Added new property `SearchResultMetadata.cuisines` which returns a list of cuisines served if metadata belongs to a food-serving POI.
+- Added new function `OfflineSearchEngine.selectTileset(TilesetParameters)` which allows to select tileset with specified parameters, including language and worldview.
+
+### Bug fixes
+- Search along route functionality in offline has been improved.
+
+### Experimental API breaking changes
+- `OfflineSearchEngine.createTilesetDescriptor(String, String, IsoLanguageCode, IsoCountryCode)` has been replaced with `OfflineSearchEngine.createTilesetDescriptor(TilesetParameters)`.
+- `OfflineSearchEngine.createPlacesTilesetDescriptor(String, String, IsoLanguageCode, IsoCountryCode)` has been replaced with `OfflineSearchEngine.createPlacesTilesetDescriptor(TilesetParameters)`.
+
+### Mapbox dependencies
+- Search Native SDK `2.9.0-beta.1`
+- Common SDK `24.11.0-beta.1`
+
+
+
 ## 2.8.0
 
 ### New features
@@ -12,8 +55,8 @@
 - Now `OfflineSearchAlongRouteOptions` doesn't accept `proximity` as a parameter, search will be performed along the whole route.
 
 ### Mapbox dependencies
-- Search Native SDK `2.8.0-rc.2`
-- Common SDK `24.10.0-rc.1`
+- Search Native SDK `2.8.0`
+- Common SDK `24.10.0`
 
 
 

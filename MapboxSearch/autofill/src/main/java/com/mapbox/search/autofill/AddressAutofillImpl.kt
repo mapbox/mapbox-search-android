@@ -20,6 +20,7 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.base.utils.extension.flatMap
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import java.util.concurrent.ExecutorService
@@ -124,6 +125,7 @@ internal class AddressAutofillImpl(
                     apiType = CoreApiType.AUTOFILL,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider),

@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.LogConfiguration
+import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.BoundingBox
@@ -16,6 +19,7 @@ import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
 import com.mapbox.search.base.location.defaultLocationProvider
 import com.mapbox.search.base.utils.UserAgentProvider
+import com.mapbox.search.base.utils.defaultOnlineRequestTimeoutSeconds
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
@@ -26,6 +30,7 @@ import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.tests.assertEqualsExpected
 import com.mapbox.search.internal.bindgen.ApiType
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
@@ -38,6 +43,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -137,8 +143,10 @@ internal class PlaceAutocompleteIntegrationTest {
             placeAutocomplete.suggestions(TEST_QUERY)
         }
 
-        assertTrue(response.isValue)
-        assertTrue(requireNotNull(response.value).isEmpty())
+        assertEqualsExpected(
+            ExpectedFactory.createValue(emptyList()),
+            response,
+        )
     }
 
     @Test
@@ -524,6 +532,7 @@ internal class PlaceAutocompleteIntegrationTest {
                     apiType = ApiType.SBS,
                     sdkInformation = UserAgentProvider.sdkInformation(),
                     eventsUrl = null,
+                    onlineRequestTimeout = defaultOnlineRequestTimeoutSeconds(),
                 ),
                 WrapperLocationProvider(
                     LocationEngineAdapter(app, locationProvider), null
@@ -558,6 +567,12 @@ internal class PlaceAutocompleteIntegrationTest {
             return MockResponse()
                 .setResponseCode(200)
                 .setBody(readFileFromAssets(bodyContentPath))
+        }
+
+        @BeforeClass
+        @JvmStatic
+        fun enableDebugLogs() {
+            LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
         }
     }
 }

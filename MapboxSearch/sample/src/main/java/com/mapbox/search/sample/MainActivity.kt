@@ -68,7 +68,9 @@ import com.mapbox.search.sample.api.HistoryDataProviderJavaExample
 import com.mapbox.search.sample.api.HistoryDataProviderKotlinExample
 import com.mapbox.search.sample.api.JapanSearchJavaExampleActivity
 import com.mapbox.search.sample.api.JapanSearchKotlinExampleActivity
+import com.mapbox.search.sample.api.OfflineCategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineEvSearchKotlinExampleActivity
+import com.mapbox.search.sample.api.OfflineMultipleLanguagesActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingJavaExampleActivity
 import com.mapbox.search.sample.api.OfflineReverseGeocodingKotlinExampleActivity
 import com.mapbox.search.sample.api.OfflineSearchAlongRouteExampleActivity
@@ -124,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                     if (BuildConfig.DEBUG) {
                         error("This OnBackPressedCallback should not be enabled")
                     }
-                    Log.i("SearchApiExample", "This OnBackPressedCallback should not be enabled")
+                    Log.i(LOG_TAG, "This OnBackPressedCallback should not be enabled")
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
@@ -233,23 +235,17 @@ class MainActivity : AppCompatActivity() {
         tilesLoadingTask = tileStore.loadTileRegion(
             tileRegionId,
             tileRegionLoadOptions,
-            { progress -> Log.i("SearchApiExample", "Loading progress: $progress") },
+            { progress -> Log.i(LOG_TAG, "Loading progress: $progress") },
             { result ->
-                val toastMsg = if (result.isValue) {
-                    Log.i("SearchApiExample", "Tiles successfully loaded: ${result.value}")
-                    "Tile region $tileRegionId loaded"
+                val loadResultMessage = if (result.isValue) {
+                    "Tiles successfully loaded: ${result.value}"
                 } else {
-                    Log.i("SearchApiExample", "Tiles loading error: ${result.error}")
-                    "Tile region $tileRegionId load error: ${result.error}"
+                    "Tiles loading error: ${result.error}"
                 }
 
-                offlineSearchEngine.selectTileset(
-                    dataset = "experimental-poi-cat-alias",
-                    version = "v20"
-                )
-
+                Log.i(LOG_TAG, loadResultMessage)
                 runOnUiThread {
-                    Toast.makeText(applicationContext, toastMsg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, loadResultMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -539,6 +535,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, OfflineEvSearchKotlinExampleActivity::class.java))
                 true
             }
+            R.id.open_offline_multiple_languages_kt_example -> {
+                startActivity(Intent(this, OfflineMultipleLanguagesActivity::class.java))
+                true
+            }
+            R.id.open_offline_category_kt_example -> {
+                startActivity(Intent(this, OfflineCategorySearchKotlinExampleActivity::class.java))
+                true
+            }
             R.id.open_history_data_provider_java_example -> {
                 startActivity(Intent(this, HistoryDataProviderJavaExample::class.java))
                 true
@@ -637,6 +641,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private companion object {
+
+        const val LOG_TAG = "MainActivity"
 
         val MARKERS_EDGE_OFFSET = dpToPx(64f).toDouble()
         val PLACE_CARD_HEIGHT = dpToPx(300f).toDouble()

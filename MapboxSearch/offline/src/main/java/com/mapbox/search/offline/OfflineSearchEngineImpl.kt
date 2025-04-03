@@ -66,6 +66,11 @@ internal class OfflineSearchEngineImpl(
         coreEngine.selectTileset(dataset, version)
     }
 
+    @MapboxExperimental
+    override fun selectTileset(tilesetParameters: TilesetParameters) {
+        coreEngine.selectTileset(tilesetParameters.generatedDatasetName, tilesetParameters.version)
+    }
+
     override fun search(
         query: String,
         options: OfflineSearchOptions,
@@ -79,6 +84,32 @@ internal class OfflineSearchEngineImpl(
         return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
             coreEngine.searchOffline(
                 query, emptyList(), options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = request,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SBS),
+                    isOffline = true,
+                )
+            )
+        }
+    }
+
+    @MapboxExperimental
+    override fun categorySearch(
+        categoryNames: List<String>,
+        options: OfflineCategorySearchOptions,
+        executor: Executor,
+        callback: OfflineSearchCallback
+    ): AsyncOperationTask {
+        logd("categorySearch($categoryNames, $options) called")
+
+        activityReporter.reportActivity("offline-search-engine-category-search")
+
+        return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
+            coreEngine.searchOffline(
+                "", categoryNames, options.mapToCore(),
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,

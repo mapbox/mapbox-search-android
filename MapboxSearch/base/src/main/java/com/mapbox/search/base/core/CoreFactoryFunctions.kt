@@ -116,6 +116,7 @@ fun createCoreResultMetadata(
     facilities: List<CoreFacility>? = null,
     timezone: String? = null,
     lastUpdated: String? = null,
+    cuisines: List<String>? = null,
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount = reviewCount,
     phone = phone,
@@ -159,6 +160,7 @@ fun createCoreResultMetadata(
     facilities = facilities,
     timezone = timezone,
     lastUpdated = lastUpdated,
+    cuisines = cuisines,
 )
 
 fun createCoreOpenHours(
@@ -183,10 +185,12 @@ fun createCoreEvSearchOptions(
     minChargingPower: Float? = null,
     maxChargingPower: Float? = null,
     availability: CoreChargingStatus? = null,
+    excludeOperators: List<String>? = null,
 ): CoreEvSearchOptions = CoreEvSearchOptions(
     connectorTypes = connectorTypes,
     operators = operators,
     minChargingPower = minChargingPower,
     maxChargingPower = maxChargingPower,
     availability = availability,
+    excludeOperators = excludeOperators,
 )

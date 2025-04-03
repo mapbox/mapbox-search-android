@@ -113,6 +113,7 @@ internal class SearchResultMetadataTest {
                 servesVegetarian = true,
                 rating = 5.0f,
                 popularity = 0.5f,
+                cuisines = listOf("french", "spanish"),
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -262,10 +263,18 @@ internal class SearchResultMetadataTest {
                 Verify("CoreResultMetadata.getPopularity() called") {
                     spyCoreMeta.popularity
                 }
+
+                Verify("CoreResultMetadata.getCuisines() called") {
+                    spyCoreMeta.cuisines
+                }
             }
 
             When("reviewCount accessed") {
-                Then("Returned review count should be as original", originalCoreMeta.reviewCount, metadata.reviewCount)
+                Then(
+                    "Returned review count should be as original",
+                    originalCoreMeta.reviewCount,
+                    metadata.reviewCount
+                )
             }
 
             When("phone accessed") {
@@ -273,23 +282,43 @@ internal class SearchResultMetadataTest {
             }
 
             When("website accessed") {
-                Then("Returned website should be as original", originalCoreMeta.website, metadata.website)
+                Then(
+                    "Returned website should be as original",
+                    originalCoreMeta.website,
+                    metadata.website
+                )
             }
 
             When("averageRating accessed") {
-                Then("Returned average rating should be as original", originalCoreMeta.avRating, metadata.averageRating)
+                Then(
+                    "Returned average rating should be as original",
+                    originalCoreMeta.avRating,
+                    metadata.averageRating
+                )
             }
 
             When("description accessed") {
-                Then("Returned description should be as original", originalCoreMeta.description, metadata.description)
+                Then(
+                    "Returned description should be as original",
+                    originalCoreMeta.description,
+                    metadata.description
+                )
             }
 
             When("primaryPhotos accessed") {
-                Then("Returned primary photos should be as original", testPrimaryPhotos, metadata.primaryPhotos)
+                Then(
+                    "Returned primary photos should be as original",
+                    testPrimaryPhotos,
+                    metadata.primaryPhotos
+                )
             }
 
             When("otherPhotos accessed") {
-                Then("Returned other photos should be as original", testOtherPhotos, metadata.otherPhotos)
+                Then(
+                    "Returned other photos should be as original",
+                    testOtherPhotos,
+                    metadata.otherPhotos
+                )
             }
 
             When("extraData accessed") {
@@ -317,155 +346,172 @@ internal class SearchResultMetadataTest {
             }
 
             When("countryIso1 accessed") {
-                Then("Returned data should be equal to initially provided", testIso1Value, metadata.countryIso1)
+                Then(
+                    "Returned data should be equal to initially provided",
+                    testIso1Value,
+                    metadata.countryIso1
+                )
             }
 
             When("countryIso2 accessed") {
-                Then("Returned data should be equal to initially provided", testIso2Value, metadata.countryIso2)
+                Then(
+                    "Returned data should be equal to initially provided",
+                    testIso2Value,
+                    metadata.countryIso2
+                )
             }
 
             When("wheelchairAccessible accessed") {
                 Then("Returned data should be as original") {
-                    assertEquals(originalCoreMeta.wheelchairAccessible, metadata.wheelchairAccessible)
+                    assertEquals(
+                        originalCoreMeta.wheelchairAccessible,
+                        metadata.wheelchairAccessible
+                    )
                 }
             }
 
-             When("delivery accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.delivery, metadata.delivery)
-                 }
+            When("delivery accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.delivery, metadata.delivery)
+                }
             }
 
-             When("driveThrough accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.driveThrough, metadata.driveThrough)
-                 }
+            When("driveThrough accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.driveThrough, metadata.driveThrough)
+                }
             }
 
-             When("reservable accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.reservable, metadata.reservable)
-                 }
+            When("reservable accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.reservable, metadata.reservable)
+                }
             }
 
-             When("parkingAvailable accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.parkingAvailable, metadata.parkingAvailable)
-                 }
+            When("parkingAvailable accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.parkingAvailable, metadata.parkingAvailable)
+                }
             }
 
-             When("valetParking accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.valetParking, metadata.valetParking)
-                 }
+            When("valetParking accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.valetParking, metadata.valetParking)
+                }
             }
 
-             When("streetParking accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.streetParking, metadata.streetParking)
-                 }
+            When("streetParking accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.streetParking, metadata.streetParking)
+                }
             }
 
-             When("servesBreakfast accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesBreakfast, metadata.servesBreakfast)
-                 }
+            When("servesBreakfast accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesBreakfast, metadata.servesBreakfast)
+                }
             }
 
-             When("servesBrunch accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesBrunch, metadata.servesBrunch)
-                 }
+            When("servesBrunch accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesBrunch, metadata.servesBrunch)
+                }
             }
 
-             When("servesDinner accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesDinner, metadata.servesDinner)
-                 }
+            When("servesDinner accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesDinner, metadata.servesDinner)
+                }
             }
 
-             When("servesLunch accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesLunch, metadata.servesLunch)
-                 }
+            When("servesLunch accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesLunch, metadata.servesLunch)
+                }
             }
 
-             When("servesWine accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesWine, metadata.servesWine)
-                 }
+            When("servesWine accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesWine, metadata.servesWine)
+                }
             }
 
-             When("servesBeer accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesBeer, metadata.servesBeer)
-                 }
+            When("servesBeer accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesBeer, metadata.servesBeer)
+                }
             }
 
-             When("takeout accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.takeout, metadata.takeout)
-                 }
+            When("takeout accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.takeout, metadata.takeout)
+                }
             }
 
-             When("facebookId accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.facebookId, metadata.facebookId)
-                 }
+            When("facebookId accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.facebookId, metadata.facebookId)
+                }
             }
 
-             When("fax accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.fax, metadata.fax)
-                 }
+            When("fax accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.fax, metadata.fax)
+                }
             }
 
-             When("email accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.email, metadata.email)
-                 }
+            When("email accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.email, metadata.email)
+                }
             }
 
-             When("instagram accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.instagram, metadata.instagram)
-                 }
+            When("instagram accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.instagram, metadata.instagram)
+                }
             }
 
-             When("twitter accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.twitter, metadata.twitter)
-                 }
+            When("twitter accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.twitter, metadata.twitter)
+                }
             }
 
-             When("priceLevel accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.priceLevel, metadata.priceLevel)
-                 }
+            When("priceLevel accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.priceLevel, metadata.priceLevel)
+                }
             }
 
-             When("serviceVegan accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesVegan, metadata.servesVegan)
-                 }
+            When("serviceVegan accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesVegan, metadata.servesVegan)
+                }
             }
 
-             When("servesVegetarian accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.servesVegetarian, metadata.servesVegetarian)
-                 }
+            When("servesVegetarian accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.servesVegetarian, metadata.servesVegetarian)
+                }
             }
 
-             When("rating accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.rating, metadata.rating)
-                 }
+            When("rating accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.rating, metadata.rating)
+                }
             }
 
-             When("popularity accessed") {
-                 Then("Returned data should be as original") {
-                     assertEquals(originalCoreMeta.popularity, metadata.popularity)
-                 }
+            When("popularity accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.popularity, metadata.popularity)
+                }
+            }
+
+            When("cuisines accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.cuisines, metadata.cuisines)
+                }
             }
 
             When("toString() called") {
@@ -510,7 +556,8 @@ internal class SearchResultMetadataTest {
                             "servesVegan=${originalCoreMeta.servesVegan}, " +
                             "servesVegetarian=${originalCoreMeta.servesVegetarian}, " +
                             "rating=${originalCoreMeta.rating}, " +
-                            "popularity=${originalCoreMeta.popularity}" +
+                            "popularity=${originalCoreMeta.popularity}, " +
+                            "cuisines=${originalCoreMeta.cuisines}" +
                             ")",
                     value
                 )
@@ -563,6 +610,7 @@ internal class SearchResultMetadataTest {
             val servesVegetarian = true
             val rating = 5.0f
             val popularity = 0.5f
+            val cuisines = listOf("greek")
 
             When("a SearchResultMeta object is created") {
                 val searchResultMetadata =
@@ -580,7 +628,9 @@ internal class SearchResultMetadataTest {
                         .takeout(takeout).facebookId(facebookId).fax(fax).email(email)
                         .instagram(instagram).twitter(twitter).priceLevel(priceLevel)
                         .servesVegan(servesVegan).servesVegetarian(servesVegetarian).rating(rating)
-                        .popularity(popularity).build()
+                        .popularity(popularity)
+                        .cuisines(cuisines)
+                        .build()
 
                 Then("all properties should be set") {
                     assertEquals(searchResultMetadata.reviewCount, reviewCount)
@@ -619,6 +669,7 @@ internal class SearchResultMetadataTest {
                     assertEquals(searchResultMetadata.servesVegetarian, servesVegetarian)
                     assertEquals(searchResultMetadata.rating, rating)
                     assertEquals(searchResultMetadata.popularity, popularity)
+                    assertEquals(searchResultMetadata.cuisines, cuisines)
                 }
             }
         }

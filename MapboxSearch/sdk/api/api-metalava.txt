@@ -458,6 +458,7 @@ package com.mapbox.search {
     method public String? getCountryIso1();
     method public String? getCountryIso2();
     method public String? getCpsJson();
+    method public java.util.List<java.lang.String>? getCuisines();
     method public Boolean? getDelivery();
     method public String? getDescription();
     method public Boolean? getDriveThrough();
@@ -497,6 +498,7 @@ package com.mapbox.search {
     property public final String? countryIso1;
     property public final String? countryIso2;
     property public final String? cpsJson;
+    property public final java.util.List<java.lang.String>? cuisines;
     property public final Boolean? delivery;
     property public final String? description;
     property public final Boolean? driveThrough;
@@ -538,6 +540,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchResultMetadata build();
     method public com.mapbox.search.SearchResultMetadata.Builder children(java.util.List<com.mapbox.search.common.metadata.ChildMetadata>? children);
     method public com.mapbox.search.SearchResultMetadata.Builder cpsJson(String? cpsJson);
+    method public com.mapbox.search.SearchResultMetadata.Builder cuisines(java.util.List<java.lang.String>? cuisines);
     method public com.mapbox.search.SearchResultMetadata.Builder delivery(Boolean? delivery);
     method public com.mapbox.search.SearchResultMetadata.Builder description(String? description);
     method public com.mapbox.search.SearchResultMetadata.Builder driveThrough(Boolean? driveThrough);
@@ -998,6 +1001,7 @@ package com.mapbox.search.result {
   @kotlinx.parcelize.Parcelize public final class SearchResult implements android.os.Parcelable {
     method public com.mapbox.search.result.ResultAccuracy? getAccuracy();
     method public com.mapbox.search.result.SearchAddress? getAddress();
+    method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
@@ -1018,6 +1022,7 @@ package com.mapbox.search.result {
     method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
     property public final com.mapbox.search.result.ResultAccuracy? accuracy;
     property public final com.mapbox.search.result.SearchAddress? address;
+    property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<java.lang.String>? categories;
     property public final com.mapbox.geojson.Point coordinate;
     property public final String? descriptionText;

@@ -76,14 +76,6 @@
                 android:text="@string/position_along_route"
                 android:textSize="16sp" />
 
-            <android.widget.SeekBar
-                android:id="@+id/distance_along_route"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:enabled="false"
-                android:max="100" />
-
         </LinearLayout>
 
         <com.mapbox.maps.MapView

@@ -13,6 +13,8 @@ import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.result.mapToBase
+import com.mapbox.search.common.IsoCountryCode
+import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchCancellationException
 import com.mapbox.search.common.concurrent.MainThreadWorker
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
@@ -30,17 +32,20 @@ import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.test.dsl.TestCase
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -723,6 +728,78 @@ internal class OfflineSearchEngineTest {
                         eq(coreOptions),
                         slotSearchCallback.captured
                     )
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `Check selectTileset() functions`() {
+        searchEngine.selectTileset("test-dataset", "test-version")
+        verify(exactly = 1) {
+            coreEngine.selectTileset("test-dataset", "test-version")
+        }
+
+        val tilesetParameters = TilesetParameters.Builder(dataset = "test-dataset", version = "test-version")
+            .worldview(IsoLanguageCode.ENGLISH, IsoCountryCode.MOROCCO)
+            .build()
+
+        clearMocks(coreEngine)
+        searchEngine.selectTileset(tilesetParameters)
+        verify(exactly = 1) {
+            coreEngine.selectTileset(
+                tilesetParameters.generatedDatasetName,
+                "test-version",
+            )
+        }
+    }
+
+    @TestFactory
+    fun `Check offline category search`() = TestCase {
+        Given("OfflineSearchEngine with mocked dependencies") {
+            val slotSearchCallback = slot<CoreSearchCallback>()
+            every { coreEngine.searchOffline(any(), any(), any(), capture(slotSearchCallback)) } answers {
+                slotSearchCallback.captured.run(TEST_RETRIEVED_SUCCESSFUL_CORE_RESPONSE)
+            }
+
+            When("Category search called") {
+                val callback = mockk<OfflineSearchCallback>(relaxed = true)
+
+                val task = searchEngine.categorySearch(
+                    categoryName = "cafe",
+                    options = OfflineCategorySearchOptions(),
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                VerifyOnce("Callbacks called inside executor") {
+                    executor.execute(any())
+                }
+
+                VerifyOnce("CoreSearchEngine.searchOffline() called") {
+                    coreEngine.searchOffline(
+                        eq(""),
+                        eq(listOf("cafe")),
+                        eq(OfflineCategorySearchOptions().mapToCore()),
+                        slotSearchCallback.captured
+                    )
+                }
+
+                VerifyOnce("Results passed to callback") {
+                    callback.onResults(
+                        listOf(TEST_SEARCH_RESULT),
+                        TEST_OFFLINE_RESPONSE_INFO,
+                    )
+                }
+
+                VerifyNo("onError() wasn't called") {
+                    callback.onError(any())
+                }
+
+                VerifyOnce("User activity reported") {
+                    activityReporter.reportActivity(eq("offline-search-engine-category-search"))
                 }
             }
         }

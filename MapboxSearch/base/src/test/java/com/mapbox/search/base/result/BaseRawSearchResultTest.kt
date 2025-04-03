@@ -2,6 +2,7 @@ package com.mapbox.search.base.result
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BuildConfig
+import com.mapbox.search.base.core.CoreBoundingBox
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchResult
@@ -10,6 +11,7 @@ import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
+import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.tests.TestConstants.ASSERTIONS_KT_CLASS_NAME
 import com.mapbox.search.common.tests.catchThrowable
 import com.mapbox.search.common.tests.createCoreSearchAddress
@@ -300,7 +302,8 @@ internal class BaseRawSearchResultTest {
             null,
             -1,
             null,
-            null
+            null,
+            null,
         )
 
         val BASE_EMPTY_SEARCH_RESULT = BaseRawSearchResult(
@@ -318,6 +321,7 @@ internal class BaseRawSearchResultTest {
             center = CORE_EMPTY_SEARCH_RESULT.center,
             accuracy = CORE_EMPTY_SEARCH_RESULT.accuracy,
             routablePoints = CORE_EMPTY_SEARCH_RESULT.routablePoints,
+            bbox = CORE_EMPTY_SEARCH_RESULT.bbox?.mapToPlatform(),
             categories = CORE_EMPTY_SEARCH_RESULT.categories,
             categoryIds = CORE_EMPTY_SEARCH_RESULT.categoryIDs,
             brand = CORE_EMPTY_SEARCH_RESULT.brand,
@@ -350,6 +354,7 @@ internal class BaseRawSearchResultTest {
             center = CORE_FILLED_SEARCH_RESULT.center,
             accuracy = CORE_FILLED_SEARCH_RESULT.accuracy,
             routablePoints = CORE_FILLED_SEARCH_RESULT.routablePoints,
+            bbox = CORE_FILLED_SEARCH_RESULT.bbox?.mapToPlatform(),
             categories = CORE_FILLED_SEARCH_RESULT.categories,
             categoryIds = CORE_FILLED_SEARCH_RESULT.categoryIDs,
             brand = CORE_FILLED_SEARCH_RESULT.brand,
@@ -407,7 +412,8 @@ internal class BaseRawSearchResultTest {
                 "test user record id",
                 -1,
                 CoreSuggestAction("test endpoint", "test path", "test query", byteArrayOf(1, 2, 3), true),
-                123
+                123,
+                CoreBoundingBox(Point.fromLngLat(1.0, 2.0), Point.fromLngLat(2.0, 3.0)),
             )
         }
 

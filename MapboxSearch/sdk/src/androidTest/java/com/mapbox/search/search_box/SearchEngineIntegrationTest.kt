@@ -657,6 +657,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 )
             ), searchResult.routablePoints
         )
+        assertEquals(
+            BoundingBox.fromPoints(
+                Point.fromLngLat(-77.041219, 38.906024),
+                Point.fromLngLat(-77.040685, 38.906647),
+            ),
+            searchResult.boundingBox,
+        )
         assertEquals(Point.fromLngLat(-77.041093, 38.906197), searchResult.coordinate)
         assertEquals("marker", searchResult.makiIcon)
         assertEquals(listOf("gym", "services"), searchResult.categories)
