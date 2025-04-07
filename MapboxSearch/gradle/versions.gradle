@@ -44,10 +44,10 @@ ext {
     mapbox_maps_version = '11.11.0'
     mapbox_turf_version = '6.15.0'
 
-    common_sdk_version = '24.11.0'
+    common_sdk_version = '24.11.0-SNAPSHOT-04-07--10-36.git-2f6ffec'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '2.9.0'
+    search_native_version = '2.9.0-SNAPSHOT-04-07--10-36.git-2f6ffec'
 
     detekt_version = '1.19.0'
 
