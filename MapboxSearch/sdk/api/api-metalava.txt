@@ -1003,6 +1003,7 @@ package com.mapbox.search.result {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<java.lang.String>? getCategories();
+    method public java.util.List<java.lang.String>? getCategoryIds();
     method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
@@ -1024,6 +1025,7 @@ package com.mapbox.search.result {
     property public final com.mapbox.search.result.SearchAddress? address;
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<java.lang.String>? categories;
+    property public final java.util.List<java.lang.String>? categoryIds;
     property public final com.mapbox.geojson.Point coordinate;
     property public final String? descriptionText;
     property public final Double? distanceMeters;
@@ -1063,6 +1065,7 @@ package com.mapbox.search.result {
   @kotlinx.parcelize.Parcelize public final class SearchSuggestion implements android.os.Parcelable {
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
+    method public java.util.List<java.lang.String>? getCategoryIds();
     method public com.mapbox.geojson.Point? getCoordinate();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
@@ -1082,6 +1085,7 @@ package com.mapbox.search.result {
     method public boolean isBatchResolveSupported();
     property public final com.mapbox.search.result.SearchAddress? address;
     property public final java.util.List<java.lang.String>? categories;
+    property public final java.util.List<java.lang.String>? categoryIds;
     property public final com.mapbox.geojson.Point? coordinate;
     property public final String? descriptionText;
     property public final Double? distanceMeters;

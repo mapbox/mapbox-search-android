@@ -112,11 +112,18 @@ public class SearchSuggestion internal constructor(
     public val distanceMeters: Double? = base.distanceMeters
 
     /**
-     * Poi categories. Always empty for non-POI suggestions.
+     * POI categories. Always empty for non-POI suggestions.
      * @see type
      */
     @IgnoredOnParcel
     public val categories: List<String>? = base.categories
+
+    /**
+     * Canonical POI category IDs. Always empty for non-POI suggestions.
+     * @see type
+     */
+    @IgnoredOnParcel
+    public val categoryIds: List<String>? = base.categoryIds
 
     /**
      * [Maki](https://github.com/mapbox/maki/) icon name for search suggestion.
@@ -181,6 +188,7 @@ public class SearchSuggestion internal constructor(
         if (requestOptions != other.requestOptions) return false
         if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
         if (categories != other.categories) return false
+        if (categoryIds != other.categoryIds) return false
         if (makiIcon != other.makiIcon) return false
         if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (metadata != other.metadata) return false
@@ -207,6 +215,7 @@ public class SearchSuggestion internal constructor(
         result = 31 * result + requestOptions.hashCode()
         result = 31 * result + (distanceMeters?.hashCode() ?: 0)
         result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (categoryIds?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + (etaMinutes?.hashCode() ?: 0)
         result = 31 * result + (metadata?.hashCode() ?: 0)
@@ -233,6 +242,7 @@ public class SearchSuggestion internal constructor(
                 "requestOptions=$requestOptions, " +
                 "distanceMeters=$distanceMeters, " +
                 "categories=$categories, " +
+                "categoryIds=$categoryIds, " +
                 "makiIcon=$makiIcon, " +
                 "etaMinutes=$etaMinutes, " +
                 "metadata=$metadata, " +

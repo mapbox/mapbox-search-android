@@ -708,6 +708,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
+                    endpoint = "retrieve",
                     options = options,
                     requestContext = requestContext.copy(
                         responseUuid = "0a197057-edf0-4447-be63-9badcf7c19be"
@@ -966,6 +967,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
+                    endpoint = "retrieve",
                     options = options.copy(
                         types = listOf(QueryType.CATEGORY)
                     ),

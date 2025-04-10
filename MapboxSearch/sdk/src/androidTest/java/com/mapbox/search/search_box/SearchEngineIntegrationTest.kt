@@ -52,6 +52,7 @@ import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchResultType
@@ -256,6 +257,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
         assertEquals(900.0, suggestion.distanceMeters)
         assertEquals(listOf("gym", "services"), suggestion.categories)
+        assertEquals(listOf("fitness_center", "services"), suggestion.categoryIds)
         assertEquals("marker", suggestion.makiIcon)
         assertEquals(null, suggestion.etaMinutes)
         assertEquals(null, suggestion.metadata)
@@ -637,8 +639,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
             searchResult.fullAddress
         )
-        // TODO fixme Search Native should parse accuracy
-        // assertEquals(ResultAccuracy.APPROXIMATE, searchResult.accuracy)
+        assertEquals(ResultAccuracy.Proximate, searchResult.accuracy)
         assertEquals(
             SearchAddress(
                 country = "United States of America",
@@ -667,6 +668,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(Point.fromLngLat(-77.041093, 38.906197), searchResult.coordinate)
         assertEquals("marker", searchResult.makiIcon)
         assertEquals(listOf("gym", "services"), searchResult.categories)
+        assertEquals(listOf("fitness_center", "services"), searchResult.categoryIds)
         assertEquals(null, searchResult.etaMinutes)
         assertEquals(null, searchResult.indexableRecord)
         assertEquals(900.0, searchResult.distanceMeters)
