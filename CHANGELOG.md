@@ -1,5 +1,18 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.12.0-beta.1
+
+⚠️ Minor version has been aligned with other Mapbox SDK offerings. Search SDK v2.12.0 is a successor to v2.9.0. Versions 2.10 and 2.11 of the Search SDK do not exist.
+
+### New features
+- Added new properties `SearchSuggestion.categoryIds` and `SearchResult.categoryIds` that return canonical POI category IDs.
+
+### Mapbox dependencies
+- Search Native SDK `2.12.0-beta.1`
+- Common SDK `24.12.0-beta.1`
+
+
+
 ## 2.9.0
 
 ### New features

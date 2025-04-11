@@ -41,13 +41,13 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '11.11.0'
+    mapbox_maps_version = '11.12.0-beta.1'
     mapbox_turf_version = '6.15.0'
 
-    common_sdk_version = '24.11.0'
+    common_sdk_version = '24.12.0-beta.1'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '2.9.0'
+    search_native_version = '2.12.0-beta.1'
 
     detekt_version = '1.19.0'
 

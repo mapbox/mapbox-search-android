@@ -45,6 +45,9 @@ sealed class BaseSearchSuggestion(
     open val categories: List<String>?
         get() = rawSearchResult.categories
 
+    open val categoryIds: List<String>?
+        get() = rawSearchResult.categoryIds
+
     open val makiIcon: String?
         get() = rawSearchResult.icon
 

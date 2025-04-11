@@ -84,11 +84,18 @@ public class SearchResult internal constructor(
     public val boundingBox: BoundingBox? = base.bbox
 
     /**
-     * Poi categories. Always empty for non-POI search results.
+     * POI categories. Always empty for non-POI search results.
      * @see types
      */
     @IgnoredOnParcel
     public val categories: List<String>? = base.categories
+
+    /**
+     * Canonical POI category IDs. Always empty for non-POI suggestions.
+     * @see types
+     */
+    @IgnoredOnParcel
+    public val categoryIds: List<String>? = base.categoryIds
 
     /**
      * [Maki](https://github.com/mapbox/maki/) icon name for search result.
@@ -177,6 +184,7 @@ public class SearchResult internal constructor(
         if (routablePoints != other.routablePoints) return false
         if (boundingBox != other.boundingBox) return false
         if (categories != other.categories) return false
+        if (categoryIds != other.categoryIds) return false
         if (makiIcon != other.makiIcon) return false
         if (coordinate != other.coordinate) return false
         if (accuracy != other.accuracy) return false
@@ -199,23 +207,24 @@ public class SearchResult internal constructor(
         result = 31 * result + id.hashCode()
         result = 31 * result + mapboxId.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + (matchingName?.hashCode() ?: 0)
-        result = 31 * result + (descriptionText?.hashCode() ?: 0)
-        result = 31 * result + (address?.hashCode() ?: 0)
-        result = 31 * result + (fullAddress?.hashCode() ?: 0)
-        result = 31 * result + (routablePoints?.hashCode() ?: 0)
-        result = 31 * result + (boundingBox?.hashCode() ?: 0)
-        result = 31 * result + (categories?.hashCode() ?: 0)
-        result = 31 * result + (makiIcon?.hashCode() ?: 0)
+        result = 31 * result + matchingName.hashCode()
+        result = 31 * result + descriptionText.hashCode()
+        result = 31 * result + address.hashCode()
+        result = 31 * result + fullAddress.hashCode()
+        result = 31 * result + routablePoints.hashCode()
+        result = 31 * result + boundingBox.hashCode()
+        result = 31 * result + categories.hashCode()
+        result = 31 * result + categoryIds.hashCode()
+        result = 31 * result + makiIcon.hashCode()
         result = 31 * result + coordinate.hashCode()
-        result = 31 * result + (accuracy?.hashCode() ?: 0)
+        result = 31 * result + accuracy.hashCode()
         result = 31 * result + types.hashCode()
-        result = 31 * result + (etaMinutes?.hashCode() ?: 0)
-        result = 31 * result + (metadata?.hashCode() ?: 0)
+        result = 31 * result + etaMinutes.hashCode()
+        result = 31 * result + metadata.hashCode()
         result = 31 * result + externalIDs.hashCode()
-        result = 31 * result + (distanceMeters?.hashCode() ?: 0)
+        result = 31 * result + distanceMeters.hashCode()
         result = 31 * result + (serverIndex ?: 0)
-        result = 31 * result + (indexableRecord?.hashCode() ?: 0)
+        result = 31 * result + indexableRecord.hashCode()
         return result
     }
 
@@ -235,6 +244,7 @@ public class SearchResult internal constructor(
                 "routablePoints=$routablePoints, " +
                 "boundingBox=$boundingBox, " +
                 "categories=$categories, " +
+                "categoryIds=$categoryIds, " +
                 "makiIcon=$makiIcon, " +
                 "coordinate=$coordinate, " +
                 "accuracy=$accuracy, " +
