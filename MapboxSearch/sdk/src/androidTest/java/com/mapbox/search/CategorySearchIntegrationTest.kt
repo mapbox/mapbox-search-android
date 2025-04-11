@@ -191,7 +191,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             languages = listOf("def"), // should it be "en"?
             categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
             // TODO should be fixed on Search Native side
-            //categoryIds = listOf("restaurant", "food", "food_and_drink", "coffee_shop", "coffee", "cafe"),
+            // categoryIds = listOf("restaurant", "food", "food_and_drink", "coffee_shop", "coffee", "cafe"),
             brand = listOf("Starbucks"),
             brandId = "starbucks",
             addresses = listOf(
