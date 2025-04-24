@@ -1,5 +1,13 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.12.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.12.0-rc.1`
+- Common SDK `24.12.0-rc.1`
+
+
+
 ## 2.12.0-beta.1
 
 ⚠️ Minor version has been aligned with other Mapbox SDK offerings. Search SDK v2.12.0 is a successor to v2.9.0. Versions 2.10 and 2.11 of the Search SDK do not exist.
