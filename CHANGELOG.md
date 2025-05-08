@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.12.0
+
+### New features
+- Added support for retrieving multiple search results at once in the `DetailsApi`.
+- Added new properties `PlaceAutocompleteSuggestion.categoryIds`, `PlaceAutocompleteResult.categoryIds`, and `PlaceAutocompleteResult.boundingBox`.
+
+### Mapbox dependencies
+- Search Native SDK `2.12.0`
+- Common SDK `24.12.0`
+
+
+
 ## 2.12.0-rc.1
 
 ### Mapbox dependencies

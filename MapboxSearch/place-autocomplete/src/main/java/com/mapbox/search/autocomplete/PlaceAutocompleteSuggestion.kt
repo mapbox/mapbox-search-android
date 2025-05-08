@@ -61,6 +61,12 @@ public class PlaceAutocompleteSuggestion internal constructor(
     public val categories: List<String>?,
 
     /**
+     * Canonical POI category IDs. Always empty for non-POI suggestions.
+     * @see type
+     */
+    public val categoryIds: List<String>?,
+
+    /**
      * Underlying data on which this [PlaceAutocompleteSuggestion] is based.
      */
     @JvmSynthetic
@@ -85,6 +91,7 @@ public class PlaceAutocompleteSuggestion internal constructor(
         if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (type != other.type) return false
         if (categories != other.categories) return false
+        if (categoryIds != other.categoryIds) return false
 
         return true
     }
@@ -102,6 +109,7 @@ public class PlaceAutocompleteSuggestion internal constructor(
         result = 31 * result + (etaMinutes?.hashCode() ?: 0)
         result = 31 * result + type.hashCode()
         result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (categoryIds?.hashCode() ?: 0)
         return result
     }
 
@@ -118,7 +126,8 @@ public class PlaceAutocompleteSuggestion internal constructor(
                 "distanceMeters=$distanceMeters, " +
                 "etaMinutes=$etaMinutes, " +
                 "type=$type, " +
-                "categories=$categories" +
+                "categories=$categories, " +
+                "categoryIds=$categoryIds" +
                 ")"
     }
 

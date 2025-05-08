@@ -1,0 +1,358 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -122.4193798,
+          37.7772285
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "address": "150 Van Ness Avenue",
+        "brand": [
+          "Starbucks",
+          "星巴克",
+          "スターバックス",
+          "สตาร์บัคส์",
+          "ستاربكس"
+        ],
+        "brand_id": [
+          "starbucks"
+        ],
+        "context": {
+          "address": {
+            "address_number": "150",
+            "id": "",
+            "name": "150 Van Ness Avenue, San Francisco, California 94102, United States",
+            "street_name": "Van Ness Avenue"
+          },
+          "country": {
+            "country_code": "US",
+            "country_code_alpha_3": "USA",
+            "id": "",
+            "name": "United States"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpDaTBzN0E",
+            "name": "Downtown"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpFVzBJN0E",
+            "name": "San Francisco"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpFcDh1N0E",
+            "name": "94102"
+          },
+          "region": {
+            "id": "",
+            "name": "California",
+            "region_code": "CA",
+            "region_code_full": "US-CA"
+          },
+          "street": {
+            "id": "",
+            "name": "Van Ness Avenue"
+          }
+        },
+        "coordinates": {
+          "latitude": 37.7772285,
+          "longitude": -122.4193798,
+          "routable_points": [
+            {
+              "latitude": 37.77718089634983,
+              "longitude": -122.4195794355632,
+              "name": "POI"
+            }
+          ]
+        },
+        "external_ids": {},
+        "feature_type": "poi",
+        "full_address": "150 Van Ness Avenue, San Francisco, California 94102, United States",
+        "language": "en",
+        "maki": "restaurant",
+        "mapbox_id": "dXJuOm1ieHBvaTowZGY2MzE4Yi0wNGNjLTRkOTYtYTZmMy0yNmJmM2ZiODUyODU",
+        "metadata": {
+          "delivery": false,
+          "open_hours": {
+            "periods": [
+              {
+                "close": {
+                  "day": 0,
+                  "time": "1900"
+                },
+                "open": {
+                  "day": 0,
+                  "time": "0600"
+                }
+              },
+              {
+                "close": {
+                  "day": 1,
+                  "time": "1930"
+                },
+                "open": {
+                  "day": 1,
+                  "time": "0430"
+                }
+              },
+              {
+                "close": {
+                  "day": 2,
+                  "time": "1930"
+                },
+                "open": {
+                  "day": 2,
+                  "time": "0430"
+                }
+              },
+              {
+                "close": {
+                  "day": 3,
+                  "time": "1930"
+                },
+                "open": {
+                  "day": 3,
+                  "time": "0430"
+                }
+              },
+              {
+                "close": {
+                  "day": 4,
+                  "time": "1930"
+                },
+                "open": {
+                  "day": 4,
+                  "time": "0430"
+                }
+              },
+              {
+                "close": {
+                  "day": 5,
+                  "time": "1930"
+                },
+                "open": {
+                  "day": 5,
+                  "time": "0430"
+                }
+              },
+              {
+                "close": {
+                  "day": 6,
+                  "time": "1900"
+                },
+                "open": {
+                  "day": 6,
+                  "time": "0600"
+                }
+              }
+            ],
+            "weekday_text": [
+              "Monday: 4:30 AM - 7:30 PM",
+              "Tuesday: 4:30 AM - 7:30 PM",
+              "Wednesday: 4:30 AM - 7:30 PM",
+              "Thursday: 4:30 AM - 7:30 PM",
+              "Friday: 4:30 AM - 7:30 PM",
+              "Saturday: 6:00 AM - 7:00 PM",
+              "Sunday: 6:00 AM - 7:00 PM"
+            ]
+          },
+          "phone": "+14155587715",
+          "popularity": 0.839,
+          "serves_breakfast": true,
+          "serves_lunch": true,
+          "takeout": true,
+          "website": "https://www.starbucks.com/store-locator/store/1028036",
+          "wheelchair_accessible": true
+        },
+        "name": "Starbucks",
+        "operational_status": "active",
+        "place_formatted": "San Francisco, California 94102, United States",
+        "poi_category": [
+          "café",
+          "coffee",
+          "coffee shop",
+          "food",
+          "food and drink"
+        ],
+        "poi_category_ids": [
+          "cafe",
+          "coffee",
+          "coffee_shop",
+          "food",
+          "food_and_drink"
+        ]
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          2.2900953,
+          48.85626515
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "address": "91 Quai Jacques Chirac",
+        "context": {
+          "address": {
+            "address_number": "91",
+            "id": "",
+            "name": "91 Quai Jacques Chirac",
+            "street_name": "quai jacques chirac"
+          },
+          "country": {
+            "country_code": "FR",
+            "country_code_alpha_3": "FRA",
+            "id": "",
+            "name": "France"
+          },
+          "locality": {
+            "id": "dXJuOm1ieHBsYzpCeXBO",
+            "name": "15th arrondissement"
+          },
+          "neighborhood": {
+            "id": "dXJuOm1ieHBsYzpBY0hzVFE",
+            "name": "Grenelle"
+          },
+          "place": {
+            "id": "dXJuOm1ieHBsYzpEYVJO",
+            "name": "Paris"
+          },
+          "postcode": {
+            "id": "dXJuOm1ieHBsYzpBbGt1VFE",
+            "name": "75015"
+          },
+          "street": {
+            "id": "",
+            "name": "quai jacques chirac"
+          }
+        },
+        "coordinates": {
+          "latitude": 48.85626515,
+          "longitude": 2.2900953,
+          "routable_points": [
+            {
+              "latitude": 48.85634142599447,
+              "longitude": 2.2899203138950273,
+              "name": "POI"
+            }
+          ]
+        },
+        "external_ids": {},
+        "feature_type": "poi",
+        "full_address": "91 Quai Jacques Chirac, 75015 Paris, France",
+        "language": "en",
+        "maki": "restaurant",
+        "mapbox_id": "dXJuOm1ieHBvaTozMTRlYTY3ZS1kMjA4LTRlMTQtODMzZi1mYjE5NjZjNzFhYWI",
+        "metadata": {
+          "delivery": false,
+          "open_hours": {
+            "periods": [
+              {
+                "close": {
+                  "day": 0,
+                  "time": "1900"
+                },
+                "open": {
+                  "day": 0,
+                  "time": "1000"
+                }
+              },
+              {
+                "close": {
+                  "day": 1,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 1,
+                  "time": "0830"
+                }
+              },
+              {
+                "close": {
+                  "day": 2,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 2,
+                  "time": "0830"
+                }
+              },
+              {
+                "close": {
+                  "day": 3,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 3,
+                  "time": "0830"
+                }
+              },
+              {
+                "close": {
+                  "day": 4,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 4,
+                  "time": "0830"
+                }
+              },
+              {
+                "close": {
+                  "day": 5,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 5,
+                  "time": "0830"
+                }
+              },
+              {
+                "close": {
+                  "day": 6,
+                  "time": "2000"
+                },
+                "open": {
+                  "day": 6,
+                  "time": "0830"
+                }
+              }
+            ],
+            "weekday_text": [
+              "Monday: 8:30 AM - 8:00 PM",
+              "Tuesday: 8:30 AM - 8:00 PM",
+              "Wednesday: 8:30 AM - 8:00 PM",
+              "Thursday: 8:30 AM - 8:00 PM",
+              "Friday: 8:30 AM - 8:00 PM",
+              "Saturday: 8:30 AM - 8:00 PM",
+              "Sunday: 10:00 AM - 7:00 PM"
+            ]
+          },
+          "popularity": 0.224,
+          "serves_lunch": true,
+          "takeout": true,
+          "wheelchair_accessible": true
+        },
+        "name": "Le Kiosque des Saveurs",
+        "operational_status": "active",
+        "place_formatted": "75015 Paris, France",
+        "poi_category": [
+          "café",
+          "food",
+          "food and drink"
+        ],
+        "poi_category_ids": [
+          "cafe",
+          "food",
+          "food_and_drink"
+        ]
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

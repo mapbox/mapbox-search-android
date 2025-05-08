@@ -679,6 +679,8 @@ package com.mapbox.search.details {
     method public default static final com.mapbox.search.details.DetailsApi create();
     method public default com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, com.mapbox.search.SearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask retrieveDetails(String mapboxId, com.mapbox.search.details.RetrieveDetailsOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask retrieveDetails(java.util.List<java.lang.String> mapboxIds, com.mapbox.search.details.RetrieveDetailsOptions options, com.mapbox.search.SearchCallback callback);
+    method public com.mapbox.search.common.AsyncOperationTask retrieveDetails(java.util.List<java.lang.String> mapboxIds, com.mapbox.search.details.RetrieveDetailsOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchCallback callback);
     field public static final com.mapbox.search.details.DetailsApi.Companion Companion;
   }
 

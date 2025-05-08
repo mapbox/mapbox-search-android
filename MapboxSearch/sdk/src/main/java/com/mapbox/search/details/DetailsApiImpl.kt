@@ -1,7 +1,9 @@
 package com.mapbox.search.details
 
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchResultCallback
+import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.SearchResultCallbackAdapter
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
@@ -37,6 +39,34 @@ internal class DetailsApiImpl(
         return makeRequest(baseCallback) { task ->
             val requestId = coreEngine.retrieveDetails(
                 mapboxId,
+                options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = requestContextProvider.provide(CoreApiType.SEARCH_BOX),
+                    isOffline = false,
+                )
+            )
+
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
+        }
+    }
+
+    override fun retrieveDetails(
+        mapboxIds: List<String>,
+        options: RetrieveDetailsOptions,
+        executor: Executor,
+        callback: SearchCallback
+    ): AsyncOperationTask {
+        activityReporter.reportActivity("details-api-retrieve-multiple")
+
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
+            val requestId = coreEngine.retrieveMultipleDetails(
+                mapboxIds,
                 options.mapToCore(),
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,

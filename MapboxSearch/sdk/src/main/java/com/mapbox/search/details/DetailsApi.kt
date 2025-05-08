@@ -3,6 +3,7 @@ package com.mapbox.search.details
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.ApiType
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngineFactory
 import com.mapbox.search.SearchResultCallback
 import com.mapbox.search.base.core.getUserActivityReporter
@@ -60,6 +61,49 @@ public interface DetailsApi {
         options: RetrieveDetailsOptions,
         executor: Executor,
         callback: SearchResultCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Request basic metadata for POIs, which includes attributes such as POI name, address,
+     * coordinates, primary photo and category classification.
+     *
+     * To retrieve additional attributes beyond the basic data for a POI,
+     * specify [RetrieveDetailsOptions.attributeSets] in the provided [options].
+     *
+     * @param mapboxIds Unique identifiers for the geographic features.
+     * @param options Retrieve options.
+     * @param callback Search result callback. Events are dispatched on the main thread.
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     */
+    public fun retrieveDetails(
+        mapboxIds: List<String>,
+        options: RetrieveDetailsOptions,
+        callback: SearchCallback,
+    ): AsyncOperationTask = retrieveDetails(
+        mapboxIds = mapboxIds,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Request basic metadata for POIs, which includes attributes such as POI name, address,
+     * coordinates, primary photo and category classification.
+     *
+     * To retrieve additional attributes beyond the basic data for a POI,
+     * specify [RetrieveDetailsOptions.attributeSets] in the provided [options].
+     *
+     * @param mapboxIds Unique identifiers for the geographic features.
+     * @param options Retrieve options.
+     * @param executor [Executor] used for events dispatching, default is the main thread.
+     * @param callback Search result callback.
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     */
+    public fun retrieveDetails(
+        mapboxIds: List<String>,
+        options: RetrieveDetailsOptions,
+        executor: Executor,
+        callback: SearchCallback,
     ): AsyncOperationTask
 
     /**

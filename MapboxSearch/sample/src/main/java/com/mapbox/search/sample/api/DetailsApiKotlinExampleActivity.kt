@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchResultCallback
+import com.mapbox.search.SearchCallback
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.details.DetailsApi
 import com.mapbox.search.details.DetailsApiSettings
@@ -35,11 +35,14 @@ class DetailsApiKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override fun startExample() {
         task = detailsApi.retrieveDetails(
-            mapboxId = "dXJuOm1ieHBvaTowZGY2MzE4Yi0wNGNjLTRkOTYtYTZmMy0yNmJmM2ZiODUyODU",
+            mapboxIds = listOf(
+                "dXJuOm1ieHBvaTowZGY2MzE4Yi0wNGNjLTRkOTYtYTZmMy0yNmJmM2ZiODUyODU",
+                "dXJuOm1ieHBvaTozMTRlYTY3ZS1kMjA4LTRlMTQtODMzZi1mYjE5NjZjNzFhYWI"
+            ),
             options = RetrieveDetailsOptions(attributeSets = AttributeSet.values().toList()),
-            callback = object : SearchResultCallback {
-                override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {
-                    logI("SearchApiExample", "Retrieve result:", result)
+            callback = object : SearchCallback {
+                override fun onResults(results: List<SearchResult>, responseInfo: ResponseInfo) {
+                    logI("SearchApiExample", "Retrieve result:", results)
                     onFinished()
                 }
 

@@ -54,7 +54,6 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import java.io.IOException
 import java.util.Locale
@@ -190,8 +189,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
             names = listOf("Starbucks"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
-            // TODO should be fixed on Search Native side
-            // categoryIds = listOf("restaurant", "food", "food_and_drink", "coffee_shop", "coffee", "cafe"),
+            categoryIds = listOf("restaurant", "food", "food_and_drink", "coffee_shop", "coffee", "cafe"),
             brand = listOf("Starbucks"),
             brandId = "starbucks",
             addresses = listOf(
@@ -507,7 +505,6 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         }
     }
 
-    @Ignore("TODO fix on Search Native side")
     @Test
     fun testConsecutiveRequests() {
         mockServer.enqueueMultiple(createSuccessfulResponse("sbs_responses/category/successful_incorrect_response.json"), 2)
