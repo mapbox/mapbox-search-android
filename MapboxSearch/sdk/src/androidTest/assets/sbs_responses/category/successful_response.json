@@ -58,7 +58,7 @@
           "coffee",
           "cafe"
         ],
-        "category_ids":[
+        "poi_category_ids":[
           "restaurant",
           "food",
           "food_and_drink",
