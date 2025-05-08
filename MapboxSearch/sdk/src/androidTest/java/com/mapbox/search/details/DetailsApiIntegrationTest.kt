@@ -11,6 +11,7 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.BlockingSearchResultCallback
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import okhttp3.mockwebserver.MockResponse
@@ -127,6 +128,35 @@ internal class DetailsApiIntegrationTest : BaseTest() {
                 ),
             ),
             searchResult.metadata?.primaryPhotos
+        )
+    }
+
+    @Test
+    fun testSuccessfulResponseMultipleValues() {
+        mockServer.enqueue(createSuccessfulResponse("details_api/response_successful_multiple_values.json"))
+
+        val callback = BlockingSearchCallback()
+        detailsApi.retrieveDetails(
+            listOf(
+                "dXJuOm1ieHBvaTowZGY2MzE4Yi0wNGNjLTRkOTYtYTZmMy0yNmJmM2ZiODUyODU",
+                "dXJuOm1ieHBvaTozMTRlYTY3ZS1kMjA4LTRlMTQtODMzZi1mYjE5NjZjNzFhYWI"
+            ),
+            RetrieveDetailsOptions(),
+            callback,
+        )
+
+        val requestResult = callback.getResultBlocking()
+        assertTrue(requestResult.isResults)
+
+        val results = requestResult.requireResults()
+        assertEquals(2, results.size)
+        assertEquals(
+            "dXJuOm1ieHBvaTowZGY2MzE4Yi0wNGNjLTRkOTYtYTZmMy0yNmJmM2ZiODUyODU",
+            results[0].mapboxId,
+        )
+        assertEquals(
+            "dXJuOm1ieHBvaTozMTRlYTY3ZS1kMjA4LTRlMTQtODMzZi1mYjE5NjZjNzFhYWI",
+            results[1].mapboxId,
         )
     }
 

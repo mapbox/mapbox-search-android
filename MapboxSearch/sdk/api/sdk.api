@@ -811,6 +811,8 @@ public abstract interface class com/mapbox/search/details/DetailsApi {
 	public static fun create (Lcom/mapbox/search/details/DetailsApiSettings;)Lcom/mapbox/search/details/DetailsApi;
 	public abstract fun retrieveDetails (Ljava/lang/String;Lcom/mapbox/search/details/RetrieveDetailsOptions;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun retrieveDetails (Ljava/lang/String;Lcom/mapbox/search/details/RetrieveDetailsOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieveDetails (Ljava/util/List;Lcom/mapbox/search/details/RetrieveDetailsOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieveDetails (Ljava/util/List;Lcom/mapbox/search/details/RetrieveDetailsOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public final class com/mapbox/search/details/DetailsApi$Companion {
@@ -821,6 +823,7 @@ public final class com/mapbox/search/details/DetailsApi$Companion {
 
 public final class com/mapbox/search/details/DetailsApi$DefaultImpls {
 	public static fun retrieveDetails (Lcom/mapbox/search/details/DetailsApi;Ljava/lang/String;Lcom/mapbox/search/details/RetrieveDetailsOptions;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun retrieveDetails (Lcom/mapbox/search/details/DetailsApi;Ljava/util/List;Lcom/mapbox/search/details/RetrieveDetailsOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 }
 
 public final class com/mapbox/search/details/DetailsApiSettings {
