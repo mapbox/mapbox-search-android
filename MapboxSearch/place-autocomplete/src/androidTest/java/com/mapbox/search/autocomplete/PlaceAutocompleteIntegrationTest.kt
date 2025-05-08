@@ -188,7 +188,22 @@ internal class PlaceAutocompleteIntegrationTest {
         )
         assertEquals("restaurant", suggestion.makiIcon)
         assertEquals(PlaceAutocompleteType.Poi, suggestion.type)
-        assertEquals(listOf("food", "food and drink", "coffee shop", "coffee", "cafe", "bakery", "teahouse"), suggestion.categories)
+        assertEquals(
+            listOf("food", "food and drink", "coffee shop", "coffee", "cafe", "bakery", "teahouse"),
+            suggestion.categories,
+        )
+        assertEquals(
+            listOf(
+                "food",
+                "food_and_drink",
+                "coffee_shop",
+                "coffee",
+                "cafe",
+                "bakery",
+                "teahouse"
+            ),
+            suggestion.categoryIds
+        )
 
         val selectResponse = runBlocking {
             placeAutocomplete.select(suggestion)

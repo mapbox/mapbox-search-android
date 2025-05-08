@@ -63,7 +63,9 @@ package com.mapbox.search.autocomplete {
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteResult implements android.os.Parcelable {
     method public com.mapbox.search.autocomplete.PlaceAutocompleteAddress? getAddress();
     method public Double? getAverageRating();
+    method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<java.lang.String>? getCategories();
+    method public java.util.List<java.lang.String>? getCategoryIds();
     method public com.mapbox.geojson.Point getCoordinate();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
@@ -81,7 +83,9 @@ package com.mapbox.search.autocomplete {
     method public String? getWebsite();
     property public final com.mapbox.search.autocomplete.PlaceAutocompleteAddress? address;
     property public final Double? averageRating;
+    property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<java.lang.String>? categories;
+    property public final java.util.List<java.lang.String>? categoryIds;
     property public final com.mapbox.geojson.Point coordinate;
     property public final Double? distanceMeters;
     property public final Double? etaMinutes;
@@ -101,6 +105,7 @@ package com.mapbox.search.autocomplete {
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteSuggestion implements android.os.Parcelable {
     method public java.util.List<java.lang.String>? getCategories();
+    method public java.util.List<java.lang.String>? getCategoryIds();
     method public com.mapbox.geojson.Point? getCoordinate();
     method public Double? getDistanceMeters();
     method public Double? getEtaMinutes();
@@ -110,6 +115,7 @@ package com.mapbox.search.autocomplete {
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public com.mapbox.search.autocomplete.PlaceAutocompleteType getType();
     property public final java.util.List<java.lang.String>? categories;
+    property public final java.util.List<java.lang.String>? categoryIds;
     property public final com.mapbox.geojson.Point? coordinate;
     property public final Double? distanceMeters;
     property public final Double? etaMinutes;

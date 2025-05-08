@@ -1,6 +1,7 @@
 package com.mapbox.search.autocomplete
 
 import android.os.Parcelable
+import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RoutablePoint
@@ -40,6 +41,12 @@ public class PlaceAutocompleteResult internal constructor(
     public val routablePoints: List<RoutablePoint>?,
 
     /**
+     * Optional bounding box that represents the geographical boundaries of a location,
+     * e.g., a building.
+     */
+    public val boundingBox: BoundingBox?,
+
+    /**
      * [Maki](https://github.com/mapbox/maki/) icon name for the place.
      */
     public val makiIcon: String?,
@@ -69,6 +76,12 @@ public class PlaceAutocompleteResult internal constructor(
      * @see type
      */
     public val categories: List<String>?,
+
+    /**
+     * Canonical POI category IDs. Always empty for non-POI suggestions.
+     * @see type
+     */
+    public val categoryIds: List<String>?,
 
     /**
      * Business phone number.
@@ -120,12 +133,14 @@ public class PlaceAutocompleteResult internal constructor(
         if (name != other.name) return false
         if (coordinate != other.coordinate) return false
         if (routablePoints != other.routablePoints) return false
+        if (boundingBox != other.boundingBox) return false
         if (makiIcon != other.makiIcon) return false
         if (!distanceMeters.safeCompareTo(other.distanceMeters)) return false
         if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (address != other.address) return false
         if (type != other.type) return false
         if (categories != other.categories) return false
+        if (categoryIds != other.categoryIds) return false
         if (phone != other.phone) return false
         if (website != other.website) return false
         if (reviewCount != other.reviewCount) return false
@@ -146,12 +161,14 @@ public class PlaceAutocompleteResult internal constructor(
         result = 31 * result + name.hashCode()
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + (routablePoints?.hashCode() ?: 0)
+        result = 31 * result + (boundingBox?.hashCode() ?: 0)
         result = 31 * result + (makiIcon?.hashCode() ?: 0)
         result = 31 * result + (distanceMeters?.hashCode() ?: 0)
         result = 31 * result + (etaMinutes?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + type.hashCode()
         result = 31 * result + (categories?.hashCode() ?: 0)
+        result = 31 * result + (categoryIds?.hashCode() ?: 0)
         result = 31 * result + (phone?.hashCode() ?: 0)
         result = 31 * result + (website?.hashCode() ?: 0)
         result = 31 * result + (reviewCount ?: 0)
@@ -172,12 +189,14 @@ public class PlaceAutocompleteResult internal constructor(
                 "name='$name', " +
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +
+                "boundingBox=$boundingBox, " +
                 "makiIcon=$makiIcon, " +
                 "distanceMeters=$distanceMeters, " +
                 "etaMinutes=$etaMinutes, " +
                 "address=$address, " +
                 "type=$type, " +
                 "categories=$categories, " +
+                "categoryIds=$categoryIds, " +
                 "phone=$phone, " +
                 "website=$website, " +
                 "reviewCount=$reviewCount, " +

@@ -28,6 +28,7 @@ internal class PlaceAutocompleteResultFactory {
                 etaMinutes = etaMinutes,
                 type = type,
                 categories = categories,
+                categoryIds = categoryIds,
                 underlying = PlaceAutocompleteSuggestion.Underlying.Suggestion(suggestion)
             )
         }
@@ -48,6 +49,7 @@ internal class PlaceAutocompleteResultFactory {
                 etaMinutes = etaMinutes,
                 type = type,
                 categories = categories,
+                categoryIds = categoryIds,
                 underlying = PlaceAutocompleteSuggestion.Underlying.Result(result)
             )
         }
@@ -81,12 +83,14 @@ internal class PlaceAutocompleteResultFactory {
                 name = name,
                 coordinate = coordinate,
                 routablePoints = routablePoints?.map { it.mapToPlatform() },
+                boundingBox = bbox,
                 makiIcon = makiIcon,
                 distanceMeters = distanceMeters,
                 etaMinutes = etaMinutes,
                 address = createPlaceAutocompleteAddress(this),
                 type = type,
                 categories = categories,
+                categoryIds = categoryIds,
                 phone = metadata?.phone,
                 website = metadata?.website,
                 reviewCount = metadata?.reviewCount,
