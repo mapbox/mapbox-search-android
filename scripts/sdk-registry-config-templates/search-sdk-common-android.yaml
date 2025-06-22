@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - mapbox-search-android-common
+    - mapbox-search-android-common-ndk27
 
 bundles:
   android: mapbox-search-android-common-all

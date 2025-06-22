@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - discover
+    - discover-ndk27
 
 bundles:
   android: discover-all

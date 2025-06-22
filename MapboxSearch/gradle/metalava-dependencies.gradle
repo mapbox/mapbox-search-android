@@ -20,8 +20,8 @@ dependencies {
     metalava "com.android.tools:common:$studio_version"
     metalava "com.android.tools:sdk-common:$studio_version"
     metalava "com.android.tools:sdklib:$studio_version"
-    metalava "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    metalava "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    metalava dependenciesList.kotlinStdlibJdk8
+    metalava dependenciesList.kotlinReflect
     metalava "org.ow2.asm:asm:8.0"
     metalava "org.ow2.asm:asm-tree:8.0"
 }

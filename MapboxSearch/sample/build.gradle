@@ -46,7 +46,7 @@ if (apiTypeString == "SEARCH_BOX") {
 }
 
 android {
-    compileSdkVersion compile_sdk_version
+    compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
         buildConfigField "boolean", "COVERAGE_ENABLED", "${project.hasProperty('coverage')}"
@@ -54,8 +54,8 @@ android {
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         applicationId "com.mapbox.search.sample"
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
         versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -112,33 +112,33 @@ dependencies {
     implementation project(':discover')
     implementation project(':place-autocomplete')
 
-    debugImplementation "androidx.multidex:multidex:$multidex_version"
+    debugImplementation dependenciesList.androidxMultidex
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation dependenciesList.kotlinStdlibJdk8
 
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_runtime_ktx_version"
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation dependenciesList.androidxAppcompat
+    implementation dependenciesList.androidxRecyclerview
+    implementation dependenciesList.androidxLifecycleRuntimeKtx
+    implementation dependenciesList.androidxLifecycleViewmodelKtx
+    implementation dependenciesList.androidxCore
+    implementation dependenciesList.androidxConstraintlayout
 
-    implementation "com.mapbox.maps:android:$mapbox_maps_version"
-    implementation "com.mapbox.mapboxsdk:mapbox-sdk-turf:$mapbox_turf_version"
+    implementation dependenciesList.mapboxMaps
+    implementation dependenciesList.mapboxTurf
 
-    ktlint "com.pinterest:ktlint:$ktlint_version"
+    ktlint dependenciesList.ktlint
 
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    debugImplementation dependenciesList.leakcanary
 
     androidTestImplementation project(":common-tests")
 
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:$ui_automator_version"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
-    androidTestImplementation "androidx.test:rules:$androidx_test_rules_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
-    androidTestImplementation "com.adevinta.android:barista:$barista_version"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
-    androidTestImplementation "junit:junit:$junit_version"
+    androidTestImplementation dependenciesList.androidXUiAutomator
+    androidTestImplementation dependenciesList.androidXEspressoContrib
+    androidTestImplementation dependenciesList.androidXEspressoCore
+    androidTestImplementation dependenciesList.androidxTestRunner
+    androidTestImplementation dependenciesList.androidxTestRules
+    androidTestImplementation dependenciesList.androidxJunit
+    androidTestImplementation dependenciesList.barista
+    androidTestImplementation dependenciesList.okHttpMockWebServer
+    androidTestImplementation dependenciesList.junit
 }

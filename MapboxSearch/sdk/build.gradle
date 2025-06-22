@@ -21,11 +21,11 @@ apply from: "../gradle/license.gradle"
 apply from: "../gradle/track-public-apis.gradle"
 
 android {
-    compileSdkVersion compile_sdk_version
+    compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -79,43 +79,43 @@ dependencies {
     implementation project(path: ':base')
     api project(path: ':sdk-common')
 
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation dependenciesList.kotlinStdlibJdk8
 
-    implementation "androidx.annotation:annotation:$androidx_annotation_version"
-    implementation "androidx.collection:collection-ktx:$androidx_collection_version"
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
+    implementation dependenciesList.androidxAnnotation
+    implementation dependenciesList.androidxCollection
+    implementation dependenciesList.androidxCore
+    implementation dependenciesList.androidxStartupRuntime
 
-    api "com.mapbox.common:common:$common_sdk_version"
+    api dependenciesList.mapboxCommon
 
-    implementation "com.mapbox.base:annotations:$mapbox_base_version"
+    implementation dependenciesList.mapboxBase
 
-    ktlint "com.pinterest:ktlint:$ktlint_version"
+    ktlint dependenciesList.ktlint
 
-    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
-    testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation dependenciesList.mapboxTestDsl
+    testImplementation dependenciesList.gmazzoOkHttpMock
+    testImplementation dependenciesList.junit
+    testImplementation dependenciesList.mockitoCore
 
-    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation dependenciesList.mockk
     // The following libraries were added for preventing
     // Pitest from crash due to missing libraries in passed
     // classpath.
-    testImplementation "io.mockk:mockk-agent-common:$mockk_version"
-    testImplementation "io.mockk:mockk-agent-api:$mockk_version"
-    testImplementation "io.mockk:mockk-agent-jvm:$mockk_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation dependenciesList.mockkCommon
+    testImplementation dependenciesList.mockkApi
+    testImplementation dependenciesList.mockkJvm
+    testImplementation dependenciesList.kotlinReflect
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
+    testImplementation dependenciesList.jupiterApi
+    testImplementation dependenciesList.jupiterEngine
     testImplementation project(":common-tests")
 
-    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    androidTestImplementation dependenciesList.androidxTestRunner
+    androidTestImplementation dependenciesList.androidxJunit
+    androidTestImplementation dependenciesList.androidXEspressoCore
+    androidTestImplementation dependenciesList.okHttpMockWebServer
     androidTestImplementation project(":common-tests")
 }
 

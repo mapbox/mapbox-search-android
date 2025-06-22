@@ -3,7 +3,7 @@ apply plugin: 'pl.droidsonroids.pitest'
 pitest {
     targetClasses = ['com.mapbox.search.**']
     targetTests = ['**Test**']
-    pitestVersion = pitest_version
+    pitestVersion = toolsVersion.pitest
     avoidCallsTo = ['kotlin.jvm.internal']
     testPlugin = "junit5"
     threads = Runtime.getRuntime().availableProcessors()

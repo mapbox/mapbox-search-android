@@ -19,11 +19,11 @@ apply from: "../gradle/track-public-apis.gradle"
 apply from: "../gradle/track-public-xml-apis.gradle"
 
 android {
-    compileSdkVersion compile_sdk_version
+    compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -73,34 +73,34 @@ dependencies {
     api project(path: ':sdk-common')
     implementation project(path: ':base')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation dependenciesList.kotlinStdlibJdk8
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
+    implementation dependenciesList.kotlinCoroutines
+    implementation dependenciesList.androidxLifecycleRuntimeKtx
 
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    api "com.google.android.material:material:$material_version"
+    implementation dependenciesList.androidxAppcompat
+    implementation dependenciesList.androidxConstraintlayout
+    implementation dependenciesList.androidxRecyclerview
+    implementation dependenciesList.androidxCore
+    api dependenciesList.googleMaterial
 
-    ktlint "com.pinterest:ktlint:$ktlint_version"
+    ktlint dependenciesList.ktlint
 
     testImplementation project(":common-tests")
-    testImplementation "com.mapbox.test.dsl:mapbox-kotlin-test-dsl:$kotlin_test_dsl_version"
-    testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
+    testImplementation dependenciesList.mapboxTestDsl
+    testImplementation dependenciesList.gmazzoOkHttpMock
+    testImplementation dependenciesList.junit
+    testImplementation dependenciesList.mockitoCore
+    testImplementation dependenciesList.mockk
+    testImplementation dependenciesList.jupiterApi
+    testImplementation dependenciesList.jupiterEngine
+    testImplementation dependenciesList.kotlinReflect
+    testImplementation dependenciesList.kotlinCoroutinesTest
 
     androidTestImplementation project(":common-tests")
-    androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
-    androidTestImplementation "com.adevinta.android:barista:$barista_version"
+    androidTestImplementation dependenciesList.androidxTestRunner
+    androidTestImplementation dependenciesList.androidxJunit
+    androidTestImplementation dependenciesList.androidXEspressoCore
+    androidTestImplementation dependenciesList.okHttpMockWebServer
+    androidTestImplementation dependenciesList.barista
 }

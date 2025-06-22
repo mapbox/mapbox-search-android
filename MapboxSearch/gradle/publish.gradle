@@ -1,7 +1,12 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.mapbox.sdkRegistry'
 
-project.archivesBaseName = project.property('mapboxArtifactName')
+def artefactNdkVersionSuffix = ""
+if (project.hasProperty("ndkMajor")) {
+    artefactNdkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+}
+
+project.archivesBaseName = "${project.property('mapboxArtifactName')}$artefactNdkVersionSuffix"
 project.version = project.property('VERSION_NAME')
 group = project.property('mapboxArtifactGroup')
 version = project.property('VERSION_NAME')
@@ -68,7 +73,7 @@ registry {
     sdkName = sdkNameMap[project.name]
     production = true
     snapshot = version.endsWith("-SNAPSHOT")
-    override = snapshot ? true : false
+    override = snapshot
     dryRun = project.properties['sdkRegistryDryRun'] ?: false
     publications = ["MapboxAndroidSDKPublication"]
 }
