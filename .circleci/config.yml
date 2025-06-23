@@ -358,9 +358,9 @@ jobs:
       - run:
           name: Validate declared versions
           command: bash ./scripts/ci-validate-release-version.sh
-      - run:
-          name: Publish to the SDK registry
-          command: bash ./scripts/ci-publish.sh
+#      - run:
+#          name: Publish to the SDK registry
+#          command: bash ./scripts/ci-publish.sh
       - run:
           name: Create PR in the SDK registry repository
           command: bash ./scripts/ci-create-registry-pr.sh
@@ -428,6 +428,9 @@ workflows:
           requires:
             - prepare-and-assemble
       - sample-instrumentation-tests:
+          requires:
+            - prepare-and-assemble
+      - publish-release:
           requires:
             - prepare-and-assemble
       - publish-snapshots:
