@@ -1,12 +1,14 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.mapbox.sdkRegistry'
 
-def artefactNdkVersionSuffix = ""
+def artifactName = ""
 if (project.hasProperty("ndkMajor")) {
-    artefactNdkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+    artifactName = "${project.property('mapboxArtifactName')}-ndk${project.property("ndkMajor")}"
+} else {
+    artifactName = "${project.property('mapboxArtifactName')}"
 }
 
-project.archivesBaseName = "${project.property('mapboxArtifactName')}$artefactNdkVersionSuffix"
+project.archivesBaseName = artifactName
 project.version = project.property('VERSION_NAME')
 group = project.property('mapboxArtifactGroup')
 version = project.property('VERSION_NAME')
@@ -18,7 +20,7 @@ afterEvaluate {
                 from components.release
 
                 groupId project.property('mapboxArtifactGroup')
-                artifactId project.property('mapboxArtifactName')
+                artifactId artifactName
                 version project.property('VERSION_NAME')
 
                 artifact(androidSourcesJar)
