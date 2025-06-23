@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "io.gitlab.arturbosch.detekt:detekt-api:$detekt_version"
-    implementation "io.gitlab.arturbosch.detekt:detekt-test:$detekt_version"
+    implementation dependenciesList.kotlinStdlibJdk8
+    implementation dependenciesList.detektApi
+    implementation dependenciesList.detektTest
 }

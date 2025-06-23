@@ -49,6 +49,7 @@ pushd MapboxSearch/
 if [ "$1" = "--runInstrumentationTests" ]; then
   # TODO start emulator if there's no active
   ./gradlew connectedAndroidTest mergeAndroidReports --continue
+  ./gradlew connectedAndroidTest mergeAndroidReports --continue -PndkMajor=27
 fi
 
 popd

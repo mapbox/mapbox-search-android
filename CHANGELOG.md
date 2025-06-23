@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.14.0-alpha.2
+
+### New features
+- Added support for Android 16 KB page-size devices. To consume SDK compatible with NDK 27 you need to add `-ndk27` suffix to the artifact name, for example, `com.mapbox.search:mapbox-search-android` -> `com.mapbox.search:mapbox-search-android-ndk27`.
+
+### Mapbox dependencies
+- Search Native SDK `2.14.0-alpha.2`
+- Common SDK `24.14.0-alpha.2`
+- Maps SDK `11.14.0-alpha.2`
+
+
+
 ## 2.13.1
 
 ### Mapbox dependencies

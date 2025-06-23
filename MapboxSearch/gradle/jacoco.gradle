@@ -4,7 +4,7 @@ apply from: "../gradle/versions.gradle"
 
 jacoco {
     // Workaround for https://youtrack.jetbrains.com/issue/KT-44757
-    toolVersion = "$jacoco_tool_version"
+    toolVersion = "${toolsVersion.jacoco}"
 }
 
 project.afterEvaluate {

@@ -19,11 +19,11 @@ apply from: "../gradle/license.gradle"
 apply from: "../gradle/track-public-apis.gradle"
 
 android {
-    compileSdkVersion compile_sdk_version
+    compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -76,23 +76,23 @@ android {
 }
 
 dependencies {
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.annotation:annotation:$androidx_annotation_version"
+    implementation dependenciesList.kotlinStdlib
+    implementation dependenciesList.androidxAnnotation
 
-    api "com.mapbox.common:common:$common_sdk_version"
+    api dependenciesList.mapboxCommon
 
-    ktlint "com.pinterest:ktlint:$ktlint_version"
+    ktlint dependenciesList.ktlint
 
-    testImplementation "com.github.gmazzo:okhttp-mock:$okhttp_mock_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation dependenciesList.gmazzoOkHttpMock
+    testImplementation dependenciesList.junit
+    testImplementation dependenciesList.mockitoCore
 
-    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation dependenciesList.mockk
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_5_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_5_version"
+    testImplementation dependenciesList.jupiterApi
+    testImplementation dependenciesList.jupiterEngine
+    testImplementation dependenciesList.jupiterParams
     testImplementation project(":common-tests")
 }

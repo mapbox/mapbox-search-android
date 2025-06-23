@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - offline
+    - offline-ndk27
 
 bundles:
   android: offline-all

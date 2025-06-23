@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - autofill
+    - autofill-ndk27
 
 bundles:
   android: autofill-all

@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - mapbox-search-android-ui
+    - mapbox-search-android-ui-ndk27
 
 bundles:
   android: mapbox-search-android-ui-all

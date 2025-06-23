@@ -40,8 +40,8 @@ android {
 }
 
 dependencies {
-    implementation "com.mapbox.search:mapbox-search-android-ui:2.4.0-rc.2"
-    implementation "com.mapbox.maps:android:11.0.0"
+    implementation "com.mapbox.search:mapbox-search-android-ui:2.13.1"
+    implementation "com.mapbox.maps:android:11.13.1"
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
