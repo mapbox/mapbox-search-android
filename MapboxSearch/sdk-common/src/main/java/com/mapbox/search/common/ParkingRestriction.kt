@@ -36,6 +36,61 @@ public object ParkingRestriction {
     public const val MOTOR_CYCLES: String = "MOTOR_CYCLES"
 
     /**
+     * No parking allowed.
+     */
+    public const val NO_PARKING: String = "NO_PARKING"
+
+    /**
+     * Maximum stay time restriction.
+     */
+    public const val MAX_STAY: String = "MAX_STAY"
+
+    /**
+     * Monthly parking only.
+     */
+    public const val MONTHLY_ONLY: String = "MONTHLY_ONLY"
+
+    /**
+     * No SUV parking allowed.
+     */
+    public const val NO_SUV: String = "NO_SUV"
+
+    /**
+     * No LPG vehicles allowed.
+     */
+    public const val NO_LPG: String = "NO_LPG"
+
+    /**
+     * Valet parking only.
+     */
+    public const val VALET_ONLY: String = "VALET_ONLY"
+
+    /**
+     * Visitors only parking.
+     */
+    public const val VISITORS_ONLY: String = "VISITORS_ONLY"
+
+    /**
+     * Events only parking.
+     */
+    public const val EVENTS_ONLY: String = "EVENTS_ONLY"
+
+    /**
+     * No restrictions outside of specified hours.
+     */
+    public const val NO_RESTRICTIONS_OUTSIDE_HOURS: String = "NO_RESTRICTIONS_OUTSIDE_HOURS"
+
+    /**
+     * Booking required for parking.
+     */
+    public const val BOOKING_ONLY: String = "BOOKING_ONLY"
+
+    /**
+     * Parking disk required.
+     */
+    public const val PARKING_DISK: String = "PARKING_DISK"
+
+    /**
      * Unknown parking restriction.
      */
     public const val UNKNOWN: String = "UNKNOWN"
@@ -50,6 +105,17 @@ public object ParkingRestriction {
         DISABLED,
         CUSTOMERS,
         MOTOR_CYCLES,
+        NO_PARKING,
+        MAX_STAY,
+        MONTHLY_ONLY,
+        NO_SUV,
+        NO_LPG,
+        VALET_ONLY,
+        VISITORS_ONLY,
+        EVENTS_ONLY,
+        NO_RESTRICTIONS_OUTSIDE_HOURS,
+        BOOKING_ONLY,
+        PARKING_DISK,
         UNKNOWN,
     )
     public annotation class Type

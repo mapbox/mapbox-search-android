@@ -7,6 +7,7 @@ import com.mapbox.search.internal.bindgen.ExceptionalPeriod
 import com.mapbox.search.internal.bindgen.LonLatBBox
 import com.mapbox.search.internal.bindgen.OpenMode
 import com.mapbox.search.internal.bindgen.OpenPeriod
+import com.mapbox.search.internal.bindgen.ParkingInfo
 import com.mapbox.search.internal.bindgen.QueryType
 import com.mapbox.search.internal.bindgen.ReverseGeoOptions
 import com.mapbox.search.internal.bindgen.ReverseMode
@@ -117,6 +118,7 @@ fun createCoreResultMetadata(
     timezone: String? = null,
     lastUpdated: String? = null,
     cuisines: List<String>? = null,
+    parkingInfo: ParkingInfo? = null,
 ): CoreResultMetadata = CoreResultMetadata(
     reviewCount = reviewCount,
     phone = phone,
@@ -161,6 +163,7 @@ fun createCoreResultMetadata(
     timezone = timezone,
     lastUpdated = lastUpdated,
     cuisines = cuisines,
+    parkingInfo = parkingInfo,
 )
 
 fun createCoreOpenHours(

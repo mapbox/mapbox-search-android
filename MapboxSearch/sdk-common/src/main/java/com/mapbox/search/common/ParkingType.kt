@@ -36,6 +36,11 @@ public object ParkingType {
     public const val ON_STREET: String = "ON_STREET"
 
     /**
+     * Off-street parking.
+     */
+    public const val OFF_STREET: String = "OFF_STREET"
+
+    /**
      * Multistorey car park, mainly underground.
      */
     public const val UNDERGROUND_GARAGE: String = "UNDERGROUND_GARAGE"
@@ -55,6 +60,7 @@ public object ParkingType {
         PARKING_LOT,
         ON_DRIVEWAY,
         ON_STREET,
+        OFF_STREET,
         UNDERGROUND_GARAGE,
         UNKNOWN,
     )
