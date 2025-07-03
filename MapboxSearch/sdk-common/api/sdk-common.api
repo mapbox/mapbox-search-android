@@ -480,33 +480,6 @@ public final class com/mapbox/search/common/OsmIdUtils {
 	public static final fun fromPoiId (Ljava/lang/String;)Ljava/lang/String;
 }
 
-public final class com/mapbox/search/common/ParkingRestriction {
-	public static final field CUSTOMERS Ljava/lang/String;
-	public static final field DISABLED Ljava/lang/String;
-	public static final field EV_ONLY Ljava/lang/String;
-	public static final field INSTANCE Lcom/mapbox/search/common/ParkingRestriction;
-	public static final field MOTOR_CYCLES Ljava/lang/String;
-	public static final field PLUGGED Ljava/lang/String;
-	public static final field UNKNOWN Ljava/lang/String;
-}
-
-public abstract interface annotation class com/mapbox/search/common/ParkingRestriction$Type : java/lang/annotation/Annotation {
-}
-
-public final class com/mapbox/search/common/ParkingType {
-	public static final field ALONG_MOTORWAY Ljava/lang/String;
-	public static final field INSTANCE Lcom/mapbox/search/common/ParkingType;
-	public static final field ON_DRIVEWAY Ljava/lang/String;
-	public static final field ON_STREET Ljava/lang/String;
-	public static final field PARKING_GARAGE Ljava/lang/String;
-	public static final field PARKING_LOT Ljava/lang/String;
-	public static final field UNDERGROUND_GARAGE Ljava/lang/String;
-	public static final field UNKNOWN Ljava/lang/String;
-}
-
-public abstract interface annotation class com/mapbox/search/common/ParkingType$Type : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class com/mapbox/search/common/RestrictedMapboxSearchAPI : java/lang/annotation/Annotation {
 }
 
@@ -1171,5 +1144,315 @@ public final class com/mapbox/search/common/metadata/WeekTimestamp$Creator : and
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
 	public final fun newArray (I)[Lcom/mapbox/search/common/metadata/WeekTimestamp;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingAvailabilityLevel {
+	public static final field HIGH Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingAvailabilityLevel;
+	public static final field LOW Ljava/lang/String;
+	public static final field MID Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingAvailabilityLevel$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingInfo : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/Integer;Lcom/mapbox/search/common/parking/ParkingRateInfo;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailability ()Ljava/lang/Integer;
+	public final fun getAvailabilityLevel ()Ljava/lang/String;
+	public final fun getAvailabilityUpdatedAt ()Ljava/lang/String;
+	public final fun getCapacity ()Ljava/lang/Integer;
+	public final fun getPaymentMethods ()Ljava/util/List;
+	public final fun getPaymentTypes ()Ljava/util/List;
+	public final fun getRateInfo ()Lcom/mapbox/search/common/parking/ParkingRateInfo;
+	public final fun getRestrictions ()Ljava/util/List;
+	public final fun getTrend ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingPaymentMethod {
+	public static final field ATTENDANT Ljava/lang/String;
+	public static final field ELECTRONIC_PARKING_SYSTEM Ljava/lang/String;
+	public static final field HONESTY_BOX Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingPaymentMethod;
+	public static final field MULTI_SPACE_METER Ljava/lang/String;
+	public static final field PARKING_METER Ljava/lang/String;
+	public static final field PAY_AND_DISPLAY Ljava/lang/String;
+	public static final field PAY_AT_RECEPTION Ljava/lang/String;
+	public static final field PAY_BY_COUPON Ljava/lang/String;
+	public static final field PAY_BY_PHONE Ljava/lang/String;
+	public static final field PAY_BY_PLATE Ljava/lang/String;
+	public static final field PAY_ON_ENTRY Ljava/lang/String;
+	public static final field PAY_ON_EXIT Ljava/lang/String;
+	public static final field PAY_ON_FOOT Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingPaymentMethod$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingPaymentType {
+	public static final field ALIPAY Ljava/lang/String;
+	public static final field CARDS Ljava/lang/String;
+	public static final field CARDS_AMEX Ljava/lang/String;
+	public static final field CARDS_CARTEBLEUE Ljava/lang/String;
+	public static final field CARDS_CASHCARD Ljava/lang/String;
+	public static final field CARDS_CEPAS Ljava/lang/String;
+	public static final field CARDS_DINERS Ljava/lang/String;
+	public static final field CARDS_DISCOVER Ljava/lang/String;
+	public static final field CARDS_EASYCARD Ljava/lang/String;
+	public static final field CARDS_ECASH Ljava/lang/String;
+	public static final field CARDS_FLASHPAY Ljava/lang/String;
+	public static final field CARDS_GELDKARTE Ljava/lang/String;
+	public static final field CARDS_JCB Ljava/lang/String;
+	public static final field CARDS_MAESTRO Ljava/lang/String;
+	public static final field CARDS_MASTERCARD Ljava/lang/String;
+	public static final field CARDS_MONEO Ljava/lang/String;
+	public static final field CARDS_OCTOPUS Ljava/lang/String;
+	public static final field CARDS_OPERATORCARD Ljava/lang/String;
+	public static final field CARDS_SMARTCARD Ljava/lang/String;
+	public static final field CARDS_TELEPEAGE Ljava/lang/String;
+	public static final field CARDS_TOTALGR Ljava/lang/String;
+	public static final field CARDS_TOUCHNGO Ljava/lang/String;
+	public static final field CARDS_VCASHCARD Ljava/lang/String;
+	public static final field CARDS_VISA Ljava/lang/String;
+	public static final field CHEQUE Ljava/lang/String;
+	public static final field COINS Ljava/lang/String;
+	public static final field CONTACTLESS Ljava/lang/String;
+	public static final field EFTPOS Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingPaymentType;
+	public static final field MOBILE Ljava/lang/String;
+	public static final field NOTES Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+	public static final field WECHATPAY Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingPaymentType$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingPriceType {
+	public static final field CUSTOM Ljava/lang/String;
+	public static final field DURATION Ljava/lang/String;
+	public static final field DURATION_ADDITIONAL Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingPriceType;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingPriceType$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingRate : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/List;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxStay ()Ljava/lang/String;
+	public final fun getPrices ()Ljava/util/List;
+	public final fun getTimes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRate$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRate;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRate;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateCustomDurationValue {
+	public static final field BANK_HOLIDAY Ljava/lang/String;
+	public static final field DAYTIME Ljava/lang/String;
+	public static final field EARLY_BIRD Ljava/lang/String;
+	public static final field EVENING Ljava/lang/String;
+	public static final field FLAT_RATE Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingRateCustomDurationValue;
+	public static final field MAX Ljava/lang/String;
+	public static final field MAX_ONLY_ONCE Ljava/lang/String;
+	public static final field MINIMUM Ljava/lang/String;
+	public static final field MONTH Ljava/lang/String;
+	public static final field MONTH_MON_FRI Ljava/lang/String;
+	public static final field MONTH_RESERVED Ljava/lang/String;
+	public static final field MONTH_UNRESERVED Ljava/lang/String;
+	public static final field OVERNIGHT Ljava/lang/String;
+	public static final field QUARTER_MON_FRI Ljava/lang/String;
+	public static final field SIX_MONTHS_MON_FRI Ljava/lang/String;
+	public static final field UNTIL_CLOSING Ljava/lang/String;
+	public static final field WEEKEND Ljava/lang/String;
+	public static final field YEAR_MON_FRI Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingRateCustomDurationValue$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateInfo : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCurrencyCode ()Ljava/lang/String;
+	public final fun getCurrencySymbol ()Ljava/lang/String;
+	public final fun getRates ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateInfo$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRateInfo;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRateInfo;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingRatePrice : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Double;Lcom/mapbox/search/common/parking/ParkingRateValue;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()Ljava/lang/Double;
+	public final fun getType ()Ljava/lang/String;
+	public final fun getValue ()Lcom/mapbox/search/common/parking/ParkingRateValue;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRatePrice$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRatePrice;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRatePrice;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateTime : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/util/List;Ljava/lang/Byte;Ljava/lang/Byte;Ljava/lang/Byte;Ljava/lang/Byte;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDays ()Ljava/util/List;
+	public final fun getFromHour ()Ljava/lang/Byte;
+	public final fun getFromMinute ()Ljava/lang/Byte;
+	public final fun getToHour ()Ljava/lang/Byte;
+	public final fun getToMinute ()Ljava/lang/Byte;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateTime$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRateTime;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRateTime;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public abstract class com/mapbox/search/common/parking/ParkingRateValue : android/os/Parcelable {
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateValue$CustomDurationValue : com/mapbox/search/common/parking/ParkingRateValue {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateValue$CustomDurationValue$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRateValue$CustomDurationValue;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRateValue$CustomDurationValue;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateValue$IsoValue : com/mapbox/search/common/parking/ParkingRateValue {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/parking/ParkingRateValue$IsoValue$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/parking/ParkingRateValue$IsoValue;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/parking/ParkingRateValue$IsoValue;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/parking/ParkingRestriction {
+	public static final field BOOKING_ONLY Ljava/lang/String;
+	public static final field CUSTOMERS Ljava/lang/String;
+	public static final field DISABLED Ljava/lang/String;
+	public static final field EVENTS_ONLY Ljava/lang/String;
+	public static final field EV_ONLY Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingRestriction;
+	public static final field MAX_STAY Ljava/lang/String;
+	public static final field MONTHLY_ONLY Ljava/lang/String;
+	public static final field MOTOR_CYCLES Ljava/lang/String;
+	public static final field NO_LPG Ljava/lang/String;
+	public static final field NO_PARKING Ljava/lang/String;
+	public static final field NO_RESTRICTIONS_OUTSIDE_HOURS Ljava/lang/String;
+	public static final field NO_SUV Ljava/lang/String;
+	public static final field PARKING_DISK Ljava/lang/String;
+	public static final field PLUGGED Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+	public static final field VALET_ONLY Ljava/lang/String;
+	public static final field VISITORS_ONLY Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingRestriction$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingTrend {
+	public static final field DECREASING Ljava/lang/String;
+	public static final field INCREASING Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingTrend;
+	public static final field NO_CHANGE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingTrend$Type : java/lang/annotation/Annotation {
+}
+
+public final class com/mapbox/search/common/parking/ParkingType {
+	public static final field ALONG_MOTORWAY Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/common/parking/ParkingType;
+	public static final field OFF_STREET Ljava/lang/String;
+	public static final field ON_DRIVEWAY Ljava/lang/String;
+	public static final field ON_STREET Ljava/lang/String;
+	public static final field PARKING_GARAGE Ljava/lang/String;
+	public static final field PARKING_LOT Ljava/lang/String;
+	public static final field UNDERGROUND_GARAGE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/common/parking/ParkingType$Type : java/lang/annotation/Annotation {
 }
 

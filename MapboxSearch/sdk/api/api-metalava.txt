@@ -471,6 +471,7 @@ package com.mapbox.search {
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getOtherPhotos();
     method public com.mapbox.search.common.metadata.ParkingData? getParking();
     method public Boolean? getParkingAvailable();
+    method public com.mapbox.search.common.parking.ParkingInfo? getParkingInfo();
     method public String? getPhone();
     method public Float? getPopularity();
     method public String? getPriceLevel();
@@ -511,6 +512,7 @@ package com.mapbox.search {
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos;
     property public final com.mapbox.search.common.metadata.ParkingData? parking;
     property public final Boolean? parkingAvailable;
+    property public final com.mapbox.search.common.parking.ParkingInfo? parkingInfo;
     property public final String? phone;
     property public final Float? popularity;
     property public final String? priceLevel;
@@ -553,6 +555,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchResultMetadata.Builder otherPhotos(java.util.List<com.mapbox.search.common.metadata.ImageInfo>? otherPhotos);
     method public com.mapbox.search.SearchResultMetadata.Builder parking(com.mapbox.search.common.metadata.ParkingData? parking);
     method public com.mapbox.search.SearchResultMetadata.Builder parkingAvailable(Boolean? parkingAvailable);
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.SearchResultMetadata.Builder parkingInfo(com.mapbox.search.common.parking.ParkingInfo? parkingInfo);
     method public com.mapbox.search.SearchResultMetadata.Builder phone(String? phone);
     method public com.mapbox.search.SearchResultMetadata.Builder popularity(Float? popularity);
     method public com.mapbox.search.SearchResultMetadata.Builder priceLevel(String? priceLevel);

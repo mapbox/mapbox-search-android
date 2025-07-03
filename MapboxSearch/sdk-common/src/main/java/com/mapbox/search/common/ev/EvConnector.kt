@@ -3,7 +3,7 @@ package com.mapbox.search.common.ev
 import android.os.Parcelable
 import androidx.annotation.RestrictTo
 import com.mapbox.annotation.MapboxExperimental
-import com.mapbox.search.common.ParkingType
+import com.mapbox.search.common.parking.ParkingType
 import kotlinx.parcelize.Parcelize
 
 /**

@@ -563,7 +563,7 @@ public abstract interface class com/mapbox/search/SearchResultCallback {
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;Ljava/util/List;Lcom/mapbox/search/common/parking/ParkingInfo;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
@@ -584,6 +584,7 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getOtherPhotos ()Ljava/util/List;
 	public final fun getParking ()Lcom/mapbox/search/common/metadata/ParkingData;
 	public final fun getParkingAvailable ()Ljava/lang/Boolean;
+	public final fun getParkingInfo ()Lcom/mapbox/search/common/parking/ParkingInfo;
 	public final fun getPhone ()Ljava/lang/String;
 	public final fun getPopularity ()Ljava/lang/Float;
 	public final fun getPriceLevel ()Ljava/lang/String;
@@ -630,6 +631,7 @@ public final class com/mapbox/search/SearchResultMetadata$Builder {
 	public final fun otherPhotos (Ljava/util/List;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun parking (Lcom/mapbox/search/common/metadata/ParkingData;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun parkingAvailable (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun parkingInfo (Lcom/mapbox/search/common/parking/ParkingInfo;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun phone (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun popularity (Ljava/lang/Float;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun priceLevel (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;

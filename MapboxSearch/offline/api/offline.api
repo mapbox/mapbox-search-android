@@ -407,6 +407,7 @@ public final class com/mapbox/search/offline/OfflineSearchResultMetadata : andro
 	public final fun getOpenHours ()Lcom/mapbox/search/common/metadata/OpenHours;
 	public final fun getOtherPhotos ()Ljava/util/List;
 	public final fun getParkingAvailable ()Ljava/lang/Boolean;
+	public final fun getParkingInfo ()Lcom/mapbox/search/common/parking/ParkingInfo;
 	public final fun getParkingType ()Ljava/lang/String;
 	public final fun getPrimaryPhotos ()Ljava/util/List;
 	public final fun getStreetParking ()Ljava/lang/Boolean;

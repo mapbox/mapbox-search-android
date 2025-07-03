@@ -1,5 +1,22 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.14.0-beta.1
+
+### Experimental API breaking changes
+- Type `com.mapbox.search.common.ParkingRestriction` has been moved to `com.mapbox.search.common.parking.ParkingRestriction`
+- Type `com.mapbox.search.common.ParkingType` has been moved to `com.mapbox.search.common.parking.ParkingType`
+
+### New features
+- Extended list of supported `com.mapbox.search.common.parking.ParkingRestriction` and `com.mapbox.search.common.parking.ParkingType`.
+- Added experimental support for parking metadata, both online and offline, see `SearchResultMetadata.parkingInfo` and `OfflineSearchResultMetadata.parkingInfo`.
+
+### Mapbox dependencies
+- Search Native SDK `2.14.0-beta.1`
+- Common SDK `24.14.0-beta.1`
+- Maps SDK `11.14.0-beta.1`
+
+
+
 ## 2.14.0-alpha.2
 
 ### New features

@@ -1,16 +1,23 @@
+@file:OptIn(MapboxExperimental::class)
+
 package com.mapbox.search
 
 import android.os.Parcelable
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.factory.mapToPlatform
+import com.mapbox.search.base.factory.parking.mapToCore
+import com.mapbox.search.base.factory.parking.mapToPlatform
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.ParkingData
+import com.mapbox.search.common.parking.ParkingInfo
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -275,6 +282,15 @@ public class SearchResultMetadata internal constructor(
     @IgnoredOnParcel
     public val cuisines: List<String>? = coreMetadata.cuisines
 
+    /**
+     * Parking information for POIs that represent parking facilities, e.g., parking lots,
+     * garages, street parking etc.
+     */
+    @IgnoredOnParcel
+    @MapboxExperimental
+    @RestrictedMapboxSearchAPI
+    public val parkingInfo: ParkingInfo? = coreMetadata.parkingInfo?.mapToPlatform()
+
     internal constructor(
         metadata: Map<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -313,6 +329,7 @@ public class SearchResultMetadata internal constructor(
         rating: Float? = null,
         popularity: Float? = null,
         cuisines: List<String>? = null,
+        parkingInfo: ParkingInfo? = null,
     ) : this(
         createCoreResultMetadata(
             reviewCount = reviewCount,
@@ -354,6 +371,7 @@ public class SearchResultMetadata internal constructor(
             // We don't support EV metadata for online search yet
             evMetadata = null,
             cuisines = cuisines,
+            parkingInfo = parkingInfo?.mapToCore(),
         )
     )
 
@@ -400,6 +418,7 @@ public class SearchResultMetadata internal constructor(
             .servesVegetarian(servesVegetarian)
             .rating(rating)
             .popularity(popularity)
+            .parkingInfo(parkingInfo)
     }
 
     /**
@@ -464,7 +483,8 @@ public class SearchResultMetadata internal constructor(
                 "servesVegetarian=$servesVegetarian, " +
                 "rating=$rating, " +
                 "popularity=$popularity, " +
-                "cuisines=$cuisines" +
+                "cuisines=$cuisines, " +
+                "parkingInfo=$parkingInfo" +
                 ")"
     }
 
@@ -510,6 +530,7 @@ public class SearchResultMetadata internal constructor(
         private var rating: Float? = null
         private var popularity: Float? = null
         private var cuisines: List<String>? = null
+        private var parkingInfo: ParkingInfo? = null
 
         /**
          * Sets the metadata for the search result.
@@ -772,6 +793,15 @@ public class SearchResultMetadata internal constructor(
         public fun cuisines(cuisines: List<String>?): Builder = apply { this.cuisines = cuisines }
 
         /**
+         * Sets parking information for POIs that represent parking facilities, e.g., parking lots,
+         * garages, street parking etc.
+         */
+        @MapboxExperimental
+        public fun parkingInfo(parkingInfo: ParkingInfo?): Builder = apply {
+            this.parkingInfo = parkingInfo
+        }
+
+        /**
          * Builds an instance of [SearchResultMetadata] using the provided values.
          * @return A new instance of [SearchResultMetadata].
          */
@@ -814,6 +844,7 @@ public class SearchResultMetadata internal constructor(
                 rating = rating,
                 popularity = popularity,
                 cuisines = cuisines,
+                parkingInfo = parkingInfo,
             )
         }
     }

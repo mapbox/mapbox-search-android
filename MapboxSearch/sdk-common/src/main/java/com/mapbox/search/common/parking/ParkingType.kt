@@ -1,4 +1,4 @@
-package com.mapbox.search.common
+package com.mapbox.search.common.parking
 
 import androidx.annotation.StringDef
 import com.mapbox.annotation.MapboxExperimental
@@ -36,6 +36,11 @@ public object ParkingType {
     public const val ON_STREET: String = "ON_STREET"
 
     /**
+     * Off-street parking spaces that are not located on public streets.
+     */
+    public const val OFF_STREET: String = "OFF_STREET"
+
+    /**
      * Multistorey car park, mainly underground.
      */
     public const val UNDERGROUND_GARAGE: String = "UNDERGROUND_GARAGE"
@@ -55,6 +60,7 @@ public object ParkingType {
         PARKING_LOT,
         ON_DRIVEWAY,
         ON_STREET,
+        OFF_STREET,
         UNDERGROUND_GARAGE,
         UNKNOWN,
     )

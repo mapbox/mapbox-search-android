@@ -4,13 +4,16 @@ import android.os.Parcelable
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.factory.mapToPlatform
+import com.mapbox.search.base.factory.parking.mapToPlatform
 import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.common.Facility
 import com.mapbox.search.common.LocalizedText
-import com.mapbox.search.common.ParkingType
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.ev.EvMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
+import com.mapbox.search.common.parking.ParkingInfo
+import com.mapbox.search.common.parking.ParkingType
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -108,6 +111,15 @@ public class OfflineSearchResultMetadata internal constructor(
     public val lastUpdated: String? = coreMetadata.lastUpdated
 
     /**
+     * Parking information for POIs that represent parking facilities, e.g., parking lots,
+     * garages, street parking etc.
+     */
+    @IgnoredOnParcel
+    @MapboxExperimental
+    @RestrictedMapboxSearchAPI
+    public val parkingInfo: ParkingInfo? = coreMetadata.parkingInfo?.mapToPlatform()
+
+    /**
      * @suppress
      */
     override fun equals(other: Any?): Boolean {
@@ -143,7 +155,8 @@ public class OfflineSearchResultMetadata internal constructor(
                 "evMetadata=$evMetadata, " +
                 "facilities=$facilities, " +
                 "timezone=$timezone, " +
-                "lastUpdated=$lastUpdated" +
+                "lastUpdated=$lastUpdated, " +
+                "parkingInfo=$parkingInfo" +
                 ")"
     }
 }
