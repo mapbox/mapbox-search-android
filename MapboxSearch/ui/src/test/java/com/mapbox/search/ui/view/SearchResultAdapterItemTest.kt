@@ -1,7 +1,10 @@
 package com.mapbox.search.ui.view
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.common.parking.ParkingRateCustomDurationValue
+import com.mapbox.search.common.parking.ParkingRateValue
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
@@ -68,11 +71,20 @@ internal class SearchResultAdapterItemTest {
             listOf(UiError.ClientError, UiError.ServerError)[mode.ordinal]
         }
 
+        @OptIn(MapboxExperimental::class)
+        private val PARKING_RATE_PRICE_CREATOR = CustomTypeObjectCreatorImpl(ParkingRateValue::class) { mode ->
+            listOf(
+                ParkingRateValue.IsoValue("test"),
+                ParkingRateValue.CustomDurationValue(ParkingRateCustomDurationValue.DAYTIME),
+            )[mode.ordinal]
+        }
+
         private val OBJ_FACTORY = ReflectionObjectsFactory(
             extraCreators = UiCustomTypeObjectCreators.ALL_CREATORS +
                     CHAR_SEQUENCE_OBJ_CREATOR +
                     RESPONSE_INFO_CREATOR +
-                    UI_ERROR_CREATOR,
+                    UI_ERROR_CREATOR +
+                    PARKING_RATE_PRICE_CREATOR,
         )
     }
 }

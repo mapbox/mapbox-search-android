@@ -1,12 +1,17 @@
 package com.mapbox.search.tests_support
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
 import com.mapbox.search.RouteOptions
+import com.mapbox.search.base.core.CoreParkingRateCustomValue
+import com.mapbox.search.base.core.CoreParkingRateValue
 import com.mapbox.search.base.core.CoreSearchResponse
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.parking.ParkingRateCustomDurationValue
+import com.mapbox.search.common.parking.ParkingRateValue
 import com.mapbox.search.common.tests.CommonSdkTypeObjectCreators
 import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
@@ -70,6 +75,21 @@ internal object SdkCustomTypeObjectCreators {
         )[mode.ordinal]
     }
 
+    @OptIn(MapboxExperimental::class)
+    val PARKING_RATE_PRICE_CREATOR = CustomTypeObjectCreatorImpl(ParkingRateValue::class) { mode ->
+        listOf(
+            ParkingRateValue.IsoValue("test"),
+            ParkingRateValue.CustomDurationValue(ParkingRateCustomDurationValue.DAYTIME),
+        )[mode.ordinal]
+    }
+
+    val CORE_PARKING_RATE_PRICE_CREATOR = CustomTypeObjectCreatorImpl(CoreParkingRateValue::class) { mode ->
+        listOf(
+            CoreParkingRateValue.valueOf("test"),
+            CoreParkingRateValue.valueOf(CoreParkingRateCustomValue.DAYTIME),
+        )[mode.ordinal]
+    }
+
     internal val ALL_CREATORS = listOf<CustomTypeObjectCreator>(
         ROUTE_OPTIONS_OBJECT_CREATOR,
         WEEK_TIMESTAMP_OBJECT_CREATOR,
@@ -77,5 +97,7 @@ internal object SdkCustomTypeObjectCreators {
         CORE_SEARCH_RESPONSE_CREATOR,
         BASE_RAW_SEARCH_RESULT_OBJECT_CREATOR,
         INDEXABLE_RECORD_OBJECT_CREATOR,
+        PARKING_RATE_PRICE_CREATOR,
+        CORE_PARKING_RATE_PRICE_CREATOR,
     ) + CommonSdkTypeObjectCreators.ALL_CREATORS
 }

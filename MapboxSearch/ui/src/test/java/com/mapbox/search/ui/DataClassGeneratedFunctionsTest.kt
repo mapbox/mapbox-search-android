@@ -1,7 +1,11 @@
 package com.mapbox.search.ui
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
+import com.mapbox.search.common.parking.ParkingRateCustomDurationValue
+import com.mapbox.search.common.parking.ParkingRateValue
 import com.mapbox.search.common.tests.CopyVerifier
+import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.tests.isEnum
@@ -22,8 +26,16 @@ import kotlin.reflect.KClass
  */
 internal class DataClassGeneratedFunctionsTest {
 
+    @OptIn(MapboxExperimental::class)
+    private val parkingRatePriceCreator = CustomTypeObjectCreatorImpl(ParkingRateValue::class) { mode ->
+        listOf(
+            ParkingRateValue.IsoValue("test"),
+            ParkingRateValue.CustomDurationValue(ParkingRateCustomDurationValue.DAYTIME),
+        )[mode.ordinal]
+    }
+
     private val reflectionObjectFactory = ReflectionObjectsFactory(
-        extraCreators = UiCustomTypeObjectCreators.ALL_CREATORS,
+        extraCreators = UiCustomTypeObjectCreators.ALL_CREATORS + parkingRatePriceCreator,
         subclassProvider = this::provideSubclass
     )
 

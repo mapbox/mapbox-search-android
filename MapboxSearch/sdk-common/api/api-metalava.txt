@@ -419,33 +419,6 @@ package com.mapbox.search.common {
     field public static final com.mapbox.search.common.OsmIdUtils INSTANCE;
   }
 
-  @com.mapbox.annotation.MapboxExperimental public final class ParkingRestriction {
-    field public static final String CUSTOMERS = "CUSTOMERS";
-    field public static final String DISABLED = "DISABLED";
-    field public static final String EV_ONLY = "EV_ONLY";
-    field public static final com.mapbox.search.common.ParkingRestriction INSTANCE;
-    field public static final String MOTOR_CYCLES = "MOTOR_CYCLES";
-    field public static final String PLUGGED = "PLUGGED";
-    field public static final String UNKNOWN = "UNKNOWN";
-  }
-
-  @StringDef({com.mapbox.search.common.ParkingRestriction.EV_ONLY, com.mapbox.search.common.ParkingRestriction.PLUGGED, com.mapbox.search.common.ParkingRestriction.DISABLED, com.mapbox.search.common.ParkingRestriction.CUSTOMERS, com.mapbox.search.common.ParkingRestriction.MOTOR_CYCLES, com.mapbox.search.common.ParkingRestriction.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingRestriction.Type {
-  }
-
-  @com.mapbox.annotation.MapboxExperimental public final class ParkingType {
-    field public static final String ALONG_MOTORWAY = "ALONG_MOTORWAY";
-    field public static final com.mapbox.search.common.ParkingType INSTANCE;
-    field public static final String ON_DRIVEWAY = "ON_DRIVEWAY";
-    field public static final String ON_STREET = "ON_STREET";
-    field public static final String PARKING_GARAGE = "PARKING_GARAGE";
-    field public static final String PARKING_LOT = "PARKING_LOT";
-    field public static final String UNDERGROUND_GARAGE = "UNDERGROUND_GARAGE";
-    field public static final String UNKNOWN = "";
-  }
-
-  @StringDef({com.mapbox.search.common.ParkingType.ALONG_MOTORWAY, com.mapbox.search.common.ParkingType.PARKING_GARAGE, com.mapbox.search.common.ParkingType.PARKING_LOT, com.mapbox.search.common.ParkingType.ON_DRIVEWAY, com.mapbox.search.common.ParkingType.ON_STREET, com.mapbox.search.common.ParkingType.UNDERGROUND_GARAGE, com.mapbox.search.common.ParkingType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingType.Type {
-  }
-
   @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface RestrictedMapboxSearchAPI {
   }
 
@@ -917,6 +890,247 @@ package com.mapbox.search.common.metadata {
     property public final com.mapbox.search.common.metadata.WeekDay day;
     property public final int hour;
     property public final int minute;
+  }
+
+}
+
+package com.mapbox.search.common.parking {
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingAvailabilityLevel {
+    field public static final String HIGH = "HIGH";
+    field public static final com.mapbox.search.common.parking.ParkingAvailabilityLevel INSTANCE;
+    field public static final String LOW = "LOW";
+    field public static final String MID = "MID";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingAvailabilityLevel.UNKNOWN, com.mapbox.search.common.parking.ParkingAvailabilityLevel.LOW, com.mapbox.search.common.parking.ParkingAvailabilityLevel.MID, com.mapbox.search.common.parking.ParkingAvailabilityLevel.HIGH}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingAvailabilityLevel.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ParkingInfo implements android.os.Parcelable {
+    ctor public ParkingInfo(Integer? capacity, com.mapbox.search.common.parking.ParkingRateInfo? rateInfo, Integer? availability, @com.mapbox.search.common.parking.ParkingAvailabilityLevel.Type String? availabilityLevel, String? availabilityUpdatedAt, @com.mapbox.search.common.parking.ParkingTrend.Type String? trend, java.util.List<java.lang.String>? paymentMethods, java.util.List<java.lang.String>? paymentTypes, java.util.List<java.lang.String>? restrictions);
+    method public Integer? getAvailability();
+    method public String? getAvailabilityLevel();
+    method public String? getAvailabilityUpdatedAt();
+    method public Integer? getCapacity();
+    method public java.util.List<java.lang.String>? getPaymentMethods();
+    method public java.util.List<java.lang.String>? getPaymentTypes();
+    method public com.mapbox.search.common.parking.ParkingRateInfo? getRateInfo();
+    method public java.util.List<java.lang.String>? getRestrictions();
+    method public String? getTrend();
+    property public final Integer? availability;
+    property public final String? availabilityLevel;
+    property public final String? availabilityUpdatedAt;
+    property public final Integer? capacity;
+    property public final java.util.List<java.lang.String>? paymentMethods;
+    property public final java.util.List<java.lang.String>? paymentTypes;
+    property public final com.mapbox.search.common.parking.ParkingRateInfo? rateInfo;
+    property public final java.util.List<java.lang.String>? restrictions;
+    property public final String? trend;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingPaymentMethod {
+    field public static final String ATTENDANT = "ATTENDANT";
+    field public static final String ELECTRONIC_PARKING_SYSTEM = "ELECTRONIC_PARKING_SYSTEM";
+    field public static final String HONESTY_BOX = "HONESTY_BOX";
+    field public static final com.mapbox.search.common.parking.ParkingPaymentMethod INSTANCE;
+    field public static final String MULTI_SPACE_METER = "MULTI_SPACE_METER";
+    field public static final String PARKING_METER = "PARKING_METER";
+    field public static final String PAY_AND_DISPLAY = "PAY_AND_DISPLAY";
+    field public static final String PAY_AT_RECEPTION = "PAY_AT_RECEPTION";
+    field public static final String PAY_BY_COUPON = "PAY_BY_COUPON";
+    field public static final String PAY_BY_PHONE = "PAY_BY_PHONE";
+    field public static final String PAY_BY_PLATE = "PAY_BY_PLATE";
+    field public static final String PAY_ON_ENTRY = "PAY_ON_ENTRY";
+    field public static final String PAY_ON_EXIT = "PAY_ON_EXIT";
+    field public static final String PAY_ON_FOOT = "PAY_ON_FOOT";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_ON_FOOT, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_AND_DISPLAY, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_ON_EXIT, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_ON_ENTRY, com.mapbox.search.common.parking.ParkingPaymentMethod.PARKING_METER, com.mapbox.search.common.parking.ParkingPaymentMethod.MULTI_SPACE_METER, com.mapbox.search.common.parking.ParkingPaymentMethod.HONESTY_BOX, com.mapbox.search.common.parking.ParkingPaymentMethod.ATTENDANT, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_BY_PLATE, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_AT_RECEPTION, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_BY_PHONE, com.mapbox.search.common.parking.ParkingPaymentMethod.PAY_BY_COUPON, com.mapbox.search.common.parking.ParkingPaymentMethod.ELECTRONIC_PARKING_SYSTEM, com.mapbox.search.common.parking.ParkingPaymentMethod.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingPaymentMethod.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingPaymentType {
+    field public static final String ALIPAY = "ALIPAY";
+    field public static final String CARDS = "CARDS";
+    field public static final String CARDS_AMEX = "CARDS_AMEX";
+    field public static final String CARDS_CARTEBLEUE = "CARDS_CARTEBLEUE";
+    field public static final String CARDS_CASHCARD = "CARDS_CASHCARD";
+    field public static final String CARDS_CEPAS = "CARDS_CEPAS";
+    field public static final String CARDS_DINERS = "CARDS_DINERS";
+    field public static final String CARDS_DISCOVER = "CARDS_DISCOVER";
+    field public static final String CARDS_EASYCARD = "CARDS_EASYCARD";
+    field public static final String CARDS_ECASH = "CARDS_ECASH";
+    field public static final String CARDS_FLASHPAY = "CARDS_FLASHPAY";
+    field public static final String CARDS_GELDKARTE = "CARDS_GELDKARTE";
+    field public static final String CARDS_JCB = "CARDS_JCB";
+    field public static final String CARDS_MAESTRO = "CARDS_MAESTRO";
+    field public static final String CARDS_MASTERCARD = "CARDS_MASTERCARD";
+    field public static final String CARDS_MONEO = "CARDS_MONEO";
+    field public static final String CARDS_OCTOPUS = "CARDS_OCTOPUS";
+    field public static final String CARDS_OPERATORCARD = "CARDS_OPERATORCARD";
+    field public static final String CARDS_SMARTCARD = "CARDS_SMARTCARD";
+    field public static final String CARDS_TELEPEAGE = "CARDS_TELEPEAGE";
+    field public static final String CARDS_TOTALGR = "CARDS_TOTALGR";
+    field public static final String CARDS_TOUCHNGO = "CARDS_TOUCHNGO";
+    field public static final String CARDS_VCASHCARD = "CARDS_VCASHCARD";
+    field public static final String CARDS_VISA = "CARDS_VISA";
+    field public static final String CHEQUE = "CHEQUE";
+    field public static final String COINS = "COINS";
+    field public static final String CONTACTLESS = "CONTACTLESS";
+    field public static final String EFTPOS = "EFTPOS";
+    field public static final com.mapbox.search.common.parking.ParkingPaymentType INSTANCE;
+    field public static final String MOBILE = "MOBILE";
+    field public static final String NOTES = "NOTES";
+    field public static final String UNKNOWN = "UNKNOWN";
+    field public static final String WECHATPAY = "WECHATPAY";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingPaymentType.COINS, com.mapbox.search.common.parking.ParkingPaymentType.NOTES, com.mapbox.search.common.parking.ParkingPaymentType.CONTACTLESS, com.mapbox.search.common.parking.ParkingPaymentType.CARDS, com.mapbox.search.common.parking.ParkingPaymentType.MOBILE, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_VISA, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_MASTERCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_AMEX, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_MAESTRO, com.mapbox.search.common.parking.ParkingPaymentType.EFTPOS, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_DINERS, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_GELDKARTE, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_DISCOVER, com.mapbox.search.common.parking.ParkingPaymentType.CHEQUE, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_ECASH, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_JCB, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_OPERATORCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_SMARTCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_TELEPEAGE, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_TOTALGR, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_MONEO, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_FLASHPAY, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_CASHCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_VCASHCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_CEPAS, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_OCTOPUS, com.mapbox.search.common.parking.ParkingPaymentType.ALIPAY, com.mapbox.search.common.parking.ParkingPaymentType.WECHATPAY, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_EASYCARD, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_CARTEBLEUE, com.mapbox.search.common.parking.ParkingPaymentType.CARDS_TOUCHNGO, com.mapbox.search.common.parking.ParkingPaymentType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingPaymentType.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingPriceType {
+    field public static final String CUSTOM = "CUSTOM";
+    field public static final String DURATION = "DURATION";
+    field public static final String DURATION_ADDITIONAL = "DURATION_ADDITIONAL";
+    field public static final com.mapbox.search.common.parking.ParkingPriceType INSTANCE;
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingPriceType.DURATION, com.mapbox.search.common.parking.ParkingPriceType.DURATION_ADDITIONAL, com.mapbox.search.common.parking.ParkingPriceType.CUSTOM}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingPriceType.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ParkingRate implements android.os.Parcelable {
+    ctor public ParkingRate(String? maxStay, java.util.List<com.mapbox.search.common.parking.ParkingRateTime>? times, java.util.List<com.mapbox.search.common.parking.ParkingRatePrice>? prices);
+    method public String? getMaxStay();
+    method public java.util.List<com.mapbox.search.common.parking.ParkingRatePrice>? getPrices();
+    method public java.util.List<com.mapbox.search.common.parking.ParkingRateTime>? getTimes();
+    property public final String? maxStay;
+    property public final java.util.List<com.mapbox.search.common.parking.ParkingRatePrice>? prices;
+    property public final java.util.List<com.mapbox.search.common.parking.ParkingRateTime>? times;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingRateCustomDurationValue {
+    field public static final String BANK_HOLIDAY = "BANK_HOLIDAY";
+    field public static final String DAYTIME = "DAYTIME";
+    field public static final String EARLY_BIRD = "EARLY_BIRD";
+    field public static final String EVENING = "EVENING";
+    field public static final String FLAT_RATE = "FLAT_RATE";
+    field public static final com.mapbox.search.common.parking.ParkingRateCustomDurationValue INSTANCE;
+    field public static final String MAX = "MAX";
+    field public static final String MAX_ONLY_ONCE = "MAX_ONLY_ONCE";
+    field public static final String MINIMUM = "MINIMUM";
+    field public static final String MONTH = "MONTH";
+    field public static final String MONTH_MON_FRI = "MONTH_MON_FRI";
+    field public static final String MONTH_RESERVED = "MONTH_RESERVED";
+    field public static final String MONTH_UNRESERVED = "MONTH_UNRESERVED";
+    field public static final String OVERNIGHT = "OVERNIGHT";
+    field public static final String QUARTER_MON_FRI = "QUARTER_MON_FRI";
+    field public static final String SIX_MONTHS_MON_FRI = "SIX_MONTHS_MON_FRI";
+    field public static final String UNTIL_CLOSING = "UNTIL_CLOSING";
+    field public static final String WEEKEND = "WEEKEND";
+    field public static final String YEAR_MON_FRI = "YEAR_MON_FRI";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingRateCustomDurationValue.SIX_MONTHS_MON_FRI, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.BANK_HOLIDAY, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.DAYTIME, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.EARLY_BIRD, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.EVENING, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.FLAT_RATE, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MAX, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MAX_ONLY_ONCE, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MINIMUM, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MONTH, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MONTH_MON_FRI, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MONTH_RESERVED, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.MONTH_UNRESERVED, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.OVERNIGHT, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.QUARTER_MON_FRI, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.UNTIL_CLOSING, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.WEEKEND, com.mapbox.search.common.parking.ParkingRateCustomDurationValue.YEAR_MON_FRI}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingRateCustomDurationValue.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ParkingRateInfo implements android.os.Parcelable {
+    ctor public ParkingRateInfo(String? currencySymbol, String? currencyCode, java.util.List<com.mapbox.search.common.parking.ParkingRate>? rates);
+    method public String? getCurrencyCode();
+    method public String? getCurrencySymbol();
+    method public java.util.List<com.mapbox.search.common.parking.ParkingRate>? getRates();
+    property public final String? currencyCode;
+    property public final String? currencySymbol;
+    property public final java.util.List<com.mapbox.search.common.parking.ParkingRate>? rates;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ParkingRatePrice implements android.os.Parcelable {
+    ctor public ParkingRatePrice(@com.mapbox.search.common.parking.ParkingPriceType.Type String? type, Double? amount, com.mapbox.search.common.parking.ParkingRateValue? value);
+    method public Double? getAmount();
+    method public String? getType();
+    method public com.mapbox.search.common.parking.ParkingRateValue? getValue();
+    property public final Double? amount;
+    property public final String? type;
+    property public final com.mapbox.search.common.parking.ParkingRateValue? value;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ParkingRateTime implements android.os.Parcelable {
+    ctor public ParkingRateTime(java.util.List<? extends com.mapbox.search.common.metadata.WeekDay>? days, Byte? fromHour, Byte? fromMinute, Byte? toHour, Byte? toMinute);
+    method public java.util.List<com.mapbox.search.common.metadata.WeekDay>? getDays();
+    method public Byte? getFromHour();
+    method public Byte? getFromMinute();
+    method public Byte? getToHour();
+    method public Byte? getToMinute();
+    property public final java.util.List<com.mapbox.search.common.metadata.WeekDay>? days;
+    property public final Byte? fromHour;
+    property public final Byte? fromMinute;
+    property public final Byte? toHour;
+    property public final Byte? toMinute;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public abstract class ParkingRateValue implements android.os.Parcelable {
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ParkingRateValue.CustomDurationValue extends com.mapbox.search.common.parking.ParkingRateValue {
+    ctor public ParkingRateValue.CustomDurationValue(String value);
+    method public String getValue();
+    property public final String value;
+  }
+
+  @kotlinx.parcelize.Parcelize public static final class ParkingRateValue.IsoValue extends com.mapbox.search.common.parking.ParkingRateValue {
+    ctor public ParkingRateValue.IsoValue(String value);
+    method public String getValue();
+    property public final String value;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingRestriction {
+    field public static final String BOOKING_ONLY = "BOOKING_ONLY";
+    field public static final String CUSTOMERS = "CUSTOMERS";
+    field public static final String DISABLED = "DISABLED";
+    field public static final String EVENTS_ONLY = "EVENTS_ONLY";
+    field public static final String EV_ONLY = "EV_ONLY";
+    field public static final com.mapbox.search.common.parking.ParkingRestriction INSTANCE;
+    field public static final String MAX_STAY = "MAX_STAY";
+    field public static final String MONTHLY_ONLY = "MONTHLY_ONLY";
+    field public static final String MOTOR_CYCLES = "MOTOR_CYCLES";
+    field public static final String NO_LPG = "NO_LPG";
+    field public static final String NO_PARKING = "NO_PARKING";
+    field public static final String NO_RESTRICTIONS_OUTSIDE_HOURS = "NO_RESTRICTIONS_OUTSIDE_HOURS";
+    field public static final String NO_SUV = "NO_SUV";
+    field public static final String PARKING_DISK = "PARKING_DISK";
+    field public static final String PLUGGED = "PLUGGED";
+    field public static final String UNKNOWN = "UNKNOWN";
+    field public static final String VALET_ONLY = "VALET_ONLY";
+    field public static final String VISITORS_ONLY = "VISITORS_ONLY";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingRestriction.EV_ONLY, com.mapbox.search.common.parking.ParkingRestriction.PLUGGED, com.mapbox.search.common.parking.ParkingRestriction.DISABLED, com.mapbox.search.common.parking.ParkingRestriction.CUSTOMERS, com.mapbox.search.common.parking.ParkingRestriction.MOTOR_CYCLES, com.mapbox.search.common.parking.ParkingRestriction.NO_PARKING, com.mapbox.search.common.parking.ParkingRestriction.MAX_STAY, com.mapbox.search.common.parking.ParkingRestriction.MONTHLY_ONLY, com.mapbox.search.common.parking.ParkingRestriction.NO_SUV, com.mapbox.search.common.parking.ParkingRestriction.NO_LPG, com.mapbox.search.common.parking.ParkingRestriction.VALET_ONLY, com.mapbox.search.common.parking.ParkingRestriction.VISITORS_ONLY, com.mapbox.search.common.parking.ParkingRestriction.EVENTS_ONLY, com.mapbox.search.common.parking.ParkingRestriction.NO_RESTRICTIONS_OUTSIDE_HOURS, com.mapbox.search.common.parking.ParkingRestriction.BOOKING_ONLY, com.mapbox.search.common.parking.ParkingRestriction.PARKING_DISK, com.mapbox.search.common.parking.ParkingRestriction.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingRestriction.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingTrend {
+    field public static final String DECREASING = "DECREASING";
+    field public static final String INCREASING = "INCREASING";
+    field public static final com.mapbox.search.common.parking.ParkingTrend INSTANCE;
+    field public static final String NO_CHANGE = "NO_CHANGE";
+    field public static final String UNKNOWN = "UNKNOWN";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingTrend.NO_CHANGE, com.mapbox.search.common.parking.ParkingTrend.DECREASING, com.mapbox.search.common.parking.ParkingTrend.INCREASING, com.mapbox.search.common.parking.ParkingTrend.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingTrend.Type {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public final class ParkingType {
+    field public static final String ALONG_MOTORWAY = "ALONG_MOTORWAY";
+    field public static final com.mapbox.search.common.parking.ParkingType INSTANCE;
+    field public static final String OFF_STREET = "OFF_STREET";
+    field public static final String ON_DRIVEWAY = "ON_DRIVEWAY";
+    field public static final String ON_STREET = "ON_STREET";
+    field public static final String PARKING_GARAGE = "PARKING_GARAGE";
+    field public static final String PARKING_LOT = "PARKING_LOT";
+    field public static final String UNDERGROUND_GARAGE = "UNDERGROUND_GARAGE";
+    field public static final String UNKNOWN = "";
+  }
+
+  @StringDef({com.mapbox.search.common.parking.ParkingType.ALONG_MOTORWAY, com.mapbox.search.common.parking.ParkingType.PARKING_GARAGE, com.mapbox.search.common.parking.ParkingType.PARKING_LOT, com.mapbox.search.common.parking.ParkingType.ON_DRIVEWAY, com.mapbox.search.common.parking.ParkingType.ON_STREET, com.mapbox.search.common.parking.ParkingType.OFF_STREET, com.mapbox.search.common.parking.ParkingType.UNDERGROUND_GARAGE, com.mapbox.search.common.parking.ParkingType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface ParkingType.Type {
   }
 
 }

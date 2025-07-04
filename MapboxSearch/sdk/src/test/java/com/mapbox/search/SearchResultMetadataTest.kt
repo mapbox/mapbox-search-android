@@ -1,11 +1,23 @@
+@file:OptIn(MapboxExperimental::class, RestrictedMapboxSearchAPI::class)
+
 package com.mapbox.search
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreChildMetadata
+import com.mapbox.search.base.core.CoreParkingAvailabilityLevel
+import com.mapbox.search.base.core.CoreParkingInfo
+import com.mapbox.search.base.core.CoreParkingPaymentMethod
+import com.mapbox.search.base.core.CoreParkingPaymentType
+import com.mapbox.search.base.core.CoreParkingRestriction
+import com.mapbox.search.base.core.CoreParkingTrend
 import com.mapbox.search.base.core.createCoreResultMetadata
 import com.mapbox.search.base.factory.mapToCore
+import com.mapbox.search.base.factory.parking.mapToCore
+import com.mapbox.search.base.factory.parking.mapToPlatform
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
@@ -76,6 +88,18 @@ internal class SearchResultMetadataTest {
                 )
             )
 
+            val parkingInfo = CoreParkingInfo(
+                capacity = 100,
+                rateInfo = null,
+                availability = 75,
+                availabilityLevel = CoreParkingAvailabilityLevel.HIGH,
+                availabilityAt = "test",
+                trend = CoreParkingTrend.INCREASING,
+                paymentMethods = listOf(CoreParkingPaymentMethod.PARKING_METER),
+                paymentTypes = listOf(CoreParkingPaymentType.CARDS),
+                restrictions = listOf(CoreParkingRestriction.NO_LPG),
+            )
+
             val originalCoreMeta = createCoreResultMetadata(
                 reviewCount = 243,
                 phone = "+7 939 32 12",
@@ -114,6 +138,7 @@ internal class SearchResultMetadataTest {
                 rating = 5.0f,
                 popularity = 0.5f,
                 cuisines = listOf("french", "spanish"),
+                parkingInfo = parkingInfo,
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -266,6 +291,10 @@ internal class SearchResultMetadataTest {
 
                 Verify("CoreResultMetadata.getCuisines() called") {
                     spyCoreMeta.cuisines
+                }
+
+                Verify("CoreResultMetadata.parkingInfo() called") {
+                    spyCoreMeta.parkingInfo
                 }
             }
 
@@ -514,6 +543,12 @@ internal class SearchResultMetadataTest {
                 }
             }
 
+            When("parkingInfo accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(originalCoreMeta.parkingInfo, metadata.parkingInfo?.mapToCore())
+                }
+            }
+
             When("toString() called") {
                 val value = metadata.toString()
                 Then(
@@ -557,7 +592,8 @@ internal class SearchResultMetadataTest {
                             "servesVegetarian=${originalCoreMeta.servesVegetarian}, " +
                             "rating=${originalCoreMeta.rating}, " +
                             "popularity=${originalCoreMeta.popularity}, " +
-                            "cuisines=${originalCoreMeta.cuisines}" +
+                            "cuisines=${originalCoreMeta.cuisines}, " +
+                            "parkingInfo=${parkingInfo.mapToPlatform()}" +
                             ")",
                     value
                 )
