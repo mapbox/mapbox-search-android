@@ -1,3 +1,5 @@
+@file:OptIn(RestrictedMapboxSearchAPI::class)
+
 package com.mapbox.search.offline
 
 import android.os.Parcelable

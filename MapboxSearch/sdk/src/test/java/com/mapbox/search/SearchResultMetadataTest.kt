@@ -1,4 +1,4 @@
-@file:OptIn(MapboxExperimental::class)
+@file:OptIn(MapboxExperimental::class, RestrictedMapboxSearchAPI::class)
 
 package com.mapbox.search
 
@@ -17,6 +17,7 @@ import com.mapbox.search.base.factory.parking.mapToCore
 import com.mapbox.search.base.factory.parking.mapToPlatform
 import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.mapToPlatform
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.metadata.ChildMetadata
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours

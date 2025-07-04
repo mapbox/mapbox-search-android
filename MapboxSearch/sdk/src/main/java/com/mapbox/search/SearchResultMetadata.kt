@@ -1,4 +1,4 @@
-@file:OptIn(MapboxExperimental::class)
+@file:OptIn(MapboxExperimental::class, RestrictedMapboxSearchAPI::class)
 
 package com.mapbox.search
 
