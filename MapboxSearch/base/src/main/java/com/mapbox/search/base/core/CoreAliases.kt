@@ -10,6 +10,7 @@ typealias CoreSearchEngine = com.mapbox.search.internal.bindgen.SearchEngine
 typealias CoreEngineOptions = com.mapbox.search.internal.bindgen.EngineOptions
 typealias CoreSearchEngineInterface = com.mapbox.search.internal.bindgen.SearchEngineInterface
 typealias CoreSearchOptions = com.mapbox.search.internal.bindgen.SearchOptions
+typealias CoreBrandSearchOptions = com.mapbox.search.internal.bindgen.BrandSearchOptions
 typealias CoreSearchResponse = com.mapbox.search.internal.bindgen.SearchResponse
 typealias CoreSearchResult = com.mapbox.search.internal.bindgen.SearchResult
 typealias CoreSuggestAction = com.mapbox.search.internal.bindgen.SuggestAction

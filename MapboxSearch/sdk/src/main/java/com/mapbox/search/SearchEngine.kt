@@ -4,6 +4,7 @@ import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.StubCompletionCallback
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -325,6 +326,55 @@ public interface SearchEngine {
         callback: SearchCallback,
     ): AsyncOperationTask = search(
         categoryNames = categoryNames,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
+
+    /**
+     * Performs a search request for places based on a brand name. This functionality is only
+     * supported for a [SearchEngine] with [ApiType.SEARCH_BOX]. For other api types [callback]
+     * will be called with [UnsupportedOperationException] immediately.
+     *
+     * This API is available for selected customers only. Contact our [sales](https://www.mapbox.com/contact/sales)
+     * team to access brand search API.
+     *
+     * @param brandName Name of a brand to search.
+     * @param options Brand search options.
+     * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
+     * @param callback Search callback to retrieve results.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    @RestrictedMapboxSearchAPI
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public fun brandSearch(
+        brandName: String,
+        options: BrandSearchOptions,
+        executor: Executor,
+        callback: SearchCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Performs a search request for places based on a brand name. This functionality is only
+     * supported for a [SearchEngine] with [ApiType.SEARCH_BOX]. For other api types [callback]
+     * will be called with [UnsupportedOperationException] immediately.
+     *
+     * This API is available for selected customers only. Contact our [sales](https://www.mapbox.com/contact/sales)
+     * team to access brand search API.
+     *
+     * @param brandName Name of a brand to search.
+     * @param options Brand search options.
+     * @param callback Search callback to retrieve results. Events are dispatched on the main thread.
+     * @return [AsyncOperationTask] object representing pending completion of the request.
+     */
+    @RestrictedMapboxSearchAPI
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public fun brandSearch(
+        brandName: String,
+        options: BrandSearchOptions,
+        callback: SearchCallback,
+    ): AsyncOperationTask = brandSearch(
+        brandName = brandName,
         options = options,
         executor = SearchSdkMainThreadWorker.mainExecutor,
         callback = callback,

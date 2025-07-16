@@ -5,6 +5,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
 import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.mapbox.search.sample.api.AddressAutofillKotlinExampleActivity
+import com.mapbox.search.sample.api.BrandSearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CategorySearchJavaExampleActivity
 import com.mapbox.search.sample.api.CategorySearchKotlinExampleActivity
 import com.mapbox.search.sample.api.CustomIndexableDataProviderJavaExample
@@ -83,6 +84,8 @@ class ExampleActivitiesTest(private val clazz: Class<out Activity>) {
 
             CategorySearchKotlinExampleActivity::class.java,
             CategorySearchJavaExampleActivity::class.java,
+
+            BrandSearchKotlinExampleActivity::class.java,
 
             OfflineSearchKotlinExampleActivity::class.java,
             OfflineSearchJavaExampleActivity::class.java,
