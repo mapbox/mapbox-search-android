@@ -55,6 +55,7 @@ internal class BrandSearchOptionsTest {
         assertNull(options.countries)
         assertNull(options.limit)
         assertNull(options.showClosedPOIs)
+        assertNull(options.unsafeParameters)
         assertEquals(TestObjects.TEST_LOCALE.language, options.language?.code)
     }
 
@@ -67,6 +68,7 @@ internal class BrandSearchOptionsTest {
             language = IsoLanguageCode.FRENCH,
             limit = 15,
             showClosedPOIs = true,
+            unsafeParameters = mapOf("arg1" to "val1", "arg2" to "val2")
         )
 
         val testQuery = "test-brand-name"
@@ -81,5 +83,6 @@ internal class BrandSearchOptionsTest {
         )
         assertEquals(options.limit, core.limit)
         assertEquals(options.showClosedPOIs, core.showClosedPois)
+        assertEquals(options.unsafeParameters, core.addonAPI)
     }
 }
