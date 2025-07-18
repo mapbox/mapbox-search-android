@@ -57,6 +57,7 @@
         <activity android:name=".api.ReverseGeocodingJavaExampleActivity" />
         <activity android:name=".api.CategorySearchKotlinExampleActivity" />
         <activity android:name=".api.CategorySearchJavaExampleActivity" />
+        <activity android:name=".api.BrandSearchKotlinExampleActivity" />
         <activity android:name=".api.OfflineSearchKotlinExampleActivity" />
         <activity android:name=".api.OfflineSearchJavaExampleActivity" />
         <activity android:name=".api.OfflineReverseGeocodingKotlinExampleActivity" />

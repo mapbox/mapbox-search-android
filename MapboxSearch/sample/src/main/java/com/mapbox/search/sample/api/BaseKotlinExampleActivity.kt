@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.gson.GsonBuilder
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.offline.OfflineSearchResult
+import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
 
 @OptIn(MapboxExperimental::class)
@@ -79,6 +80,10 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
         printMessage("Results:\n${results.joinToString(separator = "\n") { it.toPrettyString() }}")
     }
 
+    protected fun printSearchResults(results: List<SearchResult>) {
+        printMessage("Results:\n${results.joinToString(separator = "\n") { it.toPrettyString() }}")
+    }
+
     @SuppressLint("SetTextI18n")
     private fun appendToLogMsg(message: String) {
         logTextView.text = "${logTextView.text}\n$message"
@@ -105,6 +110,26 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
                     "\tcoordinate=$coordinate,\n" +
                     "\troutablePoints=$routablePoints,\n" +
                     "\tnewType=$newType,\n" +
+                    "\tdistanceMeters=$distanceMeters,\n" +
+                    "\tmetadata=$metadata\n" +
+                    ")"
+        }
+
+        fun SearchResult.toPrettyString(): String {
+            return "SearchResult(\n" +
+                    "\tid='$id',\n" +
+                    "\tmapboxId='$mapboxId',\n" +
+                    "\tname='$name',\n" +
+                    "\tmatchingName='$matchingName',\n" +
+                    "\tdescriptionText=$descriptionText,\n" +
+                    "\taddress=$address,\n" +
+                    "\tfullAddress=$fullAddress,\n" +
+                    "\tcoordinate=$coordinate,\n" +
+                    "\troutablePoints=$routablePoints,\n" +
+                    "\tboundingBox=$boundingBox,\n" +
+                    "\tcategories=$categories,\n" +
+                    "\tcategoryIds=$categoryIds,\n" +
+                    "\ttypes=$types,\n" +
                     "\tdistanceMeters=$distanceMeters,\n" +
                     "\tmetadata=$metadata\n" +
                     ")"

@@ -1,3 +1,5 @@
+@file:OptIn(RestrictedMapboxSearchAPI::class)
+
 package com.mapbox.search
 
 import com.mapbox.common.BaseMapboxInitializer
@@ -31,6 +33,7 @@ import com.mapbox.search.base.result.mapToCore
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -361,6 +364,40 @@ internal class SearchEngineImpl(
                 "",
                 categoryNames,
                 options.mapToCoreCategory(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = requestContext,
+                    isOffline = false,
+                )
+            )
+            task.addOnCancelledCallback {
+                coreEngine.cancel(requestId)
+            }
+        }
+    }
+
+    override fun brandSearch(
+        brandName: String,
+        options: BrandSearchOptions,
+        executor: Executor,
+        callback: SearchCallback
+    ): AsyncOperationTask {
+        activityReporter.reportActivity("search-engine-brand-search")
+
+        if (apiType != ApiType.SEARCH_BOX) {
+            executor.execute {
+                callback.onError(UnsupportedOperationException("Supported only for the SEARCH_BOX api type"))
+            }
+            return AsyncOperationTaskImpl.COMPLETED
+        }
+
+        return makeRequest(BaseSearchCallbackAdapter(callback)) { task ->
+            val requestContext = requestContextProvider.provide(apiType.mapToCore())
+            val requestId = coreEngine.brandSearch(
+                options.mapToCoreBrandOptions(brandName),
                 OneStepRequestCallbackWrapper(
                     searchResultFactory = searchResultFactory,
                     callbackExecutor = executor,

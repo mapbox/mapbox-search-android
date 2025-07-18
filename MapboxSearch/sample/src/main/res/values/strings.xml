@@ -34,6 +34,7 @@
     <string name="action_open_custom_data_provider_kt_example">Custom data provider</string>
     <string name="action_open_details_api_kt_example">Details API</string>
     <string name="action_open_forward_api_kt_example">Forward API</string>
+    <string name="action_open_brand_search_kt_example">Brand Search</string>
 
     <string name="action_open_offline_search_along_route_example">Offline Search Along Route</string>
 
