@@ -54,6 +54,14 @@ public class BrandSearchOptions @JvmOverloads public constructor(
      * Determines whether to return “closed” POIs.
      */
     public val showClosedPOIs: Boolean? = null,
+
+    /**
+     * Non-verified query parameters, that will be added to the server API request.
+     *
+     * Note: Incorrect usage of this parameter may cause failed or malformed response.
+     * Do not use it without SDK developers agreement.
+     */
+    public val unsafeParameters: Map<String, String>? = null,
 ) : Parcelable {
 
     init {
@@ -71,6 +79,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
         language: IsoLanguageCode? = this.language,
         limit: Int? = this.limit,
         showClosedPOIs: Boolean? = this.showClosedPOIs,
+        unsafeParameters: Map<String, String>? = this.unsafeParameters,
     ): BrandSearchOptions {
         return BrandSearchOptions(
             proximity = proximity,
@@ -79,6 +88,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
             language = language,
             limit = limit,
             showClosedPOIs = showClosedPOIs,
+            unsafeParameters = unsafeParameters,
         )
     }
 
@@ -104,6 +114,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
         if (boundingBox != other.boundingBox) return false
         if (countries != other.countries) return false
         if (language != other.language) return false
+        if (unsafeParameters != other.unsafeParameters) return false
 
         return true
     }
@@ -118,6 +129,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
         result = 31 * result + (boundingBox?.hashCode() ?: 0)
         result = 31 * result + (countries?.hashCode() ?: 0)
         result = 31 * result + (language?.hashCode() ?: 0)
+        result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         return result
     }
 
@@ -131,7 +143,8 @@ public class BrandSearchOptions @JvmOverloads public constructor(
                 "countries=$countries, " +
                 "language=$language, " +
                 "limit=$limit, " +
-                "showClosedPOIs=$showClosedPOIs" +
+                "showClosedPOIs=$showClosedPOIs, " +
+                "unsafeParameters=$unsafeParameters" +
                 ")"
     }
 
@@ -147,6 +160,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
         private var language: IsoLanguageCode? = defaultLocaleLanguage()
         private var limit: Int? = null
         private var showClosedPOIs: Boolean? = null
+        private var unsafeParameters: Map<String, String>? = null
 
         internal constructor(options: BrandSearchOptions) : this() {
             proximity = options.proximity
@@ -195,6 +209,16 @@ public class BrandSearchOptions @JvmOverloads public constructor(
         public fun showClosedPOIs(showClosedPOIs: Boolean): Builder = apply { this.showClosedPOIs = showClosedPOIs }
 
         /**
+         * Non-verified query parameters, that will be added to the server API request.
+         *
+         * Note: Incorrect usage of this parameter may cause failed or malformed response.
+         * Do not use it without SDK developers agreement.
+         */
+        public fun unsafeParameters(unsafeParameters: Map<String, String>): Builder = apply {
+            this.unsafeParameters = unsafeParameters
+        }
+
+        /**
          * Create [BrandSearchOptions] instance from builder data.
          */
         public fun build(): BrandSearchOptions = BrandSearchOptions(
@@ -204,6 +228,7 @@ public class BrandSearchOptions @JvmOverloads public constructor(
             language = language,
             limit = limit,
             showClosedPOIs = showClosedPOIs,
+            unsafeParameters = unsafeParameters,
         )
     }
 }
@@ -220,5 +245,6 @@ internal fun BrandSearchOptions.mapToCoreBrandOptions(query: String): CoreBrandS
         countries = countries?.map { it.code },
         bbox = boundingBox?.mapToCore(),
         showClosedPois = showClosedPOIs,
+        addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     )
 }

@@ -1,14 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.14.0-rc.1-SNAPSHOT
+## 2.14.0-rc.1
 
 ### New features
 - Added support for brand search via `SearchEngine.brandSearch()`. Note that the Brand API is available only to selected customers. Please contact our [sales](https://www.mapbox.com/contact/sales) team for access.
 
 ### Mapbox dependencies
-- Search Native SDK `2.14.0-beta.1`
-- Common SDK `24.14.0-beta.1`
-- Maps SDK `11.14.0-beta.1`
+- Search Native SDK `2.14.0-rc.1`
+- Common SDK `24.14.0-rc.1`
+- Maps SDK `11.14.0-rc.1`
 
 
 

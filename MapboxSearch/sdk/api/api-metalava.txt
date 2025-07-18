@@ -21,6 +21,7 @@ package com.mapbox.search {
   }
 
   @com.mapbox.search.common.RestrictedMapboxSearchAPI @kotlinx.parcelize.Parcelize public final class BrandSearchOptions implements android.os.Parcelable {
+    ctor public BrandSearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode? language = <anonymous class>(), Integer? limit = null, Boolean? showClosedPOIs = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
     ctor public BrandSearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode? language = <anonymous class>(), Integer? limit = null, Boolean? showClosedPOIs = null);
     ctor public BrandSearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode? language = <anonymous class>(), Integer? limit = null);
     ctor public BrandSearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode? language = <anonymous class>());
@@ -33,6 +34,7 @@ package com.mapbox.search {
     method public Integer? getLimit();
     method public com.mapbox.geojson.Point? getProximity();
     method public Boolean? getShowClosedPOIs();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.BrandSearchOptions.Builder toBuilder();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
@@ -40,6 +42,7 @@ package com.mapbox.search {
     property public final Integer? limit;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Boolean? showClosedPOIs;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
 
   public static final class BrandSearchOptions.Builder {
@@ -52,6 +55,7 @@ package com.mapbox.search {
     method public com.mapbox.search.BrandSearchOptions.Builder limit(int limit);
     method public com.mapbox.search.BrandSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.BrandSearchOptions.Builder showClosedPOIs(boolean showClosedPOIs);
+    method public com.mapbox.search.BrandSearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
   }
 
   public final class BrandSearchOptionsKt {
