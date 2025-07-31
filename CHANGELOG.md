@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.14.0
+
+### Bug fixes
+- Fixed an issue with empty in some cases `PlaceAutocompleteSuggestion.formattedAddress` field.
+
+### Mapbox dependencies
+- Search Native SDK `2.14.0`
+- Common SDK `24.14.0`
+- Maps SDK `11.14.0`
+
+
+
 ## 2.14.0-rc.1
 
 ### New features
