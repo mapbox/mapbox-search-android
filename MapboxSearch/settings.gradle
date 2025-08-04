@@ -2,6 +2,24 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
     }
+
+    // see https://issuetracker.google.com/issues/342522142#comment8
+    // needed to workaround AGP 7.4.2 incompatibility with error_prone_annotations:2.38.0
+    // +--- com.mapbox.mapboxsdk:mapbox-sdk-geojson:7.5.0
+    // |    \--- com.google.code.gson:gson:2.13.1
+    // |         \--- com.google.errorprone:error_prone_annotations:2.38.0
+    // TODO update to AGP 8.10.1 used in monorepo for the proper workaround
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url = uri("https://storage.googleapis.com/r8-releases/raw")
+            }
+        }
+        dependencies {
+            classpath("com.android.tools:r8:8.1.44")
+        }
+    }
 }
 
 include ':custom-detekt-rules'
