@@ -215,7 +215,7 @@ commands:
 executors:
   default-executor:
     docker:
-      - image: mbgl/android-ndk-r22:latest
+      - image: mbgl/android-ndk-r22-jdk17-ubuntu24:latest
     working_directory: ~/code
     environment:
       MBX_CI_DOMAIN: o619qyc20d.execute-api.us-east-1.amazonaws.com

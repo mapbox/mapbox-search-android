@@ -8,7 +8,7 @@ plugins {
 apply from: "../gradle/ktlint.gradle"
 apply from: "../gradle/dexcount.gradle"
 apply from: "../gradle/versions.gradle"
-apply from: "../gradle/pitest.gradle"
+//apply from: "../gradle/pitest.gradle"
 
 def mapboxApiToken = project.properties['MAPBOX_ACCESS_TOKEN'] ?: System.getenv('MAPBOX_ACCESS_TOKEN')
 if (mapboxApiToken == null) {
@@ -46,6 +46,7 @@ if (apiTypeString == "SEARCH_BOX") {
 }
 
 android {
+    namespace 'com.mapbox.search.sample'
     compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
@@ -81,6 +82,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig = true
     }
 
     compileOptions {
