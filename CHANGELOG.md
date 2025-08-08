@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.14.1
+
+### Bug fixes
+- Fixed a crash that could happen in some cases during offline search.
+
+### Mapbox dependencies
+- Search Native SDK `2.14.1`
+- Common SDK `24.14.1`
+- Maps SDK `11.14.1`
+
+
+
 ## 2.14.0
 
 ### Bug fixes
