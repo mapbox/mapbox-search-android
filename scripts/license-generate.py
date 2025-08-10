@@ -15,9 +15,6 @@ def writeDependency(licenseFile, projectName, projectUrl, licenseName, licenseUr
 
 def generateLicense(licenseFile, moduleName):
     try:
-        # run gradle license generation
-        os.system("cd MapboxSearch && ./gradlew {}:licenseReleaseReport".format(moduleName))
-
         with open(path + "/{}/build/reports/licenses/licenseReleaseReport.json".format(moduleName), 'r') as dataFile:
             data = json.load(dataFile)
 
@@ -36,8 +33,16 @@ def generateLicense(licenseFile, moduleName):
     except IOError as err:
         print("I/O error: {}".format(str(err)))
 
+def generateLicenses():
+    try:
+        os.system("cd MapboxSearch && ./gradlew licenseReleaseReport --refresh-dependencies")
+    except IOError as err:
+        print("I/O error: {}".format(str(err)))
+
 try:
     with open(licenseFilePath, 'w+') as licenseFile:
+        generateLicenses()
+
         now = datetime.datetime.now()
         licenseFile.write("### License\n")
         licenseFile.write("\n")

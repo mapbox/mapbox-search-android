@@ -1739,7 +1739,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 #### Search Autofill module
 Mapbox Search Android uses portions of the Activity.  
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.4](https://developer.android.com/jetpack/androidx/releases/activity#1.2.4)  
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -2071,7 +2071,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 #### Search Discover module
 Mapbox Search Android uses portions of the Activity.  
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.4](https://developer.android.com/jetpack/androidx/releases/activity#1.2.4)  
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -2403,7 +2403,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 #### Search Place Autocomplete module
 Mapbox Search Android uses portions of the Activity.  
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.4](https://developer.android.com/jetpack/androidx/releases/activity#1.2.4)  
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
