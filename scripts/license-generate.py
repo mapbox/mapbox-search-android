@@ -18,6 +18,10 @@ def generateLicense(licenseFile, moduleName):
         with open(path + "/{}/build/reports/licenses/licenseReleaseReport.json".format(moduleName), 'r') as dataFile:
             data = json.load(dataFile)
 
+            # There can be several dependency entries with the same "project" field,
+            # so we sort them to avoid relying on the JSON file's original ordering
+            data.sort(key=lambda x: x["dependency"])
+
             uniqueProjects = set()
 
             for entry in data:
@@ -35,7 +39,7 @@ def generateLicense(licenseFile, moduleName):
 
 def generateLicenses():
     try:
-        os.system("cd MapboxSearch && ./gradlew licenseReleaseReport --refresh-dependencies")
+        os.system("cd MapboxSearch && ./gradlew licenseReleaseReport")
     except IOError as err:
         print("I/O error: {}".format(str(err)))
 
