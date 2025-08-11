@@ -100,7 +100,7 @@ internal fun IndexableRecord.mapToBase(): BaseIndexableRecord {
         id = id,
         name = name,
         descriptionText = descriptionText,
-        address = address?.mapToBase(),
+        address = address?.mapToCore(),
         routablePoints = routablePoints?.map { it.mapToCore() },
         categories = categories,
         makiIcon = makiIcon,

@@ -7,6 +7,7 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.SearchAddressCountry
 import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.OpenPeriod
@@ -93,7 +94,10 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             name = TEST_BASE_RAW_SEARCH_RESULT.names.first(),
             coordinate = Point.fromLngLat(.0, .1),
             descriptionText = "Belarus, Minsk",
-            address = SearchAddress(country = "Belarus"),
+            address = SearchAddress(
+                country = "Belarus",
+                countryInfo = SearchAddressCountry("Belarus", null, null),
+            ),
             timestamp = 123L,
             type = SearchResultType.ADDRESS,
             makiIcon = "test maki",

@@ -4,10 +4,12 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.record.IndexableRecordResolver
-import com.mapbox.search.base.tests_support.createBaseSearchAddress
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
 import com.mapbox.search.base.tests_support.createTestBaseRequestOptions
 import com.mapbox.search.common.tests.TestConstants
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockk
@@ -73,9 +75,9 @@ internal class SearchResultFactoryTest {
             names = listOf("Search result 1.1", "Search result 1.2"),
             descriptionAddress = "Search result 1 description",
             addresses = listOf(
-                createBaseSearchAddress(
-                    country = "Belarus",
-                    region = "Minsk",
+                createCoreSearchAddress(
+                    country = createCoreSearchAddressCountry("Belarus"),
+                    region = createCoreSearchAddressRegion("Minsk"),
                     street = "Francyska Skaryny",
                     houseNumber = "1"
                 )

@@ -7,6 +7,7 @@ import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.core.CoreSearchResult
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.base.utils.extension.mapToPlatform
@@ -22,7 +23,7 @@ data class BaseRawSearchResult(
     val names: List<String>,
     val namePreferred: String?,
     val languages: List<String>,
-    val addresses: List<BaseSearchAddress>?,
+    val addresses: List<CoreSearchAddress>?,
     val descriptionAddress: String?,
     val matchingName: String?,
     val fullAddress: String?,
@@ -110,7 +111,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     names = names,
     namePreferred = namePreferred,
     languages = languages,
-    addresses = addresses?.map { it.mapToBaseSearchAddress() },
+    addresses = addresses,
     descriptionAddress = descrAddress,
     matchingName = matchingName,
     fullAddress = fullAddress,
@@ -141,7 +142,7 @@ fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     names,
     namePreferred,
     languages,
-    addresses?.map { it.mapToCore() },
+    addresses,
     descriptionAddress,
     matchingName,
     fullAddress,

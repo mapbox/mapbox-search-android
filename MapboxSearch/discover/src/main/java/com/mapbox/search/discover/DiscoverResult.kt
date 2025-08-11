@@ -122,8 +122,8 @@ public class DiscoverResult internal constructor(
                     postcode = address?.postcode?.nullIfEmpty(),
                     place = address?.place?.nullIfEmpty(),
                     district = address?.district?.nullIfEmpty(),
-                    region = address?.region?.nullIfEmpty(),
-                    country = address?.country?.nullIfEmpty(),
+                    region = address?.region?.name?.nullIfEmpty(),
+                    country = address?.country?.name?.nullIfEmpty(),
                     formattedAddress = result.fullAddress ?: result.descriptionText,
                     countryIso1 = metadata?.countryIso1,
                     countryIso2 = metadata?.countryIso2

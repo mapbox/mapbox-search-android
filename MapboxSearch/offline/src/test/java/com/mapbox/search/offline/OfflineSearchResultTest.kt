@@ -11,10 +11,10 @@ import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.tests.catchThrowable
+import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createTestCoreRoutablePoint
 import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.offline.tests_support.createTestBaseRawSearchResult
-import com.mapbox.search.offline.tests_support.createTestBaseSearchAddress
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
@@ -121,7 +121,7 @@ internal class OfflineSearchResultTest {
                 every { id } returns TEST_ID
                 every { names } returns listOf(TEST_NAME)
                 every { descriptionAddress } returns TEST_DESCRIPTION_TEXT
-                every { addresses } returns listOf(TEST_BASE_ADDRESS)
+                every { addresses } returns listOf(TEST_CORE_ADDRESS)
                 every { types } returns listOf(BaseRawResultType.ADDRESS)
                 every { center } returns TEST_COORDINATE
                 every { routablePoints } returns listOf(TEST_CORE_ROUTABLE_POINT)
@@ -183,8 +183,8 @@ internal class OfflineSearchResultTest {
         const val TEST_ID = "test-id-1"
         const val TEST_NAME = "test-name"
         const val TEST_DESCRIPTION_TEXT = "test-description-text"
-        val TEST_BASE_ADDRESS = createTestBaseSearchAddress(houseNumber = "1", street = "street")
-        val TEST_ADDRESS = TEST_BASE_ADDRESS.mapToOfflineSdkType()
+        val TEST_CORE_ADDRESS = createCoreSearchAddress(houseNumber = "1", street = "street")
+        val TEST_ADDRESS = TEST_CORE_ADDRESS.mapToOfflineSdkType()
         val TEST_COORDINATE: Point = Point.fromLngLat(10.0, 20.0)
         val TEST_CORE_ROUTABLE_POINT = createTestCoreRoutablePoint()
         val TEST_ROUTABLE_POINT = TEST_CORE_ROUTABLE_POINT.mapToPlatform()

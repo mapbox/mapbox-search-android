@@ -2,10 +2,11 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.search.ApiType
-import com.mapbox.search.Reserved
 import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.core.CoreSearchAddressCountry
+import com.mapbox.search.base.core.CoreSearchAddressRegion
 import com.mapbox.search.base.mapToCore
-import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.base.utils.extension.nullIfEmpty
 import com.mapbox.search.base.utils.printableName
 import com.mapbox.search.common.SearchAddressCountry
@@ -77,14 +78,12 @@ public class SearchAddress @JvmOverloads public constructor(
      * Additional region information, such as region ISO code.
      * Available only for the [ApiType.SEARCH_BOX] api type, otherwise null.
      */
-    @Reserved(Reserved.Flags.SEARCH_BOX)
     public val regionInfo: SearchAddressRegion? = null,
 
     /**
      * Additional country information, such as country ISO code.
      * Available only for the [ApiType.SEARCH_BOX] api type, otherwise null.
      */
-    @Reserved(Reserved.Flags.SEARCH_BOX)
     public val countryInfo: SearchAddressCountry? = null,
 ) : Parcelable {
 
@@ -527,28 +526,13 @@ internal fun SearchAddress.mapToCore(): CoreSearchAddress {
         postcode,
         place,
         district,
-        regionInfo?.mapToCore(),
-        countryInfo?.mapToCore(),
+        regionInfo?.mapToCore() ?: region?.let { CoreSearchAddressRegion(it, null, null) },
+        countryInfo?.mapToCore() ?: country?.let { CoreSearchAddressCountry(it, null, null) },
     )
 }
 
 @JvmSynthetic
-internal fun SearchAddress.mapToBase(): BaseSearchAddress {
-    return BaseSearchAddress(
-        houseNumber = houseNumber,
-        street = street,
-        neighborhood = neighborhood,
-        locality = locality,
-        postcode = postcode,
-        place = place,
-        district = district,
-        region = region,
-        country = country
-    )
-}
-
-@JvmSynthetic
-internal fun BaseSearchAddress.mapToPlatform(): SearchAddress {
+internal fun CoreSearchAddress.mapToPlatform(): SearchAddress {
     return SearchAddress(
         houseNumber = houseNumber?.nullIfEmpty(),
         street = street?.nullIfEmpty(),
@@ -557,9 +541,9 @@ internal fun BaseSearchAddress.mapToPlatform(): SearchAddress {
         postcode = postcode?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
         district = district?.nullIfEmpty(),
-        region = region?.nullIfEmpty(),
-        country = country?.nullIfEmpty(),
-        regionInfo = regionInfo,
-        countryInfo = countryInfo,
+        region = region?.name?.nullIfEmpty(),
+        country = country?.name?.nullIfEmpty(),
+        regionInfo = region?.mapToPlatform(),
+        countryInfo = country?.mapToPlatform(),
     )
 }

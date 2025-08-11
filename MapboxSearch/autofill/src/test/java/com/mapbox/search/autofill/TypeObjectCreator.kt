@@ -2,13 +2,15 @@ package com.mapbox.search.autofill
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreResultMetadata
-import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 
 internal object TypeObjectCreator {
 
     val SUGGESTION_CREATOR = CustomTypeObjectCreatorImpl(AddressAutofillSuggestion::class) { mode ->
-        val searchAddress = BaseSearchAddress(
+        val searchAddress = createCoreSearchAddress(
             houseNumber = "5",
             street = "Rue De Marseille",
             neighborhood = "Porte-Saint-Martin",
@@ -16,8 +18,8 @@ internal object TypeObjectCreator {
             postcode = "75010",
             place = "Paris",
             district = "Paris district",
-            region = "Paris region",
-            country = "France"
+            region = createCoreSearchAddressRegion("Paris region"),
+            country = createCoreSearchAddressCountry("France"),
         )
 
         val coreMetadata = createCoreResultMetadata(

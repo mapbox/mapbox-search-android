@@ -4,6 +4,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.record.BaseIndexableRecord
 import kotlinx.parcelize.Parcelize
 
@@ -34,7 +35,7 @@ data class BaseIndexableRecordSearchSuggestion(
     override val descriptionText: String?
         get() = rawSearchResult.descriptionAddress ?: record.descriptionText
 
-    override val address: BaseSearchAddress?
+    override val address: CoreSearchAddress?
         get() = rawSearchResult.addresses?.first() ?: record.address
 
     override val categories: List<String>?

@@ -11,7 +11,6 @@ import com.mapbox.search.base.core.CoreRequestOptions
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
-import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
@@ -70,7 +69,7 @@ internal fun createTestBaseRawSearchResult(
     names = names,
     namePreferred = namePreferred,
     languages = languages,
-    addresses = addresses?.map { it.mapToBase() },
+    addresses = addresses?.map { it.mapToCore() },
     descriptionAddress = descriptionAddress,
     distanceMeters = distanceMeters,
     matchingName = matchingName,
@@ -253,30 +252,6 @@ internal fun createSearchAddress(
     region: String? = defaultValue,
     country: String? = defaultValue,
 ) = SearchAddress(
-    houseNumber = houseNumber,
-    street = street,
-    neighborhood = neighborhood,
-    locality = locality,
-    postcode = postcode,
-    place = place,
-    district = district,
-    region = region,
-    country = country
-)
-
-@Suppress("LongParameterList")
-internal fun createBaseSearchAddress(
-    defaultValue: String? = null,
-    houseNumber: String? = defaultValue,
-    street: String? = defaultValue,
-    neighborhood: String? = defaultValue,
-    locality: String? = defaultValue,
-    postcode: String? = defaultValue,
-    place: String? = defaultValue,
-    district: String? = defaultValue,
-    region: String? = defaultValue,
-    country: String? = defaultValue,
-) = BaseSearchAddress(
     houseNumber = houseNumber,
     street = street,
     neighborhood = neighborhood,

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
-import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.result.BaseSearchResultType
 import kotlinx.parcelize.Parcelize
 
@@ -13,7 +13,7 @@ data class BaseIndexableRecord(
     val id: String,
     val name: String,
     val descriptionText: String?,
-    val address: BaseSearchAddress?,
+    val address: CoreSearchAddress?,
     val routablePoints: List<CoreRoutablePoint>?,
     val categories: List<String>?,
     val makiIcon: String?,

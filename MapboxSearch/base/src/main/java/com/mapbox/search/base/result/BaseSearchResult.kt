@@ -7,6 +7,7 @@ import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.record.BaseIndexableRecord
 import java.util.Collections
 
@@ -36,7 +37,7 @@ abstract class BaseSearchResult(
     open val descriptionText: String?
         get() = rawSearchResult.descriptionAddress
 
-    open val address: BaseSearchAddress?
+    open val address: CoreSearchAddress?
         get() = rawSearchResult.addresses?.get(0)
 
     open val routablePoints: List<CoreRoutablePoint>?

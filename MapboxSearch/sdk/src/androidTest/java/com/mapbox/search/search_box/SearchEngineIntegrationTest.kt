@@ -40,6 +40,8 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.SearchAddressCountry
+import com.mapbox.search.common.SearchAddressRegion
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.metadata.ImageInfo
@@ -247,7 +249,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 postcode = "20036",
                 place = "Washington",
                 neighborhood = "Dupont Circle",
-                street = "Connecticut Ave Nw"
+                street = "Connecticut Ave Nw",
+                countryInfo = SearchAddressCountry("United States of America", "US", "USA"),
+                regionInfo = SearchAddressRegion("District of Columbia", "DC", "US-DC"),
             ),
             suggestion.address
         )
@@ -519,7 +523,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 neighborhood = "Downtown",
                 postcode = "94102",
                 street = "Van Ness",
-            ),
+                countryInfo = SearchAddressCountry("United States of America", "US", "USA"),
+                regionInfo = SearchAddressRegion("California", "CA", "US-CA"),
+                ),
             searchResultType = SearchResultType.ADDRESS,
         )
         historyDataProvider.upsertBlocking(record, callbacksExecutor)
@@ -647,8 +653,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 place = "Washington",
                 postcode = "20036",
                 region = "District of Columbia",
-                street = "Connecticut Ave Nw"
-            ),
+                street = "Connecticut Ave Nw",
+                countryInfo = SearchAddressCountry("United States of America", "US", "USA"),
+                regionInfo = SearchAddressRegion("District of Columbia", "DC", "US-DC"),
+                ),
             searchResult.address
         )
         assertEquals(

@@ -1,7 +1,7 @@
 package com.mapbox.search.offline
 
 import android.os.Parcelable
-import com.mapbox.search.base.result.BaseSearchAddress
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.utils.extension.nullIfEmpty
 import kotlinx.parcelize.Parcelize
 
@@ -98,14 +98,14 @@ public class OfflineSearchAddress internal constructor(
 }
 
 @JvmSynthetic
-internal fun BaseSearchAddress.mapToOfflineSdkType(): OfflineSearchAddress {
+internal fun CoreSearchAddress.mapToOfflineSdkType(): OfflineSearchAddress {
     return OfflineSearchAddress(
         houseNumber = houseNumber?.nullIfEmpty(),
         street = street?.nullIfEmpty(),
         neighborhood = neighborhood?.nullIfEmpty(),
         locality = locality?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
-        region = region?.nullIfEmpty(),
-        country = country?.nullIfEmpty()
+        region = region?.name?.nullIfEmpty(),
+        country = country?.name?.nullIfEmpty(),
     )
 }

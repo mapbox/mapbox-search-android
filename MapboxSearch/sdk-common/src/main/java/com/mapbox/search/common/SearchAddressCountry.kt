@@ -23,7 +23,7 @@ public class SearchAddressCountry(
      * Country ISO 3166-1 alpha 3 code
      */
     public val isoCodeAlpha3: String?
-): Parcelable {
+) : Parcelable {
 
     /**
      * @suppress

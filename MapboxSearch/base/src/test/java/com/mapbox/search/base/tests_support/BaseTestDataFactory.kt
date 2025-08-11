@@ -8,9 +8,9 @@ import com.mapbox.search.base.core.CoreRequestOptions
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
-import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
@@ -23,7 +23,7 @@ internal fun createTestBaseRawSearchResult(
     names: List<String> = listOf("Test Search Result"),
     namePreferred: String? = null,
     languages: List<String> = listOf("def"),
-    addresses: List<BaseSearchAddress>? = null,
+    addresses: List<CoreSearchAddress>? = null,
     descriptionAddress: String? = null,
     matchingName: String? = null,
     fullAddress: String? = null,
@@ -83,20 +83,4 @@ internal fun createTestBaseRequestOptions(
 ) = BaseRequestOptions(
     core = core,
     requestContext = requestContext
-)
-
-@Suppress("LongParameterList")
-internal fun createBaseSearchAddress(
-    defaultValue: String? = null,
-    houseNumber: String? = defaultValue,
-    street: String? = defaultValue,
-    neighborhood: String? = defaultValue,
-    locality: String? = defaultValue,
-    postcode: String? = defaultValue,
-    place: String? = defaultValue,
-    district: String? = defaultValue,
-    region: String? = defaultValue,
-    country: String? = defaultValue,
-) = BaseSearchAddress(
-    houseNumber, street, neighborhood, locality, postcode, place, district, region, country
 )
