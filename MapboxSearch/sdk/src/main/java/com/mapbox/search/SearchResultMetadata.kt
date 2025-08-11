@@ -6,6 +6,7 @@ import android.os.Parcelable
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.createCoreParkingType
 import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.factory.mapToPlatform
 import com.mapbox.search.base.factory.parking.mapToCore
@@ -18,6 +19,7 @@ import com.mapbox.search.common.metadata.ImageInfo
 import com.mapbox.search.common.metadata.OpenHours
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.parking.ParkingInfo
+import com.mapbox.search.common.parking.ParkingType
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -291,6 +293,14 @@ public class SearchResultMetadata internal constructor(
     @RestrictedMapboxSearchAPI
     public val parkingInfo: ParkingInfo? = coreMetadata.parkingInfo?.mapToPlatform()
 
+    /**
+     * The type of parking at the POI.
+     */
+    @IgnoredOnParcel
+    @MapboxExperimental
+    @ParkingType.Type
+    public val parkingType: String? = coreMetadata.parkingType?.mapToPlatform()
+
     internal constructor(
         metadata: Map<String, String> = HashMap(),
         reviewCount: Int? = null,
@@ -330,6 +340,7 @@ public class SearchResultMetadata internal constructor(
         popularity: Float? = null,
         cuisines: List<String>? = null,
         parkingInfo: ParkingInfo? = null,
+        @ParkingType.Type parkingType: String? = null,
     ) : this(
         createCoreResultMetadata(
             reviewCount = reviewCount,
@@ -372,6 +383,7 @@ public class SearchResultMetadata internal constructor(
             evMetadata = null,
             cuisines = cuisines,
             parkingInfo = parkingInfo?.mapToCore(),
+            parkingType = createCoreParkingType(parkingType),
         )
     )
 
@@ -484,7 +496,8 @@ public class SearchResultMetadata internal constructor(
                 "rating=$rating, " +
                 "popularity=$popularity, " +
                 "cuisines=$cuisines, " +
-                "parkingInfo=$parkingInfo" +
+                "parkingInfo=$parkingInfo, " +
+                "parkingType=$parkingType" +
                 ")"
     }
 
@@ -531,6 +544,7 @@ public class SearchResultMetadata internal constructor(
         private var popularity: Float? = null
         private var cuisines: List<String>? = null
         private var parkingInfo: ParkingInfo? = null
+        @ParkingType.Type private var parkingType: String? = null
 
         /**
          * Sets the metadata for the search result.
@@ -802,6 +816,14 @@ public class SearchResultMetadata internal constructor(
         }
 
         /**
+         * The type of parking at the POI.
+         */
+        @MapboxExperimental
+        public fun parkingType(@ParkingType.Type parkingType: String?): Builder = apply {
+            this.parkingType = parkingType
+        }
+
+        /**
          * Builds an instance of [SearchResultMetadata] using the provided values.
          * @return A new instance of [SearchResultMetadata].
          */
@@ -845,6 +867,7 @@ public class SearchResultMetadata internal constructor(
                 popularity = popularity,
                 cuisines = cuisines,
                 parkingInfo = parkingInfo,
+                parkingType = parkingType,
             )
         }
     }
