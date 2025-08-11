@@ -615,7 +615,7 @@ public abstract interface class com/mapbox/search/SearchResultCallback {
 
 public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;Ljava/util/List;Lcom/mapbox/search/common/parking/ParkingInfo;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/common/metadata/OpenHours;Lcom/mapbox/search/common/metadata/ParkingData;Ljava/util/List;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Float;Ljava/lang/Float;Ljava/util/List;Lcom/mapbox/search/common/parking/ParkingInfo;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAverageRating ()Ljava/lang/Double;
@@ -637,6 +637,7 @@ public final class com/mapbox/search/SearchResultMetadata : android/os/Parcelabl
 	public final fun getParking ()Lcom/mapbox/search/common/metadata/ParkingData;
 	public final fun getParkingAvailable ()Ljava/lang/Boolean;
 	public final fun getParkingInfo ()Lcom/mapbox/search/common/parking/ParkingInfo;
+	public final fun getParkingType ()Ljava/lang/String;
 	public final fun getPhone ()Ljava/lang/String;
 	public final fun getPopularity ()Ljava/lang/Float;
 	public final fun getPriceLevel ()Ljava/lang/String;
@@ -684,6 +685,7 @@ public final class com/mapbox/search/SearchResultMetadata$Builder {
 	public final fun parking (Lcom/mapbox/search/common/metadata/ParkingData;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun parkingAvailable (Ljava/lang/Boolean;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun parkingInfo (Lcom/mapbox/search/common/parking/ParkingInfo;)Lcom/mapbox/search/SearchResultMetadata$Builder;
+	public final fun parkingType (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun phone (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun popularity (Ljava/lang/Float;)Lcom/mapbox/search/SearchResultMetadata$Builder;
 	public final fun priceLevel (Ljava/lang/String;)Lcom/mapbox/search/SearchResultMetadata$Builder;
@@ -1258,15 +1260,18 @@ public final class com/mapbox/search/result/SearchAddress : android/os/Parcelabl
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress;
-	public static synthetic fun copy$default (Lcom/mapbox/search/result/SearchAddress;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/search/result/SearchAddress;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/SearchAddressRegion;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/SearchAddressRegion;Lcom/mapbox/search/common/SearchAddressCountry;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/SearchAddressRegion;Lcom/mapbox/search/common/SearchAddressCountry;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/SearchAddressRegion;Lcom/mapbox/search/common/SearchAddressCountry;)Lcom/mapbox/search/result/SearchAddress;
+	public static synthetic fun copy$default (Lcom/mapbox/search/result/SearchAddress;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/search/common/SearchAddressRegion;Lcom/mapbox/search/common/SearchAddressCountry;ILjava/lang/Object;)Lcom/mapbox/search/result/SearchAddress;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun formattedAddress ()Ljava/lang/String;
 	public final fun formattedAddress (Lcom/mapbox/search/result/SearchAddress$FormatStyle;)Ljava/lang/String;
 	public static synthetic fun formattedAddress$default (Lcom/mapbox/search/result/SearchAddress;Lcom/mapbox/search/result/SearchAddress$FormatStyle;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun getCountry ()Ljava/lang/String;
+	public final fun getCountryInfo ()Lcom/mapbox/search/common/SearchAddressCountry;
 	public final fun getDistrict ()Ljava/lang/String;
 	public final fun getHouseNumber ()Ljava/lang/String;
 	public final fun getLocality ()Ljava/lang/String;
@@ -1274,6 +1279,7 @@ public final class com/mapbox/search/result/SearchAddress : android/os/Parcelabl
 	public final fun getPlace ()Ljava/lang/String;
 	public final fun getPostcode ()Ljava/lang/String;
 	public final fun getRegion ()Ljava/lang/String;
+	public final fun getRegionInfo ()Lcom/mapbox/search/common/SearchAddressRegion;
 	public final fun getStreet ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/search/result/SearchAddress$Builder;
@@ -1285,6 +1291,7 @@ public final class com/mapbox/search/result/SearchAddress$Builder {
 	public fun <init> ()V
 	public final fun build ()Lcom/mapbox/search/result/SearchAddress;
 	public final fun country (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
+	public final fun countryInfo (Lcom/mapbox/search/common/SearchAddressCountry;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun district (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun houseNumber (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun locality (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
@@ -1292,6 +1299,7 @@ public final class com/mapbox/search/result/SearchAddress$Builder {
 	public final fun place (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun postcode (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun region (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
+	public final fun regionInfo (Lcom/mapbox/search/common/SearchAddressRegion;)Lcom/mapbox/search/result/SearchAddress$Builder;
 	public final fun street (Ljava/lang/String;)Lcom/mapbox/search/result/SearchAddress$Builder;
 }
 

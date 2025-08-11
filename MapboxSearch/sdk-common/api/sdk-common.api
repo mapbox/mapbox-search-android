@@ -503,6 +503,48 @@ public final class com/mapbox/search/common/RoutablePoint$Creator : android/os/P
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/common/SearchAddressCountry : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIsoCodeAlpha2 ()Ljava/lang/String;
+	public final fun getIsoCodeAlpha3 ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/SearchAddressCountry$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/SearchAddressCountry;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/SearchAddressCountry;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/common/SearchAddressRegion : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public final fun getCodeFull ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/common/SearchAddressRegion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/common/SearchAddressRegion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/common/SearchAddressRegion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/common/SearchCancellationException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
