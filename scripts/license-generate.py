@@ -15,11 +15,12 @@ def writeDependency(licenseFile, projectName, projectUrl, licenseName, licenseUr
 
 def generateLicense(licenseFile, moduleName):
     try:
-        # run gradle license generation
-        os.system("cd MapboxSearch && ./gradlew {}:licenseReleaseReport".format(moduleName))
-
         with open(path + "/{}/build/reports/licenses/licenseReleaseReport.json".format(moduleName), 'r') as dataFile:
             data = json.load(dataFile)
+
+            # There can be several dependency entries with the same "project" field,
+            # so we sort them to avoid relying on the JSON file's original ordering
+            data.sort(key=lambda x: x["dependency"])
 
             uniqueProjects = set()
 
@@ -36,8 +37,16 @@ def generateLicense(licenseFile, moduleName):
     except IOError as err:
         print("I/O error: {}".format(str(err)))
 
+def generateLicenses():
+    try:
+        os.system("cd MapboxSearch && ./gradlew licenseReleaseReport")
+    except IOError as err:
+        print("I/O error: {}".format(str(err)))
+
 try:
     with open(licenseFilePath, 'w+') as licenseFile:
+        generateLicenses()
+
         now = datetime.datetime.now()
         licenseFile.write("### License\n")
         licenseFile.write("\n")

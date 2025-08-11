@@ -31,7 +31,9 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_code_example)
 
         toolbarView.setTitle(titleResId)
-        toolbarView.setNavigationIcon(R.drawable.mapbox_search_sdk_close_drawable)
+        toolbarView.setNavigationIcon(
+            com.mapbox.search.ui.R.drawable.mapbox_search_sdk_close_drawable
+        )
         toolbarView.setNavigationOnClickListener {
             this.finish()
         }

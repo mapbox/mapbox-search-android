@@ -1,8 +1,8 @@
 apply plugin: 'com.jaredsburrows.license'
 
 licenseReport {
-  generateCsvReport = true
-  generateHtmlReport = true
+  generateCsvReport = false
+  generateHtmlReport = false
   generateJsonReport = true
 
   copyCsvReportToAssets = false
