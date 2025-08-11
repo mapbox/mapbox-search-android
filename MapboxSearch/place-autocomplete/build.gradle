@@ -43,6 +43,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     kotlinOptions {
         allWarningsAsErrors = !project.hasProperty('android.injected.invoked.from.ide')
         jvmTarget = JavaVersion.VERSION_1_8.toString()

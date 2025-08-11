@@ -2,17 +2,17 @@
 package com.mapbox.search.autocomplete {
 
   public interface PlaceAutocomplete {
-    method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
-    method @Deprecated public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.internal.bindgen.ApiType apiType);
-    method public suspend Object? reverse(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
-    method public suspend Object? select(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autocomplete.PlaceAutocompleteResult>> p);
-    method public suspend Object? suggestions(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> p = PlaceAutocompleteOptions());
+    method public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = defaultLocationProvider());
+    method @Deprecated public default static com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = defaultLocationProvider(), com.mapbox.search.internal.bindgen.ApiType apiType);
+    method public suspend Object? reverse(com.mapbox.geojson.Point point, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
+    method public suspend Object? select(com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion suggestion, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,com.mapbox.search.autocomplete.PlaceAutocompleteResult>>);
+    method public suspend Object? suggestions(String query, com.mapbox.geojson.BoundingBox? region = null, com.mapbox.geojson.Point? proximity = null, com.mapbox.search.autocomplete.PlaceAutocompleteOptions options = com.mapbox.search.autocomplete.PlaceAutocompleteOptions(), kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.Exception,java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion>>> = com.mapbox.search.autocomplete.PlaceAutocompleteOptions());
     field public static final com.mapbox.search.autocomplete.PlaceAutocomplete.Companion Companion;
   }
 
   public static final class PlaceAutocomplete.Companion {
-    method public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
-    method @Deprecated public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>(), com.mapbox.search.internal.bindgen.ApiType apiType);
+    method public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = defaultLocationProvider());
+    method @Deprecated public com.mapbox.search.autocomplete.PlaceAutocomplete create(com.mapbox.common.location.LocationProvider? locationProvider = defaultLocationProvider(), com.mapbox.search.internal.bindgen.ApiType apiType);
   }
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteAddress implements android.os.Parcelable {
@@ -43,11 +43,12 @@ package com.mapbox.search.autocomplete {
   }
 
   @kotlinx.parcelize.Parcelize public final class PlaceAutocompleteOptions implements android.os.Parcelable {
-    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>(), java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteType>? types = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null);
-    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>(), java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteType>? types = null);
-    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = <anonymous class>());
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteType>? types = null, com.mapbox.search.common.NavigationProfile? navigationProfile = null);
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), java.util.List<? extends com.mapbox.search.autocomplete.PlaceAutocompleteType>? types = null);
+    ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage());
     ctor public PlaceAutocompleteOptions(int limit = 10, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public PlaceAutocompleteOptions(int limit = 10);
+    ctor public PlaceAutocompleteOptions();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public com.mapbox.search.common.IsoLanguageCode getLanguage();
     method public int getLimit();
@@ -131,7 +132,7 @@ package com.mapbox.search.autocomplete {
   }
 
   public abstract static class PlaceAutocompleteType.AdministrativeUnit extends com.mapbox.search.autocomplete.PlaceAutocompleteType {
-    ctor public PlaceAutocompleteType.AdministrativeUnit(error.NonExistentClass type);
+    ctor public PlaceAutocompleteType.AdministrativeUnit(com.mapbox.search.internal.bindgen.QueryType type);
   }
 
   @kotlinx.parcelize.Parcelize public static final class PlaceAutocompleteType.AdministrativeUnit.Address extends com.mapbox.search.autocomplete.PlaceAutocompleteType.AdministrativeUnit {
