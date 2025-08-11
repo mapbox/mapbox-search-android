@@ -2,9 +2,11 @@ package com.mapbox.search.base.result
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.mapToCore
+import com.mapbox.search.base.mapToPlatform
 import com.mapbox.search.base.utils.extension.nullIfEmpty
-import com.mapbox.search.internal.bindgen.SearchAddressCountry
-import com.mapbox.search.internal.bindgen.SearchAddressRegion
+import com.mapbox.search.common.SearchAddressCountry
+import com.mapbox.search.common.SearchAddressRegion
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -20,7 +22,9 @@ data class BaseSearchAddress(
     val place: String? = null,
     val district: String? = null,
     val region: String? = null,
-    val country: String? = null
+    val country: String? = null,
+    val regionInfo: SearchAddressRegion? = null,
+    val countryInfo: SearchAddressCountry? = null,
 ) : Parcelable
 
 @JvmSynthetic
@@ -33,9 +37,10 @@ fun CoreSearchAddress.mapToBaseSearchAddress(): BaseSearchAddress {
         postcode = postcode?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
         district = district?.nullIfEmpty(),
-        // TODO support address in BaseSearchAddress?
         region = region?.name?.nullIfEmpty(),
-        country = country?.name?.nullIfEmpty()
+        country = country?.name?.nullIfEmpty(),
+        regionInfo = region?.mapToPlatform(),
+        countryInfo = country?.mapToPlatform(),
     )
 }
 
@@ -49,8 +54,7 @@ fun BaseSearchAddress.mapToCore(): CoreSearchAddress {
         postcode,
         place,
         district,
-        // TODO support address in BaseSearchAddress?
-        region?.let { SearchAddressRegion(it, null, null) },
-        country?.let { SearchAddressCountry(it, null, null) },
+        regionInfo?.mapToCore(),
+        countryInfo?.mapToCore(),
     )
 }

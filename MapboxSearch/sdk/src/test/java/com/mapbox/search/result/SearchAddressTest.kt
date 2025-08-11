@@ -1,7 +1,12 @@
 package com.mapbox.search.result
 
+import com.mapbox.search.common.SearchAddressCountry
+import com.mapbox.search.common.SearchAddressRegion
+import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.tests_support.toStringFull
 import com.mapbox.test.dsl.TestCase
+import nl.jqno.equalsverifier.EqualsVerifier
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
 internal class SearchAddressTest {
@@ -133,6 +138,15 @@ internal class SearchAddressTest {
         }
     }
 
+    @Test
+    fun `toString(), equals(), hashCode() functions are correct`() {
+        EqualsVerifier.forClass(SearchAddress::class.java)
+            .verify()
+
+        ToStringVerifier(SearchAddress::class)
+            .verify()
+    }
+
     private companion object {
 
         const val HOUSE_NUMBER = "house_number"
@@ -145,18 +159,57 @@ internal class SearchAddressTest {
         const val REGION = "region"
         const val COUNTRY = "country"
 
-        val EMPTY_SEARCH_ADDRESS = SearchAddress("", "", "", "", "", "", "", "", "")
-        val NULL_SEARCH_ADDRESS = SearchAddress(null, null, null, null, null, null, null, null, null)
+        val REGION_INFO = SearchAddressRegion(
+            name = "region name",
+            code = "region code",
+            codeFull = "region full code",
+        )
+
+        val COUNTRY_INFO = SearchAddressCountry(
+            name = "country name",
+            isoCodeAlpha2 = "iso code alpha 2",
+            isoCodeAlpha3 = "iso code alpha 3",
+        )
+
+        val EMPTY_SEARCH_ADDRESS = SearchAddress(
+            houseNumber = "",
+            street = "",
+            neighborhood = "",
+            locality = "",
+            postcode = "",
+            place = "",
+            district = "",
+            region = "",
+            country = "",
+            regionInfo = SearchAddressRegion("", "", ""),
+            countryInfo = SearchAddressCountry("", "", ""),
+
+        )
+        val NULL_SEARCH_ADDRESS = SearchAddress(
+            houseNumber = null,
+            street = null,
+            neighborhood = null,
+            locality = null,
+            postcode = null,
+            place = null,
+            district = null,
+            region = null,
+            country = null,
+            regionInfo = null,
+            countryInfo = null,
+        )
         val FULL_SEARCH_ADDRESS = SearchAddress(
-            HOUSE_NUMBER,
-            STREET,
-            NEIGHBORHOOD,
-            LOCALITY,
-            POSTCODE,
-            PLACE,
-            DISTRICT,
-            REGION,
-            COUNTRY
+            houseNumber = HOUSE_NUMBER,
+            street = STREET,
+            neighborhood = NEIGHBORHOOD,
+            locality = LOCALITY,
+            postcode = POSTCODE,
+            place = PLACE,
+            district = DISTRICT,
+            region = REGION,
+            country = COUNTRY,
+            regionInfo = REGION_INFO,
+            countryInfo = COUNTRY_INFO,
         )
     }
 }

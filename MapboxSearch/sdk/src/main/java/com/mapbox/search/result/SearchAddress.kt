@@ -1,12 +1,15 @@
 package com.mapbox.search.result
 
 import android.os.Parcelable
+import com.mapbox.search.ApiType
+import com.mapbox.search.Reserved
 import com.mapbox.search.base.core.CoreSearchAddress
+import com.mapbox.search.base.mapToCore
 import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.utils.extension.nullIfEmpty
 import com.mapbox.search.base.utils.printableName
-import com.mapbox.search.internal.bindgen.SearchAddressCountry
-import com.mapbox.search.internal.bindgen.SearchAddressRegion
+import com.mapbox.search.common.SearchAddressCountry
+import com.mapbox.search.common.SearchAddressRegion
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.COUNTRY
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.DISTRICT
 import com.mapbox.search.result.SearchAddress.FormatComponent.Companion.HOUSE_NUMBER
@@ -68,7 +71,21 @@ public class SearchAddress @JvmOverloads public constructor(
     /**
      * Address country.
      */
-    public val country: String? = null
+    public val country: String? = null,
+
+    /**
+     * Additional region information, such as region ISO code.
+     * Available only for the [ApiType.SEARCH_BOX] api type, otherwise null.
+     */
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public val regionInfo: SearchAddressRegion? = null,
+
+    /**
+     * Additional country information, such as country ISO code.
+     * Available only for the [ApiType.SEARCH_BOX] api type, otherwise null.
+     */
+    @Reserved(Reserved.Flags.SEARCH_BOX)
+    public val countryInfo: SearchAddressCountry? = null,
 ) : Parcelable {
 
     /**
@@ -114,6 +131,8 @@ public class SearchAddress @JvmOverloads public constructor(
         district: String? = this.district,
         region: String? = this.region,
         country: String? = this.country,
+        regionInfo: SearchAddressRegion? = this.regionInfo,
+        countryInfo: SearchAddressCountry? = this.countryInfo,
     ): SearchAddress {
         return SearchAddress(
             houseNumber = houseNumber,
@@ -125,6 +144,8 @@ public class SearchAddress @JvmOverloads public constructor(
             district = district,
             region = region,
             country = country,
+            regionInfo = regionInfo,
+            countryInfo = countryInfo,
         )
     }
 
@@ -214,6 +235,8 @@ public class SearchAddress @JvmOverloads public constructor(
         if (district != other.district) return false
         if (region != other.region) return false
         if (country != other.country) return false
+        if (regionInfo != other.regionInfo) return false
+        if (countryInfo != other.countryInfo) return false
 
         return true
     }
@@ -231,6 +254,8 @@ public class SearchAddress @JvmOverloads public constructor(
         result = 31 * result + (district?.hashCode() ?: 0)
         result = 31 * result + (region?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
+        result = 31 * result + (regionInfo?.hashCode() ?: 0)
+        result = 31 * result + (countryInfo?.hashCode() ?: 0)
         return result
     }
 
@@ -247,7 +272,9 @@ public class SearchAddress @JvmOverloads public constructor(
                 "place=$place, " +
                 "district=$district, " +
                 "region=$region, " +
-                "country=$country" +
+                "country=$country, " +
+                "regionInfo=$regionInfo, " +
+                "countryInfo=$countryInfo" +
                 ")"
     }
 
@@ -265,6 +292,8 @@ public class SearchAddress @JvmOverloads public constructor(
         private var district: String? = null
         private var region: String? = null
         private var country: String? = null
+        private var regionInfo: SearchAddressRegion? = null
+        private var countryInfo: SearchAddressCountry? = null
 
         internal constructor(searchAddress: SearchAddress) : this() {
             houseNumber = searchAddress.houseNumber
@@ -276,6 +305,8 @@ public class SearchAddress @JvmOverloads public constructor(
             district = searchAddress.district
             region = searchAddress.region
             country = searchAddress.country
+            regionInfo = searchAddress.regionInfo
+            countryInfo = searchAddress.countryInfo
         }
 
         /**
@@ -324,6 +355,20 @@ public class SearchAddress @JvmOverloads public constructor(
         public fun country(country: String): Builder = apply { this.country = country }
 
         /**
+         * Additional region information, such as region ISO code.
+         */
+        public fun regionInfo(regionInfo: SearchAddressRegion): Builder = apply {
+            this.regionInfo = regionInfo
+        }
+
+        /**
+         * Additional country information, such as country ISO code.
+         */
+        public fun countryInfo(countryInfo: SearchAddressCountry): Builder = apply {
+            this.countryInfo = countryInfo
+        }
+
+        /**
          * Create [SearchAddress] instance from builder data.
          */
         public fun build(): SearchAddress = SearchAddress(
@@ -336,6 +381,8 @@ public class SearchAddress @JvmOverloads public constructor(
             district = district,
             region = region,
             country = country,
+            regionInfo = regionInfo,
+            countryInfo = countryInfo,
         )
     }
 
@@ -480,9 +527,8 @@ internal fun SearchAddress.mapToCore(): CoreSearchAddress {
         postcode,
         place,
         district,
-        // TODO add region and country codes to the SearchAddress structure?
-        region?.let { SearchAddressRegion(it, null, null) },
-        country?.let { SearchAddressCountry(it, null, null) },
+        regionInfo?.mapToCore(),
+        countryInfo?.mapToCore(),
     )
 }
 
@@ -512,6 +558,8 @@ internal fun BaseSearchAddress.mapToPlatform(): SearchAddress {
         place = place?.nullIfEmpty(),
         district = district?.nullIfEmpty(),
         region = region?.nullIfEmpty(),
-        country = country?.nullIfEmpty()
+        country = country?.nullIfEmpty(),
+        regionInfo = regionInfo,
+        countryInfo = countryInfo,
     )
 }
