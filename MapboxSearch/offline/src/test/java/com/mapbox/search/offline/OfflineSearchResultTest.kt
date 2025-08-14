@@ -4,7 +4,7 @@ package com.mapbox.search.offline
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.SdkAssertion
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
@@ -91,8 +91,8 @@ internal class OfflineSearchResultTest {
     @TestFactory
     fun `Check OfflineSearchResult instantiation with unsupported type`() = TestCase {
         Given("OfflineSearchResult constructor") {
-            When("OfflineSearchResult instantiated with ${BaseRawResultType.LOCALITY} type") {
-                val baseResult = TEST_BASE_RAW_RESULT_1.copy(types = listOf(BaseRawResultType.LOCALITY))
+            When("OfflineSearchResult instantiated with ${CoreResultType.LOCALITY} type") {
+                val baseResult = TEST_BASE_RAW_RESULT_1.copy(types = listOf(CoreResultType.LOCALITY))
                 val offlineSearchResult = OfflineSearchResult(baseResult)
 
                 Then(
@@ -122,10 +122,10 @@ internal class OfflineSearchResultTest {
                 every { names } returns listOf(TEST_NAME)
                 every { descriptionAddress } returns TEST_DESCRIPTION_TEXT
                 every { addresses } returns listOf(TEST_CORE_ADDRESS)
-                every { types } returns listOf(BaseRawResultType.ADDRESS)
+                every { types } returns listOf(CoreResultType.ADDRESS)
                 every { center } returns TEST_COORDINATE
                 every { routablePoints } returns listOf(TEST_CORE_ROUTABLE_POINT)
-                every { types } returns listOf(TEST_BASE_TYPE)
+                every { types } returns listOf(TEST_CORE_TYPE)
                 every { distanceMeters } returns TEST_DISTANCE_METERS
             }
 
@@ -188,8 +188,8 @@ internal class OfflineSearchResultTest {
         val TEST_COORDINATE: Point = Point.fromLngLat(10.0, 20.0)
         val TEST_CORE_ROUTABLE_POINT = createTestCoreRoutablePoint()
         val TEST_ROUTABLE_POINT = TEST_CORE_ROUTABLE_POINT.mapToPlatform()
-        val TEST_BASE_TYPE = BaseRawResultType.ADDRESS
-        val TEST_TYPE = NewOfflineSearchResultType.createFromRawResultType(TEST_BASE_TYPE)
+        val TEST_CORE_TYPE = CoreResultType.ADDRESS
+        val TEST_TYPE = NewOfflineSearchResultType.createFromRawResultType(TEST_CORE_TYPE)
         const val TEST_DISTANCE_METERS = 123.456
 
         val TEST_BASE_RAW_RESULT_1 = createTestBaseRawSearchResult(
@@ -197,13 +197,13 @@ internal class OfflineSearchResultTest {
             names = listOf(TEST_NAME),
             descriptionAddress = TEST_DESCRIPTION_TEXT,
             center = TEST_COORDINATE,
-            types = listOf(TEST_BASE_TYPE)
+            types = listOf(TEST_CORE_TYPE)
         )
 
         val TEST_BASE_RAW_RESULT_2 = createTestBaseRawSearchResult(
             id = "id2",
             center = Point.fromLngLat(30.0, 50.0),
-            types = listOf(BaseRawResultType.STREET)
+            types = listOf(CoreResultType.STREET)
         )
     }
 }

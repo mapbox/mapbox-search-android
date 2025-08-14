@@ -4,9 +4,9 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
@@ -221,7 +221,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "Y2OAgKLU9Mz8PAA=.Y2OAgOTEotzUPAA=.RYzBDQIxDASpJW8q4MmfGpDPtu4scjaynccJUQb9EpFI7GtntNrPaeRV0JqmH-VSrlzBW5RzcV7FtKubaDy6IIl0weyq07MC8qwWiUaTqiFUyWOQsqzbYr6Z0TBA5Bzxh7u2fWGfe9h_P-8v",
-            types = listOf(BaseRawResultType.REGION),
+            types = listOf(CoreResultType.REGION),
             names = listOf("Minsk"),
             languages = listOf("en"),
             addresses = listOf(
@@ -656,7 +656,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "place.11543680732831130",
-            types = listOf(BaseRawResultType.PLACE, BaseRawResultType.REGION),
+            types = listOf(CoreResultType.PLACE, CoreResultType.REGION),
             names = listOf("Minsk"),
             descriptionAddress = "Minsk Region, Belarus, Planet Earth",
             languages = listOf("en"),
@@ -839,7 +839,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val recursionSearchResult = createTestBaseRawSearchResult(
             id = "Y2WAgMLS1KJKAA==.42CAgMy8ktSivMQcAA==.42SAgKDU5NKi4sz8PAA=",
-            types = listOf(BaseRawResultType.QUERY),
+            types = listOf(CoreResultType.QUERY),
             names = listOf("Did you mean recursion?"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
@@ -895,7 +895,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val baseRawCategorySuggestion = createTestBaseRawSearchResult(
             id = "42CAgOTEktT0_KJKAA==.42eAgMSCTN2C_Ezd4tSisszkVAA=.Y2GAgOTEtFQA",
-            types = listOf(BaseRawResultType.CATEGORY),
+            types = listOf(CoreResultType.CATEGORY),
             names = listOf("Cafe"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),
@@ -946,7 +946,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "ItFzVnwBAsSWFvXxpsTw",
             mapboxId = "CkIKQDVkN2U0Zjk0MDIzOGY2NDY0NzM2NjNlMWQ0ZWQzOWM5NWJlYmEzMmIxYjM3NzExYTE2NDEzYzgwZjI0M2NmMmQ=",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("SimplexiTea"),
             center = Point.fromLngLat(-122.41721, 37.775934),
             accuracy = ResultAccuracy.Point,
@@ -1014,7 +1014,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
 
         val baseRawCategorySuggestion = createTestBaseRawSearchResult(
             id = "test-brand-internal-id",
-            types = listOf(BaseRawResultType.BRAND),
+            types = listOf(CoreResultType.BRAND),
             names = listOf("Starbucks"),
             languages = listOf("en"),
             addresses = listOf(SearchAddress()),

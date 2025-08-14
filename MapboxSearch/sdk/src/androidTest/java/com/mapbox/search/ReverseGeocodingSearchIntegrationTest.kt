@@ -2,7 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -149,7 +149,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
 
         val rawSearchResult = createTestBaseRawSearchResult(
             id = "p4bWdnYBo8NaDG6XjlSq",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("Eiffel Tower"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("historic site", "tourist attraction", "monument", "viewpoint"),

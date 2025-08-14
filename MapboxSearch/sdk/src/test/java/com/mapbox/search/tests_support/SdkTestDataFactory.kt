@@ -8,8 +8,8 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRequestOptions
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
@@ -36,7 +36,7 @@ import com.mapbox.search.result.mapToCore
 internal fun createTestBaseRawSearchResult(
     id: String = "id_test_search_result",
     mapboxId: String? = null,
-    types: List<BaseRawResultType> = listOf(BaseRawResultType.POI),
+    types: List<CoreResultType> = listOf(CoreResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     namePreferred: String? = null,
     languages: List<String> = listOf("def"),
@@ -166,7 +166,7 @@ internal fun createTestSearchResult(
     types = listOf(SearchResultType.POI),
     rawSearchResult = createTestBaseRawSearchResult(
         id = id,
-        types = listOf(BaseRawResultType.POI),
+        types = listOf(CoreResultType.POI),
         center = center
     ),
     requestOptions = createTestRequestOptions()

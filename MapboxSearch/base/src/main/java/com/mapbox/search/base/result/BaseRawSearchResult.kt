@@ -6,6 +6,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.assertDebug
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.core.CoreSearchResult
@@ -19,7 +20,7 @@ import java.util.HashMap
 data class BaseRawSearchResult(
     val id: String,
     val mapboxId: String?,
-    val types: List<BaseRawResultType>,
+    val types: List<CoreResultType>,
     val names: List<String>,
     val namePreferred: String?,
     val languages: List<String>,
@@ -54,7 +55,7 @@ data class BaseRawSearchResult(
     }
 
     @IgnoredOnParcel
-    val type: BaseRawResultType = types.firstOrNull() ?: BaseRawResultType.UNKNOWN
+    val type: CoreResultType = types.firstOrNull() ?: CoreResultType.UNKNOWN
 
     @IgnoredOnParcel
     val categoryCanonicalName: String? by lazy(LazyThreadSafetyMode.NONE) {
@@ -79,13 +80,13 @@ data class BaseRawSearchResult(
 
     @IgnoredOnParcel
     val isValidBrandType: Boolean
-        get() = type == BaseRawResultType.BRAND &&
+        get() = type == CoreResultType.BRAND &&
                 extractedBrandName != null &&
                 !extractedBrandId.isNullOrEmpty()
 
     @IgnoredOnParcel
     val isValidCategoryType: Boolean
-        get() = type == BaseRawResultType.CATEGORY && categoryCanonicalName != null
+        get() = type == CoreResultType.CATEGORY && categoryCanonicalName != null
 
     private companion object {
 
@@ -107,7 +108,7 @@ data class BaseRawSearchResult(
 fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
     id = id,
     mapboxId = mapboxId,
-    types = types.map { it.mapToBase() },
+    types = types,
     names = names,
     namePreferred = namePreferred,
     languages = languages,
@@ -138,7 +139,7 @@ fun CoreSearchResult.mapToBase() = BaseRawSearchResult(
 fun BaseRawSearchResult.mapToCore() = CoreSearchResult(
     id,
     mapboxId,
-    types.map { it.mapToCore() },
+    types,
     names,
     namePreferred,
     languages,

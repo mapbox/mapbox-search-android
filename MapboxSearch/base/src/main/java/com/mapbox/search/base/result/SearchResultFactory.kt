@@ -2,6 +2,7 @@ package com.mapbox.search.base.result
 
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.record.IndexableRecordResolver
@@ -13,7 +14,7 @@ import java.util.concurrent.Executor
 class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
 
     fun isUserRecord(searchResult: BaseRawSearchResult): Boolean {
-        return searchResult.type == BaseRawResultType.USER_RECORD
+        return searchResult.type == CoreResultType.USER_RECORD
     }
 
     fun isResolvedSearchResult(searchResult: BaseRawSearchResult): Boolean {
@@ -33,7 +34,10 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
         }
     }
 
-    fun createSearchResult(searchResult: BaseRawSearchResult, requestOptions: BaseRequestOptions): BaseSearchResult? {
+    fun createSearchResult(
+        searchResult: BaseRawSearchResult,
+        requestOptions: BaseRequestOptions,
+    ): BaseSearchResult? {
         fun debugInfo(): String {
             return prepareSearchResultInfo(searchResult, requestOptions)
         }
@@ -79,14 +83,14 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 }
             }
             CoreApiType.SBS, CoreApiType.AUTOFILL -> {
-                if (searchResult.action == null && searchResult.type != BaseRawResultType.USER_RECORD) {
+                if (searchResult.action == null && searchResult.type != CoreResultType.USER_RECORD) {
                     failDebug { "Can't create search suggestion from. ${debugInfo()}" }
                     callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
                     return AsyncOperationTaskImpl.COMPLETED
                 }
             }
             CoreApiType.SEARCH_BOX -> {
-                if (searchResult.type == BaseRawResultType.BRAND) {
+                if (searchResult.type == CoreResultType.BRAND) {
                     val result = if (searchResult.isValidBrandType) {
                         val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                         Result.success(value)
@@ -96,10 +100,10 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     callback(result)
                     return AsyncOperationTaskImpl.COMPLETED
                 } else if (searchResult.action == null) {
-                    if (searchResult.type == BaseRawResultType.QUERY) {
+                    if (searchResult.type == CoreResultType.QUERY) {
                         callback(Result.failure(InternalIgnorableException("Skipping query suggestion without action")))
                         return AsyncOperationTaskImpl.COMPLETED
-                    } else if (searchResult.type != BaseRawResultType.USER_RECORD) {
+                    } else if (searchResult.type != CoreResultType.USER_RECORD) {
                         failDebug { "Can't create search suggestion from. ${debugInfo()}" }
                         callback(Result.failure(Exception("Can't create search suggestion from $searchResult")))
                         return AsyncOperationTaskImpl.COMPLETED
@@ -109,18 +113,18 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
         }
 
         return when (searchResult.type) {
-            BaseRawResultType.COUNTRY,
-            BaseRawResultType.REGION,
-            BaseRawResultType.PLACE,
-            BaseRawResultType.DISTRICT,
-            BaseRawResultType.LOCALITY,
-            BaseRawResultType.NEIGHBORHOOD,
-            BaseRawResultType.ADDRESS,
-            BaseRawResultType.POI,
-            BaseRawResultType.STREET,
-            BaseRawResultType.POSTCODE,
-            BaseRawResultType.BLOCK,
-            BaseRawResultType.QUERY -> {
+            CoreResultType.COUNTRY,
+            CoreResultType.REGION,
+            CoreResultType.PLACE,
+            CoreResultType.DISTRICT,
+            CoreResultType.LOCALITY,
+            CoreResultType.NEIGHBORHOOD,
+            CoreResultType.ADDRESS,
+            CoreResultType.POI,
+            CoreResultType.STREET,
+            CoreResultType.POSTCODE,
+            CoreResultType.BLOCK,
+            CoreResultType.QUERY -> {
                 when (apiType) {
                     CoreApiType.GEOCODING -> {
                         if (searchResult.center != null && searchResult.type.isSearchResultType) {
@@ -147,7 +151,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     else -> error("Unsupported API type: $apiType")
                 }
             }
-            BaseRawResultType.BRAND -> {
+            CoreResultType.BRAND -> {
                 val result = if (searchResult.isValidBrandType) {
                     val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                     Result.success(value)
@@ -159,7 +163,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 callback(result)
                 AsyncOperationTaskImpl.COMPLETED
             }
-            BaseRawResultType.CATEGORY -> {
+            CoreResultType.CATEGORY -> {
                 val result = if (searchResult.isValidCategoryType) {
                     val value = BaseServerSearchSuggestion(searchResult, requestOptions)
                     Result.success(value)
@@ -170,7 +174,7 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                 callback(result)
                 AsyncOperationTaskImpl.COMPLETED
             }
-            BaseRawResultType.USER_RECORD -> {
+            CoreResultType.USER_RECORD -> {
                 if (searchResult.layerId != null) {
                     resolveIndexableRecordAsync(searchResult, callbackExecutor) {
                         callback(it.map { record ->
@@ -178,13 +182,13 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                         })
                     }
                 } else {
-                    failDebug { "${BaseRawResultType.USER_RECORD} search result without layer id." }
+                    failDebug { "${CoreResultType.USER_RECORD} search result without layer id." }
                     callback(Result.failure(Exception("USER_RECORD search result without layer id: $searchResult")))
                     AsyncOperationTaskImpl.COMPLETED
                 }
             }
-            BaseRawResultType.UNKNOWN -> {
-                failDebug { "Invalid search result with ${BaseRawResultType.UNKNOWN} result type. ${debugInfo()}" }
+            CoreResultType.UNKNOWN -> {
+                failDebug { "Invalid search result with ${CoreResultType.UNKNOWN} result type. ${debugInfo()}" }
                 callback(Result.failure(Exception("Unknown search result type: $searchResult")))
                 AsyncOperationTaskImpl.COMPLETED
             }
@@ -230,11 +234,11 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
         }
 
         val NOT_SEARCH_RESULT_TYPES = arrayOf(
-            BaseRawResultType.USER_RECORD,
-            BaseRawResultType.CATEGORY,
-            BaseRawResultType.BRAND,
-            BaseRawResultType.QUERY,
-            BaseRawResultType.UNKNOWN
+            CoreResultType.USER_RECORD,
+            CoreResultType.CATEGORY,
+            CoreResultType.BRAND,
+            CoreResultType.QUERY,
+            CoreResultType.UNKNOWN
         )
     }
 }

@@ -4,7 +4,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.BaseResponseInfo
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
@@ -169,7 +169,7 @@ internal class OfflineSearchResultCallbackAdapterTest {
         fun createBaseRawSearchResult(
             id: String = UUID.randomUUID().toString(),
             mapboxId: String? = null,
-            resultType: BaseRawResultType = BaseRawResultType.PLACE,
+            resultType: CoreResultType = CoreResultType.PLACE,
             name: String = "Random Place Name",
             distanceMeters: Double? = null,
             center: Point = Point.fromLngLat(Random.nextDouble(), Random.nextDouble())

@@ -18,7 +18,6 @@ import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
@@ -1110,7 +1109,7 @@ internal class SearchEngineTest {
 
         val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
-                types = listOf(BaseRawResultType.POI),
+                types = listOf(CoreResultType.POI),
                 action = createTestCoreSuggestAction(multiRetrievable = true).mapToBase()
             ),
             BASE_TEST_REQUEST_OPTIONS
@@ -1147,7 +1146,7 @@ internal class SearchEngineTest {
         val TEST_USER_RECORD_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
             TEST_FAVORITE_RECORD.mapToBase(),
             rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase().copy(
-                types = listOf(BaseRawResultType.USER_RECORD)
+                types = listOf(CoreResultType.USER_RECORD)
             ),
             requestOptions = BASE_TEST_REQUEST_OPTIONS
         )

@@ -5,7 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.BaseTest
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchAddressCountry
 import com.mapbox.search.common.metadata.ImageInfo
@@ -80,7 +80,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
 
         val TEST_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "test id",
-            types = listOf(BaseRawResultType.PLACE),
+            types = listOf(CoreResultType.PLACE),
             names = listOf("test name"),
             languages = listOf("default"),
             addresses = listOf(SearchAddress(country = "Belarus")),
@@ -108,7 +108,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
 
         val TEST_EMPTY_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "empty_correct_record_id",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("Empty correct record"),
             languages = listOf("default"),
         )

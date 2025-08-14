@@ -15,11 +15,11 @@ import com.mapbox.search.analytics.FeedbackEvent
 import com.mapbox.search.analytics.MissingResultFeedbackEvent
 import com.mapbox.search.analytics.SearchFeedbackEventsFactory
 import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.location.calculateMapZoom
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
@@ -676,7 +676,7 @@ internal class SearchFeedbackEventsFactoryTest {
 
         val TEST_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "Y2aAgIL8TAA=.42eAgMSCTN2C_Ezd4tSisszkVAA=.U2aAgLT80qLiwtLEolQ9U8NEIxMT01RTA0PLZAuDJFMzS2OTZHNTAA==",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("Tour Eiffel"),
             languages = listOf("fr"),
             addresses = listOf(SearchAddress()),
@@ -734,7 +734,7 @@ internal class SearchFeedbackEventsFactoryTest {
         val TEST_LOCAL_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
             record = TEST_FAVORITE_RECORD.mapToBase(),
             rawSearchResult = TEST_SEARCH_RESULT.copy(
-                types = listOf(BaseRawResultType.USER_RECORD), layerId = "testLayerId"
+                types = listOf(CoreResultType.USER_RECORD), layerId = "testLayerId"
             ),
             requestOptions = TEST_REQUEST_OPTIONS.mapToBase()
         )

@@ -4,7 +4,7 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -185,7 +185,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "6IXWdnYBo8NaDG6XivFv",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("Starbucks"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
