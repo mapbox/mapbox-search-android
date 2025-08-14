@@ -525,6 +525,7 @@ package com.mapbox.search {
     method public com.mapbox.search.common.metadata.ParkingData? getParking();
     method public Boolean? getParkingAvailable();
     method public com.mapbox.search.common.parking.ParkingInfo? getParkingInfo();
+    method public String? getParkingType();
     method public String? getPhone();
     method public Float? getPopularity();
     method public String? getPriceLevel();
@@ -566,6 +567,7 @@ package com.mapbox.search {
     property public final com.mapbox.search.common.metadata.ParkingData? parking;
     property public final Boolean? parkingAvailable;
     property public final com.mapbox.search.common.parking.ParkingInfo? parkingInfo;
+    property public final String? parkingType;
     property public final String? phone;
     property public final Float? popularity;
     property public final String? priceLevel;
@@ -609,6 +611,7 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchResultMetadata.Builder parking(com.mapbox.search.common.metadata.ParkingData? parking);
     method public com.mapbox.search.SearchResultMetadata.Builder parkingAvailable(Boolean? parkingAvailable);
     method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.SearchResultMetadata.Builder parkingInfo(com.mapbox.search.common.parking.ParkingInfo? parkingInfo);
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.SearchResultMetadata.Builder parkingType(@com.mapbox.search.common.parking.ParkingType.Type String? parkingType);
     method public com.mapbox.search.SearchResultMetadata.Builder phone(String? phone);
     method public com.mapbox.search.SearchResultMetadata.Builder popularity(Float? popularity);
     method public com.mapbox.search.SearchResultMetadata.Builder priceLevel(String? priceLevel);
@@ -982,6 +985,8 @@ package com.mapbox.search.result {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchAddress implements android.os.Parcelable {
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null, String? country = null, com.mapbox.search.common.SearchAddressRegion? regionInfo = null, com.mapbox.search.common.SearchAddressCountry? countryInfo = null);
+    ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null, String? country = null, com.mapbox.search.common.SearchAddressRegion? regionInfo = null);
     ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null, String? country = null);
     ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null, String? region = null);
     ctor public SearchAddress(String? houseNumber = null, String? street = null, String? neighborhood = null, String? locality = null, String? postcode = null, String? place = null, String? district = null);
@@ -992,10 +997,11 @@ package com.mapbox.search.result {
     ctor public SearchAddress(String? houseNumber = null, String? street = null);
     ctor public SearchAddress(String? houseNumber = null);
     ctor public SearchAddress();
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.result.SearchAddress! copy(String houseNumber = houseNumber, String street = street, String neighborhood = neighborhood, String locality = locality, String postcode = postcode, String place = place, String district = district, String region = region, String country = country);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.result.SearchAddress! copy(String houseNumber = houseNumber, String street = street, String neighborhood = neighborhood, String locality = locality, String postcode = postcode, String place = place, String district = district, String region = region, String country = country, com.mapbox.search.common.SearchAddressRegion? regionInfo = regionInfo, com.mapbox.search.common.SearchAddressCountry? countryInfo = countryInfo);
     method public String? formattedAddress(com.mapbox.search.result.SearchAddress.FormatStyle style = FormatStyle.Medium);
     method public String? formattedAddress();
     method public String? getCountry();
+    method public com.mapbox.search.common.SearchAddressCountry? getCountryInfo();
     method public String? getDistrict();
     method public String? getHouseNumber();
     method public String? getLocality();
@@ -1003,9 +1009,11 @@ package com.mapbox.search.result {
     method public String? getPlace();
     method public String? getPostcode();
     method public String? getRegion();
+    method public com.mapbox.search.common.SearchAddressRegion? getRegionInfo();
     method public String? getStreet();
     method public com.mapbox.search.result.SearchAddress.Builder toBuilder();
     property public final String? country;
+    property public final com.mapbox.search.common.SearchAddressCountry? countryInfo;
     property public final String? district;
     property public final String? houseNumber;
     property public final String? locality;
@@ -1013,6 +1021,7 @@ package com.mapbox.search.result {
     property public final String? place;
     property public final String? postcode;
     property public final String? region;
+    property public final com.mapbox.search.common.SearchAddressRegion? regionInfo;
     property public final String? street;
     field public static final String SEPARATOR = ", ";
   }
@@ -1021,6 +1030,7 @@ package com.mapbox.search.result {
     ctor public SearchAddress.Builder();
     method public com.mapbox.search.result.SearchAddress build();
     method public com.mapbox.search.result.SearchAddress.Builder country(String country);
+    method public com.mapbox.search.result.SearchAddress.Builder countryInfo(com.mapbox.search.common.SearchAddressCountry countryInfo);
     method public com.mapbox.search.result.SearchAddress.Builder district(String district);
     method public com.mapbox.search.result.SearchAddress.Builder houseNumber(String houseNumber);
     method public com.mapbox.search.result.SearchAddress.Builder locality(String locality);
@@ -1028,6 +1038,7 @@ package com.mapbox.search.result {
     method public com.mapbox.search.result.SearchAddress.Builder place(String place);
     method public com.mapbox.search.result.SearchAddress.Builder postcode(String postcode);
     method public com.mapbox.search.result.SearchAddress.Builder region(String region);
+    method public com.mapbox.search.result.SearchAddress.Builder regionInfo(com.mapbox.search.common.SearchAddressRegion regionInfo);
     method public com.mapbox.search.result.SearchAddress.Builder street(String street);
   }
 

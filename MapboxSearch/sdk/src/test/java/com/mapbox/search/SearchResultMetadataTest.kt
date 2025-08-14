@@ -12,6 +12,7 @@ import com.mapbox.search.base.core.CoreParkingPaymentType
 import com.mapbox.search.base.core.CoreParkingRestriction
 import com.mapbox.search.base.core.CoreParkingTrend
 import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.factory.createCoreParkingType
 import com.mapbox.search.base.factory.mapToCore
 import com.mapbox.search.base.factory.parking.mapToCore
 import com.mapbox.search.base.factory.parking.mapToPlatform
@@ -25,6 +26,7 @@ import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import com.mapbox.search.common.parking.ParkingType
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.tests.withPrefabTestPoint
@@ -100,6 +102,8 @@ internal class SearchResultMetadataTest {
                 restrictions = listOf(CoreParkingRestriction.NO_LPG),
             )
 
+            val parkingType = ParkingType.PARKING_LOT
+
             val originalCoreMeta = createCoreResultMetadata(
                 reviewCount = 243,
                 phone = "+7 939 32 12",
@@ -139,6 +143,7 @@ internal class SearchResultMetadataTest {
                 popularity = 0.5f,
                 cuisines = listOf("french", "spanish"),
                 parkingInfo = parkingInfo,
+                parkingType = createCoreParkingType(parkingType),
             )
             val spyCoreMeta = spyk(originalCoreMeta)
 
@@ -295,6 +300,10 @@ internal class SearchResultMetadataTest {
 
                 Verify("CoreResultMetadata.parkingInfo() called") {
                     spyCoreMeta.parkingInfo
+                }
+
+                Verify("CoreResultMetadata.parkingType() called") {
+                    spyCoreMeta.parkingType
                 }
             }
 
@@ -549,6 +558,15 @@ internal class SearchResultMetadataTest {
                 }
             }
 
+            When("parkingType accessed") {
+                Then("Returned data should be as original") {
+                    assertEquals(
+                        originalCoreMeta.parkingType,
+                        createCoreParkingType(metadata.parkingType),
+                    )
+                }
+            }
+
             When("toString() called") {
                 val value = metadata.toString()
                 Then(
@@ -593,7 +611,8 @@ internal class SearchResultMetadataTest {
                             "rating=${originalCoreMeta.rating}, " +
                             "popularity=${originalCoreMeta.popularity}, " +
                             "cuisines=${originalCoreMeta.cuisines}, " +
-                            "parkingInfo=${parkingInfo.mapToPlatform()}" +
+                            "parkingInfo=${parkingInfo.mapToPlatform()}, " +
+                            "parkingType=$parkingType" +
                             ")",
                     value
                 )
@@ -647,6 +666,7 @@ internal class SearchResultMetadataTest {
             val rating = 5.0f
             val popularity = 0.5f
             val cuisines = listOf("greek")
+            val parkingType = ParkingType.ON_STREET
 
             When("a SearchResultMeta object is created") {
                 val searchResultMetadata =
@@ -666,6 +686,7 @@ internal class SearchResultMetadataTest {
                         .servesVegan(servesVegan).servesVegetarian(servesVegetarian).rating(rating)
                         .popularity(popularity)
                         .cuisines(cuisines)
+                        .parkingType(parkingType)
                         .build()
 
                 Then("all properties should be set") {
@@ -706,6 +727,7 @@ internal class SearchResultMetadataTest {
                     assertEquals(searchResultMetadata.rating, rating)
                     assertEquals(searchResultMetadata.popularity, popularity)
                     assertEquals(searchResultMetadata.cuisines, cuisines)
+                    assertEquals(searchResultMetadata.parkingType, parkingType)
                 }
             }
         }

@@ -1,7 +1,9 @@
 package com.mapbox.search.offline
 
-import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.common.tests.ToStringVerifier
+import com.mapbox.search.common.tests.createCoreSearchAddress
+import com.mapbox.search.common.tests.createCoreSearchAddressCountry
+import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.test.dsl.TestCase
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.TestFactory
@@ -29,7 +31,7 @@ internal class OfflineSearchAddressTest {
     @TestFactory
     fun `Check BaseSearchAddress mapToOfflineSdkType() function`() = TestCase {
         Given("BaseSearchAddress instance") {
-            val baseAddress = BaseSearchAddress(
+            val baseAddress = createCoreSearchAddress(
                 houseNumber = "test houseNumber",
                 street = "test street",
                 neighborhood = "test neighborhood",
@@ -37,8 +39,8 @@ internal class OfflineSearchAddressTest {
                 postcode = "test postcode",
                 place = "test place",
                 district = "test district",
-                region = "test region",
-                country = "test country"
+                region = createCoreSearchAddressRegion("test region"),
+                country = createCoreSearchAddressCountry("test country"),
             )
 
             When("mapToOfflineSdkType() called") {

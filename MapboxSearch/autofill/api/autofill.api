@@ -80,7 +80,7 @@ public final class com/mapbox/search/autofill/AddressAutofillSuggestion$Creator 
 
 public final class com/mapbox/search/autofill/AddressComponents : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Lcom/mapbox/search/base/result/BaseSearchAddress;Lcom/mapbox/search/internal/bindgen/ResultMetadata;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/search/internal/bindgen/SearchAddress;Lcom/mapbox/search/internal/bindgen/ResultMetadata;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCountry ()Ljava/lang/String;

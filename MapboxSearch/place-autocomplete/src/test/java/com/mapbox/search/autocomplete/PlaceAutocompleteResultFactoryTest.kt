@@ -75,8 +75,8 @@ internal class PlaceAutocompleteResultFactoryTest {
         assertEquals(baseResult.addresses?.first()?.postcode, result.address?.postcode)
         assertEquals(baseResult.addresses?.first()?.place, result.address?.place)
         assertEquals(baseResult.addresses?.first()?.district, result.address?.district)
-        assertEquals(baseResult.addresses?.first()?.region, result.address?.region)
-        assertEquals(baseResult.addresses?.first()?.country, result.address?.country)
+        assertEquals(baseResult.addresses?.first()?.region?.name, result.address?.region)
+        assertEquals(baseResult.addresses?.first()?.country?.name, result.address?.country)
         assertEquals(baseResult.metadata?.countryIso1, result.address?.countryIso1)
         assertEquals(baseResult.metadata?.countryIso2, result.address?.countryIso2)
 

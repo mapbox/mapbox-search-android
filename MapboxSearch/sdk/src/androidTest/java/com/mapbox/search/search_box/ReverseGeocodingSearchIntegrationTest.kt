@@ -21,6 +21,7 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.SearchAddressCountry
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.metadata.ImageInfo
@@ -157,7 +158,6 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         assertEquals("5 Avenue Anatole France, 75007 Paris, France", searchResult.descriptionText)
         assertEquals(
             SearchAddress(
-                // TODO FIXME incorrect parsing
                 houseNumber = "Hamp",
                 street = "av. Anatole France",
                 neighborhood = "Gros-Caillou",
@@ -167,6 +167,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
                 district = null,
                 region = null,
                 country = "France",
+                countryInfo = SearchAddressCountry("France", "FR", "FRA")
             ),
             searchResult.address
         )

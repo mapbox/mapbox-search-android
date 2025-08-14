@@ -5,6 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import java.util.Collections
 
 sealed class BaseSearchSuggestion(
@@ -36,7 +37,7 @@ sealed class BaseSearchSuggestion(
     open val descriptionText: String?
         get() = rawSearchResult.descriptionAddress
 
-    open val address: BaseSearchAddress?
+    open val address: CoreSearchAddress?
         get() = rawSearchResult.addresses?.first()
 
     open val distanceMeters: Double?

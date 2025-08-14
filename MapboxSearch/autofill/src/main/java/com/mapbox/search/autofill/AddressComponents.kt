@@ -2,9 +2,9 @@ package com.mapbox.search.autofill
 
 import android.os.Parcelable
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.core.countryIso1
 import com.mapbox.search.base.core.countryIso2
-import com.mapbox.search.base.result.BaseSearchAddress
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 public class AddressComponents private constructor(
-    private val coreSdkAddress: BaseSearchAddress,
+    private val coreSdkAddress: CoreSearchAddress,
     private val coreMetadata: CoreResultMetadata?,
 ) : Parcelable {
 
@@ -66,13 +66,13 @@ public class AddressComponents private constructor(
      * Address region.
      */
     public val region: String?
-        get() = coreSdkAddress.region
+        get() = coreSdkAddress.region?.name
 
     /**
      * Address country.
      */
     public val country: String?
-        get() = coreSdkAddress.country
+        get() = coreSdkAddress.country?.name
 
     /**
      * The country code in ISO 3166-1.
@@ -148,7 +148,7 @@ public class AddressComponents private constructor(
 
         @JvmSynthetic
         fun fromCoreSdkAddress(
-            address: BaseSearchAddress?,
+            address: CoreSearchAddress?,
             metadata: CoreResultMetadata?
         ): AddressComponents? = if (address == null || address.isEmpty) {
             null
@@ -156,7 +156,7 @@ public class AddressComponents private constructor(
             AddressComponents(address, metadata)
         }
 
-        private val BaseSearchAddress.isEmpty: Boolean
+        private val CoreSearchAddress.isEmpty: Boolean
             get() {
                 return listOf(
                     houseNumber,
@@ -166,8 +166,8 @@ public class AddressComponents private constructor(
                     postcode,
                     place,
                     district,
-                    region,
-                    country,
+                    region?.name,
+                    country?.name,
                 ).all { it.isNullOrEmpty() }
             }
     }

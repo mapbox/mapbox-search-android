@@ -5,9 +5,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
 import com.mapbox.search.base.core.CoreRoutablePoint
+import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
-import com.mapbox.search.base.result.BaseSearchAddress
 import com.mapbox.search.base.result.BaseSuggestAction
 
 internal fun createTestBaseRawSearchResult(
@@ -17,7 +17,7 @@ internal fun createTestBaseRawSearchResult(
     names: List<String> = listOf("Test Search Result"),
     namePreferred: String? = null,
     languages: List<String> = listOf("def"),
-    addresses: List<BaseSearchAddress>? = null,
+    addresses: List<CoreSearchAddress>? = null,
     descriptionAddress: String? = null,
     matchingName: String? = null,
     fullAddress: String? = null,
@@ -68,28 +68,4 @@ internal fun createTestBaseRawSearchResult(
     action = action,
     serverIndex = serverIndex,
     etaMinutes = etaMinutes
-)
-
-@Suppress("LongParameterList")
-internal fun createTestBaseSearchAddress(
-    defaultValue: String? = null,
-    houseNumber: String? = defaultValue,
-    street: String? = defaultValue,
-    neighborhood: String? = defaultValue,
-    locality: String? = defaultValue,
-    postcode: String? = defaultValue,
-    place: String? = defaultValue,
-    district: String? = defaultValue,
-    region: String? = defaultValue,
-    country: String? = defaultValue,
-) = BaseSearchAddress(
-    houseNumber = houseNumber,
-    street = street,
-    neighborhood = neighborhood,
-    locality = locality,
-    postcode = postcode,
-    place = place,
-    district = district,
-    region = region,
-    country = country
 )

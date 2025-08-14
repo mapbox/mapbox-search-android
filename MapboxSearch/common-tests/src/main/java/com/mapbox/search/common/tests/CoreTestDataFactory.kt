@@ -32,6 +32,8 @@ fun createTestCoreSearchOptions(
     navProfile: String? = null,
     etaType: String? = null,
     bbox: LonLatBBox? = null,
+    // TODO support viewport
+    viewport: LonLatBBox? = null,
     countries: List<String>? = null,
     fuzzyMatch: Boolean? = null,
     language: List<String>? = null,
@@ -54,6 +56,7 @@ fun createTestCoreSearchOptions(
     navProfile,
     etaType,
     bbox,
+    viewport,
     countries,
     fuzzyMatch,
     language,

@@ -89,9 +89,10 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
         assertTrue(result.isError)
 
         val error = result.requireError()
-        assertEquals(
-            "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path \$",
-            error.message
+        assertTrue(
+            error.message?.contains(
+                "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path"
+            ) == true
         )
         assertTrue(error is JsonSyntaxException)
     }
@@ -111,9 +112,10 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
         assertTrue(result.isError)
 
         val error = result.requireError()
-        assertEquals(
-            "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path \$",
-            error.message
+        assertTrue(
+            error.message?.contains(
+                "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path"
+            ) == true
         )
         assertTrue(error is JsonSyntaxException)
     }

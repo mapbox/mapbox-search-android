@@ -432,6 +432,26 @@ package com.mapbox.search.common {
     property public final com.mapbox.geojson.Point point;
   }
 
+  @kotlinx.parcelize.Parcelize public final class SearchAddressCountry implements android.os.Parcelable {
+    ctor public SearchAddressCountry(String name, String? isoCodeAlpha2, String? isoCodeAlpha3);
+    method public String? getIsoCodeAlpha2();
+    method public String? getIsoCodeAlpha3();
+    method public String getName();
+    property public final String? isoCodeAlpha2;
+    property public final String? isoCodeAlpha3;
+    property public final String name;
+  }
+
+  @kotlinx.parcelize.Parcelize public final class SearchAddressRegion implements android.os.Parcelable {
+    ctor public SearchAddressRegion(String name, String? code, String? codeFull);
+    method public String? getCode();
+    method public String? getCodeFull();
+    method public String getName();
+    property public final String? code;
+    property public final String? codeFull;
+    property public final String name;
+  }
+
   public final class SearchCancellationException extends java.lang.RuntimeException {
     ctor public SearchCancellationException(String message);
     property public String message;

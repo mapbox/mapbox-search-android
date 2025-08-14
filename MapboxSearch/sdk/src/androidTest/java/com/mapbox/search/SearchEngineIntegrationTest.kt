@@ -20,6 +20,8 @@ import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.common.SearchAddressCountry
+import com.mapbox.search.common.SearchAddressRegion
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.common.metadata.ImageInfo
@@ -222,7 +224,13 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             types = listOf(BaseRawResultType.REGION),
             names = listOf("Minsk"),
             languages = listOf("en"),
-            addresses = listOf(SearchAddress(country = "Belarus")),
+            addresses = listOf(
+                SearchAddress(
+                    country = "Belarus",
+                    countryInfo = SearchAddressCountry("Belarus", "by", null),
+                    regionInfo = SearchAddressRegion("", null, "BY-MI")
+                ),
+            ),
             fullAddress = "Belarus",
             descriptionAddress = "Belarus",
             matchingName = "Minsk",
@@ -522,7 +530,9 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 neighborhood = "Downtown",
                 postcode = "94102",
                 street = "Van Ness",
-                houseNumber = "150"
+                houseNumber = "150",
+                countryInfo = SearchAddressCountry("United States of America", "US", null),
+                regionInfo = SearchAddressRegion("California", null, null),
             ),
             searchResultType = SearchResultType.ADDRESS,
         )
@@ -650,7 +660,14 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             names = listOf("Minsk"),
             descriptionAddress = "Minsk Region, Belarus, Planet Earth",
             languages = listOf("en"),
-            addresses = listOf(SearchAddress(country = "Belarus", region = "Minsk Region")),
+            addresses = listOf(
+                SearchAddress(
+                    country = "Belarus",
+                    region = "Minsk Region",
+                    countryInfo = SearchAddressCountry("Belarus", "by", null),
+                    regionInfo = SearchAddressRegion("Minsk Region", null, "BY-MI")
+                )
+            ),
             fullAddress = "Minsk Region, Belarus, Planet Earth",
             distanceMeters = 5000000.0,
             matchingName = "Minsk",

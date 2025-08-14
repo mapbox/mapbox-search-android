@@ -19,7 +19,6 @@ import com.mapbox.search.base.result.BaseServerSearchResultImpl
 import com.mapbox.search.base.result.BaseServerSearchSuggestion
 import com.mapbox.search.base.result.BaseSuggestAction
 import com.mapbox.search.base.result.SearchRequestContext
-import com.mapbox.search.base.result.mapToBaseSearchAddress
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.tests.createCoreSearchAddress
@@ -146,7 +145,7 @@ internal fun createTestBaseRawSearchResult(
     names = names,
     namePreferred = namePreferred,
     languages = languages,
-    addresses = addresses?.map { it.mapToBaseSearchAddress() },
+    addresses = addresses,
     descriptionAddress = descriptionAddress,
     distanceMeters = distanceMeters,
     matchingName = matchingName,
