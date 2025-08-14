@@ -207,6 +207,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -521,6 +526,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -847,6 +857,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -1279,6 +1294,11 @@ License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the error-prone annotations.  
+License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Guava ListenableFuture only.  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1611,6 +1631,11 @@ License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
+Mapbox Search Android uses portions of the error-prone annotations.  
+License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Search Android uses portions of the Guava ListenableFuture only.  
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1939,6 +1964,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -2271,6 +2301,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
@@ -2603,6 +2638,11 @@ License: [Android Software Development Kit License](https://developer.android.co
 ===========================================================================
 
 Mapbox Search Android uses portions of the Gson.  
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Search Android uses portions of the error-prone annotations.  
 License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================

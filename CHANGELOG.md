@@ -1,15 +1,15 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.15.0-beta.1-SNAPSHOT
+## 2.15.0-beta.1
 
 ### New features
 - Added new field `SearchResultMetadata.parkingType` - the type of parking at the POI.
 - Added new fields for the `SearchAddress` type - `regionInfo` and `countryInfo` which provide additional address information like region and country ISO codes.
 
 ### Mapbox dependencies
-- Search Native SDK `2.14.1`
-- Common SDK `24.14.1`
-- Maps SDK `11.14.1`
+- Search Native SDK `2.15.0-beta.1`
+- Common SDK `24.15.0-beta.1`
+- Maps SDK `11.15.0-beta.1`
 
 
 
