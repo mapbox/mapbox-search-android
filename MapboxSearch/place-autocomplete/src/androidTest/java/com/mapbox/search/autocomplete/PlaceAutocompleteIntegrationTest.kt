@@ -44,7 +44,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -114,7 +113,6 @@ internal class PlaceAutocompleteIntegrationTest {
         )
     }
 
-    @Ignore("TODO fix crash")
     @Test
     fun testRequestParametersForReverseGeocodingSearch() {
         mockServer.enqueue(MockResponse().setResponseCode(500))
