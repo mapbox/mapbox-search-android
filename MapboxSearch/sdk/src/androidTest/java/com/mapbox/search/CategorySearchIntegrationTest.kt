@@ -24,10 +24,10 @@ import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
@@ -253,7 +253,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val expected = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
+            listOf(NewSearchResultType.POI),
             baseRawSearchResult,
             RequestOptions(
                 query = TEST_CATEGORY,

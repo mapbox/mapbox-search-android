@@ -155,7 +155,7 @@ internal class CustomDataProviderTest : BaseTest() {
                 categories = secondCustomRecord.categories,
                 makiIcon = secondCustomRecord.makiIcon,
                 coordinate = secondCustomRecord.coordinate,
-                type = secondCustomRecord.type,
+                newType = secondCustomRecord.newType,
                 metadata = secondCustomRecord.metadata,
                 timestamp = TEST_LOCAL_TIME_MILLIS,
             ),

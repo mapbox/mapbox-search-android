@@ -33,7 +33,7 @@ internal data class HistoryRecordDAO(
             categories = categories,
             makiIcon = makiIcon,
             coordinate = coordinate!!,
-            type = searchResultType!!.createData(),
+            newType = searchResultType!!.createData(),
             metadata = metadata?.createData(),
             timestamp = timestamp!!,
         )
@@ -52,7 +52,7 @@ internal data class HistoryRecordDAO(
                     timestamp = timestamp,
                     makiIcon = makiIcon,
                     categories = categories,
-                    searchResultType = SearchResultTypeDAO.create(type),
+                    searchResultType = SearchResultTypeDAO.create(newType),
                     routablePoints = routablePoints?.mapNotNull { RoutablePointDAO.create(it) },
                     metadata = SearchResultMetadataDAO.create(metadata)
                 )

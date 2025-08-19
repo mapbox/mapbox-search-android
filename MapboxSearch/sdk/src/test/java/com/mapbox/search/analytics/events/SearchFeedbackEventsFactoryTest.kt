@@ -39,8 +39,8 @@ import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.mapToBase
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.StubIndexableRecord
 import com.mapbox.search.tests_support.assertEqualsJsonify
@@ -699,7 +699,7 @@ internal class SearchFeedbackEventsFactoryTest {
         )
 
         val TEST_SERVER_SEARCH_RESULT = createTestServerSearchResult(
-            types = listOf(SearchResultType.ADDRESS),
+            types = listOf(NewSearchResultType.ADDRESS),
             rawSearchResult = TEST_SEARCH_RESULT,
             requestOptions = TEST_REQUEST_OPTIONS
         )
@@ -724,7 +724,7 @@ internal class SearchFeedbackEventsFactoryTest {
                 houseNumber = "22",
                 street = "Baker street"
             ),
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             makiIcon = null,
             categories = emptyList(),
             routablePoints = null,
@@ -750,7 +750,7 @@ internal class SearchFeedbackEventsFactoryTest {
             coordinate = Point.fromLngLat(2.294423282146454, 48.85825817805569),
             descriptionText = "Test description text",
             address = SearchAddress(),
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             routablePoints = null,
             metadata = null,
             makiIcon = null,

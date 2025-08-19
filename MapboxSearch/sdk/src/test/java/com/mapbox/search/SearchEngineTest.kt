@@ -41,9 +41,9 @@ import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.mapToBase
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.createTestRequestOptions
@@ -1136,7 +1136,7 @@ internal class SearchEngineTest {
             coordinate = TEST_USER_LOCATION,
             descriptionText = TEST_DESCRIPTION_TEXT,
             address = TEST_SEARCH_ADDRESS,
-            type = SearchResultType.ADDRESS,
+            newType = NewSearchResultType.ADDRESS,
             makiIcon = null,
             categories = emptyList(),
             routablePoints = null,

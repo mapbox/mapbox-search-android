@@ -23,10 +23,10 @@ import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
@@ -218,7 +218,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         )
 
         val expectedResult = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
+            listOf(NewSearchResultType.POI),
             rawSearchResult,
             RequestOptions(
                 query = formatPoints(TEST_POINT),

@@ -9,6 +9,8 @@ import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.internal.mapToNewSearchResultType
+import com.mapbox.search.internal.newSearchResultTypeToOld
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.IgnoredOnParcel
@@ -17,6 +19,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * Resolved search object with populated fields.
  */
+@Suppress("DEPRECATION")
 @Parcelize
 public class SearchResult internal constructor(
     internal val base: BaseSearchResult
@@ -116,10 +119,23 @@ public class SearchResult internal constructor(
     public val accuracy: ResultAccuracy? = base.accuracy?.mapToPlatform()
 
     /**
-     * Non-empty list of resolved [SearchResult] types.
+     * Non-empty list of [NewSearchResultType.Type] values.
      */
     @IgnoredOnParcel
-    public val types: List<SearchResultType> = base.types.map { it.mapToPlatform() }
+    public val newTypes: List<String> = base.types.map { it.mapToNewSearchResultType() }
+
+    /**
+     * Non-empty list of resolved [SearchResult] types.
+     *
+     * List values are of type [SearchResultType], which have been replaced by [NewSearchResultType].
+     * Use [newTypes] to identify the actual type of this [SearchResult].
+     */
+    @IgnoredOnParcel
+    @Deprecated(
+        message = "This property is deprecated and should be replaced by newTypes",
+        replaceWith = ReplaceWith("newTypes"),
+    )
+    public val types: List<SearchResultType> = newTypes.map { newSearchResultTypeToOld(it) }
 
     /**
      * Estimated time of arrival (in minutes) based on the specified in the [com.mapbox.search.SearchOptions] origin point and navigation profile.
@@ -188,6 +204,7 @@ public class SearchResult internal constructor(
         if (makiIcon != other.makiIcon) return false
         if (coordinate != other.coordinate) return false
         if (accuracy != other.accuracy) return false
+        if (newTypes != other.newTypes) return false
         if (types != other.types) return false
         if (!etaMinutes.safeCompareTo(other.etaMinutes)) return false
         if (metadata != other.metadata) return false
@@ -218,6 +235,7 @@ public class SearchResult internal constructor(
         result = 31 * result + makiIcon.hashCode()
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + accuracy.hashCode()
+        result = 31 * result + newTypes.hashCode()
         result = 31 * result + types.hashCode()
         result = 31 * result + etaMinutes.hashCode()
         result = 31 * result + metadata.hashCode()
@@ -248,6 +266,7 @@ public class SearchResult internal constructor(
                 "makiIcon=$makiIcon, " +
                 "coordinate=$coordinate, " +
                 "accuracy=$accuracy, " +
+                "newTypes=$newTypes, " +
                 "types=$types, " +
                 "etaMinutes=$etaMinutes, " +
                 "metadata=$metadata, " +

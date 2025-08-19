@@ -33,10 +33,10 @@ import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.isIndexableRecordSuggestion
@@ -270,8 +270,17 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         ).mapToPlatform()
         assertTrue(compareSearchResultWithServerSearchResult(expectedResult, first))
 
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE, SearchResultType.REGION), suggestions[1].type)
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.POI), suggestions[2].type)
+        assertEquals(
+            SearchSuggestionType.SearchResultSuggestion(
+                NewSearchResultType.PLACE,
+                NewSearchResultType.REGION,
+            ),
+            suggestions[1].type
+        )
+        assertEquals(
+            SearchSuggestionType.SearchResultSuggestion(NewSearchResultType.POI),
+            suggestions[2].type
+        )
         assertEquals(SearchSuggestionType.Category("cafe"), suggestions[3].type)
         assertEquals(SearchSuggestionType.Category("florist"), suggestions[4].type)
         assertEquals(SearchSuggestionType.Brand("Starbucks", "starbucks"), suggestions[5].type)
@@ -377,7 +386,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(historyRecord.address, searchResult.address)
         assertEquals(historyRecord.makiIcon, searchResult.makiIcon)
         assertEquals(historyRecord.metadata, searchResult.metadata)
-        assertEquals(historyRecord.type, searchResult.types.first())
+        assertEquals(historyRecord.newType, searchResult.newTypes.first())
     }
 
     @Test
@@ -534,7 +543,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 countryInfo = SearchAddressCountry("United States of America", "US", null),
                 regionInfo = SearchAddressRegion("California", null, null),
             ),
-            searchResultType = SearchResultType.ADDRESS,
+            searchResultType = NewSearchResultType.ADDRESS,
         )
         historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
@@ -721,7 +730,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         val expectedResult = createTestServerSearchResult(
-            listOf(SearchResultType.PLACE, SearchResultType.REGION),
+            listOf(NewSearchResultType.PLACE, NewSearchResultType.REGION),
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(
@@ -980,7 +989,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         )
 
         val expectedSearchResult = createTestServerSearchResult(
-            listOf(SearchResultType.POI),
+            listOf(NewSearchResultType.POI),
             baseRawSearchResult,
             TEST_REQUEST_OPTIONS.run {
                 copy(

@@ -60,7 +60,6 @@ internal class SearchResultFactoryTest {
                 listOf(CoreResultType.REGION, CoreResultType.ADDRESS, CoreResultType.POI) to false,
                 emptyList<CoreResultType>() to false,
                 listOf(CoreResultType.PLACE, CoreResultType.CATEGORY) to false,
-                listOf(CoreResultType.UNKNOWN) to false,
                 listOf(CoreResultType.CATEGORY) to false,
                 listOf(CoreResultType.BRAND) to false,
                 listOf(CoreResultType.QUERY) to false,

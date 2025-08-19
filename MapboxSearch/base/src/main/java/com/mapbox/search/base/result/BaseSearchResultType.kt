@@ -14,6 +14,7 @@ enum class BaseSearchResultType {
     STREET,
     ADDRESS,
     POI,
+    UNKNOWN,
 }
 
 internal fun BaseSearchResultType.mapToCore(): CoreResultType {
@@ -29,6 +30,7 @@ internal fun BaseSearchResultType.mapToCore(): CoreResultType {
         BaseSearchResultType.STREET -> CoreResultType.STREET
         BaseSearchResultType.ADDRESS -> CoreResultType.ADDRESS
         BaseSearchResultType.POI -> CoreResultType.POI
+        BaseSearchResultType.UNKNOWN -> CoreResultType.UNKNOWN
     }
 }
 
@@ -48,7 +50,7 @@ fun CoreResultType.tryMapToSearchResultType(): BaseSearchResultType? {
         CoreResultType.STREET -> BaseSearchResultType.STREET
         CoreResultType.POSTCODE -> BaseSearchResultType.POSTCODE
         CoreResultType.BLOCK -> BaseSearchResultType.BLOCK
-        CoreResultType.UNKNOWN,
+        CoreResultType.UNKNOWN -> BaseSearchResultType.UNKNOWN
         CoreResultType.USER_RECORD,
         CoreResultType.CATEGORY,
         CoreResultType.BRAND,

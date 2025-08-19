@@ -23,6 +23,7 @@ internal class BaseSearchResultTypeTest {
                         BaseSearchResultType.STREET -> CoreResultType.STREET
                         BaseSearchResultType.POSTCODE -> CoreResultType.POSTCODE
                         BaseSearchResultType.BLOCK -> CoreResultType.BLOCK
+                        BaseSearchResultType.UNKNOWN -> CoreResultType.UNKNOWN
                     }
                     Then("Core value should be $expectedCoreType", expectedCoreType, it.mapToCore())
                 }
@@ -124,11 +125,18 @@ internal class BaseSearchResultTypeTest {
                                 rawResultType.tryMapToSearchResultType()
                             )
                         }
+                        CoreResultType.UNKNOWN -> {
+                            Then("isSearchResultType should be true", true, rawResultType.isSearchResultType)
+                            Then(
+                                "tryMapToSearchResultType() should return UNKNOWN",
+                                BaseSearchResultType.UNKNOWN,
+                                rawResultType.tryMapToSearchResultType()
+                            )
+                        }
                         CoreResultType.CATEGORY,
                         CoreResultType.BRAND,
                         CoreResultType.QUERY,
-                        CoreResultType.USER_RECORD,
-                        CoreResultType.UNKNOWN -> {
+                        CoreResultType.USER_RECORD -> {
                             Then("isSearchResultType should be false", false, rawResultType.isSearchResultType)
                             Then(
                                 "tryMapToSearchResultType() should return null",

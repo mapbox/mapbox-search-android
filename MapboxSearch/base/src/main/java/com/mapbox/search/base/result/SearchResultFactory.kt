@@ -124,7 +124,8 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
             CoreResultType.STREET,
             CoreResultType.POSTCODE,
             CoreResultType.BLOCK,
-            CoreResultType.QUERY -> {
+            CoreResultType.QUERY,
+            CoreResultType.UNKNOWN -> {
                 when (apiType) {
                     CoreApiType.GEOCODING -> {
                         if (searchResult.center != null && searchResult.type.isSearchResultType) {
@@ -186,11 +187,6 @@ class SearchResultFactory(private val recordResolver: IndexableRecordResolver) {
                     callback(Result.failure(Exception("USER_RECORD search result without layer id: $searchResult")))
                     AsyncOperationTaskImpl.COMPLETED
                 }
-            }
-            CoreResultType.UNKNOWN -> {
-                failDebug { "Invalid search result with ${CoreResultType.UNKNOWN} result type. ${debugInfo()}" }
-                callback(Result.failure(Exception("Unknown search result type: $searchResult")))
-                AsyncOperationTaskImpl.COMPLETED
             }
         }
     }

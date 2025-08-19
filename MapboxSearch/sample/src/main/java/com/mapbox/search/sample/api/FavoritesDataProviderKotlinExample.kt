@@ -7,8 +7,8 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.sample.R
 import java.util.UUID
 
@@ -67,7 +67,7 @@ class FavoritesDataProviderKotlinExample : BaseKotlinExampleActivity() {
             categories = null,
             makiIcon = null,
             coordinate = Point.fromLngLat(2.294434, 48.858349),
-            type = SearchResultType.PLACE,
+            newType = NewSearchResultType.PLACE,
             metadata = null
         )
 

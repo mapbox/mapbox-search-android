@@ -124,7 +124,8 @@ internal class BaseSearchSuggestionTest {
                     CoreResultType.NEIGHBORHOOD,
                     CoreResultType.STREET,
                     CoreResultType.POSTCODE,
-                    CoreResultType.BLOCK -> {
+                    CoreResultType.BLOCK,
+                    CoreResultType.UNKNOWN -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val expectedResultType = checkNotNull(rawResultType.tryMapToSearchResultType()) {
                                 "$rawResultType must have corresponding ${BaseSearchResultType::class.java.simpleName}"
@@ -193,8 +194,7 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
                     }
-                    CoreResultType.USER_RECORD,
-                    CoreResultType.UNKNOWN -> {
+                    CoreResultType.USER_RECORD -> {
                         WhenThrows(
                             "Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType",
                             IllegalStateException::class
@@ -390,7 +390,8 @@ internal class BaseSearchSuggestionTest {
                     CoreResultType.NEIGHBORHOOD,
                     CoreResultType.STREET,
                     CoreResultType.POSTCODE,
-                    CoreResultType.BLOCK -> {
+                    CoreResultType.BLOCK,
+                    CoreResultType.UNKNOWN -> {
                         When("Trying ro instantiate GeocodingCompatSearchSuggestion with raw type = $rawResultType") {
                             val expectedResultType = checkNotNull(rawResultType.tryMapToSearchResultType()) {
                                 "$rawResultType must have corresponding ${BaseSearchResultType::class.java.simpleName}"
@@ -411,8 +412,7 @@ internal class BaseSearchSuggestionTest {
                     CoreResultType.CATEGORY,
                     CoreResultType.BRAND,
                     CoreResultType.QUERY,
-                    CoreResultType.USER_RECORD,
-                    CoreResultType.UNKNOWN -> {
+                    CoreResultType.USER_RECORD -> {
                         WhenThrows(
                             "Trying ro instantiate GeocodingCompatSearchSuggestion with raw type = $rawResultType",
                             IllegalStateException::class
