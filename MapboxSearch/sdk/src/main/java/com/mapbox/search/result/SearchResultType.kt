@@ -1,11 +1,22 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.result
 
-import com.mapbox.search.base.core.CoreResultType
-import com.mapbox.search.base.result.BaseSearchResultType
+import com.mapbox.search.result.SearchResultType.Companion.DEFAULT
 
 /**
  * Defines type of search result.
+ *
+ * This enum has been replaced by [NewSearchResultType].
+ * It no longer represents the currently supported types in the Search Engine
+ * because it cannot be extended without violating SemVer rules for public API changes.
+ *
+ * If a type of a [SearchResult] is not present in [SearchResultType], it will default to [DEFAULT].
  */
+@Deprecated(
+    message = "Replaced by NewSearchResultType. This enum no longer represents the current supported types.",
+    replaceWith = ReplaceWith("NewSearchResultType"),
+)
 public enum class SearchResultType {
 
     /**
@@ -70,56 +81,16 @@ public enum class SearchResultType {
      * Points of interest.
      * These include restaurants, stores, concert venues, parks, museums, etc.
      */
-    POI,
-}
+    POI;
 
-@JvmSynthetic
-internal fun SearchResultType.mapToCore(): CoreResultType {
-    return when (this) {
-        SearchResultType.COUNTRY -> CoreResultType.COUNTRY
-        SearchResultType.REGION -> CoreResultType.REGION
-        SearchResultType.POSTCODE -> CoreResultType.POSTCODE
-        SearchResultType.BLOCK -> CoreResultType.BLOCK
-        SearchResultType.PLACE -> CoreResultType.PLACE
-        SearchResultType.DISTRICT -> CoreResultType.DISTRICT
-        SearchResultType.LOCALITY -> CoreResultType.LOCALITY
-        SearchResultType.NEIGHBORHOOD -> CoreResultType.NEIGHBORHOOD
-        SearchResultType.STREET -> CoreResultType.STREET
-        SearchResultType.ADDRESS -> CoreResultType.ADDRESS
-        SearchResultType.POI -> CoreResultType.POI
-    }
-}
+    /**
+     * Companion object.
+     */
+    public companion object {
 
-@JvmSynthetic
-internal fun BaseSearchResultType.mapToPlatform(): SearchResultType {
-    return when (this) {
-        BaseSearchResultType.COUNTRY -> SearchResultType.COUNTRY
-        BaseSearchResultType.REGION -> SearchResultType.REGION
-        BaseSearchResultType.POSTCODE -> SearchResultType.POSTCODE
-        BaseSearchResultType.BLOCK -> SearchResultType.BLOCK
-        BaseSearchResultType.PLACE -> SearchResultType.PLACE
-        BaseSearchResultType.DISTRICT -> SearchResultType.DISTRICT
-        BaseSearchResultType.LOCALITY -> SearchResultType.LOCALITY
-        BaseSearchResultType.NEIGHBORHOOD -> SearchResultType.NEIGHBORHOOD
-        BaseSearchResultType.STREET -> SearchResultType.STREET
-        BaseSearchResultType.ADDRESS -> SearchResultType.ADDRESS
-        BaseSearchResultType.POI -> SearchResultType.POI
-    }
-}
-
-@JvmSynthetic
-internal fun SearchResultType.mapToBase(): BaseSearchResultType {
-    return when (this) {
-        SearchResultType.COUNTRY -> BaseSearchResultType.COUNTRY
-        SearchResultType.REGION -> BaseSearchResultType.REGION
-        SearchResultType.POSTCODE -> BaseSearchResultType.POSTCODE
-        SearchResultType.BLOCK -> BaseSearchResultType.BLOCK
-        SearchResultType.PLACE -> BaseSearchResultType.PLACE
-        SearchResultType.DISTRICT -> BaseSearchResultType.DISTRICT
-        SearchResultType.LOCALITY -> BaseSearchResultType.LOCALITY
-        SearchResultType.NEIGHBORHOOD -> BaseSearchResultType.NEIGHBORHOOD
-        SearchResultType.STREET -> BaseSearchResultType.STREET
-        SearchResultType.ADDRESS -> BaseSearchResultType.ADDRESS
-        SearchResultType.POI -> BaseSearchResultType.POI
+        /**
+         * The default type used when the type of an [SearchResult] is not present in [SearchResultType].
+         */
+        public val DEFAULT: SearchResultType = ADDRESS
     }
 }

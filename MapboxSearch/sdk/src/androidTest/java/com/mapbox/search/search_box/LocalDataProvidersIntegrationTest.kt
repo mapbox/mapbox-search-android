@@ -12,8 +12,8 @@ import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryRecord
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingOnDataProviderEngineRegisterListener
@@ -142,7 +142,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
             categories = listOf("gym", "services"),
             makiIcon = null,
             coordinate = DEFAULT_TEST_USER_LOCATION,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             metadata = null,
             timestamp = 100,
         )

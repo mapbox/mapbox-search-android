@@ -59,6 +59,7 @@ internal class PlaceAutocompleteTypeTest {
                 BaseSearchResultType.NEIGHBORHOOD -> PlaceAutocompleteType.AdministrativeUnit.Neighborhood
                 BaseSearchResultType.STREET -> PlaceAutocompleteType.AdministrativeUnit.Street
                 BaseSearchResultType.ADDRESS, BaseSearchResultType.BLOCK -> PlaceAutocompleteType.AdministrativeUnit.Address
+                BaseSearchResultType.UNKNOWN -> null
             }
             assertEquals(placeType, PlaceAutocompleteType.createFromBaseType(it))
         }

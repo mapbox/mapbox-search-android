@@ -4,13 +4,10 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
 import com.mapbox.search.BaseTest
 import com.mapbox.search.MapboxSearchSdk
-import com.mapbox.search.RequestOptions
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.ServiceProvider
-import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientation
@@ -133,7 +130,7 @@ internal class CustomDataProviderTest : BaseTest() {
                 categories = secondCustomRecord.categories,
                 makiIcon = secondCustomRecord.makiIcon,
                 coordinate = secondCustomRecord.coordinate,
-                type = secondCustomRecord.type,
+                newType = secondCustomRecord.newType,
                 metadata = secondCustomRecord.metadata,
                 timestamp = TEST_LOCAL_TIME_MILLIS,
             ),
@@ -235,23 +232,7 @@ internal class CustomDataProviderTest : BaseTest() {
         val TEST_USER_LOCATION: Point = Point.fromLngLat(10.1, 11.1234567)
 
         const val TEST_LOCAL_TIME_MILLIS = 12345L
-        const val TEST_UUID = "test-generated-uuid"
         val TEST_KEYBOARD_LOCALE: Locale = Locale.ENGLISH
         val TEST_ORIENTATION = ScreenOrientation.PORTRAIT
-
-        val TEST_REQUEST_OPTIONS = RequestOptions(
-            query = "",
-            endpoint = "suggest",
-            options = SearchOptions.Builder().build(),
-            proximityRewritten = false,
-            originRewritten = false,
-            sessionID = TEST_UUID,
-            requestContext = SearchRequestContext(
-                apiType = CoreApiType.SEARCH_BOX,
-                keyboardLocale = TEST_KEYBOARD_LOCALE,
-                screenOrientation = TEST_ORIENTATION,
-                responseUuid = ""
-            )
-        )
     }
 }

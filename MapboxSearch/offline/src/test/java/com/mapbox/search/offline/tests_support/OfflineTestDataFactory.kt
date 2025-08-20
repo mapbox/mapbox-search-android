@@ -4,16 +4,16 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreResultAccuracy
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchAddress
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSuggestAction
 
 internal fun createTestBaseRawSearchResult(
     id: String = "id_test_search_result",
     mapboxId: String? = null,
-    types: List<BaseRawResultType> = listOf(BaseRawResultType.POI),
+    types: List<CoreResultType> = listOf(CoreResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     namePreferred: String? = null,
     languages: List<String> = listOf("def"),

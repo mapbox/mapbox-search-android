@@ -293,8 +293,13 @@ package com.mapbox.search.ui.view.place {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchPlace implements android.os.Parcelable {
-    ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ui.view.place.SearchPlace! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes = resultTypes, com.mapbox.search.record.IndexableRecord? record = record, com.mapbox.geojson.Point coordinate = coordinate, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.search.SearchResultMetadata? metadata = metadata, double distanceMeters = distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback = feedback);
+    ctor @Deprecated public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, @Deprecated java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback, java.util.List<java.lang.String> newTypes = resultTypes.map({ var it: com.mapbox.search.result.SearchResultType ->
+
+    return newSearchResultTypeToFromOld(it)
+}));
+    ctor @Deprecated public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, @Deprecated java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback);
+    ctor public SearchPlace(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, com.mapbox.search.record.IndexableRecord? record, com.mapbox.geojson.Point coordinate, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.search.SearchResultMetadata? metadata, Double? distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback, java.util.List<java.lang.String> newTypes);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ui.view.place.SearchPlace! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.result.SearchResultType> resultTypes = resultTypes, com.mapbox.search.record.IndexableRecord? record = record, com.mapbox.geojson.Point coordinate = coordinate, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.search.SearchResultMetadata? metadata = metadata, double distanceMeters = distanceMeters, com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback? feedback = feedback, java.util.List<? extends java.lang.String> newTypes = newTypes);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromIndexableRecord(com.mapbox.search.record.IndexableRecord record, Double? distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult, Double? distanceMeters = searchResult.distanceMeters);
     method public static com.mapbox.search.ui.view.place.SearchPlace createFromOfflineSearchResult(com.mapbox.search.offline.OfflineSearchResult searchResult);
@@ -312,8 +317,9 @@ package com.mapbox.search.ui.view.place {
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
+    method public java.util.List<java.lang.String> getNewTypes();
     method public com.mapbox.search.record.IndexableRecord? getRecord();
-    method public java.util.List<com.mapbox.search.result.SearchResultType> getResultTypes();
+    method @Deprecated public java.util.List<com.mapbox.search.result.SearchResultType> getResultTypes();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     property public final com.mapbox.search.result.SearchAddress? address;
     property public final java.util.List<java.lang.String>? categories;
@@ -325,8 +331,9 @@ package com.mapbox.search.ui.view.place {
     property public final String? makiIcon;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
+    property public final java.util.List<java.lang.String> newTypes;
     property public final com.mapbox.search.record.IndexableRecord? record;
-    property public final java.util.List<com.mapbox.search.result.SearchResultType> resultTypes;
+    property @Deprecated public final java.util.List<com.mapbox.search.result.SearchResultType> resultTypes;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     field public static final com.mapbox.search.ui.view.place.SearchPlace.Companion Companion;
   }

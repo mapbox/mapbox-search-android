@@ -10,11 +10,11 @@ sealed class BaseSearchSuggestionType : Parcelable {
     @Parcelize
     data class SearchResultSuggestion internal constructor(val types: List<BaseSearchResultType>) : BaseSearchSuggestionType() {
 
-        constructor(vararg types: BaseSearchResultType) : this(types.asList())
-
         init {
             assertDebug(types.isNotEmpty()) { "Provided types should not be empty!" }
         }
+
+        constructor(vararg types: BaseSearchResultType) : this(types.asList())
     }
 
     @Parcelize

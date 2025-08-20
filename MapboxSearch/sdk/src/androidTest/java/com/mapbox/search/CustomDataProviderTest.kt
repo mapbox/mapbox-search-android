@@ -2,8 +2,8 @@ package com.mapbox.search
 
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
-import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -113,7 +113,7 @@ internal class CustomDataProviderTest : BaseTest() {
             rawSearchResult = createTestBaseRawSearchResult(
                 id = secondCustomRecord.id,
                 layerId = customDataProvider.dataProviderName,
-                types = listOf(BaseRawResultType.USER_RECORD),
+                types = listOf(CoreResultType.USER_RECORD),
                 names = listOf(secondCustomRecord.name),
                 center = secondCustomRecord.coordinate,
                 addresses = listOf(SearchAddress()),
@@ -155,7 +155,7 @@ internal class CustomDataProviderTest : BaseTest() {
                 categories = secondCustomRecord.categories,
                 makiIcon = secondCustomRecord.makiIcon,
                 coordinate = secondCustomRecord.coordinate,
-                type = secondCustomRecord.type,
+                newType = secondCustomRecord.newType,
                 metadata = secondCustomRecord.metadata,
                 timestamp = TEST_LOCAL_TIME_MILLIS,
             ),

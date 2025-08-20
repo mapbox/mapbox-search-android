@@ -18,7 +18,7 @@ import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchRequestException
 import com.mapbox.search.common.tests.FixedPointLocationEngine
-import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.utils.assertEqualsIgnoreCase
 import okhttp3.mockwebserver.MockResponse
@@ -136,7 +136,7 @@ internal class ForwardApiIntegrationTest : BaseTest() {
 
         val first = results.first()
         assertEquals("Starbucks", first.name)
-        assertEquals(listOf(SearchResultType.POI), first.types)
+        assertEquals(listOf(NewSearchResultType.POI), first.newTypes)
         assertEquals(
             "1429 P St NW, Washington, District of Columbia 20005, United States",
             first.fullAddress,

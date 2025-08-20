@@ -3,6 +3,7 @@ package com.mapbox.search.base.result
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreResultMetadata
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchAddress
 import com.mapbox.search.base.record.BaseIndexableRecord
@@ -16,7 +17,7 @@ data class BaseIndexableRecordSearchSuggestion(
 ) : BaseSearchSuggestion(rawSearchResult) {
 
     init {
-        check(rawSearchResult.type == BaseRawResultType.USER_RECORD)
+        check(rawSearchResult.type == CoreResultType.USER_RECORD)
         checkNotNull(rawSearchResult.layerId)
     }
 

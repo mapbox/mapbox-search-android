@@ -14,6 +14,9 @@ internal class TestDataProvider<R : IndexableRecord> : LocalDataProviderImpl<R> 
 
     var mode: Mode = Mode.Default
 
+    val records: List<R>?
+        get() = (dataState as? DataState.Data)?.records?.values?.toList()
+
     internal constructor(
         dataProviderName: String = "TEST_DATA_PROVIDER",
         priority: Int = 1000,
@@ -35,9 +38,6 @@ internal class TestDataProvider<R : IndexableRecord> : LocalDataProviderImpl<R> 
         recordsStorage = stubStorage,
         backgroundTaskExecutorService = executorService,
     )
-
-    val records: List<R>?
-        get() = (dataState as? DataState.Data)?.records?.values?.toList()
 
     override fun registerIndexableDataProviderEngine(
         dataProviderEngine: IndexableDataProviderEngine,

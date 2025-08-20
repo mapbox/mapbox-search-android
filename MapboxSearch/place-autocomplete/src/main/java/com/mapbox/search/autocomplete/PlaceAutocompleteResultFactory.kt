@@ -56,7 +56,6 @@ internal class PlaceAutocompleteResultFactory {
     }
 
     fun createPlaceAutocompleteSuggestions(results: List<BaseSearchResult>): List<PlaceAutocompleteSuggestion> {
-//        throw IllegalStateException(results.toString())
         return results.mapNotNull { result ->
             val type = result.types.firstNotNullOfOrNull {
                 PlaceAutocompleteType.createFromBaseType(it)

@@ -14,6 +14,7 @@ import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.base.utils.extension.safeCompareTo
 import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.internal.mapToNewSearchResultType
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.IndexableRecord
 import kotlinx.parcelize.IgnoredOnParcel
@@ -269,7 +270,7 @@ internal val SearchSuggestion.record: IndexableRecord?
 internal fun BaseSearchSuggestion.getSearchSuggestionType(): SearchSuggestionType {
     return when (val t = type) {
         is BaseSearchSuggestionType.SearchResultSuggestion -> SearchSuggestionType.SearchResultSuggestion(
-            t.types.map { it.mapToPlatform() }
+            t.types.map { it.mapToNewSearchResultType() }
         )
         is BaseSearchSuggestionType.Category -> SearchSuggestionType.Category(t.canonicalName)
         is BaseSearchSuggestionType.Brand -> SearchSuggestionType.Brand(

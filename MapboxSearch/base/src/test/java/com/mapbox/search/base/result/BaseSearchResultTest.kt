@@ -1,5 +1,6 @@
 package com.mapbox.search.base.result
 
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
@@ -107,7 +108,7 @@ internal class BaseSearchResultTest {
             distanceMeters = 123.0,
             icon = "cafe",
             etaMinutes = 5.0,
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",

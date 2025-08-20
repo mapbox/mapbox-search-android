@@ -12,7 +12,7 @@ import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.TestThreadExecutorService
 import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
-import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.TestDataProviderEngine
 import com.mapbox.search.tests_support.TestMainThreadWorker
@@ -401,7 +401,7 @@ internal class HistoryDataProviderTest {
                     descriptionText = TEST_FAVORITE_RECORD_SEARCH_RESULT.descriptionText,
                     address = TEST_FAVORITE_RECORD_SEARCH_RESULT.address,
                     timestamp = TEST_LOCAL_TIME_MILLIS,
-                    type = TEST_FAVORITE_RECORD_SEARCH_RESULT.types.first(),
+                    newType = TEST_FAVORITE_RECORD_SEARCH_RESULT.newTypes.first(),
                     routablePoints = TEST_FAVORITE_RECORD_SEARCH_RESULT.routablePoints,
                     metadata = TEST_FAVORITE_RECORD_SEARCH_RESULT.metadata,
                     makiIcon = TEST_FAVORITE_RECORD_SEARCH_RESULT.makiIcon,
@@ -451,7 +451,7 @@ internal class HistoryDataProviderTest {
                     descriptionText = TEST_SERVER_SEARCH_RESULT.descriptionText,
                     address = TEST_SERVER_SEARCH_RESULT.address,
                     timestamp = TEST_LOCAL_TIME_MILLIS,
-                    type = TEST_SERVER_SEARCH_RESULT.types.first(),
+                    newType = TEST_SERVER_SEARCH_RESULT.newTypes.first(),
                     routablePoints = TEST_SERVER_SEARCH_RESULT.routablePoints,
                     metadata = TEST_SERVER_SEARCH_RESULT.metadata,
                     makiIcon = TEST_SERVER_SEARCH_RESULT.makiIcon,
@@ -521,7 +521,7 @@ internal class HistoryDataProviderTest {
             descriptionText = null,
             address = null,
             timestamp = 1L,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             routablePoints = null,
             metadata = null,
             makiIcon = null,
@@ -535,7 +535,7 @@ internal class HistoryDataProviderTest {
             descriptionText = null,
             address = null,
             timestamp = 3L,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             routablePoints = listOf(
                 RoutablePoint(
                     point = Point.fromLngLat(19.999999, 30.0001),
@@ -557,7 +557,7 @@ internal class HistoryDataProviderTest {
             coordinate = TEST_USER_RECORD_SEARCH_RESULT.center!!,
             descriptionText = TEST_USER_RECORD_SEARCH_RESULT.descrAddress,
             address = null,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             makiIcon = null,
             categories = emptyList(),
             routablePoints = TEST_USER_RECORD_SEARCH_RESULT.routablePoints?.take(1)?.map { it.mapToPlatform() },
@@ -577,7 +577,7 @@ internal class HistoryDataProviderTest {
         )
 
         val TEST_SERVER_SEARCH_RESULT = createTestServerSearchResult(
-            types = listOf(SearchResultType.POI),
+            types = listOf(NewSearchResultType.POI),
             rawSearchResult = TEST_POI_SEARCH_RESULT.mapToBase(),
             requestOptions = createTestRequestOptions("Test query")
         )

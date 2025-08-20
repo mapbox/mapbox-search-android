@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.record
 
 import android.os.Parcelable
@@ -7,9 +9,12 @@ import com.mapbox.search.base.core.CoreUserRecord
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
+import com.mapbox.search.internal.newSearchResultTypeToBase
+import com.mapbox.search.internal.newSearchResultTypeToCore
+import com.mapbox.search.internal.newSearchResultTypeToFromOld
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
-import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
 
 /**
@@ -67,8 +72,14 @@ public interface IndexableRecord : Parcelable {
 
     /**
      * Type of the search result represented by the record.
+     * Deprecated, use [newType] to identify the actual type
+     *
      * @see [com.mapbox.search.result.SearchResult.types].
      */
+    @Deprecated(
+        message = "This property is deprecated and should be replaced by newType",
+        replaceWith = ReplaceWith("newType"),
+    )
     public val type: SearchResultType
 
     /**
@@ -81,6 +92,14 @@ public interface IndexableRecord : Parcelable {
      * Additional string literals that should be included in search index. For example, you may provide non-official names to force search engine match them.
      */
     public val indexTokens: List<String>
+
+    /**
+     * Type of the search result represented by the record.
+     * @see [NewSearchResultType]
+     */
+    @NewSearchResultType.Type
+    public val newType: String
+        get() = newSearchResultTypeToFromOld(type)
 }
 
 @JvmSynthetic
@@ -91,7 +110,7 @@ internal fun IndexableRecord.mapToCore() = CoreUserRecord(
     address?.mapToCore(),
     categories,
     indexTokens,
-    type.mapToCore(), // TODO(search-sdk/#526): consider multiple types for IndexableRecord
+    newSearchResultTypeToCore(newType),
 )
 
 @JvmSynthetic
@@ -105,7 +124,7 @@ internal fun IndexableRecord.mapToBase(): BaseIndexableRecord {
         categories = categories,
         makiIcon = makiIcon,
         coordinate = coordinate,
-        type = type.mapToBase(),
+        type = newSearchResultTypeToBase(newType),
         metadata = metadata?.coreMetadata,
         indexTokens = indexTokens,
         sdkResolvedRecord = this
