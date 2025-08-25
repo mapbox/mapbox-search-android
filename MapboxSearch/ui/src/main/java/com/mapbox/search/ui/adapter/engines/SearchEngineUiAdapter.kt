@@ -42,7 +42,7 @@ import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.ui.utils.HistoryRecordsInteractor
-import com.mapbox.search.ui.utils.offline.createNewSearchResultTypeFromOfflineType
+import com.mapbox.search.ui.utils.offline.createSearchResultTypeFromOfflineType
 import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.view.GlobalViewPreferences
 import com.mapbox.search.ui.view.SearchMode
@@ -512,7 +512,7 @@ public class SearchEngineUiAdapter(
             categories = searchResult.categories,
             makiIcon = searchResult.makiIcon,
             coordinate = searchResult.coordinate,
-            newType = searchResult.newTypes.first(),
+            type = searchResult.types.first(),
             metadata = searchResult.metadata,
             timestamp = System.currentTimeMillis(),
         ).also {
@@ -530,7 +530,7 @@ public class SearchEngineUiAdapter(
             categories = null,
             makiIcon = null,
             coordinate = searchResult.coordinate,
-            newType = createNewSearchResultTypeFromOfflineType(searchResult.newType),
+            type = createSearchResultTypeFromOfflineType(searchResult.newType),
             metadata = null,
             timestamp = System.currentTimeMillis(),
         ).also {

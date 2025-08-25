@@ -4,7 +4,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseResponseInfo
 import com.mapbox.search.base.BaseSearchCallback
-import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchResult
 import com.mapbox.turf.TurfMeasurement
@@ -35,7 +35,7 @@ internal class OfflineSearchResultCallbackAdapter(private val feature: Feature, 
     private fun Feature.toBaseRawSearchResult() = BaseRawSearchResult(
         "",
         null,
-        listOf(CoreResultType.PLACE),
+        listOf(BaseRawResultType.PLACE),
         listOf(getStringProperty("name")),
         null,
         listOf(),

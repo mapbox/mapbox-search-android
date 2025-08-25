@@ -1,7 +1,7 @@
 package com.mapbox.search.offline
 
 import androidx.annotation.StringDef
-import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseRawResultType
 
 /**
  * Defines type of the [OfflineSearchResult].
@@ -49,12 +49,12 @@ public object NewOfflineSearchResultType {
     internal val FALLBACK_TYPE = ADDRESS
 
     @Type
-    internal fun createFromRawResultType(type: CoreResultType): String? {
+    internal fun createFromRawResultType(type: BaseRawResultType): String? {
         return when (type) {
-            CoreResultType.PLACE -> PLACE
-            CoreResultType.STREET -> STREET
-            CoreResultType.ADDRESS -> ADDRESS
-            CoreResultType.POI -> POI
+            BaseRawResultType.PLACE -> PLACE
+            BaseRawResultType.STREET -> STREET
+            BaseRawResultType.ADDRESS -> ADDRESS
+            BaseRawResultType.POI -> POI
             else -> null
         }
     }

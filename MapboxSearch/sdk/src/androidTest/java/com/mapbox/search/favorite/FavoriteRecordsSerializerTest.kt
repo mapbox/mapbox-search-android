@@ -14,8 +14,8 @@ import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoriteRecordsSerializer
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
+import com.mapbox.search.result.SearchResultType
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -76,7 +76,7 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
                 country = "Belarus",
                 countryInfo = SearchAddressCountry("Belarus", null, null),
             ),
-            newType = NewSearchResultType.POI,
+            type = SearchResultType.POI,
             makiIcon = "test maki",
             categories = listOf("test"),
             routablePoints = null,
@@ -89,7 +89,7 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
             coordinate = Point.fromLngLat(.0, .1),
             descriptionText = null,
             address = null,
-            newType = NewSearchResultType.POI,
+            type = SearchResultType.POI,
             makiIcon = null,
             categories = null,
             routablePoints = null,
@@ -102,7 +102,7 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
             coordinate = Point.fromLngLat(2.295135021209717, 48.859291076660156),
             descriptionText = TestData.EIFFEL_TOWER_ADDRESS_DESCRIPTION,
             address = TestData.EIFFEL_TOWER_ADDRESS,
-            newType = NewSearchResultType.POI,
+            type = SearchResultType.POI,
             makiIcon = null,
             categories = listOf("monument", "landmark", "historic"),
             routablePoints = null,
@@ -115,7 +115,7 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
             coordinate = Point.fromLngLat(-3.6922054290771484, 40.41393280029297),
             descriptionText = TestData.PRADO_MUSEUM_ADDRESS_DESCRIPTION,
             address = TestData.PRADO_MUSEUM_ADDRESS,
-            newType = NewSearchResultType.ADDRESS,
+            type = SearchResultType.ADDRESS,
             makiIcon = "museum",
             categories = listOf("monument", "landmark", "historic"),
             routablePoints = listOf(
@@ -155,7 +155,7 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
             coordinate = Point.fromLngLat(10.752805709838867, 59.90727233886719),
             descriptionText = TestData.OSLO_OPERA_HOUSE_ADDRESS_DESCRIPTION,
             address = TestData.OSLO_OPERA_HOUSE_ADDRESS,
-            newType = NewSearchResultType.POI,
+            type = SearchResultType.POI,
             makiIcon = "opera",
             categories = listOf("theatre", "theater", "music", "show venue", "concert", "concert hall"),
             routablePoints = null,

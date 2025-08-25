@@ -20,4 +20,3 @@ git config user.name "Release SDK bot"
 # TODO need to make sure that available on the CI executor gh version is up-to-date
 gh api --silent -X POST "/repos/{owner}/{repo}/releases" -F tag_name="v${VERSION}" -F name="Release v${VERSION}"
 # TODO add version info from CHANGELOG
-

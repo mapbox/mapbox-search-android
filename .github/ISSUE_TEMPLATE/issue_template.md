@@ -18,14 +18,14 @@ assignees: ''
 - Included in project Maps SDK, Nav SDK versions if available:
 
 ## Code examples
-<!--- 
+<!---
 
-Include code with 
+Include code with
   - SDK initialization
   - Search requests
   - Search options (proximity point, countries, languages, etc.)
   - Code snippets that cause crash
-  - etc. 
+  - etc.
 
 Make sure you don't expose secret tokens and other sensitive information.
 
@@ -43,7 +43,7 @@ val searchRequestTask = searchEngine.search(
   searchCallback
 )
 
-or 
+or
 
 MapboxOptions.accessToken = myToken
 val addressAutofill = AddressAutofill.create()

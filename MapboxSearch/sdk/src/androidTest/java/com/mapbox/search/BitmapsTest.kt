@@ -14,7 +14,7 @@ internal class BitmapsTest : BaseTest() {
     // TODO(#418): Fix failing JPEG comparison test
     @Ignore("""
        Bitmap comparison fails for emulators / devices, that has different
-       OS version / screen density. Commenting this test for now. 
+       OS version / screen density. Commenting this test for now.
     """)
     @Test
     fun checkBase64EncodingForPortraitScreenshot() {

@@ -176,4 +176,3 @@ package com.mapbox.search.autocomplete {
   }
 
 }
-

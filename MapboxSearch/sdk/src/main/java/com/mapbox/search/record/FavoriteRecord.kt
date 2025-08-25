@@ -1,14 +1,9 @@
-@file:Suppress("DEPRECATION")
-
 package com.mapbox.search.record
 
 import android.os.Parcelable
 import com.mapbox.geojson.Point
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.common.RoutablePoint
-import com.mapbox.search.internal.newSearchResultTypeToFromOld
-import com.mapbox.search.internal.newSearchResultTypeToOld
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResultType
 import kotlinx.parcelize.Parcelize
@@ -18,9 +13,7 @@ import kotlinx.parcelize.Parcelize
  * @see IndexableRecord
  */
 @Parcelize
-public class FavoriteRecord
-@Deprecated("Use constructor that don't accept deprecated type")
-@JvmOverloads constructor(
+public class FavoriteRecord(
     override val id: String,
     override val name: String,
     override val descriptionText: String?,
@@ -29,53 +22,12 @@ public class FavoriteRecord
     override val categories: List<String>?,
     override val makiIcon: String?,
     override val coordinate: Point,
-
-    @Deprecated(
-        message = "This property is deprecated and should be replaced by newType",
-        replaceWith = ReplaceWith("newType"),
-    )
     override val type: SearchResultType,
-
     override val metadata: SearchResultMetadata?,
-
-    /**
-     * Type of the history record.
-     * Must be one of the constants defined in [NewSearchResultType.Type] values.
-     * @see [NewSearchResultType]
-     */
-    override val newType: String = newSearchResultTypeToFromOld(type),
 ) : IndexableRecord, Parcelable {
 
     override val indexTokens: List<String>
         get() = listOfNotNull(address?.place, address?.street, address?.houseNumber)
-
-    /**
-     * Secondary constructor that accepts [newType] instead of the deprecated [type].
-     */
-    public constructor(
-        id: String,
-        name: String,
-        descriptionText: String?,
-        address: SearchAddress?,
-        routablePoints: List<RoutablePoint>?,
-        categories: List<String>?,
-        makiIcon: String?,
-        coordinate: Point,
-        metadata: SearchResultMetadata?,
-        @NewSearchResultType.Type newType: String,
-    ) : this(
-        id = id,
-        name = name,
-        descriptionText = descriptionText,
-        address = address,
-        routablePoints = routablePoints,
-        categories = categories,
-        makiIcon = makiIcon,
-        coordinate = coordinate,
-        type = newSearchResultTypeToOld(newType),
-        metadata = metadata,
-        newType = newType,
-    )
 
     /**
      * Creates new [FavoriteRecord] from current instance.
@@ -92,7 +44,6 @@ public class FavoriteRecord
         coordinate: Point = this.coordinate,
         type: SearchResultType = this.type,
         metadata: SearchResultMetadata? = this.metadata,
-        @NewSearchResultType.Type newType: String = this.newType,
     ): FavoriteRecord {
         return FavoriteRecord(
             id = id,
@@ -105,7 +56,6 @@ public class FavoriteRecord
             coordinate = coordinate,
             type = type,
             metadata = metadata,
-            newType = newType,
         )
     }
 
@@ -128,7 +78,6 @@ public class FavoriteRecord
         if (coordinate != other.coordinate) return false
         if (type != other.type) return false
         if (metadata != other.metadata) return false
-        if (newType != other.newType) return false
 
         return true
     }
@@ -147,7 +96,6 @@ public class FavoriteRecord
         result = 31 * result + coordinate.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + (metadata?.hashCode() ?: 0)
-        result = 31 * result + newType.hashCode()
         return result
     }
 
@@ -165,7 +113,6 @@ public class FavoriteRecord
                 "makiIcon=$makiIcon, " +
                 "coordinate=$coordinate, " +
                 "type=$type, " +
-                "newType=$newType, " +
                 "metadata=$metadata" +
                 ")"
     }

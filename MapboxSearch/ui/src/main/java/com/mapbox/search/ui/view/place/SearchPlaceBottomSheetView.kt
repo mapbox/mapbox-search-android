@@ -631,7 +631,7 @@ public class SearchPlaceBottomSheetView @JvmOverloads constructor(
                     coordinate = coordinate,
                     descriptionText = descriptionText,
                     address = address,
-                    newType = newTypes.first(),
+                    type = resultTypes.first(),
                     makiIcon = makiIcon,
                     categories = categories,
                     routablePoints = routablePoints,

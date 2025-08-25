@@ -14,8 +14,8 @@ import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.IndexableDataProvider
 import com.mapbox.search.record.IndexableDataProviderEngine
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.sample.R
 import java.util.UUID
@@ -124,16 +124,16 @@ class CustomIndexableDataProviderKotlinExample : BaseKotlinExampleActivity() {
 
     private fun createRecord(name: String, coordinate: Point): IndexableRecord {
         return FavoriteRecord(
-            id = UUID.randomUUID().toString(),
-            name = name,
-            descriptionText = null,
-            address = null,
-            routablePoints = null,
-            categories = emptyList(),
-            makiIcon = null,
-            coordinate = coordinate,
-            metadata = null,
-            newType = NewSearchResultType.POI,
+            UUID.randomUUID().toString(),
+            name,
+            null,
+            null,
+            null,
+            emptyList(),
+            null,
+            coordinate,
+            SearchResultType.POI,
+            null,
         )
     }
 

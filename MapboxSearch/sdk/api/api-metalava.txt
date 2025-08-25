@@ -785,10 +785,8 @@ package com.mapbox.search.details {
 package com.mapbox.search.record {
 
   @kotlinx.parcelize.Parcelize public final class FavoriteRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
-    ctor @Deprecated public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, String newType = newSearchResultTypeToFromOld(type));
-    ctor @Deprecated public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
-    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.SearchResultMetadata? metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType);
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.FavoriteRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType = newType);
+    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.FavoriteRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
@@ -799,7 +797,7 @@ package com.mapbox.search.record {
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
-    method @Deprecated public com.mapbox.search.result.SearchResultType getType();
+    method public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
     property public java.util.List<java.lang.String>? categories;
     property public com.mapbox.geojson.Point coordinate;
@@ -809,9 +807,8 @@ package com.mapbox.search.record {
     property public String? makiIcon;
     property public com.mapbox.search.SearchResultMetadata? metadata;
     property public String name;
-    property public String newType;
     property public java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
-    property @Deprecated public com.mapbox.search.result.SearchResultType type;
+    property public com.mapbox.search.result.SearchResultType type;
   }
 
   public interface FavoritesDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.FavoriteRecord> {
@@ -837,10 +834,8 @@ package com.mapbox.search.record {
   }
 
   @kotlinx.parcelize.Parcelize public final class HistoryRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
-    ctor @Deprecated public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp, String newType = newSearchResultTypeToFromOld(type));
-    ctor @Deprecated public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
-    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.SearchResultMetadata? metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType, long timestamp);
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.HistoryRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata, long timestamp = timestamp, @com.mapbox.search.result.NewSearchResultType.Type String newType = newType);
+    ctor public HistoryRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, long timestamp);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.HistoryRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata, long timestamp = timestamp);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
@@ -852,7 +847,7 @@ package com.mapbox.search.record {
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public long getTimestamp();
-    method @Deprecated public com.mapbox.search.result.SearchResultType getType();
+    method public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
     property public java.util.List<java.lang.String>? categories;
     property public com.mapbox.geojson.Point coordinate;
@@ -862,10 +857,9 @@ package com.mapbox.search.record {
     property public String? makiIcon;
     property public com.mapbox.search.SearchResultMetadata? metadata;
     property public String name;
-    property public String newType;
     property public java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final long timestamp;
-    property @Deprecated public com.mapbox.search.result.SearchResultType type;
+    property public com.mapbox.search.result.SearchResultType type;
   }
 
   public interface IndexableDataProvider<R extends com.mapbox.search.record.IndexableRecord> {
@@ -911,9 +905,8 @@ package com.mapbox.search.record {
     method public String? getMakiIcon();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
-    method public default String getNewType();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
-    method @Deprecated public com.mapbox.search.result.SearchResultType getType();
+    method public com.mapbox.search.result.SearchResultType getType();
     property public abstract com.mapbox.search.result.SearchAddress? address;
     property public abstract java.util.List<java.lang.String>? categories;
     property public abstract com.mapbox.geojson.Point coordinate;
@@ -923,9 +916,8 @@ package com.mapbox.search.record {
     property public abstract String? makiIcon;
     property public abstract com.mapbox.search.SearchResultMetadata? metadata;
     property public abstract String name;
-    property public default String newType;
     property public abstract java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
-    property @Deprecated public abstract com.mapbox.search.result.SearchResultType type;
+    property public abstract com.mapbox.search.result.SearchResultType type;
   }
 
   public final class IndexableRecordKt {
@@ -952,25 +944,6 @@ package com.mapbox.search.record {
 }
 
 package com.mapbox.search.result {
-
-  public final class NewSearchResultType {
-    field public static final String ADDRESS = "address";
-    field public static final String BLOCK = "block";
-    field public static final String COUNTRY = "country";
-    field public static final String DISTRICT = "district";
-    field public static final com.mapbox.search.result.NewSearchResultType INSTANCE;
-    field public static final String LOCALITY = "locality";
-    field public static final String NEIGHBORHOOD = "neighborhood";
-    field public static final String PLACE = "place";
-    field public static final String POI = "poi";
-    field public static final String POSTCODE = "postcode";
-    field public static final String REGION = "region";
-    field public static final String STREET = "street";
-    field public static final String UNKNOWN = "unknown";
-  }
-
-  @StringDef({com.mapbox.search.result.NewSearchResultType.COUNTRY, com.mapbox.search.result.NewSearchResultType.REGION, com.mapbox.search.result.NewSearchResultType.POSTCODE, com.mapbox.search.result.NewSearchResultType.DISTRICT, com.mapbox.search.result.NewSearchResultType.PLACE, com.mapbox.search.result.NewSearchResultType.LOCALITY, com.mapbox.search.result.NewSearchResultType.NEIGHBORHOOD, com.mapbox.search.result.NewSearchResultType.STREET, com.mapbox.search.result.NewSearchResultType.ADDRESS, com.mapbox.search.result.NewSearchResultType.POI, com.mapbox.search.result.NewSearchResultType.BLOCK, com.mapbox.search.result.NewSearchResultType.UNKNOWN}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) public static @interface NewSearchResultType.Type {
-  }
 
   public abstract class ResultAccuracy implements android.os.Parcelable {
     ctor public ResultAccuracy();
@@ -1122,11 +1095,10 @@ package com.mapbox.search.result {
     method public String? getMatchingName();
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
-    method public java.util.List<java.lang.String> getNewTypes();
     method public com.mapbox.search.RequestOptions getRequestOptions();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method public Integer? getServerIndex();
-    method @Deprecated public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
+    method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
     property public final com.mapbox.search.result.ResultAccuracy? accuracy;
     property public final com.mapbox.search.result.SearchAddress? address;
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
@@ -1145,31 +1117,27 @@ package com.mapbox.search.result {
     property public final String? matchingName;
     property public final com.mapbox.search.SearchResultMetadata? metadata;
     property public final String name;
-    property public final java.util.List<java.lang.String> newTypes;
     property public final com.mapbox.search.RequestOptions requestOptions;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property public final Integer? serverIndex;
-    property @Deprecated public final java.util.List<com.mapbox.search.result.SearchResultType> types;
+    property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
   }
 
-  @Deprecated public enum SearchResultType {
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType ADDRESS;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType BLOCK;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType COUNTRY;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType DISTRICT;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType LOCALITY;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType NEIGHBORHOOD;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType PLACE;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType POI;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType POSTCODE;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType REGION;
-    enum_constant @Deprecated public static final com.mapbox.search.result.SearchResultType STREET;
-    field @Deprecated public static final com.mapbox.search.result.SearchResultType.Companion Companion;
+  public enum SearchResultType {
+    enum_constant public static final com.mapbox.search.result.SearchResultType ADDRESS;
+    enum_constant public static final com.mapbox.search.result.SearchResultType BLOCK;
+    enum_constant public static final com.mapbox.search.result.SearchResultType COUNTRY;
+    enum_constant public static final com.mapbox.search.result.SearchResultType DISTRICT;
+    enum_constant public static final com.mapbox.search.result.SearchResultType LOCALITY;
+    enum_constant public static final com.mapbox.search.result.SearchResultType NEIGHBORHOOD;
+    enum_constant public static final com.mapbox.search.result.SearchResultType PLACE;
+    enum_constant public static final com.mapbox.search.result.SearchResultType POI;
+    enum_constant public static final com.mapbox.search.result.SearchResultType POSTCODE;
+    enum_constant public static final com.mapbox.search.result.SearchResultType REGION;
+    enum_constant public static final com.mapbox.search.result.SearchResultType STREET;
   }
 
-  @Deprecated public static final class SearchResultType.Companion {
-    method @Deprecated public com.mapbox.search.result.SearchResultType getDEFAULT();
-    property public final com.mapbox.search.result.SearchResultType DEFAULT;
+  public final class SearchResultTypeKt {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchSuggestion implements android.os.Parcelable {
@@ -1250,10 +1218,8 @@ package com.mapbox.search.result {
   }
 
   @kotlinx.parcelize.Parcelize public static final class SearchSuggestionType.SearchResultSuggestion extends com.mapbox.search.result.SearchSuggestionType {
-    method public java.util.List<java.lang.String> getNewTypes();
-    method @Deprecated public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
-    property public final java.util.List<java.lang.String> newTypes;
-    property @Deprecated public final java.util.List<com.mapbox.search.result.SearchResultType> types;
+    method public java.util.List<com.mapbox.search.result.SearchResultType> getTypes();
+    property public final java.util.List<com.mapbox.search.result.SearchResultType> types;
   }
 
 }
@@ -1264,4 +1230,3 @@ package com.mapbox.search.utils.bitmap {
   }
 
 }
-

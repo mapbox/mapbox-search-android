@@ -1,36 +1,5 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.15.0
-
-### New features
-- Added serialization of the `SearchResultMetadata.rating` value for the `HistoryRecord`.
-
-### Mapbox dependencies
-- Search Native SDK `2.15.0`
-- Common SDK `24.15.0`
-- Maps SDK `11.15.0`
-
-
-
-## 2.15.0-rc.1
-
-### New features
-- Added the `NewSearchResultType` class with predefined string constants for search results, replacing the `SearchResultType` enum. Unlike the old enum, `NewSearchResultType` introduces a new value, `UNKNOWN`, which is used when a search result’s type is not included in the predefined constants.
-- If an object has a type not listed in the `SearchResultType`, its type would fall back to `SearchResultType.DEFAULT`. With the new implementation, you should use `NewSearchResultType` to determine the actual type of a search result.
-- Updated classes: `SearchResult`, `SearchSuggestionType`, `IndexableRecord`, `HistoryRecord`, `FavoriteRecord`, and `SearchPlace`:
-  - Deprecated properties and constructors using `SearchResultType` enum.
-  - Added new properties and constructors using `NewSearchResultType` for better type handling.
-
-### Bug fixes
-- Fixed a crash that could happen when backend returned incorrect metadata.
-
-### Mapbox dependencies
-- Search Native SDK `2.15.0-rc.1`
-- Common SDK `24.15.0-rc.1`
-- Maps SDK `11.15.0-rc.1`
-
-
-
 ## 2.15.0-beta.2
 
 ### New features
@@ -227,7 +196,7 @@
 - `OfflineSearchEngine.searchAlongRoute(String, Point, List<Point>, OfflineSearchCallback)` has been deprecated. Use an overloaded function that accepts `OfflineSearchAlongRouteOptions` as a parameter instead.
 
 ### Experimental API breaking changes
-- Properties `EvConnector.id`, `EVSE.uid` are nullable now. 
+- Properties `EvConnector.id`, `EVSE.uid` are nullable now.
 - Property `EvLocation.images` has been removed.
 - Now `OfflineSearchAlongRouteOptions` doesn't accept `proximity` as a parameter, search will be performed along the whole route.
 
@@ -255,7 +224,7 @@
 
 ### New features
 - Added experimental support for the EV search in offline, see `OfflineSearchOptions.evSearchOptions` and `OfflineSearchResult.metadata`.
-- Added experimental support for worldviews. Note that only selected worldviews are supported. To specify worldview, create Tileset Descriptor with required language and worldview, for example, `OfflineSearchEngine.createTilesetDescriptor(language = IsoLanguageCode.ENGLISH, worldview = IsoCountryCode.MOROCCO)`. 
+- Added experimental support for worldviews. Note that only selected worldviews are supported. To specify worldview, create Tileset Descriptor with required language and worldview, for example, `OfflineSearchEngine.createTilesetDescriptor(language = IsoLanguageCode.ENGLISH, worldview = IsoCountryCode.MOROCCO)`.
 
 ### Experimental API breaking changes
 - Annotation `ExperimentalMapboxSearchAPI` has been replaced with Mapbox common annotation `MapboxExperimental`.
@@ -524,7 +493,7 @@
 ## 2.2.0-rc.1
 
 ### New features
-- Adding support for [`ApiType.SEARCH_BOX`](https://docs.mapbox.com/api/search/search-box/) 
+- Adding support for [`ApiType.SEARCH_BOX`](https://docs.mapbox.com/api/search/search-box/)
 
 ### Mapbox dependencies
 - Search Native SDK `2.1.0`
@@ -678,7 +647,7 @@
 
 ### Bug fixes
 - [CORE] Partially fixed a bug when indexable records couldn't be matched with corresponding search results which caused duplicated search results.
-- [UI] Fixed a crash in `SearchEngineUiAdapter` that could happen during history records removing. 
+- [UI] Fixed a crash in `SearchEngineUiAdapter` that could happen during history records removing.
 
 ### Mapbox dependencies
 - Search Native SDK `0.67.2`
@@ -706,7 +675,7 @@
 - [DISCOVER] Now `Discover` SDK provides callback-based alternatives for Kotlin suspend functions.
 - [DISCOVER] Now `DiscoverResult` provides a new field `formattedAddress`.
 - [PLACE AUTOCOMPLETE] Place Autocomplete SDK is available now. See docs for more information.
-- [UI] `PlaceAutocompleteUiAdapter` type is available. It's a helper class for connecting `Place Autocomple SDK` with the `SearchResultsView`. 
+- [UI] `PlaceAutocompleteUiAdapter` type is available. It's a helper class for connecting `Place Autocomple SDK` with the `SearchResultsView`.
 - [UI] A new `SearchPlace.createFromPlaceAutocompleteResult()` function is available.
 
 ### Breaking changes
@@ -715,7 +684,7 @@
 
 ### Bug fixes
 - [CORE] Fixed `SearchSuggestion.name` and `SearchResult.name` formatting for address types.
-- [AUTOFILL] Fixed address formatting for `AddressAutofillSuggestion.formattedAddress`. 
+- [AUTOFILL] Fixed address formatting for `AddressAutofillSuggestion.formattedAddress`.
 
 ### Mapbox dependencies
 - Search Native SDK `0.67.1`
@@ -804,7 +773,7 @@
 - Search Native SDK `0.64.0`
 - Common SDK `23.2.0-rc.3`
 - Kotlin `1.5.31`
-- Removed `mapbox-android-core` dependency, it is now part of Mapbox Common library. 
+- Removed `mapbox-android-core` dependency, it is now part of Mapbox Common library.
 NOTE: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs.
 
 ## 1.0.0-beta.40
