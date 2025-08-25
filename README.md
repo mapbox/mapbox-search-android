@@ -100,7 +100,7 @@ cd MapboxSearch
 ```
 
 ## Public API changes tracking
-We use [binary-compatibility-validator](https://github.com/Kotlin/binary-compatibility-validator) and [Metalava](https://android.googlesource.com/platform/tools/metalava/) for tracking binary and source compatibility of the APIs we ship. 
+We use [binary-compatibility-validator](https://github.com/Kotlin/binary-compatibility-validator) and [Metalava](https://android.googlesource.com/platform/tools/metalava/) for tracking binary and source compatibility of the APIs we ship.
 
 Also we use [special Gradle task](https://github.com/mapbox/mapbox-search-android/blob/develop/MapboxSearch/gradle/track-public-xml-apis.gradle) to generate `public.xml` file, which helps us track changes in public API of Android `values/` resources. Please note that not every `values/` resource is tracked, so if you want to add extra resources under the radar, please, specify file contatining these resources manually in mentioned Gradle task.
 
@@ -158,7 +158,7 @@ To use this tool, follow this steps:
 3) Run `./gradlew :gradle:japicmp:japicmp` task. If breaking changes have been found, you'll see Gradle failure and a link to HTML report in the output.
 
 ## Testing
-We use **Kotlin Test DSL** for unit tests. Kotlin Test DSL provides human-readable DSL and is based on JUnit 5 dynamic tests. 
+We use **Kotlin Test DSL** for unit tests. Kotlin Test DSL provides human-readable DSL and is based on JUnit 5 dynamic tests.
 To run unit tests use the following commands:
 ```
 ./gradlew :sdk:testReleaseUnitTest

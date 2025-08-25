@@ -21,7 +21,7 @@ if [ "$1" = "--check" ]; then
   ./gradlew apiCheck
 
   ./gradlew :sdk-common:checkApi
-  ./gradlew :sdk:checkApi -PhidePackage=com.mapbox.search.internal
+  ./gradlew :sdk:checkApi
   ./gradlew :ui:checkApi
   ./gradlew :offline:checkApi
   ./gradlew :autofill:checkApi
@@ -39,7 +39,7 @@ if [ "$1" = "--update" ]; then
   ./gradlew apiDump
 
   ./gradlew :sdk-common:updateApi
-  ./gradlew :sdk:updateApi -PhidePackage=com.mapbox.search.internal
+  ./gradlew :sdk:updateApi
   ./gradlew :ui:updateApi
   ./gradlew :offline:updateApi
   ./gradlew :autofill:updateApi

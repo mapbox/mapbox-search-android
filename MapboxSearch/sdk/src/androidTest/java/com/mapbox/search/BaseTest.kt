@@ -6,7 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
 import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -30,10 +29,6 @@ internal abstract class BaseTest {
         return MockResponse()
             .setResponseCode(200)
             .setBody(readFileFromAssets(bodyContentPath))
-    }
-
-    protected fun MockWebServer.enqueueResponse(bodyContentPath: String) {
-        enqueue(createSuccessfulResponse(bodyContentPath))
     }
 
     @Before

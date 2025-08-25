@@ -18,6 +18,7 @@ import com.mapbox.search.base.record.SearchHistoryService
 import com.mapbox.search.base.result.BaseGeocodingCompatSearchSuggestion
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
 import com.mapbox.search.base.result.BaseIndexableRecordSearchSuggestion
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseSearchResultType
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
@@ -41,9 +42,9 @@ import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.mapToBase
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.mapToCore
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.tests_support.createTestRequestOptions
@@ -1109,7 +1110,7 @@ internal class SearchEngineTest {
 
         val TEST_SBS_SERVER_SEARCH_SUGGESTION = BaseServerSearchSuggestion(
             TEST_CORE_SEARCH_SUGGESTION.mapToBase().copy(
-                types = listOf(CoreResultType.POI),
+                types = listOf(BaseRawResultType.POI),
                 action = createTestCoreSuggestAction(multiRetrievable = true).mapToBase()
             ),
             BASE_TEST_REQUEST_OPTIONS
@@ -1136,7 +1137,7 @@ internal class SearchEngineTest {
             coordinate = TEST_USER_LOCATION,
             descriptionText = TEST_DESCRIPTION_TEXT,
             address = TEST_SEARCH_ADDRESS,
-            newType = NewSearchResultType.ADDRESS,
+            type = SearchResultType.ADDRESS,
             makiIcon = null,
             categories = emptyList(),
             routablePoints = null,
@@ -1146,7 +1147,7 @@ internal class SearchEngineTest {
         val TEST_USER_RECORD_SEARCH_SUGGESTION = BaseIndexableRecordSearchSuggestion(
             TEST_FAVORITE_RECORD.mapToBase(),
             rawSearchResult = TEST_USER_RECORD_SEARCH_RESULT.mapToBase().copy(
-                types = listOf(CoreResultType.USER_RECORD)
+                types = listOf(BaseRawResultType.USER_RECORD)
             ),
             requestOptions = BASE_TEST_REQUEST_OPTIONS
         )

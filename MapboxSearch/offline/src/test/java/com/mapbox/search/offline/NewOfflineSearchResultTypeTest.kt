@@ -1,6 +1,6 @@
 package com.mapbox.search.offline
 
-import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.test.dsl.TestCase
 import org.junit.jupiter.api.TestFactory
 
@@ -8,30 +8,30 @@ internal class NewOfflineSearchResultTypeTest {
 
     @TestFactory
     fun `Check createFromRawResultType() function`() = TestCase {
-        Given("All the possible CoreResultType types") {
-            CoreResultType.values().forEach { coreResultType ->
-                When("CoreResultType is $coreResultType") {
-                    val newType = when (coreResultType) {
-                        CoreResultType.PLACE -> NewOfflineSearchResultType.PLACE
-                        CoreResultType.STREET -> NewOfflineSearchResultType.STREET
-                        CoreResultType.ADDRESS -> NewOfflineSearchResultType.ADDRESS
-                        CoreResultType.POI -> NewOfflineSearchResultType.POI
-                        CoreResultType.COUNTRY,
-                        CoreResultType.REGION,
-                        CoreResultType.DISTRICT,
-                        CoreResultType.LOCALITY,
-                        CoreResultType.NEIGHBORHOOD,
-                        CoreResultType.POSTCODE,
-                        CoreResultType.BLOCK,
-                        CoreResultType.CATEGORY,
-                        CoreResultType.BRAND,
-                        CoreResultType.QUERY,
-                        CoreResultType.USER_RECORD,
-                        CoreResultType.UNKNOWN -> null
+        Given("All the possible BaseRawResultType types") {
+            BaseRawResultType.values().forEach { rawResultType ->
+                When("BaseRawResultType is $rawResultType") {
+                    val newType = when (rawResultType) {
+                        BaseRawResultType.PLACE -> NewOfflineSearchResultType.PLACE
+                        BaseRawResultType.STREET -> NewOfflineSearchResultType.STREET
+                        BaseRawResultType.ADDRESS -> NewOfflineSearchResultType.ADDRESS
+                        BaseRawResultType.POI -> NewOfflineSearchResultType.POI
+                        BaseRawResultType.COUNTRY,
+                        BaseRawResultType.REGION,
+                        BaseRawResultType.DISTRICT,
+                        BaseRawResultType.LOCALITY,
+                        BaseRawResultType.NEIGHBORHOOD,
+                        BaseRawResultType.POSTCODE,
+                        BaseRawResultType.BLOCK,
+                        BaseRawResultType.CATEGORY,
+                        BaseRawResultType.BRAND,
+                        BaseRawResultType.QUERY,
+                        BaseRawResultType.USER_RECORD,
+                        BaseRawResultType.UNKNOWN -> null
                     }
 
                     val expectedType =
-                        NewOfflineSearchResultType.createFromRawResultType(coreResultType)
+                        NewOfflineSearchResultType.createFromRawResultType(rawResultType)
                     Then("New type should be $expectedType", newType, expectedType)
                 }
             }

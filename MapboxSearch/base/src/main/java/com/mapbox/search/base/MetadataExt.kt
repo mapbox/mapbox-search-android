@@ -16,14 +16,13 @@ import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
-import java.util.concurrent.TimeUnit
 
 fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
     CoreOpenMode.ALWAYS_OPEN -> OpenHours.AlwaysOpen
     CoreOpenMode.TEMPORARILY_CLOSED -> OpenHours.TemporaryClosed
     CoreOpenMode.PERMANENTLY_CLOSED -> OpenHours.PermanentlyClosed
     CoreOpenMode.SCHEDULED -> {
-        val periods = periods.mapNotNull { it.mapToPlatform() }
+        val periods = periods.map { it.mapToPlatform() }
         if (periods.isEmpty()) {
             failDebug {
                 "CoreOpenHours type is SCHEDULED, but periods is empty"
@@ -48,44 +47,18 @@ fun OpenHours.mapToCore() = when (this) {
     else -> error("Unknown OpenHours subclass: ${javaClass.printableName}.")
 }
 
-fun createWeekTimestamp(day: WeekDay, hour: Int, minute: Int): WeekTimestamp? {
-    if (hour !in 0..24) {
-        failDebug {
-            "Hour should be specified in [0..24] range."
-        }
-        return null
-    }
-
-    if (minute !in 0..59) {
-        failDebug {
-            "Minute should be specified in [0..60) range."
-        }
-        return null
-    }
-
-    if ((hour * 60 + minute) !in 0..TimeUnit.DAYS.toMinutes(1)) {
-        failDebug {
-            "There can't be $hour hours and $minute minutes in the day."
-        }
-        return null
-    }
-    return WeekTimestamp(day, hour, minute)
-}
-
-fun CoreOpenPeriod.mapToPlatform(): OpenPeriod? {
-    return OpenPeriod(
-        open = createWeekTimestamp(
-            day = weekDayFromCore(openD) ?: return null,
-            hour = openH.toInt(),
-            minute = openM.toInt()
-        ) ?: return null,
-        closed = createWeekTimestamp(
-            day = weekDayFromCore(closedD) ?: return null,
-            hour = closedH.toInt(),
-            minute = closedM.toInt()
-        ) ?: return null,
-    )
-}
+fun CoreOpenPeriod.mapToPlatform() = OpenPeriod(
+    open = WeekTimestamp(
+        day = weekDayFromCore(openD),
+        hour = openH.toInt(),
+        minute = openM.toInt()
+    ),
+    closed = WeekTimestamp(
+        day = weekDayFromCore(closedD),
+        hour = closedH.toInt(),
+        minute = closedM.toInt()
+    ),
+)
 
 fun OpenPeriod.mapToCore() = CoreOpenPeriod(
     open.day.internalRawCode, open.hour.toByte(), open.minute.toByte(),
@@ -116,10 +89,7 @@ fun ChildMetadata.mapToCore() = CoreChildMetadata(
     name
 )
 
-fun weekDayFromCore(dayCode: Byte): WeekDay? {
-    val result = WeekDay.values().firstOrNull { it.internalRawCode == dayCode }
-    assertDebug(result != null) {
-        "Unknown day code (=$dayCode) from Core SDK."
-    }
-    return result
+fun weekDayFromCore(dayCode: Byte): WeekDay {
+    return WeekDay.values().firstOrNull { it.internalRawCode == dayCode }
+        ?: throw IllegalArgumentException("Unknown day code (=$dayCode) from Core SDK.")
 }

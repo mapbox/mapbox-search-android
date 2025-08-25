@@ -6,7 +6,7 @@ import com.mapbox.search.common.tests.CustomTypeObjectCreator
 import com.mapbox.search.common.tests.CustomTypeObjectCreatorImpl
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
-import com.mapbox.search.result.NewSearchResultType
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.ui.view.place.IncorrectSearchPlaceFeedback
 
 internal object UiCustomTypeObjectCreators {
@@ -45,7 +45,7 @@ internal object UiCustomTypeObjectCreators {
         coordinate = Point.fromLngLat(.0, .1),
         descriptionText = null,
         address = null,
-        newType = NewSearchResultType.POI,
+        type = SearchResultType.POI,
         makiIcon = null,
         categories = null,
         routablePoints = null,
@@ -59,7 +59,7 @@ internal object UiCustomTypeObjectCreators {
         descriptionText = null,
         address = null,
         timestamp = 123L,
-        newType = NewSearchResultType.POI,
+        type = SearchResultType.POI,
         routablePoints = null,
         metadata = null,
         makiIcon = null,

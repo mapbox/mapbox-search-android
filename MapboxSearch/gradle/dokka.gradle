@@ -29,11 +29,6 @@ tasks.named("dokkaHtml") {
 
             // Forces Dokka to fail on warnings (e.g. when some class/method wasn't documented)
             failOnWarning.set(true)
-
-            perPackageOption {
-                matchingRegex.set("com.mapbox.search.internal.*")
-                suppress.set(true)
-            }
         }
     }
 }

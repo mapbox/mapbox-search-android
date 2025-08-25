@@ -14,7 +14,6 @@ enum class BaseSearchResultType {
     STREET,
     ADDRESS,
     POI,
-    UNKNOWN,
 }
 
 internal fun BaseSearchResultType.mapToCore(): CoreResultType {
@@ -30,43 +29,5 @@ internal fun BaseSearchResultType.mapToCore(): CoreResultType {
         BaseSearchResultType.STREET -> CoreResultType.STREET
         BaseSearchResultType.ADDRESS -> CoreResultType.ADDRESS
         BaseSearchResultType.POI -> CoreResultType.POI
-        BaseSearchResultType.UNKNOWN -> CoreResultType.UNKNOWN
     }
-}
-
-val CoreResultType.isSearchResultType: Boolean
-    get() = tryMapToSearchResultType() != null
-
-fun CoreResultType.tryMapToSearchResultType(): BaseSearchResultType? {
-    return when (this) {
-        CoreResultType.COUNTRY -> BaseSearchResultType.COUNTRY
-        CoreResultType.REGION -> BaseSearchResultType.REGION
-        CoreResultType.PLACE -> BaseSearchResultType.PLACE
-        CoreResultType.DISTRICT -> BaseSearchResultType.DISTRICT
-        CoreResultType.LOCALITY -> BaseSearchResultType.LOCALITY
-        CoreResultType.NEIGHBORHOOD -> BaseSearchResultType.NEIGHBORHOOD
-        CoreResultType.ADDRESS -> BaseSearchResultType.ADDRESS
-        CoreResultType.POI -> BaseSearchResultType.POI
-        CoreResultType.STREET -> BaseSearchResultType.STREET
-        CoreResultType.POSTCODE -> BaseSearchResultType.POSTCODE
-        CoreResultType.BLOCK -> BaseSearchResultType.BLOCK
-        CoreResultType.UNKNOWN -> BaseSearchResultType.UNKNOWN
-        CoreResultType.USER_RECORD,
-        CoreResultType.CATEGORY,
-        CoreResultType.BRAND,
-        CoreResultType.QUERY -> null
-    }
-}
-
-val ALLOWED_MULTI_PLACE_TYPES = listOf(
-    CoreResultType.COUNTRY,
-    CoreResultType.REGION,
-    CoreResultType.POSTCODE,
-    CoreResultType.DISTRICT,
-    CoreResultType.PLACE,
-    CoreResultType.LOCALITY
-)
-
-fun Collection<CoreResultType>.isValidMultiType(): Boolean {
-    return isNotEmpty() && (ALLOWED_MULTI_PLACE_TYPES.containsAll(this) || size == 1)
 }

@@ -4,7 +4,7 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreApiType
-import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.KeyboardLocaleProvider
 import com.mapbox.search.base.utils.TimeProvider
@@ -24,10 +24,10 @@ import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingCompletionCallback
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
@@ -185,7 +185,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
 
         val baseRawSearchResult = createTestBaseRawSearchResult(
             id = "6IXWdnYBo8NaDG6XivFv",
-            types = listOf(CoreResultType.POI),
+            types = listOf(BaseRawResultType.POI),
             names = listOf("Starbucks"),
             languages = listOf("def"), // should it be "en"?
             categories = listOf("restaurant", "food", "food and drink", "coffee shop", "coffee", "cafe"),
@@ -253,7 +253,7 @@ internal class CategorySearchIntegrationTest : BaseTest() {
         )
 
         val expected = createTestServerSearchResult(
-            listOf(NewSearchResultType.POI),
+            listOf(SearchResultType.POI),
             baseRawSearchResult,
             RequestOptions(
                 query = TEST_CATEGORY,

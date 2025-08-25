@@ -32,9 +32,9 @@ import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.common.tests.FixedPointLocationEngine
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.BlockingSearchCallback
 import com.mapbox.search.tests_support.EmptySearchCallback
 import com.mapbox.search.tests_support.compareSearchResultWithServerSearchResult
@@ -193,7 +193,7 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
         assertEquals("marker", searchResult.makiIcon)
         // TODO FIXME Search Native should parse accuracy
         assertEquals(null, searchResult.accuracy)
-        assertEquals(listOf(NewSearchResultType.POI), searchResult.newTypes)
+        assertEquals(listOf(SearchResultType.POI), searchResult.types)
         assertEquals(null, searchResult.etaMinutes)
 
         assertEquals(

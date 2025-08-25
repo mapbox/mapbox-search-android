@@ -131,7 +131,7 @@ abstract class BaseKotlinExampleActivity : AppCompatActivity() {
                     "\tboundingBox=$boundingBox,\n" +
                     "\tcategories=$categories,\n" +
                     "\tcategoryIds=$categoryIds,\n" +
-                    "\tnewTypes=$newTypes,\n" +
+                    "\ttypes=$types,\n" +
                     "\tdistanceMeters=$distanceMeters,\n" +
                     "\tmetadata=$metadata\n" +
                     ")"

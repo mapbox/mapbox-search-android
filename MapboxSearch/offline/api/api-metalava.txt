@@ -371,4 +371,3 @@ package com.mapbox.search.offline {
   }
 
 }
-

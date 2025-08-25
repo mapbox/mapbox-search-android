@@ -9,7 +9,7 @@ Include necessary implementation details (e.g. I opted to use this algorithm bec
 
 
 ### Screenshots or Gifs
-<!-- 
+<!--
 Include media files to provide additional context. It's REALLY useful for UI related PRs (e.g. ![screenshot gif](link))
 
 Please note that you can change image width/height with one of the following ways:

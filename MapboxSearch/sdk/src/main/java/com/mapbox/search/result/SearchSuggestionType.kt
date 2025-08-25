@@ -2,7 +2,6 @@ package com.mapbox.search.result
 
 import android.os.Parcelable
 import com.mapbox.search.base.assertDebug
-import com.mapbox.search.internal.newSearchResultTypeToOld
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
@@ -11,38 +10,23 @@ import kotlinx.parcelize.Parcelize
 /**
  * Type of the search suggestion.
  */
-@Suppress("DEPRECATION")
 public abstract class SearchSuggestionType internal constructor() : Parcelable {
 
     /**
-     * Search suggestion of the [SearchResultSuggestion] type points to the only [SearchResult]
-     * that will be returned after selection.
+     * Search suggestion of the [SearchResultSuggestion] type points to the only [SearchResult] that will be returned after selection.
      *
-     * @param newTypes Non-empty list of [NewSearchResultType.Type] values.
+     * @property types - types of the [SearchResult] that will be resolved after selection of the search suggestion.
      */
     @Parcelize
     public class SearchResultSuggestion internal constructor(
-        public val newTypes: List<String>,
+        public val types: List<SearchResultType>
     ) : SearchSuggestionType() {
 
-        /**
-         * Types of the [SearchResult] that will be resolved after selection of the search suggestion.
-         *
-         * List values are of type [SearchResultType], which have been replaced by [NewSearchResultType].
-         * Use [newTypes] to identify the actual type of this [SearchResult].
-         */
-        @Deprecated(
-            message = "This property is deprecated and should be replaced by newTypes",
-            replaceWith = ReplaceWith("newTypes"),
-        )
-        public val types: List<SearchResultType>
-            get() = newTypes.map { newSearchResultTypeToOld(it) }
+        internal constructor(vararg types: SearchResultType) : this(types.asList())
 
         init {
             assertDebug(types.isNotEmpty()) { "Provided types should not be empty!" }
         }
-
-        internal constructor(vararg newTypes: String) : this(newTypes.asList())
 
         /**
          * @suppress
@@ -53,7 +37,6 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
 
             other as SearchResultSuggestion
 
-            if (newTypes != other.newTypes) return false
             if (types != other.types) return false
 
             return true
@@ -63,16 +46,14 @@ public abstract class SearchSuggestionType internal constructor() : Parcelable {
          * @suppress
          */
         override fun hashCode(): Int {
-            var result = newTypes.hashCode()
-            result = 31 * result + types.hashCode()
-            return result
+            return types.hashCode()
         }
 
         /**
          * @suppress
          */
         override fun toString(): String {
-            return "SearchResultSuggestion(newTypes=$newTypes, types=$types)"
+            return "SearchResultSuggestion(types=$types)"
         }
     }
 

@@ -1,7 +1,6 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.SearchResultMetadata
 
 internal data class SearchResultMetadataDAO(
@@ -15,14 +14,12 @@ internal data class SearchResultMetadataDAO(
     @SerializedName("otherPhotos") val otherPhotos: List<ImageInfoDAO>? = null,
     @SerializedName("openHours") val openHours: OpenHoursDAO? = null,
     @SerializedName("parking") val parking: ParkingDataDAO? = null,
-    @SerializedName("cpsJson") val cpsJson: String? = null,
-    @SerializedName("rating") val rating: Float? = null,
+    @SerializedName("cpsJson") val cpsJson: String? = null
 ) : DataAccessObject<SearchResultMetadata?> {
 
     override val isValid: Boolean
         get() = openHours?.isValid != false && parking?.isValid != false
 
-    @OptIn(MapboxExperimental::class)
     override fun createData(): SearchResultMetadata? {
         val validPrimaryPhotos = primaryPhotos?.filter { it.isValid }?.map { it.createData() }
         val validOtherPhotos = otherPhotos?.filter { it.isValid }?.map { it.createData() }
@@ -40,8 +37,7 @@ internal data class SearchResultMetadataDAO(
                 otherPhotos = validOtherPhotos,
                 openHours = openHours?.createData(),
                 parking = parking?.createData(),
-                cpsJson = cpsJson,
-                rating = rating,
+                cpsJson = cpsJson
             )
         }
     }
@@ -61,8 +57,7 @@ internal data class SearchResultMetadataDAO(
                     otherPhotos = otherPhotos?.map { ImageInfoDAO.create(it) },
                     openHours = OpenHoursDAO.create(openHours),
                     parking = ParkingDataDAO.create(parking),
-                    cpsJson = cpsJson,
-                    rating = rating,
+                    cpsJson = cpsJson
                 )
             }
         }

@@ -23,7 +23,7 @@ import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.common.tests.createTestCoreSearchResult
 import com.mapbox.search.internal.bindgen.ResultType
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
-import com.mapbox.search.result.NewSearchResultType
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.createTestRequestOptions
 import com.mapbox.search.tests_support.createTestServerSearchResult
 import com.mapbox.test.dsl.TestCase
@@ -319,7 +319,7 @@ internal class ReverseGeocodingSearchTest {
         )
 
         val TEST_SEARCH_RESULT = createTestServerSearchResult(
-            types = listOf(NewSearchResultType.ADDRESS),
+            types = listOf(SearchResultType.ADDRESS),
             rawSearchResult = TEST_CORE_SEARCH_RESULT.mapToBase(),
             requestOptions = TEST_REQUEST_OPTIONS
         )

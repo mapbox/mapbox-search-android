@@ -10,9 +10,9 @@ import com.mapbox.search.analytics.events.AppMetadata
 import com.mapbox.search.analytics.events.SearchFeedbackEvent
 import com.mapbox.search.analytics.events.SearchResultEntry
 import com.mapbox.search.analytics.events.SearchResultsInfo
-import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.location.calculateMapZoom
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchResponse
 import com.mapbox.search.base.result.mapToCore
@@ -183,13 +183,13 @@ internal class SearchFeedbackEventsFactory(
         val results = (searchResponse?.result as? BaseSearchResponse.Result.Success)?.result
         val resultEntries = results?.map { coreResult ->
             SearchResultEntry(
-                name = when (CoreResultType.USER_RECORD) {
+                name = when (BaseRawResultType.USER_RECORD) {
                     coreResult.types.firstOrNull() -> "<Local item>"
                     else -> coreResult.names.firstOrNull() ?: ""
                 },
                 address = coreResult.descriptionAddress ?: coreResult.addresses?.getOrNull(0)?.mapToPlatform()?.formattedAddress(FormatStyle.Full),
                 coordinates = coreResult.center?.coordinates(),
-                id = when (CoreResultType.USER_RECORD) {
+                id = when (BaseRawResultType.USER_RECORD) {
                     coreResult.types.firstOrNull() -> "<Local id>"
                     else -> coreResult.id
                 },

@@ -8,8 +8,8 @@ import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRequestOptions
-import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.result.BaseIndexableRecordSearchResultImpl
+import com.mapbox.search.base.result.BaseRawResultType
 import com.mapbox.search.base.result.BaseRawSearchResult
 import com.mapbox.search.base.result.BaseSearchSuggestion
 import com.mapbox.search.base.result.BaseServerSearchResultImpl
@@ -19,24 +19,24 @@ import com.mapbox.search.base.result.SearchRequestContext
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.tests.createTestCoreRequestOptions
-import com.mapbox.search.internal.newSearchResultTypeToBase
 import com.mapbox.search.mapToBase
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
 import com.mapbox.search.record.mapToBase
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
+import com.mapbox.search.result.mapToBase
 import com.mapbox.search.result.mapToCore
 
 @Suppress("LongParameterList")
 internal fun createTestBaseRawSearchResult(
     id: String = "id_test_search_result",
     mapboxId: String? = null,
-    types: List<CoreResultType> = listOf(CoreResultType.POI),
+    types: List<BaseRawResultType> = listOf(BaseRawResultType.POI),
     names: List<String> = listOf("Test Search Result"),
     namePreferred: String? = null,
     languages: List<String> = listOf("def"),
@@ -163,10 +163,10 @@ internal fun createTestSearchResult(
     id: String = "id_test_search_result",
     center: Point = Point.fromLngLat(10.0, 11.123456)
 ): SearchResult = createTestServerSearchResult(
-    types = listOf(NewSearchResultType.POI),
+    types = listOf(SearchResultType.POI),
     rawSearchResult = createTestBaseRawSearchResult(
         id = id,
-        types = listOf(CoreResultType.POI),
+        types = listOf(BaseRawResultType.POI),
         center = center
     ),
     requestOptions = createTestRequestOptions()
@@ -178,7 +178,7 @@ internal fun createTestFavoriteRecord(
     coordinate: Point = Point.fromLngLat(.0, .1),
     descriptionText: String? = "Test description text",
     address: SearchAddress? = SearchAddress(country = "Belarus"),
-    @NewSearchResultType.Type searchResultType: String = NewSearchResultType.POI,
+    searchResultType: SearchResultType = SearchResultType.POI,
     makiIcon: String? = "test maki",
     categories: List<String>? = listOf("test"),
     routablePoints: List<RoutablePoint>? = null,
@@ -189,7 +189,7 @@ internal fun createTestFavoriteRecord(
     coordinate = coordinate,
     descriptionText = descriptionText,
     address = address,
-    newType = searchResultType,
+    type = searchResultType,
     makiIcon = makiIcon,
     categories = categories,
     routablePoints = routablePoints,
@@ -204,7 +204,7 @@ internal fun createTestHistoryRecord(
     descriptionText: String? = null,
     address: SearchAddress? = SearchAddress(),
     timestamp: Long = 123L,
-    @NewSearchResultType.Type searchResultType: String = NewSearchResultType.POI,
+    searchResultType: SearchResultType = SearchResultType.POI,
     routablePoints: List<RoutablePoint>? = null,
     metadata: SearchResultMetadata? = null,
     categories: List<String>? = null,
@@ -216,7 +216,7 @@ internal fun createTestHistoryRecord(
     descriptionText = descriptionText,
     address = address,
     timestamp = timestamp,
-    newType = searchResultType,
+    type = searchResultType,
     routablePoints = routablePoints,
     metadata = metadata,
     makiIcon = makiIcon,
@@ -231,7 +231,7 @@ internal fun createHistoryRecord(searchResult: SearchResult, timestamp: Long): H
         descriptionText = searchResult.descriptionText,
         address = searchResult.address,
         timestamp = timestamp,
-        newType = searchResult.newTypes.first(),
+        type = searchResult.types.first(),
         routablePoints = searchResult.routablePoints,
         metadata = searchResult.metadata,
         makiIcon = searchResult.makiIcon,
@@ -265,12 +265,12 @@ internal fun createSearchAddress(
 
 @JvmSynthetic
 internal fun createTestServerSearchResult(
-    types: List<String>,
+    types: List<SearchResultType>,
     rawSearchResult: BaseRawSearchResult,
     requestOptions: RequestOptions
 ): SearchResult {
     val base = BaseServerSearchResultImpl(
-        types = types.map { newSearchResultTypeToBase(it) },
+        types = types.map { it.mapToBase() },
         rawSearchResult = rawSearchResult,
         requestOptions = requestOptions.mapToBase()
     )

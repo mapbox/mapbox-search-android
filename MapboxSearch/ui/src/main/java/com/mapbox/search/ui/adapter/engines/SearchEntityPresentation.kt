@@ -8,20 +8,19 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.mapbox.search.autocomplete.PlaceAutocompleteSuggestion
-import com.mapbox.search.base.utils.extension.nullIfEmpty
 import com.mapbox.search.common.HighlightsCalculator
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.IndexableRecord
-import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.ui.R
 import com.mapbox.search.ui.utils.extenstion.resolveAttrOrThrow
 import com.mapbox.search.ui.utils.maki.MakiToDrawableIdMapper
-import com.mapbox.search.ui.utils.offline.createNewSearchResultTypeFromOfflineType
+import com.mapbox.search.ui.utils.offline.createSearchResultTypeFromOfflineType
 import com.mapbox.search.ui.utils.offline.mapToSdkSearchResultType
 import com.mapbox.search.ui.view.category.Category
 import com.mapbox.search.ui.view.place.SearchPlace
@@ -68,44 +67,44 @@ internal class SearchEntityPresentation(
         }
     }
 
-    fun getDescription(searchResult: SearchResult): String? {
+    fun getDescription(searchResult: SearchResult): String {
         val descriptionText = searchResult.descriptionText
         val addressText = searchResult.fullAddress ?: searchResult.address?.formattedAddress()
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            searchResult.indexableRecord != null -> getResultTypeName(searchResult.newTypes, searchResult.indexableRecord)
-            else -> getResultTypeName(searchResult.newTypes)
+            searchResult.indexableRecord != null -> getResultTypeName(searchResult.types, searchResult.indexableRecord)
+            else -> getResultTypeName(searchResult.types)
         }
     }
 
-    fun getDescription(searchResult: OfflineSearchResult): String? {
+    fun getDescription(searchResult: OfflineSearchResult): String {
         val descriptionText = searchResult.descriptionText
         val addressText = searchResult.address?.mapToSdkSearchResultType()?.formattedAddress()
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            else -> getResultTypeName(listOf(createNewSearchResultTypeFromOfflineType(searchResult.newType)))
+            else -> getResultTypeName(listOf(createSearchResultTypeFromOfflineType(searchResult.newType)))
         }
     }
 
-    fun getAddressOrResultType(searchPlace: SearchPlace): String? {
+    fun getAddressOrResultType(searchPlace: SearchPlace): String {
         val descriptionText = searchPlace.descriptionText
         val addressText = searchPlace.address?.formattedAddress()
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            else -> getResultTypeName(searchPlace.newTypes, searchPlace.record)
+            else -> getResultTypeName(searchPlace.resultTypes, searchPlace.record)
         }
     }
 
-    fun getAddressOrResultType(record: IndexableRecord): String? {
+    fun getAddressOrResultType(record: IndexableRecord): String {
         val descriptionText = record.descriptionText
         val addressText = record.address?.formattedAddress()
         return when {
             !descriptionText.isNullOrBlank() -> descriptionText
             !addressText.isNullOrBlank() -> addressText
-            else -> getResultTypeName(listOf(record.newType), record)
+            else -> getResultTypeName(listOf(record.type), record)
         }
     }
 
@@ -131,7 +130,7 @@ internal class SearchEntityPresentation(
             is SearchSuggestionType.SearchResultSuggestion -> getDrawableForSearchResult(
                 maki = suggestion.makiIcon,
                 categories = suggestion.categories,
-                types = type.newTypes
+                types = type.types
             )
             is SearchSuggestionType.IndexableRecordItem -> getDrawableForDataProvider(type)
             is SearchSuggestionType.Query -> pickEntityDrawable(
@@ -147,7 +146,7 @@ internal class SearchEntityPresentation(
 
     @DrawableRes
     fun getDrawableForSearchResult(result: SearchResult): Int {
-        return getDrawableForSearchResult(result.makiIcon, result.categories, result.newTypes)
+        return getDrawableForSearchResult(result.makiIcon, result.categories, result.types)
     }
 
     @DrawableRes
@@ -161,25 +160,24 @@ internal class SearchEntityPresentation(
     private fun getDrawableForSearchResult(
         maki: String?,
         categories: List<String>?,
-        types: List<String>
+        types: List<SearchResultType>
     ): Int {
         // We expect to have either combination of ADDRESS, COUNTRY, ..., POSTCODE
         // types or only POI type in list, so only first type is needed.
         return when (types.first()) {
-            NewSearchResultType.ADDRESS,
-            NewSearchResultType.COUNTRY,
-            NewSearchResultType.REGION,
-            NewSearchResultType.PLACE,
-            NewSearchResultType.DISTRICT,
-            NewSearchResultType.LOCALITY,
-            NewSearchResultType.NEIGHBORHOOD,
-            NewSearchResultType.STREET,
-            NewSearchResultType.POSTCODE,
-            NewSearchResultType.BLOCK -> R.drawable.mapbox_search_sdk_ic_search_result_address
-            NewSearchResultType.POI -> pickEntityDrawable(
+            SearchResultType.ADDRESS,
+            SearchResultType.COUNTRY,
+            SearchResultType.REGION,
+            SearchResultType.PLACE,
+            SearchResultType.DISTRICT,
+            SearchResultType.LOCALITY,
+            SearchResultType.NEIGHBORHOOD,
+            SearchResultType.STREET,
+            SearchResultType.POSTCODE,
+            SearchResultType.BLOCK -> R.drawable.mapbox_search_sdk_ic_search_result_address
+            SearchResultType.POI -> pickEntityDrawable(
                 maki, categories, R.drawable.mapbox_search_sdk_ic_mdi_search
             )
-            else -> R.drawable.mapbox_search_sdk_ic_mdi_search
         }
     }
 
@@ -201,7 +199,7 @@ internal class SearchEntityPresentation(
                 ?.icon ?: fallback)
     }
 
-    private fun getResultTypeName(resultTypes: List<String>, record: IndexableRecord?): String? {
+    private fun getResultTypeName(resultTypes: List<SearchResultType>, record: IndexableRecord?): String {
         return when (record) {
             is FavoriteRecord -> context.getString(R.string.mapbox_search_sdk_search_result_type_favorite)
             is HistoryRecord -> context.getString(R.string.mapbox_search_sdk_search_result_type_history)
@@ -212,7 +210,7 @@ internal class SearchEntityPresentation(
     private fun getSearchSuggestionTypeName(context: Context, suggestionType: SearchSuggestionType): String? {
         return when (suggestionType) {
             is SearchSuggestionType.IndexableRecordItem -> context.getString(getRecordTypeName(suggestionType))
-            is SearchSuggestionType.SearchResultSuggestion -> getResultTypeName(suggestionType.newTypes)
+            is SearchSuggestionType.SearchResultSuggestion -> getResultTypeName(suggestionType.types)
             is SearchSuggestionType.Category,
             is SearchSuggestionType.Query,
             is SearchSuggestionType.Brand -> null
@@ -229,29 +227,24 @@ internal class SearchEntityPresentation(
         }
     }
 
-    private fun getResultTypeName(resultTypes: List<String>): String? {
-        return resultTypes
-            .map { type -> getResultTypeName(type) }
-            .filter { it != 0 }
-            .joinToString { typeRes -> context.getString(typeRes) }
-            .nullIfEmpty()
+    private fun getResultTypeName(resultTypes: List<SearchResultType>): String {
+        return resultTypes.joinToString { type -> context.getString(getResultTypeName(type)) }
     }
 
     @StringRes
-    private fun getResultTypeName(@NewSearchResultType.Type resultType: String): Int {
+    private fun getResultTypeName(resultType: SearchResultType): Int {
         return when (resultType) {
-            NewSearchResultType.ADDRESS -> R.string.mapbox_search_sdk_search_result_type_address
-            NewSearchResultType.POI -> R.string.mapbox_search_sdk_search_result_type_poi
-            NewSearchResultType.COUNTRY -> R.string.mapbox_search_sdk_search_result_type_country
-            NewSearchResultType.REGION -> R.string.mapbox_search_sdk_search_result_type_region
-            NewSearchResultType.PLACE -> R.string.mapbox_search_sdk_search_result_type_place
-            NewSearchResultType.DISTRICT -> R.string.mapbox_search_sdk_search_result_type_district
-            NewSearchResultType.LOCALITY -> R.string.mapbox_search_sdk_search_result_type_locality
-            NewSearchResultType.NEIGHBORHOOD -> R.string.mapbox_search_sdk_search_result_type_neighborhood
-            NewSearchResultType.STREET -> R.string.mapbox_search_sdk_search_result_type_street
-            NewSearchResultType.POSTCODE -> R.string.mapbox_search_sdk_search_result_type_postcode
-            NewSearchResultType.BLOCK -> R.string.mapbox_search_sdk_search_result_type_block
-            else -> 0
+            SearchResultType.ADDRESS -> R.string.mapbox_search_sdk_search_result_type_address
+            SearchResultType.POI -> R.string.mapbox_search_sdk_search_result_type_poi
+            SearchResultType.COUNTRY -> R.string.mapbox_search_sdk_search_result_type_country
+            SearchResultType.REGION -> R.string.mapbox_search_sdk_search_result_type_region
+            SearchResultType.PLACE -> R.string.mapbox_search_sdk_search_result_type_place
+            SearchResultType.DISTRICT -> R.string.mapbox_search_sdk_search_result_type_district
+            SearchResultType.LOCALITY -> R.string.mapbox_search_sdk_search_result_type_locality
+            SearchResultType.NEIGHBORHOOD -> R.string.mapbox_search_sdk_search_result_type_neighborhood
+            SearchResultType.STREET -> R.string.mapbox_search_sdk_search_result_type_street
+            SearchResultType.POSTCODE -> R.string.mapbox_search_sdk_search_result_type_postcode
+            SearchResultType.BLOCK -> R.string.mapbox_search_sdk_search_result_type_block
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.mapbox.search.base.result
 
 import com.mapbox.search.base.BaseRequestOptions
-import com.mapbox.search.base.core.CoreResultType
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -13,9 +12,9 @@ data class BaseServerSearchSuggestion(
 
     init {
         check(rawSearchResult.action != null)
-        check(rawSearchResult.type != CoreResultType.CATEGORY || rawSearchResult.isValidCategoryType)
+        check(rawSearchResult.type != BaseRawResultType.CATEGORY || rawSearchResult.isValidCategoryType)
         check(
-            rawSearchResult.type != CoreResultType.BRAND || rawSearchResult.isValidBrandType
+            rawSearchResult.type != BaseRawResultType.BRAND || rawSearchResult.isValidBrandType
         )
     }
 
@@ -25,14 +24,14 @@ data class BaseServerSearchSuggestion(
             val searchResultTypes = rawSearchResult.types.map { it.tryMapToSearchResultType()!! }
             BaseSearchSuggestionType.SearchResultSuggestion(searchResultTypes)
         }
-        rawSearchResult.type == CoreResultType.CATEGORY -> {
+        rawSearchResult.type == BaseRawResultType.CATEGORY -> {
             BaseSearchSuggestionType.Category(requireNotNull(rawSearchResult.categoryCanonicalName))
         }
-        rawSearchResult.type == CoreResultType.BRAND -> BaseSearchSuggestionType.Brand(
+        rawSearchResult.type == BaseRawResultType.BRAND -> BaseSearchSuggestionType.Brand(
             requireNotNull(rawSearchResult.extractedBrandName),
             requireNotNull(rawSearchResult.extractedBrandId)
         )
-        rawSearchResult.type == CoreResultType.QUERY -> BaseSearchSuggestionType.Query
+        rawSearchResult.type == BaseRawResultType.QUERY -> BaseSearchSuggestionType.Query
         else -> error("Illegal raw search result type: ${rawSearchResult.type}")
     }
 }

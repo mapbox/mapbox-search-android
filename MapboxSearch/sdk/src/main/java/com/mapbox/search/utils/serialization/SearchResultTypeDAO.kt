@@ -1,10 +1,9 @@
 package com.mapbox.search.utils.serialization
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.search.base.failDebug
-import com.mapbox.search.result.NewSearchResultType
+import com.mapbox.search.result.SearchResultType
 
-internal enum class SearchResultTypeDAO : DataAccessObject<String> {
+internal enum class SearchResultTypeDAO : DataAccessObject<SearchResultType> {
 
     @SerializedName("ADDRESS")
     ADDRESS,
@@ -27,53 +26,42 @@ internal enum class SearchResultTypeDAO : DataAccessObject<String> {
     @SerializedName("POSTCODE")
     POSTCODE,
     @SerializedName("BLOCK")
-    BLOCK,
-    @SerializedName("UNKNOWN")
-    UNKNOWN;
+    BLOCK;
 
     override val isValid: Boolean
         get() = true
 
-    @NewSearchResultType.Type
-    override fun createData(): String {
+    override fun createData(): SearchResultType {
         return when (this) {
-            ADDRESS -> NewSearchResultType.ADDRESS
-            POI -> NewSearchResultType.POI
-            COUNTRY -> NewSearchResultType.COUNTRY
-            REGION -> NewSearchResultType.REGION
-            PLACE -> NewSearchResultType.PLACE
-            DISTRICT -> NewSearchResultType.DISTRICT
-            LOCALITY -> NewSearchResultType.LOCALITY
-            NEIGHBORHOOD -> NewSearchResultType.NEIGHBORHOOD
-            STREET -> NewSearchResultType.STREET
-            POSTCODE -> NewSearchResultType.POSTCODE
-            BLOCK -> NewSearchResultType.BLOCK
-            UNKNOWN -> NewSearchResultType.UNKNOWN
+            ADDRESS -> SearchResultType.ADDRESS
+            POI -> SearchResultType.POI
+            COUNTRY -> SearchResultType.COUNTRY
+            REGION -> SearchResultType.REGION
+            PLACE -> SearchResultType.PLACE
+            DISTRICT -> SearchResultType.DISTRICT
+            LOCALITY -> SearchResultType.LOCALITY
+            NEIGHBORHOOD -> SearchResultType.NEIGHBORHOOD
+            STREET -> SearchResultType.STREET
+            POSTCODE -> SearchResultType.POSTCODE
+            BLOCK -> SearchResultType.BLOCK
         }
     }
 
     companion object {
 
-        fun create(@NewSearchResultType.Type type: String): SearchResultTypeDAO {
+        fun create(type: SearchResultType): SearchResultTypeDAO {
             return when (type) {
-                NewSearchResultType.ADDRESS -> ADDRESS
-                NewSearchResultType.POI -> POI
-                NewSearchResultType.COUNTRY -> COUNTRY
-                NewSearchResultType.REGION -> REGION
-                NewSearchResultType.PLACE -> PLACE
-                NewSearchResultType.DISTRICT -> DISTRICT
-                NewSearchResultType.LOCALITY -> LOCALITY
-                NewSearchResultType.NEIGHBORHOOD -> NEIGHBORHOOD
-                NewSearchResultType.STREET -> STREET
-                NewSearchResultType.POSTCODE -> POSTCODE
-                NewSearchResultType.BLOCK -> BLOCK
-                NewSearchResultType.UNKNOWN -> UNKNOWN
-                else -> {
-                    failDebug {
-                        "Unknown type: $type"
-                    }
-                    UNKNOWN
-                }
+                SearchResultType.ADDRESS -> ADDRESS
+                SearchResultType.POI -> POI
+                SearchResultType.COUNTRY -> COUNTRY
+                SearchResultType.REGION -> REGION
+                SearchResultType.PLACE -> PLACE
+                SearchResultType.DISTRICT -> DISTRICT
+                SearchResultType.LOCALITY -> LOCALITY
+                SearchResultType.NEIGHBORHOOD -> NEIGHBORHOOD
+                SearchResultType.STREET -> STREET
+                SearchResultType.POSTCODE -> POSTCODE
+                SearchResultType.BLOCK -> BLOCK
             }
         }
     }

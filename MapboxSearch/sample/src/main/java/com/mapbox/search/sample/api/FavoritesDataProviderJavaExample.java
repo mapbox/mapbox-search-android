@@ -14,8 +14,8 @@ import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.FavoritesDataProvider;
 import com.mapbox.search.common.CompletionCallback;
 import com.mapbox.search.record.LocalDataProvider.OnDataChangedListener;
-import com.mapbox.search.result.NewSearchResultType;
 import com.mapbox.search.result.SearchAddress;
+import com.mapbox.search.result.SearchResultType;
 
 import java.util.List;
 import java.util.UUID;
@@ -72,8 +72,8 @@ public class FavoritesDataProviderJavaExample extends AppCompatActivity {
             null,
             null,
             Point.fromLngLat(2.294434, 48.858349),
-            null,
-            NewSearchResultType.PLACE
+            SearchResultType.PLACE,
+            null
         );
 
         task = favoritesDataProvider.upsert(newFavorite, addFavoriteCallback);
