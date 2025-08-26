@@ -10,6 +10,7 @@ import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
+import com.mapbox.search.internal.mapToNewSearchResultType
 import com.mapbox.search.result.mapToPlatform
 import java.util.PriorityQueue
 import java.util.concurrent.Executor
@@ -128,7 +129,7 @@ internal class HistoryDataProviderImpl(
                     categories = searchResult.categories,
                     makiIcon = searchResult.makiIcon,
                     coordinate = searchResult.coordinate,
-                    type = searchResult.types.first().mapToPlatform(),
+                    newType = searchResult.types.first().mapToNewSearchResultType(),
                     metadata = searchResult.metadata?.let { SearchResultMetadata(it) },
                     timestamp = timeProvider.currentTimeMillis(),
                 ),

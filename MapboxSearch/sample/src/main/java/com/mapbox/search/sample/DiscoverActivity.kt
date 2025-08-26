@@ -37,8 +37,8 @@ import com.mapbox.search.discover.DiscoverAddress
 import com.mapbox.search.discover.DiscoverOptions
 import com.mapbox.search.discover.DiscoverQuery
 import com.mapbox.search.discover.DiscoverResult
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.ui.view.CommonSearchViewConfiguration
 import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.place.SearchPlace
@@ -292,7 +292,7 @@ class DiscoverActivity : AppCompatActivity() {
                 name = name,
                 descriptionText = null,
                 address = address.toSearchAddress(),
-                resultTypes = listOf(SearchResultType.POI),
+                newTypes = listOf(NewSearchResultType.POI),
                 record = null,
                 coordinate = coordinate,
                 routablePoints = routablePoints,

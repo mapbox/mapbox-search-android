@@ -110,7 +110,7 @@ public abstract class PlaceAutocompleteType constructor(
         }
 
         @JvmSynthetic
-        fun createFromBaseType(baseType: BaseSearchResultType): PlaceAutocompleteType {
+        fun createFromBaseType(baseType: BaseSearchResultType): PlaceAutocompleteType? {
             return when (baseType) {
                 BaseSearchResultType.POI -> Poi
                 BaseSearchResultType.COUNTRY -> AdministrativeUnit.Country
@@ -122,6 +122,7 @@ public abstract class PlaceAutocompleteType constructor(
                 BaseSearchResultType.NEIGHBORHOOD -> AdministrativeUnit.Neighborhood
                 BaseSearchResultType.STREET -> AdministrativeUnit.Street
                 BaseSearchResultType.ADDRESS, BaseSearchResultType.BLOCK -> AdministrativeUnit.Address
+                BaseSearchResultType.UNKNOWN -> null
             }
         }
     }
