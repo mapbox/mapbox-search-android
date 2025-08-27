@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - place-autocomplete
+    - place-autocomplete-ndk27
 
 bundles:
   android: place-autocomplete-all

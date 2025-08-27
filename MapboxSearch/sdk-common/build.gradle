@@ -76,12 +76,12 @@ android {
 }
 
 dependencies {
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
 
-    api "com.mapbox.common:common:$common_sdk_version"
+    api dependenciesList.mapboxCommon
 
     ktlint "com.pinterest:ktlint:$ktlint_version"
 

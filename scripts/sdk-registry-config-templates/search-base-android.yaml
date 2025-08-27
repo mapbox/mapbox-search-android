@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - base
+    - base-ndk27
 
 bundles:
   android: base-all

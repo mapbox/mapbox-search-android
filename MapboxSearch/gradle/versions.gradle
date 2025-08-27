@@ -41,15 +41,28 @@ ext {
 
     pitest_version = '1.6.7'
 
-    mapbox_maps_version = '10.18.1'
-    common_sdk_version = '23.10.1'
+    mapbox_maps_version = '10.19.0'
+    common_sdk_version = '23.11.4'
     mapbox_base_version = '0.8.0'
 
-    search_native_version = '1.4.0'
+    search_native_version = '1.5.1'
 
     detekt_version = '1.19.0'
 
     leakcanary_version = '2.8.1'
 
     jacoco_tool_version = '0.8.7'
+
+    def ndkVersionSuffix = ""
+    if (project.hasProperty("ndkMajor")) {
+        ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+        println("Building with NDK version suffix: " + ndkVersionSuffix)
+    }
+
+    dependenciesList = [
+            mapboxSearchNative: "com.mapbox.search:mapbox-search-android-native$ndkVersionSuffix:${search_native_version}",
+            mapboxCommon      : "com.mapbox.common:common$ndkVersionSuffix:${common_sdk_version}",
+            mapboxCommonOkHttp: "com.mapbox.common:okhttp$ndkVersionSuffix:${common_sdk_version}",
+            mapboxMaps        : "com.mapbox.maps:android$ndkVersionSuffix:${mapbox_maps_version}",
+    ]
 }

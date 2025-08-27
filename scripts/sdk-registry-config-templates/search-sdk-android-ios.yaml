@@ -6,6 +6,7 @@ android:
 packages:
   android:
     - mapbox-search-android
+    - mapbox-search-android-ndk27
   ios:
     - MapboxSearch
     - MapboxSearchUI

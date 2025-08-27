@@ -96,7 +96,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
-    implementation "com.mapbox.maps:android:$mapbox_maps_version"
+    implementation dependenciesList.mapboxMaps
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.15.0'
 
     ktlint "com.pinterest:ktlint:$ktlint_version"

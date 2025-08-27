@@ -79,7 +79,7 @@ dependencies {
     implementation project(path: ':base')
     api project(path: ':sdk-common')
 
-    implementation "com.mapbox.search:mapbox-search-android-native:$search_native_version"
+    implementation dependenciesList.mapboxSearchNative
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -88,7 +88,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.startup:startup-runtime:$androidx_startup_runtime_version"
 
-    api "com.mapbox.common:common:$common_sdk_version"
+    api dependenciesList.mapboxCommon
 
     implementation "com.mapbox.base:annotations:$mapbox_base_version"
 
@@ -112,7 +112,7 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_5_version"
     testImplementation project(":common-tests")
 
-    androidTestImplementation "com.mapbox.common:okhttp:$common_sdk_version"
+    androidTestImplementation dependenciesList.mapboxCommonOkHttp
     androidTestImplementation "androidx.test:runner:$androidx_test_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
