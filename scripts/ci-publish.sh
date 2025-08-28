@@ -4,15 +4,16 @@ set -eo pipefail
 
 pushd MapboxSearch/
 
-./gradlew clean
+modules=("sdk-common" "base" "sdk" "ui" "offline" "autofill" "discover" "place-autocomplete")
 
-./gradlew :sdk-common:mapboxSDKRegistryUpload
-./gradlew :base:mapboxSDKRegistryUpload
-./gradlew :sdk:mapboxSDKRegistryUpload
-./gradlew :ui:mapboxSDKRegistryUpload
-./gradlew :offline:mapboxSDKRegistryUpload
-./gradlew :autofill:mapboxSDKRegistryUpload
-./gradlew :discover:mapboxSDKRegistryUpload
-./gradlew :place-autocomplete:mapboxSDKRegistryUpload
+./gradlew clean
+for module in "${modules[@]}"; do
+  ./gradlew ":$module:mapboxSDKRegistryUpload"
+done
+
+./gradlew clean
+for module in "${modules[@]}"; do
+  ./gradlew ":$module:mapboxSDKRegistryUpload" "-PndkMajor=27"
+done
 
 popd
