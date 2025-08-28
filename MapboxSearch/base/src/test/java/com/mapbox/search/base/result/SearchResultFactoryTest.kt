@@ -54,7 +54,6 @@ internal class SearchResultFactoryTest {
             CoreResultType.values().associate { listOf(it) to true } + mapOf(
                 listOf(CoreResultType.COUNTRY, CoreResultType.REGION) to true,
                 listOf(CoreResultType.REGION, CoreResultType.PLACE) to true,
-                listOf(CoreResultType.COUNTRY, CoreResultType.REGION) to true,
                 listOf(CoreResultType.COUNTRY, CoreResultType.POI) to false,
                 listOf(CoreResultType.ADDRESS, CoreResultType.POI) to false,
                 listOf(CoreResultType.REGION, CoreResultType.ADDRESS, CoreResultType.POI) to false,
