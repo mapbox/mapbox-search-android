@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -77.041093,
+          38.906197
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Washington",
+        "mapbox_id": "test-id",
+        "feature_type": "poi",
+        "address": "1211 Connecticut Ave NW",
+        "full_address": "1211 Connecticut Ave NW, Washington, District of Columbia 20036, United States of America",
+        "place_formatted": "Washington, District of Columbia 20036, United States of America",
+        "context": {
+          "country": {
+            "name": "United States of America",
+            "country_code": "US",
+            "country_code_alpha_3": "USA"
+          },
+          "region": {
+            "name": "District of Columbia",
+            "region_code": "DC",
+            "region_code_full": "US-DC"
+          },
+          "postcode": {
+            "name": "20036"
+          },
+          "place": {
+            "name": "Washington"
+          },
+          "neighborhood": {
+            "name": "Dupont Circle"
+          },
+          "street": {
+            "name": "connecticut ave nw"
+          }
+        },
+        "coordinates": {
+          "latitude": 38.906197,
+          "longitude": -77.041093,
+          "accuracy":"proximate",
+          "routable_points": [
+            {
+              "name": "default",
+              "latitude": 38.90608285774093,
+              "longitude": -77.0412880184587
+            }
+          ]
+        },
+        "bbox": [-77.041219, 38.906024, -77.040685, 38.906647],
+        "maki": "marker",
+        "poi_category": [
+          "gym",
+          "services"
+        ],
+        "poi_category_ids": [
+          "fitness_center",
+          "services"
+        ],
+        "brand": [
+          "Washington Sports Club"
+        ],
+        "brand_id": "washington_sports_club",
+        "external_ids": {
+          "id-1": "id-1-value"
+        },
+        "metadata": {
+          "review_count": 35,
+          "phone": "+123 456 789",
+          "website": "https://www.test.com",
+          "rating": 4.0,
+          "primary_photo": "https://test.com/img-primary.jpg",
+          "photos":[
+            {
+              "width":300,
+              "height":350,
+              "url":"https://test.com/img-primary.jpg"
+            },
+            {
+              "width":150,
+              "height":350,
+              "url":"https://test.com/img-other.jpg"
+            }
+          ],
+          "open_hours": {
+            "periods": [
+              {
+                "open": {
+                  "day": 5,
+                  "time": "2500"
+                },
+                "close": {
+                  "day": 5,
+                  "time": "2000"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "attribution": "© 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}

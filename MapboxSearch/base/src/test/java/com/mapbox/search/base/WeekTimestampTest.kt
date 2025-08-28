@@ -35,7 +35,7 @@ internal class WeekTimestampTest {
     }
 
     private fun WeekTimestampParams.toTimestamp(): WeekTimestamp {
-        return WeekTimestamp(weekDayFromCore(first), second, third)
+        return WeekTimestamp(weekDayFromCore(first)!!, second, third)
     }
 
     companion object {

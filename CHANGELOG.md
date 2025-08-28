@@ -1,6 +1,6 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.15.0-beta.3
+## 2.15.0-rc.1
 
 ### New features
 - Added the `NewSearchResultType` class with predefined string constants for search results, replacing the `SearchResultType` enum. Unlike the old enum, `NewSearchResultType` introduces a new value, `UNKNOWN`, which is used when a search result’s type is not included in the predefined constants.
@@ -9,10 +9,13 @@
   - Deprecated properties and constructors using `SearchResultType` enum.
   - Added new properties and constructors using `NewSearchResultType` for better type handling.
 
+### Bug fixes
+- Fixed a crash that could happen when backend returned incorrect metadata.
+
 ### Mapbox dependencies
-- Search Native SDK `2.15.0-beta.2`
-- Common SDK `24.15.0-beta.2`
-- Maps SDK `11.15.0-beta.2`
+- Search Native SDK `2.15.0-rc.1`
+- Common SDK `24.15.0-rc.1`
+- Maps SDK `11.15.0-rc.1`
 
 
 

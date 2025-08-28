@@ -768,6 +768,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testIncorrectMetadataParsing() {
+        mockServer.enqueueResponse("search_box_responses/forward/suggestions-successful.json")
+        mockServer.enqueueResponse("search_box_responses/forward/retrieve-suggest-incorrect-metadata.json")
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY)
+
+        val searchResult = searchEngine
+            .selectBlocking(suggestionsResponse.requireSuggestions().first())
+            .requireResult().result
+
+        assertNull(searchResult.metadata!!.openHours)
+    }
+
+    @Test
     fun testSuccessfulSuggestionSelectionWithTurnedOffAddToHistoryLogic() {
         mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
         mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
