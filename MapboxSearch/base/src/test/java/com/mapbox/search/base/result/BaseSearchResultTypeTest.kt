@@ -120,7 +120,7 @@ internal class BaseSearchResultTypeTest {
                         CoreResultType.BLOCK -> {
                             Then("isSearchResultType should be true", true, rawResultType.isSearchResultType)
                             Then(
-                                "tryMapToSearchResultType() should return POSTCODE",
+                                "tryMapToSearchResultType() should return BLOCK",
                                 BaseSearchResultType.BLOCK,
                                 rawResultType.tryMapToSearchResultType()
                             )

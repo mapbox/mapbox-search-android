@@ -16,6 +16,7 @@ import com.mapbox.search.common.metadata.OpenPeriod
 import com.mapbox.search.common.metadata.ParkingData
 import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
+import java.util.concurrent.TimeUnit
 
 fun CoreOpenHours.mapToPlatform(): OpenHours? = when (mode) {
     CoreOpenMode.ALWAYS_OPEN -> OpenHours.AlwaysOpen
@@ -62,7 +63,7 @@ fun createWeekTimestamp(day: WeekDay, hour: Int, minute: Int): WeekTimestamp? {
         return null
     }
 
-    if ((hour * 60 + minute) !in 0..1440) {
+    if ((hour * 60 + minute) !in 0..TimeUnit.DAYS.toMinutes(1)) {
         failDebug {
             "There can't be $hour hours and $minute minutes in the day."
         }
