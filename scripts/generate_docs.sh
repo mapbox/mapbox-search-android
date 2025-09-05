@@ -9,7 +9,7 @@ searchVersion="$(grep 'VERSION_NAME' gradle.properties | sed 's/^VERSION_NAME=//
 ./gradlew clean
 
 ./gradlew :sdk-common:dokkaHtml
-./gradlew :sdk:dokkaHtml
+./gradlew :search-sdk:dokkaHtml
 ./gradlew :ui:dokkaHtml
 ./gradlew :offline:dokkaHtml
 ./gradlew :autofill:dokkaHtml

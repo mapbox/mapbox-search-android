@@ -7,7 +7,7 @@ python scripts/license-validate.py
 pushd MapboxSearch/
 
 ./gradlew :base:ktlintFormat
-./gradlew :sdk:ktlintFormat
+./gradlew :search-sdk:ktlintFormat
 ./gradlew :ui:ktlintFormat
 ./gradlew :offline:ktlintFormat
 ./gradlew :sdk-common:ktlintFormat
@@ -17,7 +17,7 @@ pushd MapboxSearch/
 ./gradlew :sample:ktlintFormat
 
 ./gradlew :base:lint
-./gradlew :sdk:lint
+./gradlew :search-sdk:lint
 ./gradlew :ui:lint
 ./gradlew :offline:lint
 ./gradlew :sdk-common:lint
@@ -33,7 +33,7 @@ pushd MapboxSearch/
 ../scripts/validate-kdocs.sh
 
 ./gradlew :base:testReleaseUnitTest
-./gradlew :sdk:testReleaseUnitTest
+./gradlew :search-sdk:testReleaseUnitTest
 ./gradlew :ui:testReleaseUnitTest
 ./gradlew :offline:testReleaseUnitTest
 ./gradlew :sdk-common:testReleaseUnitTest

@@ -71,7 +71,7 @@ android {
 }
 
 dependencies {
-    api project(path: ':sdk')
+    api project(path: ':search-sdk')
     api project(path: ':offline')
     api project(path: ':autofill')
     api project(path: ':place-autocomplete')

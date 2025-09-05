@@ -1,8 +1,10 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.mapbox.sdkRegistry'
 
+def defaultNdkMajor = "23"
+
 def artifactName = ""
-if (project.hasProperty("ndkMajor")) {
+if (project.hasProperty("ndkMajor") && project.property("ndkMajor") != defaultNdkMajor) {
     artifactName = "${project.property('mapboxArtifactName')}-ndk${project.property("ndkMajor")}"
 } else {
     artifactName = "${project.property('mapboxArtifactName')}"
@@ -64,7 +66,7 @@ task androidJavadocsJar(type: Jar, dependsOn: dokkaHtml) {
 def sdkNameMap = [:]
 sdkNameMap["sdk-common"] = "search-sdk-common"
 sdkNameMap["base"] = "search-base-sdk"
-sdkNameMap["sdk"] = "search-sdk"
+sdkNameMap["search-sdk"] = "search-sdk"
 sdkNameMap["ui"] = "search-ui-sdk"
 sdkNameMap["offline"] = "search-offline-sdk"
 sdkNameMap["autofill"] = "search-autofill-sdk"
@@ -74,8 +76,10 @@ sdkNameMap["place-autocomplete"] = "search-place-autocomplete-sdk"
 registry {
     sdkName = sdkNameMap[project.name]
     production = true
-    snapshot = version.endsWith("-SNAPSHOT")
+    snapshot = version.contains("-SNAPSHOT")
     override = snapshot
-    dryRun = project.properties['sdkRegistryDryRun'] ?: false
+    dryRun = project.hasProperty('mapbox.dryRun') ? project.property('mapbox.dryRun').toBoolean() :
+                System.getenv('SDK_REGISTRY_DRYRUN') != null ? System.getenv('SDK_REGISTRY_DRYRUN').toBoolean() :
+                true
     publications = ["MapboxAndroidSDKPublication"]
 }

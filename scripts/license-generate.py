@@ -78,7 +78,7 @@ try:
         licenseFile.write("\n\n#### Search SDK-Common module\n")
         generateLicense(licenseFile, "sdk-common")
         licenseFile.write("\n\n#### Search Core module\n")
-        generateLicense(licenseFile, "sdk")
+        generateLicense(licenseFile, "search-sdk")
         licenseFile.write("\n\n#### Search UI module\n")
         generateLicense(licenseFile, "ui")
         licenseFile.write("\n\n#### Search Offline module\n")

@@ -37,7 +37,7 @@ mkdir -p "${TMPDIR}/sdk-common"
 cp -r "${INITIAL_PATH}/MapboxSearch/sdk-common/build/dokka" "${TMPDIR}/sdk-common/${VERSION}"
 
 mkdir -p "${TMPDIR}/core"
-cp -r "${INITIAL_PATH}/MapboxSearch/sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
+cp -r "${INITIAL_PATH}/MapboxSearch/search-sdk/build/dokka" "${TMPDIR}/core/${VERSION}"
 
 mkdir -p "${TMPDIR}/ui"
 cp -r "${INITIAL_PATH}/MapboxSearch/ui/build/dokka" "${TMPDIR}/ui/${VERSION}"
