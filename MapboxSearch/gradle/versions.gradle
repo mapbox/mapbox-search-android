@@ -7,8 +7,10 @@ ext {
             compileSdkVersion: 33,
     ]
 
+    def defaultNdkMajor = "23"
+
     def ndkVersionSuffix = ""
-    if (project.hasProperty("ndkMajor")) {
+    if (project.hasProperty("ndkMajor") && project.property("ndkMajor") != defaultNdkMajor) {
         ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
         println("Building with NDK version suffix: " + ndkVersionSuffix)
     }
@@ -22,7 +24,7 @@ ext {
             gradle           : '8.10.1',
             kotlin           : kotlinVersion,
             mapboxSdkVersions: '1.1.5',
-            mapboxSdkRegistry: '1.2.5',
+            mapboxSdkRegistry: '1.4.3',
             pitest           : '0.15',
             gradlePitest     : '0.2.8',
             license          : '0.8.91',
@@ -44,9 +46,9 @@ ext {
 
     version = [
             // Mapbox
-            mapboxSearchNative      : '2.15.0-beta.2',
-            mapboxCommon            : '24.15.0-beta.2',
-            mapboxMaps              : '11.15.0-beta.2',
+            mapboxSearchNative      : '2.16.0-SNAPSHOT-09-05--04-29.git-fcdc70d',
+            mapboxCommon            : '24.16.0-SNAPSHOT-09-05--04-29.git-fcdc70d',
+            mapboxMaps              : '11.16.0-SNAPSHOT-09-05--04-29.git-fcdc70d',
             mapboxTurf              : '6.15.0',
             mapboxBase              : '0.8.0',
             mapboxTestDsl           : '0.1.5',

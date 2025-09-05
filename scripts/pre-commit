@@ -9,7 +9,7 @@ pushd MapboxSearch/
 
 subprojects=(
     "base"
-    "sdk"
+    "search-sdk"
     "ui"
     "offline"
     "sdk-common"

@@ -18,7 +18,7 @@ if [ "$declaredVersionName" != "$tagVersionName" ]; then
   exit 1
 fi
 
-if [[ $declaredVersionName == *-SNAPSHOT ]]
+if [[ $declaredVersionName == *-SNAPSHOT* ]]
 then
   echo "Version $declaredVersionName is a SNAPSHOT. Skip publishing."
   exit 1

@@ -78,11 +78,11 @@ We use [ktlint](https://ktlint.github.io/) for checking Kotlin codestyle and for
 To run `ktlint` checks locally:
 ```
 cd MapboxSearch
-./gradlew :sdk:ktlint
+./gradlew :search-sdk:ktlint
 ```
 To run `ktlint` formatter:
 ```
-./gradlew :sdk:ktlintFormat
+./gradlew :search-sdk:ktlintFormat
 ```
 
 Also we have custom codestyle settings for XML. To apply those settings, please, select `AndroidStudio/code_style.xml` file in Android Studio: `Preferences -> Editor -> Code style -> XML -> "gear button" -> Import Scheme`.
@@ -96,7 +96,7 @@ We use [detekt](https://arturbosch.github.io/detekt/) as static code analyzer.
 To run `detekt` locally:
 ```
 cd MapboxSearch
-./gradlew :sdk:detekt
+./gradlew :search-sdk:detekt
 ```
 
 ## Public API changes tracking
@@ -161,9 +161,9 @@ To use this tool, follow this steps:
 We use **Kotlin Test DSL** for unit tests. Kotlin Test DSL provides human-readable DSL and is based on JUnit 5 dynamic tests.
 To run unit tests use the following commands:
 ```
-./gradlew :sdk:testReleaseUnitTest
+./gradlew :search-sdk:testReleaseUnitTest
 ./gradlew :ui:testReleaseUnitTest
-./gradlew :sdk-common:testReleaseUnitTest
+./gradlew :search-sdk-common:testReleaseUnitTest
 ```
 
 Search SDK also contains a bunch of instrumentation and UI tests. To run them, please, use the following command:
@@ -175,7 +175,7 @@ We use [pitest](https://pitest.org/) for mutation testing.
 To run pitest, execute the following commands:
 ```
 cd MapboxSearch
-./gradlew :sdk:pitestDebug
+./gradlew :search-sdk:pitestDebug
 ```
 You can find report at `MapboxSearch/sdk/build/reports`.
 

@@ -4,7 +4,7 @@ set -eo pipefail
 
 pushd MapboxSearch/
 
-modules=("sdk-common" "base" "sdk" "ui" "offline" "autofill" "discover" "place-autocomplete")
+modules=("sdk-common" "base" "search-sdk" "ui" "offline" "autofill" "discover" "place-autocomplete")
 
 ./gradlew clean
 for module in "${modules[@]}"; do
