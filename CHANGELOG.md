@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.15.0
+
+### New features
+- Added serialization of the `SearchResultMetadata.rating` value for the `HistoryRecord`.
+
+### Mapbox dependencies
+- Search Native SDK `2.15.0`
+- Common SDK `24.15.0`
+- Maps SDK `11.15.0`
+
+
+
 ## 2.15.0-rc.1
 
 ### New features
