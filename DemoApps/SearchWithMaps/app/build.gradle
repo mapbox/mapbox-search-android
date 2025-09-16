@@ -39,9 +39,16 @@ android {
     }
 }
 
+def ndkVersionSuffix = ""
+if (project.hasProperty("ndkMajor")) {
+    ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+    println("Building with NDK version suffix: " + ndkVersionSuffix)
+}
+
 dependencies {
-    implementation "com.mapbox.search:mapbox-search-android-ui-ndk27:1.5.0-SNAPSHOT"
-    implementation "com.mapbox.maps:android-ndk27:10.19.0"
+    implementation "com.mapbox.search:mapbox-search-android-ui$ndkVersionSuffix:1.5.0"
+    implementation "com.mapbox.maps:android$ndkVersionSuffix:10.19.0"
+    implementation "com.mapbox.navigation:android$ndkVersionSuffix:2.21.0"
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -50,4 +57,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def baseName = outputFileName.replace(".apk", "")
+        outputFileName = "$baseName${ndkVersionSuffix}.apk"
+    }
 }
