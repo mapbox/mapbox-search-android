@@ -1,5 +1,36 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.15.0
+
+### New features
+- Added serialization of the `SearchResultMetadata.rating` value for the `HistoryRecord`.
+
+### Mapbox dependencies
+- Search Native SDK `2.15.0`
+- Common SDK `24.15.0`
+- Maps SDK `11.15.0`
+
+
+
+## 2.15.0-rc.1
+
+### New features
+- Added the `NewSearchResultType` class with predefined string constants for search results, replacing the `SearchResultType` enum. Unlike the old enum, `NewSearchResultType` introduces a new value, `UNKNOWN`, which is used when a search result’s type is not included in the predefined constants.
+- If an object has a type not listed in the `SearchResultType`, its type would fall back to `SearchResultType.DEFAULT`. With the new implementation, you should use `NewSearchResultType` to determine the actual type of a search result.
+- Updated classes: `SearchResult`, `SearchSuggestionType`, `IndexableRecord`, `HistoryRecord`, `FavoriteRecord`, and `SearchPlace`:
+  - Deprecated properties and constructors using `SearchResultType` enum.
+  - Added new properties and constructors using `NewSearchResultType` for better type handling.
+
+### Bug fixes
+- Fixed a crash that could happen when backend returned incorrect metadata.
+
+### Mapbox dependencies
+- Search Native SDK `2.15.0-rc.1`
+- Common SDK `24.15.0-rc.1`
+- Maps SDK `11.15.0-rc.1`
+
+
+
 ## 2.15.0-beta.2
 
 ### New features

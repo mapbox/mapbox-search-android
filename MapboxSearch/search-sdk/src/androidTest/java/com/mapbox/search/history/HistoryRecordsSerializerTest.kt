@@ -5,7 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.BaseTest
 import com.mapbox.search.SearchResultMetadata
 import com.mapbox.search.TestData
-import com.mapbox.search.base.result.BaseRawResultType
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.common.RoutablePoint
 import com.mapbox.search.common.SearchAddressCountry
 import com.mapbox.search.common.metadata.ImageInfo
@@ -16,8 +16,8 @@ import com.mapbox.search.common.metadata.WeekDay
 import com.mapbox.search.common.metadata.WeekTimestamp
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.HistoryRecordsSerializer
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.tests_support.createTestBaseRawSearchResult
 import org.junit.Assert
 import org.junit.Before
@@ -80,7 +80,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
 
         val TEST_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "test id",
-            types = listOf(BaseRawResultType.PLACE),
+            types = listOf(CoreResultType.PLACE),
             names = listOf("test name"),
             languages = listOf("default"),
             addresses = listOf(SearchAddress(country = "Belarus")),
@@ -99,7 +99,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
                 countryInfo = SearchAddressCountry("Belarus", null, null),
             ),
             timestamp = 123L,
-            type = SearchResultType.ADDRESS,
+            newType = NewSearchResultType.ADDRESS,
             makiIcon = "test maki",
             categories = listOf("test"),
             routablePoints = null,
@@ -108,7 +108,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
 
         val TEST_EMPTY_BASE_RAW_SEARCH_RESULT = createTestBaseRawSearchResult(
             id = "empty_correct_record_id",
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             names = listOf("Empty correct record"),
             languages = listOf("default"),
         )
@@ -120,7 +120,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             descriptionText = null,
             address = null,
             timestamp = 123L,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             makiIcon = null,
             categories = null,
             routablePoints = null,
@@ -134,7 +134,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             descriptionText = TestData.EIFFEL_TOWER_ADDRESS_DESCRIPTION,
             address = TestData.EIFFEL_TOWER_ADDRESS,
             timestamp = 1598138435443L,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             makiIcon = null,
             categories = listOf("monument", "landmark", "historic"),
             routablePoints = null,
@@ -148,7 +148,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             descriptionText = TestData.PRADO_MUSEUM_ADDRESS_DESCRIPTION,
             address = TestData.PRADO_MUSEUM_ADDRESS,
             timestamp = 1598138865525L,
-            type = SearchResultType.ADDRESS,
+            newType = NewSearchResultType.ADDRESS,
             makiIcon = "museum",
             categories = listOf("monument", "landmark", "historic"),
             routablePoints = listOf(
@@ -189,7 +189,7 @@ internal class HistoryRecordsSerializerTest : BaseTest() {
             descriptionText = TestData.OSLO_OPERA_HOUSE_ADDRESS_DESCRIPTION,
             address = TestData.OSLO_OPERA_HOUSE_ADDRESS,
             timestamp = 1598138907968L,
-            type = SearchResultType.POI,
+            newType = NewSearchResultType.POI,
             makiIcon = "opera",
             categories = listOf("theatre", "theater", "music", "show venue", "concert", "concert hall"),
             routablePoints = null,

@@ -9,10 +9,10 @@ import com.mapbox.search.base.weekDayFromCore
 import com.mapbox.search.common.parking.ParkingRateTime
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
-fun CoreParkingRateTime.mapToPlatform(): ParkingRateTime {
+fun CoreParkingRateTime.mapToPlatform(): ParkingRateTime? {
     return ParkingRateTime(
         days = days?.map {
-            weekDayFromCore(it)
+            weekDayFromCore(it) ?: return null
         },
         fromHour = fromHour,
         fromMinute = fromMinute,

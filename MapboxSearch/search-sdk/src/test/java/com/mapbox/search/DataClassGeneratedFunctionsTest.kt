@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 package com.mapbox.search
 
 import com.mapbox.geojson.Point
