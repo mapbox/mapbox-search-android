@@ -1,6 +1,7 @@
 package com.mapbox.search.base.result
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.record.IndexableRecordResolver
@@ -49,21 +50,19 @@ internal class SearchResultFactoryTest {
 
     private companion object {
 
-        val SEARCH_RESULT_TYPES_MAP: Map<List<BaseRawResultType>, Boolean> =
-            BaseRawResultType.values().associate { listOf(it) to true } + mapOf(
-                listOf(BaseRawResultType.COUNTRY, BaseRawResultType.REGION) to true,
-                listOf(BaseRawResultType.REGION, BaseRawResultType.PLACE) to true,
-                listOf(BaseRawResultType.COUNTRY, BaseRawResultType.REGION) to true,
-                listOf(BaseRawResultType.COUNTRY, BaseRawResultType.POI) to false,
-                listOf(BaseRawResultType.ADDRESS, BaseRawResultType.POI) to false,
-                listOf(BaseRawResultType.REGION, BaseRawResultType.ADDRESS, BaseRawResultType.POI) to false,
-                emptyList<BaseRawResultType>() to false,
-                listOf(BaseRawResultType.PLACE, BaseRawResultType.CATEGORY) to false,
-                listOf(BaseRawResultType.UNKNOWN) to false,
-                listOf(BaseRawResultType.CATEGORY) to false,
-                listOf(BaseRawResultType.BRAND) to false,
-                listOf(BaseRawResultType.QUERY) to false,
-                listOf(BaseRawResultType.USER_RECORD) to false,
+        val SEARCH_RESULT_TYPES_MAP: Map<List<CoreResultType>, Boolean> =
+            CoreResultType.values().associate { listOf(it) to true } + mapOf(
+                listOf(CoreResultType.COUNTRY, CoreResultType.REGION) to true,
+                listOf(CoreResultType.REGION, CoreResultType.PLACE) to true,
+                listOf(CoreResultType.COUNTRY, CoreResultType.POI) to false,
+                listOf(CoreResultType.ADDRESS, CoreResultType.POI) to false,
+                listOf(CoreResultType.REGION, CoreResultType.ADDRESS, CoreResultType.POI) to false,
+                emptyList<CoreResultType>() to false,
+                listOf(CoreResultType.PLACE, CoreResultType.CATEGORY) to false,
+                listOf(CoreResultType.CATEGORY) to false,
+                listOf(CoreResultType.BRAND) to false,
+                listOf(CoreResultType.QUERY) to false,
+                listOf(CoreResultType.USER_RECORD) to false,
             )
 
         val REQUEST_OPTIONS = createTestBaseRequestOptions(
@@ -86,7 +85,7 @@ internal class SearchResultFactoryTest {
             icon = "cafe",
             etaMinutes = 5.0,
             center = Point.fromLngLat(1.0, 1.0),
-            types = listOf(BaseRawResultType.POI)
+            types = listOf(CoreResultType.POI)
         )
 
         @Suppress("JVM_STATIC_IN_PRIVATE_COMPANION")

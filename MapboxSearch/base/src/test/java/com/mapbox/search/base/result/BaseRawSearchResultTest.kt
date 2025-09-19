@@ -4,6 +4,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.base.BuildConfig
 import com.mapbox.search.base.core.CoreBoundingBox
 import com.mapbox.search.base.core.CoreResultAccuracy
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.CoreSearchResult
 import com.mapbox.search.base.core.CoreSuggestAction
@@ -47,7 +48,7 @@ internal class BaseRawSearchResultTest {
 
             RESULT_TYPES_MAP.entries.forEach { (resultTypes, expectedValid) ->
                 When("Convert filled core search result with $resultTypes types") {
-                    val coreSearchResult = createCoreSearchResult(resultTypes.map { it.mapToCore() })
+                    val coreSearchResult = createCoreSearchResult(resultTypes)
                     val actualValid = catchThrowable<IllegalStateException> {
                         coreSearchResult.mapToBase()
                     } == null
@@ -88,7 +89,7 @@ internal class BaseRawSearchResultTest {
         Given("BaseRawSearchResult with 'brand' type") {
             When("Brand name and id available") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("test-brand"),
                     brandId = "test-brand-id"
                 )
@@ -114,7 +115,7 @@ internal class BaseRawSearchResultTest {
 
             When("Brand id is available and names contains at leas one non empty name") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("", "test-brand"),
                     brandId = "test-brand-id"
                 )
@@ -135,7 +136,7 @@ internal class BaseRawSearchResultTest {
             When("Brand names list is empty") {
                 val result = createTestBaseRawSearchResult(
                     names = listOf("test-name"),
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = emptyList(),
                     brandId = "test-brand-id"
                 )
@@ -156,7 +157,7 @@ internal class BaseRawSearchResultTest {
             When("Brand names list contains empty names") {
                 val result = createTestBaseRawSearchResult(
                     names = listOf("test-name"),
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("", ""),
                     brandId = "test-brand-id"
                 )
@@ -176,7 +177,7 @@ internal class BaseRawSearchResultTest {
 
             When("Brand id is null") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("test-brand"),
                     brandId = null
                 )
@@ -190,7 +191,7 @@ internal class BaseRawSearchResultTest {
 
             When("Brand id is empty") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("test-brand"),
                     brandId = ""
                 )
@@ -209,7 +210,7 @@ internal class BaseRawSearchResultTest {
         Given("BaseRawSearchResult with 'category' type") {
             When("Category id available") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.CATEGORY),
+                    types = listOf(CoreResultType.CATEGORY),
                     categoryIds = listOf("test-category")
                 )
 
@@ -222,7 +223,7 @@ internal class BaseRawSearchResultTest {
 
             When("At least one non empty category id is available") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.CATEGORY),
+                    types = listOf(CoreResultType.CATEGORY),
                     categoryIds = listOf("", "test-category")
                 )
 
@@ -235,7 +236,7 @@ internal class BaseRawSearchResultTest {
 
             When("Category id is null") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.CATEGORY),
+                    types = listOf(CoreResultType.CATEGORY),
                     categoryIds = null
                 )
 
@@ -248,7 +249,7 @@ internal class BaseRawSearchResultTest {
 
             When("Category id is null and external ids contain category id") {
                 val result = createTestBaseRawSearchResult(
-                    types = listOf(BaseRawResultType.CATEGORY),
+                    types = listOf(CoreResultType.CATEGORY),
                     categoryIds = null,
                     externalIDs = mapOf("federated" to "category.test")
                 )
@@ -264,16 +265,16 @@ internal class BaseRawSearchResultTest {
 
     private companion object {
 
-        val RESULT_TYPES_MAP: Map<List<BaseRawResultType>, Boolean> = mapOf(
-            listOf(BaseRawResultType.COUNTRY, BaseRawResultType.REGION) to true,
-            listOf(BaseRawResultType.REGION, BaseRawResultType.PLACE) to true,
-            listOf(BaseRawResultType.COUNTRY, BaseRawResultType.REGION) to true,
-            listOf(BaseRawResultType.COUNTRY, BaseRawResultType.POI) to false,
-            listOf(BaseRawResultType.ADDRESS, BaseRawResultType.POI) to false,
-            listOf(BaseRawResultType.REGION, BaseRawResultType.ADDRESS, BaseRawResultType.POI) to false,
-            emptyList<BaseRawResultType>() to false,
-            listOf(BaseRawResultType.PLACE, BaseRawResultType.CATEGORY) to false,
-        ) + BaseRawResultType.values().associate { listOf(it) to true }
+        val RESULT_TYPES_MAP: Map<List<CoreResultType>, Boolean> = mapOf(
+            listOf(CoreResultType.COUNTRY, CoreResultType.REGION) to true,
+            listOf(CoreResultType.REGION, CoreResultType.PLACE) to true,
+            listOf(CoreResultType.COUNTRY, CoreResultType.REGION) to true,
+            listOf(CoreResultType.COUNTRY, CoreResultType.POI) to false,
+            listOf(CoreResultType.ADDRESS, CoreResultType.POI) to false,
+            listOf(CoreResultType.REGION, CoreResultType.ADDRESS, CoreResultType.POI) to false,
+            emptyList<CoreResultType>() to false,
+            listOf(CoreResultType.PLACE, CoreResultType.CATEGORY) to false,
+        ) + CoreResultType.values().associate { listOf(it) to true }
 
         val CORE_EMPTY_SEARCH_RESULT = CoreSearchResult(
             "Empty result id",
@@ -309,7 +310,7 @@ internal class BaseRawSearchResultTest {
         val BASE_EMPTY_SEARCH_RESULT = BaseRawSearchResult(
             id = CORE_EMPTY_SEARCH_RESULT.id,
             mapboxId = CORE_EMPTY_SEARCH_RESULT.mapboxId,
-            types = CORE_EMPTY_SEARCH_RESULT.types.map { it.mapToBase() },
+            types = CORE_EMPTY_SEARCH_RESULT.types,
             names = CORE_EMPTY_SEARCH_RESULT.names,
             namePreferred = CORE_EMPTY_SEARCH_RESULT.namePreferred,
             languages = CORE_EMPTY_SEARCH_RESULT.languages,
@@ -342,7 +343,7 @@ internal class BaseRawSearchResultTest {
         val BASE_FILLED_SEARCH_RESULT = BaseRawSearchResult(
             id = CORE_FILLED_SEARCH_RESULT.id,
             mapboxId = CORE_FILLED_SEARCH_RESULT.mapboxId,
-            types = CORE_FILLED_SEARCH_RESULT.types.map { it.mapToBase() },
+            types = CORE_FILLED_SEARCH_RESULT.types,
             names = CORE_FILLED_SEARCH_RESULT.names,
             namePreferred = CORE_FILLED_SEARCH_RESULT.namePreferred,
             languages = CORE_FILLED_SEARCH_RESULT.languages,

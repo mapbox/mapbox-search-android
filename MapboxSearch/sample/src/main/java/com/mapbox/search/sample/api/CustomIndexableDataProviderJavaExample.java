@@ -21,10 +21,9 @@ import com.mapbox.search.record.FavoriteRecord;
 import com.mapbox.search.record.IndexableDataProvider;
 import com.mapbox.search.record.IndexableDataProviderEngine;
 import com.mapbox.search.record.IndexableRecord;
+import com.mapbox.search.result.NewSearchResultType;
 import com.mapbox.search.result.SearchResult;
-import com.mapbox.search.result.SearchResultType;
 import com.mapbox.search.result.SearchSuggestion;
-import com.mapbox.search.sample.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,8 +147,8 @@ public class CustomIndexableDataProviderJavaExample extends AppCompatActivity {
             Collections.emptyList(),
             null,
             coordinate,
-            SearchResultType.POI,
-            null
+            null,
+            NewSearchResultType.POI
         );
     }
 

@@ -2,19 +2,22 @@ package com.mapbox.search.ui.utils.offline
 
 import com.mapbox.search.base.failDebug
 import com.mapbox.search.offline.NewOfflineSearchResultType
-import com.mapbox.search.result.SearchResultType
+import com.mapbox.search.result.NewSearchResultType
 
-internal fun createSearchResultTypeFromOfflineType(@NewOfflineSearchResultType.Type type: String): SearchResultType {
+@NewSearchResultType.Type
+internal fun createNewSearchResultTypeFromOfflineType(
+    @NewOfflineSearchResultType.Type type: String,
+): String {
     return when (type) {
-        NewOfflineSearchResultType.PLACE -> SearchResultType.PLACE
-        NewOfflineSearchResultType.STREET -> SearchResultType.STREET
-        NewOfflineSearchResultType.ADDRESS -> SearchResultType.ADDRESS
-        NewOfflineSearchResultType.POI -> SearchResultType.POI
+        NewOfflineSearchResultType.PLACE -> NewSearchResultType.PLACE
+        NewOfflineSearchResultType.STREET -> NewSearchResultType.STREET
+        NewOfflineSearchResultType.ADDRESS -> NewSearchResultType.ADDRESS
+        NewOfflineSearchResultType.POI -> NewSearchResultType.POI
         else -> {
             failDebug {
                 "Unprocessed offline search result type: $type"
             }
-            SearchResultType.ADDRESS
+            NewSearchResultType.ADDRESS
         }
     }
 }

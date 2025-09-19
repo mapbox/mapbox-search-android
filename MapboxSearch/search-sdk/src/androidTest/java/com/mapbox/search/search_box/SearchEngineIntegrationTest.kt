@@ -54,10 +54,10 @@ import com.mapbox.search.common.tests.equalsTo
 import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.ResultAccuracy
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.result.SearchResult
-import com.mapbox.search.result.SearchResultType
 import com.mapbox.search.result.SearchSuggestion
 import com.mapbox.search.result.SearchSuggestionType
 import com.mapbox.search.result.isIndexableRecordSuggestion
@@ -267,7 +267,10 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(null, suggestion.metadata)
         assertEquals(mapOf("id-1" to "id-1-key"), suggestion.externalIDs)
         assertEquals(0, suggestion.serverIndex)
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(listOf(SearchResultType.POI)), suggestion.type)
+        assertEquals(
+            SearchSuggestionType.SearchResultSuggestion(NewSearchResultType.POI),
+            suggestion.type,
+        )
         assertEquals(
             Point.fromLngLat(-77.034309387207, 38.9028091430664),
             suggestion.coordinate,
@@ -280,8 +283,52 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             suggestion.routablePoints,
         )
 
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.PLACE), suggestions[1].type)
-        assertEquals(SearchSuggestionType.SearchResultSuggestion(SearchResultType.STREET), suggestions[2].type)
+        assertEquals(
+            SearchSuggestionType.SearchResultSuggestion(NewSearchResultType.PLACE),
+            suggestions[1].type,
+        )
+        assertEquals(
+            SearchSuggestionType.SearchResultSuggestion(NewSearchResultType.STREET),
+            suggestions[2].type,
+        )
+    }
+
+    @Test
+    fun testSuccessfulResponseWithUnknownTypes() {
+        mockServer.enqueueResponse(
+            "search_box_responses/forward/suggestions-successful-unknown-type.json",
+        )
+
+        val options = SearchOptions(origin = TEST_ORIGIN_LOCATION, navigationOptions = TEST_NAV_OPTIONS)
+        val response = searchEngine.searchBlocking(TEST_QUERY, options)
+        assertTrue(response.isSuggestions)
+
+        val suggestions = response.requireSuggestions()
+        assertEquals(3, suggestions.size)
+
+        assertEquals(
+            listOf(NewSearchResultType.UNKNOWN),
+            (suggestions.first().type as SearchSuggestionType.SearchResultSuggestion).newTypes
+        )
+
+        assertEquals(
+            listOf(NewSearchResultType.PLACE),
+            (suggestions[1].type as SearchSuggestionType.SearchResultSuggestion).newTypes
+        )
+
+        assertEquals(
+            listOf(NewSearchResultType.STREET),
+            (suggestions[2].type as SearchSuggestionType.SearchResultSuggestion).newTypes
+        )
+
+        mockServer.enqueueResponse(
+            "search_box_responses/forward/retrieve-suggest-unknown-type.json"
+        )
+
+        val selectionResponse = searchEngine.selectBlocking(suggestions.first())
+        val selectionResult = selectionResponse.requireResult()
+
+        assertEquals(listOf(NewSearchResultType.UNKNOWN), selectionResult.result.newTypes)
     }
 
     @Test
@@ -375,7 +422,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(historyRecord.address, searchResult.address)
         assertEquals(historyRecord.makiIcon, searchResult.makiIcon)
         assertEquals(historyRecord.metadata, searchResult.metadata)
-        assertEquals(historyRecord.type, searchResult.types.first())
+        assertEquals(historyRecord.newType, searchResult.newTypes.first())
     }
 
     @Test
@@ -526,7 +573,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 countryInfo = SearchAddressCountry("United States of America", "US", "USA"),
                 regionInfo = SearchAddressRegion("California", "CA", "US-CA"),
                 ),
-            searchResultType = SearchResultType.ADDRESS,
+            searchResultType = NewSearchResultType.ADDRESS,
         )
         historyDataProvider.upsertBlocking(record, callbacksExecutor)
 
@@ -681,7 +728,7 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals(null, searchResult.indexableRecord)
         assertEquals(900.0, searchResult.distanceMeters)
         assertEquals(hashMapOf("id-1" to "id-1-value"), searchResult.externalIDs)
-        assertEquals(listOf(SearchResultType.POI), searchResult.types)
+        assertEquals(listOf(NewSearchResultType.POI), searchResult.newTypes)
         assertEquals(0, searchResult.serverIndex)
 
         with(searchResult.metadata!!) {
@@ -718,6 +765,20 @@ internal class SearchEngineIntegrationTest : BaseTest() {
             createHistoryRecord(searchResult, TEST_LOCAL_TIME_MILLIS),
             historyData.first()
         )
+    }
+
+    @Test
+    fun testIncorrectMetadataParsing() {
+        mockServer.enqueueResponse("search_box_responses/forward/suggestions-successful.json")
+        mockServer.enqueueResponse("search_box_responses/forward/retrieve-suggest-incorrect-metadata.json")
+
+        val suggestionsResponse = searchEngine.searchBlocking(TEST_QUERY)
+
+        val searchResult = searchEngine
+            .selectBlocking(suggestionsResponse.requireSuggestions().first())
+            .requireResult().result
+
+        assertNull(searchResult.metadata!!.openHours)
     }
 
     @Test

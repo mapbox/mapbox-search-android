@@ -1,6 +1,7 @@
 package com.mapbox.search.base.result
 
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreResultType
 import com.mapbox.search.base.record.BaseIndexableRecord
 import com.mapbox.search.base.tests_support.TestParcelable
 import com.mapbox.search.base.tests_support.createTestBaseRawSearchResult
@@ -110,20 +111,21 @@ internal class BaseSearchSuggestionTest {
             }
         }
 
-        Given("All the possible BaseRawResultType types") {
-            BaseRawResultType.values().forEach { rawResultType ->
+        Given("All the possible CoreResultType types") {
+            CoreResultType.values().forEach { rawResultType ->
                 when (rawResultType) {
-                    BaseRawResultType.ADDRESS,
-                    BaseRawResultType.POI,
-                    BaseRawResultType.COUNTRY,
-                    BaseRawResultType.REGION,
-                    BaseRawResultType.PLACE,
-                    BaseRawResultType.DISTRICT,
-                    BaseRawResultType.LOCALITY,
-                    BaseRawResultType.NEIGHBORHOOD,
-                    BaseRawResultType.STREET,
-                    BaseRawResultType.POSTCODE,
-                    BaseRawResultType.BLOCK -> {
+                    CoreResultType.ADDRESS,
+                    CoreResultType.POI,
+                    CoreResultType.COUNTRY,
+                    CoreResultType.REGION,
+                    CoreResultType.PLACE,
+                    CoreResultType.DISTRICT,
+                    CoreResultType.LOCALITY,
+                    CoreResultType.NEIGHBORHOOD,
+                    CoreResultType.STREET,
+                    CoreResultType.POSTCODE,
+                    CoreResultType.BLOCK,
+                    CoreResultType.UNKNOWN -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val expectedResultType = checkNotNull(rawResultType.tryMapToSearchResultType()) {
                                 "$rawResultType must have corresponding ${BaseSearchResultType::class.java.simpleName}"
@@ -139,10 +141,10 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
                     }
-                    BaseRawResultType.CATEGORY -> {
+                    CoreResultType.CATEGORY -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType and with canonical name specified in external IDs") {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                                types = listOf(BaseRawResultType.CATEGORY),
+                                types = listOf(CoreResultType.CATEGORY),
                                 externalIDs = mapOf("federated" to "category.cafe")
                             )
 
@@ -158,16 +160,16 @@ internal class BaseSearchSuggestionTest {
                             IllegalStateException::class
                         ) {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                                types = listOf(BaseRawResultType.CATEGORY),
+                                types = listOf(CoreResultType.CATEGORY),
                                 externalIDs = emptyMap()
                             )
                             BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
                         }
                     }
-                    BaseRawResultType.BRAND -> {
+                    CoreResultType.BRAND -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                                types = listOf(BaseRawResultType.BRAND),
+                                types = listOf(CoreResultType.BRAND),
                                 brandId = "test-brand-id",
                                 brand = listOf("Test brand", "other name")
                             )
@@ -179,10 +181,10 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
                     }
-                    BaseRawResultType.QUERY -> {
+                    CoreResultType.QUERY -> {
                         When("Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType") {
                             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                                types = listOf(BaseRawResultType.QUERY)
+                                types = listOf(CoreResultType.QUERY)
                             )
 
                             val suggestion = BaseServerSearchSuggestion(searchResult, REQUEST_OPTIONS)
@@ -192,8 +194,7 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
                     }
-                    BaseRawResultType.USER_RECORD,
-                    BaseRawResultType.UNKNOWN -> {
+                    CoreResultType.USER_RECORD -> {
                         WhenThrows(
                             "Trying ro instantiate ServerSearchSuggestion with raw type = $rawResultType",
                             IllegalStateException::class
@@ -208,7 +209,7 @@ internal class BaseSearchSuggestionTest {
                 }
             }
 
-            val multipleTypes = listOf(BaseRawResultType.PLACE, BaseRawResultType.REGION)
+            val multipleTypes = listOf(CoreResultType.PLACE, CoreResultType.REGION)
             When("Trying ro instantiate ServerSearchSuggestion with multiple types: $multipleTypes") {
                 val searchResult = BASE_RAW_SEARCH_RESULT_3.copy(
                     types = multipleTypes,
@@ -228,7 +229,7 @@ internal class BaseSearchSuggestionTest {
         Given("Base result with brand type") {
             WhenThrows("Trying to instantiate brand without brand id", IllegalStateException::class) {
                 val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("test-brand"),
                     brandId = null,
                 )
@@ -238,7 +239,7 @@ internal class BaseSearchSuggestionTest {
             When("Trying to instantiate brand without brand name") {
                 val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
                     names = listOf("test-name"),
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = null,
                     brandId = "test-brand-id",
                 )
@@ -254,7 +255,7 @@ internal class BaseSearchSuggestionTest {
             When("Trying to instantiate brand with empty brand name") {
                 val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
                     names = listOf("test-name"),
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf(""),
                     brandId = "test-brand-id",
                 )
@@ -268,7 +269,7 @@ internal class BaseSearchSuggestionTest {
 
             When("Trying to instantiate brand with at least one non empty brand name") {
                 val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("", "test-brand"),
                     brandId = "test-brand-id",
                 )
@@ -282,7 +283,7 @@ internal class BaseSearchSuggestionTest {
 
             When("Trying to instantiate brand with all non empty brand names") {
                 val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                    types = listOf(BaseRawResultType.BRAND),
+                    types = listOf(CoreResultType.BRAND),
                     brand = listOf("test-brand-1", "test-brand-2"),
                     brandId = "test-brand-id",
                 )
@@ -300,7 +301,7 @@ internal class BaseSearchSuggestionTest {
     fun `Check IndexableRecordSearchSuggestion-specific implementation`() = TestCase {
         Given("Core search result with illegal type") {
             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                types = listOf(BaseRawResultType.POI)
+                types = listOf(CoreResultType.POI)
             )
 
             WhenThrows(
@@ -313,7 +314,7 @@ internal class BaseSearchSuggestionTest {
 
         Given("Core search result without 'layerId'") {
             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
-                types = listOf(BaseRawResultType.USER_RECORD),
+                types = listOf(CoreResultType.USER_RECORD),
                 layerId = null
             )
 
@@ -328,7 +329,7 @@ internal class BaseSearchSuggestionTest {
         Given("Correct Core search result representing `USER_RECORD`") {
             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
                 action = null,
-                types = listOf(BaseRawResultType.USER_RECORD),
+                types = listOf(CoreResultType.USER_RECORD),
                 layerId = "test-layer-id",
                 id = "generic-id",
                 userRecordId = "test-user-record-id"
@@ -364,7 +365,7 @@ internal class BaseSearchSuggestionTest {
             val searchResult = BASE_RAW_SEARCH_RESULT_1.copy(
                 action = null,
                 center = Point.fromLngLat(10.123, 50.456),
-                types = listOf(BaseRawResultType.POI)
+                types = listOf(CoreResultType.POI)
             )
 
             val suggestion = BaseGeocodingCompatSearchSuggestion(searchResult, REQUEST_OPTIONS)
@@ -376,20 +377,21 @@ internal class BaseSearchSuggestionTest {
             }
         }
 
-        Given("All the possible BaseRawResultType types") {
-            BaseRawResultType.values().forEach { rawResultType ->
+        Given("All the possible CoreResultType types") {
+            CoreResultType.values().forEach { rawResultType ->
                 when (rawResultType) {
-                    BaseRawResultType.ADDRESS,
-                    BaseRawResultType.POI,
-                    BaseRawResultType.COUNTRY,
-                    BaseRawResultType.REGION,
-                    BaseRawResultType.PLACE,
-                    BaseRawResultType.DISTRICT,
-                    BaseRawResultType.LOCALITY,
-                    BaseRawResultType.NEIGHBORHOOD,
-                    BaseRawResultType.STREET,
-                    BaseRawResultType.POSTCODE,
-                    BaseRawResultType.BLOCK -> {
+                    CoreResultType.ADDRESS,
+                    CoreResultType.POI,
+                    CoreResultType.COUNTRY,
+                    CoreResultType.REGION,
+                    CoreResultType.PLACE,
+                    CoreResultType.DISTRICT,
+                    CoreResultType.LOCALITY,
+                    CoreResultType.NEIGHBORHOOD,
+                    CoreResultType.STREET,
+                    CoreResultType.POSTCODE,
+                    CoreResultType.BLOCK,
+                    CoreResultType.UNKNOWN -> {
                         When("Trying ro instantiate GeocodingCompatSearchSuggestion with raw type = $rawResultType") {
                             val expectedResultType = checkNotNull(rawResultType.tryMapToSearchResultType()) {
                                 "$rawResultType must have corresponding ${BaseSearchResultType::class.java.simpleName}"
@@ -407,11 +409,10 @@ internal class BaseSearchSuggestionTest {
                             Then("Suggestion type should be $expectedType", expectedType, suggestion.type)
                         }
                     }
-                    BaseRawResultType.CATEGORY,
-                    BaseRawResultType.BRAND,
-                    BaseRawResultType.QUERY,
-                    BaseRawResultType.USER_RECORD,
-                    BaseRawResultType.UNKNOWN -> {
+                    CoreResultType.CATEGORY,
+                    CoreResultType.BRAND,
+                    CoreResultType.QUERY,
+                    CoreResultType.USER_RECORD -> {
                         WhenThrows(
                             "Trying ro instantiate GeocodingCompatSearchSuggestion with raw type = $rawResultType",
                             IllegalStateException::class
@@ -503,7 +504,7 @@ internal class BaseSearchSuggestionTest {
             distanceMeters = 123.0,
             icon = "cafe",
             etaMinutes = 5.0,
-            types = listOf(BaseRawResultType.POI),
+            types = listOf(CoreResultType.POI),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-1",
                 path = "test-path-1",
@@ -529,7 +530,7 @@ internal class BaseSearchSuggestionTest {
             distanceMeters = 456.0,
             icon = "bar",
             etaMinutes = 10.0,
-            types = listOf(BaseRawResultType.CATEGORY),
+            types = listOf(CoreResultType.CATEGORY),
             externalIDs = mapOf("federated" to "category.cafe"),
             categories = listOf("bar"),
             action = BaseSuggestAction(
@@ -557,7 +558,7 @@ internal class BaseSearchSuggestionTest {
             distanceMeters = 789.0,
             icon = null,
             etaMinutes = 15.0,
-            types = listOf(BaseRawResultType.REGION, BaseRawResultType.PLACE),
+            types = listOf(CoreResultType.REGION, CoreResultType.PLACE),
             categories = emptyList(),
             action = BaseSuggestAction(
                 endpoint = "test-endpoint-3",

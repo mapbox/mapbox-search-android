@@ -11,7 +11,7 @@ import com.mapbox.search.common.parking.ParkingRate
 fun CoreParkingRate.mapToPlatform(): ParkingRate {
     return ParkingRate(
         maxStay = maxStay,
-        times = times?.map { it.mapToPlatform() },
+        times = times?.mapNotNull { it.mapToPlatform() },
         prices = prices?.map { it.mapToPlatform() }
     )
 }
