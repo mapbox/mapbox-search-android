@@ -140,7 +140,7 @@ internal class AnalyticsServiceImpl(
             }
             val jsonEvent = eventsJsonParser.serialize(feedbackEvent)
             sendEventJson(jsonEvent)
-            logd("Feedback event: $feedbackEvent")
+            logd("Feedback event sent")
             callback?.onComplete(Unit)
         } catch (e: Exception) {
             callback?.onError(e)
