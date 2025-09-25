@@ -10,14 +10,14 @@ if (mapboxApiToken == null) {
 
 android {
     namespace 'com.mapbox.demo.searchwithmaps'
-    compileSdk 33
+    compileSdk 36
 
     defaultConfig {
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         applicationId "com.mapbox.demo.searchwithmaps"
         minSdk 21
-        targetSdk 33
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -39,9 +39,16 @@ android {
     }
 }
 
+def ndkVersionSuffix = ""
+if (project.hasProperty("ndkMajor")) {
+    ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+    println("Building with NDK version suffix: " + ndkVersionSuffix)
+}
+
 dependencies {
-    implementation "com.mapbox.search:mapbox-search-android-ui:2.15.0-rc.1"
-    implementation "com.mapbox.maps:android:11.15.0-rc.1"
+    implementation "com.mapbox.search:mapbox-search-android-ui$ndkVersionSuffix:2.15.0"
+    implementation "com.mapbox.maps:android$ndkVersionSuffix:11.15.0"
+    implementation "com.mapbox.navigationcore:android$ndkVersionSuffix:3.12.0"
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -51,4 +58,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def baseName = outputFileName.replace(".apk", "")
+        outputFileName = "$baseName${ndkVersionSuffix}.apk"
+    }
+}
+
+configurations.all {
+    exclude group: "com.google.errorprone", module: "error_prone_annotations"
 }
