@@ -12,6 +12,7 @@ ext {
     def ndkVersionSuffix = ""
     if (project.hasProperty("ndkMajor") && project.property("ndkMajor") != defaultNdkMajor) {
         ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
+        println("Building with NDK version suffix: " + ndkVersionSuffix)
     }
 
     toolsVersion = [
@@ -45,9 +46,9 @@ ext {
 
     version = [
             // Mapbox
-            mapboxSearchNative      : '2.18.0-SNAPSHOT-11-19--04-29.git-64ab671',
-            mapboxCommon            : '24.18.0-SNAPSHOT-11-19--04-29.git-64ab671',
-            mapboxMaps              : '11.18.0-SNAPSHOT-11-19--04-29.git-64ab671',
+            mapboxSearchNative      : '2.17.0-beta.1',
+            mapboxCommon            : '24.17.0-beta.1',
+            mapboxMaps              : '11.17.0-beta.1',
             mapboxTurf              : '6.15.0',
             mapboxBase              : '0.8.0',
             mapboxTestDsl           : '0.1.5',

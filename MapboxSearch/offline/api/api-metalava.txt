@@ -124,7 +124,6 @@ package com.mapbox.search.offline {
     method public String? getLocality();
     method public String? getNeighborhood();
     method public String? getPlace();
-    method public String? getPostcode();
     method public String? getRegion();
     method public String? getStreet();
     property public final String? country;
@@ -132,7 +131,6 @@ package com.mapbox.search.offline {
     property public final String? locality;
     property public final String? neighborhood;
     property public final String? place;
-    property public final String? postcode;
     property public final String? region;
     property public final String? street;
   }

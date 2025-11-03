@@ -1,14 +1,10 @@
 package com.mapbox.search.utils.loader
 
 import android.content.Context
-import com.mapbox.search.base.logger.reinitializeLogImpl
-import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.test.dsl.TestCase
 import io.mockk.mockk
 import io.mockk.spyk
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 
 internal class InternalDataLoaderTest {
@@ -157,23 +153,10 @@ internal class InternalDataLoaderTest {
 
     private fun mockContext() = mockk<Context>()
 
-    companion object {
-
-        private const val RELATIVE_DIR = "dir"
-        private const val FILE_NAME = "file.txt"
-        private val EMPTY_ARRAY = ByteArray(0)
-        private val TEST_ARRAY = byteArrayOf(52, 32, 53, 75, 77, 65, 98)
-
-        @BeforeAll
-        @JvmStatic
-        fun setUpAll() {
-            resetLogImpl()
-        }
-
-        @AfterAll
-        @JvmStatic
-        fun tearDownAll() {
-            reinitializeLogImpl()
-        }
+    private companion object {
+        const val RELATIVE_DIR = "dir"
+        const val FILE_NAME = "file.txt"
+        val EMPTY_ARRAY = ByteArray(0)
+        val TEST_ARRAY = byteArrayOf(52, 32, 53, 75, 77, 65, 98)
     }
 }

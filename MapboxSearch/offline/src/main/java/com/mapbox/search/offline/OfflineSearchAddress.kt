@@ -32,11 +32,6 @@ public class OfflineSearchAddress internal constructor(
     public val locality: String?,
 
     /**
-     * Address postcode.
-     */
-    public val postcode: String?,
-
-    /**
      * Address place.
      */
     public val place: String?,
@@ -65,7 +60,6 @@ public class OfflineSearchAddress internal constructor(
         if (street != other.street) return false
         if (neighborhood != other.neighborhood) return false
         if (locality != other.locality) return false
-        if (postcode != other.postcode) return false
         if (place != other.place) return false
         if (region != other.region) return false
         if (country != other.country) return false
@@ -81,7 +75,6 @@ public class OfflineSearchAddress internal constructor(
         result = 31 * result + (street?.hashCode() ?: 0)
         result = 31 * result + (neighborhood?.hashCode() ?: 0)
         result = 31 * result + (locality?.hashCode() ?: 0)
-        result = 31 * result + (postcode?.hashCode() ?: 0)
         result = 31 * result + (place?.hashCode() ?: 0)
         result = 31 * result + (region?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
@@ -97,7 +90,6 @@ public class OfflineSearchAddress internal constructor(
                 "street=$street, " +
                 "neighborhood=$neighborhood, " +
                 "locality=$locality, " +
-                "postcode=$postcode, " +
                 "place=$place, " +
                 "region=$region, " +
                 "country=$country" +
@@ -112,7 +104,6 @@ internal fun CoreSearchAddress.mapToOfflineSdkType(): OfflineSearchAddress {
         street = street?.nullIfEmpty(),
         neighborhood = neighborhood?.nullIfEmpty(),
         locality = locality?.nullIfEmpty(),
-        postcode = postcode?.nullIfEmpty(),
         place = place?.nullIfEmpty(),
         region = region?.name?.nullIfEmpty(),
         country = country?.name?.nullIfEmpty(),

@@ -171,7 +171,6 @@ public final class com/mapbox/search/offline/OfflineSearchAddress : android/os/P
 	public final fun getLocality ()Ljava/lang/String;
 	public final fun getNeighborhood ()Ljava/lang/String;
 	public final fun getPlace ()Ljava/lang/String;
-	public final fun getPostcode ()Ljava/lang/String;
 	public final fun getRegion ()Ljava/lang/String;
 	public final fun getStreet ()Ljava/lang/String;
 	public fun hashCode ()I

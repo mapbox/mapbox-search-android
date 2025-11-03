@@ -49,7 +49,6 @@ internal class OfflineSearchAddressTest {
                     street = "test street",
                     neighborhood = "test neighborhood",
                     locality = "test locality",
-                    postcode = "test postcode",
                     place = "test place",
                     region = "test region",
                     country = "test country"
