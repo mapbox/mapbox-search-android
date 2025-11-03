@@ -14,6 +14,4 @@ internal interface FileSystem {
     fun createFile(pathName: String): File
 
     fun createFile(parent: File, child: String): File
-
-    fun createDirectory(file: File)
 }

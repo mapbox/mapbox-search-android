@@ -1,12 +1,9 @@
 package com.mapbox.search.utils.loader
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import com.mapbox.search.utils.file.FileSystem
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import java.nio.file.Files
 
 internal class TestFileSystem : FileSystem {
 
@@ -64,17 +61,4 @@ internal class TestFileSystem : FileSystem {
     override fun createFile(pathName: String) = File(pathName)
 
     override fun createFile(parent: File, child: String) = File(parent, child)
-
-    override fun createDirectory(file: File) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            @SuppressLint("NewApi")
-            if (!file.exists()) {
-                Files.createDirectory(file.toPath())
-            }
-        } else {
-            if (!file.exists() && !file.mkdirs()) {
-                throw IllegalStateException("Can not create dir at ${file.path}")
-            }
-        }
-    }
 }
