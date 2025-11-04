@@ -56,12 +56,6 @@ internal class InternalFileSystemTest {
                 Verify("Called getAppRelativeDir for FileSystem") {
                     mockedFileSystem.getAppRelativeDir(mockedContext, TEST_RELATIVE_DIR)
                 }
-                Verify("Called getAbsoluteDir for FileSystem") {
-                    mockedFileSystem.getAbsoluteDir(fullPath)
-                }
-                Verify("Called createFile with fullPath") {
-                    mockedFileSystem.createFile(fullPath)
-                }
                 Verify("Called createFile with File and <$TEST_RELATIVE_DIR>") {
                     mockedFileSystem.createFile(any(), TEST_RELATIVE_DIR)
                 }
@@ -87,7 +81,7 @@ internal class InternalFileSystemTest {
                 every { path } returns "test path"
             }
 
-            every { mockedFileSystem.createFile(any()) } returns readOnlyDirMock
+            every { mockedFileSystem.createFile(any(), any()) } returns readOnlyDirMock
 
             WhenThrows("Can't access folder", IllegalStateException::class) {
                 file = mockedFileSystem.getAppRelativeDir(mockedContext, TEST_RELATIVE_DIR)
@@ -107,7 +101,7 @@ internal class InternalFileSystemTest {
                 }
 
                 mockedFileSystem = spyk(InternalFileSystem { Build.VERSION_CODES.O }).apply {
-                    every { createFile(any()) } returns readOnlyDirMock
+                    every { createFile(any(), any()) } returns readOnlyDirMock
                 }
 
                 val thrown = catchThrowable<IOException> {
