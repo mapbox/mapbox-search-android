@@ -1,6 +1,7 @@
 package com.mapbox.search.utils
 
 import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.logger.loge
 import com.mapbox.search.common.CompletionCallback
 
 internal class LoggingCompletionCallback(private val operationName: String) : CompletionCallback<Unit> {
@@ -9,6 +10,6 @@ internal class LoggingCompletionCallback(private val operationName: String) : Co
     }
 
     override fun onError(e: Exception) {
-        logd("$operationName error: ${e.message}")
+        loge("$operationName error: ${e.message}")
     }
 }
