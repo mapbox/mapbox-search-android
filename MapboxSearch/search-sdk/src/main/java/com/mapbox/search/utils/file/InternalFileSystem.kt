@@ -32,11 +32,18 @@ internal class InternalFileSystem(
         if (sdkVersionProvider() >= Build.VERSION_CODES.O) {
             @SuppressLint("NewApi")
             if (!file.exists()) {
-                Files.createDirectory(file.toPath())
+                try {
+                    Files.createDirectory(file.toPath())
+                } catch (_: FileAlreadyExistsException) {
+                    // Race condition, the directory was created in another thread, do nothing
+                }
             }
         } else {
             if (!file.exists() && !file.mkdirs()) {
-                throw IllegalStateException("Can not create dir at ${file.path}")
+                if (!file.exists()) {
+                    throw IllegalStateException("Can not create dir at ${file.path}")
+                }
+                // Otherwise, race condition, the directory was created in another thread, do nothing
             }
         }
     }
