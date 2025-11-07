@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.WorkerThread
 import java.io.File
+import java.nio.file.FileAlreadyExistsException
 import java.nio.file.Files
 
 @WorkerThread
