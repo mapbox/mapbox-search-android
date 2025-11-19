@@ -12,7 +12,6 @@ ext {
     def ndkVersionSuffix = ""
     if (project.hasProperty("ndkMajor") && project.property("ndkMajor") != defaultNdkMajor) {
         ndkVersionSuffix = "-ndk${project.property("ndkMajor")}"
-        println("Building with NDK version suffix: " + ndkVersionSuffix)
     }
 
     toolsVersion = [
