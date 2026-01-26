@@ -285,7 +285,6 @@ package com.mapbox.search.offline {
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchResult implements android.os.Parcelable {
     method public com.mapbox.search.offline.OfflineSearchAddress? getAddress();
-    method public java.util.List<java.lang.String>? getCategoryIds();
     method public com.mapbox.geojson.Point getCoordinate();
     method public String? getDescriptionText();
     method public Double? getDistanceMeters();
@@ -297,7 +296,6 @@ package com.mapbox.search.offline {
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method @Deprecated public com.mapbox.search.offline.OfflineSearchResultType getType();
     property public final com.mapbox.search.offline.OfflineSearchAddress? address;
-    property public final java.util.List<java.lang.String>? categoryIds;
     property public final com.mapbox.geojson.Point coordinate;
     property public final String? descriptionText;
     property public final Double? distanceMeters;

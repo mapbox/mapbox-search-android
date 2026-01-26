@@ -125,7 +125,6 @@ internal class OfflineSearchResultTest {
                 every { types } returns listOf(CoreResultType.ADDRESS)
                 every { center } returns TEST_COORDINATE
                 every { routablePoints } returns listOf(TEST_CORE_ROUTABLE_POINT)
-                every { categoryIds } returns TEST_CATEGORY_IDS
                 every { types } returns listOf(TEST_CORE_TYPE)
                 every { distanceMeters } returns TEST_DISTANCE_METERS
             }
@@ -164,11 +163,6 @@ internal class OfflineSearchResultTest {
                     base.routablePoints
                 }
 
-                Then("categoryIds should be $TEST_CATEGORY_IDS", TEST_CATEGORY_IDS, searchResult.categoryIds)
-                VerifyOnce("base.categoryIds called") {
-                    base.categoryIds
-                }
-
                 val oldType = NewOfflineSearchResultType.toOldResultType(searchResult.newType)
                 Then("type should be $oldType", oldType, searchResult.type)
                 Then("newType should be $TEST_TYPE", TEST_TYPE, searchResult.newType)
@@ -197,7 +191,6 @@ internal class OfflineSearchResultTest {
         val TEST_CORE_TYPE = CoreResultType.ADDRESS
         val TEST_TYPE = NewOfflineSearchResultType.createFromRawResultType(TEST_CORE_TYPE)
         const val TEST_DISTANCE_METERS = 123.456
-        val TEST_CATEGORY_IDS = listOf("restaurant", "cafe")
 
         val TEST_BASE_RAW_RESULT_1 = createTestBaseRawSearchResult(
             id = TEST_ID,
