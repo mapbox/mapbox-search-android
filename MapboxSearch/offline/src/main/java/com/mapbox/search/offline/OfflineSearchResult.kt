@@ -87,6 +87,12 @@ public class OfflineSearchResult internal constructor(
         get() = rawSearchResult.routablePoints?.map { it.mapToPlatform() }
 
     /**
+     * Canonical POI category IDs. Always empty for non-POI search results.
+     */
+    public val categoryIds: List<String>?
+        get() = rawSearchResult.categoryIds
+
+    /**
      * Search result type.
      *
      * This property is of type [OfflineSearchResultType], which has been replaced by [NewOfflineSearchResultType].
@@ -157,6 +163,7 @@ public class OfflineSearchResult internal constructor(
                 "address=$address, " +
                 "coordinate=$coordinate, " +
                 "routablePoints=$routablePoints, " +
+                "categoryIds=$categoryIds, " +
                 "type=$type, " +
                 "newType=$newType, " +
                 "distanceMeters=$distanceMeters, " +
