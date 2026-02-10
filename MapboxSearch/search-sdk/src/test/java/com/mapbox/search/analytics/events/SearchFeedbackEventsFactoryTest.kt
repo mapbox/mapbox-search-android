@@ -146,7 +146,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 queryString = searchResult.requestOptions.query
                                 language = searchResult.requestOptions.options.languages?.map { it.code }
                                 boundingBox = searchResult.requestOptions.options.boundingBox?.coordinates()
-                                proximity = searchResult.requestOptions.options.proximity?.coordinates()
+                                proximity = searchResult.requestOptions.options.proximity?.flattenCoordinates()
                                 country = searchResult.requestOptions.options.countries?.map { it.code }
                                 endpoint = TEST_ENDPOINT
                                 fuzzyMatch = searchResult.requestOptions.options.fuzzyMatch
@@ -173,7 +173,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = searchResult.coordinate.coordinates()
+                                resultCoordinates = searchResult.coordinate.flattenCoordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = AppMetadata(
                                     name = null,
@@ -265,7 +265,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 queryString = searchSuggestion.requestOptions.core.query
                                 language = searchSuggestion.requestOptions.core.options.language
                                 boundingBox = searchSuggestion.requestOptions.core.options.bbox?.mapToPlatform()?.coordinates()
-                                proximity = searchSuggestion.requestOptions.core.options.proximity?.coordinates()
+                                proximity = searchSuggestion.requestOptions.core.options.proximity?.flattenCoordinates()
                                 country = searchSuggestion.requestOptions.core.options.countries
                                 endpoint = TEST_ENDPOINT
                                 fuzzyMatch = searchSuggestion.requestOptions.core.options.fuzzyMatch
@@ -292,7 +292,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                     isTest = true
                                 }
                                 screenshot = TEST_ENCODED_BITMAP
-                                resultCoordinates = searchSuggestion.rawSearchResult.center?.coordinates()
+                                resultCoordinates = searchSuggestion.rawSearchResult.center?.flattenCoordinates()
                                 requestParamsJson = TEST_REQUEST_PARAMS_JSON
                                 appMetadata = null
                                 searchResultsJson = null
@@ -379,7 +379,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = TEST_FAVORITE_RECORD.coordinate.coordinates()
+                            resultCoordinates = TEST_FAVORITE_RECORD.coordinate.flattenCoordinates()
                             requestParamsJson = null
                             appMetadata = null
                             searchResultsJson = null
@@ -439,7 +439,7 @@ internal class SearchFeedbackEventsFactoryTest {
                                 isTest = true
                             }
                             screenshot = TEST_ENCODED_BITMAP
-                            resultCoordinates = TEST_HISTORY_RECORD.coordinate.coordinates()
+                            resultCoordinates = TEST_HISTORY_RECORD.coordinate.flattenCoordinates()
                             requestParamsJson = null
                             appMetadata = null
                             schema = SEARCH_FEEDBACK_SCHEMA_VERSION
@@ -503,7 +503,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             queryString = TEST_REQUEST_OPTIONS.query
                             language = TEST_SEARCH_OPTIONS.languages?.map { it.code }
                             boundingBox = TEST_SEARCH_OPTIONS.boundingBox?.coordinates()
-                            proximity = TEST_SEARCH_OPTIONS.proximity?.coordinates()
+                            proximity = TEST_SEARCH_OPTIONS.proximity?.flattenCoordinates()
                             country = TEST_SEARCH_OPTIONS.countries?.map { it.code }
                             endpoint = TEST_ENDPOINT
                             fuzzyMatch = true

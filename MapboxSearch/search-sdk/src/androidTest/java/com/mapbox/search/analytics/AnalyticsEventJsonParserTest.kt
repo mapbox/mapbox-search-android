@@ -25,7 +25,7 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
             feedbackId = "e0a2b1d6-3621-11eb-adc1-0242ac120003"
             isTest = true
             screenshot = "VGhlIHBhdGggb2YgdGhlIHJpZ2h0ZW91cyBtYW4gaXMgYmVzZXQ"
-            resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+            resultCoordinates = doubleArrayOf(2.294423282146454, 48.85825817805569)
             requestParamsJson = "{\"navigation_profile\":\"driving\",\"eta_type\":\"navigation\",\"route\":\"iikeFfygjVixNiwhAjvNkw\",\"route_geometry\":\"polyline6\",\"time_deviation\":1,\"sar_type\":\"isochrone\",\"origin\":[1.0,1.0]}"
             appMetadata = AppMetadata(
                 name = "App Name",
@@ -57,7 +57,7 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
             feedbackId = "e0a2b1d6-3621-11eb-adc1-0242ac120003"
             isTest = true
             screenshot = "VGhlIHBhdGggb2YgdGhlIHJpZ2h0ZW91cyBtYW4gaXMgYmVzZXQ"
-            resultCoordinates = listOf(2.294423282146454, 48.85825817805569)
+            resultCoordinates = doubleArrayOf(2.294423282146454, 48.85825817805569)
             requestParamsJson = "{\"navigation_profile\":\"driving\",\"eta_type\":\"navigation\",\"route\":\"iikeFfygjVixNiwhAjvNkw\",\"route_geometry\":\"polyline6\",\"time_deviation\":1,\"sar_type\":\"isochrone\",\"origin\":[1.0,1.0]}"
             appMetadata = AppMetadata(
                 name = "App Name",
@@ -113,7 +113,7 @@ internal class AnalyticsEventJsonParserTest : BaseTest() {
             latitude = 53.911334999999994
             limit = 10
             longitude = 27.55140833333333
-            proximity = listOf(27.55140833333333, 53.911334999999994)
+            proximity = doubleArrayOf(27.55140833333333, 53.911334999999994)
             sessionIdentifier = "2068adda-16c0-4dfe-a5a1-4a08aee8a600"
             userAgent = "search-sdk-android-internal"
             boundingBox = listOf(27.55140833333333, 53.911334999999994, 27.55140833333333, 53.911334999999994)
