@@ -87,7 +87,7 @@ internal class SearchFeedbackEventsFactory(
             if (event.sessionId != null) {
                 appMetadata = AppMetadata(sessionId = event.sessionId)
             }
-            resultCoordinates = record.coordinate.coordinates()
+            resultCoordinates = record.coordinate.flattenCoordinates()
             schema = "${SearchFeedbackEvent.EVENT_NAME}-$SEARCH_FEEDBACK_SCHEMA_VERSION"
             fallbackRequiredFields()
         }
@@ -141,7 +141,7 @@ internal class SearchFeedbackEventsFactory(
                     // so we don't specify it
                     else -> baseRawSearchResult?.id
                 }
-                resultCoordinates = baseRawSearchResult?.center?.coordinates()
+                resultCoordinates = baseRawSearchResult?.center?.flattenCoordinates()
                 schema = "${SearchFeedbackEvent.EVENT_NAME}-$SEARCH_FEEDBACK_SCHEMA_VERSION"
 
                 // For events, that will be used for template creation,
@@ -173,7 +173,7 @@ internal class SearchFeedbackEventsFactory(
         types = requestOptions.options.types?.map { it.mapToCore().toString() }
         fuzzyMatch = requestOptions.options.fuzzyMatch
         limit = requestOptions.options.limit
-        proximity = requestOptions.options.proximity?.coordinates()
+        proximity = requestOptions.options.proximity?.flattenCoordinates()
         responseUuid = requestOptions.requestContext.responseUuid
         keyboardLocale = requestOptions.requestContext.keyboardLocale?.language
         orientation = requestOptions.requestContext.screenOrientation?.rawValue
@@ -188,7 +188,7 @@ internal class SearchFeedbackEventsFactory(
                     else -> coreResult.names.firstOrNull() ?: ""
                 },
                 address = coreResult.descriptionAddress ?: coreResult.addresses?.getOrNull(0)?.mapToPlatform()?.formattedAddress(FormatStyle.Full),
-                coordinates = coreResult.center?.coordinates(),
+                coordinates = coreResult.center?.flattenCoordinates(),
                 id = when (CoreResultType.USER_RECORD) {
                     coreResult.types.firstOrNull() -> "<Local id>"
                     else -> coreResult.id
