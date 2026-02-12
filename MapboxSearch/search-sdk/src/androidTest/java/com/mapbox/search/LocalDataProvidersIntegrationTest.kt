@@ -157,9 +157,9 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
     private object WrongDataFormatDataLoader : DataLoader<ByteArray> {
         override fun load(relativeDir: String, fileName: String): ByteArray {
-            val text = when (fileName) {
-                "search_history.bin" -> "wrong search history data format"
-                "favorites.bin" -> "wrong favorites data format"
+            val text = when {
+                fileName.startsWith("search_history") -> "wrong search history data format"
+                fileName.startsWith("favorites") -> "wrong favorites data format"
                 else -> error("Unknown file name: $fileName")
             }
             return text.toByteArray()
