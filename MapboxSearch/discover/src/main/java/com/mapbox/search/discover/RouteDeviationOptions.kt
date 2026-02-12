@@ -73,9 +73,9 @@ public abstract class RouteDeviationOptions internal constructor() : Parcelable 
     /**
      * Maximum detour in time from route.
      *
-     * @param value deviation time value.
-     * @param unit deviation time unit.
-     * @param sarType algorithm of deviation calculation.
+     * @property value deviation time value.
+     * @property unit deviation time unit.
+     * @property sarType algorithm of deviation calculation.
      */
     @Parcelize
     public class Time @JvmOverloads public constructor(

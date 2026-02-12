@@ -1,6 +1,8 @@
 package com.mapbox.search
 
 import com.mapbox.search.base.core.CoreSearchEngineInterface
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
@@ -18,6 +20,8 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.spyk
 import org.junit.Assert.assertSame
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.ExecutorService
@@ -449,6 +453,21 @@ internal class IndexableDataProvidersRegistryTest {
 
                 Then("Task completes", true, task.isDone)
             }
+        }
+    }
+
+    companion object {
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
         }
     }
 }

@@ -90,6 +90,7 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
         val error = result.requireError()
         assertTrue(
+            "Error ${error.message} don't match with expected",
             error.message?.contains(
                 "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path"
             ) == true
@@ -163,9 +164,9 @@ internal class LocalDataProvidersIntegrationTest : BaseTest() {
 
     private object WrongDataFormatDataLoader : DataLoader<ByteArray> {
         override fun load(relativeDir: String, fileName: String): ByteArray {
-            val text = when (fileName) {
-                "search_history.bin" -> "wrong search history data format"
-                "favorites.bin" -> "wrong favorites data format"
+            val text = when {
+                fileName.startsWith("search_history") -> "wrong search history data format"
+                fileName.startsWith("favorites") -> "wrong favorites data format"
                 else -> error("Unknown file name: $fileName")
             }
             return text.toByteArray()
