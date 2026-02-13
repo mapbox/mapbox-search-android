@@ -5,6 +5,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
 import com.mapbox.search.base.logger.logd
 import com.mapbox.search.base.logger.loge
+import com.mapbox.search.base.perf.PerformanceTracker
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
@@ -139,10 +140,12 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     private val initializingLock = Object()
 
     init {
-        require(maxRecordsAmount > 0) {
-            "Provided 'maxRecordsAmount' should be greater than 0 (provided value: $maxRecordsAmount)"
+        PerformanceTracker.trackPerformanceSync("LocalDataProviderImpl#init") {
+            require(maxRecordsAmount > 0) {
+                "Provided 'maxRecordsAmount' should be greater than 0 (provided value: $maxRecordsAmount)"
+            }
+            initialRead()
         }
-        initialRead()
     }
 
     @SuppressLint("CheckResult")
@@ -150,26 +153,28 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         logD("initialRead()")
 
         backgroundTaskExecutorService.submit {
-            try {
-                val loaded = recordsStorage.load()
+            PerformanceTracker.trackPerformanceSync("LocalDataProviderImpl#initialRead") {
+                try {
+                    val loaded = recordsStorage.load()
 
-                val records: MutableMap<String, R> = Collections.synchronizedMap(LinkedHashMap())
-                records.addAndTrimRecords(loaded)
+                    val records: MutableMap<String, R> = Collections.synchronizedMap(LinkedHashMap())
+                    records.addAndTrimRecords(loaded)
 
-                dataState = DataState.Data(records)
+                    dataState = DataState.Data(records)
 
-                val recordsList = records.values.toList()
-                dataProviderEngines.forEach { dataProviderEngine ->
-                    dataProviderEngine.upsertAll(recordsList)
-                }
+                    val recordsList = records.values.toList()
+                    dataProviderEngines.forEach { dataProviderEngine ->
+                        dataProviderEngine.upsertAll(recordsList)
+                    }
 
-                logD("initialRead() completed")
-            } catch (e: Exception) {
-                logE("Error during initialRead(): ${e.message}")
-                dataState = DataState.Error(e)
-            } finally {
-                synchronized(initializingLock) {
-                    initializingLock.notifyAll()
+                    logD("initialRead() completed")
+                } catch (e: Exception) {
+                    logE("Error during initialRead(): ${e.message}")
+                    dataState = DataState.Error(e)
+                } finally {
+                    synchronized(initializingLock) {
+                        initializingLock.notifyAll()
+                    }
                 }
             }
         }
