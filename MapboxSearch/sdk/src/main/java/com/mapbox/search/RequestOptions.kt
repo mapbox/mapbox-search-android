@@ -23,6 +23,8 @@ import kotlinx.parcelize.Parcelize
  * @property endpoint Search method. One of { "suggest", "category", "reverse" }.
  *
  * @property sessionID Session ID that groups a series of requests for billing purposes.
+ *
+ * @property requestContext Internal request context. Do not use from outside the library.
  */
 @Parcelize
 public class RequestOptions internal constructor(

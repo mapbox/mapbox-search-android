@@ -1,5 +1,20 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.14.4
+
+### Improvement
+- Optimized Search SDK startup by moving heavy initialization to lazy loading.
+
+### Bug fixes
+- Various bug fixes in dependencies.
+
+### Mapbox dependencies
+- Search Native SDK `2.14.8`
+- Common SDK `24.14.8`
+- Maps SDK `11.14.8`
+
+
+
 ## 2.14.3
 
 ### Bug fixes

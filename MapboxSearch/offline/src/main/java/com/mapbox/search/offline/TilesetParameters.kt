@@ -68,8 +68,8 @@ public class TilesetParameters internal constructor(
     /**
      * Builder for creating an instance of [TilesetParameters].
      *
-     * @param dataset The dataset name.
-     * @param version The dataset version. If empty, the version is chosen automatically.
+     * @property dataset The dataset name.
+     * @property version The dataset version. If empty, the version is chosen automatically.
      */
     public class Builder @JvmOverloads constructor(
         public val dataset: String = DEFAULT_DATASET,

@@ -45,9 +45,16 @@ internal interface InternalServiceProvider : ServiceProvider {
 }
 
 internal class ServiceProviderImpl(
-    private val historyDataProvider: HistoryDataProviderImpl,
-    private val favoritesDataProvider: FavoritesDataProvider,
+    private val historyDataProviderInitializer: () -> HistoryDataProviderImpl,
+    private val favoritesDataProviderInitializer: () -> FavoritesDataProvider,
 ) : ServiceProvider, InternalServiceProvider {
+
+    private val historyDataProvider: HistoryDataProviderImpl by lazy {
+        historyDataProviderInitializer()
+    }
+    private val favoritesDataProvider: FavoritesDataProvider by lazy {
+        favoritesDataProviderInitializer()
+    }
 
     override fun favoritesDataProvider(): FavoritesDataProvider = favoritesDataProvider
 
