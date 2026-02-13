@@ -7,6 +7,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.HttpRequest
 import com.mapbox.common.HttpRequestOrResponse
 import com.mapbox.common.HttpResponse
@@ -16,7 +17,9 @@ import com.mapbox.common.HttpServiceInterceptorRequestContinuation
 import com.mapbox.common.HttpServiceInterceptorResponseContinuation
 import com.mapbox.common.LogConfiguration
 import com.mapbox.common.LoggingLevel
+import com.mapbox.search.base.perf.SearchPerformance
 
+@OptIn(MapboxExperimental::class)
 open class SampleApplication : Application() {
 
     override fun onCreate() {
@@ -25,6 +28,9 @@ open class SampleApplication : Application() {
         enableDebugHttpLogs()
         enableStrictMode()
         LeakCanaryConfiguration.apply()
+
+        SearchPerformance.performanceTracingEnabled(true)
+        SearchPerformance.performanceInfoLoggingEnabled(true)
     }
 
     @SuppressLint("RestrictedApi")

@@ -3,6 +3,9 @@ package com.mapbox.search.record
 import android.annotation.SuppressLint
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.logger.loge
+import com.mapbox.search.base.perf.PerformanceTracker
 import com.mapbox.search.base.task.AsyncOperationTaskImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.CompletionCallback
@@ -137,32 +140,41 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     private val initializingLock = Object()
 
     init {
-        require(maxRecordsAmount > 0) {
-            "Provided 'maxRecordsAmount' should be greater than 0 (provided value: $maxRecordsAmount)"
+        PerformanceTracker.trackPerformanceSync("LocalDataProviderImpl#init") {
+            require(maxRecordsAmount > 0) {
+                "Provided 'maxRecordsAmount' should be greater than 0 (provided value: $maxRecordsAmount)"
+            }
+            initialRead()
         }
-        initialRead()
     }
 
     @SuppressLint("CheckResult")
     private fun initialRead() {
+        logD("initialRead()")
+
         backgroundTaskExecutorService.submit {
-            try {
-                val loaded = recordsStorage.load()
+            PerformanceTracker.trackPerformanceSync("LocalDataProviderImpl#initialRead") {
+                try {
+                    val loaded = recordsStorage.load()
 
-                val records: MutableMap<String, R> = Collections.synchronizedMap(LinkedHashMap())
-                records.addAndTrimRecords(loaded)
+                    val records: MutableMap<String, R> = Collections.synchronizedMap(LinkedHashMap())
+                    records.addAndTrimRecords(loaded)
 
-                dataState = DataState.Data(records)
+                    dataState = DataState.Data(records)
 
-                val recordsList = records.values.toList()
-                dataProviderEngines.forEach { dataProviderEngine ->
-                    dataProviderEngine.upsertAll(recordsList)
-                }
-            } catch (e: Exception) {
-                dataState = DataState.Error(e)
-            } finally {
-                synchronized(initializingLock) {
-                    initializingLock.notifyAll()
+                    val recordsList = records.values.toList()
+                    dataProviderEngines.forEach { dataProviderEngine ->
+                        dataProviderEngine.upsertAll(recordsList)
+                    }
+
+                    logD("initialRead() completed")
+                } catch (e: Exception) {
+                    logE("Error during initialRead(): ${e.message}")
+                    dataState = DataState.Error(e)
+                } finally {
+                    synchronized(initializingLock) {
+                        initializingLock.notifyAll()
+                    }
                 }
             }
         }
@@ -185,6 +197,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
     @WorkerThread
     private fun persistData(records: List<R>) {
+        logD("persistData(recordsCount=${records.size}) called")
         recordsStorage.save(records)
     }
 
@@ -226,6 +239,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
+        logD("registerIndexableDataProviderEngine() called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -246,6 +261,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("registerIndexableDataProviderEngine()", dataState)
                     synchronized(dataProviderEngineLock) {
                         engineRegisterListeners.entries.forEach { (listener, executor) ->
                             executor.execute {
@@ -268,6 +284,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Boolean>
     ): AsyncOperationTask {
+        logD("unregisterIndexableDataProviderEngine() called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             val isRemoved = dataProviderEngines.remove(dataProviderEngine)
@@ -282,6 +300,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun get(id: String, executor: Executor, callback: CompletionCallback<in R?>): AsyncOperationTask {
+        logD("get(id=$id) called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -293,6 +313,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("get(id=$id)", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -303,6 +324,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun getAll(executor: Executor, callback: CompletionCallback<List<R>>): AsyncOperationTask {
+        logD("getAll() called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -314,6 +337,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("getAll()", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -324,6 +348,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun contains(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
+        logD("contains(id=$id) called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -335,6 +361,7 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("contains(id=$id)", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -353,6 +380,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
         executor: Executor,
         callback: CompletionCallback<Unit>
     ): AsyncOperationTask {
+        logD("upsertAll(recordsCount=${records.size}) called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -377,12 +406,15 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                         notifyListeners(recordsList)
                     } catch (e: Exception) {
+                        logE("upsertAll() failed: ${e.message}")
+
                         postOnExecutorIfNeeded(task, executor) {
                             callback.onError(e)
                         }
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("upsertAll()", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -393,6 +425,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun remove(id: String, executor: Executor, callback: CompletionCallback<Boolean>): AsyncOperationTask {
+        logD("remove(id=$id) called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -418,12 +452,15 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                         notifyListeners(recordsList)
                     } catch (e: Exception) {
+                        logE("remove(id=$id) failed: ${e.message}")
+
                         postOnExecutorIfNeeded(task, executor) {
                             callback.onError(e)
                         }
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("remove(id=$id)", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -434,6 +471,8 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     override fun clear(executor: Executor, callback: CompletionCallback<Unit>): AsyncOperationTask {
+        logD("clear() called")
+
         val task = AsyncOperationTaskImpl<Any>()
         task += backgroundTaskExecutorService.submit {
             when (val dataState = getLocalData()) {
@@ -459,12 +498,15 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
 
                         notifyListeners(recordsList)
                     } catch (e: Exception) {
+                        logE("clear() failed: ${e.message}")
+
                         postOnExecutorIfNeeded(task, executor) {
                             callback.onError(e)
                         }
                     }
                 }
                 is DataState.Error -> {
+                    logSkippedOperation("clear()", dataState)
                     postOnExecutorIfNeeded(task, executor) {
                         callback.onError(dataState.error)
                     }
@@ -513,6 +555,21 @@ internal abstract class LocalDataProviderImpl<R : IndexableRecord>(
     }
 
     companion object {
+
+        private const val LOG_TAG = "LocalDataProvider"
+
+        private fun logD(message: String) {
+            logd(message = message, tag = LOG_TAG)
+        }
+
+        private fun logE(message: String) {
+            loge(message = message, tag = LOG_TAG)
+        }
+
+        private fun logSkippedOperation(operation: String, e: DataState.Error<*>) {
+            logD("$operation skipped: data unavailable (load error: ${e.error.message})")
+        }
+
         fun defaultExecutor(providerName: String): ExecutorService {
             return Executors.newSingleThreadExecutor { runnable ->
                 Thread(runnable, "LocalDataProvider executor for $providerName")
