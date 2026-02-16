@@ -3,6 +3,8 @@ package com.mapbox.search.record
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreRoutablePoint
 import com.mapbox.search.base.core.createCoreResultMetadata
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.result.mapToBase
 import com.mapbox.search.base.utils.TimeProvider
 import com.mapbox.search.base.utils.extension.mapToPlatform
@@ -32,8 +34,10 @@ import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.Executor
@@ -581,5 +585,17 @@ internal class HistoryDataProviderTest {
             rawSearchResult = TEST_POI_SEARCH_RESULT.mapToBase(),
             requestOptions = createTestRequestOptions("Test query")
         )
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+        }
     }
 }

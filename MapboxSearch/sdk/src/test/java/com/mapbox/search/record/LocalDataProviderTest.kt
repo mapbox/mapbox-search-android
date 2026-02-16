@@ -1,6 +1,8 @@
 @file:Suppress("NoMockkVerifyImport")
 package com.mapbox.search.record
 
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.tests.TestExecutor
 import com.mapbox.search.common.tests.TestThreadExecutorService
@@ -15,6 +17,8 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.io.IOException
@@ -94,7 +98,7 @@ internal class LocalDataProviderTest {
             },
             "addAll()" to { dataProvider ->
                 val callback = BlockingCompletionCallback<Unit>()
-                val task = dataProvider.upsertAll(mockk(), executor, callback)
+                val task = dataProvider.upsertAll(emptyList(), executor, callback)
                 callback.getResultBlocking() to task
             },
             "upsert" to { dataProvider ->
@@ -303,6 +307,21 @@ internal class LocalDataProviderTest {
                 }
                 entriesToRemove.map { it.value }
             }
+        }
+    }
+
+    companion object {
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
         }
     }
 }

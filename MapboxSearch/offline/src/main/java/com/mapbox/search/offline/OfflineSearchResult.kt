@@ -102,7 +102,7 @@ public class OfflineSearchResult internal constructor(
     /**
      * The type of the search result.
      */
-    @NewOfflineSearchResultType.Type
+    @get:NewOfflineSearchResultType.Type
     public val newType: String
         get() = offlineType
 

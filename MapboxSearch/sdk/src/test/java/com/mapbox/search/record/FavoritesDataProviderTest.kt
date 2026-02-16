@@ -1,9 +1,13 @@
 package com.mapbox.search.record
 
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.common.tests.TestThreadExecutorService
 import com.mapbox.test.dsl.TestCase
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestFactory
 import java.util.concurrent.ExecutorService
@@ -38,6 +42,21 @@ internal class FavoritesDataProviderTest {
                     favoritesDataProvider.dataProviderName
                 )
             }
+        }
+    }
+
+    companion object {
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
         }
     }
 }

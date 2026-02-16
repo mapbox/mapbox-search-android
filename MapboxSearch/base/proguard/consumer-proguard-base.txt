@@ -21,3 +21,6 @@
 # --- AutoValue ---
 # AutoValue annotations are retained but dependency is compileOnly.
 -dontwarn com.google.auto.value.**
+
+# --- Kotlin ---
+-dontwarn kotlin.jvm.internal.SourceDebugExtension

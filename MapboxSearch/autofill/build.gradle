@@ -18,6 +18,7 @@ apply from: "../gradle/license.gradle"
 apply from: "../gradle/track-public-apis.gradle"
 
 android {
+    namespace 'com.mapbox.search.autofill'
     compileSdkVersion androidVersions.compileSdkVersion
 
     defaultConfig {
@@ -40,6 +41,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     kotlinOptions {

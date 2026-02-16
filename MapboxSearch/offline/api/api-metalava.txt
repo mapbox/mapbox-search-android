@@ -9,7 +9,7 @@ package com.mapbox.search.offline {
     field public static final String STREET = "STREET";
   }
 
-  @StringDef({com.mapbox.search.offline.NewOfflineSearchResultType.PLACE, com.mapbox.search.offline.NewOfflineSearchResultType.STREET, com.mapbox.search.offline.NewOfflineSearchResultType.ADDRESS, com.mapbox.search.offline.NewOfflineSearchResultType.POI}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) public static @interface NewOfflineSearchResultType.Type {
+  @StringDef({com.mapbox.search.offline.NewOfflineSearchResultType.PLACE, com.mapbox.search.offline.NewOfflineSearchResultType.STREET, com.mapbox.search.offline.NewOfflineSearchResultType.ADDRESS, com.mapbox.search.offline.NewOfflineSearchResultType.POI}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) public static @interface NewOfflineSearchResultType.Type {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class OfflineCategorySearchOptions implements android.os.Parcelable {
@@ -19,6 +19,7 @@ package com.mapbox.search.offline {
     ctor public OfflineCategorySearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineCategorySearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
     ctor public OfflineCategorySearchOptions(com.mapbox.geojson.Point? proximity = null);
+    ctor public OfflineCategorySearchOptions();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public Boolean? getEnsureResultsPerCategory();
     method public com.mapbox.search.offline.OfflineEvSearchOptions? getEvSearchOptions();
@@ -42,6 +43,7 @@ package com.mapbox.search.offline {
     ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null, Float? minChargingPower = null);
     ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null, java.util.List<java.lang.String>? operators = null);
     ctor public OfflineEvSearchOptions(java.util.List<java.lang.String>? connectorTypes = null);
+    ctor public OfflineEvSearchOptions();
     method public java.util.List<java.lang.String>? getConnectorTypes();
     method public java.util.List<java.lang.String>? getExcludeOperators();
     method public Float? getMaxChargingPower();
@@ -167,14 +169,14 @@ package com.mapbox.search.offline {
     method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask categorySearch(String categoryName, com.mapbox.search.offline.OfflineCategorySearchOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method public default static com.mapbox.search.offline.OfflineSearchEngine create(com.mapbox.search.offline.OfflineSearchEngineSettings settings);
     method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
-    method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
-    method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
-    method public default static final com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
+    method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
+    method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
+    method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
     method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
-    method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
-    method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
-    method public default static final com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
+    method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
+    method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
+    method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
     method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
@@ -221,9 +223,10 @@ package com.mapbox.search.offline {
   }
 
   public final class OfflineSearchEngineSettings {
-    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.common.location.LocationProvider? locationProvider = <anonymous class>());
+    ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI, com.mapbox.common.location.LocationProvider? locationProvider = defaultLocationProvider());
     ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore(), java.net.URI tilesBaseUri = DEFAULT_ENDPOINT_URI);
     ctor public OfflineSearchEngineSettings(com.mapbox.common.TileStore tileStore = defaultTileStore());
+    ctor public OfflineSearchEngineSettings();
     method public com.mapbox.common.location.LocationProvider? getLocationProvider();
     method public com.mapbox.common.TileStore getTileStore();
     method public java.net.URI getTilesBaseUri();
@@ -248,6 +251,7 @@ package com.mapbox.search.offline {
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null, com.mapbox.geojson.Point? origin = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null, Integer? limit = null);
     ctor public OfflineSearchOptions(com.mapbox.geojson.Point? proximity = null);
+    ctor public OfflineSearchOptions();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public com.mapbox.search.offline.OfflineEvSearchOptions? getEvSearchOptions();
     method public Integer? getLimit();
@@ -286,7 +290,7 @@ package com.mapbox.search.offline {
     method public String? getMapboxId();
     method public com.mapbox.search.offline.OfflineSearchResultMetadata? getMetadata();
     method public String getName();
-    method public String getNewType();
+    method @com.mapbox.search.offline.NewOfflineSearchResultType.Type public String getNewType();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
     method @Deprecated public com.mapbox.search.offline.OfflineSearchResultType getType();
     property public final com.mapbox.search.offline.OfflineSearchAddress? address;
@@ -297,7 +301,7 @@ package com.mapbox.search.offline {
     property public final String? mapboxId;
     property public final com.mapbox.search.offline.OfflineSearchResultMetadata? metadata;
     property public final String name;
-    property public final String newType;
+    property @com.mapbox.search.offline.NewOfflineSearchResultType.Type public final String newType;
     property public final java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
     property @Deprecated public final com.mapbox.search.offline.OfflineSearchResultType type;
   }
@@ -356,6 +360,7 @@ package com.mapbox.search.offline {
   public static final class TilesetParameters.Builder {
     ctor public TilesetParameters.Builder(String dataset = "mbx-gen2", String version = "");
     ctor public TilesetParameters.Builder(String dataset = "mbx-gen2");
+    ctor public TilesetParameters.Builder();
     method public com.mapbox.search.offline.TilesetParameters build();
     method public String getDataset();
     method public String getVersion();

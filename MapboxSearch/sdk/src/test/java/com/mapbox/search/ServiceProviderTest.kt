@@ -15,8 +15,8 @@ internal class ServiceProviderTest {
             val favoritesDataProvider: FavoritesDataProvider = mockk()
 
             val serviceProvider = ServiceProviderImpl(
-                historyDataProvider = historyDataProvider,
-                favoritesDataProvider = favoritesDataProvider,
+                historyDataProviderInitializer = { historyDataProvider },
+                favoritesDataProviderInitializer = { favoritesDataProvider },
             )
 
             When("Get favoritesDataProvider") {

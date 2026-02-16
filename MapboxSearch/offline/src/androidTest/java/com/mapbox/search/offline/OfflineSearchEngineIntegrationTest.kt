@@ -18,6 +18,7 @@ import com.mapbox.search.common.tests.createCoreSearchAddress
 import com.mapbox.search.common.tests.createCoreSearchAddressCountry
 import com.mapbox.search.common.tests.createCoreSearchAddressRegion
 import com.mapbox.search.common.tests.createTestCoreSearchResult
+import com.mapbox.search.internal.bindgen.RoutablePoint
 import com.mapbox.search.offline.tests_support.BlockingEngineReadyCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback
 import com.mapbox.search.offline.tests_support.BlockingOfflineSearchCallback.SearchEngineResult
@@ -615,6 +616,11 @@ internal class OfflineSearchEngineIntegrationTest {
 
             distanceMeters = 0.0,
             center = Point.fromLngLat(-77.03404491238354, 38.9179071535832),
+            routablePoints = listOf(
+                RoutablePoint(
+                    Point.fromLngLat(-77.03408612211523, 38.917917827629125), ""
+                )
+            ),
             serverIndex = null,
         )
 

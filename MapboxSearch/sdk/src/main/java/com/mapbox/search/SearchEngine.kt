@@ -476,6 +476,7 @@ public interface SearchEngine {
     /**
      * Registers [dataProvider] in this [SearchEngine].
      *
+     * @param R The type of indexable record that the data provider supplies.
      * @param dataProvider [IndexableDataProvider] to register.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
@@ -490,6 +491,7 @@ public interface SearchEngine {
     /**
      * Registers [dataProvider] in this [SearchEngine].
      *
+     * @param R The type of indexable record that the data provider supplies.
      * @param dataProvider [IndexableDataProvider] to register.
      * @param callback Callback to handle result. Events are dispatched on the main thread.
      * @return an object representing pending completion of the task.
@@ -506,6 +508,7 @@ public interface SearchEngine {
     /**
      * Unregisters previously registered [IndexableDataProvider].
      *
+     * @param R The type of indexable record that the data provider supplies.
      * @param dataProvider [IndexableDataProvider] to unregister.
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param callback Callback to handle result.
@@ -520,6 +523,7 @@ public interface SearchEngine {
     /**
      * Unregisters previously registered [IndexableDataProvider].
      *
+     * @param R The type of indexable record that the data provider supplies.
      * @param dataProvider [IndexableDataProvider] to unregister.
      * @param callback Callback to handle result. Events are dispatched on the main thread.
      * @return an object representing pending completion of the task.
@@ -554,7 +558,7 @@ public interface SearchEngine {
          *
          * @param settings [SearchEngine] settings.
          *
-         * @return a new instance instance of [SearchEngine].
+         * @return a new instance of [SearchEngine].
          * @see createSearchEngineWithBuiltInDataProviders
          * @see <a href="https://docs.mapbox.com/api/search/geocoding-v5/">Geocoding v5 API</a>
          */
@@ -568,12 +572,12 @@ public interface SearchEngine {
          * Creates a new instance of the [SearchEngine].
          * A new instance doesn't have any [IndexableDataProvider] registered by default.
          *
-         * @param settings [SearchEngine] settings.
          * @param apiType The type of the API used by the Search Engines.
          * Note that [ApiType.GEOCODING] is the only available publicly.
          * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+         * @param settings [SearchEngine] settings.
          *
-         * @return a new instance instance of [SearchEngine].
+         * @return a new instance of [SearchEngine].
          * @see createSearchEngineWithBuiltInDataProviders
          */
         @JvmStatic
@@ -620,10 +624,10 @@ public interface SearchEngine {
          * [com.mapbox.search.record.HistoryDataProvider] and [com.mapbox.search.record.FavoritesDataProvider])
          * registered by default.
          *
-         * @param settings [SearchEngine] settings.
          * @param apiType The type of the API used by the Search Engines. By default [ApiType.GEOCODING] will be used.
          * Note that [ApiType.GEOCODING] is the only available publicly.
          * You might need to [contact sales](https://www.mapbox.com/contact/sales/) to enable access for other API types.
+         * @param settings [SearchEngine] settings.
          * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
          * @param callback Callback to handle result.
          *

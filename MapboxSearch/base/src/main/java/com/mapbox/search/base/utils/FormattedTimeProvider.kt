@@ -18,6 +18,8 @@ class FormattedTimeProviderImpl(
     }
 
     private companion object {
-        val ISO_8601_DATE_FORMATTER = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+        val ISO_8601_DATE_FORMATTER by lazy {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+        }
     }
 }

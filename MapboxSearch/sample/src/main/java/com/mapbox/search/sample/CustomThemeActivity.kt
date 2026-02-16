@@ -51,7 +51,11 @@ class CustomThemeActivity : AppCompatActivity() {
             title = getString(R.string.simple_ui_toolbar_title)
             setSupportActionBar(this)
             ResourcesCompat
-                .getDrawable(resources, R.drawable.mapbox_search_sdk_close_drawable, theme)
+                .getDrawable(
+                    resources,
+                    com.mapbox.search.ui.R.drawable.mapbox_search_sdk_close_drawable,
+                    theme,
+                )
                 ?.let { drawable ->
                     drawable.setTint(Color.parseColor("#4F6530"))
                     setNavigationIcon(drawable)

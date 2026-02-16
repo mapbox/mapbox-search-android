@@ -17,6 +17,7 @@ public interface AnalyticsService {
      * @param searchResult search result, for which feedback is given.
      * @param responseInfo search context, associated with provided *searchResult*.
      * @param event extra information for feedback, provided by user.
+     * @param callback optional callback to handle result.
      */
     public fun sendFeedback(searchResult: SearchResult, responseInfo: ResponseInfo, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
@@ -25,6 +26,7 @@ public interface AnalyticsService {
      * @param searchSuggestion search suggestion, for which feedback is given.
      * @param responseInfo search context, associated with provided *searchSuggestion*.
      * @param event extra information for feedback, provided by user.
+     * @param callback optional callback to handle result.
      */
     public fun sendFeedback(searchSuggestion: SearchSuggestion, responseInfo: ResponseInfo, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
@@ -32,6 +34,7 @@ public interface AnalyticsService {
      * Sends feedback event to analytics.
      * @param historyRecord history record, for which feedback is given.
      * @param event extra information for feedback, provided by user.
+     * @param callback optional callback to handle result.
      */
     public fun sendFeedback(historyRecord: HistoryRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
@@ -39,12 +42,14 @@ public interface AnalyticsService {
      * Sends feedback event to analytics.
      * @param favoriteRecord favorite record, for which feedback is given.
      * @param event extra information for feedback, provided by user.
+     * @param callback optional callback to handle result.
      */
     public fun sendFeedback(favoriteRecord: FavoriteRecord, event: FeedbackEvent, callback: CompletionCallback<Unit>? = null)
 
     /**
      * Sends missing result feedback event to analytics.
      * @param event extra information for feedback, provided by user.
+     * @param callback optional callback to handle result.
      */
     public fun sendMissingResultFeedback(event: MissingResultFeedbackEvent, callback: CompletionCallback<Unit>? = null)
 }

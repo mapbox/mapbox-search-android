@@ -14,8 +14,8 @@ import kotlin.math.floor
  *
  * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
  *
- * @param route route to search across; please note, at least 2 points should be provided.
- * @param deviation option describing maximum detour from route.
+ * @property route Route to search across; please note, at least 2 points should be provided.
+ * @property deviation Option describing maximum detour from route.
  */
 @Reserved(SBS, SEARCH_BOX)
 @Parcelize
@@ -141,9 +141,9 @@ public class RouteOptions(
          *
          * Note: Supported for Single Box Search and Search Box APIs only. Reserved for internal and special use.
          *
-         * @param value deviation time value.
-         * @param unit deviation time unit.
-         * @param sarType algorithm of deviation calculation.
+         * @property value Deviation time value.
+         * @property unit Deviation time unit.
+         * @property sarType Algorithm of deviation calculation.
          */
         @Reserved(SBS, SEARCH_BOX)
         @Parcelize

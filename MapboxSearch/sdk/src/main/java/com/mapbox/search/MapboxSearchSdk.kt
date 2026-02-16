@@ -23,9 +23,7 @@ import com.mapbox.search.base.utils.orientation.AndroidScreenOrientationProvider
 import com.mapbox.search.base.utils.orientation.ScreenOrientationProvider
 import com.mapbox.search.common.concurrent.SearchSdkMainThreadWorker
 import com.mapbox.search.record.DataProviderEngineRegistrationServiceImpl
-import com.mapbox.search.record.FavoritesDataProvider
 import com.mapbox.search.record.FavoritesDataProviderImpl
-import com.mapbox.search.record.HistoryDataProvider
 import com.mapbox.search.record.HistoryDataProviderImpl
 import com.mapbox.search.record.RecordsFileStorage
 import com.mapbox.search.utils.LoggingCompletionCallback
@@ -38,17 +36,19 @@ internal object MapboxSearchSdk {
     lateinit var searchRequestContextProvider: SearchRequestContextProvider
     lateinit var searchResultFactory: SearchResultFactory
     private lateinit var timeProvider: TimeProvider
-    private lateinit var formattedTimeProvider: FormattedTimeProvider
     private lateinit var uuidProvider: UUIDProvider
 
     lateinit var indexableDataProvidersRegistry: IndexableDataProvidersRegistryImpl
+
+    private val formattedTimeProvider: FormattedTimeProvider by lazy {
+        FormattedTimeProviderImpl(timeProvider)
+    }
 
     private lateinit var application: Application
 
     fun initialize(
         application: Application,
         timeProvider: TimeProvider = LocalTimeProvider(),
-        formattedTimeProvider: FormattedTimeProvider = FormattedTimeProviderImpl(timeProvider),
         uuidProvider: UUIDProvider = UUIDProviderImpl(),
         keyboardLocaleProvider: KeyboardLocaleProvider = AndroidKeyboardLocaleProvider(application),
         orientationProvider: ScreenOrientationProvider = AndroidScreenOrientationProvider(application),
@@ -56,7 +56,6 @@ internal object MapboxSearchSdk {
     ) {
         this.application = application
         this.timeProvider = timeProvider
-        this.formattedTimeProvider = formattedTimeProvider
         this.uuidProvider = uuidProvider
 
         searchRequestContextProvider = SearchRequestContextProvider(
@@ -68,41 +67,37 @@ internal object MapboxSearchSdk {
             dataProviderEngineRegistrationService = DataProviderEngineRegistrationServiceImpl()
         )
 
-        val historyDataProvider = HistoryDataProviderImpl(
-            recordsStorage = RecordsFileStorage.History(dataLoader),
-            timeProvider = timeProvider,
-        )
-
-        val favoritesDataProvider = FavoritesDataProviderImpl(
-            recordsStorage = RecordsFileStorage.Favorite(dataLoader),
-        )
-
         ServiceProvider.INTERNAL_INSTANCE = ServiceProviderImpl(
-            historyDataProvider = historyDataProvider,
-            favoritesDataProvider = favoritesDataProvider,
+            historyDataProviderInitializer = {
+                val provider = HistoryDataProviderImpl(
+                    recordsStorage = RecordsFileStorage.History(dataLoader),
+                    timeProvider = timeProvider,
+                )
+
+                indexableDataProvidersRegistry.preregister(
+                    provider,
+                    SearchSdkMainThreadWorker.mainExecutor,
+                    LoggingCompletionCallback("HistoryDataProvider register")
+                )
+
+                provider
+            },
+            favoritesDataProviderInitializer = {
+                val provider = FavoritesDataProviderImpl(
+                    recordsStorage = RecordsFileStorage.Favorite(dataLoader),
+                )
+
+                indexableDataProvidersRegistry.preregister(
+                    provider,
+                    SearchSdkMainThreadWorker.mainExecutor,
+                    LoggingCompletionCallback("FavoritesDataProvider register")
+                )
+
+                provider
+            },
         )
 
         searchResultFactory = SearchResultFactory(indexableDataProvidersRegistry)
-
-        preregisterDefaultDataProviders(
-            historyDataProvider, favoritesDataProvider
-        )
-    }
-
-    private fun preregisterDefaultDataProviders(
-        historyDataProvider: HistoryDataProvider,
-        favoritesDataProvider: FavoritesDataProvider
-    ) {
-        indexableDataProvidersRegistry.preregister(
-            historyDataProvider,
-            SearchSdkMainThreadWorker.mainExecutor,
-            LoggingCompletionCallback("HistoryDataProvider register")
-        )
-        indexableDataProvidersRegistry.preregister(
-            favoritesDataProvider,
-            SearchSdkMainThreadWorker.mainExecutor,
-            LoggingCompletionCallback("FavoritesDataProvider register")
-        )
     }
 
     fun createAnalyticsService(
