@@ -1,161 +1,180 @@
+@file:Suppress("NoMockkVerifyImport")
 package com.mapbox.search.utils.loader
 
 import android.content.Context
+import android.util.AtomicFile
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
-import com.mapbox.test.dsl.TestCase
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import io.mockk.verify
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertSame
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import java.io.FileOutputStream
+import java.io.IOException
 
 internal class InternalDataLoaderTest {
 
     private lateinit var dataLoader: InternalDataLoader
-    private lateinit var byteArray: ByteArray
 
-    @TestFactory
-    fun `Check InternalDataLoader load`() = TestCase {
-        Given("Empty file system (without file)") {
-            val fileSystem = spyk<TestFileSystem>()
-            val context = mockContext()
+    private lateinit var fileSystem: TestFileSystem
+    private lateinit var context: Context
 
-            Before {
-                fileSystem.init()
-                dataLoader = InternalDataLoader(context, fileSystem)
-                byteArray = dataLoader.load(RELATIVE_DIR, FILE_NAME)
-            }
-            After {
-                fileSystem.destroy()
-            }
+    private lateinit var atomicFile: AtomicFile
+    private lateinit var atomicFileFOS: FileOutputStream
 
-            When("Call load") {
-                Then("Should load empty array") {
-                    Assertions.assertArrayEquals(byteArray, EMPTY_ARRAY)
-                }
-                Verify("Called fileSystem.getAppRelativeDir") {
-                    fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
-                }
-                Verify("Called fileSystem.createFile") {
-                    fileSystem.createFile(any(), FILE_NAME)
-                }
-            }
+    @BeforeEach
+    fun setUp() {
+        fileSystem = spyk<TestFileSystem>()
+        fileSystem.init()
+
+        atomicFileFOS = spyk(
+            fileSystem.createOutputStream(
+                RELATIVE_DIR,
+                fileName = FILE_NAME,
+            )
+        )
+
+        atomicFile = mockk<AtomicFile>(relaxed = true)
+        every { atomicFile.startWrite() } returns atomicFileFOS
+
+        context = mockk<Context>()
+
+        dataLoader = InternalDataLoader(
+            context,
+            fileSystem,
+            { atomicFile }
+        )
+    }
+
+    @AfterEach
+    fun tearDown() {
+        fileSystem.destroy()
+    }
+
+    @Test
+    fun testLoadFromEmptyFile() {
+        val byteArray = dataLoader.load(RELATIVE_DIR, FILE_NAME)
+        assertArrayEquals(byteArray, EMPTY_ARRAY)
+        verify {
+            fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
         }
-
-        Given("File system with file") {
-            val fileSystem = spyk<TestFileSystem>()
-            val context = mockContext()
-
-            Before {
-                fileSystem.init()
-                fileSystem.writeBytesToFile(
-                    fileName = FILE_NAME,
-                    byteArray = TEST_ARRAY,
-                    folderNames = arrayOf(RELATIVE_DIR)
-                )
-                dataLoader = InternalDataLoader(context, fileSystem)
-                byteArray = dataLoader.load(RELATIVE_DIR, FILE_NAME)
-            }
-            After {
-                fileSystem.destroy()
-            }
-
-            When("Call load") {
-                Then("Should read test array") {
-                    Assertions.assertArrayEquals(byteArray, TEST_ARRAY)
-                }
-                Verify("Called fileSystem.getAppRelativeDir") {
-                    fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
-                }
-                Verify("Called fileSystem.createFile") {
-                    fileSystem.createFile(any(), FILE_NAME)
-                }
-            }
-        }
-
-        Given("File system with error") {
-            val fileSystem = spyk<TestFileSystem>()
-            val context = mockContext()
-
-            Before {
-                fileSystem.init(throwException = true)
-                dataLoader = InternalDataLoader(context, fileSystem)
-            }
-            After {
-                fileSystem.destroy()
-            }
-
-            WhenThrows("Can't open file", IllegalStateException::class) {
-                byteArray = dataLoader.load(RELATIVE_DIR, FILE_NAME)
-            }
+        verify {
+            fileSystem.createFile(any(), FILE_NAME)
         }
     }
 
-    @TestFactory
-    fun `Check InternalDataLoader save`() = TestCase {
-        Given("Empty file system (without file)") {
-            val fileSystem = spyk<TestFileSystem>()
-            val context = mockContext()
+    @Test
+    fun testLoadFromExistingFile() {
+        fileSystem.writeBytesToFile(
+            fileName = FILE_NAME,
+            byteArray = TEST_ARRAY,
+            folderNames = arrayOf(RELATIVE_DIR)
+        )
 
-            Before {
-                fileSystem.init()
-                dataLoader = InternalDataLoader(context, fileSystem)
-                dataLoader.save(RELATIVE_DIR, FILE_NAME, TEST_ARRAY)
-                byteArray = fileSystem.getBytesFromFile(RELATIVE_DIR, fileName = FILE_NAME)
-            }
-            After {
-                fileSystem.destroy()
-            }
+        val byteArray = dataLoader.load(RELATIVE_DIR, FILE_NAME)
+        assertArrayEquals(byteArray, TEST_ARRAY)
 
-            When("Call import") {
-                Then("test") {
-                    Assertions.assertArrayEquals(TEST_ARRAY, byteArray)
-                }
-                Verify("Called fileSystem.getAppRelativeDir") {
-                    fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
-                }
-                Verify("Called fileSystem.createFile") {
-                    fileSystem.createFile(any(), FILE_NAME)
-                }
-            }
+        verify {
+            fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
         }
-
-        Given("File with some data") {
-            val fileSystem = spyk<TestFileSystem>()
-            val context = mockContext()
-
-            Before {
-                fileSystem.init()
-                dataLoader = InternalDataLoader(context, fileSystem)
-                fileSystem.writeBytesToFile(
-                    fileName = FILE_NAME,
-                    byteArray = TEST_ARRAY.reversedArray(),
-                    folderNames = arrayOf(RELATIVE_DIR)
-                )
-                dataLoader.save(RELATIVE_DIR, FILE_NAME, TEST_ARRAY)
-                byteArray = fileSystem.getBytesFromFile(RELATIVE_DIR, fileName = FILE_NAME)
-            }
-            After {
-                fileSystem.destroy()
-            }
-
-            When("Call save") {
-                Then("Should read from file new data") {
-                    Assertions.assertArrayEquals(TEST_ARRAY, byteArray)
-                }
-                Verify("Called fileSystem.getAppRelativeDir") {
-                    fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
-                }
-                Verify("Called fileSystem.createFile") {
-                    fileSystem.createFile(any(), FILE_NAME)
-                }
-            }
+        verify {
+            fileSystem.createFile(any(), FILE_NAME)
         }
     }
 
-    private fun mockContext() = mockk<Context>()
+    @Test
+    fun testFileSystemWithError() {
+        fileSystem.init(throwException = true)
+
+        val thrown = assertThrows(IllegalStateException::class.java) {
+            dataLoader.load(RELATIVE_DIR, FILE_NAME)
+        }
+
+        assertTrue(thrown?.message?.startsWith("Can not create dir at") == true)
+    }
+
+    @Test
+    fun testSaveToEmptyFile() {
+        dataLoader.save(RELATIVE_DIR, FILE_NAME, TEST_ARRAY)
+
+        val byteArray = fileSystem.getBytesFromFile(RELATIVE_DIR, fileName = FILE_NAME)
+        assertArrayEquals(TEST_ARRAY, byteArray)
+
+        verify {
+            fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
+            fileSystem.createFile(any(), FILE_NAME)
+        }
+
+        verify(exactly = 1) {
+            atomicFile.finishWrite(any())
+        }
+
+        verify(exactly = 0) {
+            atomicFile.failWrite(any())
+        }
+
+        verify(exactly = 1) {
+            atomicFileFOS.write(eq(TEST_ARRAY))
+            atomicFileFOS.flush()
+        }
+    }
+
+    @Test
+    fun testSaveToExistingFile() {
+        fileSystem.writeBytesToFile(
+            fileName = FILE_NAME,
+            byteArray = TEST_ARRAY.reversedArray(),
+            folderNames = arrayOf(RELATIVE_DIR)
+        )
+
+        dataLoader.save(RELATIVE_DIR, FILE_NAME, TEST_ARRAY)
+
+        val byteArray = fileSystem.getBytesFromFile(RELATIVE_DIR, fileName = FILE_NAME)
+        assertArrayEquals(TEST_ARRAY, byteArray)
+
+        verify {
+            fileSystem.getAppRelativeDir(context, RELATIVE_DIR)
+            fileSystem.createFile(any(), FILE_NAME)
+        }
+
+        verify(exactly = 1) {
+            atomicFile.finishWrite(any())
+        }
+
+        verify(exactly = 0) {
+            atomicFile.failWrite(any())
+        }
+
+        verify(exactly = 1) {
+            atomicFileFOS.write(eq(TEST_ARRAY))
+            atomicFileFOS.flush()
+        }
+    }
+
+    @Test
+    fun testAtomicFileFailWriteOnError() {
+        val error = IOException()
+        every { atomicFile.startWrite() } throws error
+
+        val thrown = assertThrows(error.javaClass) {
+            dataLoader.save(RELATIVE_DIR, FILE_NAME, TEST_ARRAY)
+        }
+
+        verify(exactly = 1) {
+            atomicFile.failWrite(any())
+        }
+
+        assertSame(error, thrown)
+    }
 
     companion object {
 

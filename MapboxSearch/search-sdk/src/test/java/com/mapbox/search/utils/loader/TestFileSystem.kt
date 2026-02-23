@@ -6,6 +6,7 @@ import android.os.Build
 import com.mapbox.search.utils.file.FileSystem
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import java.io.FileOutputStream
 import java.nio.file.Files
 
 internal class TestFileSystem : FileSystem {
@@ -45,6 +46,12 @@ internal class TestFileSystem : FileSystem {
 
     fun getRoot(): File {
         return temporaryFolder.root
+    }
+
+    fun createOutputStream(vararg folderNames: String, fileName: String): FileOutputStream {
+        val dir = createDir(*folderNames)
+        val file = createFile(dir, fileName)
+        return FileOutputStream(file)
     }
 
     // TODO refactor InternalFileSystem. Join getAppRelativeDir and getAbsoluteDir
