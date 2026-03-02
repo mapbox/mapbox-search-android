@@ -13,12 +13,17 @@ if (mapboxApiToken == null) {
 android {
     namespace 'com.mapbox.search.common.tests'
     compileSdkVersion androidVersions.compileSdkVersion
+    lint {
+        targetSdk androidVersions.targetSdkVersion
+    }
+    testOptions {
+        targetSdk androidVersions.targetSdkVersion
+    }
 
     defaultConfig {
         resValue "string", "mapbox_access_token", mapboxApiToken
 
         minSdkVersion androidVersions.minSdkVersion
-        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

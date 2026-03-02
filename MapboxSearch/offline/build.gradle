@@ -24,7 +24,6 @@ android {
 
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
-        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -68,12 +67,14 @@ android {
     }
 
     testOptions {
+        targetSdk androidVersions.targetSdkVersion
         unitTests {
             returnDefaultValues = true
         }
     }
 
     lint {
+        targetSdk androidVersions.targetSdkVersion
         abortOnError true
         disable 'ParcelCreator'
     }

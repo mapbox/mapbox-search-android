@@ -20,10 +20,12 @@ apply from: "../gradle/track-public-apis.gradle"
 android {
     namespace 'com.mapbox.search.autocomplete'
     compileSdk androidVersions.compileSdkVersion
+    testOptions {
+        targetSdk androidVersions.targetSdkVersion
+    }
 
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
-        targetSdkVersion androidVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,6 +66,7 @@ android {
     }
 
     lint {
+        targetSdk androidVersions.targetSdkVersion
         abortOnError true
         disable 'ParcelCreator', 'ContentDescription'
     }
