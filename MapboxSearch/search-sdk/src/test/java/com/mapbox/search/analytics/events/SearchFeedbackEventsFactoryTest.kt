@@ -5,7 +5,7 @@ import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.EtaType
-import com.mapbox.search.QueryType
+import com.mapbox.search.NewQueryType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchNavigationOptions
 import com.mapbox.search.SearchOptions
@@ -34,11 +34,13 @@ import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.tests.createTestCoreSearchResponseSuccess
 import com.mapbox.search.internal.bindgen.FeedbackEventCallback
+import com.mapbox.search.mapNewQueryTypesToCore
 import com.mapbox.search.mapToBase
 import com.mapbox.search.mapToPlatform
 import com.mapbox.search.record.FavoriteRecord
 import com.mapbox.search.record.HistoryRecord
 import com.mapbox.search.record.mapToBase
+import com.mapbox.search.resolveQueryTypesToCore
 import com.mapbox.search.result.NewSearchResultType
 import com.mapbox.search.result.SearchAddress
 import com.mapbox.search.tests_support.BlockingCompletionCallback
@@ -151,7 +153,9 @@ internal class SearchFeedbackEventsFactoryTest {
                                 endpoint = TEST_ENDPOINT
                                 fuzzyMatch = searchResult.requestOptions.options.fuzzyMatch
                                 limit = searchResult.requestOptions.options.limit
-                                types = searchResult.requestOptions.options.types?.map { it.name }
+                                types = with(searchResult.requestOptions.options) {
+                                    resolveQueryTypesToCore(@Suppress("DEPRECATION") types, newTypes)
+                                }?.map { it.toString() }
                                 feedbackReason = "Missing routable point"
                                 feedbackText = "Fix, please!"
                                 selectedItemName = searchResult.base.rawSearchResult.names.first()
@@ -508,7 +512,7 @@ internal class SearchFeedbackEventsFactoryTest {
                             endpoint = TEST_ENDPOINT
                             fuzzyMatch = true
                             limit = 6
-                            types = TEST_SEARCH_OPTIONS.types?.map { it.name }
+                            types = TEST_SEARCH_OPTIONS.newTypes?.mapNewQueryTypesToCore()?.map { it.toString() }
                             feedbackReason = "cannot_find"
                             feedbackText = "Please, add Paris to search results!"
                             selectedItemName = ""
@@ -654,7 +658,7 @@ internal class SearchFeedbackEventsFactoryTest {
             fuzzyMatch = true,
             languages = listOf(IsoLanguageCode.FRENCH, IsoLanguageCode.GERMAN, IsoLanguageCode.ENGLISH),
             limit = 6,
-            types = listOf(QueryType.POI, QueryType.ADDRESS, QueryType.POSTCODE),
+            newTypes = listOf(NewQueryType.POI, NewQueryType.ADDRESS, NewQueryType.POSTCODE),
             origin = TEST_ORIGIN_LOCATION,
             navigationOptions = SearchNavigationOptions(
                 navigationProfile = NavigationProfile.DRIVING,

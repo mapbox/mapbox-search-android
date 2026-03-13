@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.search_box
 
 import com.mapbox.common.MapboxOptions
@@ -8,6 +10,7 @@ import com.mapbox.search.BaseTest
 import com.mapbox.search.EtaType
 import com.mapbox.search.ForwardSearchOptions
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.NewQueryType
 import com.mapbox.search.QueryType
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -115,6 +118,25 @@ internal class ForwardApiIntegrationTest : BaseTest() {
             url.queryParameter("eta_type"),
         )
         assertEquals(formatPoints(options.origin), url.queryParameter("origin"))
+    }
+
+    @Test
+    fun testRequestParametersNewQueryType() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val options = ForwardSearchOptions.Builder()
+            .language(IsoLanguageCode.FRENCH)
+            .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+            .build()
+
+        val callback = BlockingSearchCallback()
+        searchEngine.forward(TEST_QUERY, options, callback)
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEquals(
+            options.newTypes?.joinToString(separator = ",") { it.lowercase(Locale.getDefault()) },
+            url.queryParameter("types")
+        )
     }
 
     @Test

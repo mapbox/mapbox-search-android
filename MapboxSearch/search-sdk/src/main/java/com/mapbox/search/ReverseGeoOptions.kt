@@ -63,9 +63,24 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
     public val reverseMode: ReverseMode? = null,
 
     /**
-     * Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+     * Filter results to include only a subset (one or more) of the available feature types.
+     * Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+     * Brand is not supported; use [newTypes] with [NewQueryType.BRAND] instead.
+     * When both [types] and [newTypes] are provided, [newTypes] take priority and a warning is logged.
      */
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+        replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+    )
     public val types: List<QueryType>? = null,
+
+    /**
+     * Filter results to include only a subset (one or more) of the available feature types.
+     * Use constants from [NewQueryType] (e.g. [NewQueryType.BRAND], [NewQueryType.POI]).
+     * When both [types] and [newTypes] are provided, [newTypes] take priority and a warning is logged.
+     */
+    public val newTypes: List<String>? = null,
 ) : Parcelable {
 
     init {
@@ -82,7 +97,8 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
         languages: List<IsoLanguageCode>? = this.languages,
         limit: Int? = this.limit,
         reverseMode: ReverseMode? = this.reverseMode,
-        types: List<QueryType>? = this.types,
+        @Suppress("DEPRECATION") types: List<QueryType>? = this.types,
+        newTypes: List<String>? = this.newTypes,
     ): ReverseGeoOptions {
         return ReverseGeoOptions(
             center = center,
@@ -91,6 +107,7 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
             limit = limit,
             reverseMode = reverseMode,
             types = types,
+            newTypes = newTypes,
         )
     }
 
@@ -115,7 +132,9 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
         if (languages != other.languages) return false
         if (limit != other.limit) return false
         if (reverseMode != other.reverseMode) return false
+        @Suppress("DEPRECATION")
         if (types != other.types) return false
+        if (newTypes != other.newTypes) return false
 
         return true
     }
@@ -129,7 +148,9 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
         result = 31 * result + (languages?.hashCode() ?: 0)
         result = 31 * result + (limit ?: 0)
         result = 31 * result + (reverseMode?.hashCode() ?: 0)
+        @Suppress("DEPRECATION")
         result = 31 * result + (types?.hashCode() ?: 0)
+        result = 31 * result + (newTypes?.hashCode() ?: 0)
         return result
     }
 
@@ -143,7 +164,9 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
                 "languages=$languages, " +
                 "limit=$limit, " +
                 "reverseMode=$reverseMode, " +
-                "types=$types" +
+                @Suppress("DEPRECATION")
+                "types=$types, " +
+                "newTypes=$newTypes" +
                 ")"
     }
 
@@ -157,14 +180,18 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
         private var languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
         private var reverseMode: ReverseMode? = null
+        @Suppress("DEPRECATION")
         private var types: List<QueryType>? = null
+        private var newTypes: List<String>? = null
 
         internal constructor(options: ReverseGeoOptions) : this(options.center) {
             countries = options.countries
             languages = options.languages
             limit = options.limit
             reverseMode = options.reverseMode
+            @Suppress("DEPRECATION")
             types = options.types
+            newTypes = options.newTypes
         }
 
         /**
@@ -206,13 +233,41 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
 
         /**
          * Filter results to include only a subset (one or more) of the available feature types.
+         * Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+         * Brand is not supported; use newTypes with NewQueryType.BRAND instead.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(vararg types: QueryType): Builder = apply { this.types = types.toList() }
 
         /**
          * Filter results to include only a subset (one or more) of the available feature types.
+         * Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+         * Brand is not supported; use newTypes with NewQueryType.BRAND instead.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(types: List<QueryType>): Builder = apply { this.types = types }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(vararg newTypes: String): Builder = apply { this.newTypes = newTypes.toList() }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(newTypes: List<String>): Builder = apply { this.newTypes = newTypes }
 
         /**
          * Create [ReverseGeoOptions] instance from builder data.
@@ -224,6 +279,7 @@ public class ReverseGeoOptions @JvmOverloads public constructor(
             limit = limit,
             reverseMode = reverseMode,
             types = types,
+            newTypes = newTypes,
         )
     }
 }
@@ -243,5 +299,5 @@ internal fun ReverseGeoOptions.mapToCore(): CoreReverseGeoOptions = CoreReverseG
     countries?.map { it.code },
     languages?.map { it.code },
     limit,
-    types.mapToCoreTypes()
+    resolveQueryTypesToCore(@Suppress("DEPRECATION") types, newTypes),
 )

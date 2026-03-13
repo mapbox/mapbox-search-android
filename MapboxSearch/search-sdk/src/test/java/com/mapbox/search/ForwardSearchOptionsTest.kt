@@ -3,17 +3,24 @@ package com.mapbox.search
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.createCoreSearchOptions
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
 import com.mapbox.search.common.tests.ReflectionObjectsFactory
+import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.common.tests.ToStringVerifier
 import com.mapbox.search.common.tests.withPrefabTestPoint
 import com.mapbox.search.tests_support.SdkCustomTypeObjectCreators
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import nl.jqno.equalsverifier.EqualsVerifier
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.Locale
@@ -55,7 +62,7 @@ internal class ForwardSearchOptionsTest {
             proximity = options.proximity,
             bbox = options.boundingBox?.mapToCore(),
             countries = options.countries?.map { it.code },
-            types = options.types?.map { it.mapToCore() },
+            types = @Suppress("DEPRECATION") options.types?.map { it.mapToCore() },
             navProfile = options.navigationOptions?.navigationProfile?.rawName,
             etaType = options.navigationOptions?.etaType?.rawName,
             origin = options.origin,
@@ -103,7 +110,7 @@ internal class ForwardSearchOptionsTest {
             countries = TEST_FILLED_OPTIONS.countries,
             language = TEST_FILLED_OPTIONS.language,
             limit = TEST_FILLED_OPTIONS.limit,
-            types = TEST_FILLED_OPTIONS.types,
+            types = @Suppress("DEPRECATION") TEST_FILLED_OPTIONS.types,
             requestDebounce = TEST_FILLED_OPTIONS.requestDebounce,
             origin = TEST_FILLED_OPTIONS.origin,
             navigationOptions = TEST_FILLED_OPTIONS.navigationOptions,
@@ -118,6 +125,32 @@ internal class ForwardSearchOptionsTest {
     @Test
     fun `Test copy() without parameters returns the same object`() {
         assertEquals(TEST_FILLED_OPTIONS, TEST_FILLED_OPTIONS.copy())
+    }
+
+    @Test
+    fun `Test mapToCore uses newTypes when newTypes provided`() {
+        val options = ForwardSearchOptions.Builder()
+            .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+            .build()
+        val coreOptions = options.mapToCore()
+        assertEquals(
+            listOf(com.mapbox.search.base.core.CoreQueryType.BRAND, com.mapbox.search.base.core.CoreQueryType.POI),
+            coreOptions.types,
+        )
+    }
+
+    @Test
+    @Suppress("DEPRECATION")
+    fun `Test mapToCore uses newTypes when both types and newTypes provided`() {
+        val options = ForwardSearchOptions.Builder()
+            .types(QueryType.ADDRESS, QueryType.COUNTRY)
+            .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+            .build()
+        val coreOptions = options.mapToCore()
+        assertEquals(
+            listOf(com.mapbox.search.base.core.CoreQueryType.BRAND, com.mapbox.search.base.core.CoreQueryType.POI),
+            coreOptions.types,
+        )
     }
 
     private companion object {
@@ -135,6 +168,7 @@ internal class ForwardSearchOptionsTest {
             "autocomplete" to "false",
         )
 
+        @Suppress("DEPRECATION")
         val TEST_FILLED_OPTIONS = ForwardSearchOptions.Builder()
             .language(IsoLanguageCode.FRENCH)
             .limit(7)
@@ -150,5 +184,19 @@ internal class ForwardSearchOptionsTest {
             .indexableRecordsDistanceThresholdMeters(123.0)
             .attributeSets(listOf(AttributeSet.BASIC, AttributeSet.PHOTOS))
             .build()
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+            mockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+            unmockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
     }
 }

@@ -151,7 +151,7 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class ForwardSearchOptions implements android.os.Parcelable {
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ForwardSearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, com.mapbox.search.common.IsoLanguageCode? language = language, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = attributeSets);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ForwardSearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, com.mapbox.search.common.IsoLanguageCode? language = language, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, java.util.List<? extends java.lang.String>? newTypes = newTypes, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = attributeSets);
     method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
@@ -160,10 +160,11 @@ package com.mapbox.search {
     method public com.mapbox.search.common.IsoLanguageCode? getLanguage();
     method public Integer? getLimit();
     method public com.mapbox.search.SearchNavigationOptions? getNavigationOptions();
+    method public java.util.List<java.lang.String>? getNewTypes();
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public Integer? getRequestDebounce();
-    method public java.util.List<com.mapbox.search.QueryType>? getTypes();
+    method @Deprecated public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.ForwardSearchOptions.Builder toBuilder();
     property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
@@ -174,10 +175,11 @@ package com.mapbox.search {
     property public final com.mapbox.search.common.IsoLanguageCode? language;
     property public final Integer? limit;
     property public final com.mapbox.search.SearchNavigationOptions? navigationOptions;
+    property public final java.util.List<java.lang.String>? newTypes;
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Integer? requestDebounce;
-    property public final java.util.List<com.mapbox.search.QueryType>? types;
+    property @Deprecated public final java.util.List<com.mapbox.search.QueryType>? types;
     property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
 
@@ -193,29 +195,50 @@ package com.mapbox.search {
     method public com.mapbox.search.ForwardSearchOptions.Builder language(com.mapbox.search.common.IsoLanguageCode language);
     method public com.mapbox.search.ForwardSearchOptions.Builder limit(int limit);
     method public com.mapbox.search.ForwardSearchOptions.Builder navigationOptions(com.mapbox.search.SearchNavigationOptions navigationOptions);
+    method public com.mapbox.search.ForwardSearchOptions.Builder newTypes(java.lang.String... newTypes);
+    method public com.mapbox.search.ForwardSearchOptions.Builder newTypes(java.util.List<java.lang.String> newTypes);
     method public com.mapbox.search.ForwardSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.ForwardSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.ForwardSearchOptions.Builder requestDebounce(int debounce);
-    method public com.mapbox.search.ForwardSearchOptions.Builder types(com.mapbox.search.QueryType... types);
-    method public com.mapbox.search.ForwardSearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
+    method @Deprecated public com.mapbox.search.ForwardSearchOptions.Builder types(com.mapbox.search.QueryType... types);
+    method @Deprecated public com.mapbox.search.ForwardSearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
     method public com.mapbox.search.ForwardSearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
   }
 
   public final class ForwardSearchOptionsKt {
   }
 
-  public enum QueryType {
-    enum_constant public static final com.mapbox.search.QueryType ADDRESS;
-    enum_constant public static final com.mapbox.search.QueryType CATEGORY;
-    enum_constant public static final com.mapbox.search.QueryType COUNTRY;
-    enum_constant public static final com.mapbox.search.QueryType DISTRICT;
-    enum_constant public static final com.mapbox.search.QueryType LOCALITY;
-    enum_constant public static final com.mapbox.search.QueryType NEIGHBORHOOD;
-    enum_constant public static final com.mapbox.search.QueryType PLACE;
-    enum_constant public static final com.mapbox.search.QueryType POI;
-    enum_constant public static final com.mapbox.search.QueryType POSTCODE;
-    enum_constant public static final com.mapbox.search.QueryType REGION;
-    enum_constant public static final com.mapbox.search.QueryType STREET;
+  public final class NewQueryType {
+    field public static final String ADDRESS = "address";
+    field public static final String BRAND = "brand";
+    field public static final String CATEGORY = "category";
+    field public static final String COUNTRY = "country";
+    field public static final String DISTRICT = "district";
+    field public static final com.mapbox.search.NewQueryType INSTANCE;
+    field public static final String LOCALITY = "locality";
+    field public static final String NEIGHBORHOOD = "neighborhood";
+    field public static final String PLACE = "place";
+    field public static final String POI = "poi";
+    field public static final String POSTCODE = "postcode";
+    field public static final String REGION = "region";
+    field public static final String STREET = "street";
+  }
+
+  @StringDef({com.mapbox.search.NewQueryType.COUNTRY, com.mapbox.search.NewQueryType.REGION, com.mapbox.search.NewQueryType.POSTCODE, com.mapbox.search.NewQueryType.DISTRICT, com.mapbox.search.NewQueryType.PLACE, com.mapbox.search.NewQueryType.LOCALITY, com.mapbox.search.NewQueryType.NEIGHBORHOOD, com.mapbox.search.NewQueryType.STREET, com.mapbox.search.NewQueryType.ADDRESS, com.mapbox.search.NewQueryType.POI, com.mapbox.search.NewQueryType.CATEGORY, com.mapbox.search.NewQueryType.BRAND}) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) public static @interface NewQueryType.Type {
+  }
+
+  @Deprecated public enum QueryType {
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType ADDRESS;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType CATEGORY;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType COUNTRY;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType DISTRICT;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType LOCALITY;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType NEIGHBORHOOD;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType PLACE;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType POI;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType POSTCODE;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType REGION;
+    enum_constant @Deprecated public static final com.mapbox.search.QueryType STREET;
   }
 
   public final class QueryTypeKt {
@@ -250,26 +273,29 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class ReverseGeoOptions implements android.os.Parcelable {
-    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null);
+    ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage());
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center);
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ReverseGeoOptions! copy(com.mapbox.geojson.Point center = center, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, java.util.List<? extends com.mapbox.search.common.IsoLanguageCode>? languages = languages, int limit = limit, com.mapbox.search.ReverseMode? reverseMode = reverseMode, java.util.List<? extends com.mapbox.search.QueryType>? types = types);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ReverseGeoOptions! copy(com.mapbox.geojson.Point center = center, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, java.util.List<? extends com.mapbox.search.common.IsoLanguageCode>? languages = languages, int limit = limit, com.mapbox.search.ReverseMode? reverseMode = reverseMode, java.util.List<? extends com.mapbox.search.QueryType>? types = types, java.util.List<? extends java.lang.String>? newTypes = newTypes);
     method public com.mapbox.geojson.Point getCenter();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
+    method public java.util.List<java.lang.String>? getNewTypes();
     method public com.mapbox.search.ReverseMode? getReverseMode();
-    method public java.util.List<com.mapbox.search.QueryType>? getTypes();
+    method @Deprecated public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public com.mapbox.search.ReverseGeoOptions.Builder toBuilder();
     property public final com.mapbox.geojson.Point center;
     property public final java.util.List<com.mapbox.search.common.IsoCountryCode>? countries;
     property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
+    property public final java.util.List<java.lang.String>? newTypes;
     property public final com.mapbox.search.ReverseMode? reverseMode;
-    property public final java.util.List<com.mapbox.search.QueryType>? types;
+    property @Deprecated public final java.util.List<com.mapbox.search.QueryType>? types;
   }
 
   public static final class ReverseGeoOptions.Builder {
@@ -280,9 +306,11 @@ package com.mapbox.search {
     method public com.mapbox.search.ReverseGeoOptions.Builder languages(com.mapbox.search.common.IsoLanguageCode... languages);
     method public com.mapbox.search.ReverseGeoOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.ReverseGeoOptions.Builder limit(int limit);
+    method public com.mapbox.search.ReverseGeoOptions.Builder newTypes(java.lang.String... newTypes);
+    method public com.mapbox.search.ReverseGeoOptions.Builder newTypes(java.util.List<java.lang.String> newTypes);
     method public com.mapbox.search.ReverseGeoOptions.Builder reverseMode(com.mapbox.search.ReverseMode reverseMode);
-    method public com.mapbox.search.ReverseGeoOptions.Builder types(com.mapbox.search.QueryType... types);
-    method public com.mapbox.search.ReverseGeoOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
+    method @Deprecated public com.mapbox.search.ReverseGeoOptions.Builder types(com.mapbox.search.QueryType... types);
+    method @Deprecated public com.mapbox.search.ReverseGeoOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
   }
 
   public final class ReverseGeoOptionsKt {
@@ -428,14 +456,15 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class SearchOptions implements android.os.Parcelable {
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null, Integer? requestDebounce = null);
-    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, java.util.List<? extends com.mapbox.search.QueryType>? types = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false, Double? indexableRecordsDistanceThresholdMeters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null, boolean ignoreIndexableRecords = false);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null, @Deprecated com.mapbox.search.RouteOptions? routeOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null, com.mapbox.search.SearchNavigationOptions? navigationOptions = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null, com.mapbox.geojson.Point? origin = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null, Integer? requestDebounce = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null);
+    ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage());
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, Boolean? fuzzyMatch = null);
@@ -443,7 +472,7 @@ package com.mapbox.search {
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null, com.mapbox.geojson.BoundingBox? boundingBox = null);
     ctor public SearchOptions(com.mapbox.geojson.Point? proximity = null);
     ctor public SearchOptions();
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.SearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, boolean fuzzyMatch = fuzzyMatch, java.util.List<? extends com.mapbox.search.common.IsoLanguageCode>? languages = languages, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, com.mapbox.search.RouteOptions? routeOptions = routeOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.SearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, boolean fuzzyMatch = fuzzyMatch, java.util.List<? extends com.mapbox.search.common.IsoLanguageCode>? languages = languages, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, java.util.List<? extends java.lang.String>? newTypes = newTypes, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, com.mapbox.search.RouteOptions? routeOptions = routeOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters);
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
     method public Boolean? getFuzzyMatch();
@@ -452,11 +481,12 @@ package com.mapbox.search {
     method public java.util.List<com.mapbox.search.common.IsoLanguageCode>? getLanguages();
     method public Integer? getLimit();
     method public com.mapbox.search.SearchNavigationOptions? getNavigationOptions();
+    method public java.util.List<java.lang.String>? getNewTypes();
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public Integer? getRequestDebounce();
     method @Deprecated public com.mapbox.search.RouteOptions? getRouteOptions();
-    method public java.util.List<com.mapbox.search.QueryType>? getTypes();
+    method @Deprecated public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.SearchOptions.Builder toBuilder();
     property public final com.mapbox.geojson.BoundingBox? boundingBox;
@@ -467,11 +497,12 @@ package com.mapbox.search {
     property public final java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages;
     property public final Integer? limit;
     property public final com.mapbox.search.SearchNavigationOptions? navigationOptions;
+    property public final java.util.List<java.lang.String>? newTypes;
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Integer? requestDebounce;
     property @Deprecated public final com.mapbox.search.RouteOptions? routeOptions;
-    property public final java.util.List<com.mapbox.search.QueryType>? types;
+    property @Deprecated public final java.util.List<com.mapbox.search.QueryType>? types;
     property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
 
@@ -488,12 +519,14 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchOptions.Builder languages(java.util.List<com.mapbox.search.common.IsoLanguageCode> languages);
     method public com.mapbox.search.SearchOptions.Builder limit(int limit);
     method public com.mapbox.search.SearchOptions.Builder navigationOptions(com.mapbox.search.SearchNavigationOptions navigationOptions);
+    method public com.mapbox.search.SearchOptions.Builder newTypes(java.lang.String... newTypes);
+    method public com.mapbox.search.SearchOptions.Builder newTypes(java.util.List<java.lang.String> newTypes);
     method public com.mapbox.search.SearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.SearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.SearchOptions.Builder requestDebounce(int debounce);
     method @Deprecated public com.mapbox.search.SearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
-    method public com.mapbox.search.SearchOptions.Builder types(com.mapbox.search.QueryType... types);
-    method public com.mapbox.search.SearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
+    method @Deprecated public com.mapbox.search.SearchOptions.Builder types(com.mapbox.search.QueryType... types);
+    method @Deprecated public com.mapbox.search.SearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
     method public com.mapbox.search.SearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);
   }
 

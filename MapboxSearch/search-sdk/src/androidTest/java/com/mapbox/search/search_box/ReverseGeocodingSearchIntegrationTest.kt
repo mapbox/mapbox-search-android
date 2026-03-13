@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.search_box
 
 import com.mapbox.geojson.Point
@@ -5,6 +7,7 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.BaseTest
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.NewQueryType
 import com.mapbox.search.QueryType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
@@ -141,6 +144,24 @@ internal class ReverseGeocodingSearchIntegrationTest : BaseTest() {
             url.queryParameter("types")
         )
         assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
+    }
+
+    @Test
+    fun testRequestParametersNewQueryType() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val options = ReverseGeoOptions(
+            center = TEST_POINT,
+            newTypes = listOf(NewQueryType.BRAND, NewQueryType.CATEGORY)
+        )
+
+        searchEngine.reverseBlocking(options)
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEquals(
+            options.newTypes?.joinToString(separator = ",") { it.lowercase(Locale.getDefault()) },
+            url.queryParameter("types")
+        )
     }
 
     @Test

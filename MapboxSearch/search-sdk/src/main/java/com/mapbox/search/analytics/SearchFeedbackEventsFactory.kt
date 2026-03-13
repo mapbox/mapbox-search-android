@@ -21,6 +21,7 @@ import com.mapbox.search.base.utils.UUIDProvider
 import com.mapbox.search.common.CompletionCallback
 import com.mapbox.search.mapToCore
 import com.mapbox.search.record.IndexableRecord
+import com.mapbox.search.resolveQueryTypesToCore
 import com.mapbox.search.result.SearchAddress.FormatStyle
 import com.mapbox.search.result.mapToPlatform
 import com.mapbox.search.utils.bitmap.BitmapEncodeOptions
@@ -170,7 +171,9 @@ internal class SearchFeedbackEventsFactory(
             listOf(west(), south(), east(), north())
         }
         country = requestOptions.options.countries?.map { it.code }
-        types = requestOptions.options.types?.map { it.mapToCore().toString() }
+        types = with(requestOptions.options) {
+            resolveQueryTypesToCore(@Suppress("DEPRECATION") types, newTypes)
+        }?.map { it.toString() }
         fuzzyMatch = requestOptions.options.fuzzyMatch
         limit = requestOptions.options.limit
         proximity = requestOptions.options.proximity?.flattenCoordinates()

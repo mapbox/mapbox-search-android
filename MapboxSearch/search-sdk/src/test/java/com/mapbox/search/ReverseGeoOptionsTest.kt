@@ -3,12 +3,19 @@ package com.mapbox.search
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.core.CoreReverseGeoOptions
 import com.mapbox.search.base.core.CoreReverseMode
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
+import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.tests_support.checkEnumValues
 import com.mapbox.test.dsl.TestCase
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import org.junit.After
 import org.junit.Before
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 import java.util.Locale
 
@@ -61,7 +68,14 @@ internal class ReverseGeoOptionsTest {
             }
 
             When("Get default types") {
+                @Suppress("DEPRECATION")
                 val actualValue = reverseGeoOptions.types
+                Then("It should be <null>", null, actualValue)
+            }
+
+            When("Get default newTypes") {
+                @Suppress("DEPRECATION")
+                val actualValue = reverseGeoOptions.newTypes
                 Then("It should be <null>", null, actualValue)
             }
         }
@@ -175,6 +189,7 @@ internal class ReverseGeoOptionsTest {
         }
     }
 
+    @Suppress("DEPRECATION")
     @TestFactory
     fun `Check types field for ReverseGeoOptions builder`() = TestCase {
         Given("ReverseGeoOptions with QueryType") {
@@ -199,6 +214,7 @@ internal class ReverseGeoOptionsTest {
                 .limit(5)
                 .reverseMode(ReverseMode.DISTANCE)
                 .types(QueryType.COUNTRY)
+                .newTypes(NewQueryType.BRAND)
                 .build()
 
             @Suppress("DEPRECATION")
@@ -223,9 +239,15 @@ internal class ReverseGeoOptionsTest {
                 Then("It should be <DISTANCE>", ReverseMode.DISTANCE, actualValue)
             }
 
+            @Suppress("DEPRECATION")
             When("Get custom types") {
                 val actualValue = reverseGeoOptions.types
                 Then("It should be <arrayListOf<QueryType>(COUNTRY)>", arrayListOf(QueryType.COUNTRY), actualValue)
+            }
+
+            When("Get custom newTypes") {
+                val actualValue = reverseGeoOptions.newTypes
+                Then("It should be <arrayListOf(NewQueryType.BRAND)>", arrayListOf(NewQueryType.BRAND), actualValue)
             }
         }
     }
@@ -254,9 +276,10 @@ internal class ReverseGeoOptionsTest {
 
                 val actualValue = reverseGeoOptions.mapToCore()
 
+                @Suppress("DEPRECATION")
                 val expectedValue = CoreReverseGeoOptions(
                     TEST_COORDINATE,
-                    @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
+                    ReverseMode.DISTANCE.mapToCore(),
                     listOf(IsoCountryCode.UNITED_KINGDOM, IsoCountryCode.BELARUS).map { it.code },
                     listOf(IsoLanguageCode.ENGLISH, IsoLanguageCode("by")).map { it.code },
                     10,
@@ -278,6 +301,7 @@ internal class ReverseGeoOptionsTest {
 
                 val actualValue = reverseGeoOptions.mapToCore()
 
+                @Suppress("DEPRECATION")
                 val expectedValue = CoreReverseGeoOptions(
                     TEST_COORDINATE,
                     @Suppress("DEPRECATION") ReverseMode.DISTANCE.mapToCore(),
@@ -302,7 +326,7 @@ internal class ReverseGeoOptionsTest {
                     languages = listOf(IsoLanguageCode.ENGLISH),
                     limit = 5,
                     reverseMode = @Suppress("DEPRECATION") ReverseMode.DISTANCE,
-                    types = listOf(QueryType.COUNTRY)
+                    types = @Suppress("DEPRECATION") listOf(QueryType.COUNTRY)
                 )
 
                 Then("Options should be equal", options, options.toBuilder().build())
@@ -315,6 +339,42 @@ internal class ReverseGeoOptionsTest {
     fun `Check ReverseMode public api fields`() = TestCase {
         Given("ReverseMode values") {
             checkEnumValues(REVERSE_MODE_VALUES, ReverseMode::class.java)
+        }
+    }
+
+    @TestFactory
+    fun `Check ReverseGeoOptions mapToCore uses newTypes when newTypes provided`() = TestCase {
+        Given("ReverseGeoOptions with newTypes only") {
+            val options = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
+                .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+                .build()
+            When("mapToCore() is called") {
+                val coreOptions = options.mapToCore()
+                val expectedTypes = listOf(
+                    com.mapbox.search.base.core.CoreQueryType.BRAND,
+                    com.mapbox.search.base.core.CoreQueryType.POI,
+                )
+                Then("Core options types should be newTypes mapped to core", coreOptions.types, expectedTypes)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check ReverseGeoOptions mapToCore uses newTypes when both types and newTypes provided`() = TestCase {
+        Given("ReverseGeoOptions with both types and newTypes") {
+            @Suppress("DEPRECATION")
+            val options = ReverseGeoOptions.Builder(center = TEST_COORDINATE)
+                .types(QueryType.ADDRESS, QueryType.COUNTRY)
+                .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+                .build()
+            When("mapToCore() is called") {
+                val coreOptions = options.mapToCore()
+                val expectedTypes = listOf(
+                    com.mapbox.search.base.core.CoreQueryType.BRAND,
+                    com.mapbox.search.base.core.CoreQueryType.POI,
+                )
+                Then("newTypes should take priority", coreOptions.types, expectedTypes)
+            }
         }
     }
 
@@ -346,5 +406,19 @@ internal class ReverseGeoOptionsTest {
         )
 
         val REVERSE_MODE_VALUES = listOf("DISTANCE", "SCORE")
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+            mockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+            unmockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
     }
 }

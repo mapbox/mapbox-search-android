@@ -64,9 +64,24 @@ public class SearchOptions @JvmOverloads public constructor(
     public val limit: Int? = null,
 
     /**
-     * Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+     * Filter results to include only a subset (one or more) of the available feature types.
+     * Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+     * Brand is not supported; use [newTypes] with [NewQueryType.BRAND] instead.
+     * When both [types] and [newTypes] are provided, [newTypes] take priority and a warning is logged.
      */
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+        replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+    )
     public val types: List<QueryType>? = null,
+
+    /**
+     * Filter results to include only a subset (one or more) of the available feature types.
+     * Use constants from [NewQueryType] (e.g. [NewQueryType.BRAND], [NewQueryType.POI]).
+     * When both [types] and [newTypes] are provided, [newTypes] take priority and a warning is logged.
+     */
+    public val newTypes: List<String>? = null,
 
     /**
      * Request debounce value in milliseconds. Previous request will be cancelled if the new one made within specified by [requestDebounce] time interval.
@@ -142,7 +157,8 @@ public class SearchOptions @JvmOverloads public constructor(
         fuzzyMatch: Boolean? = this.fuzzyMatch,
         languages: List<IsoLanguageCode>? = this.languages,
         limit: Int? = this.limit,
-        types: List<QueryType>? = this.types,
+        @Suppress("DEPRECATION") types: List<QueryType>? = this.types,
+        newTypes: List<String>? = this.newTypes,
         requestDebounce: Int? = this.requestDebounce,
         origin: Point? = this.origin,
         navigationOptions: SearchNavigationOptions? = this.navigationOptions,
@@ -160,6 +176,7 @@ public class SearchOptions @JvmOverloads public constructor(
             languages = languages,
             limit = limit,
             types = types,
+            newTypes = newTypes,
             requestDebounce = requestDebounce,
             origin = origin,
             navigationOptions = navigationOptions,
@@ -192,7 +209,9 @@ public class SearchOptions @JvmOverloads public constructor(
         if (fuzzyMatch != other.fuzzyMatch) return false
         if (languages != other.languages) return false
         if (limit != other.limit) return false
+        @Suppress("DEPRECATION")
         if (types != other.types) return false
+        if (newTypes != other.newTypes) return false
         if (requestDebounce != other.requestDebounce) return false
         if (origin != other.origin) return false
         if (navigationOptions != other.navigationOptions) return false
@@ -215,7 +234,9 @@ public class SearchOptions @JvmOverloads public constructor(
         result = 31 * result + (fuzzyMatch?.hashCode() ?: 0)
         result = 31 * result + (languages?.hashCode() ?: 0)
         result = 31 * result + (limit ?: 0)
+        @Suppress("DEPRECATION")
         result = 31 * result + (types?.hashCode() ?: 0)
+        result = 31 * result + (newTypes?.hashCode() ?: 0)
         result = 31 * result + (requestDebounce ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (navigationOptions?.hashCode() ?: 0)
@@ -238,7 +259,9 @@ public class SearchOptions @JvmOverloads public constructor(
                 "fuzzyMatch=$fuzzyMatch, " +
                 "languages=$languages, " +
                 "limit=$limit, " +
+                @Suppress("DEPRECATION")
                 "types=$types, " +
+                "newTypes=$newTypes, " +
                 "requestDebounce=$requestDebounce, " +
                 "origin=$origin, " +
                 "navigationOptions=$navigationOptions, " +
@@ -262,7 +285,9 @@ public class SearchOptions @JvmOverloads public constructor(
         private var fuzzyMatch: Boolean? = null
         private var languages: List<IsoLanguageCode>? = defaultSearchOptionsLanguage()
         private var limit: Int? = null
+        @Suppress("DEPRECATION")
         private var types: List<QueryType>? = null
+        private var newTypes: List<String>? = null
         private var requestDebounce: Int? = null
         private var origin: Point? = null
         private var navigationOptions: SearchNavigationOptions? = null
@@ -278,7 +303,9 @@ public class SearchOptions @JvmOverloads public constructor(
             fuzzyMatch = options.fuzzyMatch
             languages = options.languages
             limit = options.limit
+            @Suppress("DEPRECATION")
             types = options.types
+            newTypes = options.newTypes
             requestDebounce = options.requestDebounce
             origin = options.origin
             navigationOptions = options.navigationOptions
@@ -340,12 +367,36 @@ public class SearchOptions @JvmOverloads public constructor(
         /**
          * Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(vararg types: QueryType): Builder = apply { this.types = types.toList() }
 
         /**
          * Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(types: List<QueryType>): Builder = apply { this.types = types }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(vararg newTypes: String): Builder = apply { this.newTypes = newTypes.toList() }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(newTypes: List<String>): Builder = apply { this.newTypes = newTypes }
 
         /**
          * Request debounce value in milliseconds. Previous request will be cancelled if the new one made within specified by [requestDebounce] time interval.
@@ -420,6 +471,7 @@ public class SearchOptions @JvmOverloads public constructor(
             languages = languages,
             limit = limit,
             types = types,
+            newTypes = newTypes,
             requestDebounce = requestDebounce,
             origin = origin,
             navigationOptions = navigationOptions,
@@ -456,7 +508,7 @@ internal fun SearchOptions.mapToCore(): CoreSearchOptions = createCoreSearchOpti
     fuzzyMatch = fuzzyMatch,
     language = languages?.map { it.code },
     limit = limit,
-    types = types?.mapToCoreTypes(),
+    types = resolveQueryTypesToCore(@Suppress("DEPRECATION") types, newTypes),
     ignoreUR = ignoreIndexableRecords,
     urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
     requestDebounce = requestDebounce,
@@ -474,7 +526,8 @@ internal fun CoreSearchOptions.mapToPlatform(): SearchOptions = SearchOptions(
     fuzzyMatch = @Suppress("DEPRECATION") fuzzyMatch,
     languages = language?.map { IsoLanguageCode(it) },
     limit = validateLimit(limit),
-    types = types?.mapToPlatformTypes(),
+    types = null,
+    newTypes = types?.mapToNewQueryTypes(),
     requestDebounce = requestDebounce,
     origin = origin,
     navigationOptions = navProfile?.let {

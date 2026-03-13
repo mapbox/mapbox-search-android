@@ -171,9 +171,9 @@ public final class com/mapbox/search/EtaType$Creator : android/os/Parcelable$Cre
 
 public final class com/mapbox/search/ForwardSearchOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;)Lcom/mapbox/search/ForwardSearchOptions;
-	public static synthetic fun copy$default (Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/search/ForwardSearchOptions;
+	public synthetic fun <init> (Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/geojson/Point;Ljava/lang/Integer;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;)Lcom/mapbox/search/ForwardSearchOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Ljava/util/Map;ZLjava/lang/Double;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/search/ForwardSearchOptions;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttributeSets ()Ljava/util/List;
@@ -184,6 +184,7 @@ public final class com/mapbox/search/ForwardSearchOptions : android/os/Parcelabl
 	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getNavigationOptions ()Lcom/mapbox/search/SearchNavigationOptions;
+	public final fun getNewTypes ()Ljava/util/List;
 	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
 	public final fun getProximity ()Lcom/mapbox/geojson/Point;
 	public final fun getRequestDebounce ()Ljava/lang/Integer;
@@ -207,6 +208,8 @@ public final class com/mapbox/search/ForwardSearchOptions$Builder {
 	public final fun language (Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/ForwardSearchOptions$Builder;
 	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun newTypes (Ljava/util/List;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
+	public final fun newTypes ([Ljava/lang/String;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
 	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/ForwardSearchOptions$Builder;
 	public final fun requestDebounce (I)Lcom/mapbox/search/ForwardSearchOptions$Builder;
@@ -221,6 +224,25 @@ public final class com/mapbox/search/ForwardSearchOptions$Creator : android/os/P
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
 	public final fun newArray (I)[Lcom/mapbox/search/ForwardSearchOptions;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/search/NewQueryType {
+	public static final field ADDRESS Ljava/lang/String;
+	public static final field BRAND Ljava/lang/String;
+	public static final field CATEGORY Ljava/lang/String;
+	public static final field COUNTRY Ljava/lang/String;
+	public static final field DISTRICT Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/search/NewQueryType;
+	public static final field LOCALITY Ljava/lang/String;
+	public static final field NEIGHBORHOOD Ljava/lang/String;
+	public static final field PLACE Ljava/lang/String;
+	public static final field POI Ljava/lang/String;
+	public static final field POSTCODE Ljava/lang/String;
+	public static final field REGION Ljava/lang/String;
+	public static final field STREET Ljava/lang/String;
+}
+
+public abstract interface annotation class com/mapbox/search/NewQueryType$Type : java/lang/annotation/Annotation {
 }
 
 public final class com/mapbox/search/QueryType : java/lang/Enum {
@@ -289,15 +311,17 @@ public final class com/mapbox/search/ReverseGeoOptions : android/os/Parcelable {
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;)V
-	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions;
-	public static synthetic fun copy$default (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/search/ReverseGeoOptions;
+	public fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/geojson/Point;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/search/ReverseMode;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/search/ReverseGeoOptions;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCenter ()Lcom/mapbox/geojson/Point;
 	public final fun getCountries ()Ljava/util/List;
 	public final fun getLanguages ()Ljava/util/List;
 	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getNewTypes ()Ljava/util/List;
 	public final fun getReverseMode ()Lcom/mapbox/search/ReverseMode;
 	public final fun getTypes ()Ljava/util/List;
 	public fun hashCode ()I
@@ -314,6 +338,8 @@ public final class com/mapbox/search/ReverseGeoOptions$Builder {
 	public final fun languages (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun newTypes (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
+	public final fun newTypes ([Ljava/lang/String;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun reverseMode (Lcom/mapbox/search/ReverseMode;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun types (Ljava/util/List;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
 	public final fun types ([Lcom/mapbox/search/QueryType;)Lcom/mapbox/search/ReverseGeoOptions$Builder;
@@ -546,16 +572,17 @@ public final class com/mapbox/search/SearchOptions : android/os/Parcelable {
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;)V
 	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;Z)V
-	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)V
-	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)Lcom/mapbox/search/SearchOptions;
-	public static synthetic fun copy$default (Lcom/mapbox/search/SearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/SearchOptions;
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;Z)V
+	public fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;)Lcom/mapbox/search/SearchOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/search/SearchOptions;Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/BoundingBox;Ljava/util/List;Ljava/lang/Boolean;Ljava/util/List;Ljava/lang/Integer;Ljava/util/List;Ljava/util/List;Ljava/lang/Integer;Lcom/mapbox/geojson/Point;Lcom/mapbox/search/SearchNavigationOptions;Lcom/mapbox/search/RouteOptions;Ljava/util/Map;ZLjava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/search/SearchOptions;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBoundingBox ()Lcom/mapbox/geojson/BoundingBox;
@@ -566,6 +593,7 @@ public final class com/mapbox/search/SearchOptions : android/os/Parcelable {
 	public final fun getLanguages ()Ljava/util/List;
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getNavigationOptions ()Lcom/mapbox/search/SearchNavigationOptions;
+	public final fun getNewTypes ()Ljava/util/List;
 	public final fun getOrigin ()Lcom/mapbox/geojson/Point;
 	public final fun getProximity ()Lcom/mapbox/geojson/Point;
 	public final fun getRequestDebounce ()Ljava/lang/Integer;
@@ -591,6 +619,8 @@ public final class com/mapbox/search/SearchOptions$Builder {
 	public final fun languages ([Lcom/mapbox/search/common/IsoLanguageCode;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun limit (I)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun navigationOptions (Lcom/mapbox/search/SearchNavigationOptions;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun newTypes (Ljava/util/List;)Lcom/mapbox/search/SearchOptions$Builder;
+	public final fun newTypes ([Ljava/lang/String;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun origin (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun proximity (Lcom/mapbox/geojson/Point;)Lcom/mapbox/search/SearchOptions$Builder;
 	public final fun requestDebounce (I)Lcom/mapbox/search/SearchOptions$Builder;

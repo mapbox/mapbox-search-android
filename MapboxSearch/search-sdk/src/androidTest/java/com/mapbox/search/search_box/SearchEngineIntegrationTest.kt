@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 @file:OptIn(RestrictedMapboxSearchAPI::class)
 
 package com.mapbox.search.search_box
@@ -12,6 +13,7 @@ import com.mapbox.search.BaseTest
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.EtaType
 import com.mapbox.search.MapboxSearchSdk
+import com.mapbox.search.NewQueryType
 import com.mapbox.search.QueryType
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.ResponseInfo
@@ -202,6 +204,23 @@ internal class SearchEngineIntegrationTest : BaseTest() {
         assertEquals("polyline6", url.queryParameter("route_geometry"))
 
         assertFalse(request.headers["X-Request-ID"].isNullOrEmpty())
+    }
+
+    @Test
+    fun testRequestParametersNewQueryType() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val options = SearchOptions(
+            newTypes = listOf(NewQueryType.BRAND, NewQueryType.DISTRICT),
+        )
+
+        searchEngine.searchBlocking(TEST_QUERY, options)
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEquals(
+            options.newTypes?.joinToString(separator = ",") { it.lowercase(Locale.getDefault()) },
+            url.queryParameter("types")
+        )
     }
 
     @Test

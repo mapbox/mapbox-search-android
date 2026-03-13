@@ -66,9 +66,23 @@ public class ForwardSearchOptions private constructor(
      * Filter results to include only a subset (one or more) of the available feature types.
      * See the
      * [Administrative unit types section](https://docs.mapbox.com/api/search/search-box/#administrative-unit-types)
-     * for details about the types.
+     * for details about the types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi.
+     * Brand is not supported; use [newTypes] with [NewQueryType.BRAND] instead.
+     * When both [types] and [newTypes] are provided, [newTypes] take priority.
      */
+    @Deprecated(
+        message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+        replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+    )
+    @Suppress("DEPRECATION")
     public val types: List<QueryType>? = null,
+
+    /**
+     * Filter results to include only a subset (one or more) of the available feature types.
+     * Use constants from [NewQueryType] (e.g. [NewQueryType.BRAND], [NewQueryType.POI]).
+     * When both [types] and [newTypes] are provided, [newTypes] take priority and a warning is logged.
+     */
+    public val newTypes: List<String>? = null,
 
     /**
      * Navigation options used for Estimate Time Arrival (ETA) calculation in the response.
@@ -142,7 +156,8 @@ public class ForwardSearchOptions private constructor(
         countries: List<IsoCountryCode>? = this.countries,
         language: IsoLanguageCode? = this.language,
         limit: Int? = this.limit,
-        types: List<QueryType>? = this.types,
+        @Suppress("DEPRECATION") types: List<QueryType>? = this.types,
+        newTypes: List<String>? = this.newTypes,
         requestDebounce: Int? = this.requestDebounce,
         origin: Point? = this.origin,
         navigationOptions: SearchNavigationOptions? = this.navigationOptions,
@@ -158,6 +173,7 @@ public class ForwardSearchOptions private constructor(
             language = language,
             limit = limit,
             types = types,
+            newTypes = newTypes,
             requestDebounce = requestDebounce,
             origin = origin,
             navigationOptions = navigationOptions,
@@ -189,7 +205,9 @@ public class ForwardSearchOptions private constructor(
         if (proximity != other.proximity) return false
         if (boundingBox != other.boundingBox) return false
         if (countries != other.countries) return false
+        @Suppress("DEPRECATION")
         if (types != other.types) return false
+        if (newTypes != other.newTypes) return false
         if (navigationOptions != other.navigationOptions) return false
         if (origin != other.origin) return false
         if (requestDebounce != other.requestDebounce) return false
@@ -210,7 +228,9 @@ public class ForwardSearchOptions private constructor(
         result = 31 * result + (proximity?.hashCode() ?: 0)
         result = 31 * result + (boundingBox?.hashCode() ?: 0)
         result = 31 * result + (countries?.hashCode() ?: 0)
+        @Suppress("DEPRECATION")
         result = 31 * result + (types?.hashCode() ?: 0)
+        result = 31 * result + (newTypes?.hashCode() ?: 0)
         result = 31 * result + (navigationOptions?.hashCode() ?: 0)
         result = 31 * result + (origin?.hashCode() ?: 0)
         result = 31 * result + (requestDebounce ?: 0)
@@ -231,7 +251,9 @@ public class ForwardSearchOptions private constructor(
                 "proximity=$proximity, " +
                 "boundingBox=$boundingBox, " +
                 "countries=$countries, " +
+                @Suppress("DEPRECATION")
                 "types=$types, " +
+                "newTypes=$newTypes, " +
                 "navigationOptions=$navigationOptions, " +
                 "origin=$origin, " +
                 "requestDebounce=$requestDebounce, " +
@@ -253,7 +275,9 @@ public class ForwardSearchOptions private constructor(
         private var countries: List<IsoCountryCode>? = null
         private var language: IsoLanguageCode? = defaultLocaleLanguage()
         private var limit: Int? = null
+        @Suppress("DEPRECATION")
         private var types: List<QueryType>? = null
+        private var newTypes: List<String>? = null
         private var requestDebounce: Int? = null
         private var origin: Point? = null
         private var navigationOptions: SearchNavigationOptions? = null
@@ -268,7 +292,9 @@ public class ForwardSearchOptions private constructor(
             countries = options.countries
             language = options.language
             limit = options.limit
+            @Suppress("DEPRECATION")
             types = options.types
+            newTypes = options.newTypes
             requestDebounce = options.requestDebounce
             origin = options.origin
             navigationOptions = options.navigationOptions
@@ -332,17 +358,41 @@ public class ForwardSearchOptions private constructor(
          * Filter results to include only a subset (one or more) of the available feature types.
          * See the
          * [Administrative unit types section](https://docs.mapbox.com/api/search/search-box/#administrative-unit-types)
-         * for details about the types.
+         * for details. Brand is not supported; use newTypes with NewQueryType.BRAND instead.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(vararg types: QueryType): Builder = apply { this.types = types.toList() }
 
         /**
          * Filter results to include only a subset (one or more) of the available feature types.
          * See the
          * [Administrative unit types section](https://docs.mapbox.com/api/search/search-box/#administrative-unit-types)
-         * for details about the types.
+         * for details. Brand is not supported; use newTypes with NewQueryType.BRAND instead.
          */
+        @Deprecated(
+            message = "Use newTypes with NewQueryType constants for extended support (e.g. BRAND).",
+            replaceWith = ReplaceWith("newTypes", "com.mapbox.search.NewQueryType"),
+        )
+        @Suppress("DEPRECATION")
         public fun types(types: List<QueryType>): Builder = apply { this.types = types }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(vararg newTypes: String): Builder = apply { this.newTypes = newTypes.toList() }
+
+        /**
+         * Filter results to include only a subset (one or more) of the available feature types.
+         * Use [NewQueryType] constants (e.g. [NewQueryType.BRAND]).
+         * When both [types] and [newTypes] are set, [newTypes] take priority and a warning is logged.
+         */
+        public fun newTypes(newTypes: List<String>): Builder = apply { this.newTypes = newTypes }
 
         /**
          * Navigation options used for Estimate Time Arrival (ETA) calculation in the response.
@@ -415,6 +465,7 @@ public class ForwardSearchOptions private constructor(
             language = language,
             limit = limit,
             types = types,
+            newTypes = newTypes,
             requestDebounce = requestDebounce,
             origin = origin,
             navigationOptions = navigationOptions,
@@ -436,7 +487,7 @@ internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = createCoreSea
     countries = countries?.map { it.code },
     language = language?.code?.let { listOf(it) },
     limit = limit,
-    types = types?.mapToCoreTypes(),
+    types = resolveQueryTypesToCore(@Suppress("DEPRECATION") types, newTypes),
     ignoreUR = ignoreIndexableRecords,
     urDistanceThreshold = indexableRecordsDistanceThresholdMeters,
     requestDebounce = requestDebounce,

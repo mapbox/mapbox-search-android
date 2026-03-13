@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-python scripts/license-validate.py
+python3 scripts/license-validate.py
 
 pushd MapboxSearch/
 

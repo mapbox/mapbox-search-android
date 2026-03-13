@@ -2,14 +2,22 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.base.core.CoreQueryType
+import com.mapbox.search.base.logger.reinitializeLogImpl
+import com.mapbox.search.base.logger.resetLogImpl
 import com.mapbox.search.base.utils.extension.mapToCore
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.NavigationProfile
+import com.mapbox.search.common.tests.TestConstants
 import com.mapbox.search.common.tests.createTestCoreSearchOptions
 import com.mapbox.test.dsl.TestCase
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import org.junit.After
 import org.junit.Before
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestFactory
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -79,6 +87,7 @@ internal class SearchOptionsTest {
                     .indexableRecordsDistanceThresholdMeters(50.0)
                     .build()
 
+                @Suppress("DEPRECATION")
                 val expectedOptions = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
@@ -123,6 +132,7 @@ internal class SearchOptionsTest {
                     .indexableRecordsDistanceThresholdMeters(100.123)
                     .build()
 
+                @Suppress("DEPRECATION")
                 val expectedOptions = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
@@ -184,6 +194,7 @@ internal class SearchOptionsTest {
 
                 val actualOptions = originalOptions.mapToCore()
 
+                @Suppress("DEPRECATION")
                 val expectedOptions = createTestCoreSearchOptions(
                     proximity = TEST_POINT,
                     origin = TEST_ORIGIN_POINT,
@@ -213,6 +224,7 @@ internal class SearchOptionsTest {
     fun `Check filled SearchOptions toBuilder() function`() = TestCase {
         Given("SearchOptions") {
             When("Use toBuilder() function and then build new SearchOptions") {
+                @Suppress("DEPRECATION")
                 val options = SearchOptions(
                     proximity = TEST_POINT,
                     boundingBox = TEST_BOUNDING_BOX,
@@ -267,6 +279,36 @@ internal class SearchOptionsTest {
                 WhenThrows("Create SearchOptions with constructor", IllegalArgumentException::class) {
                     SearchOptions(limit = inputValue)
                 }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check SearchOptions mapToCore uses newTypes when newTypes provided`() = TestCase {
+        Given("SearchOptions with newTypes only") {
+            val options = SearchOptions.Builder()
+                .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+                .build()
+            When("mapToCore() is called") {
+                val coreOptions = options.mapToCore()
+                val expectedTypes = listOf(CoreQueryType.BRAND, CoreQueryType.POI)
+                Then("Core options types should be newTypes mapped to core", coreOptions.types, expectedTypes)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `Check SearchOptions mapToCore uses newTypes when both types and newTypes provided`() = TestCase {
+        Given("SearchOptions with both types and newTypes") {
+            @Suppress("DEPRECATION")
+            val options = SearchOptions.Builder()
+                .types(QueryType.ADDRESS, QueryType.COUNTRY)
+                .newTypes(NewQueryType.BRAND, NewQueryType.POI)
+                .build()
+            When("mapToCore() is called") {
+                val coreOptions = options.mapToCore()
+                val expectedTypes = listOf(CoreQueryType.BRAND, CoreQueryType.POI)
+                Then("newTypes should take priority", coreOptions.types, expectedTypes)
             }
         }
     }
@@ -327,5 +369,19 @@ internal class SearchOptionsTest {
             "routing" to "true",
             "autocomplete" to "false",
         )
+
+        @BeforeAll
+        @JvmStatic
+        fun setUpAll() {
+            resetLogImpl()
+            mockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
+
+        @AfterAll
+        @JvmStatic
+        fun tearDownAll() {
+            reinitializeLogImpl()
+            unmockkStatic(TestConstants.ASSERTIONS_KT_CLASS_NAME)
+        }
     }
 }
