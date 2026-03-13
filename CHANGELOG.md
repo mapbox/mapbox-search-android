@@ -1,5 +1,241 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.20.0
+
+### Bug fixes
+- Various bug fixes in dependencies.
+
+### Mapbox dependencies
+- Search Native SDK `2.20.0`
+- Common SDK `24.20.0`
+- Maps SDK `11.20.0`
+
+
+
+## 2.20.0-rc.1
+
+### Bug fixes
+- Various bug fixes in dependencies.
+
+### Mapbox dependencies
+- Search Native SDK `2.20.0-rc.1`
+- Common SDK `24.20.0-rc.1`
+- Maps SDK `11.20.0-rc.1`
+
+
+
+## 2.19.1
+
+### Mapbox dependencies
+- Search Native SDK `2.19.1`
+- Common SDK `24.19.1`
+- Maps SDK `11.19.1`
+
+
+
+## 2.19.0
+
+### Bug fixes
+- Various bug fixes in dependencies.
+
+### Mapbox dependencies
+- Search Native SDK `2.19.0`
+- Common SDK `24.19.0`
+- Maps SDK `11.19.0`
+
+
+
+## 2.19.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.19.0-rc.1`
+- Common SDK `24.19.0-rc.1`
+- Maps SDK `11.19.0-rc.1`
+
+
+
+## 2.19.0-beta.1
+
+### Mapbox dependencies
+- Search Native SDK `2.19.0-beta.1`
+- Common SDK `24.19.0-beta.1`
+- Maps SDK `11.19.0-beta.1`
+
+
+
+## 2.18.2
+
+### Mapbox dependencies
+- Search Native SDK `2.18.2`
+- Common SDK `24.18.2`
+- Maps SDK `11.18.2`
+
+
+
+## 2.18.1
+
+### New features
+- Added category IDs to offline search results when included in tiles
+
+### Mapbox dependencies
+- Search Native SDK `2.18.1`
+- Common SDK `24.18.1`
+- Maps SDK `11.18.1`
+
+
+
+## 2.18.0
+
+### Bug fixes
+- Restore fallback tileset selection when selectTileset is not called.
+
+### Mapbox dependencies
+- Search Native SDK `2.18.0`
+- Common SDK `24.18.0`
+- Maps SDK `11.18.0`
+
+
+
+## 2.18.0-beta.1
+
+### Bug fixes
+- Various bugfixes and improvements.
+
+### Mapbox dependencies
+- Search Native SDK `2.18.0-beta.1`
+- Common SDK `24.18.0-beta.1`
+- Maps SDK `11.18.0-beta.1`
+
+
+
+## 2.17.2
+
+### Mapbox dependencies
+- Search Native SDK `2.17.2`
+- Common SDK `24.17.2`
+- Maps SDK `11.17.2`
+
+
+
+## 2.17.1
+
+### Mapbox dependencies
+- Search Native SDK `2.17.1`
+- Common SDK `24.17.1`
+- Maps SDK `11.17.1`
+
+
+
+## 2.17.0
+
+### New features
+- Added postcode in offline search results. Availability depends on dataset.
+
+### Mapbox dependencies
+- Search Native SDK `2.17.0`
+- Common SDK `24.17.0`
+- Maps SDK `11.17.0`
+
+
+
+## 2.17.0-rc.1
+
+### Bug fixes
+- Various bug fixes and improvements.
+
+### Mapbox dependencies
+- Search Native SDK `2.17.0-rc.1`
+- Common SDK `24.17.0-rc.1`
+- Maps SDK `11.17.0-rc.1`
+
+
+
+## 2.17.0-beta.1
+
+### Bug fixes
+- Various bug fixes and improvements.
+
+### Mapbox dependencies
+- Search Native SDK `2.17.0-beta.1`
+- Common SDK `24.17.0-beta.1`
+- Maps SDK `11.17.0-beta.1`
+
+
+
+## 2.16.4
+
+### Mapbox dependencies
+- Search Native SDK `2.16.4`
+- Common SDK `24.16.4`
+- Maps SDK `11.16.4`
+
+
+
+## 2.16.3
+
+### Mapbox dependencies
+- Search Native SDK `2.16.3`
+- Common SDK `24.16.3`
+- Maps SDK `11.16.3`
+
+
+
+## 2.16.2
+
+### Mapbox dependencies
+- Search Native SDK `2.16.2`
+- Common SDK `24.16.2`
+- Maps SDK `11.16.2`
+
+
+
+## 2.16.1
+
+### Bug fixes
+- Fix data race by serializing tile update and offline search tasks
+
+### Mapbox dependencies
+- Search Native SDK `2.16.1`
+- Common SDK `24.16.2`
+- Maps SDK `11.16.1`
+
+
+
+## 2.16.0
+
+### Mapbox dependencies
+- Search Native SDK `2.16.0`
+- Common SDK `24.16.0`
+- Maps SDK `11.16.0`
+
+
+
+## 2.16.0-rc.1
+
+### Bug fixes
+- Fixed an issue where results were sometimes empty when bounding box was provided but proximity was not set
+- Ignore invalid place types in offline search to prevent broken addresses
+
+### Mapbox dependencies
+- Search Native SDK `2.16.0-rc.1`
+- Common SDK `24.16.0-rc.1`
+- Maps SDK `11.16.0-rc.1`
+
+
+
+# 2.16.0-beta.1
+
+### Bug fixes 🐞
+- Fixed an issue where results were sometimes empty when bounding box was provided but proximity was not set.
+- Ignore invalid place types in offline search to prevent broken addresses.
+
+### Mapbox dependencies
+- Search Native SDK `324.16.0-beta.1`
+- Common SDK `24.16.0-beta.1`
+- Maps SDK `11.16.0-beta.1`
+
+
+
 ## 2.15.0
 
 ### New features
