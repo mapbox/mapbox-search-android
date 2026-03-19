@@ -23,7 +23,7 @@ ext {
             gradle           : '8.10.1',
             kotlin           : kotlinVersion,
             mapboxSdkVersions: '1.1.5',
-            mapboxSdkRegistry: '1.4.3',
+            mapboxSdkRegistry: '1.5.5',
             pitest           : '0.15',
             gradlePitest     : '0.2.8',
             license          : '0.8.91',

@@ -82,4 +82,6 @@ registry {
                 System.getenv('SDK_REGISTRY_DRYRUN') != null ? System.getenv('SDK_REGISTRY_DRYRUN').toBoolean() :
                 true
     publications = ["MapboxAndroidSDKPublication"]
+    sbom = true
+    sbomSupplier = "Mapbox"
 }
