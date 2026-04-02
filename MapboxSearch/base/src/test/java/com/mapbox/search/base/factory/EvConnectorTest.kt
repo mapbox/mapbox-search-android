@@ -82,6 +82,8 @@ class EvConnectorTest {
         assertEquals(CoreConnectorType.PANTOGRAPH_TOP_DOWN, createCoreConnectorType(EvConnectorType.PANTOGRAPH_TOP_DOWN))
         assertEquals(CoreConnectorType.TESLA_R, createCoreConnectorType(EvConnectorType.TESLA_R))
         assertEquals(CoreConnectorType.TESLA_S, createCoreConnectorType(EvConnectorType.TESLA_S))
+        assertEquals(CoreConnectorType.MCS, createCoreConnectorType(EvConnectorType.MCS))
+        assertEquals(CoreConnectorType.SAE_J3400, createCoreConnectorType(EvConnectorType.SAE_J3400))
         assertEquals(CoreConnectorType.UNKNOWN, createCoreConnectorType(EvConnectorType.UNKNOWN))
         assertNull(createCoreConnectorType("UNKNOWN_TYPE"))
     }
@@ -128,6 +130,8 @@ class EvConnectorTest {
         assertEquals(EvConnectorType.PANTOGRAPH_TOP_DOWN, CoreConnectorType.PANTOGRAPH_TOP_DOWN.mapToPlatform())
         assertEquals(EvConnectorType.TESLA_R, CoreConnectorType.TESLA_R.mapToPlatform())
         assertEquals(EvConnectorType.TESLA_S, CoreConnectorType.TESLA_S.mapToPlatform())
+        assertEquals(EvConnectorType.MCS, CoreConnectorType.MCS.mapToPlatform())
+        assertEquals(EvConnectorType.SAE_J3400, CoreConnectorType.SAE_J3400.mapToPlatform())
         assertEquals(EvConnectorType.UNKNOWN, CoreConnectorType.UNKNOWN.mapToPlatform())
     }
 }

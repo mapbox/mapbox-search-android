@@ -80,6 +80,8 @@ fun createCoreConnectorType(@EvConnectorType.Type type: String): CoreConnectorTy
         EvConnectorType.PANTOGRAPH_TOP_DOWN -> CoreConnectorType.PANTOGRAPH_TOP_DOWN
         EvConnectorType.TESLA_R -> CoreConnectorType.TESLA_R
         EvConnectorType.TESLA_S -> CoreConnectorType.TESLA_S
+        EvConnectorType.MCS -> CoreConnectorType.MCS
+        EvConnectorType.SAE_J3400 -> CoreConnectorType.SAE_J3400
         EvConnectorType.UNKNOWN -> CoreConnectorType.UNKNOWN
         else -> null
     }
@@ -129,6 +131,8 @@ fun CoreConnectorType.mapToPlatform(): String {
         CoreConnectorType.PANTOGRAPH_TOP_DOWN -> EvConnectorType.PANTOGRAPH_TOP_DOWN
         CoreConnectorType.TESLA_R -> EvConnectorType.TESLA_R
         CoreConnectorType.TESLA_S -> EvConnectorType.TESLA_S
+        CoreConnectorType.MCS -> EvConnectorType.MCS
+        CoreConnectorType.SAE_J3400 -> EvConnectorType.SAE_J3400
         CoreConnectorType.UNKNOWN -> EvConnectorType.UNKNOWN
     }
 }
