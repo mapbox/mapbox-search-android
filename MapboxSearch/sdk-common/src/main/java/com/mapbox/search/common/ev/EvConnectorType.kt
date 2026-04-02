@@ -212,6 +212,16 @@ public object EvConnectorType {
     public const val TESLA_S: String = "TESLA_S"
 
     /**
+     * Megawatt Charging System, DC.
+     */
+    public const val MCS: String = "MCS"
+
+    /**
+     * SAE J3400, formerly NACS (North American Charging Standard), DC.
+     */
+    public const val SAE_J3400: String = "SAE_J3400"
+
+    /**
      * Connector type is unknown.
      */
     public const val UNKNOWN: String = "UNKNOWN"
@@ -261,6 +271,8 @@ public object EvConnectorType {
         PANTOGRAPH_TOP_DOWN,
         TESLA_R,
         TESLA_S,
+        MCS,
+        SAE_J3400,
         UNKNOWN,
     )
     public annotation class Type

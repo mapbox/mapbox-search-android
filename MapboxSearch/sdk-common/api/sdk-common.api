@@ -714,6 +714,7 @@ public final class com/mapbox/search/common/ev/EvConnectorType {
 	public static final field IEC_62196_T3_A Ljava/lang/String;
 	public static final field IEC_62196_T3_C Ljava/lang/String;
 	public static final field INSTANCE Lcom/mapbox/search/common/ev/EvConnectorType;
+	public static final field MCS Ljava/lang/String;
 	public static final field NEMA_10_30 Ljava/lang/String;
 	public static final field NEMA_10_50 Ljava/lang/String;
 	public static final field NEMA_14_30 Ljava/lang/String;
@@ -723,6 +724,7 @@ public final class com/mapbox/search/common/ev/EvConnectorType {
 	public static final field NEMA_6_50 Ljava/lang/String;
 	public static final field PANTOGRAPH_BOTTOM_UP Ljava/lang/String;
 	public static final field PANTOGRAPH_TOP_DOWN Ljava/lang/String;
+	public static final field SAE_J3400 Ljava/lang/String;
 	public static final field TESLA_R Ljava/lang/String;
 	public static final field TESLA_S Ljava/lang/String;
 	public static final field UNKNOWN Ljava/lang/String;
