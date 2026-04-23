@@ -39,11 +39,19 @@ public class FavoriteRecord
     override val metadata: SearchResultMetadata?,
 
     /**
-     * Type of the history record.
+     * Type of the favorite record.
      * Must be one of the constants defined in [NewSearchResultType.Type] values.
      * @see [NewSearchResultType]
      */
     override val newType: String = newSearchResultTypeToFromOld(type),
+
+    /**
+     * Timestamp of the favorite record creation or last modification, in milliseconds since epoch.
+     * Equal to [UNKNOWN_TIMESTAMP] for records created before this field was introduced.
+     * @see System.currentTimeMillis
+     * @see UNKNOWN_TIMESTAMP
+     */
+    public val timestamp: Long = UNKNOWN_TIMESTAMP,
 ) : IndexableRecord, Parcelable {
 
     override val indexTokens: List<String>
@@ -52,6 +60,7 @@ public class FavoriteRecord
     /**
      * Secondary constructor that accepts [newType] instead of the deprecated [type].
      */
+    @JvmOverloads
     public constructor(
         id: String,
         name: String,
@@ -63,6 +72,7 @@ public class FavoriteRecord
         coordinate: Point,
         metadata: SearchResultMetadata?,
         @NewSearchResultType.Type newType: String,
+        timestamp: Long = UNKNOWN_TIMESTAMP,
     ) : this(
         id = id,
         name = name,
@@ -75,6 +85,7 @@ public class FavoriteRecord
         type = newSearchResultTypeToOld(newType),
         metadata = metadata,
         newType = newType,
+        timestamp = timestamp,
     )
 
     /**
@@ -93,6 +104,7 @@ public class FavoriteRecord
         type: SearchResultType = this.type,
         metadata: SearchResultMetadata? = this.metadata,
         @NewSearchResultType.Type newType: String = this.newType,
+        timestamp: Long = this.timestamp,
     ): FavoriteRecord {
         return FavoriteRecord(
             id = id,
@@ -106,6 +118,7 @@ public class FavoriteRecord
             type = type,
             metadata = metadata,
             newType = newType,
+            timestamp = timestamp,
         )
     }
 
@@ -129,6 +142,7 @@ public class FavoriteRecord
         if (type != other.type) return false
         if (metadata != other.metadata) return false
         if (newType != other.newType) return false
+        if (timestamp != other.timestamp) return false
 
         return true
     }
@@ -148,6 +162,7 @@ public class FavoriteRecord
         result = 31 * result + type.hashCode()
         result = 31 * result + (metadata?.hashCode() ?: 0)
         result = 31 * result + newType.hashCode()
+        result = 31 * result + timestamp.hashCode()
         return result
     }
 
@@ -166,7 +181,21 @@ public class FavoriteRecord
                 "coordinate=$coordinate, " +
                 "type=$type, " +
                 "newType=$newType, " +
-                "metadata=$metadata" +
+                "metadata=$metadata, " +
+                "timestamp=$timestamp" +
                 ")"
+    }
+
+    /**
+     * Companion object.
+     */
+    public companion object {
+
+        /**
+         * Sentinel value for [timestamp] indicating that the creation or modification time is
+         * unknown. This is the value assigned to records that were created before the [timestamp]
+         * field was introduced.
+         */
+        public const val UNKNOWN_TIMESTAMP: Long = -1L
     }
 }

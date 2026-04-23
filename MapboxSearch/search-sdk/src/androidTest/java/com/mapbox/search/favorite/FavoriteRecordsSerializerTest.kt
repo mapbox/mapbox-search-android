@@ -51,6 +51,19 @@ internal class FavoriteRecordsSerializerTest : BaseTest() {
     }
 
     @Test
+    fun testTimestampRoundTrip() {
+        val record = TEST_RECORD.copy(timestamp = 1_700_000_000_000L)
+        val deserialized = serializer.deserialize(serializer.serialize(listOf(record)))
+        Assert.assertEquals(listOf(record), deserialized)
+    }
+
+    @Test
+    fun testRecordsWithoutTimestampDeserializeToUnknown() {
+        val deserialized = serializer.deserialize(readBytesFromAssets("test_data_favorites.json"))
+        Assert.assertTrue(deserialized.all { it.timestamp == FavoriteRecord.UNKNOWN_TIMESTAMP })
+    }
+
+    @Test
     fun testDeserializeJsonData() {
         val deserialized = serializer.deserialize(readBytesFromAssets("test_data_favorites.json"))
         Assert.assertEquals(
