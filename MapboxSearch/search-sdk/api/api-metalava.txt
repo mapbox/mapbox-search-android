@@ -818,10 +818,12 @@ package com.mapbox.search.details {
 package com.mapbox.search.record {
 
   @kotlinx.parcelize.Parcelize public final class FavoriteRecord implements com.mapbox.search.record.IndexableRecord android.os.Parcelable {
+    ctor @Deprecated public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, String newType = newSearchResultTypeToFromOld(type), long timestamp = -1L);
     ctor @Deprecated public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata, String newType = newSearchResultTypeToFromOld(type));
     ctor @Deprecated public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, @Deprecated com.mapbox.search.result.SearchResultType type, com.mapbox.search.SearchResultMetadata? metadata);
+    ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.SearchResultMetadata? metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType, long timestamp = -1L);
     ctor public FavoriteRecord(String id, String name, String? descriptionText, com.mapbox.search.result.SearchAddress? address, java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints, java.util.List<java.lang.String>? categories, String? makiIcon, com.mapbox.geojson.Point coordinate, com.mapbox.search.SearchResultMetadata? metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType);
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.FavoriteRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType = newType);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.record.FavoriteRecord! copy(String id = id, String name = name, String descriptionText = descriptionText, com.mapbox.search.result.SearchAddress? address = address, java.util.List<? extends com.mapbox.search.common.RoutablePoint>? routablePoints = routablePoints, java.util.List<? extends java.lang.String>? categories = categories, String makiIcon = makiIcon, com.mapbox.geojson.Point coordinate = coordinate, com.mapbox.search.result.SearchResultType type = type, com.mapbox.search.SearchResultMetadata? metadata = metadata, @com.mapbox.search.result.NewSearchResultType.Type String newType = newType, long timestamp = timestamp);
     method public com.mapbox.search.result.SearchAddress? getAddress();
     method public java.util.List<java.lang.String>? getCategories();
     method public com.mapbox.geojson.Point getCoordinate();
@@ -832,6 +834,7 @@ package com.mapbox.search.record {
     method public com.mapbox.search.SearchResultMetadata? getMetadata();
     method public String getName();
     method public java.util.List<com.mapbox.search.common.RoutablePoint>? getRoutablePoints();
+    method public long getTimestamp();
     method @Deprecated public com.mapbox.search.result.SearchResultType getType();
     property public com.mapbox.search.result.SearchAddress? address;
     property public java.util.List<java.lang.String>? categories;
@@ -844,7 +847,13 @@ package com.mapbox.search.record {
     property public String name;
     property public String newType;
     property public java.util.List<com.mapbox.search.common.RoutablePoint>? routablePoints;
+    property public final long timestamp;
     property @Deprecated public com.mapbox.search.result.SearchResultType type;
+    field public static final com.mapbox.search.record.FavoriteRecord.Companion Companion;
+    field public static final long UNKNOWN_TIMESTAMP = -1L; // 0xffffffffffffffffL
+  }
+
+  public static final class FavoriteRecord.Companion {
   }
 
   public interface FavoritesDataProvider extends com.mapbox.search.record.LocalDataProvider<com.mapbox.search.record.FavoriteRecord> {

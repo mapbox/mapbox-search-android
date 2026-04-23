@@ -15,6 +15,7 @@ internal data class FavoriteRecordDAO(
     @SerializedName("categories") val categories: List<String>? = null,
     @SerializedName("routablePoints") val routablePoints: List<RoutablePointDAO>? = null,
     @SerializedName("metadata") val metadata: SearchResultMetadataDAO? = null,
+    @SerializedName("timestamp") val timestamp: Long? = null,
 ) : DataAccessObject<FavoriteRecord> {
 
     override val isValid: Boolean
@@ -33,7 +34,8 @@ internal data class FavoriteRecordDAO(
             makiIcon = makiIcon,
             categories = categories,
             routablePoints = routablePoints?.map { it.createData() },
-            metadata = metadata?.createData()
+            metadata = metadata?.createData(),
+            timestamp = timestamp ?: FavoriteRecord.UNKNOWN_TIMESTAMP,
         )
     }
 
@@ -51,7 +53,8 @@ internal data class FavoriteRecordDAO(
                     makiIcon = makiIcon,
                     categories = categories,
                     routablePoints = routablePoints?.mapNotNull { RoutablePointDAO.create(it) },
-                    metadata = SearchResultMetadataDAO.create(metadata)
+                    metadata = SearchResultMetadataDAO.create(metadata),
+                    timestamp = timestamp,
                 )
             }
         }
