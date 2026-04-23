@@ -183,6 +183,7 @@ internal fun createTestFavoriteRecord(
     categories: List<String>? = listOf("test"),
     routablePoints: List<RoutablePoint>? = null,
     metadata: SearchResultMetadata? = null,
+    timestamp: Long = FavoriteRecord.UNKNOWN_TIMESTAMP,
 ) = FavoriteRecord(
     id = id,
     name = name,
@@ -193,7 +194,8 @@ internal fun createTestFavoriteRecord(
     makiIcon = makiIcon,
     categories = categories,
     routablePoints = routablePoints,
-    metadata = metadata
+    metadata = metadata,
+    timestamp = timestamp,
 )
 
 @Suppress("LongParameterList")
