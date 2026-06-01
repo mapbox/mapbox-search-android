@@ -36,6 +36,13 @@ public class OfflineSearchResultMetadata internal constructor(
     public val extraData: Map<String, String> = coreMetadata.data
 
     /**
+     * Phone number, associated with the search result.
+     * Available only for resolved [com.mapbox.search.result.SearchResult].
+     */
+    @IgnoredOnParcel
+    public val phone: String? = coreMetadata.phone
+
+    /**
      * Website, associated with the search result.
      * Available only for resolved [com.mapbox.search.result.SearchResult].
      */
@@ -146,6 +153,7 @@ public class OfflineSearchResultMetadata internal constructor(
     override fun toString(): String {
         return "OfflineSearchResultMetadata(" +
                 "extraData=$extraData, " +
+                "phone=$phone, " +
                 "website=$website, " +
                 "primaryPhotos=$primaryPhotos, " +
                 "otherPhotos=$otherPhotos, " +
