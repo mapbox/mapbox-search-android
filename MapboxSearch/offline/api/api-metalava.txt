@@ -330,6 +330,7 @@ package com.mapbox.search.offline {
     method public Boolean? getParkingAvailable();
     method public com.mapbox.search.common.parking.ParkingInfo? getParkingInfo();
     method public String? getParkingType();
+    method public String? getPhone();
     method public java.util.List<com.mapbox.search.common.metadata.ImageInfo>? getPrimaryPhotos();
     method public Boolean? getStreetParking();
     method public String? getTimezone();
@@ -344,6 +345,7 @@ package com.mapbox.search.offline {
     property public final Boolean? parkingAvailable;
     property public final com.mapbox.search.common.parking.ParkingInfo? parkingInfo;
     property public final String? parkingType;
+    property public final String? phone;
     property public final java.util.List<com.mapbox.search.common.metadata.ImageInfo>? primaryPhotos;
     property public final Boolean? streetParking;
     property public final String? timezone;

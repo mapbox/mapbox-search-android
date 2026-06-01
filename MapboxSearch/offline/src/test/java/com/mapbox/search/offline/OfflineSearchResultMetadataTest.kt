@@ -44,6 +44,7 @@ internal class OfflineSearchResultMetadataTest {
     @Test
     fun `fields access test`() {
         val mockData = mockk<HashMap<String, String>>(relaxed = true)
+        val testPhone = "+1 555 0100"
         val testWebsite = "https://test.com"
         val primaryPhotos = listOf(createCoreImageInfo("https://test.com/primary.png", 300, 100))
         val otherPhotos = listOf(createCoreImageInfo("https://test.com/other.png", 300, 100))
@@ -59,6 +60,7 @@ internal class OfflineSearchResultMetadataTest {
 
         val coreMetadata = mockk<CoreResultMetadata>(relaxed = true).apply {
             every { this@apply.data } returns mockData
+            every { this@apply.phone } returns testPhone
             every { this@apply.website } returns testWebsite
             every { this@apply.primaryPhoto } returns primaryPhotos
             every { this@apply.otherPhoto } returns otherPhotos
@@ -76,6 +78,7 @@ internal class OfflineSearchResultMetadataTest {
         val metadata = OfflineSearchResultMetadata(coreMetadata)
         verify(exactly = 1) {
             coreMetadata.data
+            coreMetadata.phone
             coreMetadata.website
             coreMetadata.primaryPhoto
             coreMetadata.otherPhoto
@@ -90,6 +93,7 @@ internal class OfflineSearchResultMetadataTest {
             coreMetadata.lastUpdated
         }
         assertSame(mockData, metadata.extraData)
+        assertSame(testPhone, metadata.phone)
         assertSame(testWebsite, metadata.website)
         assertEquals(primaryPhotos.map { it.mapToPlatform() }, metadata.primaryPhotos)
         assertEquals(otherPhotos.map { it.mapToPlatform() }, metadata.otherPhotos)
