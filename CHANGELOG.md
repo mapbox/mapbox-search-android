@@ -1,5 +1,248 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.25.0-rc.2
+
+### Mapbox dependencies
+- Search Native SDK `2.25.0-rc.2`
+- Common SDK `24.25.0-rc.2`
+- Maps SDK `11.25.0-rc.2`
+
+
+
+## 2.25.0-rc.1
+
+### Features ✨ and improvements 🏁
+* Added a new property `OfflineSearchResultMetadata#phone` which represents phone number, associated with the search result POI.
+
+### Mapbox dependencies
+- Search Native SDK `2.25.0-rc.1`
+- Common SDK `24.25.0-rc.1`
+- Maps SDK `11.25.0-rc.1`
+
+
+
+## 2.24.3
+
+### Mapbox dependencies
+- Search Native SDK `2.24.3`
+- Common SDK `24.24.3`
+- Maps SDK `11.24.3`
+
+
+
+## 2.24.2
+
+### Mapbox dependencies
+- Search Native SDK `2.24.2`
+- Common SDK `24.24.2`
+- Maps SDK `11.24.2`
+
+
+
+## 2.24.1
+
+### Mapbox dependencies
+- Search Native SDK `2.24.1`
+- Common SDK `24.24.1`
+- Maps SDK `11.24.1`
+
+
+
+## 2.24.0
+
+### Mapbox dependencies
+- Search Native SDK `2.24.0`
+- Common SDK `24.24.0`
+- Maps SDK `11.24.0`
+
+
+
+## 2.24.0-rc.1
+
+### Features ✨ and improvements 🏁
+* Added a new property `FavoriteRecord#timestamp` which represents record creation or last modification timestamp. Equal to `FavoriteRecord#UNKNOWN_TIMESTAMP` for records created before this field was introduced
+
+### Mapbox dependencies
+- Search Native SDK `2.24.0-rc.1`
+- Common SDK `24.24.0-rc.1`
+- Maps SDK `11.24.0-rc.1`
+
+
+
+## 2.23.1
+
+### Mapbox dependencies
+- Search Native SDK `2.23.1`
+- Common SDK `24.23.1`
+- Maps SDK `11.23.1`
+
+
+
+## 2.23.0
+
+### Mapbox dependencies
+- Search Native SDK `2.23.0`
+- Common SDK `24.23.0`
+- Maps SDK `11.23.0`
+
+
+
+## 2.23.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.23.0-rc.1`
+- Common SDK `24.23.0-rc.1`
+- Maps SDK `11.23.0-rc.1`
+
+
+
+## 2.22.3
+
+### Mapbox dependencies
+- Search Native SDK `2.22.3`
+- Common SDK `24.22.3`
+- Maps SDK `11.22.3`
+
+
+
+## 2.22.1
+
+### Mapbox dependencies
+- Search Native SDK `2.22.1`
+- Common SDK `24.22.1`
+- Maps SDK `11.22.1`
+
+
+
+## 2.22.0
+
+### Mapbox dependencies
+- Search Native SDK `2.22.0`
+- Common SDK `24.22.0`
+- Maps SDK `11.22.0`
+
+
+
+## 2.22.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.22.0-rc.1`
+- Common SDK `24.22.0-rc.1`
+- Maps SDK `11.22.0-rc.1`
+
+
+
+## 2.21.7
+
+### Mapbox dependencies
+- Search Native SDK `2.21.7`
+- Common SDK `24.21.7`
+- Maps SDK `11.21.7`
+
+
+
+## 2.21.6
+
+### Mapbox dependencies
+- Search Native SDK `2.21.6`
+- Common SDK `24.21.6`
+- Maps SDK `11.21.6`
+
+
+
+## 2.21.5
+
+### Mapbox dependencies
+- Search Native SDK `2.21.5`
+- Common SDK `24.21.5`
+- Maps SDK `11.21.5`
+
+
+
+## 2.21.4
+
+### Mapbox dependencies
+- Search Native SDK `2.21.4`
+- Common SDK `24.21.4`
+- Maps SDK `11.21.4`
+
+
+
+## 2.21.3
+
+### Mapbox dependencies
+- Search Native SDK `2.21.3`
+- Common SDK `24.21.3`
+- Maps SDK `11.21.3`
+
+
+
+## 2.21.2
+
+### Mapbox dependencies
+- Search Native SDK `2.21.2`
+- Common SDK `24.21.2`
+- Maps SDK `11.21.2`
+
+
+
+## 2.21.1
+
+### Mapbox dependencies
+- Search Native SDK `2.21.1`
+- Common SDK `24.21.1`
+- Maps SDK `11.21.1`
+
+
+
+## 2.21.0
+
+### Mapbox dependencies
+- Search Native SDK `2.21.0`
+- Common SDK `24.21.0`
+- Maps SDK `11.21.0`
+
+
+
+## 2.21.0-rc.1
+
+### 💫️ Other
+* Added NewQueryType on search options to support BRAND and future query types; deprecated QueryType enum in favor of NewQueryType
+
+### Mapbox dependencies
+- Search Native SDK `2.21.0-rc.1`
+- Common SDK `24.21.0-rc.1`
+- Maps SDK `11.21.0-rc.1`
+
+
+
+## 2.20.3
+
+### Mapbox dependencies
+- Search Native SDK `2.20.3`
+- Common SDK `24.20.3`
+- Maps SDK `11.20.3`
+
+
+
+## 2.20.2
+
+### Mapbox dependencies
+- Search Native SDK `2.20.2`
+- Common SDK `24.20.2`
+- Maps SDK `11.20.2`
+
+
+
+## 2.20.1
+
+### Mapbox dependencies
+- Search Native SDK `2.20.1`
+- Common SDK `24.20.1`
+- Maps SDK `11.20.1`
+
+
+
 ## 2.20.0
 
 ### Bug fixes
@@ -16,6 +259,11 @@
 
 ### Bug fixes
 - Various bug fixes in dependencies.
+
+### 💫️ Other
+* Added new offline search result types
+* Use AtomicFile for safe file writes
+* Optimized Search SDK startup by moving heavy initialization to lazy loading
 
 ### Mapbox dependencies
 - Search Native SDK `2.20.0-rc.1`
