@@ -2,6 +2,7 @@ package com.mapbox.search
 
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
+import com.mapbox.search.RouteOptions.Deviation.SarType
 import com.mapbox.search.base.core.createCoreSearchOptions
 import com.mapbox.search.base.logger.reinitializeLogImpl
 import com.mapbox.search.base.logger.resetLogImpl
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 internal class ForwardSearchOptionsTest {
 
@@ -71,6 +73,9 @@ internal class ForwardSearchOptionsTest {
             ignoreUR = options.ignoreIndexableRecords,
             urDistanceThreshold = options.indexableRecordsDistanceThresholdMeters,
             attributeSets = options.attributeSets?.map { it.mapToCore() },
+            route = options.routeOptions?.route,
+            sarType = options.routeOptions?.deviation?.sarType?.rawName,
+            timeDeviation = options.routeOptions?.timeDeviationMinutes,
         )
 
         assertEquals(expectedCoreOptions, options.mapToCore())
@@ -118,6 +123,7 @@ internal class ForwardSearchOptionsTest {
             ignoreIndexableRecords = TEST_FILLED_OPTIONS.ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = TEST_FILLED_OPTIONS.indexableRecordsDistanceThresholdMeters,
             attributeSets = TEST_FILLED_OPTIONS.attributeSets,
+            routeOptions = TEST_FILLED_OPTIONS.routeOptions,
         )
         assertEquals(TEST_FILLED_OPTIONS, newOptions)
     }
@@ -167,6 +173,10 @@ internal class ForwardSearchOptionsTest {
             "routing" to "true",
             "autocomplete" to "false",
         )
+        val TEST_ROUTE_OPTIONS: RouteOptions = RouteOptions(
+            route = listOf(Point.fromLngLat(1.0, 2.0), Point.fromLngLat(3.0, 4.0)),
+            deviation = RouteOptions.Deviation.Time(10, TimeUnit.MINUTES, SarType.ISOCHROME),
+        )
 
         @Suppress("DEPRECATION")
         val TEST_FILLED_OPTIONS = ForwardSearchOptions.Builder()
@@ -183,6 +193,7 @@ internal class ForwardSearchOptionsTest {
             .ignoreIndexableRecords(true)
             .indexableRecordsDistanceThresholdMeters(123.0)
             .attributeSets(listOf(AttributeSet.BASIC, AttributeSet.PHOTOS))
+            .routeOptions(TEST_ROUTE_OPTIONS)
             .build()
 
         @BeforeAll

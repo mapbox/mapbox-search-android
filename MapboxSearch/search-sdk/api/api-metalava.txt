@@ -151,7 +151,7 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class ForwardSearchOptions implements android.os.Parcelable {
-    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ForwardSearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, com.mapbox.search.common.IsoLanguageCode? language = language, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, java.util.List<? extends java.lang.String>? newTypes = newTypes, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = attributeSets);
+    method @kotlin.jvm.JvmSynthetic public com.mapbox.search.ForwardSearchOptions! copy(com.mapbox.geojson.Point? proximity = proximity, com.mapbox.geojson.BoundingBox? boundingBox = boundingBox, java.util.List<? extends com.mapbox.search.common.IsoCountryCode>? countries = countries, com.mapbox.search.common.IsoLanguageCode? language = language, int limit = limit, java.util.List<? extends com.mapbox.search.QueryType>? types = types, java.util.List<? extends java.lang.String>? newTypes = newTypes, int requestDebounce = requestDebounce, com.mapbox.geojson.Point? origin = origin, com.mapbox.search.SearchNavigationOptions? navigationOptions = navigationOptions, java.util.Map<java.lang.String,? extends java.lang.String>? unsafeParameters = unsafeParameters, boolean ignoreIndexableRecords = ignoreIndexableRecords, double indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = attributeSets, com.mapbox.search.RouteOptions? routeOptions = routeOptions);
     method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
     method public com.mapbox.geojson.BoundingBox? getBoundingBox();
     method public java.util.List<com.mapbox.search.common.IsoCountryCode>? getCountries();
@@ -164,6 +164,7 @@ package com.mapbox.search {
     method public com.mapbox.geojson.Point? getOrigin();
     method public com.mapbox.geojson.Point? getProximity();
     method public Integer? getRequestDebounce();
+    method public com.mapbox.search.RouteOptions? getRouteOptions();
     method @Deprecated public java.util.List<com.mapbox.search.QueryType>? getTypes();
     method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.ForwardSearchOptions.Builder toBuilder();
@@ -179,6 +180,7 @@ package com.mapbox.search {
     property public final com.mapbox.geojson.Point? origin;
     property public final com.mapbox.geojson.Point? proximity;
     property public final Integer? requestDebounce;
+    property public final com.mapbox.search.RouteOptions? routeOptions;
     property @Deprecated public final java.util.List<com.mapbox.search.QueryType>? types;
     property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
@@ -200,6 +202,7 @@ package com.mapbox.search {
     method public com.mapbox.search.ForwardSearchOptions.Builder origin(com.mapbox.geojson.Point origin);
     method public com.mapbox.search.ForwardSearchOptions.Builder proximity(com.mapbox.geojson.Point? proximity);
     method public com.mapbox.search.ForwardSearchOptions.Builder requestDebounce(int debounce);
+    method public com.mapbox.search.ForwardSearchOptions.Builder routeOptions(com.mapbox.search.RouteOptions routeOptions);
     method @Deprecated public com.mapbox.search.ForwardSearchOptions.Builder types(com.mapbox.search.QueryType... types);
     method @Deprecated public com.mapbox.search.ForwardSearchOptions.Builder types(java.util.List<? extends com.mapbox.search.QueryType> types);
     method public com.mapbox.search.ForwardSearchOptions.Builder unsafeParameters(java.util.Map<java.lang.String,java.lang.String> unsafeParameters);

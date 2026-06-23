@@ -133,6 +133,11 @@ public class ForwardSearchOptions private constructor(
      * Request additional metadata attributes besides the basic ones.
      */
     public val attributeSets: List<AttributeSet>? = null,
+
+    /**
+     * Options to configure Route for search along the route functionality.
+     */
+    public val routeOptions: RouteOptions? = null,
 ) : Parcelable {
 
     init {
@@ -165,6 +170,7 @@ public class ForwardSearchOptions private constructor(
         ignoreIndexableRecords: Boolean = this.ignoreIndexableRecords,
         indexableRecordsDistanceThresholdMeters: Double? = this.indexableRecordsDistanceThresholdMeters,
         attributeSets: List<AttributeSet>? = this.attributeSets,
+        routeOptions: RouteOptions? = this.routeOptions,
     ): ForwardSearchOptions {
         return ForwardSearchOptions(
             proximity = proximity,
@@ -181,6 +187,7 @@ public class ForwardSearchOptions private constructor(
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             attributeSets = attributeSets,
+            routeOptions = routeOptions,
         )
     }
 
@@ -215,6 +222,7 @@ public class ForwardSearchOptions private constructor(
         if (ignoreIndexableRecords != other.ignoreIndexableRecords) return false
         if (!indexableRecordsDistanceThresholdMeters.safeCompareTo(other.indexableRecordsDistanceThresholdMeters)) return false
         if (attributeSets != other.attributeSets) return false
+        if (routeOptions != other.routeOptions) return false
 
         return true
     }
@@ -238,6 +246,7 @@ public class ForwardSearchOptions private constructor(
         result = 31 * result + ignoreIndexableRecords.hashCode()
         result = 31 * result + (indexableRecordsDistanceThresholdMeters?.hashCode() ?: 0)
         result = 31 * result + (attributeSets?.hashCode() ?: 0)
+        result = 31 * result + (routeOptions?.hashCode() ?: 0)
         return result
     }
 
@@ -260,7 +269,8 @@ public class ForwardSearchOptions private constructor(
                 "unsafeParameters=$unsafeParameters, " +
                 "ignoreIndexableRecords=$ignoreIndexableRecords, " +
                 "indexableRecordsDistanceThresholdMeters=$indexableRecordsDistanceThresholdMeters, " +
-                "attributeSets=$attributeSets" +
+                "attributeSets=$attributeSets, " +
+                "routeOptions=$routeOptions" +
                 ")"
     }
 
@@ -285,6 +295,7 @@ public class ForwardSearchOptions private constructor(
         private var ignoreIndexableRecords: Boolean = false
         private var indexableRecordsDistanceThresholdMeters: Double? = null
         private var attributeSets: List<AttributeSet>? = null
+        private var routeOptions: RouteOptions? = null
 
         internal constructor(options: ForwardSearchOptions) : this() {
             proximity = options.proximity
@@ -303,6 +314,7 @@ public class ForwardSearchOptions private constructor(
             indexableRecordsDistanceThresholdMeters =
                 options.indexableRecordsDistanceThresholdMeters
             attributeSets = options.attributeSets
+            routeOptions = options.routeOptions
         }
 
         /**
@@ -456,6 +468,13 @@ public class ForwardSearchOptions private constructor(
         }
 
         /**
+         * Options to configure Route for search along the route functionality.
+         */
+        public fun routeOptions(routeOptions: RouteOptions): Builder = apply {
+            this.routeOptions = routeOptions
+        }
+
+        /**
          * Create [ForwardSearchOptions] instance from builder data.
          */
         public fun build(): ForwardSearchOptions = ForwardSearchOptions(
@@ -473,6 +492,7 @@ public class ForwardSearchOptions private constructor(
             ignoreIndexableRecords = ignoreIndexableRecords,
             indexableRecordsDistanceThresholdMeters = indexableRecordsDistanceThresholdMeters,
             attributeSets = attributeSets,
+            routeOptions = routeOptions,
         )
     }
 }
@@ -493,4 +513,7 @@ internal fun ForwardSearchOptions.mapToCore(): CoreSearchOptions = createCoreSea
     requestDebounce = requestDebounce,
     addonAPI = unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     attributeSets = attributeSets?.map { it.mapToCore() },
+    route = routeOptions?.route,
+    sarType = routeOptions?.deviation?.sarType?.rawName,
+    timeDeviation = routeOptions?.timeDeviationMinutes,
 )

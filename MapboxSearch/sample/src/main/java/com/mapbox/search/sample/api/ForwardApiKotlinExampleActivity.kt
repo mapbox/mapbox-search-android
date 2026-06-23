@@ -6,12 +6,14 @@ import com.mapbox.search.ApiType
 import com.mapbox.search.AttributeSet
 import com.mapbox.search.ForwardSearchOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchCallback
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.sample.R
+import java.util.concurrent.TimeUnit
 
 class ForwardApiKotlinExampleActivity : BaseKotlinExampleActivity() {
 
@@ -34,8 +36,22 @@ class ForwardApiKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun startExample() {
+        val routeOptions = RouteOptions(
+            route = listOf(
+                Point.fromLngLat(-77.03400742663874, 38.904863105693586),
+                Point.fromLngLat(-77.02682916054256, 38.91061099753604),
+                Point.fromLngLat(-76.96542252114972, 38.93421266759881),
+            ),
+            deviation = RouteOptions.Deviation.Time(
+                value = 10,
+                unit = TimeUnit.MINUTES,
+                sarType = RouteOptions.Deviation.SarType.ISOCHROME,
+            ),
+        )
+
         val options = ForwardSearchOptions.Builder()
             .proximity(Point.fromLngLat(-77.03400742663874, 38.904863105693586))
+            .routeOptions(routeOptions)
             .attributeSets(
                 listOf(
                     AttributeSet.BASIC,
