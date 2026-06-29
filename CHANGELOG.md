@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.26.0-rc.1
+
+### 💫️ Other
+* Added ability to provide route options for the Forward API search.
+
+### Mapbox dependencies
+- Search Native SDK `2.26.0-rc.1`
+- Common SDK `24.26.0-rc.1`
+- Maps SDK `11.26.0-rc.1`
+
+
+
 ## 2.25.0-rc.2
 
 ### Mapbox dependencies
