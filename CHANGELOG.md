@@ -1,5 +1,14 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.28.0-alpha.1
+
+### Mapbox dependencies
+- Search Native SDK `2.28.0-alpha.1`
+- Common SDK `24.28.0-alpha.1`
+- Maps SDK `11.28.0-alpha.1`
+
+
+
 ## 2.27.0-rc.1
 
 ### Mapbox dependencies
