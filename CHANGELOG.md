@@ -7,6 +7,26 @@
 - Common SDK `24.29.0-rc.1`
 - Maps SDK `11.29.0-rc.1`
 
+
+
+## 2.28.2
+
+### Mapbox dependencies
+- Search Native SDK `2.28.2`
+- Common SDK `24.28.2`
+- Maps SDK `11.28.2`
+
+
+
+## 2.28.1
+
+### Mapbox dependencies
+- Search Native SDK `2.28.1`
+- Common SDK `24.28.1`
+- Maps SDK `11.28.1`
+
+
+
 ## 2.28.0
 
 ### Mapbox dependencies
