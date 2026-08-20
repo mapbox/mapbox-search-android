@@ -13,7 +13,7 @@ internal class SelectOptionsTest {
 
             When(".mapToCore()") {
                 val actual = selectOptions.mapToCore()
-                val expected = CoreRetrieveOptions(null)
+                val expected = CoreRetrieveOptions(null, null)
 
                 Then("Options should be as expected", expected, actual)
             }
@@ -27,7 +27,7 @@ internal class SelectOptionsTest {
 
             When(".mapToCore()") {
                 val actual = selectOptions.mapToCore()
-                val expected = CoreRetrieveOptions(CoreAttributeSet.values().toList())
+                val expected = CoreRetrieveOptions(CoreAttributeSet.values().toList(), null)
 
                 Then("Options should be as expected", expected, actual)
             }
