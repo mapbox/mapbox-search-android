@@ -81,6 +81,7 @@ internal fun RetrieveDetailsOptions.mapToCore(): DetailsOptions {
         attributeSets?.fixedAttributesOption()?.map { it.mapToCore() },
         language.code,
         worldview?.code,
+        null,
     )
 }
 
