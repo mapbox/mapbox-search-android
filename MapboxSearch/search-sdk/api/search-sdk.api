@@ -305,6 +305,29 @@ public final class com/mapbox/search/ResponseInfo$Creator : android/os/Parcelabl
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 }
 
+public final class com/mapbox/search/RetrieveOptions : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttributeSets ()Ljava/util/List;
+	public final fun getUnsafeParameters ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/search/RetrieveOptions$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/search/RetrieveOptions;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/search/RetrieveOptions;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/search/ReverseGeoOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lcom/mapbox/geojson/Point;)V
@@ -457,6 +480,8 @@ public abstract interface class com/mapbox/search/SearchEngine {
 	public abstract fun getSettings ()Lcom/mapbox/search/SearchEngineSettings;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun registerDataProvider (Lcom/mapbox/search/record/IndexableDataProvider;Ljava/util/concurrent/Executor;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieve (Ljava/lang/String;Lcom/mapbox/search/RetrieveOptions;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public abstract fun retrieve (Ljava/lang/String;Lcom/mapbox/search/RetrieveOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun retrieve (Ljava/lang/String;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun retrieve (Ljava/lang/String;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public abstract fun search (Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
@@ -493,7 +518,9 @@ public final class com/mapbox/search/SearchEngine$DefaultImpls {
 	public static fun brandSearch (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/BrandSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun forward (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/ForwardSearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun registerDataProvider (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/record/IndexableDataProvider;Lcom/mapbox/search/common/CompletionCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun retrieve (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/RetrieveOptions;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun retrieve (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
+	public static fun retrieve (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchResultCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Lcom/mapbox/search/ReverseGeoOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
 	public static fun search (Lcom/mapbox/search/SearchEngine;Ljava/lang/String;Lcom/mapbox/search/CategorySearchOptions;Ljava/util/concurrent/Executor;Lcom/mapbox/search/SearchCallback;)Lcom/mapbox/search/common/AsyncOperationTask;
@@ -762,12 +789,15 @@ public abstract interface class com/mapbox/search/SearchSuggestionsCallback {
 public final class com/mapbox/search/SelectOptions : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> ()V
+	public fun <init> (Z)V
 	public fun <init> (ZLjava/util/List;)V
-	public synthetic fun <init> (ZLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZLjava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (ZLjava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddResultToHistory ()Z
 	public final fun getAttributeSets ()Ljava/util/List;
+	public final fun getUnsafeParameters ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -934,11 +964,13 @@ public final class com/mapbox/search/details/RetrieveDetailsOptions : android/os
 	public fun <init> (Ljava/util/List;)V
 	public fun <init> (Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;)V
 	public fun <init> (Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;)V
-	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Lcom/mapbox/search/common/IsoLanguageCode;Lcom/mapbox/search/common/IsoCountryCode;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttributeSets ()Ljava/util/List;
 	public final fun getLanguage ()Lcom/mapbox/search/common/IsoLanguageCode;
+	public final fun getUnsafeParameters ()Ljava/util/Map;
 	public final fun getWorldview ()Lcom/mapbox/search/common/IsoCountryCode;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

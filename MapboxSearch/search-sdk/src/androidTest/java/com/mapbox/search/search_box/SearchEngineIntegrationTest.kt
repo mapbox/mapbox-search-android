@@ -1,14 +1,16 @@
 @file:Suppress("DEPRECATION")
-@file:OptIn(RestrictedMapboxSearchAPI::class)
+@file:OptIn(RestrictedMapboxSearchAPI::class, MapboxExperimental::class)
 
 package com.mapbox.search.search_box
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.LogConfiguration
 import com.mapbox.common.LoggingLevel
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.BoundingBox
 import com.mapbox.geojson.Point
 import com.mapbox.search.ApiType
+import com.mapbox.search.AttributeSet
 import com.mapbox.search.BaseTest
 import com.mapbox.search.BuildConfig
 import com.mapbox.search.EtaType
@@ -17,6 +19,7 @@ import com.mapbox.search.NewQueryType
 import com.mapbox.search.QueryType
 import com.mapbox.search.RequestOptions
 import com.mapbox.search.ResponseInfo
+import com.mapbox.search.RetrieveOptions
 import com.mapbox.search.RouteOptions
 import com.mapbox.search.SearchEngine
 import com.mapbox.search.SearchEngineSettings
@@ -819,6 +822,56 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testSelectRequestParametersWithUnsafeParameters() {
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val suggestions = searchEngine.searchBlocking(TEST_QUERY).requireSuggestions()
+
+        val selectionResponse = searchEngine.selectBlocking(
+            suggestions.first(),
+            SelectOptions(
+                attributeSets = listOf(AttributeSet.BASIC),
+                unsafeParameters = TEST_UNSAFE_PARAMETERS,
+            ),
+        )
+        assertTrue(selectionResponse.isResult)
+
+        // The first request is the "suggest" one, the second is the "retrieve" one.
+        mockServer.takeRequest()
+        val retrieveRequest = mockServer.takeRequest()
+
+        val url = retrieveRequest.requestUrl!!
+        assertEqualsIgnoreCase("//search/searchbox/v1/retrieve/suggestion-id-1", url.encodedPath)
+        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
+        assertEquals(AttributeSet.BASIC.name.lowercase(Locale.getDefault()), url.queryParameter("attribute_sets"))
+
+        TEST_UNSAFE_PARAMETERS.forEach { (key, value) ->
+            assertEquals(value, url.queryParameter(key))
+        }
+    }
+
+    @Test
+    fun testSelectRequestParametersWithoutUnsafeParameters() {
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val suggestions = searchEngine.searchBlocking(TEST_QUERY).requireSuggestions()
+
+        val selectionResponse = searchEngine.selectBlocking(suggestions.first(), SelectOptions())
+        assertTrue(selectionResponse.isResult)
+
+        // The first request is the "suggest" one, the second is the "retrieve" one.
+        mockServer.takeRequest()
+        val url = mockServer.takeRequest().requestUrl!!
+
+        assertEqualsIgnoreCase("//search/searchbox/v1/retrieve/suggestion-id-1", url.encodedPath)
+        TEST_UNSAFE_PARAMETERS.keys.forEach { key ->
+            assertNull(url.queryParameter(key))
+        }
+    }
+
+    @Test
     fun testSuccessfulIncorrectResponse() {
         mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful-incorrect.json"))
 
@@ -1073,6 +1126,57 @@ internal class SearchEngineIntegrationTest : BaseTest() {
     }
 
     @Test
+    fun testRetrieveRequestParametersWithRetrieveOptions() {
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SEARCH_BOX, searchEngineSettings)
+
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val mapboxId = "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
+        val callback = BlockingSearchResultCallback()
+
+        val options = RetrieveOptions(
+            attributeSets = listOf(AttributeSet.BASIC, AttributeSet.PHOTOS),
+            unsafeParameters = TEST_UNSAFE_PARAMETERS,
+        )
+
+        searchEngine.retrieve(mapboxId, options, callback)
+        callback.getResultBlocking()
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEqualsIgnoreCase("//search/searchbox/v1/retrieve/$mapboxId", url.encodedPath)
+        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
+        assertEquals(
+            options.attributeSets!!.joinToString(separator = ",") { it.name.lowercase(Locale.getDefault()) },
+            url.queryParameter("attribute_sets")
+        )
+
+        TEST_UNSAFE_PARAMETERS.forEach { (key, value) ->
+            assertEquals(value, url.queryParameter(key))
+        }
+    }
+
+    @Test
+    fun testRetrieveRequestParametersWithoutRetrieveOptions() {
+        searchEngine = SearchEngine.createSearchEngine(ApiType.SEARCH_BOX, searchEngineSettings)
+
+        mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/retrieve-suggest.json"))
+
+        val mapboxId = "dXJuOm1ieHBvaS1vc206bjExMzY1MTcyNTg0"
+        val callback = BlockingSearchResultCallback()
+
+        // The overload without options must keep working exactly as before.
+        searchEngine.retrieve(mapboxId, callback)
+        assertTrue(callback.getResultBlocking().isSuccess)
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEqualsIgnoreCase("//search/searchbox/v1/retrieve/$mapboxId", url.encodedPath)
+        assertNull(url.queryParameter("attribute_sets"))
+        TEST_UNSAFE_PARAMETERS.keys.forEach { key ->
+            assertNull(url.queryParameter(key))
+        }
+    }
+
+    @Test
     fun testBatchSelectionFails() {
         LogConfiguration.setLoggingLevel(LoggingLevel.DEBUG)
         mockServer.enqueue(createSuccessfulResponse("search_box_responses/forward/suggestions-successful.json"))
@@ -1127,6 +1231,11 @@ internal class SearchEngineIntegrationTest : BaseTest() {
                 screenOrientation = TEST_ORIENTATION,
                 responseUuid = ""
             )
+        )
+
+        val TEST_UNSAFE_PARAMETERS = mapOf(
+            "unsafe_key_1" to "unsafe_value_1",
+            "unsafe_key_2" to "unsafe_value_2",
         )
 
         val TEST_ROUTE_OPTIONS = RouteOptions(

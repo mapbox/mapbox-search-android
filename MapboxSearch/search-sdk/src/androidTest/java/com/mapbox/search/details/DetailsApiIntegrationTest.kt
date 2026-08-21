@@ -17,6 +17,7 @@ import com.mapbox.search.utils.assertEqualsIgnoreCase
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -71,6 +72,45 @@ internal class DetailsApiIntegrationTest : BaseTest() {
             options.attributeSets!!.joinToString(separator = ",") { it.name.lowercase() },
             url.queryParameter("attribute_sets")
         )
+    }
+
+    @Test
+    fun testRequestParametersWithUnsafeParameters() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val options = RetrieveDetailsOptions(
+            attributeSets = listOf(AttributeSet.BASIC),
+            language = IsoLanguageCode.FRENCH,
+            worldview = IsoCountryCode.FRANCE,
+            unsafeParameters = TEST_UNSAFE_PARAMETERS,
+        )
+
+        val callback = BlockingSearchResultCallback()
+        detailsApi.retrieveDetails(TEST_MAPBOX_ID, options, callback)
+        callback.getResultBlocking()
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEqualsIgnoreCase("//search/details/v1/retrieve/$TEST_MAPBOX_ID", url.encodedPath)
+        assertEquals(TEST_ACCESS_TOKEN, url.queryParameter("access_token"))
+
+        TEST_UNSAFE_PARAMETERS.forEach { (key, value) ->
+            assertEquals(value, url.queryParameter(key))
+        }
+    }
+
+    @Test
+    fun testRequestParametersWithoutUnsafeParameters() {
+        mockServer.enqueue(MockResponse().setResponseCode(500))
+
+        val callback = BlockingSearchResultCallback()
+        detailsApi.retrieveDetails(TEST_MAPBOX_ID, RetrieveDetailsOptions(), callback)
+        callback.getResultBlocking()
+
+        val url = mockServer.takeRequest().requestUrl!!
+        assertEqualsIgnoreCase("//search/details/v1/retrieve/$TEST_MAPBOX_ID", url.encodedPath)
+        TEST_UNSAFE_PARAMETERS.keys.forEach { key ->
+            assertNull(url.queryParameter(key))
+        }
     }
 
     @Test
@@ -177,5 +217,10 @@ internal class DetailsApiIntegrationTest : BaseTest() {
     private companion object {
         const val TEST_ACCESS_TOKEN = "pk.test"
         const val TEST_MAPBOX_ID = "test-id"
+
+        val TEST_UNSAFE_PARAMETERS = mapOf(
+            "unsafe_key_1" to "unsafe_value_1",
+            "unsafe_key_2" to "unsafe_value_2",
+        )
     }
 }
