@@ -1,31 +1,30 @@
 package com.mapbox.search
 
 import android.os.Parcelable
+import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.search.Reserved.Flags.SEARCH_BOX
 import com.mapbox.search.base.core.CoreRetrieveOptions
 import kotlinx.parcelize.Parcelize
 import java.util.Objects
 
 /**
- * Bunch of options used by [SearchEngine.select] function.
- * @see SearchEngine
+ * Bunch of options used by the [SearchEngine.retrieve] function.
+ *
+ * Note: this class is only supported for [ApiType.SEARCH_BOX].
+ *
+ * @see SearchEngine.retrieve
  */
+@MapboxExperimental
+@Reserved(SEARCH_BOX)
 @Parcelize
-public class SelectOptions @JvmOverloads public constructor(
-
-    /**
-     * Flag to control whether search result should be added to history automatically. Defaults to true.
-     */
-    public val addResultToHistory: Boolean = true,
+public class RetrieveOptions @JvmOverloads public constructor(
 
     /**
      * Besides the basic metadata attributes, developers can request additional
      * attributes by setting attribute_sets parameter with attribute set values,
      * for example &attribute_sets=basic,photos,visit.
      * The requested metadata will be provided in metadata object in the response.
-     *
-     * Note: this method is only used supported for [ApiType.SEARCH_BOX]
      */
-    @Reserved(Reserved.Flags.SEARCH_BOX)
     public val attributeSets: List<AttributeSet>? = null,
 
     /**
@@ -33,10 +32,7 @@ public class SelectOptions @JvmOverloads public constructor(
      *
      * Note: Incorrect usage of this parameter may cause failed or malformed response.
      * Do not use it without SDK developers agreement.
-     *
-     * Note: this property is only supported for [ApiType.SEARCH_BOX]
      */
-    @Reserved(Reserved.Flags.SEARCH_BOX)
     public val unsafeParameters: Map<String, String>? = null,
 ) : Parcelable {
 
@@ -47,9 +43,8 @@ public class SelectOptions @JvmOverloads public constructor(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as SelectOptions
+        other as RetrieveOptions
 
-        if (addResultToHistory != other.addResultToHistory) return false
         if (attributeSets != other.attributeSets) return false
         if (unsafeParameters != other.unsafeParameters) return false
 
@@ -60,23 +55,23 @@ public class SelectOptions @JvmOverloads public constructor(
      * @suppress
      */
     override fun hashCode(): Int {
-        return Objects.hash(addResultToHistory, attributeSets, unsafeParameters)
+        return Objects.hash(attributeSets, unsafeParameters)
     }
 
     /**
      * @suppress
      */
     override fun toString(): String {
-        return "SelectOptions(" +
-                "addResultToHistory=$addResultToHistory, " +
+        return "RetrieveOptions(" +
                 "attributeSets=$attributeSets, " +
                 "unsafeParameters=$unsafeParameters" +
                 ")"
     }
 }
 
+@OptIn(MapboxExperimental::class)
 @JvmSynthetic
-internal fun SelectOptions.mapToCore(): CoreRetrieveOptions = CoreRetrieveOptions(
+internal fun RetrieveOptions.mapToCore(): CoreRetrieveOptions = CoreRetrieveOptions(
     attributeSets?.map { it.mapToCore() },
     unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
 )

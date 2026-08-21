@@ -275,6 +275,19 @@ package com.mapbox.search {
   public final class ResponseInfoKt {
   }
 
+  @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class RetrieveOptions implements android.os.Parcelable {
+    ctor public RetrieveOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
+    ctor public RetrieveOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null);
+    ctor public RetrieveOptions();
+    method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
+    property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
+  }
+
+  public final class RetrieveOptionsKt {
+  }
+
   @kotlinx.parcelize.Parcelize public final class ReverseGeoOptions implements android.os.Parcelable {
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null, java.util.List<java.lang.String>? newTypes = null);
     ctor public ReverseGeoOptions(com.mapbox.geojson.Point center, java.util.List<com.mapbox.search.common.IsoCountryCode>? countries = null, java.util.List<com.mapbox.search.common.IsoLanguageCode>? languages = defaultSearchOptionsLanguage(), Integer? limit = null, com.mapbox.search.ReverseMode? reverseMode = null, @Deprecated java.util.List<? extends com.mapbox.search.QueryType>? types = null);
@@ -378,7 +391,9 @@ package com.mapbox.search {
     method public com.mapbox.search.SearchEngineSettings getSettings();
     method public <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, java.util.concurrent.Executor executor, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
     method public default <R extends com.mapbox.search.record.IndexableRecord> com.mapbox.search.common.AsyncOperationTask registerDataProvider(com.mapbox.search.record.IndexableDataProvider<R> dataProvider, com.mapbox.search.common.CompletionCallback<kotlin.Unit> callback);
-    method public com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, com.mapbox.search.RetrieveOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    method public default com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, java.util.concurrent.Executor executor, com.mapbox.search.SearchResultCallback callback);
+    method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, com.mapbox.search.RetrieveOptions options, com.mapbox.search.SearchResultCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask retrieve(String mapboxId, com.mapbox.search.SearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.SearchSuggestionsCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask search(String query, com.mapbox.search.SearchOptions options, com.mapbox.search.SearchSuggestionsCallback callback);
@@ -682,11 +697,16 @@ package com.mapbox.search {
   }
 
   @kotlinx.parcelize.Parcelize public final class SelectOptions implements android.os.Parcelable {
+    ctor public SelectOptions(boolean addResultToHistory = true, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
     ctor public SelectOptions(boolean addResultToHistory = true, java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null);
+    ctor public SelectOptions(boolean addResultToHistory = true);
+    ctor public SelectOptions();
     method public boolean getAddResultToHistory();
     method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     property public final boolean addResultToHistory;
     property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
   }
 
   public final class SelectOptionsKt {
@@ -801,15 +821,18 @@ package com.mapbox.search.details {
   }
 
   @com.mapbox.annotation.MapboxExperimental @kotlinx.parcelize.Parcelize public final class RetrieveDetailsOptions implements android.os.Parcelable {
+    ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), com.mapbox.search.common.IsoCountryCode? worldview = null, java.util.Map<java.lang.String,java.lang.String>? unsafeParameters = null);
     ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage(), com.mapbox.search.common.IsoCountryCode? worldview = null);
     ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null, com.mapbox.search.common.IsoLanguageCode language = defaultLocaleLanguage());
     ctor public RetrieveDetailsOptions(java.util.List<? extends com.mapbox.search.AttributeSet>? attributeSets = null);
     ctor public RetrieveDetailsOptions();
     method public java.util.List<com.mapbox.search.AttributeSet>? getAttributeSets();
     method public com.mapbox.search.common.IsoLanguageCode getLanguage();
+    method public java.util.Map<java.lang.String,java.lang.String>? getUnsafeParameters();
     method public com.mapbox.search.common.IsoCountryCode? getWorldview();
     property public final java.util.List<com.mapbox.search.AttributeSet>? attributeSets;
     property public final com.mapbox.search.common.IsoLanguageCode language;
+    property public final java.util.Map<java.lang.String,java.lang.String>? unsafeParameters;
     property public final com.mapbox.search.common.IsoCountryCode? worldview;
   }
 

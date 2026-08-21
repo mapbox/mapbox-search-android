@@ -1,11 +1,13 @@
 package com.mapbox.search
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Point
 import com.mapbox.search.base.BaseRequestOptions
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreRequestOptions
 import com.mapbox.search.base.core.CoreResultType
+import com.mapbox.search.base.core.CoreRetrieveOptions
 import com.mapbox.search.base.core.CoreSearchCallback
 import com.mapbox.search.base.core.CoreSearchEngineInterface
 import com.mapbox.search.base.core.CoreSearchOptions
@@ -64,6 +66,7 @@ import java.util.concurrent.Executor
  * See [CategorySearchTest], [ReverseGeocodingSearchTest] for more tests.
  */
 @Suppress("LargeClass", "DEPRECATION")
+@OptIn(MapboxExperimental::class)
 internal class SearchEngineTest {
 
     private lateinit var coreEngine: CoreSearchEngineInterface
@@ -862,10 +865,16 @@ internal class SearchEngineTest {
         Given("SearchEngine with mocked dependencies") {
             val slotRequestOptions = slot<CoreRequestOptions>()
             val slotSearchResult = slot<CoreSearchResult>()
+            val slotRetrieveOptions = slot<CoreRetrieveOptions>()
             val slotSearchCallback = slot<CoreSearchCallback>()
 
             every {
-                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+                coreEngine.retrieve(
+                    capture(slotRequestOptions),
+                    capture(slotSearchResult),
+                    capture(slotRetrieveOptions),
+                    capture(slotSearchCallback),
+                )
             } answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
                 TEST_REQUEST_ID
@@ -885,12 +894,23 @@ internal class SearchEngineTest {
 
                 Then("Task is executed", true, task.isDone)
 
+                Then(
+                    "Default RetrieveOptions are passed to the core engine",
+                    RetrieveOptions().mapToCore(),
+                    slotRetrieveOptions.captured,
+                )
+
                 Verify("Callbacks called inside executor") {
                     executor.execute(any())
                 }
 
                 Verify("CoreSearchEngine.retrieve() called") {
-                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                    coreEngine.retrieve(
+                        slotRequestOptions.captured,
+                        slotSearchResult.captured,
+                        slotRetrieveOptions.captured,
+                        slotSearchCallback.captured,
+                    )
                 }
 
                 Verify("Results passed to callback") {
@@ -908,14 +928,72 @@ internal class SearchEngineTest {
     }
 
     @TestFactory
+    fun `Check retrieval by Mapbox ID with RetrieveOptions`() = TestCase {
+        Given("SearchEngine with mocked dependencies") {
+            val slotRetrieveOptions = slot<CoreRetrieveOptions>()
+            val slotSearchCallback = slot<CoreSearchCallback>()
+
+            every {
+                coreEngine.retrieve(any(), any(), capture(slotRetrieveOptions), capture(slotSearchCallback))
+            } answers {
+                slotSearchCallback.captured.run(TEST_SUCCESSFUL_CORE_RESPONSE)
+                TEST_REQUEST_ID
+            }
+
+            When("Retrieve called with unsafe parameters") {
+                val callback = spyk<SearchResultCallback>(object : SearchResultCallback {
+                    override fun onResult(result: SearchResult, responseInfo: ResponseInfo) {}
+                    override fun onError(e: Exception) {}
+                })
+
+                val options = RetrieveOptions(unsafeParameters = TEST_UNSAFE_PARAMETERS)
+
+                val task = searchEngine.retrieve(
+                    mapboxId = "random mapbox id",
+                    options = options,
+                    executor = executor,
+                    callback = callback
+                )
+
+                Then("Task is executed", true, task.isDone)
+
+                Then(
+                    "Unsafe parameters are passed to the core engine",
+                    options.mapToCore(),
+                    slotRetrieveOptions.captured,
+                )
+
+                Then(
+                    "Unsafe parameters are mapped to addonAPI",
+                    HashMap(TEST_UNSAFE_PARAMETERS),
+                    slotRetrieveOptions.captured.addonAPI,
+                )
+
+                Verify("Results passed to callback") {
+                    callback.onResult(
+                        any<SearchResult>(),
+                        any<ResponseInfo>()
+                    )
+                }
+            }
+        }
+    }
+
+    @TestFactory
     fun `Check onError is called when retrieve fails`() = TestCase {
         Given("SearchEngine with mocked dependencies") {
             val slotRequestOptions = slot<CoreRequestOptions>()
             val slotSearchResult = slot<CoreSearchResult>()
+            val slotRetrieveOptions = slot<CoreRetrieveOptions>()
             val slotSearchCallback = slot<CoreSearchCallback>()
 
             every {
-                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+                coreEngine.retrieve(
+                    capture(slotRequestOptions),
+                    capture(slotSearchResult),
+                    capture(slotRetrieveOptions),
+                    capture(slotSearchCallback),
+                )
             } answers {
                 slotSearchCallback.captured.run(TEST_ERROR_CORE_RESPONSE)
                 TEST_REQUEST_ID
@@ -940,7 +1018,12 @@ internal class SearchEngineTest {
                 }
 
                 Verify("CoreSearchEngine.retrieve() called") {
-                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                    coreEngine.retrieve(
+                        slotRequestOptions.captured,
+                        slotSearchResult.captured,
+                        slotRetrieveOptions.captured,
+                        slotSearchCallback.captured,
+                    )
                 }
 
                 Verify("Results passed to callback") {
@@ -966,10 +1049,16 @@ internal class SearchEngineTest {
             val mapboxId = "a mapbox id"
             val slotRequestOptions = slot<CoreRequestOptions>()
             val slotSearchResult = slot<CoreSearchResult>()
+            val slotRetrieveOptions = slot<CoreRetrieveOptions>()
             val slotSearchCallback = slot<CoreSearchCallback>()
 
             every {
-                coreEngine.retrieve(capture(slotRequestOptions), capture(slotSearchResult), capture(slotSearchCallback))
+                coreEngine.retrieve(
+                    capture(slotRequestOptions),
+                    capture(slotSearchResult),
+                    capture(slotRetrieveOptions),
+                    capture(slotSearchCallback),
+                )
             } answers {
                 slotSearchCallback.captured.run(TEST_SUCCESSFUL_EMPTY_CORE_RESPONSE)
                 TEST_REQUEST_ID
@@ -994,7 +1083,12 @@ internal class SearchEngineTest {
                 }
 
                 Verify("CoreSearchEngine.retrieve() called") {
-                    coreEngine.retrieve(slotRequestOptions.captured, slotSearchResult.captured, slotSearchCallback.captured)
+                    coreEngine.retrieve(
+                        slotRequestOptions.captured,
+                        slotSearchResult.captured,
+                        slotRetrieveOptions.captured,
+                        slotSearchCallback.captured,
+                    )
                 }
 
                 Assertions.assertEquals(
@@ -1028,6 +1122,11 @@ internal class SearchEngineTest {
     private companion object {
 
         const val TEST_REQUEST_ID = 1L
+
+        val TEST_UNSAFE_PARAMETERS = mapOf(
+            "unsafe_key_1" to "unsafe_value_1",
+            "unsafe_key_2" to "unsafe_value_2",
+        )
 
         const val TEST_QUERY = "Minsk"
         val TEST_SEARCH_OPTIONS = SearchOptions()

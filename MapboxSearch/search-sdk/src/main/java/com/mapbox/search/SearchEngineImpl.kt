@@ -1,7 +1,8 @@
-@file:OptIn(RestrictedMapboxSearchAPI::class)
+@file:OptIn(RestrictedMapboxSearchAPI::class, MapboxExperimental::class)
 
 package com.mapbox.search
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.search.adapter.BaseSearchCallbackAdapter
 import com.mapbox.search.adapter.BaseSearchMultipleSelectionCallbackAdapter
@@ -329,21 +330,31 @@ internal class SearchEngineImpl(
         }
     }
 
-    override fun retrieve(mapboxId: String, executor: Executor, callback: SearchResultCallback): AsyncOperationTask {
+    override fun retrieve(
+        mapboxId: String,
+        options: RetrieveOptions,
+        executor: Executor,
+        callback: SearchResultCallback,
+    ): AsyncOperationTask {
         val searchResult = createSearchResultForRetrieve(this.apiType, mapboxId)
         val baseCallback = SearchResultCallbackAdapter(callback)
 
         return makeRequest(baseCallback) { task ->
-            val requestId = coreEngine.retrieve(EMPTY_REQUEST_OPTIONS, searchResult, OneStepRequestCallbackWrapper(
-                searchResultFactory = searchResultFactory,
-                callbackExecutor = executor,
-                workerExecutor = engineExecutorService,
-                searchRequestTask = task,
-                searchRequestContext = SearchRequestContext(
-                    this.apiType.mapToCore()
+            val requestId = coreEngine.retrieve(
+                EMPTY_REQUEST_OPTIONS,
+                searchResult,
+                options.mapToCore(),
+                OneStepRequestCallbackWrapper(
+                    searchResultFactory = searchResultFactory,
+                    callbackExecutor = executor,
+                    workerExecutor = engineExecutorService,
+                    searchRequestTask = task,
+                    searchRequestContext = SearchRequestContext(
+                        this.apiType.mapToCore()
+                    ),
+                    isOffline = false,
                 ),
-                isOffline = false,
-            ))
+            )
             task.addOnCancelledCallback {
                 coreEngine.cancel(requestId)
             }

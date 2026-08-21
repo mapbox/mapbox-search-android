@@ -1,10 +1,7 @@
-package com.mapbox.search.details
+package com.mapbox.search
 
 import com.mapbox.annotation.MapboxExperimental
-import com.mapbox.search.AttributeSet
 import com.mapbox.search.base.core.CoreAttributeSet
-import com.mapbox.search.common.IsoCountryCode
-import com.mapbox.search.common.IsoLanguageCode
 import com.mapbox.search.common.tests.ToStringVerifier
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,31 +9,28 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
 @OptIn(MapboxExperimental::class)
-internal class RetrieveDetailsOptionsTest {
+internal class RetrieveOptionsTest {
 
     @Test
     fun `Test generated equals(), hashCode() and toString() methods`() {
-        EqualsVerifier.forClass(RetrieveDetailsOptions::class.java)
+        EqualsVerifier.forClass(RetrieveOptions::class.java)
             .verify()
 
-        ToStringVerifier(RetrieveDetailsOptions::class).verify()
+        ToStringVerifier(RetrieveOptions::class).verify()
     }
 
     @Test
     fun `Test default values`() {
-        val options = RetrieveDetailsOptions()
+        val options = RetrieveOptions()
 
         assertNull(options.attributeSets)
-        assertNull(options.worldview)
         assertNull(options.unsafeParameters)
     }
 
     @Test
     fun `Test mapToCore() function`() {
-        val options = RetrieveDetailsOptions(
+        val options = RetrieveOptions(
             attributeSets = listOf(AttributeSet.BASIC, AttributeSet.VISIT),
-            language = IsoLanguageCode.FRENCH,
-            worldview = IsoCountryCode.FRANCE,
             unsafeParameters = TEST_UNSAFE_PARAMETERS,
         )
 
@@ -46,20 +40,33 @@ internal class RetrieveDetailsOptionsTest {
             listOf(CoreAttributeSet.BASIC, CoreAttributeSet.VISIT),
             coreOptions.attributeSets
         )
-        assertEquals(IsoLanguageCode.FRENCH.code, coreOptions.language)
-        assertEquals(IsoCountryCode.FRANCE.code, coreOptions.worldview)
         assertEquals(HashMap(TEST_UNSAFE_PARAMETERS), coreOptions.addonAPI)
     }
 
     @Test
-    fun `Test mapToCore() function for options without unsafeParameters`() {
-        val coreOptions = RetrieveDetailsOptions().mapToCore()
+    fun `Test mapToCore() function for empty options`() {
+        val coreOptions = RetrieveOptions().mapToCore()
+
+        assertNull(coreOptions.attributeSets)
         assertNull(coreOptions.addonAPI)
     }
 
     @Test
-    fun `Test mapToCore() function for options with empty unsafeParameters`() {
-        val coreOptions = RetrieveDetailsOptions(unsafeParameters = emptyMap()).mapToCore()
+    fun `Test mapToCore() function for options with all the attribute sets`() {
+        val coreOptions = RetrieveOptions(attributeSets = AttributeSet.values().toList()).mapToCore()
+
+        assertEquals(CoreAttributeSet.values().toList(), coreOptions.attributeSets)
+        assertNull(coreOptions.addonAPI)
+    }
+
+    @Test
+    fun `Test mapToCore() function for options with empty collections`() {
+        val coreOptions = RetrieveOptions(
+            attributeSets = emptyList(),
+            unsafeParameters = emptyMap(),
+        ).mapToCore()
+
+        assertEquals(emptyList<CoreAttributeSet>(), coreOptions.attributeSets)
         assertEquals(HashMap<String, String>(), coreOptions.addonAPI)
     }
 

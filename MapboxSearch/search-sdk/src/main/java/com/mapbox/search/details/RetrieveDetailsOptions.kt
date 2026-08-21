@@ -34,6 +34,14 @@ public class RetrieveDetailsOptions @JvmOverloads constructor(
      * This parameters will only be applicable for Boundaries and Places feature types.
      */
     public val worldview: IsoCountryCode? = null,
+
+    /**
+     * Non-verified query parameters, that will be added to the server API request.
+     *
+     * Note: Incorrect usage of this parameter may cause failed or malformed response.
+     * Do not use it without SDK developers agreement.
+     */
+    public val unsafeParameters: Map<String, String>? = null,
 ) : Parcelable {
 
     /**
@@ -48,6 +56,7 @@ public class RetrieveDetailsOptions @JvmOverloads constructor(
         if (attributeSets != other.attributeSets) return false
         if (language != other.language) return false
         if (worldview != other.worldview) return false
+        if (unsafeParameters != other.unsafeParameters) return false
 
         return true
     }
@@ -59,6 +68,7 @@ public class RetrieveDetailsOptions @JvmOverloads constructor(
         var result = attributeSets?.hashCode() ?: 0
         result = 31 * result + language.hashCode()
         result = 31 * result + (worldview?.hashCode() ?: 0)
+        result = 31 * result + (unsafeParameters?.hashCode() ?: 0)
         return result
     }
 
@@ -69,7 +79,8 @@ public class RetrieveDetailsOptions @JvmOverloads constructor(
         return "RetrieveDetailsOptions(" +
                 "attributeSets=$attributeSets, " +
                 "language=$language, " +
-                "worldview=$worldview" +
+                "worldview=$worldview, " +
+                "unsafeParameters=$unsafeParameters" +
                 ")"
     }
 }
@@ -81,7 +92,7 @@ internal fun RetrieveDetailsOptions.mapToCore(): DetailsOptions {
         attributeSets?.fixedAttributesOption()?.map { it.mapToCore() },
         language.code,
         worldview?.code,
-        null,
+        unsafeParameters?.let { (it as? HashMap) ?: HashMap(it) },
     )
 }
 

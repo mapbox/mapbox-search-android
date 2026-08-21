@@ -1,5 +1,6 @@
 package com.mapbox.search
 
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.search.analytics.AnalyticsService
 import com.mapbox.search.base.StubCompletionCallback
 import com.mapbox.search.common.AsyncOperationTask
@@ -227,16 +228,65 @@ public interface SearchEngine {
      * with [ApiType.SEARCH_BOX] or [ApiType.SBS].
      *
      * @param mapboxId for the item to retrieve details for
+     * @param options options used for controlling the "retrieve" request
      * @param executor [Executor] used for events dispatching, default is the main thread
      * @param callback used to receive the [SearchResult] on successful execution
      * @return [AsyncOperationTask] object representing pending completion of the request
      * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SEARCH_BOX] or [ApiType.SBS]
      */
+    @MapboxExperimental
+    public fun retrieve(
+        mapboxId: String,
+        options: RetrieveOptions,
+        executor: Executor,
+        callback: SearchResultCallback,
+    ): AsyncOperationTask
+
+    /**
+     * Function to retrieve the details for a given mapboxId. The callback will be invoked with
+     * a [SearchResult] on successful execution. This method is only supported for a SearchEngine
+     * with [ApiType.SEARCH_BOX] or [ApiType.SBS].
+     *
+     * @param mapboxId for the item to retrieve details for
+     * @param executor [Executor] used for events dispatching, default is the main thread
+     * @param callback used to receive the [SearchResult] on successful execution
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     * @throws [UnsupportedOperationException] when invoked for any [ApiType] _except_ [ApiType.SEARCH_BOX] or [ApiType.SBS]
+     */
+    @OptIn(MapboxExperimental::class)
     public fun retrieve(
         mapboxId: String,
         executor: Executor,
         callback: SearchResultCallback,
-    ): AsyncOperationTask
+    ): AsyncOperationTask = retrieve(
+        mapboxId = mapboxId,
+        options = RetrieveOptions(),
+        executor = executor,
+        callback = callback,
+    )
+
+    /**
+     * Function to retrieve the details for a given mapboxId that dispatches events using the
+     * main executor. The callback will be invoked with a [SearchResult] on successful execution.
+     *
+     * Note that this method is only supported for a SearchEngine with [ApiType.SEARCH_BOX] or [ApiType.SBS].
+     *
+     * @param mapboxId for the item to retrieve details for
+     * @param options options used for controlling the "retrieve" request
+     * @param callback used to receive the [SearchResult] on successful execution
+     * @return [AsyncOperationTask] object representing pending completion of the request
+     */
+    @MapboxExperimental
+    public fun retrieve(
+        mapboxId: String,
+        options: RetrieveOptions,
+        callback: SearchResultCallback,
+    ): AsyncOperationTask = retrieve(
+        mapboxId = mapboxId,
+        options = options,
+        executor = SearchSdkMainThreadWorker.mainExecutor,
+        callback = callback,
+    )
 
     /**
      * Function to retrieve the details for a given mapboxId that dispatches events using the
