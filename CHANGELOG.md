@@ -18,6 +18,15 @@
 
 
 
+## 2.29.0
+
+### Mapbox dependencies
+- Search Native SDK `2.29.0`
+- Common SDK `24.29.0`
+- Maps SDK `11.29.0`
+
+
+
 ## 2.29.0-rc.1
 
 ### Mapbox dependencies
