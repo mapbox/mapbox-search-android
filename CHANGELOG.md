@@ -25,7 +25,19 @@
 - Common SDK `24.30.0-rc.1`
 - Maps SDK `11.30.0-rc.1`
 
+## 2.29.3
 
+### Mapbox dependencies
+- Search Native SDK `2.29.3`
+- Common SDK `24.29.3`
+- Maps SDK `11.29.3`
+
+
+
+## 2.29.2
+
+### 💫️ Other
+* Revert "Bump version to v0.29.2 and update changelogs"
 
 ## 2.29.1
 
