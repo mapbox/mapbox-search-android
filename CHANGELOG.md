@@ -95,6 +95,15 @@
 - Common SDK `24.30.0-rc.1`
 - Maps SDK `11.30.0-rc.1`
 
+
+## 2.29.4
+
+### Mapbox dependencies
+- Search Native SDK `2.29.4`
+- Common SDK `24.29.4`
+- Maps SDK `11.29.4`
+
+
 ## 2.29.3
 
 ### Mapbox dependencies
