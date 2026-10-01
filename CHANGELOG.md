@@ -34,6 +34,13 @@
 - Common SDK `24.31.0-rc.1`
 - Maps SDK `11.31.0-rc.1`
 
+## 2.30.4
+
+### Mapbox dependencies
+- Search Native SDK `2.30.4`
+- Common SDK `24.30.4`
+- Maps SDK `11.30.4`
+
 
 
 ## 2.30.3
