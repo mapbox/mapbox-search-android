@@ -45,9 +45,9 @@ ext {
 
     version = [
             // Mapbox
-            mapboxSearchNative      : '2.34.0-SNAPSHOT-10-08--01-49.git-293b3d8',
-            mapboxCommon            : '24.34.0-SNAPSHOT-10-08--01-49.git-293b3d8',
-            mapboxMaps              : '11.34.0-SNAPSHOT-10-08--01-49.git-293b3d8',
+            mapboxSearchNative      : '2.34.0-SNAPSHOT-10-09--01-51.git-002525c',
+            mapboxCommon            : '24.34.0-SNAPSHOT-10-09--01-51.git-002525c',
+            mapboxMaps              : '11.34.0-SNAPSHOT-10-09--01-51.git-002525c',
             mapboxTurf              : '6.15.0',
             mapboxBase              : '0.8.0',
             mapboxTestDsl           : '0.1.5',
