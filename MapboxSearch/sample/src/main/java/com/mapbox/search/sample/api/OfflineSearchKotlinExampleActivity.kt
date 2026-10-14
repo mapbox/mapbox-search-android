@@ -1,14 +1,12 @@
 package com.mapbox.search.sample.api
 
 import android.os.Bundle
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.offline.OfflineIndexChangeEvent
-import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
-import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -17,6 +15,7 @@ import com.mapbox.search.offline.OfflineSearchOptions
 import com.mapbox.search.offline.OfflineSearchResult
 import com.mapbox.search.sample.R
 
+@OptIn(MapboxExperimental::class)
 class OfflineSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
 
     override val titleResId: Int = R.string.action_open_offline_search_kt_example
@@ -47,6 +46,7 @@ class OfflineSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             onFinished()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,25 +68,6 @@ class OfflineSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             .geometry(dcLocation)
             .acceptExpired(true)
             .build()
-
-        searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
-            override fun onIndexChange(event: OfflineIndexChangeEvent) {
-                if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
-                    logI("SearchApiExample", "$tileRegionId was successfully added or updated")
-
-                    searchRequestTask = searchEngine.search(
-                        "2011 15th Street Northwest, Washington, District of Columbia",
-                        OfflineSearchOptions(),
-                        searchCallback
-                    )
-                }
-            }
-
-            override fun onError(event: OfflineIndexErrorEvent) {
-                logI("SearchApiExample", "Offline index error: $event")
-                onFinished()
-            }
-        })
     }
 
     override fun startExample() {
@@ -98,10 +79,21 @@ class OfflineSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             { result ->
                 if (result.isValue) {
                     logI("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                    doSearch()
                 } else {
                     logI("SearchApiExample", "Tiles loading error: ${result.error}")
                 }
             }
+        )
+    }
+
+    private fun doSearch() {
+        logI("SearchApiExample", "Searching...")
+        searchRequestTask?.cancel()
+        searchRequestTask = searchEngine.search(
+            "2011 15th Street Northwest, Washington, District of Columbia",
+            OfflineSearchOptions(),
+            searchCallback
         )
     }
 

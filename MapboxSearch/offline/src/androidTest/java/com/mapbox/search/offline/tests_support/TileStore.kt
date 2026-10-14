@@ -1,6 +1,8 @@
 package com.mapbox.search.offline.tests_support
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.common.AmbientCacheClearingCallback
+import com.mapbox.common.CacheClearingError
 import com.mapbox.common.TileRegion
 import com.mapbox.common.TileRegionCallback
 import com.mapbox.common.TileRegionError
@@ -28,6 +30,20 @@ internal fun TileStore.getAllTileRegionsBlocking(): Expected<TileRegionError, Mu
     val callback = BlockingTileRegionsCallback()
     getAllTileRegions(callback)
     return callback.getResultBlocking()
+}
+
+internal fun TileStore.clearAmbientCacheBlocking(): Expected<CacheClearingError, Long> {
+    val callback = BlockingAmbientCacheClearingCallback()
+    clearAmbientCache(callback)
+    return callback.getResultBlocking()
+}
+
+internal class BlockingAmbientCacheClearingCallback :
+    BaseBlockingCallback<Expected<CacheClearingError, Long>>(),
+    AmbientCacheClearingCallback {
+    override fun run(result: Expected<CacheClearingError, Long>) {
+        publishResult(result)
+    }
 }
 
 internal class BlockingTileRegionsCallback :

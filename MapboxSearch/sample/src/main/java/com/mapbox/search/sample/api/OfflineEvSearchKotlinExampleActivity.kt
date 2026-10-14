@@ -9,9 +9,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.common.ev.EvConnectorType
 import com.mapbox.search.offline.OfflineEvSearchOptions
-import com.mapbox.search.offline.OfflineIndexChangeEvent
-import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
-import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -43,20 +40,6 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
         }
     }
 
-    private val onIndexChangeListener = object : OfflineSearchEngine.OnIndexChangeListener {
-        override fun onIndexChange(event: OfflineIndexChangeEvent) {
-            if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
-                printMessage("$tileRegionId was successfully added or updated")
-                startSearch()
-            }
-        }
-
-        override fun onError(event: OfflineIndexErrorEvent) {
-            printMessage("Offline index error: $event")
-            onFinished()
-        }
-    }
-
     private val datasetCong = "experimental-poi-cat-alias" to "v65"
 
     private val tileRegionId = "Germany $datasetCong"
@@ -82,8 +65,6 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun startExample() {
-        searchEngine.addOnIndexChangeListener(onIndexChangeListener)
-
         val tileRegionLoadOptions = TileRegionLoadOptions
             .Builder()
             .descriptors(descriptors)
@@ -100,6 +81,7 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             { result ->
                 if (result.isValue) {
                     printMessage("Tiles successfully loaded: ${result.value}")
+                    startSearch()
                 } else {
                     printMessage("Tiles loading error: ${result.error}")
                 }
@@ -135,7 +117,6 @@ class OfflineEvSearchKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun onDestroy() {
-        searchEngine.removeOnIndexChangeListener(onIndexChangeListener)
         tilesLoadingTask?.cancel()
         searchRequestTask?.cancel()
         super.onDestroy()

@@ -10,6 +10,16 @@ internal object DatasetNameBuilder {
         language: String?,
         worldview: String? = null,
     ): String {
+        validate(language, worldview)
+
+        return buildString {
+            append(dataset)
+            language?.let { append("_${it.lowercase()}") }
+            worldview?.let { append("-${it.lowercase()}") }
+        }
+    }
+
+    fun validate(language: String?, worldview: String?) {
         require(language != null || worldview == null) { "Language must be present when worldview is specified" }
 
         language?.let {
@@ -18,12 +28,6 @@ internal object DatasetNameBuilder {
 
         worldview?.let {
             require(REGEX_COUNTRY_CODE.matches(it)) { "Worldview should be an ISO 3166 alpha-2 code" }
-        }
-
-        return buildString {
-            append(dataset)
-            language?.let { append("_${it.lowercase()}") }
-            worldview?.let { append("-${it.lowercase()}") }
         }
     }
 }

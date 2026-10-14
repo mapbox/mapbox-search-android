@@ -45,6 +45,12 @@ android.libraryVariants.all { variant ->
                 args += hideId
             }
         }
+
+        // Metalava ends the signature file with an empty line, which shows up as noise in every diff
+        doLast {
+            def apiFile = file('api/api-metalava.txt')
+            apiFile.text = apiFile.text.replaceAll(/\n+\z/, '\n')
+        }
     }
 
     updateApi.dependsOn assembleRelease

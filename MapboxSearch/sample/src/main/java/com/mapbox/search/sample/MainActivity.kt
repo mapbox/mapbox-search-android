@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -17,11 +16,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.mapbox.android.gestures.Utils.dpToPx
-import com.mapbox.common.Cancelable
-import com.mapbox.common.TileRegionLoadOptions
-import com.mapbox.common.TileStore
 import com.mapbox.common.location.LocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -88,8 +85,6 @@ import com.mapbox.search.ui.view.SearchMode
 import com.mapbox.search.ui.view.SearchResultsView
 import com.mapbox.search.ui.view.place.SearchPlace
 import com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
-import com.mapbox.turf.TurfConstants
-import com.mapbox.turf.TurfTransformation
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,11 +101,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
     private lateinit var mapMarkersManager: MapMarkersManager
-
-    private lateinit var tileRegionLoadOptions: TileRegionLoadOptions
-    private val tileStore = TileStore.create()
-    private val tileRegionId = "MainActivity - Washington DC"
-    private var tilesLoadingTask: Cancelable? = null
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -208,48 +198,13 @@ class MainActivity : AppCompatActivity() {
             settings = SearchEngineSettings()
         )
 
-        val offlineSearchEngine = OfflineSearchEngine.create(
-            OfflineSearchEngineSettings(
-                tileStore = tileStore
-            )
-        )
-
-        val descriptors = listOf(OfflineSearchEngine.createTilesetDescriptor())
-        val dcLocation = Point.fromLngLat(-77.0339911055176, 38.899920004207516)
-        val tileGeometry = TurfTransformation.circle(dcLocation, 20.0, 32, TurfConstants.UNIT_KILOMETERS)
-
-        tileRegionLoadOptions = TileRegionLoadOptions
-            .Builder()
-            .descriptors(descriptors)
-            .geometry(tileGeometry)
-            .acceptExpired(true)
-            .build()
-
-        tilesLoadingTask = tileStore.loadTileRegion(
-            tileRegionId,
-            tileRegionLoadOptions,
-            { progress -> Log.i(LOG_TAG, "Loading progress: $progress") },
-            { result ->
-                val loadResultMessage = if (result.isValue) {
-                    "Tiles successfully loaded: ${result.value}"
-                } else {
-                    "Tiles loading error: ${result.error}"
-                }
-
-                Log.i(LOG_TAG, loadResultMessage)
-                runOnUiThread {
-                    Toast.makeText(applicationContext, loadResultMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
-
         searchEngineUiAdapter = SearchEngineUiAdapter(
             view = searchResultsView,
             searchEngine = searchEngine,
-            offlineSearchEngine = offlineSearchEngine,
+            offlineSearchEngine = OfflineSearchEngine.create(OfflineSearchEngineSettings()),
         )
 
-        searchEngineUiAdapter.searchMode = SearchMode.AUTO
+        searchEngineUiAdapter.searchMode = SearchMode.ONLINE
 
         searchEngineUiAdapter.addSearchListener(object : SearchEngineUiAdapter.SearchListener {
 
@@ -350,7 +305,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         debouncer.cancel()
-        tilesLoadingTask?.cancel()
     }
 
     private fun LocationProvider.userDistanceTo(destination: Point, callback: (Double?) -> Unit) {
@@ -378,7 +332,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun geoIntent(point: Point): Intent =
-        Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${point.latitude()}, ${point.longitude()}"))
+        Intent(Intent.ACTION_VIEW, "geo:0,0?q=${point.latitude()}, ${point.longitude()}".toUri())
 
     private fun Context.isPermissionGranted(permission: String): Boolean =
         ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED

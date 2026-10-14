@@ -12,10 +12,13 @@ import com.mapbox.search.base.BaseSearchSdkInitializerImpl
 import com.mapbox.search.base.SearchRequestContextProvider
 import com.mapbox.search.base.core.CoreApiType
 import com.mapbox.search.base.core.CoreEngineOptions
+import com.mapbox.search.base.core.CoreOfflineSearchTilesetDescriptorOptions
 import com.mapbox.search.base.core.CoreSearchEngine
 import com.mapbox.search.base.core.getUserActivityReporter
 import com.mapbox.search.base.location.LocationEngineAdapter
 import com.mapbox.search.base.location.WrapperLocationProvider
+import com.mapbox.search.base.logger.logd
+import com.mapbox.search.base.logger.logw
 import com.mapbox.search.base.record.IndexableRecordResolver
 import com.mapbox.search.base.result.SearchResultFactory
 import com.mapbox.search.base.utils.AndroidKeyboardLocaleProvider
@@ -55,7 +58,15 @@ public interface OfflineSearchEngine {
      * Interface for a listener to be invoked when index data is changed in the [OfflineSearchEngine].
      * This interface notifies users when tiles changes made with [com.mapbox.common.TileStore]
      * have been processed and visible in the [OfflineSearchEngine].
+     *
+     * Deprecated, offline search can be started as soon as [com.mapbox.common.TileStore] reports
+     * that the tile region download completed.
      */
+    @Deprecated(
+        "Offline search can be started as soon as TileStore reports that the tile region download completed, " +
+            "there's no need to wait for index change events. This functionality is not guaranteed to work.",
+    )
+    @Suppress("DEPRECATION")
     public interface OnIndexChangeListener {
 
         /**
@@ -470,16 +481,32 @@ public interface OfflineSearchEngine {
     /**
      * Adds a listener to be notified of index change events.
      *
+     * Deprecated, offline search can be started as soon as [com.mapbox.common.TileStore] reports
+     * that the tile region download completed.
+     *
      * @param executor Executor used for events dispatching. By default events are dispatched on the main thread.
      * @param listener The listener to notify when an event happens.
      */
+    @Deprecated(
+        "Offline search can be started as soon as TileStore reports that the tile region download completed, " +
+            "there's no need to wait for index change events. This functionality is not guaranteed to work.",
+    )
+    @Suppress("DEPRECATION")
     public fun addOnIndexChangeListener(executor: Executor, listener: OnIndexChangeListener)
 
     /**
      * Adds a listener to be notified of index change events.
      *
+     * Deprecated, offline search can be started as soon as [com.mapbox.common.TileStore] reports
+     * that the tile region download completed.
+     *
      * @param listener The listener to notify when an event happens. Events are dispatched on the main thread.
      */
+    @Deprecated(
+        "Offline search can be started as soon as TileStore reports that the tile region download completed, " +
+            "there's no need to wait for index change events. This functionality is not guaranteed to work.",
+    )
+    @Suppress("DEPRECATION")
     public fun addOnIndexChangeListener(listener: OnIndexChangeListener): Unit = addOnIndexChangeListener(
         executor = SearchSdkMainThreadWorker.mainExecutor,
         listener = listener,
@@ -488,14 +515,25 @@ public interface OfflineSearchEngine {
     /**
      * Removes a previously added listener.
      *
+     * Deprecated, offline search can be started as soon as [com.mapbox.common.TileStore] reports
+     * that the tile region download completed.
+     *
      * @param listener The listener to remove.
      */
+    @Deprecated(
+        "Offline search can be started as soon as TileStore reports that the tile region download completed, " +
+            "there's no need to wait for index change events. This functionality is not guaranteed to work.",
+    )
+    @Suppress("DEPRECATION")
     public fun removeOnIndexChangeListener(listener: OnIndexChangeListener)
 
     /**
      * Companion object.
      */
     public companion object {
+
+        @JvmSynthetic
+        internal const val LOG_CATEGORY = "OfflineSearchEngine"
 
         /**
          * Creates a new instance of [OfflineSearchEngine].
@@ -546,7 +584,8 @@ public interface OfflineSearchEngine {
 
         /**
          * Creates TilesetDescriptor for offline search index data using the specified dataset and version.
-         * Downloaded data will include addresses and places.
+         * Downloaded data will include both detailed data (e.g. addresses, streets and POIs)
+         * and overview data (e.g. countries, regions and cities).
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
@@ -560,15 +599,25 @@ public interface OfflineSearchEngine {
             version: String = TilesetParameters.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
+            val datasetName = DatasetNameBuilder.buildDatasetName(dataset, language)
+            logd("createTilesetDescriptor($datasetName, $version)", LOG_CATEGORY)
             return CoreSearchEngine.createTilesetDescriptor(
-                DatasetNameBuilder.buildDatasetName(dataset, language),
+                datasetName,
                 version,
             )
         }
 
         /**
          * Creates [TilesetDescriptor] for offline search using the tileset parameters.
-         * Downloaded data will include addresses and places.
+         * Downloaded data will include both detailed data (e.g. addresses, streets and POIs)
+         * and overview data (e.g. countries, regions and cities), or only overview data if [TilesetParameters.Builder.overviewOnly] is set.
+         * Language and worldview only apply to overview data, so a tileset with a language downloads
+         * the detailed and overview data of the dataset plus overview data in that language.
+         * Use [OfflineSearchEngine.selectTileset] to choose the language of search results.
+         *
+         * Same as [createTilesetDescriptor] with a list of one tileset, except when the deprecated
+         * [TilesetParameters.Builder.version] isn't empty: then that version of the dataset is downloaded,
+         * with all its data in the requested language and no additional resources.
          *
          * @param tilesetParameters Tiles parameters.
          */
@@ -577,15 +626,82 @@ public interface OfflineSearchEngine {
         public fun createTilesetDescriptor(
             tilesetParameters: TilesetParameters,
         ): TilesetDescriptor {
-            return CoreSearchEngine.createTilesetDescriptor(
-                tilesetParameters.generatedDatasetName,
-                tilesetParameters.version,
+            if (tilesetParameters.version.isEmpty()) {
+                return createTilesetDescriptor(listOf(tilesetParameters))
+            }
+
+            val datasetName = tilesetParameters.generatedDatasetName
+            val version = tilesetParameters.version
+            return if (tilesetParameters.overviewOnly) {
+                logd("createPlacesTilesetDescriptor($datasetName, $version)", LOG_CATEGORY)
+                CoreSearchEngine.createPlacesTilesetDescriptor(datasetName, version)
+            } else {
+                logd("createTilesetDescriptor($datasetName, $version)", LOG_CATEGORY)
+                CoreSearchEngine.createTilesetDescriptor(datasetName, version)
+            }
+        }
+
+        /**
+         * Creates a single [TilesetDescriptor] for offline search covering several tilesets.
+         *
+         * Each tileset adds data of its dataset, both detailed and overview data,
+         * or only overview data if [TilesetParameters.Builder.overviewOnly] is set.
+         * Language and worldview only apply to overview data, so a tileset with a language
+         * additionally adds overview data in that language, e.g. tilesets for `en` and `fr`
+         * download the detailed and overview data of the dataset once plus overview data in `en` and `fr`.
+         * Use [OfflineSearchEngine.selectTileset] to choose the language of search results.
+         *
+         * The latest version of each dataset is downloaded, the deprecated [TilesetParameters.Builder.version]
+         * is ignored.
+         *
+         * Besides the tilesets, the descriptor may declare additional resources the region needs,
+         * see [OfflineSearchResource]. Additional resources are restricted to specific datasets,
+         * so request them only if you know that your datasets need them.
+         *
+         * @param tilesets Tilesets the region covers. Must not be empty.
+         * @param additionalResources Resources to download alongside the tiles, [OfflineSearchResource] constants.
+         * When not `null`, exactly these resources are downloaded, and an empty list downloads none.
+         * Leaving out a resource that a dataset needs makes search in that dataset return no results.
+         * When `null`, the SDK may add resources it determines the datasets need. This isn't guaranteed
+         * and may change between releases, so to be sure a resource is downloaded, list it explicitly.
+         * @throws [IllegalArgumentException] if [tilesets] is empty or [additionalResources] contains
+         * a value that isn't an [OfflineSearchResource] constant.
+         */
+        @JvmStatic
+        @JvmOverloads
+        @MapboxExperimental
+        public fun createTilesetDescriptor(
+            tilesets: List<TilesetParameters>,
+            additionalResources: List<String>? = null,
+        ): TilesetDescriptor {
+            require(tilesets.isNotEmpty()) { "Tilesets must not be empty" }
+            if (additionalResources != null) {
+                require(OfflineSearchResource.ALL.containsAll(additionalResources)) {
+                    "Unsupported additional resources: $additionalResources"
+                }
+            }
+
+            tilesets.filter { it.version.isNotEmpty() }.forEach {
+                logw(
+                    "createTilesetDescriptor: version ${it.version} of ${it.dataset} is ignored, " +
+                        "the latest version is downloaded",
+                    LOG_CATEGORY,
+                )
+            }
+
+            val coreOptions = CoreOfflineSearchTilesetDescriptorOptions(
+                tilesets.map { it.mapToCore() },
+                additionalResources?.let {
+                    OfflineSearchResource.mapToCoreOfflineSearchResource(it)
+                },
             )
+            logd("createTilesetDescriptor($coreOptions)", LOG_CATEGORY)
+            return CoreSearchEngine.createTilesetDescriptor(coreOptions)
         }
 
         /**
          * Creates TilesetDescriptor for offline search using the specified dataset and version.
-         * Downloaded data will include only places.
+         * Downloaded data will include only places, i.e. overview data (e.g. countries, regions and cities).
          *
          * @param dataset Tiles dataset.
          * @param version Tiles version, chosen automatically if empty.
@@ -599,25 +715,42 @@ public interface OfflineSearchEngine {
             version: String = TilesetParameters.DEFAULT_VERSION,
             language: String? = null
         ): TilesetDescriptor {
+            val datasetName = DatasetNameBuilder.buildDatasetName(
+                dataset = dataset,
+                language = language,
+            )
+            logd("createPlacesTilesetDescriptor($datasetName, $version)", LOG_CATEGORY)
             return CoreSearchEngine.createPlacesTilesetDescriptor(
-                DatasetNameBuilder.buildDatasetName(dataset = dataset, language = language),
+                datasetName,
                 version,
             )
         }
 
         /**
          * Creates [TilesetDescriptor] for offline search using the tileset parameters.
-         * Downloaded data will include only places.
+         * Downloaded data will include only places, i.e. overview data (e.g. countries, regions and cities),
+         * [TilesetParameters.Builder.overviewOnly] is ignored.
+         *
+         * Deprecated, set [TilesetParameters.Builder.overviewOnly] and use [createTilesetDescriptor] instead.
          *
          * @param tilesetParameters Tiles parameters.
          */
         @JvmStatic
         @MapboxExperimental
+        @Deprecated(
+            message = "Use createTilesetDescriptor(TilesetParameters) with " +
+                    "TilesetParameters.Builder.overviewOnly(true) instead.",
+        )
         public fun createPlacesTilesetDescriptor(
             tilesetParameters: TilesetParameters,
         ): TilesetDescriptor {
+            val datasetName = tilesetParameters.generatedDatasetName
+            logd(
+                "createPlacesTilesetDescriptor($datasetName, ${tilesetParameters.version})",
+                LOG_CATEGORY,
+            )
             return CoreSearchEngine.createPlacesTilesetDescriptor(
-                tilesetParameters.generatedDatasetName,
+                datasetName,
                 tilesetParameters.version,
             )
         }

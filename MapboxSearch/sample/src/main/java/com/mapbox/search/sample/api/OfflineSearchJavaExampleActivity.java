@@ -13,17 +13,12 @@ import com.mapbox.common.TileStore;
 import com.mapbox.common.TilesetDescriptor;
 import com.mapbox.geojson.Point;
 import com.mapbox.search.common.AsyncOperationTask;
-import com.mapbox.search.offline.OfflineIndexChangeEvent;
-import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType;
-import com.mapbox.search.offline.OfflineIndexErrorEvent;
 import com.mapbox.search.offline.OfflineResponseInfo;
 import com.mapbox.search.offline.OfflineSearchCallback;
 import com.mapbox.search.offline.OfflineSearchEngine;
 import com.mapbox.search.offline.OfflineSearchEngineSettings;
 import com.mapbox.search.offline.OfflineSearchOptions;
 import com.mapbox.search.offline.OfflineSearchResult;
-import com.mapbox.search.sample.BuildConfig;
-import com.mapbox.search.sample.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -74,26 +69,6 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
             .acceptExpired(true)
             .build();
 
-        searchEngine.addOnIndexChangeListener(new OfflineSearchEngine.OnIndexChangeListener() {
-            @Override
-            public void onIndexChange(@NonNull OfflineIndexChangeEvent event) {
-                if (tileRegionId.equals(event.getRegionId()) && (event.getType() == EventType.ADD || event.getType() == EventType.UPDATE)) {
-                    Log.i("SearchApiExample", tileRegionId + " was successfully added or updated");
-
-                    searchRequestTask = searchEngine.search(
-                        "2011 15th Street Northwest, Washington, District of Columbia",
-                        new OfflineSearchOptions(),
-                        searchCallback
-                    );
-                }
-            }
-
-            @Override
-            public void onError(@NonNull OfflineIndexErrorEvent event) {
-                Log.i("SearchApiExample", "Offline index error: $event");
-            }
-        });
-
         Log.i("SearchApiExample", "Loading tiles...");
 
         tilesLoadingTask = tileStore.loadTileRegion(
@@ -103,10 +78,19 @@ public class OfflineSearchJavaExampleActivity extends AppCompatActivity {
             result -> {
                 if (result.isValue()) {
                     Log.i("SearchApiExample", "Tiles successfully loaded: " + result.getValue());
+                    doSearch();
                 } else {
                     Log.i("SearchApiExample", "Tiles loading error: " + result.getError());
                 }
             }
+        );
+    }
+
+    private void doSearch() {
+        searchRequestTask = searchEngine.search(
+            "2011 15th Street Northwest, Washington, District of Columbia",
+            new OfflineSearchOptions(),
+            searchCallback
         );
     }
 

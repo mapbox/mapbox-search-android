@@ -6,9 +6,6 @@ import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
-import com.mapbox.search.offline.OfflineIndexChangeEvent
-import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
-import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineReverseGeoOptions
 import com.mapbox.search.offline.OfflineSearchCallback
@@ -59,24 +56,6 @@ class OfflineReverseGeocodingKotlinExampleActivity : BaseKotlinExampleActivity()
         )
 
         searchEngine.addEngineReadyCallback(engineReadyCallback)
-
-        searchEngine.addOnIndexChangeListener(object : OfflineSearchEngine.OnIndexChangeListener {
-            override fun onIndexChange(event: OfflineIndexChangeEvent) {
-                if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
-                    logI("SearchApiExample", "$tileRegionId was successfully added or updated")
-
-                    searchRequestTask = searchEngine.reverseGeocoding(
-                        OfflineReverseGeoOptions(center = dcLocation),
-                        searchCallback
-                    )
-                }
-            }
-
-            override fun onError(event: OfflineIndexErrorEvent) {
-                logI("SearchApiExample", "Offline index error:", event)
-                onFinished()
-            }
-        })
     }
 
     override fun startExample() {
@@ -96,10 +75,18 @@ class OfflineReverseGeocodingKotlinExampleActivity : BaseKotlinExampleActivity()
             { result ->
                 if (result.isValue) {
                     logI("SearchApiExample", "Tiles successfully loaded: ${result.value}")
+                    doSearch()
                 } else {
                     logI("SearchApiExample", "Tiles loading error: ${result.error}")
                 }
             }
+        )
+    }
+
+    private fun doSearch() {
+        searchRequestTask = searchEngine.reverseGeocoding(
+            OfflineReverseGeoOptions(center = dcLocation),
+            searchCallback
         )
     }
 

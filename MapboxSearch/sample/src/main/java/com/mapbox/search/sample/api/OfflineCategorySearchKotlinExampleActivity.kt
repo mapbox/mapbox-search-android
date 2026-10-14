@@ -8,9 +8,6 @@ import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.offline.OfflineCategorySearchOptions
-import com.mapbox.search.offline.OfflineIndexChangeEvent
-import com.mapbox.search.offline.OfflineIndexChangeEvent.EventType
-import com.mapbox.search.offline.OfflineIndexErrorEvent
 import com.mapbox.search.offline.OfflineResponseInfo
 import com.mapbox.search.offline.OfflineSearchCallback
 import com.mapbox.search.offline.OfflineSearchEngine
@@ -46,27 +43,6 @@ class OfflineCategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
         }
     }
 
-    private val onIndexChangeListener = object : OfflineSearchEngine.OnIndexChangeListener {
-        override fun onIndexChange(event: OfflineIndexChangeEvent) {
-            if (event.regionId == tileRegionId && (event.type == EventType.ADD || event.type == EventType.UPDATE)) {
-                logI("SearchApiExample", "$tileRegionId was successfully added or updated")
-
-                searchRequestTask = searchEngine.categorySearch(
-                    listOf("cafe", "park"),
-                    OfflineCategorySearchOptions(
-                        ensureResultsPerCategory = true,
-                    ),
-                    searchCallback
-                )
-            }
-        }
-
-        override fun onError(event: OfflineIndexErrorEvent) {
-            logI("SearchApiExample", "Offline index error: $event")
-            onFinished()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -89,8 +65,6 @@ class OfflineCategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
     }
 
     override fun startExample() {
-        searchEngine.addOnIndexChangeListener(onIndexChangeListener)
-
         printMessage("Loading tiles...")
 
         tilesLoadingTask = tileStore.loadTileRegion(
@@ -100,6 +74,7 @@ class OfflineCategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
             { result ->
                 if (result.isValue) {
                     printMessage("Tiles successfully loaded: ${result.value}")
+                    doSearch()
                 } else {
                     printMessage("Tiles loading error: ${result.error}")
                 }
@@ -107,8 +82,17 @@ class OfflineCategorySearchKotlinExampleActivity : BaseKotlinExampleActivity() {
         )
     }
 
+    private fun doSearch() {
+        searchRequestTask = searchEngine.categorySearch(
+            listOf("cafe", "park"),
+            OfflineCategorySearchOptions(
+                ensureResultsPerCategory = true,
+            ),
+            searchCallback
+        )
+    }
+
     override fun onDestroy() {
-        searchEngine.removeOnIndexChangeListener(onIndexChangeListener)
         tilesLoadingTask?.cancel()
         searchRequestTask?.cancel()
         super.onDestroy()
