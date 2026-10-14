@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.offline
 
 import com.mapbox.search.base.core.CoreOfflineIndexChangeEvent
@@ -5,7 +7,14 @@ import com.mapbox.search.base.core.CoreOfflineIndexChangeEventType
 
 /**
  * Type that holds information about changes in the offline search index.
+ *
+ * Deprecated, offline search can be started as soon as [com.mapbox.common.TileStore] reports
+ * that the tile region download completed.
  */
+@Deprecated(
+    "Offline search can be started as soon as TileStore reports that the tile region download completed, " +
+            "there's no need to wait for index change events. This functionality is not guaranteed to work."
+)
 public class OfflineIndexChangeEvent internal constructor(
 
     /**

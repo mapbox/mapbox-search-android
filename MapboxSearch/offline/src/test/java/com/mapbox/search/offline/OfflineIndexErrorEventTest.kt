@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.search.offline
 
 import com.mapbox.search.base.core.CoreOfflineIndexError

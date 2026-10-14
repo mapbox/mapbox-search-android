@@ -1,6 +1,9 @@
 package com.mapbox.search.offline
 
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.search.base.core.CoreOfflineSearchLanguage
+import com.mapbox.search.base.core.CoreOfflineSearchTileset
+import com.mapbox.search.base.core.CoreOfflineSearchTilesetSelection
 import com.mapbox.search.common.IsoCountryCode
 import com.mapbox.search.common.IsoLanguageCode
 
@@ -11,10 +14,11 @@ import com.mapbox.search.common.IsoLanguageCode
  */
 @MapboxExperimental
 public class TilesetParameters internal constructor(
-    private val dataset: String,
+    internal val dataset: String,
     internal val version: String,
-    private val language: IsoLanguageCode?,
-    private val worldview: IsoCountryCode?,
+    internal val language: IsoLanguageCode?,
+    internal val worldview: IsoCountryCode?,
+    internal val overviewOnly: Boolean,
 ) {
 
     internal val generatedDatasetName: String by lazy {
@@ -23,6 +27,31 @@ public class TilesetParameters internal constructor(
             language = language?.code,
             worldview = worldview?.code,
         )
+    }
+
+    // CoreOfflineSearchTileset accepts several languages, but TilesetParameters holds one on purpose.
+    // OfflineSearchEngine.selectTileset() and createTilesetDescriptor(tilesetParameters: TilesetParameter)
+    // work with exactly one language, so a list would make some TilesetParameters invalid for them.
+    // Several languages are passed as one TilesetParameters per language, native merges them by dataset.
+    @JvmSynthetic
+    internal fun mapToCore(): CoreOfflineSearchTileset {
+        return CoreOfflineSearchTileset(
+            dataset,
+            listOfNotNull(getCoreOfflineSearchLanguage()),
+            overviewOnly,
+        )
+    }
+
+    @JvmSynthetic
+    internal fun getCoreOfflineSearchTilesetSelection(): CoreOfflineSearchTilesetSelection {
+        return CoreOfflineSearchTilesetSelection(dataset, getCoreOfflineSearchLanguage())
+    }
+
+    private fun getCoreOfflineSearchLanguage(): CoreOfflineSearchLanguage? {
+        DatasetNameBuilder.validate(language?.code, worldview?.code)
+        return language?.let {
+            CoreOfflineSearchLanguage(it.code.lowercase(), worldview?.code?.lowercase())
+        }
     }
 
     /**
@@ -38,6 +67,7 @@ public class TilesetParameters internal constructor(
         if (version != other.version) return false
         if (language != other.language) return false
         if (worldview != other.worldview) return false
+        if (overviewOnly != other.overviewOnly) return false
 
         return true
     }
@@ -50,6 +80,7 @@ public class TilesetParameters internal constructor(
         result = 31 * result + version.hashCode()
         result = 31 * result + (language?.hashCode() ?: 0)
         result = 31 * result + (worldview?.hashCode() ?: 0)
+        result = 31 * result + overviewOnly.hashCode()
         return result
     }
 
@@ -61,7 +92,8 @@ public class TilesetParameters internal constructor(
                 "dataset='$dataset', " +
                 "version='$version', " +
                 "language=$language, " +
-                "worldview=$worldview" +
+                "worldview=$worldview, " +
+                "overviewOnly=$overviewOnly" +
                 ")"
     }
 
@@ -69,15 +101,35 @@ public class TilesetParameters internal constructor(
      * Builder for creating an instance of [TilesetParameters].
      *
      * @property dataset The dataset name.
-     * @property version The dataset version. If empty, the version is chosen automatically.
+     * @property version The dataset version. If empty, the latest version is used.
      */
-    public class Builder @JvmOverloads constructor(
+    public class Builder @Deprecated(
+        message = "The version parameter is deprecated, the latest version is used. " +
+            "Use Builder(dataset) instead.",
+        replaceWith = ReplaceWith("Builder(dataset)"),
+    ) constructor(
         public val dataset: String = DEFAULT_DATASET,
-        public val version: String = DEFAULT_VERSION
+        @Deprecated("The latest version is used.")
+        public val version: String = DEFAULT_VERSION,
     ) {
 
         private var language: IsoLanguageCode? = null
         private var worldview: IsoCountryCode? = null
+        private var overviewOnly: Boolean = false
+
+        /**
+         * Creates a builder for the latest version of the default dataset.
+         */
+        @Suppress("DEPRECATION")
+        public constructor() : this(DEFAULT_DATASET, DEFAULT_VERSION)
+
+        /**
+         * Creates a builder for the latest version of the [dataset].
+         *
+         * @param dataset The dataset name.
+         */
+        @Suppress("DEPRECATION")
+        public constructor(dataset: String) : this(dataset, DEFAULT_VERSION)
 
         /**
          * Sets the language for the tileset.
@@ -105,11 +157,28 @@ public class TilesetParameters internal constructor(
         }
 
         /**
+         * Sets whether the tileset should include only overview data, e.g. countries, regions, cities and
+         * localities. Overview data downloads less data, at the cost of not finding detailed results such as
+         * addresses, streets and POIs. The exact contents are subject to change.
+         * Defaults to `false`, both detailed and overview data.
+         *
+         * Only affects [OfflineSearchEngine.createTilesetDescriptor],
+         * [OfflineSearchEngine.selectTileset] ignores it.
+         *
+         * @param overviewOnly `true` to include only overview data.
+         * @return This builder instance.
+         */
+        public fun overviewOnly(overviewOnly: Boolean): Builder = apply {
+            this.overviewOnly = overviewOnly
+        }
+
+        /**
          * Returns a [TilesetParameters] instance with the specified parameters.
          * @return A new instance of [TilesetParameters].
          */
         public fun build(): TilesetParameters {
-            return TilesetParameters(dataset, version, language, worldview)
+            @Suppress("DEPRECATION")
+            return TilesetParameters(dataset, version, language, worldview, overviewOnly)
         }
     }
 

@@ -20,8 +20,8 @@ import com.mapbox.search.common.AsyncOperationTask
 import com.mapbox.search.internal.bindgen.OfflineIndexChangeEvent
 import com.mapbox.search.internal.bindgen.OfflineIndexError
 import com.mapbox.search.internal.bindgen.UserActivityReporterInterface
+import com.mapbox.search.offline.OfflineSearchEngine.Companion.LOG_CATEGORY
 import com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback
-import com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener
 import com.mapbox.turf.TurfMeasurement
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
@@ -40,7 +40,9 @@ internal class OfflineSearchEngineImpl(
     private val engineReadyCallbacks = mutableMapOf<EngineReadyCallback, Executor>()
 
     private val onIndexChangeListenersLock = Any()
-    private val onIndexChangeListeners = mutableMapOf<OnIndexChangeListener, CoreOfflineIndexObserver>()
+    @Suppress("DEPRECATION")
+    private val onIndexChangeListeners =
+        mutableMapOf<OfflineSearchEngine.OnIndexChangeListener, CoreOfflineIndexObserver>()
 
     @Volatile
     private var isEngineReady: Boolean = true
@@ -58,17 +60,26 @@ internal class OfflineSearchEngineImpl(
                 }
                 engineReadyCallbacks.clear()
             }
-            logd("setTileStore done")
+            logd("setTileStore done", LOG_CATEGORY)
         }
     }
 
     override fun selectTileset(dataset: String?, version: String?) {
+        logd("selectTileset($dataset, $version) called", LOG_CATEGORY)
         coreEngine.selectTileset(dataset, version)
     }
 
     @MapboxExperimental
     override fun selectTileset(tilesetParameters: TilesetParameters) {
-        coreEngine.selectTileset(tilesetParameters.generatedDatasetName, tilesetParameters.version)
+        if (tilesetParameters.version.isEmpty()) {
+            val selection = tilesetParameters.getCoreOfflineSearchTilesetSelection()
+            logd("selectTileset($selection) called", LOG_CATEGORY)
+            coreEngine.selectTileset(selection)
+        } else {
+            val datasetName = tilesetParameters.generatedDatasetName
+            logd("selectTileset($datasetName, ${tilesetParameters.version}) called", LOG_CATEGORY)
+            coreEngine.selectTileset(datasetName, tilesetParameters.version)
+        }
     }
 
     override fun search(
@@ -77,7 +88,7 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
-        logd("search($query, $options) called")
+        logd("search($query, $options) called", LOG_CATEGORY)
 
         activityReporter.reportActivity("offline-search-engine-forward-geocoding")
 
@@ -103,7 +114,7 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
-        logd("categorySearch($categoryNames, $options) called")
+        logd("categorySearch($categoryNames, $options) called", LOG_CATEGORY)
 
         activityReporter.reportActivity("offline-search-engine-category-search")
 
@@ -127,6 +138,8 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
+        logd("reverseGeocoding($options) called", LOG_CATEGORY)
+
         activityReporter.reportActivity("offline-search-engine-reverse-geocoding")
 
         return makeRequest(OfflineSearchCallbackAdapter(callback)) { request ->
@@ -151,6 +164,8 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
+        logd("searchAddressesNearby($street, $proximity, $radiusMeters) called", LOG_CATEGORY)
+
         activityReporter.reportActivity("offline-search-engine-search-nearby-street")
         if (radiusMeters <= 0.0) {
             executor.execute {
@@ -193,7 +208,7 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
-        logd("searchAlongRoute($query, $options) called")
+        logd("searchAlongRoute($query, $options) called", LOG_CATEGORY)
 
         activityReporter.reportActivity("offline-search-engine-search-along-route")
 
@@ -234,7 +249,7 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchCallback
     ): AsyncOperationTask {
-        logd("searchAlongRoute($query, $proximity, $route) called")
+        logd("searchAlongRoute($query, $proximity, $route) called", LOG_CATEGORY)
 
         activityReporter.reportActivity("offline-search-engine-search-along-route")
 
@@ -263,6 +278,8 @@ internal class OfflineSearchEngineImpl(
         executor: Executor,
         callback: OfflineSearchResultCallback
     ): AsyncOperationTask {
+        logd("retrieve(${feature.id()}) called", LOG_CATEGORY)
+
         val name = feature.getStringProperty("name")
 
         val searchOptions = when (val geometry = feature.geometry()) {
@@ -315,7 +332,8 @@ internal class OfflineSearchEngineImpl(
         }
     }
 
-    override fun addOnIndexChangeListener(executor: Executor, listener: OnIndexChangeListener) {
+    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+    override fun addOnIndexChangeListener(executor: Executor, listener: OfflineSearchEngine.OnIndexChangeListener) {
         synchronized(onIndexChangeListenersLock) {
             if (onIndexChangeListeners.contains(listener)) {
                 return
@@ -326,7 +344,8 @@ internal class OfflineSearchEngineImpl(
         }
     }
 
-    override fun removeOnIndexChangeListener(listener: OnIndexChangeListener) {
+    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+    override fun removeOnIndexChangeListener(listener: OfflineSearchEngine.OnIndexChangeListener) {
         synchronized(onIndexChangeListenersLock) {
             onIndexChangeListeners[listener]?.let { coreObserver ->
                 coreEngine.removeOfflineIndexObserver(coreObserver)
@@ -355,9 +374,10 @@ internal class OfflineSearchEngineImpl(
         return doubleArrayOf(minLon, minLat, maxLon, maxLat)
     }
 
+    @Suppress("DEPRECATION")
     private class OnIndexChangeListenerAdapter(
         private val executor: Executor,
-        private val listener: OnIndexChangeListener,
+        private val listener: OfflineSearchEngine.OnIndexChangeListener,
     ) : CoreOfflineIndexObserver {
 
         override fun onIndexChanged(e: OfflineIndexChangeEvent) {

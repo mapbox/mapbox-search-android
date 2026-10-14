@@ -733,6 +733,7 @@ internal class OfflineSearchEngineTest {
         }
     }
 
+    @Suppress("DEPRECATION")
     @Test
     fun `Check selectTileset() functions`() {
         searchEngine.selectTileset("test-dataset", "test-version")
@@ -751,6 +752,16 @@ internal class OfflineSearchEngineTest {
                 tilesetParameters.generatedDatasetName,
                 "test-version",
             )
+        }
+
+        val latestTilesetParameters = TilesetParameters.Builder(dataset = "test-dataset")
+            .worldview(IsoLanguageCode.ENGLISH, IsoCountryCode.MOROCCO)
+            .build()
+
+        clearMocks(coreEngine)
+        searchEngine.selectTileset(latestTilesetParameters)
+        verify(exactly = 1) {
+            coreEngine.selectTileset(latestTilesetParameters.getCoreOfflineSearchTilesetSelection())
         }
     }
 

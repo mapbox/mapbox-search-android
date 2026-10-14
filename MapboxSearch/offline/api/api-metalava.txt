@@ -60,32 +60,32 @@ package com.mapbox.search.offline {
     property public final java.util.List<java.lang.String>? operators;
   }
 
-  public final class OfflineIndexChangeEvent {
-    method public String getDataset();
-    method public String getRegionId();
-    method public com.mapbox.search.offline.OfflineIndexChangeEvent.EventType getType();
-    method public String getVersion();
+  @Deprecated public final class OfflineIndexChangeEvent {
+    method @Deprecated public String getDataset();
+    method @Deprecated public String getRegionId();
+    method @Deprecated public com.mapbox.search.offline.OfflineIndexChangeEvent.EventType getType();
+    method @Deprecated public String getVersion();
     property public final String dataset;
     property public final String regionId;
     property public final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType type;
     property public final String version;
   }
 
-  public enum OfflineIndexChangeEvent.EventType {
-    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType ADD;
-    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType REMOVE;
-    enum_constant public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType UPDATE;
+  @Deprecated public enum OfflineIndexChangeEvent.EventType {
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType ADD;
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType REMOVE;
+    enum_constant @Deprecated public static final com.mapbox.search.offline.OfflineIndexChangeEvent.EventType UPDATE;
   }
 
   public final class OfflineIndexChangeEventKt {
   }
 
-  public final class OfflineIndexErrorEvent {
-    method public String getDataset();
-    method public String getMessage();
-    method public String getRegionId();
-    method public String getTile();
-    method public String getVersion();
+  @Deprecated public final class OfflineIndexErrorEvent {
+    method @Deprecated public String getDataset();
+    method @Deprecated public String getMessage();
+    method @Deprecated public String getRegionId();
+    method @Deprecated public String getTile();
+    method @Deprecated public String getVersion();
     property public final String dataset;
     property public final String message;
     property public final String regionId;
@@ -167,8 +167,8 @@ package com.mapbox.search.offline {
   public interface OfflineSearchEngine {
     method public void addEngineReadyCallback(java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
     method public default void addEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
-    method public void addOnIndexChangeListener(java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
-    method public default void addOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method @Deprecated public void addOnIndexChangeListener(java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method @Deprecated public default void addOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
     method @com.mapbox.annotation.MapboxExperimental public com.mapbox.search.common.AsyncOperationTask categorySearch(java.util.List<java.lang.String> categoryNames, com.mapbox.search.offline.OfflineCategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
     method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask categorySearch(java.util.List<java.lang.String> categoryNames, com.mapbox.search.offline.OfflineCategorySearchOptions options, com.mapbox.search.offline.OfflineSearchCallback callback);
     method @com.mapbox.annotation.MapboxExperimental public default com.mapbox.search.common.AsyncOperationTask categorySearch(String categoryName, com.mapbox.search.offline.OfflineCategorySearchOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
@@ -178,15 +178,17 @@ package com.mapbox.search.offline {
     method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
-    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
+    method @Deprecated @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
     method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(java.util.List<com.mapbox.search.offline.TilesetParameters> tilesets, java.util.List<java.lang.String>? additionalResources = null);
+    method @com.mapbox.annotation.MapboxExperimental public default static com.mapbox.common.TilesetDescriptor createTilesetDescriptor(java.util.List<com.mapbox.search.offline.TilesetParameters> tilesets);
     method public com.mapbox.search.offline.OfflineSearchEngineSettings getSettings();
     method public void removeEngineReadyCallback(com.mapbox.search.offline.OfflineSearchEngine.EngineReadyCallback callback);
-    method public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
+    method @Deprecated public void removeOnIndexChangeListener(com.mapbox.search.offline.OfflineSearchEngine.OnIndexChangeListener listener);
     method public com.mapbox.search.common.AsyncOperationTask retrieve(com.mapbox.geojson.Feature feature, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchResultCallback callback);
     method public default com.mapbox.search.common.AsyncOperationTask retrieve(com.mapbox.geojson.Feature feature, com.mapbox.search.offline.OfflineSearchResultCallback callback);
     method public com.mapbox.search.common.AsyncOperationTask reverseGeocoding(com.mapbox.search.offline.OfflineReverseGeoOptions options, java.util.concurrent.Executor executor, com.mapbox.search.offline.OfflineSearchCallback callback);
@@ -211,21 +213,23 @@ package com.mapbox.search.offline {
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor();
-    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
+    method @Deprecated @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createPlacesTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "", String? language = null);
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2", String version = "");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(String dataset = "mbx-gen2");
     method public com.mapbox.common.TilesetDescriptor createTilesetDescriptor();
     method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(com.mapbox.search.offline.TilesetParameters tilesetParameters);
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(java.util.List<com.mapbox.search.offline.TilesetParameters> tilesets, java.util.List<java.lang.String>? additionalResources = null);
+    method @com.mapbox.annotation.MapboxExperimental public com.mapbox.common.TilesetDescriptor createTilesetDescriptor(java.util.List<com.mapbox.search.offline.TilesetParameters> tilesets);
   }
 
   public static interface OfflineSearchEngine.EngineReadyCallback {
     method public void onEngineReady();
   }
 
-  public static interface OfflineSearchEngine.OnIndexChangeListener {
-    method public void onError(com.mapbox.search.offline.OfflineIndexErrorEvent event);
-    method public void onIndexChange(com.mapbox.search.offline.OfflineIndexChangeEvent event);
+  @Deprecated public static interface OfflineSearchEngine.OnIndexChangeListener {
+    method @Deprecated public void onError(com.mapbox.search.offline.OfflineIndexErrorEvent event);
+    method @Deprecated public void onIndexChange(com.mapbox.search.offline.OfflineIndexChangeEvent event);
   }
 
   public final class OfflineSearchEngineSettings {
@@ -285,6 +289,14 @@ package com.mapbox.search.offline {
   }
 
   public final class OfflineSearchOptionsKt {
+  }
+
+  @com.mapbox.annotation.MapboxExperimental @com.mapbox.search.common.RestrictedMapboxSearchAPI public final class OfflineSearchResource {
+    field public static final com.mapbox.search.offline.OfflineSearchResource INSTANCE;
+    field public static final String JAPANESE_DICTIONARY = "JAPANESE_DICTIONARY";
+  }
+
+  @StringDef(com.mapbox.search.offline.OfflineSearchResource.JAPANESE_DICTIONARY) @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) public static @interface OfflineSearchResource.Type {
   }
 
   @kotlinx.parcelize.Parcelize public final class OfflineSearchResult implements android.os.Parcelable {
@@ -368,16 +380,16 @@ package com.mapbox.search.offline {
   }
 
   public static final class TilesetParameters.Builder {
-    ctor public TilesetParameters.Builder(String dataset = "mbx-gen2", String version = "");
-    ctor public TilesetParameters.Builder(String dataset = "mbx-gen2");
-    ctor public TilesetParameters.Builder();
+    ctor @Deprecated public TilesetParameters.Builder(String dataset = "mbx-gen2", @Deprecated String version = "");
+    ctor public TilesetParameters.Builder(String dataset);
     method public com.mapbox.search.offline.TilesetParameters build();
     method public String getDataset();
-    method public String getVersion();
+    method @Deprecated public String getVersion();
     method public com.mapbox.search.offline.TilesetParameters.Builder language(com.mapbox.search.common.IsoLanguageCode language);
+    method public com.mapbox.search.offline.TilesetParameters.Builder overviewOnly(boolean overviewOnly);
     method public com.mapbox.search.offline.TilesetParameters.Builder worldview(com.mapbox.search.common.IsoLanguageCode language, com.mapbox.search.common.IsoCountryCode worldview);
     property public final String dataset;
-    property public final String version;
+    property @Deprecated public final String version;
   }
 
 }
