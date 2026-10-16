@@ -1,5 +1,17 @@
 # Changelog for the Mapbox Search SDK for Android
 
+## 2.33.0
+
+### Features ✨ and improvements 🏁
+* Added experimental `OfflineSearchEngine.createTilesetDescriptor(tilesets, additionalResources)` which creates a `TilesetDescriptor` for several tilesets and the additional resources the region needs, such as `OfflineSearchResource.JAPANESE_DICTIONARY`. Added `TilesetParameters.Builder.overviewOnly()` which limits a tileset to overview data (e.g. countries, regions and cities) in both `OfflineSearchEngine.createTilesetDescriptor(tilesetParameters: TilesetParameters)` and `OfflineSearchEngine.createTilesetDescriptor(tilesets: List<TilesetParameters>, additionalResources: List<String>?)`. Deprecated the `version` parameter of the experimental `TilesetParameters.Builder`, the latest version is used, use `TilesetParameters.Builder(dataset)` instead. Deprecated experimental `OfflineSearchEngine.createPlacesTilesetDescriptor(TilesetParameters)`, use `createTilesetDescriptor(TilesetParameters)` with `TilesetParameters.Builder.overviewOnly(true)` instead. Deprecated `OfflineSearchEngine.OnIndexChangeListener`, `OfflineSearchEngine.addOnIndexChangeListener()`, `OfflineSearchEngine.removeOnIndexChangeListener()`, `OfflineIndexChangeEvent` and `OfflineIndexErrorEvent`, offline search can be started as soon as `TileStore` reports that the tile region download completed.
+
+### Mapbox dependencies
+- Search Native SDK `2.33.0`
+- Common SDK `24.33.0`
+- Maps SDK `11.33.0`
+
+
+
 ## 2.33.0-rc.1
 
 ### Mapbox dependencies
