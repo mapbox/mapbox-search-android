@@ -9,6 +9,15 @@
 
 
 
+## 2.35.1
+
+### Mapbox dependencies
+- Search Native SDK `2.35.1`
+- Common SDK `24.35.1`
+- Maps SDK `11.35.1`
+
+
+
 ## 2.35.0
 
 ### Mapbox dependencies
