@@ -1,40 +1,192 @@
 # Changelog for the Mapbox Search SDK for Android
 
-## 2.34.5
+## 2.36.0-rc.1
 
 ### Mapbox dependencies
-- Search Native SDK `2.34.5`
-- Common SDK `24.34.5`
-- Maps SDK `11.34.5`
+- Search Native SDK `2.36.0-rc.1`
+- Common SDK `24.36.0-rc.1`
+- Maps SDK `11.36.0-rc.1`
+
+## 2.35.2
+
+### Mapbox dependencies
+- Search Native SDK `2.35.2`
+- Common SDK `24.35.2`
+- Maps SDK `11.35.2`
+
+## 2.35.1
+
+### Mapbox dependencies
+- Search Native SDK `2.35.1`
+- Common SDK `24.35.1`
+- Maps SDK `11.35.1`
 
 
+
+## 2.35.0
+
+### Mapbox dependencies
+- Search Native SDK `2.35.0`
+- Common SDK `24.35.0`
+- Maps SDK `11.35.0`
+
+
+
+## 2.35.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.35.0-rc.1`
+- Common SDK `24.35.0-rc.1`
+- Maps SDK `11.35.0-rc.1`
 
 ## 2.34.4
 
 ### Mapbox dependencies
-- Search Native SDK `2.33.4`
-- Common SDK `24.33.4`
-- Maps SDK `11.33.4`
+- Search Native SDK `2.34.4`
+- Common SDK `24.34.4`
+- Maps SDK `11.34.4`
+
+## 2.34.3
+
+### Mapbox dependencies
+- Search Native SDK `2.34.3`
+- Common SDK `24.34.3`
+- Maps SDK `11.34.3`
 
 
+
+## 2.34.2
+
+### Mapbox dependencies
+- Search Native SDK `2.34.2`
+- Common SDK `24.34.2`
+- Maps SDK `11.34.2`
+
+
+
+## 2.34.1
+
+### Mapbox dependencies
+- Search Native SDK `2.34.1`
+- Common SDK `24.34.1`
+- Maps SDK `11.34.1`
+
+
+
+## 2.34.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.34.0-rc.1`
+- Common SDK `24.34.0-rc.1`
+- Maps SDK `11.34.0-rc.1`
 
 ## 2.33.3
+
+### Mapbox dependencies
+- Search Native SDK `2.33.3`
+- Common SDK `24.33.3`
+- Maps SDK `11.33.3`
+
+## 2.33.2
+
+### Mapbox dependencies
+- Search Native SDK `2.33.2`
+- Common SDK `24.33.2`
+- Maps SDK `11.33.2`
+
+
+
+## 2.33.1
+
+### Mapbox dependencies
+- Search Native SDK `2.33.1`
+- Common SDK `24.33.1`
+- Maps SDK `11.33.1`
+
+
+
+## 2.33.0
+
+### Features ✨ and improvements 🏁
+* Added experimental `OfflineSearchEngine.createTilesetDescriptor(tilesets, additionalResources)` which creates a `TilesetDescriptor` for several tilesets and the additional resources the region needs, such as `OfflineSearchResource.JAPANESE_DICTIONARY`. Added `TilesetParameters.Builder.overviewOnly()` which limits a tileset to overview data (e.g. countries, regions and cities) in both `OfflineSearchEngine.createTilesetDescriptor(tilesetParameters: TilesetParameters)` and `OfflineSearchEngine.createTilesetDescriptor(tilesets: List<TilesetParameters>, additionalResources: List<String>?)`. Deprecated the `version` parameter of the experimental `TilesetParameters.Builder`, the latest version is used, use `TilesetParameters.Builder(dataset)` instead. Deprecated experimental `OfflineSearchEngine.createPlacesTilesetDescriptor(TilesetParameters)`, use `createTilesetDescriptor(TilesetParameters)` with `TilesetParameters.Builder.overviewOnly(true)` instead. Deprecated `OfflineSearchEngine.OnIndexChangeListener`, `OfflineSearchEngine.addOnIndexChangeListener()`, `OfflineSearchEngine.removeOnIndexChangeListener()`, `OfflineIndexChangeEvent` and `OfflineIndexErrorEvent`, offline search can be started as soon as `TileStore` reports that the tile region download completed.
+
+### Mapbox dependencies
+- Search Native SDK `2.33.0`
+- Common SDK `24.33.0`
+- Maps SDK `11.33.0`
+
+
+
+## 2.33.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.33.0-rc.1`
+- Common SDK `24.33.0-rc.1`
+- Maps SDK `11.33.0-rc.1`
+
+## 2.32.5
 
 ### Mapbox dependencies
 - Search Native SDK `2.32.5`
 - Common SDK `24.32.5`
 - Maps SDK `11.32.5`
 
-
-
 ## 2.32.4
+
+### Mapbox dependencies
+- Search Native SDK `2.32.4`
+- Common SDK `24.32.4`
+- Maps SDK `11.32.4`
+
+
+
+## 2.32.3
+
+### Mapbox dependencies
+- Search Native SDK `2.32.3`
+- Common SDK `24.32.3`
+- Maps SDK `11.32.3`
+
+
+
+## 2.32.2
+
+### Mapbox dependencies
+- Search Native SDK `2.32.2`
+- Common SDK `24.32.2`
+- Maps SDK `11.32.2`
+
+
+
+## 2.32.1
+
+### Mapbox dependencies
+- Search Native SDK `2.32.1`
+- Common SDK `24.32.1`
+- Maps SDK `11.32.1`
+
+## 2.32.0
+
+### Mapbox dependencies
+- Search Native SDK `2.32.0`
+- Common SDK `24.32.0`
+- Maps SDK `11.32.0`
+
+
+
+## 2.32.0-rc.1
+
+### Mapbox dependencies
+- Search Native SDK `2.32.0-rc.1`
+- Common SDK `24.32.0-rc.1`
+- Maps SDK `11.32.0-rc.1`
+
+## 2.31.3
 
 ### Mapbox dependencies
 - Search Native SDK `2.31.3`
 - Common SDK `24.31.3`
 - Maps SDK `11.31.3`
-
-
 
 ## 2.31.2
 
@@ -69,6 +221,13 @@
 - Search Native SDK `2.31.0-rc.1`
 - Common SDK `24.31.0-rc.1`
 - Maps SDK `11.31.0-rc.1`
+
+## 2.30.8
+
+### Mapbox dependencies
+- Search Native SDK `2.30.8`
+- Common SDK `24.30.8`
+- Maps SDK `11.30.8`
 
 ## 2.30.4
 
